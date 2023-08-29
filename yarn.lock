@@ -4989,9 +4989,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formik@npm:^2.2.9":
-  version: 2.4.2
-  resolution: "formik@npm:2.4.2"
+"formik@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "formik@npm:2.4.3"
   dependencies:
     deepmerge: ^2.1.1
     hoist-non-react-statics: ^3.3.0
@@ -5002,7 +5002,7 @@ __metadata:
     tslib: ^2.0.0
   peerDependencies:
     react: ">=16.8.0"
-  checksum: 2a942674ee0271707ccc575ecc025e4ac0658a66613d9a4f21e72ed81588c69e99bd627bd4844e512134268962435d3904401bcff726e49d7509125e5002f107
+  checksum: d98dabfce97beb5cf2ff10bdaff61e0cb9e1d29090cfcad706efc793d06674cfe65299d432d32518a2756a58b6b6bfe85ceec8b47b4f5f9dcc375bcd7a37107a
   languageName: node
   linkType: hard
 
@@ -9379,7 +9379,7 @@ __metadata:
     dotenv: ^16.0.1
     dropzone: ^6.0.0-beta.2
     element-visibility-watcher: ^1.0.5
-    formik: ^2.2.9
+    formik: ^2.4.3
     github-markdown-css: ^5.2.0
     history: ^5.3.0
     jquery: ^3.6.0
