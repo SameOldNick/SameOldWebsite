@@ -9546,7 +9546,7 @@ __metadata:
     redux-thunk: ^2.4.1
     rehype-sanitize: ^5.0.1
     resolve-url-loader: ^5.0.0
-    sass: ^1.53.0
+    sass: ^1.66.1
     sass-loader: ^13.0.2
     shiki: ^0.12.1
     store2: ^2.14.2
@@ -9632,16 +9632,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.53.0":
-  version: 1.64.1
-  resolution: "sass@npm:1.64.1"
+"sass@npm:^1.66.1":
+  version: 1.66.1
+  resolution: "sass@npm:1.66.1"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: e908f96f3d5fa5869e2f2aec97548c93d6ef390680af89870fcae8bdbaee2392ac650fbeae8d2ef8e4c99cb9f81e6b3624e1cb659af6d6e746332a22233b5ad8
+  checksum: 74fc11d0fcd5e16c5331b57dd59865705a299c64e89f2b99646869caeb011dc8d0b6144a6c74a90c264e9ef70654207dbf44fc9b7e3393f8bd14809b904c8a52
   languageName: node
   linkType: hard
 

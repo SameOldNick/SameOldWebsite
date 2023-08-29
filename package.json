@@ -82,7 +82,7 @@
         "redux-thunk": "^2.4.1",
         "rehype-sanitize": "^5.0.1",
         "resolve-url-loader": "^5.0.0",
-        "sass": "^1.53.0",
+        "sass": "^1.66.1",
         "sass-loader": "^13.0.2",
         "shiki": "^0.12.1",
         "store2": "^2.14.2",
