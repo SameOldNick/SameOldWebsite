@@ -56,7 +56,7 @@
         "css.gg": "^2.1.1",
         "dotenv": "^16.0.1",
         "dropzone": "^6.0.0-beta.2",
-        "formik": "^2.2.9",
+        "formik": "^2.4.3",
         "github-markdown-css": "^5.2.0",
         "history": "^5.3.0",
         "jquery-ui": "^1.13.2",
