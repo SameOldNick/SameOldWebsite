@@ -1,0 +1,20 @@
+.upload-drop-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #aaa;
+
+    &.dragging {
+        background-color: rgb(232, 248, 255);
+    }
+
+    &.error {
+        background-color: rgb(248, 215, 218);
+    }
+
+    .upload-drop-zone-inner {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        text-align: center;
+    }
+}

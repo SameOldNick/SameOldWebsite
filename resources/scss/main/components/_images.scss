@@ -1,0 +1,28 @@
+// Displays image in grayscale (until user hovers over)
+.grayscale {
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	filter: grayscale(100%);
+	transition: all 0.5s ease;
+	opacity: 0.6;
+
+	&:hover {
+		-webkit-filter: grayscale(0%);
+		-moz-filter: grayscale(0%);
+		filter: grayscale(0%);
+		opacity: 1;
+	}
+}
+
+// Rather than scaling with the width, this scales with the height of the parent container.
+.img-fluid-height {
+    width: auto;
+    height: 100%;
+}
+
+// Have image take up parent width/height without resizing image
+.img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

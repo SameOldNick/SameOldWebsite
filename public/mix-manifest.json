@@ -1,0 +1,9 @@
+{
+    "/js/main.js": "/js/main.js",
+    "/js/admin.js": "/js/admin.js",
+    "/js/manifest.js": "/js/manifest.js",
+    "/css/main.css": "/css/main.css",
+    "/js/admin-vendor.js": "/js/admin-vendor.js",
+    "/css/admin.css": "/css/admin.css",
+    "/js/main-vendor.js": "/js/main-vendor.js"
+}
