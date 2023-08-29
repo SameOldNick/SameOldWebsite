@@ -5,17 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v1
-      
+      - uses: actions/checkout@v2
+        with:
+        ref: ${{ github.head_ref }}
+
       - name: Prepare
         run: npm ci
-        
+
       - name: Lint
         uses: mooyoul/tslint-actions@v1.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pattern: '*.ts'
-          
+
       - name: Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
