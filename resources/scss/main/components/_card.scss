@@ -1,0 +1,12 @@
+.card-header-banner {
+	background-color: $secondary;
+    color: $white;
+
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+
+    %headings {
+        text-align: center;
+        text-transform: uppercase;
+    }
+}

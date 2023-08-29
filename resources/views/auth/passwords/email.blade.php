@@ -1,0 +1,66 @@
+<x-main.layout class="container my-5 page-auth page-auth-password-email">
+    <x-slot:title>{{ __('Reset Password') }}</x-slot:title>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card card-container shadow-lg bg-light mt-3">
+
+                <div class="card-header card-header-banner">
+                    <h2 class="text-center">{{ __('Reset Password') }}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="px-5 py-4">
+                        @if (session('status'))
+                            <div class="mb-4">
+                                <x-alert type="success">
+                                    {{ session('status') }}
+                                </x-alert>
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('password.email') }}">
+                            @csrf
+
+                            <div class="input-group mb-3 has-validation">
+                                <span class="input-group-text bg-primary">
+                                    <i class="fa-solid fa-at text-white"></i>
+                                </span>
+                                <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email Address') }}"
+                                    required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="d-flex justify-content-center flex-column">
+                                <div class="mx-auto mt-2 mb-4">
+                                    <button class="btn btn-primary text-center fs-5" type="submit">
+                                        {{ __('Send Password Reset Link') }}
+                                    </button>
+                                </div>
+
+                                @if (Route::has('login'))
+                                <p class="text-center">
+                                    Know your password?
+                                    <a href="{{ route('login') }}" class="text-primary">{{ __('Login') }}</a>
+                                </p>
+                                @endif
+
+                                @if (Route::has('register'))
+                                <p class="text-center">
+                                    Don't have an account?
+                                    <a href="{{ route('register') }}" class="text-primary">{{ __('Register') }}</a>
+                                </p>
+                                @endif
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-main.layout>

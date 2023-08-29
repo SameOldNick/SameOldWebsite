@@ -1,0 +1,148 @@
+import React from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+export const matchesPathName = (pathname: string, expected: string) => {
+    const actual = !pathname.startsWith('/') ? `/${pathname}` : pathname;
+
+    return actual.toLowerCase() === expected.toLowerCase();
+}
+
+/**
+ * Checks if provide value is a Promise instance.
+ * As per https://stackoverflow.com/a/28133130/533242, x instanceof Promise only works with native NodeJS.
+ * @param value Value to check
+ * @returns True if value is probably a Promise.
+ */
+export const isPromise = (value: any): value is Promise<any> => typeof value === 'object' && typeof value.then === 'function';
+
+/**
+ * Creates object with specified keys included
+ * @param obj Object
+ * @param included Array of keys to include
+ * @returns Object with only keys included
+ */
+export const includeInObject = <TObject extends Record<string, any>>(obj: TObject, included: string[]) => {
+    Object.keys(obj)
+        .filter((key) => !included.includes(key))
+        .forEach((key) => delete obj[key]);
+
+    return obj;
+}
+
+/**
+ * Creates object with specified keys excluded
+ * @param obj Object to remove keys from
+ * @param excluded Keys to exclude
+ * @returns Object with keys excluded
+ */
+export const excludeFromObject = <TObject extends Record<string, any>>(obj: TObject, excluded: string[]) => {
+    Object.keys(obj)
+        .filter((key) => excluded.includes(key))
+        .forEach((key) => delete obj[key]);
+
+    return obj;
+}
+
+/**
+ * Converts bytes to a human readable string
+ * Source: https://stackoverflow.com/a/28896535/533242
+ * @param bytes Number of bytes
+ * @returns string
+ */
+export const humanReadableFileSize = (bytes: number) => {
+    const sizes = [' Bytes', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
+
+    for (let i = 1; i < sizes.length; i++) {
+        if (bytes < Math.pow(1024, i))
+            return (Math.round((bytes / Math.pow(1024, i - 1)) * 100) / 100) + sizes[i - 1];
+    }
+
+    return String(bytes);
+}
+
+/**
+ * Get the size of the viewport
+ * @returns Object with width and hieght
+ */
+export const viewportSize = () => {
+    return {
+        width: Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0),
+        height: Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    };
+};
+
+/**
+ * Checks that two objects are equal (using JSON.stringify)
+ *
+ * @export
+ * @param {object} a
+ * @param {object} b
+ * @returns True if objects are equal.
+ */
+export function areEqual<A, B>(a: A, b: B) {
+    return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/**
+ * Creates base64 url from file contents
+ *
+ * @export
+ * @param {File} file
+ * @returns Promise with base64 url string when resolved
+ */
+export function createBase64UrlFromFile(file: File) {
+    return new Promise<string>((resolve) => {
+        const reader = new FileReader();
+
+        reader.onload = (ev: ProgressEvent<FileReader>) => {
+            if (!ev.target || !ev.target.result)
+                return;
+
+            let src: string;
+
+            if (typeof ev.target.result !== 'string') {
+                const uint8array = new Uint8Array(ev.target.result);
+                src = new TextDecoder('utf-8').decode(uint8array);
+            } else {
+                src = ev.target.result;
+            }
+
+            resolve(src);
+        }
+
+        reader.readAsDataURL(file);
+    });
+}
+
+/**
+ * Formats number for the appropriate locale.
+ * This is the equivalent of the number_format function in PHP (https://www.php.net/manual/en/function.number-format.php)
+ * @param num Number to format
+ * @param decimals Number of decimals to display (default: 0)
+ * @param decimalSeparator What to use for decimals separator (default: .)
+ * @param thousandsSeparator  What to use to separate thousands (default: ,)
+ * @returns Formatted number
+ */
+export const numberFormat = (num: number, decimals: number = 0, decimalSeparator: string = '.', thousandsSeparator: string = ',') => {
+    return num.toFixed(decimals).replace('.', decimalSeparator).replace(/(?=(?:\d{3})+$)(?!^)/g, thousandsSeparator);
+}
+
+export const debounce = (func: (...args: any) => void, timeout: number = 300) => {
+    let timer: NodeJS.Timeout | number;
+
+    return (...args: any[]) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), timeout);
+    }
+}
+
+export function awaitAtMost<T>(callback: () => Promise<T>, maxTimeMs: number) {
+    return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => reject('Max. execution time reached'), maxTimeMs);
+
+        callback()
+            .then((value) => resolve(value))
+            .catch((reason) => reject(reason))
+            .finally(() => clearTimeout(timer));
+    });
+}

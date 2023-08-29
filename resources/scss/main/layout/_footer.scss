@@ -1,0 +1,33 @@
+footer {
+	background-color: $black;
+	color: $white;
+
+    .brand {
+        a {
+            color: $text-muted;
+            font-family: $font-family-cursive;
+            text-decoration: none;
+
+            &:hover, &:active {
+                color: $white;
+            }
+        }
+
+    }
+
+	.nav {
+		.nav-item {
+			.nav-link {
+				color: $text-muted;
+
+				&:hover {
+					color: $dark-link-hover-color;
+				}
+
+				&:active {
+					color: $dark-link-active-color;
+				}
+			}
+		}
+	}
+}

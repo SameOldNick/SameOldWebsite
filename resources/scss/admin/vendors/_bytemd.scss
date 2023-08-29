@@ -1,0 +1,17 @@
+@import '@modules/bytemd/dist/index.css';
+@import '@modules/github-markdown-css';
+
+.bytemd {
+    height: 450px;
+
+    .bytemd-preview {
+        .markdown-body {
+            font-size: 18px !important;
+            font-family: 'Roboto Slab', serif !important;
+        }
+    }
+}
+
+.CodeMirror {
+    font-size: 18px !important;
+}
