@@ -12,7 +12,7 @@ class SocialMediaLink implements ValidationRule
         'twitter.com',
         'x.com',
         'linkedin.com',
-        'github.com'
+        'github.com',
     ];
 
     protected $requireSchema;
@@ -29,12 +29,13 @@ class SocialMediaLink implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!preg_match($this->pattern(), $value)) {
+        if (! preg_match($this->pattern(), $value)) {
             $fail(sprintf('Link does not start with any of the following domains: %s', implode(', ', $this->domains)));
         }
     }
 
-    private function pattern() {
-        return sprintf('/^(https?:\/\/)%s(www\.)?(%s)/i', $this->requireSchema ? '?' : '',  implode('|', array_map('preg_quote', $this->domains)));
+    private function pattern()
+    {
+        return sprintf('/^(https?:\/\/)%s(www\.)?(%s)/i', $this->requireSchema ? '?' : '', implode('|', array_map('preg_quote', $this->domains)));
     }
 }

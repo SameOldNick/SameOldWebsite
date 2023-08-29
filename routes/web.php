@@ -26,7 +26,6 @@ Route::namespace(Controllers\Main::class)->group(function () {
     Route::post('/contact', 'ContactController@process');
     Route::get('/contact/confirm/{pendingMessage}', 'ContactController@confirm')->name('contact.confirm')->middleware(['signed']);
 
-
     Route::get('/blog', 'BlogController@index')->name('blog');
     Route::match(['get', 'post'], '/blog/search', 'BlogController@search')->name('blog.search');
 
@@ -38,8 +37,7 @@ Route::namespace(Controllers\Main::class)->group(function () {
     Route::get('/blog/{article}', 'BlogArticleController@single')->name('blog.single')->middleware(Middleware\ArticleAccess::class);
     Route::get('/blog/{article}/{revision}', 'BlogArticleController@singleRevision')->name('blog.single.revision')->middleware(LaravelMiddleware\ValidateSignature::class);
 
-
-    Route::middleware(Middleware\FileAccess::class)->group(function() {
+    Route::middleware(Middleware\FileAccess::class)->group(function () {
         Route::get('/files/{file}', 'FileController@retrieve')->name('file');
     });
 

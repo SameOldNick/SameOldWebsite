@@ -18,7 +18,8 @@ class BlogSidebar extends Component
         //
     }
 
-    public function mostRecent() {
+    public function mostRecent()
+    {
         return
             Article::published()
                 ->sortedByPublishDate()
@@ -31,7 +32,8 @@ class BlogSidebar extends Component
      *
      * @return void
      */
-    public function popular() {
+    public function popular()
+    {
         return
             Article::published()
                 ->get()
@@ -44,7 +46,8 @@ class BlogSidebar extends Component
      *
      * @return void
      */
-    public function monthsWithArticles() {
+    public function monthsWithArticles()
+    {
         return
             Article::published()
                 ->get()

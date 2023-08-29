@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class ArticleCollection extends Collection {
+class ArticleCollection extends Collection
+{
     use HasWeights;
 
     /**
@@ -16,8 +17,9 @@ class ArticleCollection extends Collection {
      *
      * @return $this
      */
-    public function popular() {
-        return $this->sortBy(fn(Article $article) => $article->coments()->approved()->count());
+    public function popular()
+    {
+        return $this->sortBy(fn (Article $article) => $article->coments()->approved()->count());
     }
 
     /**
@@ -25,8 +27,9 @@ class ArticleCollection extends Collection {
      *
      * @return $this
      */
-    public function groupedByDateTime(string $format) {
-        return $this->mapToGroups(fn(Article $article) => [$article->published_at->format($format) => $article]);
+    public function groupedByDateTime(string $format)
+    {
+        return $this->mapToGroups(fn (Article $article) => [$article->published_at->format($format) => $article]);
     }
 
     /**
@@ -35,7 +38,8 @@ class ArticleCollection extends Collection {
      * @param array $tags
      * @return $this
      */
-    public function withTags(array $tags) {
+    public function withTags(array $tags)
+    {
         return $this->mapToWeight(function (Article $article) use ($tags) {
             return $article->tags->whereIn('slug', $tags)->count();
         });
@@ -45,17 +49,19 @@ class ArticleCollection extends Collection {
      * Gets articles that contains any of the keywords
      *
      * @param array $keywords
-     * @param boolean $ignoreCase
+     * @param bool $ignoreCase
      * @return $this
      */
-    public function withKeywords(array $keywords, bool $ignoreCase = true) {
+    public function withKeywords(array $keywords, bool $ignoreCase = true)
+    {
         $keywords = $ignoreCase ? Arr::map($keywords, fn ($keyword) => Str::lower($keyword)) : $keywords;
 
         return $this->mapToWeight(function (Article $article) use ($keywords, $ignoreCase) {
             $compiled = Str::of(Str::stripTags($article->revision()->compiled));
 
-            if ($ignoreCase)
+            if ($ignoreCase) {
                 $compiled = $compiled->lower();
+            }
 
             $found = 0;
 
@@ -63,7 +69,6 @@ class ArticleCollection extends Collection {
                 $found += $compiled->substrCount($keyword) + Str::substrCount(Str::lower($article->title), $keyword);
 
                 foreach ($article->comments as $comment) {
-
                 }
             }
 

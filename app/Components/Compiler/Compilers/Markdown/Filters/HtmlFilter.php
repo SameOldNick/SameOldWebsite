@@ -2,6 +2,7 @@
 
 namespace App\Components\Compiler\Compilers\Markdown\Filters;
 
-interface HtmlFilter {
+interface HtmlFilter
+{
     public function filter(string $html);
 }

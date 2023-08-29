@@ -2,10 +2,9 @@
 
 namespace App\Components\LittleJWT;
 
+use App\Models\RefreshToken;
 use LittleApps\LittleJWT\Contracts\Validatable;
 use LittleApps\LittleJWT\Validation\Validator;
-
-use App\Models\RefreshToken;
 
 class RefreshTokenValidatable implements Validatable
 {
@@ -18,7 +17,7 @@ class RefreshTokenValidatable implements Validatable
         $validator->claimCallback('jti', function ($value) {
             return RefreshToken::where([
                 ['jwt_id', '=', $value],
-                ['expires_at', '>=', now()]
+                ['expires_at', '>=', now()],
             ])->exists();
         });
     }

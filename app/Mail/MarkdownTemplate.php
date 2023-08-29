@@ -3,13 +3,8 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Container\Container;
-use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
 
 class MarkdownTemplate extends Mailable
 {
@@ -41,7 +36,8 @@ class MarkdownTemplate extends Mailable
      *
      * @return string
      */
-    protected function getContent() {
+    protected function getContent()
+    {
         return '';
     }
 }

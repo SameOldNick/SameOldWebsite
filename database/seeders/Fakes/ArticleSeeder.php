@@ -7,7 +7,6 @@ use App\Models\ArticleImage;
 use App\Models\Revision;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ArticleSeeder extends Seeder
@@ -45,7 +44,5 @@ class ArticleSeeder extends Seeder
         $factory->count(10)->deleted()->create();
 
         $factory->count(10)->create();
-
-
     }
 }

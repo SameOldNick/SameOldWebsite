@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\State;
-use App\Models\Country;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-
+use App\Models\Country;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,7 +29,7 @@ class UsersController extends Controller
         if ($request->has('show')) {
             if ($request->show === 'inactive') {
                 $query = $query->onlyTrashed();
-            } else if ($request->show === 'both') {
+            } elseif ($request->show === 'both') {
                 $query = $query->withTrashed();
             }
         }
@@ -49,13 +47,13 @@ class UsersController extends Controller
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
-        if (!empty($request->country_code)) {
+        if (! empty($request->country_code)) {
             $country = Country::firstWhere(['code' => $request->country_code]);
 
-            if (!empty($request->state_code)) {
+            if (! empty($request->state_code)) {
                 $state = $country->states()->where(['code' => $request->state_code])->first();
 
                 $user->state()->associate($state);
@@ -85,13 +83,14 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
 
-        if (!empty($request->password))
+        if (! empty($request->password)) {
             $user->password = Hash::make($request->password);
+        }
 
-        if (!empty($request->country_code)) {
+        if (! empty($request->country_code)) {
             $country = Country::firstWhere(['code' => $request->country_code]);
 
-            if (!empty($request->state_code)) {
+            if (! empty($request->state_code)) {
                 $state = $country->states()->where(['code' => $request->state_code])->first();
 
                 $user->state()->associate($state);
@@ -120,7 +119,7 @@ class UsersController extends Controller
         $user->restore();
 
         return [
-            'success' => __('User with e-mail ":email" was unlocked.', ['email' => $user->email])
+            'success' => __('User with e-mail ":email" was unlocked.', ['email' => $user->email]),
         ];
     }
 
@@ -132,7 +131,7 @@ class UsersController extends Controller
         $user->delete();
 
         return [
-            'success' => __('User with e-mail ":email" was locked.', ['email' => $user->email])
+            'success' => __('User with e-mail ":email" was locked.', ['email' => $user->email]),
         ];
     }
 }

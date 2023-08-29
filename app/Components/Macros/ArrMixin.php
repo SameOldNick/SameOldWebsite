@@ -28,7 +28,7 @@ class ArrMixin
     public function isKeyAssoc()
     {
         return function ($array, $key) {
-               return ! Arr::isKeyIndex($array, $key);
+            return ! Arr::isKeyIndex($array, $key);
         };
     }
 }

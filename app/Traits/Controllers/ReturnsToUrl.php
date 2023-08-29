@@ -6,19 +6,21 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Str;
 
-trait ReturnsToUrl {
+trait ReturnsToUrl
+{
     /**
      * Checks if can return to URL
      *
      * @param Request $request
      * @param string|null $returnUrl URL to return to. If null, return value of getReturnUrl is used. (default: null)
-     * @return boolean
+     * @return bool
      */
-    protected function canReturnTo(Request $request, string $returnUrl = null) {
+    protected function canReturnTo(Request $request, string $returnUrl = null)
+    {
         $returnUrl = $returnUrl ?? $this->getReturnUrl($request);
         $root = $this->getUrlGenerator()->formatRoot($this->getUrlGenerator()->formatScheme());
 
-        return !$request->wantsJson() && Str::startsWith($returnUrl, $root);
+        return ! $request->wantsJson() && Str::startsWith($returnUrl, $root);
     }
 
     /**
@@ -27,7 +29,8 @@ trait ReturnsToUrl {
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|null Redirect response or null (if unsafe)
      */
-    protected function returnToSafeResponse(Request $request) {
+    protected function returnToSafeResponse(Request $request)
+    {
         $returnUrl = $this->getReturnUrl($request);
 
         return is_string($returnUrl) && $this->canReturnTo($request, $returnUrl) ? $this->returnToResponse($returnUrl) : null;
@@ -39,7 +42,8 @@ trait ReturnsToUrl {
      * @param string $returnUrl
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function returnToResponse(string $returnUrl) {
+    protected function returnToResponse(string $returnUrl)
+    {
         return redirect($returnUrl);
     }
 
@@ -49,7 +53,8 @@ trait ReturnsToUrl {
      * @param Request $request
      * @return string|null
      */
-    protected function getReturnUrl(Request $request) {
+    protected function getReturnUrl(Request $request)
+    {
         return $request->get('return_url');
     }
 
@@ -58,7 +63,8 @@ trait ReturnsToUrl {
      *
      * @return UrlGenerator
      */
-    protected function getUrlGenerator() {
+    protected function getUrlGenerator()
+    {
         return app(UrlGenerator::class);
     }
 }

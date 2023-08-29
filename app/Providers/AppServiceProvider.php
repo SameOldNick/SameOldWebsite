@@ -15,8 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->runningInConsole() || $this->app->runningUnitTests())
-        {
+        if ($this->app->runningInConsole() || $this->app->runningUnitTests()) {
             $this->app->afterResolving(function ($object) {
                 $class = is_object($object) ? get_class($object) : $object;
 

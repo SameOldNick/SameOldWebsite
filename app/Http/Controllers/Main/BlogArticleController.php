@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Main;
 
-
 use App\Http\Controllers\Controller;
-
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Revision;
-use App\Models\Post;
 use Illuminate\Http\Request;
 
 class BlogArticleController extends Controller
@@ -25,8 +22,9 @@ class BlogArticleController extends Controller
 
         $parentComment = $request->has('parent_comment_id') ? Comment::find($request->parent_comment_id) : null;
 
-        if (!is_null($parentComment) && $parentComment->article->is($article))
+        if (! is_null($parentComment) && $parentComment->article->is($article)) {
             $extra['parentComment'] = $parentComment;
+        }
 
         return $this->createArticleResponse($request, $article, $article->revision(), $extra);
     }
@@ -60,7 +58,7 @@ class BlogArticleController extends Controller
                 ->comments()
                 ->parents()
                 ->approved()
-                ->orWhere(function($query) {
+                ->orWhere(function ($query) {
                     $query->owned();
                 })
                 ->get()
@@ -70,6 +68,4 @@ class BlogArticleController extends Controller
 
         return view('main.blog.single', array_merge(compact('article', 'revision', 'comments', 'comment'), $extra));
     }
-
-
 }

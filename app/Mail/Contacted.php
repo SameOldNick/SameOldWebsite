@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use App\Components\Settings\ContactPageSettings;
-use App\Mail\MarkdownTemplate;
-use App\Models\Page;
 use App\Http\Requests\ContactRequest;
-use Illuminate\Mail\Mailables\Envelope;
 
 class Contacted extends MarkdownTemplate
 {
@@ -16,12 +13,11 @@ class Contacted extends MarkdownTemplate
 
     public function __construct(
 
-    )
-    {
-
+    ) {
     }
 
-    public function build(ContactRequest $request, ContactPageSettings $settings) {
+    public function build(ContactRequest $request, ContactPageSettings $settings)
+    {
         $subject = $settings->setting('recipient_subject');
         $template = $settings->setting('recipient_template');
 

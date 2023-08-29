@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 
 trait HasPlaceholders
 {
-    protected function getDefaultPlaceholders() {
+    protected function getDefaultPlaceholders()
+    {
         $dateTime = app(Kernel::class)->requestStartedAt() ?? now();
 
         return [
             'date-time' => $dateTime->toIso8601String(),
             'user-agent' => request()->userAgent(),
-            'ip-address' => request()->ip()
+            'ip-address' => request()->ip(),
         ];
     }
 
@@ -24,7 +25,8 @@ trait HasPlaceholders
      * @param array $extras Extra tags
      * @return array
      */
-    protected function buildPlaceholders(array $placeholders, bool $applyDefault = true) {
+    protected function buildPlaceholders(array $placeholders, bool $applyDefault = true)
+    {
         $default = $applyDefault ? $this->getDefaultPlaceholders() : [];
 
         return [...$default, ...$placeholders];
@@ -37,7 +39,8 @@ trait HasPlaceholders
      * @param string $original
      * @return string
      */
-    private function fillPlaceholders(array $placeholders, string $original) {
+    private function fillPlaceholders(array $placeholders, string $original)
+    {
         $formatted = $original;
 
         foreach ($placeholders as $placeholder => $value) {

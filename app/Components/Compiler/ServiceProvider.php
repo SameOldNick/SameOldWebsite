@@ -29,4 +29,3 @@ class ServiceProvider extends BaseServiceProvider
     {
     }
 }
-

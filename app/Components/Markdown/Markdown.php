@@ -2,10 +2,9 @@
 
 namespace App\Components\Markdown;
 
-class Markdown {
+class Markdown
+{
     protected $whitelist = [];
 
     protected $blacklist = [];
-
-
 }

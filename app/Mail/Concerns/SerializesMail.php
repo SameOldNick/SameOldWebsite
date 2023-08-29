@@ -9,7 +9,8 @@ trait SerializesMail
 {
     protected $unserialized = false;
 
-    public function toArray() {
+    public function toArray()
+    {
         $this->prepareMailableForDelivery();
 
         $mailer = Container::getInstance()->make('mailer');
@@ -22,16 +23,18 @@ trait SerializesMail
             'subject' => $this->subject,
             'view' => [
                 'html' => $mailer->render($html, $data),
-                'text' => $mailer->render($text, $data)
-            ]
+                'text' => $mailer->render($text, $data),
+            ],
         ];
     }
 
-    public function __serialize() {
+    public function __serialize()
+    {
         return $this->toArray();
     }
 
-    public function __unserialize(array $values) {
+    public function __unserialize(array $values)
+    {
         foreach ($values['addresses'] as $type => $value) {
             foreach ($value as $entry) {
                 $this->{$type}($entry['address'], $entry['name']);
@@ -46,11 +49,12 @@ trait SerializesMail
         $this->unserialized = true;
     }
 
-    protected function getAddresses() {
+    protected function getAddresses()
+    {
         $addresses = [];
 
         foreach (['to', 'cc', 'bcc', 'replyTo'] as $type) {
-            if (!empty($this->{$type})) {
+            if (! empty($this->{$type})) {
                 $addresses[$type] = $this->{$type};
             }
         }
@@ -61,7 +65,7 @@ trait SerializesMail
     protected function prepareMailableForDelivery()
     {
         // Skip preparing for deliverable if unserialized (skips calling 'build' again)
-        if (!$this->unserialized) {
+        if (! $this->unserialized) {
             parent::prepareMailableForDelivery();
         }
     }

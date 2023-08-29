@@ -4,20 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use LittleApps\LittleJWT\Utils\ResponseBuilder;
 use LittleApps\LittleJWT\Build\Buildables\GuardBuildable;
+use LittleApps\LittleJWT\Utils\ResponseBuilder;
 
 class AdminController extends Controller
 {
     public function __construct(
         private Application $app
-    )
-    {
-
+    ) {
     }
 
     public function singleSignOn(Request $request, User $user)
@@ -33,7 +31,7 @@ class AdminController extends Controller
         // Store JTI in database (so refresh tokens can be validated and revoked)
         $user->refreshTokens()->create([
             'jwt_id' => $refreshToken->getPayload()->jti,
-            'expires_at' => $refreshTokenExpiresAt
+            'expires_at' => $refreshTokenExpiresAt,
         ]);
 
         return view('admin.app', [

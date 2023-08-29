@@ -2,10 +2,9 @@
 
 namespace Database\Seeders\Fakes;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Article;
 use App\Models\Comment;
+use Illuminate\Database\Seeder;
 
 class CommentSeeder extends Seeder
 {
@@ -41,8 +40,8 @@ class CommentSeeder extends Seeder
                 $baseFactory
                     ->has($nestedFactory->count(fake()->numberBetween(1, 5)), 'children')
                     ->has($$nestedFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
-                    //->has($baseFactory->count(fake()->numberBetween(1, 5)), 'children')
-                    //->has($baseFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
+            //->has($baseFactory->count(fake()->numberBetween(1, 5)), 'children')
+            //->has($baseFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
 
             $factory->count(fake()->numberBetween(1, 5))->approved()->create();
             $factory->count(fake()->numberBetween(1, 5))->create();

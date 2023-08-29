@@ -9,20 +9,21 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use PHPHtmlParser\Dom;
 
-class MarkdownCompiler implements Compiler {
-
-    public function compile(string $input, array $config = []) {
+class MarkdownCompiler implements Compiler
+{
+    public function compile(string $input, array $config = [])
+    {
         $filters = Arr::get($config, 'filters', []);
         $commonmark = Arr::get($config, 'commonmark', []);
 
-        $html = !Arr::get($config, 'inline', false) ? Str::markdown($input, $commonmark) : Str::inlineMarkdown($input, $commonmark);
+        $html = ! Arr::get($config, 'inline', false) ? Str::markdown($input, $commonmark) : Str::inlineMarkdown($input, $commonmark);
 
         $dom = (new Dom)->loadStr($html);
 
         foreach ($filters as $filter) {
             if ($filter instanceof HtmlFilter) {
                 $dom->loadStr($filter->filter((string) $dom));
-            } else if ($filter instanceof DomFilter) {
+            } elseif ($filter instanceof DomFilter) {
                 $filter->filter($dom);
             }
         }

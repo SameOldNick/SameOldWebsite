@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Exceptions\FileUploadException;
+use App\Http\Controllers\Controller;
 use App\Models\User;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +21,7 @@ class AvatarController extends Controller
     public function avatar(Request $request)
     {
         $request->validate([
-            'size' => 'sometimes|numeric|min:1'
+            'size' => 'sometimes|numeric|min:1',
         ]);
 
         $url = URL::temporarySignedRoute('api.avatar.download', now()->addMinutes(30), ['user' => $request->user(), 'size' => $request->size]);
@@ -39,16 +38,17 @@ class AvatarController extends Controller
     public function downloadAvatar(Request $request, User $user)
     {
         $request->validate([
-            'size' => 'sometimes|numeric|min:1'
+            'size' => 'sometimes|numeric|min:1',
         ]);
 
-        if (!is_null($user->avatar)) {
+        if (! is_null($user->avatar)) {
             return Storage::download($user->avatar);
         } else {
             $url = sprintf('https://www.gravatar.com/avatar/%s', md5(strtolower($user->email)));
 
-            if ($request->has('size'))
+            if ($request->has('size')) {
                 $url .= sprintf('?s=%d', $request->size);
+            }
 
             return redirect()->away($url);
         }
@@ -94,7 +94,7 @@ class AvatarController extends Controller
     {
         $user = $request->user();
 
-        if (!isset($user->avatar)) {
+        if (! isset($user->avatar)) {
             return response()->json(['message' => 'Avatar doesn\'t exist.'], 404);
         }
 

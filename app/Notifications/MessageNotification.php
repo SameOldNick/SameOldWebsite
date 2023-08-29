@@ -2,14 +2,9 @@
 
 namespace App\Notifications;
 
-use App\Mail\MarkdownTemplate;
-use App\Mail\Factories\ContactedFactory;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 use Illuminate\Mail\Mailable;
-use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 
 class MessageNotification extends Notification
 {
@@ -22,8 +17,7 @@ class MessageNotification extends Notification
      */
     public function __construct(
         private Mailable $mailable
-    )
-    {
+    ) {
     }
 
     /**
@@ -55,15 +49,16 @@ class MessageNotification extends Notification
 
         return [
             ...$data,
-            'type' => get_class($this->mailable)
+            'type' => get_class($this->mailable),
         ];
     }
 
-    protected function getDefaultData() {
+    protected function getDefaultData()
+    {
         $addresses = [];
 
         foreach (['to', 'cc', 'bcc', 'replyTo'] as $type) {
-            if (!empty($this->mailable->{$type})) {
+            if (! empty($this->mailable->{$type})) {
                 $addresses[$type] = $this->mailable->{$type};
             }
         }
@@ -71,7 +66,7 @@ class MessageNotification extends Notification
         return [
             'addresses' => $addresses,
             'subject' => $this->mailable->subject,
-            'message' => $this->mailable->render()
+            'message' => $this->mailable->render(),
         ];
     }
 }

@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use App\Components\Settings\ContactPageSettings;
-use App\Mail\MarkdownTemplate;
-use App\Models\Page;
 use App\Http\Requests\ContactRequest;
-use Illuminate\Mail\Mailables\Envelope;
 
 class ContactedConfirmation extends MarkdownTemplate
 {
@@ -16,12 +13,11 @@ class ContactedConfirmation extends MarkdownTemplate
 
     public function __construct(
         protected ContactRequest $request
-    )
-    {
-
+    ) {
     }
 
-    public function build(ContactPageSettings $settings) {
+    public function build(ContactPageSettings $settings)
+    {
         $replyTo = $settings->setting('sender_replyto');
         $subject = $settings->setting('sender_subject');
         $message = $settings->setting('sender_message');

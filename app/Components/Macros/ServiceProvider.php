@@ -2,9 +2,9 @@
 
 namespace App\Components\Macros;
 
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Str;
 
 class ServiceProvider extends BaseServiceProvider
@@ -21,7 +21,7 @@ class ServiceProvider extends BaseServiceProvider
         Collection::mixin(new CollectionMixin);
 
         Arr::macro('export', function ($array, $ignoreIndexes = true, $shortSyntax = true, $indent = '    ') {
-            return ServiceProvider::generateArrayCode($array, 1, $ignoreIndexes, $shortSyntax, $indent);
+            return self::generateArrayCode($array, 1, $ignoreIndexes, $shortSyntax, $indent);
         });
     }
 

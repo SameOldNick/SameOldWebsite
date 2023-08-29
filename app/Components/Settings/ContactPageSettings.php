@@ -20,23 +20,27 @@ class ContactPageSettings implements Arrayable
         $this->collection = $this->getPageMetaData($page);
     }
 
-    public function page() {
+    public function page()
+    {
         return $this->page;
     }
 
-    public function setting($setting, $default = null) {
+    public function setting($setting, $default = null)
+    {
         $found = $this->collection->firstWhere('key', $setting);
 
-        return !is_null($found) ? $found->value : $default;
+        return ! is_null($found) ? $found->value : $default;
     }
 
-    public function settings(...$args) {
-        $keys = !is_array($args[0]) ? $args : $args[0];
+    public function settings(...$args)
+    {
+        $keys = ! is_array($args[0]) ? $args : $args[0];
 
         return $this->collection->whereIn('key', $keys)->mapWithKeys(fn ($model) => [$model->key => $model->value]);
     }
 
-    protected function getPageMetaData(Page $page) {
+    protected function getPageMetaData(Page $page)
+    {
         return $page->metaData;
     }
 
@@ -45,7 +49,8 @@ class ContactPageSettings implements Arrayable
      *
      * @return array<TKey, TValue>
      */
-    public function toArray() {
+    public function toArray()
+    {
         return $this->collection->mapWithKeys(fn ($model) => [$model->key => $model->value]);
     }
 

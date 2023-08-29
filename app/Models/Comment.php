@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\Models\Postable;
 
 class Comment extends Model
 {
@@ -25,7 +25,7 @@ class Comment extends Model
      */
     protected $fillable = [
         'title',
-        'comment'
+        'comment',
     ];
 
     /**
@@ -41,7 +41,7 @@ class Comment extends Model
      * @var array
      */
     protected $casts = [
-        'approved_at' => 'datetime'
+        'approved_at' => 'datetime',
     ];
 
     /**
@@ -49,7 +49,8 @@ class Comment extends Model
      *
      * @return mixed
      */
-    public function parent() {
+    public function parent()
+    {
         return $this->belongsTo(static::class, 'parent_id');
     }
 
@@ -58,7 +59,8 @@ class Comment extends Model
      *
      * @return mixed
      */
-    public function children() {
+    public function children()
+    {
         return $this->hasMany(static::class, 'parent_id');
     }
 
@@ -67,7 +69,8 @@ class Comment extends Model
      *
      * @return \Illuminate\Support\Collection
      */
-    public function allChildren() {
+    public function allChildren()
+    {
         $children = collect();
 
         foreach ($this->children as $child) {
@@ -94,11 +97,11 @@ class Comment extends Model
     /**
      * Checks if comment is approved
      *
-     * @return boolean
+     * @return bool
      */
     public function isApproved()
     {
-        return !is_null($this->approved_at) && $this->approved_at->isBefore(now());
+        return ! is_null($this->approved_at) && $this->approved_at->isBefore(now());
     }
 
     /**

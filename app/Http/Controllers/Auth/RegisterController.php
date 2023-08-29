@@ -101,7 +101,7 @@ class RegisterController extends Controller
     {
         $returnResponse = $this->returnToSafeResponse($request);
 
-        if (!is_null($returnResponse)) {
+        if (! is_null($returnResponse)) {
             return $returnResponse;
         }
 

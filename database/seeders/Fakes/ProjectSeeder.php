@@ -2,10 +2,9 @@
 
 namespace Database\Seeders\Fakes;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Project;
 use App\Models\Tag;
+use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder
 {

@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
-class SearchQueryParser {
+class SearchQueryParser
+{
     const REGEX_TAGS = '/\[([^\]]+)\]/';
+
     const REGEX_GROUPED = '/"([^"]+)"/';
 
     protected $request;
 
     protected $tags;
+
     protected $keywords;
 
     public function __construct(Request $request)
@@ -27,7 +30,8 @@ class SearchQueryParser {
      *
      * @return static
      */
-    public function parse() {
+    public function parse()
+    {
         $input = $this->request->str('q', '');
 
         $this->tags = $this->parseTags($input);
@@ -39,9 +43,10 @@ class SearchQueryParser {
     /**
      * Checks if tags were specified.
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasTags() {
+    public function hasTags()
+    {
         return $this->tags->isNotEmpty();
     }
 
@@ -50,16 +55,18 @@ class SearchQueryParser {
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getTags() {
+    public function getTags()
+    {
         return collect($this->tags);
     }
 
     /**
      * Checks if keywords were specified.
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasKeywords() {
+    public function hasKeywords()
+    {
         return $this->keywords->isNotEmpty();
     }
 
@@ -68,7 +75,8 @@ class SearchQueryParser {
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getKeywords() {
+    public function getKeywords()
+    {
         return collect($this->keywords);
     }
 
@@ -78,12 +86,13 @@ class SearchQueryParser {
      * @param Stringable $input
      * @return \Illuminate\Support\Collection
      */
-    protected function parseTags(Stringable $input) {
+    protected function parseTags(Stringable $input)
+    {
         return
             $input
                 ->matchAll(static::REGEX_TAGS)
                     // Uses slug instead kebab to get rid of punctuation marks
-                    ->map(fn($value) => Str::slug($value))
+                    ->map(fn ($value) => Str::slug($value))
                     ->unique();
     }
 
@@ -93,7 +102,8 @@ class SearchQueryParser {
      * @param Stringable $input
      * @return \Illuminate\Support\Collection
      */
-    protected function parseKeywords(Stringable $input) {
+    protected function parseKeywords(Stringable $input)
+    {
         $remaining = $input->replaceMatches(static::REGEX_TAGS, '')->squish();
 
         // Group keywords in quotes together

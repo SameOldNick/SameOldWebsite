@@ -2,11 +2,9 @@
 
 namespace Database\Seeders\Fakes;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-
 use App\Models\Page;
 use App\Models\PageMetaData;
+use Illuminate\Database\Seeder;
 
 class PageMetaDataSeeder extends Seeder
 {
@@ -20,7 +18,7 @@ class PageMetaDataSeeder extends Seeder
                 'name' => fake()->name,
                 'headline' => fake()->jobTitle,
                 'location' => fake()->country,
-                'biography' => fake()->markdown()
+                'biography' => fake()->markdown(),
             ],
         ];
 

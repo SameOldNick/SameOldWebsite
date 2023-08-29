@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Parsers\SearchQueryParser;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
 class BlogSearchRequest extends FormRequest
 {
@@ -38,8 +37,9 @@ class BlogSearchRequest extends FormRequest
      */
     public function parsedSearchedQuery()
     {
-        if (isset($this->searchQuery))
+        if (isset($this->searchQuery)) {
             return $this->searchQuery;
+        }
 
         return $this->searchQuery = (new SearchQueryParser($this))->parse();
     }

@@ -2,6 +2,6 @@
 
 return [
     'comments' => [
-        'require_approval' => true
-    ]
+        'require_approval' => true,
+    ],
 ];
