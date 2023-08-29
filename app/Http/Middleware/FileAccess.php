@@ -19,8 +19,9 @@ class FileAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if (is_null($request->file))
+        if (is_null($request->file)) {
             throw (new ModelNotFoundException)->setModel(File::class);
+        }
 
         return $request->file->is_public ? $next($request) : (new ValidateSignature)->handle($request, $next);
     }

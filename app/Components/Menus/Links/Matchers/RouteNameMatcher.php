@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class RouteNameMatcher implements Matcher
 {
     protected $name;
+
     protected $params;
 
     public function __construct(string $name, array $params = [])
@@ -23,9 +24,10 @@ class RouteNameMatcher implements Matcher
     {
         $route = $request->route();
 
-        if (is_null($route) || !$route->named($this->name))
+        if (is_null($route) || ! $route->named($this->name)) {
             return false;
+        }
 
-         return count($this->params) > 0 ? empty(array_diff_assoc($this->params, $route->parameters())) : true;
+        return count($this->params) > 0 ? empty(array_diff_assoc($this->params, $route->parameters())) : true;
     }
 }

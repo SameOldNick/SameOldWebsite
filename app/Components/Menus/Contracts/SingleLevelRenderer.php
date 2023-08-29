@@ -2,7 +2,6 @@
 
 namespace App\Components\Menus\Contracts;
 
-use App\Components\Menus\Items\DropdownItem;
 use App\Components\Menus\Items\LinkItem;
 use App\Components\Menus\Items\MenuDivider;
 use App\Components\Menus\Menu;

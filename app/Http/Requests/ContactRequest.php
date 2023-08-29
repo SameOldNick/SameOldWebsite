@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Components\Settings\ContactPageSettings;
-
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
@@ -29,8 +28,9 @@ class ContactRequest extends FormRequest
             'message' => 'required|string',
         ];
 
-        if ($settings->setting('require_recaptcha'))
+        if ($settings->setting('require_recaptcha')) {
             $rules[recaptchaFieldName()] = recaptchaRuleName();
+        }
 
         return $rules;
     }

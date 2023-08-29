@@ -186,23 +186,24 @@ class File extends Model
      */
     protected function pathInfo(): Attribute
     {
-        return Attribute::get(fn($value, $attributes) => pathinfo(Storage::path($attributes['path'])));
+        return Attribute::get(fn ($value, $attributes) => pathinfo(Storage::path($attributes['path'])));
     }
 
     /**
      * Creates public URL to access this file.
      * Note: The 'is_public' attribute needs to be true in order for this URL to work.
      *
-     * @param boolean $absolute If true, absolute URL is returned. (default: true)
-     * @param boolean $withExt If true, includes file extension in URL. (default: true)
+     * @param bool $absolute If true, absolute URL is returned. (default: true)
+     * @param bool $withExt If true, includes file extension in URL. (default: true)
      * @return string
      */
     public function createPublicUrl(bool $absolute = true, bool $withExt = true)
     {
         $url = URL::route('file', ['file' => $this], $absolute);
 
-        if (!$withExt || !($ext = $this->pathInfo['extension']))
+        if (! $withExt || ! ($ext = $this->pathInfo['extension'])) {
             return $url;
+        }
 
         return sprintf('%s.%s', $url, $ext);
     }
@@ -210,8 +211,8 @@ class File extends Model
     /**
      * Creates temporary signed URL to this file
      *
-     * @param integer $minutes Minutes until URL expires (default: 30)
-     * @param boolean $absolute If true, absolute URL is returned. (default: true)
+     * @param int $minutes Minutes until URL expires (default: 30)
+     * @param bool $absolute If true, absolute URL is returned. (default: true)
      * @return string
      */
     public function createPrivateUrl(int $minutes = 30, bool $absolute = true)

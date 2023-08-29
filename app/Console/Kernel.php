@@ -2,10 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\PruneRefreshTokens;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
-use App\Console\Commands\PruneRefreshTokens;
 
 class Kernel extends ConsoleKernel
 {

@@ -2,10 +2,10 @@
 
 namespace App\Components\Compiler\Compilers\Markdown\Filters;
 
-use PHPHtmlParser\Dom;
-
-class HtmlTagFilter implements HtmlFilter {
+class HtmlTagFilter implements HtmlFilter
+{
     protected $tags;
+
     protected $includeContents;
 
     public function __construct(array $tags, bool $includeContents = false)
@@ -14,11 +14,13 @@ class HtmlTagFilter implements HtmlFilter {
         $this->includeContents = $includeContents;
     }
 
-    public function filter(string $html) {
+    public function filter(string $html)
+    {
         return preg_replace($this->getPattern(), $this->includeContents ? '$2' : '', $html);
     }
 
-    protected function getPattern() {
+    protected function getPattern()
+    {
         $quoted = implode('|', array_map('preg_quote', $this->tags));
 
         return "/<\s*\/?([{$quoted}])\s*[^>]*?>([^\<]*)/mi";

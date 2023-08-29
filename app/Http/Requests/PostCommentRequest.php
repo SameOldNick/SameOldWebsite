@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class PostCommentRequest extends FormRequest
 {
@@ -15,7 +14,7 @@ class PostCommentRequest extends FormRequest
     public function authorize()
     {
         // Only allow if user is logged in.
-        return !is_null($this->user());
+        return ! is_null($this->user());
     }
 
     /**

@@ -17,7 +17,7 @@ class RevisionFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->markdown()
+            'content' => $this->faker->markdown(),
         ];
     }
 }

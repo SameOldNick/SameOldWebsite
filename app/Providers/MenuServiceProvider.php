@@ -59,7 +59,8 @@ class MenuServiceProvider extends ServiceProvider
      * @param string $icon Icon class
      * @return callable Function that sets icon prop when called.
      */
-    private function applyIcon($icon) {
+    private function applyIcon($icon)
+    {
         return function (LinkItem $item) use ($icon) {
             $item->icon($icon);
         };

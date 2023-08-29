@@ -20,7 +20,7 @@ class ProjectFactory extends Factory
         return [
             'project' => Str::headline($this->faker->realText(25)),
             'description' => $this->faker->realText(),
-            'url' => $this->faker->url()
+            'url' => $this->faker->url(),
         ];
     }
 }

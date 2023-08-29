@@ -2,10 +2,10 @@
 
 namespace App\Components\Compiler\Compilers\Markdown\CommonMark;
 
-use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\MarkdownConverter;
 
 class AllowableMarkdownConverter extends MarkdownConverter
 {

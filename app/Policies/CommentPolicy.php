@@ -30,10 +30,11 @@ class CommentPolicy
      */
     public function view(?User $user, Comment $comment)
     {
-        if ($comment->isApproved())
+        if ($comment->isApproved()) {
             return true;
+        }
 
-        return !is_null($user) && $comment->post->user->is($user);
+        return ! is_null($user) && $comment->post->user->is($user);
     }
 
     /**
@@ -44,7 +45,7 @@ class CommentPolicy
      */
     public function create(?User $user)
     {
-        return !is_null($user);
+        return ! is_null($user);
     }
 
     /**

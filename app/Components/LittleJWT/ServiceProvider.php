@@ -3,7 +3,6 @@
 namespace App\Components\LittleJWT;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use LittleApps\LittleJWT\Contracts\Keyable;
 use LittleApps\LittleJWT\LittleJWT;
 
@@ -18,7 +17,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->app->singleton('littlejwt.refresh', function ($app) {
             $jwk = $app->make(Keyable::class)->buildFromSecret([
-                'phrase' => env('LITTLEJWT_KEY_PHRASE_REFRESH', '')
+                'phrase' => env('LITTLEJWT_KEY_PHRASE_REFRESH', ''),
             ]);
 
             return new LittleJWT($app, $jwk);

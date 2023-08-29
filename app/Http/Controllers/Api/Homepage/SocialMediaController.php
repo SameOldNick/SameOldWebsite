@@ -9,19 +9,21 @@ use Illuminate\Http\Request;
 
 class SocialMediaController extends Controller
 {
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         $model = $this->getPage()->metaData()->where('key', 'social_media_links')->first();
 
-        return !is_null($model) ? $model->value : [];
+        return ! is_null($model) ? $model->value : [];
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $request->validate([
             'links' => 'array',
             'links.*' => [
                 'string',
-                new SocialMediaLink
-            ]
+                new SocialMediaLink,
+            ],
         ]);
 
         $model = $this->getPage()->metaData()->updateOrCreate(
@@ -32,7 +34,8 @@ class SocialMediaController extends Controller
         return $model->value;
     }
 
-    private function getPage() {
+    private function getPage()
+    {
         return Page::firstWhere(['page' => 'homepage']);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Main;
 use App\Components\Settings\ContactPageSettings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactRequest;
-use App\Jobs\ContactFormNotifier;
 use App\Mail\ConfirmMessage;
 use App\Mail\Contacted;
 use App\Mail\ContactedConfirmation;
@@ -25,9 +24,10 @@ class ContactController extends Controller
      * @param ContactPageSettings $settings
      * @return mixed
      */
-    public function show(Request $request, ContactPageSettings $settings) {
+    public function show(Request $request, ContactPageSettings $settings)
+    {
         $data = [
-            'settings' => $settings->toArray()
+            'settings' => $settings->toArray(),
         ];
 
         return view('main.contact', $data);
@@ -40,7 +40,8 @@ class ContactController extends Controller
      * @param ContactPageSettings $settings
      * @return mixed
      */
-    public function process(ContactRequest $request, ContactPageSettings $settings) {
+    public function process(ContactRequest $request, ContactPageSettings $settings)
+    {
         $requiresConfirmation = false;
 
         if ($settings->setting('require_confirmation')) {
@@ -49,10 +50,10 @@ class ContactController extends Controller
 
             if ($requiredBy == 'all_users') {
                 $requiresConfirmation = true;
-            } else if ($requiredBy == 'unregistered_users') {
+            } elseif ($requiredBy == 'unregistered_users') {
                 $requiresConfirmation = is_null($user);
-            } else if ($requiredBy == 'unregistered_unverified_users') {
-                $requiresConfirmation = is_null($user) || !$user->hasVerifiedEmail();
+            } elseif ($requiredBy == 'unregistered_unverified_users') {
+                $requiresConfirmation = is_null($user) || ! $user->hasVerifiedEmail();
             }
         }
 
@@ -60,7 +61,7 @@ class ContactController extends Controller
 
         if ($requiresConfirmation) {
             $pendingMessage = (new PendingMessage([
-                'message' => $contacted
+                'message' => $contacted,
             ]))->useDefaultExpiresAt();
 
             $pendingMessage->save();
@@ -69,7 +70,7 @@ class ContactController extends Controller
 
             return view('main.contact', [
                 'success' => __('Please check your e-mail for further instructions.'),
-                'settings' => $settings->toArray()
+                'settings' => $settings->toArray(),
             ]);
         } else {
             $admins = Role::firstWhere(['role' => 'admin'])->users;
@@ -80,10 +81,9 @@ class ContactController extends Controller
 
             return view('main.contact', [
                 'success' => __('Thank you for your message! You will receive a reply shortly.'),
-                'settings' => $settings->toArray()
+                'settings' => $settings->toArray(),
             ]);
         }
-
     }
 
     /**
@@ -94,12 +94,13 @@ class ContactController extends Controller
      * @param ContactPageSettings $settings
      * @return mixed
      */
-    public function confirm(Request $request, PendingMessage $pendingMessage, ContactPageSettings $settings) {
+    public function confirm(Request $request, PendingMessage $pendingMessage, ContactPageSettings $settings)
+    {
         Mail::send($pendingMessage->message);
 
         return view('main.contact', [
             'success' => __('Thank you for your message! You will receive a reply shortly.'),
-            'settings' => $settings->toArray()
+            'settings' => $settings->toArray(),
         ]);
     }
 }

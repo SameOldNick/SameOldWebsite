@@ -6,11 +6,8 @@ use App\Components\Settings\ContactPageSettings;
 use App\Http\Requests\ContactRequest;
 use App\Models\PendingMessage;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
 
 class ConfirmMessage extends Mailable
 {
@@ -23,12 +20,11 @@ class ConfirmMessage extends Mailable
     public function __construct(
         protected ContactRequest $request,
         protected PendingMessage $pendingMessage
-    )
-    {
-
+    ) {
     }
 
-    public function build(ContactPageSettings $settings) {
+    public function build(ContactPageSettings $settings)
+    {
         $replyTo = $settings->setting('sender_replyto');
         $subject = $settings->setting('confirmation_subject');
 
@@ -53,7 +49,7 @@ class ConfirmMessage extends Mailable
         return new Content(
             markdown: 'mail.confirm-message',
             with: [
-                'url' => $this->pendingMessage->generateUrl()
+                'url' => $this->pendingMessage->generateUrl(),
             ]
         );
     }

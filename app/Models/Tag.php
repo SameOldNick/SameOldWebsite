@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class Tag extends Model
 {
@@ -78,10 +78,11 @@ class Tag extends Model
     /**
      * Creates link to tag.
      *
-     * @param boolean $absolute
+     * @param bool $absolute
      * @return string
      */
-    public function createLink(bool $absolute = true) {
+    public function createLink(bool $absolute = true)
+    {
         $query = sprintf('[%s]', $this->slug);
 
         return URL::route('blog.search', ['q' => $query], $absolute);

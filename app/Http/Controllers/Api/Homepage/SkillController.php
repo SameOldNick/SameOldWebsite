@@ -26,9 +26,9 @@ class SkillController extends Controller
             'icon' => [
                 'required',
                 'string',
-                new ValidBladeIcon
+                new ValidBladeIcon,
             ],
-            'skill' => 'required|string|max:255'
+            'skill' => 'required|string|max:255',
         ]);
 
         $skill = Skill::create($validated);
@@ -53,9 +53,9 @@ class SkillController extends Controller
             'icon' => [
                 'required',
                 'string',
-                new ValidBladeIcon
+                new ValidBladeIcon,
             ],
-            'skill' => 'required|string|max:255'
+            'skill' => 'required|string|max:255',
         ]);
 
         $skill->icon = $request->icon;
@@ -74,7 +74,7 @@ class SkillController extends Controller
         $skill->delete();
 
         return [
-            'success' => __('Skill ":skill" was removed.', ['skill' => $skill->skill])
+            'success' => __('Skill ":skill" was removed.', ['skill' => $skill->skill]),
         ];
     }
 }

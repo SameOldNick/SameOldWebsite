@@ -3,12 +3,12 @@
 namespace App\Components\Menus\Render;
 
 use App\Components\Menus\Contracts\MultiLevelRenderer;
+use App\Components\Menus\Contracts\SingleLevelRenderer;
 use App\Components\Menus\Items\DropdownItem;
 use App\Components\Menus\Items\LinkItem;
 use App\Components\Menus\Items\MenuDivider;
 use App\Components\Menus\Items\RenderableItem;
 use App\Components\Menus\Menu;
-use App\Components\Menus\Contracts\SingleLevelRenderer;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;

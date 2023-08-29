@@ -4,9 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ArticleImage>
@@ -33,7 +31,7 @@ class ArticleImageFactory extends Factory
      */
     public function picsum(array $options = [])
     {
-        return $this->afterCreating(function($model) use ($options) {
+        return $this->afterCreating(function ($model) use ($options) {
             $defaults = [
                 'ext' => '.jpg',
                 'width' => 1024,

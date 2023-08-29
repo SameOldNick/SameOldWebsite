@@ -2,8 +2,8 @@
 
 namespace App\Traits\Models;
 
-use App\Models\User;
 use App\Models\Post;
+use App\Models\User;
 
 trait Postable
 {
@@ -14,7 +14,8 @@ trait Postable
      * @param User|null $user User to associate with Post. If null, current user is used. (default: null)
      * @return static
      */
-    public static function createWithPost(callable $callback, User $user = null) {
+    public static function createWithPost(callable $callback, User $user = null)
+    {
         return tap(new static, function (self $postable) use ($callback, $user) {
             $callback($postable);
 
@@ -49,6 +50,6 @@ trait Postable
     {
         $user = $user ?? request()->user();
 
-        return !is_null($user) ? $query->whereRelation('post', 'user_id', '=', $user->getKey()) : $query;
+        return ! is_null($user) ? $query->whereRelation('post', 'user_id', '=', $user->getKey()) : $query;
     }
 }

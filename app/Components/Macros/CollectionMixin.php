@@ -2,12 +2,13 @@
 
 namespace App\Components\Macros;
 
+use ArrayAccess;
 use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
-use ArrayAccess;
 
-class CollectionMixin {
+class CollectionMixin
+{
     public function paginate()
     {
         return function (int $showPerPage) {
@@ -39,6 +40,5 @@ class CollectionMixin {
                 'items', 'total', 'perPage', 'currentPage', 'options'
             ));
         };
-
     }
 }

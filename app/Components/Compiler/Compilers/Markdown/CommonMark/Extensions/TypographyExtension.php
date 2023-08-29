@@ -2,16 +2,15 @@
 
 namespace App\Components\Compiler\Compilers\Markdown\CommonMark\Extensions;
 
-use League\CommonMark\Extension\ConfigurableExtensionInterface;
-use League\Config\ConfigurationBuilderInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\CommonMark\Delimiter\Processor\EmphasisDelimiterProcessor;
+use League\CommonMark\Extension\CommonMark\Node;
+use League\CommonMark\Extension\CommonMark\Renderer;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
+use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\Node as CoreNode;
 use League\CommonMark\Renderer as CoreRenderer;
-use League\CommonMark\Extension\CommonMark\Renderer;
-use League\CommonMark\Extension\CommonMark\Node;
-use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
-
+use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
 class TypographyExtension extends ConfigurableExtensionInterface
@@ -29,28 +28,31 @@ class TypographyExtension extends ConfigurableExtensionInterface
     {
         $environment
             ->addRenderer(CoreNode\Block\Paragraph::class, new CoreRenderer\Block\ParagraphRenderer(), 0)
-            ->addRenderer(CoreNode\Inline\Text::class,    new CoreRenderer\Inline\TextRenderer(),    0);
+            ->addRenderer(CoreNode\Inline\Text::class, new CoreRenderer\Inline\TextRenderer(), 0);
 
-        if ($environment->getConfiguration()->get('typography/bold'))
+        if ($environment->getConfiguration()->get('typography/bold')) {
             $this->registerBold($environment);
+        }
 
-        if ($environment->getConfiguration()->get('typography/italic'))
+        if ($environment->getConfiguration()->get('typography/italic')) {
             $this->registerItalic($environment);
+        }
 
-        if ($environment->getConfiguration()->get('typography/strikethrough'))
+        if ($environment->getConfiguration()->get('typography/strikethrough')) {
             $this->registerStrikethrough($environment);
+        }
     }
 
     protected function registerBold(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addRenderer(Node\Inline\Strong::class,      new Renderer\Inline\StrongRenderer(),      0);
+            ->addRenderer(Node\Inline\Strong::class, new Renderer\Inline\StrongRenderer(), 0);
     }
 
     protected function registerItalic(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addRenderer(Node\Inline\Emphasis::class,    new Renderer\Inline\EmphasisRenderer(),    0);
+            ->addRenderer(Node\Inline\Emphasis::class, new Renderer\Inline\EmphasisRenderer(), 0);
 
         if ($environment->getConfiguration()->get('commonmark/use_asterisk')) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));

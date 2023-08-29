@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
-
 use BladeUI\Icons\Factory;
 use BladeUI\Icons\IconsManifest;
+use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use SimpleXMLElement;
 
 class BladeIconsJsonCommand extends Command
@@ -42,7 +41,7 @@ class BladeIconsJsonCommand extends Command
 
             $icons[$set] = [
                 'prefix' => $prefix,
-                'icons' => []
+                'icons' => [],
             ];
 
             foreach (collect($resources)->flatten() as $name) {
@@ -57,18 +56,18 @@ class BladeIconsJsonCommand extends Command
         if ($filesystem->exists($file)) {
             $this->info(sprintf('File "%s" already exists.', $file));
 
-            if (!$this->option('force') && !$this->confirm('Do you want to overwrite it?')) {
+            if (! $this->option('force') && ! $this->confirm('Do you want to overwrite it?')) {
                 return 0;
             }
 
             $this->info(sprintf('File "%s" will be overwritten.', $file));
         }
 
-
         $encoded = json_encode($icons, JSON_PRETTY_PRINT);
 
-        if (!$filesystem->put($file, $encoded)) {
+        if (! $filesystem->put($file, $encoded)) {
             $this->error(sprintf('Unable to write to file "%s".', $file));
+
             return 1;
         }
 
@@ -77,7 +76,8 @@ class BladeIconsJsonCommand extends Command
         return 0;
     }
 
-    private function xmlToArray(SimpleXMLElement $xml) {
+    private function xmlToArray(SimpleXMLElement $xml)
+    {
         $props = [];
         $children = [];
 
@@ -91,11 +91,12 @@ class BladeIconsJsonCommand extends Command
 
         $parsed = [
             'tag' => $xml->getName(),
-            'props' => $props
+            'props' => $props,
         ];
 
-        if (!empty($children))
+        if (! empty($children)) {
             $parsed['children'] = $children;
+        }
 
         return $parsed;
     }

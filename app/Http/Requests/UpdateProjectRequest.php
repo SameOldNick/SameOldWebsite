@@ -12,7 +12,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return !$this->project->trashed();
+        return ! $this->project->trashed();
     }
 
     /**
@@ -27,12 +27,12 @@ class UpdateProjectRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('projects', 'project')->ignore($this->project)
+                Rule::unique('projects', 'project')->ignore($this->project),
             ],
             'description' => 'required|string',
             'url' => 'required|url|max:255',
             'tags' => 'required|array',
-            'tags.*' => 'string'
+            'tags.*' => 'string',
         ];
     }
 }

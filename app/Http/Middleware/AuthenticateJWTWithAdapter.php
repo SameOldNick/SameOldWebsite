@@ -3,10 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Auth\Middleware\Authenticate;
-use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Contracts\Auth\Middleware\AuthenticatesRequests;
+use Illuminate\Contracts\Container\Container;
 
 class AuthenticateJWTWithAdapter implements AuthenticatesRequests
 {
@@ -19,8 +19,7 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
         private Container $app,
         private Auth $auth,
         private Authenticate $baseMiddleware,
-    )
-    {
+    ) {
         //
     }
 
@@ -53,7 +52,8 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
      * @param string $name
      * @return \LittleApps\LittleJWT\Contracts\GuardAdapter
      */
-    protected function createAdapter($name) {
+    protected function createAdapter($name)
+    {
         return $this->app->make($name);
     }
 }

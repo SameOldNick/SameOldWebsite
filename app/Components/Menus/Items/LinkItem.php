@@ -2,8 +2,8 @@
 
 namespace App\Components\Menus\Items;
 
-use App\Components\Menus\Contracts\Resolver;
 use App\Components\Menus\Contracts\Matcher;
+use App\Components\Menus\Contracts\Resolver;
 use App\Components\Menus\Menu;
 use App\Components\Menus\Traits\HasMatcher;
 use App\Components\Menus\Traits\HasProps;

@@ -2,9 +2,7 @@
 
 namespace Database\Seeders\Fakes;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Skill;
 
 class SkillSeeder extends Seeder
 {

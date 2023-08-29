@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Contact;
 
 use App\Components\Settings\ContactPageSettings;
 use App\Http\Controllers\Controller;
-use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Main;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Components\SweetAlert\SweetAlerts;
 use App\Components\SweetAlert\SweetAlertBuilder;
+use App\Components\SweetAlert\SweetAlerts;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCommentRequest;
 use App\Models\Article;
 use App\Models\Comment;
@@ -24,12 +23,12 @@ class BlogCommentController extends Controller
         $this->authorize('create', [Comment::class, $article]);
 
         $comment =
-            Comment::createWithPost(function(Comment $comment) use ($request, $article) {
+            Comment::createWithPost(function (Comment $comment) use ($request, $article) {
                 $comment->fill(['title' => $request->title, 'comment' => $request->comment]);
 
                 $comment->article()->associate($article);
 
-                if (!config('blog.comments.require_approval', true)) {
+                if (! config('blog.comments.require_approval', true)) {
                     $comment->approved_at = now();
                 }
             });
@@ -53,17 +52,17 @@ class BlogCommentController extends Controller
      */
     public function replyTo(SweetAlerts $swal, PostCommentRequest $request, Article $article, Comment $parent)
     {
-        abort_if(!$parent->article->is($article), 404);
+        abort_if(! $parent->article->is($article), 404);
         $this->authorize('reply-to', $parent);
 
         $comment =
-            Comment::createWithPost(function(Comment $comment) use ($request, $article, $parent) {
+            Comment::createWithPost(function (Comment $comment) use ($request, $article, $parent) {
                 $comment->fill(['title' => $request->title, 'comment' => $request->comment]);
 
                 $comment->parent()->associate($parent);
                 $comment->article()->associate($article);
 
-                if (!config('blog.comments.require_approval', true)) {
+                if (! config('blog.comments.require_approval', true)) {
                     $comment->approved_at = now();
                 }
             });

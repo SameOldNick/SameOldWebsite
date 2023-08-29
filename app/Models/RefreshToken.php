@@ -22,7 +22,7 @@ class RefreshToken extends Model
      * @var array
      */
     protected $casts = [
-        'expires_at' => 'datetime'
+        'expires_at' => 'datetime',
     ];
 
     /**

@@ -24,13 +24,14 @@ class TagController extends Controller
     {
         $request->validate([
             'tag' => 'required|string|unique:tags',
-            'slug' => 'nullable|string|unique:tags'
+            'slug' => 'nullable|string|unique:tags',
         ]);
 
         $tag = new Tag(['tag' => $request->tag]);
 
-        if ($request->filled('slug'))
+        if ($request->filled('slug')) {
             $tag->slug = $request->slug;
+        }
 
         $tag->save();
 
@@ -54,12 +55,12 @@ class TagController extends Controller
             'tag' => [
                 'required',
                 'string',
-                Rule::unique('tags')->ignore($tag)
+                Rule::unique('tags')->ignore($tag),
             ],
             'slug' => [
                 'nullable',
                 'string',
-                Rule::unique('tags')->ignore($tag)
+                Rule::unique('tags')->ignore($tag),
             ],
         ]);
 
@@ -79,7 +80,7 @@ class TagController extends Controller
         $tag->delete();
 
         return [
-            'message' => __('Tag ":tag" has been removed.', ['tag' => $tag->tag])
+            'message' => __('Tag ":tag" has been removed.', ['tag' => $tag->tag]),
         ];
     }
 }

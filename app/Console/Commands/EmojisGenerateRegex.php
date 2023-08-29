@@ -37,8 +37,9 @@ class EmojisGenerateRegex extends Command
         } else {
             $path = $this->argument('path');
 
-            if (!is_readable($path)) {
+            if (! is_readable($path)) {
                 $this->error(sprintf('Unable to read file: %s', $path));
+
                 return Command::FAILURE;
             }
 
@@ -50,8 +51,9 @@ class EmojisGenerateRegex extends Command
         $codes = collect();
 
         foreach ($lines as $line) {
-            if (empty($line) || Str::startsWith($line, '#'))
+            if (empty($line) || Str::startsWith($line, '#')) {
                 continue;
+            }
 
             foreach (['#', ';'] as $delimiter) {
                 if (Str::contains($line, $delimiter)) {
@@ -67,7 +69,8 @@ class EmojisGenerateRegex extends Command
         return Command::SUCCESS;
     }
 
-    protected function getAsciiCode(string $codepoint) {
+    protected function getAsciiCode(string $codepoint)
+    {
         return hexdec($codepoint);
     }
 }

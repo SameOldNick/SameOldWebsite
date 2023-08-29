@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Casts\Serialize;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Support\Facades\URL;
-use App\Casts\Serialize;
 
 class PendingMessage extends Model
 {
@@ -20,7 +20,7 @@ class PendingMessage extends Model
      */
     protected $fillable = [
         'message',
-        'expires_at'
+        'expires_at',
     ];
 
     /**
@@ -37,20 +37,23 @@ class PendingMessage extends Model
      */
     protected $casts = [
         'message' => Serialize::class,
-        'expires_at' => 'datetime'
+        'expires_at' => 'datetime',
     ];
 
-    public function useDefaultExpiresAt() {
+    public function useDefaultExpiresAt()
+    {
         $this->expires_at = static::getDefaultExpiresAt();
 
         return $this;
     }
 
-    public function generateUrl() {
+    public function generateUrl()
+    {
         return URL::temporarySignedRoute('contact.confirm', $this->expires_at, ['pendingMessage' => $this]);
     }
 
-    public static function getDefaultExpiresAt() {
+    public static function getDefaultExpiresAt()
+    {
         return now()->addHours(2);
     }
 }

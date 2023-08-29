@@ -43,7 +43,7 @@ class Country extends Model
      * @var array
      */
     protected $with = [
-        'states'
+        'states',
     ];
 
     /**

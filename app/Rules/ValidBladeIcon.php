@@ -2,11 +2,11 @@
 
 namespace App\Rules;
 
+use BladeUI\Icons\Exceptions\SvgNotFound;
+use BladeUI\Icons\Factory;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\App;
-use BladeUI\Icons\Factory;
-use BladeUI\Icons\Exceptions\SvgNotFound;
 
 class ValidBladeIcon implements ValidationRule
 {

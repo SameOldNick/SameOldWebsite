@@ -16,7 +16,7 @@ class Json implements CastsAttributes
     {
         $decoded = json_decode($value, true);
 
-        return !is_null($decoded) ? $decoded : '';
+        return ! is_null($decoded) ? $decoded : '';
     }
 
     /**

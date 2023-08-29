@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api\Homepage;
 
 use App\Http\Controllers\Controller;
-use App\Models\Project;
-use App\Models\Tag;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Project;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -27,7 +27,7 @@ class ProjectsController extends Controller
         if ($request->has('show')) {
             if ($request->show === 'inactive') {
                 $query = $query->onlyTrashed();
-            } else if ($request->show === 'both') {
+            } elseif ($request->show === 'both') {
                 $query = $query->withTrashed();
             }
         }
@@ -45,7 +45,7 @@ class ProjectsController extends Controller
         $project = new Project([
             'project' => $request->title,
             'description' => $request->description,
-            'url' => $request->url
+            'url' => $request->url,
         ]);
 
         $project->save();
@@ -54,9 +54,7 @@ class ProjectsController extends Controller
 
         $project->tags()->sync($tags->map(fn ($model) => $model->getKey()));
 
-
         $project->push();
-
 
         return $project;
     }
@@ -98,7 +96,7 @@ class ProjectsController extends Controller
         $project->restore();
 
         return [
-            'success' => __('Project ":project" was restored.', ['project' => $project->project])
+            'success' => __('Project ":project" was restored.', ['project' => $project->project]),
         ];
     }
 
@@ -110,7 +108,7 @@ class ProjectsController extends Controller
         $project->delete();
 
         return [
-            'success' => __('Project ":project" was removed.', ['project' => $project->project])
+            'success' => __('Project ":project" was removed.', ['project' => $project->project]),
         ];
     }
 }

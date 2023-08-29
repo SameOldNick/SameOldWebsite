@@ -3,7 +3,6 @@
 namespace App\Components\Settings;
 
 use App\Models\Page;
-
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider

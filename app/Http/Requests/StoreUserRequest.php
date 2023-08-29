@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\StrongPassword;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-
-use App\Rules\StrongPassword;
 
 class StoreUserRequest extends FormRequest
 {
@@ -14,7 +13,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return !is_null($this->user()) && $this->user()->hasRoles(['admin']);
+        return ! is_null($this->user()) && $this->user()->hasRoles(['admin']);
     }
 
     /**
@@ -30,24 +29,24 @@ class StoreUserRequest extends FormRequest
             'password' => [
                 'required',
                 'confirmed',
-                new StrongPassword
+                new StrongPassword,
             ],
             'state_code' => [
                 'nullable',
-                Rule::requiredIf(!empty($this->country_code) && !empty($this->state_code)),
-                Rule::exists('states', 'code')->where('country_code', $this->country_code)
+                Rule::requiredIf(! empty($this->country_code) && ! empty($this->state_code)),
+                Rule::exists('states', 'code')->where('country_code', $this->country_code),
             ],
             'country_code' => [
                 'nullable',
-                Rule::exists('countries', 'code')
+                Rule::exists('countries', 'code'),
             ],
             'roles' => [
                 'sometimes',
-                'array'
+                'array',
             ],
             'roles.*' => [
-                Rule::exists('roles', 'role')
-            ]
+                Rule::exists('roles', 'role'),
+            ],
         ];
     }
 }

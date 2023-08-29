@@ -4,12 +4,12 @@ namespace App\Models;
 
 use App\Models\Collections\ArticleCollection;
 use App\Traits\Models\Postable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class Article extends Model
 {
@@ -36,7 +36,7 @@ class Article extends Model
      * @var array
      */
     protected $casts = [
-        'published_at' => 'datetime'
+        'published_at' => 'datetime',
     ];
 
     /**
@@ -147,9 +147,11 @@ class Article extends Model
      *
      * @return Revision
      */
-    public function revision() {
-        if (!is_null($this->currentRevision))
+    public function revision()
+    {
+        if (! is_null($this->currentRevision)) {
             return $this->currentRevision;
+        }
 
         return $this->revisions()->latest()->first();
     }
@@ -190,7 +192,7 @@ class Article extends Model
     /**
      * Creates public link to this article
      *
-     * @param boolean $absolute
+     * @param bool $absolute
      * @return string
      */
     public function createPublicLink(bool $absolute = true)
@@ -201,8 +203,8 @@ class Article extends Model
     /**
      * Creates temporary signed URL to this article
      *
-     * @param integer $minutes Minutes until URL expires (default: 30)
-     * @param boolean $absolute If true, absolute URL is returned. (default: true)
+     * @param int $minutes Minutes until URL expires (default: 30)
+     * @param bool $absolute If true, absolute URL is returned. (default: true)
      * @return string
      */
     public function createPrivateUrl(int $minutes = 30, bool $absolute = true)

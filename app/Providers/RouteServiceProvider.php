@@ -8,7 +8,6 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -78,7 +77,7 @@ class RouteServiceProvider extends ServiceProvider
             if (Str::isUuid($value)) {
                 $uuid = $value;
                 $ext = null;
-            } else if (preg_match('/^([\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12})\.([a-z0-9]+)$/iD', $value, $matches)) {
+            } elseif (preg_match('/^([\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12})\.([a-z0-9]+)$/iD', $value, $matches)) {
                 $uuid = $matches[1];
                 $ext = $matches[2];
             } else {
@@ -87,7 +86,7 @@ class RouteServiceProvider extends ServiceProvider
 
             $query = File::whereKey($uuid);
 
-            if (!is_null($ext)) {
+            if (! is_null($ext)) {
                 $query = $query->whereRaw('LOWER(`path`) LIKE ?', [sprintf('%%%s', Str::lower($ext))]);
             }
 

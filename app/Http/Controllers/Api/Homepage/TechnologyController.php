@@ -26,9 +26,9 @@ class TechnologyController extends Controller
             'icon' => [
                 'required',
                 'string',
-                new ValidBladeIcon
+                new ValidBladeIcon,
             ],
-            'technology' => 'required|string|max:255'
+            'technology' => 'required|string|max:255',
         ]);
 
         $technology = Technology::create($validated);
@@ -53,9 +53,9 @@ class TechnologyController extends Controller
             'icon' => [
                 'required',
                 'string',
-                new ValidBladeIcon
+                new ValidBladeIcon,
             ],
-            'technology' => 'required|string|max:255'
+            'technology' => 'required|string|max:255',
         ]);
 
         $technology->icon = $request->icon;
@@ -74,7 +74,7 @@ class TechnologyController extends Controller
         $technology->delete();
 
         return [
-            'success' => __('Skill ":technology" was removed.', ['technology' => $technology->technology])
+            'success' => __('Skill ":technology" was removed.', ['technology' => $technology->technology]),
         ];
     }
 }

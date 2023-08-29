@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Api;
 use App\Http\Controllers\Auth;
-use Illuminate\Support\Facades\Route;
 use App\Http\Middleware;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,7 @@ use App\Http\Middleware;
 */
 
 Route::namespace(Api::class)->group(function () {
-    Route::prefix('/auth')->group(function() {
+    Route::prefix('/auth')->group(function () {
         Route::post('refresh', [Api\AuthController::class, 'refresh'])
             ->middleware([Middleware\AuthenticateJWTWithAdapter::adapter(\App\Components\LittleJWT\RefreshTokenGuardAdapter::class)]);
     });
@@ -26,7 +26,7 @@ Route::namespace(Api::class)->group(function () {
         Route::get('/countries', [Api\CountriesController::class, 'countries']);
         Route::get('/countries/{country}', [Api\CountriesController::class, 'country']);
 
-        Route::get('/user', [Api\UserController::class, 'show'])->withoutMiddleware(['throttle:api']);;
+        Route::get('/user', [Api\UserController::class, 'show'])->withoutMiddleware(['throttle:api']);
 
         Route::get('/user/avatar', [Api\AvatarController::class, 'avatar'])->name('avatar');
         Route::post('/user/avatar', [Api\AvatarController::class, 'uploadAvatar'])->name('avatar.upload');
@@ -61,10 +61,7 @@ Route::namespace(Api::class)->group(function () {
         Route::post('/user/notifications/{notification}/read', [Api\NotificationsController::class, 'markRead']);
         Route::post('/user/notifications/{notification}/unread', [Api\NotificationsController::class, 'markUnread']);
         Route::delete('/user/notifications/{notification}', [Api\NotificationsController::class, 'destroy']);
-
-
     });
 
     Route::get('/user/{user}/avatar/download', [Api\AvatarController::class, 'downloadAvatar'])->middleware(['signed:t'])->name('avatar.download');
-
 });

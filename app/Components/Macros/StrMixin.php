@@ -67,7 +67,7 @@ class StrMixin
     public function uniqueUrl()
     {
         return function ($url, $asHtml = true) {
-            $url .= (Str::contains($url, '?') ? '&' : '?') . (string) Str::orderedUuid();
+            $url .= (Str::contains($url, '?') ? '&' : '?').(string) Str::orderedUuid();
 
             return $asHtml ? new HtmlString($url) : $url;
         };

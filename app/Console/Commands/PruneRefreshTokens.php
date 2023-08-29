@@ -2,11 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Collection;
-
 use App\Models\RefreshToken;
 use App\Models\User;
+use Illuminate\Console\Command;
 
 class PruneRefreshTokens extends Command
 {
@@ -31,21 +29,23 @@ class PruneRefreshTokens extends Command
     {
         $force = $this->option('force');
 
-        if (!is_null($this->option('user'))) {
+        if (! is_null($this->option('user'))) {
             $user = User::find($this->option('user'));
 
             if (is_null($user)) {
                 $this->error(sprintf('User with ID %s could not be found.', $this->option('user')));
+
                 return 1;
             }
 
             if ($this->option('clear')) {
                 if ($user->refreshTokens->isEmpty()) {
                     $this->info(sprintf('No refresh tokens for user "%s" found.', $user->email));
+
                     return 0;
                 }
 
-                if (!$force && !$this->confirm(sprintf('Do you want to delete %d refresh tokens for user "%s"?', $user->refreshTokens->count(), $user->email))) {
+                if (! $force && ! $this->confirm(sprintf('Do you want to delete %d refresh tokens for user "%s"?', $user->refreshTokens->count(), $user->email))) {
                     return 1;
                 }
 
@@ -57,10 +57,11 @@ class PruneRefreshTokens extends Command
 
                 if ($found->isEmpty()) {
                     $this->info(sprintf('No expired refresh tokens for user "%s" found.', $user->email));
+
                     return 0;
                 }
 
-                if (!$force && !$this->confirm(sprintf('Do you want to delete %d refresh tokens for user "%s"?', $found->count(), $user->email))) {
+                if (! $force && ! $this->confirm(sprintf('Do you want to delete %d refresh tokens for user "%s"?', $found->count(), $user->email))) {
                     return 1;
                 }
 
@@ -73,10 +74,11 @@ class PruneRefreshTokens extends Command
 
             if ($refreshTokens->isEmpty()) {
                 $this->info('No refresh tokens found.');
+
                 return 0;
             }
 
-            if (!$force && !$this->confirm(sprintf('Do you want to delete %d refresh tokens?', $refreshTokens->count()))) {
+            if (! $force && ! $this->confirm(sprintf('Do you want to delete %d refresh tokens?', $refreshTokens->count()))) {
                 return 1;
             }
 

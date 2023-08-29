@@ -3,13 +3,10 @@
 namespace App\Components\Menus\Render\Drivers;
 
 use App\Components\Menus\Contracts\SingleLevelRenderer;
-use App\Components\Menus\Items\DropdownItem;
 use App\Components\Menus\Items\LinkItem;
 use App\Components\Menus\Items\MenuDivider;
 use App\Components\Menus\Menu;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\View\ComponentAttributeBag;
 
 class ListGroupRenderer implements SingleLevelRenderer
 {

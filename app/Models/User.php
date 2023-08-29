@@ -176,11 +176,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param array $options
      * @return string
      */
-    public function getAvatarUrl(array $options = []) {
+    public function getAvatarUrl(array $options = [])
+    {
         $defaults = [];
 
         $query = Arr::query(array_merge($defaults, $options));
 
-        return (string) Str::of($this->email)->trim()->lower()->pipe('md5')->prepend('https://www.gravatar.com/avatar/')->append($query ? '?' . $query : '');
+        return (string) Str::of($this->email)->trim()->lower()->pipe('md5')->prepend('https://www.gravatar.com/avatar/')->append($query ? '?'.$query : '');
     }
 }

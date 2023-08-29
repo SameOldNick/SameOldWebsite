@@ -19,9 +19,10 @@ class ArticleAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if (is_null($request->article))
+        if (is_null($request->article)) {
             throw (new ModelNotFoundException)->setModel(Article::class);
+        }
 
-        return !is_null($request->article->published_at) ? $next($request) : (new ValidateSignature)->handle($request, $next);
+        return ! is_null($request->article->published_at) ? $next($request) : (new ValidateSignature)->handle($request, $next);
     }
 }

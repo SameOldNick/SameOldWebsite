@@ -2,8 +2,8 @@
 
 namespace App\Components\Menus;
 
-use App\Components\Menus\Contracts\Resolver;
 use App\Components\Menus\Contracts\Matcher;
+use App\Components\Menus\Contracts\Resolver;
 use App\Components\Menus\Items\DropdownItem;
 use App\Components\Menus\Items\Item;
 use App\Components\Menus\Items\LinkItem;

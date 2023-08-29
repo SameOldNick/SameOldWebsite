@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogSearchRequest;
 use App\Models\Article;
-use App\Models\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class BlogController extends Controller
@@ -63,11 +61,13 @@ class BlogController extends Controller
         $articles = Article::published()->get();
 
         if ($request->filled('q')) {
-            if ($query->hasTags())
+            if ($query->hasTags()) {
                 $articles = $articles->withTags($query->getTags()->all());
+            }
 
-            if ($query->hasKeywords())
+            if ($query->hasKeywords()) {
                 $articles = $articles->withKeywords($query->getKeywords()->all());
+            }
 
             if ($sortBy === 'relevance') {
                 $articles = $articles->sortByWeights($order);

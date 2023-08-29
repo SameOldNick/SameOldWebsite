@@ -19,7 +19,7 @@ class Project extends Model
     protected $fillable = [
         'project',
         'description',
-        'url'
+        'url',
     ];
 
     /**
@@ -28,7 +28,7 @@ class Project extends Model
      * @var array
      */
     protected $with = [
-        'tags'
+        'tags',
     ];
 
     /**
