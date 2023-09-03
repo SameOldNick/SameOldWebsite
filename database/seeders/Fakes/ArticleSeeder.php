@@ -26,9 +26,22 @@ class ArticleSeeder extends Seeder
                 ->afterCreating(function (Article $article) {
                     $article->tags()->attach(Tag::all()->random(5));
 
+                    $revisions = $article->revisions;
+
                     if (fake()->boolean()) {
-                        $revisions = $article->revisions;
                         $article->currentRevision()->associate($revisions->random());
+                    }
+
+                    if ($revisions->count() > 1) {
+                        for ($i = 1; $i < $revisions->count(); $i++) {
+                            $parent = $revisions->get($i - 1);
+                            $current = $revisions->get($i);
+
+                            $current->parentRevision()->associate($parent);
+
+                            $current->save();
+                        }
+
                     }
 
                     if (fake()->boolean()) {
