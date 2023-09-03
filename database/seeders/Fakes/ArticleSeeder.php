@@ -41,7 +41,6 @@ class ArticleSeeder extends Seeder
 
                             $current->save();
                         }
-
                     }
 
                     if (fake()->boolean()) {

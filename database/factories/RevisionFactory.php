@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Revision;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Revision>
@@ -19,7 +19,7 @@ class RevisionFactory extends Factory
     {
         return [
             'content' => $this->faker->markdown(),
-            'summary' => $this->faker->boolean() ? $this->faker->paragraphs(2, true) : null
+            'summary' => $this->faker->boolean() ? $this->faker->paragraphs(2, true) : null,
         ];
     }
 
@@ -33,7 +33,7 @@ class RevisionFactory extends Factory
         return $this->afterMaking(function (Revision $revision) {
             $last = $revision->article->revisions()->latest()->first();
 
-            if (!is_null($last)) {
+            if (! is_null($last)) {
                 $revision->parentRevision()->associate($last);
             }
         });

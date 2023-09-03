@@ -42,7 +42,8 @@ class Revision extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function parentRevision() {
+    public function parentRevision()
+    {
         return $this->belongsTo(static::class);
     }
 
