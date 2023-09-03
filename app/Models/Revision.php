@@ -38,6 +38,15 @@ class Revision extends Model
     }
 
     /**
+     * Gets the parent revision of this revision
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parentRevision() {
+        return $this->belongsTo(static::class);
+    }
+
+    /**
      * Get the compiled contents as HTML
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
