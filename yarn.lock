@@ -4382,7 +4382,7 @@ __metadata:
     sweetalert2: ^11.4.23
     sweetalert2-react-content: ^5.0.0
     tinymce: ^6.1.2
-    ts-deepmerge: ^4.0.0
+    ts-deepmerge: ^6.2.0
     typescript: ^4.7.2
     uniqid: ^5.4.0
     uuid: ^9.0.0
@@ -4758,10 +4758,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-deepmerge@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "ts-deepmerge@npm:4.0.0"
-  checksum: f0b3102a411895f1b2dce4387a94ea15a5ba0ca010e532ee3b88f942725d7c8d228ec9be20f4f7e95ebfd7aa1078cd8ac0dfa335358553423ee8b473d83a8d66
+"ts-deepmerge@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "ts-deepmerge@npm:6.2.0"
+  checksum: 88014409051cf614c5cd26c60eb2605a59b0b98896609b0483503083a2727362409b1db9b7e4bf4446733396881f32cd504ef8141dd448e38304dcdf1f9d39d0
   languageName: node
   linkType: hard
 
