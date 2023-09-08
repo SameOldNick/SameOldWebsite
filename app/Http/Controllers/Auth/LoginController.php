@@ -83,9 +83,9 @@ class LoginController extends Controller
     public function showLoginForm(Request $request)
     {
         $data = [];
-        $returnUrl = $request->get('return_url');
+        $returnUrl = $request->string('return_url');
 
-        if (is_string($returnUrl)) {
+        if (!is_null($returnUrl)) {
             $data['returnUrl'] = $returnUrl;
         }
 
