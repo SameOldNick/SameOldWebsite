@@ -1,14 +1,13 @@
 import React from 'react';
+import ReactDOMClient from 'react-dom/client';
 import ReactDOM from 'react-dom';
 
 import injects from '@admin/utils/injects';
-
 import logger from '@admin/utils/logger';
 import ConsoleDriver from '@admin/utils/logger/drivers/ConsoleDriver';
-
+import reportWebVitals from '@admin/reportWebVitals';
 
 import App from '@admin/App';
-import reportWebVitals from '@admin/reportWebVitals';
 
 // Setup logger
 logger.setDriver(new ConsoleDriver());
@@ -25,10 +24,14 @@ if (import.meta.env.VITE_APP_DEBUG) {
 
 injects();
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-);
+const rootEl = document.getElementById('root');
+
+if (rootEl) {
+    const root = ReactDOMClient.createRoot(rootEl);
+    root.render(<App />);
+} else {
+    console.error(`Unable to find DOM element with ID 'root'.`)
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
