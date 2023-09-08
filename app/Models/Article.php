@@ -40,10 +40,6 @@ class Article extends Model
     ];
 
     /**
-     *
-     */
-
-    /**
      * Create a new Eloquent Collection instance.
      *
      * @param  array  $models
