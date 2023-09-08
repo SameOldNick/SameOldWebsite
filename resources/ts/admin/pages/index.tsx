@@ -42,7 +42,7 @@ const Pages: React.FC = () => {
 
                         <Route path='posts'>
                             <Route path='create' element={<CreatePost />} />
-                            <Route path='edit/:post' element={<EditPost />} />
+                            <Route path='edit/:article' element={<EditPost />} />
                             <Route index element={<AllPosts />} />
                         </Route>
 
