@@ -34,16 +34,16 @@ Route::namespace(Controllers\Main::class)->group(function () {
         ->where('year', '\d{4}')
         ->where('month', '0?[1-9]|1[012]');
 
-    Route::get('/blog/{article}', 'BlogArticleController@single')->name('blog.single')->middleware(Middleware\ArticleAccess::class);
-    Route::get('/blog/{article}/{revision}', 'BlogArticleController@singleRevision')->name('blog.single.revision')->middleware(LaravelMiddleware\ValidateSignature::class);
+    Route::get('/blog/{article:slug}', 'BlogArticleController@single')->name('blog.single')->middleware(Middleware\ArticleAccess::class);
+    Route::get('/blog/{article:slug}/{revision}', 'BlogArticleController@singleRevision')->name('blog.single.revision')->middleware(LaravelMiddleware\ValidateSignature::class);
 
     Route::middleware(Middleware\FileAccess::class)->group(function () {
         Route::get('/files/{file}', 'FileController@retrieve')->name('file');
     });
 
     Route::middleware(['auth'])->group(function () {
-        Route::post('/blog/{article}/comment', 'BlogCommentController@comment')->name('blog.comment');
-        Route::post('/blog/{article}/comments/{parent}', 'BlogCommentController@replyTo')->name('blog.comment.reply-to');
+        Route::post('/blog/{article:slug}/comment', 'BlogCommentController@comment')->name('blog.comment');
+        Route::post('/blog/{article:slug}/comments/{parent}', 'BlogCommentController@replyTo')->name('blog.comment.reply-to');
 
         Route::name('user.')->group(function () {
             Route::get('/user', 'UserController@viewProfile')->name('profile');
