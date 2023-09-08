@@ -12,8 +12,8 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('articles', function (Blueprint $table) {
-            $table->text('summary')->nullable()->after('slug');
+        Schema::table('revisions', function (Blueprint $table) {
+            $table->text('summary')->nullable()->after('article_id');
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('articles', function (Blueprint $table) {
+        Schema::table('revisions', function (Blueprint $table) {
             $table->dropColumn('summary');
         });
     }
