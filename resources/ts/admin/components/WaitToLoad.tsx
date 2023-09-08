@@ -31,7 +31,7 @@ type TIsNotLoadingStates<T> = IFinishedState<T> | IErrorState;
 type TState<T> = IIsLoadingState | TIsNotLoadingStates<T>;
 
 export default class WaitToLoad<TReturnValue> extends React.Component<IProps<TReturnValue>, TState<TReturnValue>> {
-	private _waitTimeout?: NodeJS.Timeout;
+	private _waitTimeout?: Timeout;
 
 	constructor(props: Readonly<IProps<TReturnValue>>) {
 		super(props);
