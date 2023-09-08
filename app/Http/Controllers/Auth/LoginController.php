@@ -85,7 +85,7 @@ class LoginController extends Controller
         $data = [];
         $returnUrl = $request->string('return_url');
 
-        if (!is_null($returnUrl)) {
+        if (! is_null($returnUrl)) {
             $data['returnUrl'] = $returnUrl;
         }
 

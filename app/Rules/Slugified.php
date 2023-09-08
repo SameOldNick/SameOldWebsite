@@ -14,7 +14,8 @@ class Slugified implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $value))
+        if (! preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $value)) {
             $fail('The :attribute must be in slug format (lower case words seperated by dashes).');
+        }
     }
 }
