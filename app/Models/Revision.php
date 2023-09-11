@@ -25,6 +25,15 @@ class Revision extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'summary_auto',
+    ];
+
+    /**
      * The primary key for the model.
      *
      * @var string
