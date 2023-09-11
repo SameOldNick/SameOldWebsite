@@ -25,7 +25,9 @@ class ArticleImage extends Model
      *
      * @var array<string>
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'description'
+    ];
 
     /**
      * The attributes that should be visible in serialization.
