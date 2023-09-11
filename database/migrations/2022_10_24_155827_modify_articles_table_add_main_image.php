@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('articles', function (Blueprint $table) {
-            $table->foreignId('main_image')->nullable()->after('summary')->constrained('article_images')->nullOnDelete();
+            $table->foreignId('main_image')->nullable()->after('current_revision')->constrained('article_images')->nullOnDelete();
         });
     }
 
