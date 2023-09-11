@@ -21,7 +21,7 @@ class Revision extends Model
      */
     protected $fillable = [
         'content',
-        'summary'
+        'summary',
     ];
 
     /**
