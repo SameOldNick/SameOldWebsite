@@ -938,10 +938,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:^8.3.4":
-  version: 8.3.4
-  resolution: "@types/uuid@npm:8.3.4"
-  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
+"@types/uuid@npm:^9.0.3":
+  version: 9.0.3
+  resolution: "@types/uuid@npm:9.0.3"
+  checksum: 3dde198defd71c067dd14b3050a8fe6d1ead5fe94ec318472e2c30a399d13f18941fe66cffabdcac7267177c9de2f975fdee6f0cc87cde610a2578e1ce4cc3af
   languageName: node
   linkType: hard
 
@@ -4335,7 +4335,7 @@ __metadata:
     "@types/redux-logger": ^3.0.9
     "@types/string": ^0.0.31
     "@types/uniqid": ^5.3.2
-    "@types/uuid": ^8.3.4
+    "@types/uuid": ^9.0.3
     "@uiw/react-md-editor": ^3.23.5
     "@vitejs/plugin-react": ^4.0.4
     animate.css: ^4.1.1
