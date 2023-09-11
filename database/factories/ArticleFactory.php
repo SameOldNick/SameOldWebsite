@@ -25,7 +25,6 @@ class ArticleFactory extends Factory
         return [
             'title' => $title,
             'slug' => Str::slug($title),
-            'summary' => $this->faker->boolean() ? $this->faker->paragraphs(2, true) : null,
         ];
     }
 
