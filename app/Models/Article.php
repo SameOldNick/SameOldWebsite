@@ -4,12 +4,10 @@ namespace App\Models;
 
 use App\Models\Collections\ArticleCollection;
 use App\Traits\Models\Postable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
 
 class Article extends Model
 {
