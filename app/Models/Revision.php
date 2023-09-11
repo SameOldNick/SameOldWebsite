@@ -19,7 +19,10 @@ class Revision extends Model
      *
      * @var array<string>
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'content',
+        'summary'
+    ];
 
     /**
      * The primary key for the model.
