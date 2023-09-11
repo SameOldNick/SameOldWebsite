@@ -26,7 +26,7 @@ class ArticleImage extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'description'
+        'description',
     ];
 
     /**
