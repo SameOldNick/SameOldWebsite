@@ -11,5 +11,7 @@ declare namespace React {
             value: V
         ): Promise<V>;
     }
+
+    export function assignRef<T>(ref: React.ForwardedRef<T>, instance: T | null): T | null;
 }
 
