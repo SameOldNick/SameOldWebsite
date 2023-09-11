@@ -26,7 +26,7 @@ class BlogArticleController extends Controller
             $extra['parentComment'] = $parentComment;
         }
 
-        return $this->createArticleResponse($request, $article, $article->revision(), $extra);
+        return $this->createArticleResponse($request, $article, $article->revision, $extra);
     }
 
     /**
