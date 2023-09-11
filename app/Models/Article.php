@@ -136,17 +136,15 @@ class Article extends Model
     }
 
     /**
-     * Gets the active revision for this article.
+     * Gets the revision for this article.
      *
-     * @return Revision
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function revision()
+    protected function revision(): Attribute
     {
-        if (! is_null($this->currentRevision)) {
-            return $this->currentRevision;
-        }
+        return Attribute::get(fn () => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
+    }
 
-        return $this->revisions()->latest()->first();
     }
 
     /**
