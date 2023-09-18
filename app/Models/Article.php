@@ -7,12 +7,14 @@ use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\URL;
 
 class Article extends Model
 {
     use HasFactory;
     use Postable;
+    use SoftDeletes;
 
     /**
      * Indicates if the model should be timestamped.
