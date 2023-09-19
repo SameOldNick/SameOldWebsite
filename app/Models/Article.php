@@ -148,10 +148,13 @@ class Article extends Model
     }
 
     /**
+     * Get the URL for the article.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
+    protected function url(): Attribute
     {
+        return Attribute::get(fn ($value, $attributes) => $this->is_published ? $this->public_url : $this->private_url);
     }
 
     /**
