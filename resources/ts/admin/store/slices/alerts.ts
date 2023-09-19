@@ -44,7 +44,7 @@ export default createSlice({
     reducers: {
         addAlert: (state, { payload: { component, alert } }: PayloadAction<IAlertParams>) => merge(state, { alerts: { [component]: [{ id: uuidv4(), ...alert }] } }),
         clearAlerts: (state, { payload }: PayloadAction<TComponent>) => merge.withOptions({ mergeArrays: false }, state, { alerts: { [payload]: [] } }),
-        displaySweetAlert: (state, { payload }: PayloadAction<ISweetAlertParams>) => merge(state, { sweetalert: payload }),
-        clearSweetAlert: (state) => merge(state, { sweetalert: undefined })
+        displaySweetAlert: (state, { payload }: PayloadAction<ISweetAlertParams>) => ({ ...state, sweetalert: payload }),
+        clearSweetAlert: (state) => ({ ...state, sweetalert: undefined })
     }
 });
