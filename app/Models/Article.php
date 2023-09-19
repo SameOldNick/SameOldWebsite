@@ -164,7 +164,9 @@ class Article extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
+    protected function privateUrl(): Attribute
     {
+        return Attribute::get(fn ($value, $attributes) => $this->createPrivateUrl());
     }
 
     /**
@@ -187,5 +189,6 @@ class Article extends Model
      */
     public function createPrivateUrl(int $minutes = 30, bool $absolute = true)
     {
+        return URL::temporarySignedRoute('blog.preview', $minutes * 60, ['article' => $this], $absolute);
     }
 }
