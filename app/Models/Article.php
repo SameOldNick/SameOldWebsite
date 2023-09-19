@@ -161,6 +161,7 @@ class Article extends Model
     }
 
     /**
+     * Get the private URL for the article.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
