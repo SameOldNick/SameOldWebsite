@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Models\Collections\ArticleCollection;
 use App\Traits\Models\Postable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\URL;
 
@@ -30,7 +30,7 @@ class Article extends Model
      */
     protected $fillable = [
         'title',
-        'slug'
+        'slug',
     ];
 
     /**
@@ -152,7 +152,7 @@ class Article extends Model
      */
     protected function isPublished(): Attribute
     {
-        return Attribute::get(fn () => !is_null($this->published_at) && $this->published_at->isPast());
+        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isPast());
     }
 
     /**
