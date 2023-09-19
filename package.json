@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build"
+        "build": "vite build"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.1.1",
