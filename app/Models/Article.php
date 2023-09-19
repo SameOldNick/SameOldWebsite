@@ -145,6 +145,14 @@ class Article extends Model
         return Attribute::get(fn () => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
     }
 
+    /**
+     * Checks if article is published.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function isPublished(): Attribute
+    {
+        return Attribute::get(fn () => !is_null($this->published_at) && $this->published_at->isPast());
     }
 
     /**
