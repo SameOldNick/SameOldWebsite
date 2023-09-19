@@ -16,7 +16,7 @@ jobs:
         uses: mooyoul/tslint-actions@v1.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: '*.ts'
+          pattern: '*.ts *.tsx'
 
       - name: Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4
