@@ -155,9 +155,13 @@ class Article extends Model
     }
 
     /**
+     * Get the public URL for the article.
      *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
+    protected function publicUrl(): Attribute
     {
+        return Attribute::get(fn ($value, $attributes) => $this->createPublicLink());
     }
 
     /**
