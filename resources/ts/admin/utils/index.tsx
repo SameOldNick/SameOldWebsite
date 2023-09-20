@@ -127,6 +127,12 @@ export const numberFormat = (num: number, decimals: number = 0, decimalSeparator
     return num.toFixed(decimals).replace('.', decimalSeparator).replace(/(?=(?:\d{3})+$)(?!^)/g, thousandsSeparator);
 }
 
+/**
+ * Delays calling a function
+ * @param func Function to delay calling
+ * @param timeout Minimum amount of time to wait until calling function
+ * @returns Function that clears timeout and creates new timeout.
+ */
 export const debounce = (func: (...args: any) => void, timeout: number = 300) => {
     let timer: Timeout;
 
@@ -136,6 +142,12 @@ export const debounce = (func: (...args: any) => void, timeout: number = 300) =>
     }
 }
 
+/**
+ * Applies maximum amount of time for async function to finish
+ * @param callback Async function
+ * @param maxTimeMs Max. time to wait
+ * @returns Promise
+ */
 export function awaitAtMost<T>(callback: () => Promise<T>, maxTimeMs: number) {
     return new Promise((resolve, reject) => {
         const timer = setTimeout(() => reject('Max. execution time reached'), maxTimeMs);
