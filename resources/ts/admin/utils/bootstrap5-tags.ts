@@ -242,16 +242,12 @@ export default class Tags {
 
     public resetSuggestions() {
         const suggestions = Array.from(this._selectElement.querySelectorAll("option"))
-            .filter((option) => {
-                return !option.disabled;
-            })
-            .map<TSuggestion>((option) => {
-                return {
-                    value: option.getAttribute("value") || '',
-                    label: option.textContent || '',
-                    data: {}
-                };
-            });
+            .filter((option) => !option.disabled)
+            .map<TSuggestion>((option) => ({
+                value: option.getAttribute("value") || '',
+                label: option.textContent || '',
+                data: {}
+            }));
 
         this._buildSuggestions(suggestions);
     }
@@ -309,7 +305,7 @@ export default class Tags {
     }
 
     private _configureDropElement() {
-        this._dropElement.classList.add(...["dropdown-menu", "p-0"]);
+        this._dropElement.classList.add("dropdown-menu", "p-0");
         this._dropElement.style.maxHeight = "280px";
         if (!this._opts.fullWidth) {
             this._dropElement.style.maxWidth = "360px";
@@ -323,7 +319,7 @@ export default class Tags {
     }
 
     private _configureHolderElement() {
-        this._holderElement.classList.add(...["form-control", "dropdown"]);
+        this._holderElement.classList.add("form-control", "dropdown");
         if (this._selectElement.classList.contains("form-select-lg")) {
             this._holderElement.classList.add("form-control-lg");
         }
@@ -511,8 +507,6 @@ export default class Tags {
                 prev = prev.previousSibling as HTMLElement;
             };
 
-
-
             if (!prev) {
                 return null;
             }
@@ -620,7 +614,7 @@ export default class Tags {
 
             newChild.append(newChildLink);
 
-            newChildLink.classList.add(...["dropdown-item", "text-truncate"]);
+            newChildLink.classList.add("dropdown-item", "text-truncate");
             newChildLink.setAttribute(VALUE_ATTRIBUTE, value);
             newChildLink.setAttribute("href", "#");
             newChildLink.textContent = label;
