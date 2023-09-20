@@ -208,7 +208,7 @@ export default class Tags {
      * @returns {Function}
      */
     public static debounce(func: TDebounceFunc, timeout = 300) {
-        let timer: NodeJS.Timeout;
+        let timer: Timeout;
         return (...args: any[]) => {
             clearTimeout(timer);
             timer = setTimeout(() => {
