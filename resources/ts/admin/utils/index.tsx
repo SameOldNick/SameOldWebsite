@@ -128,7 +128,7 @@ export const numberFormat = (num: number, decimals: number = 0, decimalSeparator
 }
 
 export const debounce = (func: (...args: any) => void, timeout: number = 300) => {
-    let timer: NodeJS.Timeout | number;
+    let timer: Timeout;
 
     return (...args: any[]) => {
         clearTimeout(timer);
