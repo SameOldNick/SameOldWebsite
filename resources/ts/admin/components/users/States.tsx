@@ -35,7 +35,6 @@ const States = React.forwardRef<Input, IStatesProps>(({ country, optional, ...pr
 
         }
     }
-    console.log(country);
 
     React.useEffect(() => {
         if (country)
