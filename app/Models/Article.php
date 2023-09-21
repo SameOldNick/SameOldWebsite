@@ -53,6 +53,15 @@ class Article extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'revision',
+    ];
+
+    /**
      * Create a new Eloquent Collection instance.
      *
      * @param  array  $models
