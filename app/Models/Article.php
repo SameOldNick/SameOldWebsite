@@ -40,7 +40,7 @@ class Article extends Model
      */
     protected $with = [
         'mainImage',
-        'currentRevision'
+        'currentRevision',
     ];
 
     /**
