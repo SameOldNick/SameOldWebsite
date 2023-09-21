@@ -34,6 +34,16 @@ class Article extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'mainImage',
+        'currentRevision'
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array
