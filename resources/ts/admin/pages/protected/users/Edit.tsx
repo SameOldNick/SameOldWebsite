@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import Heading from '@admin/layouts/admin/Heading';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import withRouter, { IHasRouter } from '@admin/components/hoc/WithRouter';
+import withRouter, { IHasRouter } from '@admin/components/hoc/withRouter';
 import UserForm, { IFormikValues, TForwardedRef } from '@admin/components/users/UserForm';
 
 import { createAuthRequest } from '@admin/utils/api/factories';

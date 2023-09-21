@@ -12,7 +12,7 @@ import S from 'string';
 
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import { IHasRouter } from '@admin/components/hoc/WithRouter';
+import { IHasRouter } from '@admin/components/hoc/withRouter';
 import MarkdownEditor from '@admin/components/MarkdownEditor';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
