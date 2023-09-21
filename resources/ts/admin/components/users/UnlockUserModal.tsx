@@ -2,10 +2,10 @@ import React from 'react';
 import withReactContent from 'sweetalert2-react-content';
 
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import axios from 'axios';
 
 interface IProps {
     user: IUser;
