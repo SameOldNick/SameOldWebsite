@@ -6,10 +6,6 @@ interface IProps {
     scrollTo: string;
 }
 
-interface IState {
-    show: boolean;
-}
-
 const shouldDisplayButton = () => window.scrollY > 100;
 
 const ScrollToTop: React.FC<IProps> = ({ scrollTo }) => {
