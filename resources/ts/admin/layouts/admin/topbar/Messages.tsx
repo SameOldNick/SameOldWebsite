@@ -4,7 +4,6 @@ import { Dropdown, DropdownToggle, Badge, DropdownMenu, DropdownItem } from 'rea
 import classNames from 'classnames';
 
 import user from '@images/user.png';
-import { createAuthRequest } from '@admin/utils/api/factories';
 
 import md5 from 'blueimp-md5';
 import { DateTime } from 'luxon';

@@ -1,6 +1,7 @@
-import { createAuthRequest } from '@admin/utils/api/factories';
 import React from 'react';
 import { ReactTags, TagSuggestion } from 'react-tag-autocomplete';
+
+import { createAuthRequest } from '@admin/utils/api/factories';
 
 type TReactTagsProps = React.ComponentProps<typeof ReactTags>;
 
