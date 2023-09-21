@@ -125,7 +125,32 @@ declare global {
         technology: string;
     }
 
+    interface IArticle {
+        id?: number;
+        title: string;
+        slug: string;
+        main_image: IArticleImage | null;
+        revision?: IRevision;
+        current_revision: IRevision | null;
+        published_at: string | null;
+        deleted_at: string | null;
+        private_url?: string;
+    }
 
+    interface IRevision {
+        uuid?: string;
+        content: string;
+        summary: string;
+        summary_auto: boolean;
+        created_at: string;
+        updated_at: string;
+    }
+
+    interface IArticleImage {
+        id?: number;
+        description: string;
+        file: IFile;
+    }
 }
 
 export { };
