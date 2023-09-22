@@ -10,35 +10,22 @@ interface IProps {
 
 }
 
-interface IState {
+const All: React.FC<IProps> = ({ }) => {
+    return (
+        <>
+            <Helmet>
+                <title>All Projects</title>
+            </Helmet>
+
+            <Heading title='All Projects' />
+
+            <Card>
+                <CardBody>
+                    <ProjectList />
+                </CardBody>
+            </Card>
+        </>
+    );
 }
 
-export default class All extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-        };
-    }
-
-    public render() {
-        const { } = this.props;
-        const { } = this.state;
-
-        return (
-            <>
-                <Helmet>
-                    <title>All Projects</title>
-                </Helmet>
-
-                <Heading title='All Projects' />
-
-                <Card>
-                    <CardBody>
-                        <ProjectList />
-                    </CardBody>
-                </Card>
-            </>
-        );
-    }
-}
+export default All;

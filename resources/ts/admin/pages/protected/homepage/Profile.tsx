@@ -12,63 +12,49 @@ interface IProps extends IHasRouter {
 
 }
 
-interface IState {
+const Profile: React.FC<IProps> = ({ router }) => {
+    return (
+        <>
+            <Helmet>
+                <title>Profile</title>
+            </Helmet>
+
+
+            <Heading title='Profile' />
+
+            <Row className='justify-content-center'>
+                <Col md={4}>
+                    <Card className='mb-3'>
+                        <CardBody>
+                            <Avatar />
+                        </CardBody>
+                    </Card>
+
+                </Col>
+            </Row>
+
+            <Row className='justify-content-center mb-3'>
+                <Col md={8}>
+                    <Card>
+                        <CardBody>
+                            <HomepageForm router={router} />
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+
+            <Row className='justify-content-center'>
+                <Col md={8}>
+                    <Card>
+                        <CardBody>
+                            <SocialMediaLinks />
+
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </>
+    );
 }
 
-export default withRouter(class extends React.Component<IProps, IState> {
-
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-        };
-    }
-
-    public render() {
-        const { router } = this.props;
-        const { } = this.state;
-
-        return (
-            <>
-                <Helmet>
-                    <title>Profile</title>
-                </Helmet>
-
-
-                <Heading title='Profile' />
-
-                <Row className='justify-content-center'>
-                    <Col md={4}>
-                        <Card className='mb-3'>
-                            <CardBody>
-                                <Avatar />
-                            </CardBody>
-                        </Card>
-
-                    </Col>
-                </Row>
-
-                <Row className='justify-content-center mb-3'>
-                    <Col md={8}>
-                        <Card>
-                            <CardBody>
-                                <HomepageForm router={router} />
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-
-                <Row className='justify-content-center'>
-                    <Col md={8}>
-                        <Card>
-                            <CardBody>
-                                <SocialMediaLinks />
-
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-            </>
-        );
-    }
-});
+export default withRouter(Profile);

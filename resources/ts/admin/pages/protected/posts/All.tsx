@@ -1,35 +1,30 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Card, CardBody } from 'reactstrap';
 
 import Heading from '@admin/layouts/admin/Heading';
+import ArticleList from '@admin/components/blog/ArticleList';
 
 interface IProps {
 
 }
 
-interface IState {
+const All: React.FC<IProps> = ({ }) => {
+    return (
+        <>
+            <Helmet>
+                <title>All Posts</title>
+            </Helmet>
+
+            <Heading title='All Posts' />
+
+            <Card>
+                <CardBody>
+                    <ArticleList />
+                </CardBody>
+            </Card>
+        </>
+    );
 }
 
-export default class extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-        };
-    }
-
-    public render() {
-        const { } = this.props;
-        const { } = this.state;
-
-        return (
-            <>
-                <Helmet>
-                    <title>All Posts</title>
-                </Helmet>
-
-                <Heading title='All Posts' />
-            </>
-        );
-    }
-}
+export default All;

@@ -9,39 +9,26 @@ interface IProps {
 
 }
 
-interface IState {
+const Technologies: React.FC<IProps> = ({ }) => {
+    return (
+        <>
+            <Helmet>
+                <title>Technologies</title>
+            </Helmet>
+
+            <Heading title='Technologies' />
+
+            <Row className='justify-content-center mb-3'>
+                <Col md={8}>
+                    <Card>
+                        <CardBody>
+                            <TechnologyList />
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </>
+    );
 }
 
-export default class extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-        };
-    }
-
-    public render() {
-        const { } = this.props;
-        const { } = this.state;
-
-        return (
-            <>
-                <Helmet>
-                    <title>Technologies</title>
-                </Helmet>
-
-                <Heading title='Technologies' />
-
-                <Row className='justify-content-center mb-3'>
-                    <Col md={8}>
-                        <Card>
-                            <CardBody>
-                                <TechnologyList />
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-            </>
-        );
-    }
-}
+export default Technologies;
