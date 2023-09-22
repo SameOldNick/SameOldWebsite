@@ -31,10 +31,7 @@ export default class All extends React.Component<IProps, IState> {
                     <title>All Projects</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>All Projects</Heading.Title>
-                </Heading>
-
+                <Heading title='All Projects' />
 
                 <Card>
                     <CardBody>

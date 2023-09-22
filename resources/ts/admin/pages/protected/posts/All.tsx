@@ -28,9 +28,7 @@ export default class extends React.Component<IProps, IState> {
                     <title>All Posts</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>All Posts</Heading.Title>
-                </Heading>
+                <Heading title='All Posts' />
             </>
         );
     }

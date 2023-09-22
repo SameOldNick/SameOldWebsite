@@ -97,9 +97,7 @@ export default class extends React.Component<IProps, IState> {
                     <title>Create User</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>Create User</Heading.Title>
-                </Heading>
+                <Heading title='Create User' />
 
                 <Row className='justify-content-center'>
                     <Col md={8}>

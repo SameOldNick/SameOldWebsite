@@ -127,9 +127,8 @@ export default withRouter(class extends React.Component<IProps, IState> {
                     <title>Edit User</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>Edit User</Heading.Title>
-                </Heading>
+                <Heading title='Edit User' />
+
 
                 <Row className='justify-content-center'>
                     <Col md={8}>
