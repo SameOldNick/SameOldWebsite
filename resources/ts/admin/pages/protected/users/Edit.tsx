@@ -2,50 +2,42 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { FormikHelpers } from 'formik';
 import withReactContent from 'sweetalert2-react-content';
+import { Card, CardBody, Col, Row } from 'reactstrap';
 
 import axios, { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
 
 import Heading from '@admin/layouts/admin/Heading';
-import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import withRouter, { IHasRouter } from '@admin/components/hoc/withRouter';
 import UserForm, { IFormikValues, TForwardedRef } from '@admin/components/users/UserForm';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import { Card, CardBody, Col, Row } from 'reactstrap';
 
 interface IProps extends IHasRouter<'user'> {
 
 }
 
-interface IState {
-}
+const Edit: React.FC<IProps> = ({ router }) => {
+    const formikRef = React.createRef<TForwardedRef>();
 
-export default withRouter(class extends React.Component<IProps, IState> {
-    private _waitToLoadRef = React.createRef<WaitToLoad<IUser>>();
-    private _formikRef = React.createRef<TForwardedRef>();
+    const [user, setUser] = React.useState<IUser>();
 
-    constructor(props: Readonly<IProps>) {
-        super(props);
+    const getUser = async () => {
+        const { params: { user } } = router;
 
-        this.state = {
-        };
+        try {
+            const response = await createAuthRequest().get<IUser>(`/users/${user}`);
 
-        this.getUser = this.getUser.bind(this);
+            setUser(response.data);
+        } catch (err) {
+            await handleErrorGettingUser(err);
+        }
     }
 
-    private async getUser() {
-        const { router: { params: { user } } } = this.props;
-
-        const response = await createAuthRequest().get<IUser>(`/users/${user}`);
-
-        return response.data;
-    }
-
-    private async handleError(err: unknown) {
-        const { router: { navigate } } = this.props;
+    const handleErrorGettingUser = async (err: unknown) => {
+        const { navigate } = router;
 
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -59,25 +51,27 @@ export default withRouter(class extends React.Component<IProps, IState> {
         });
 
         if (result.isConfirmed) {
-            this._waitToLoadRef.current?.load();
+            await getUser();
         } else {
             navigate(-1);
         }
     }
 
-    private getInitialValues(user: IUser) {
-        return {
-            name: user.name,
-            email: user.email,
-            password: '',
-            confirm_password: '',
-            state: user.state?.code || '',
-            country: user.country?.code || '',
-            roles: user.roles.map(({ role }) => role)
-        }
-    }
+    const initialValues = React.useMemo(() => ({
+        name: user?.name || '',
+        email: user?.email || '',
+        password: '',
+        confirm_password: '',
+        state: user?.state?.code || '',
+        country: user?.country?.code || '',
+        roles: user?.roles.map(({ role }) => role) || []
+    }), [user]);
 
-    private async onSubmit(user: IUser, { name, email, password, confirm_password, state, country, roles }: IFormikValues, helpers: FormikHelpers<IFormikValues>) {
+    React.useEffect(() => {
+        getUser();
+    }, [router.params.user]);
+
+    const handleSubmit = async(user: IUser, { name, email, password, confirm_password, state, country, roles }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().put<IUser>(`users/${user.id}`, {
                 name,
@@ -89,25 +83,23 @@ export default withRouter(class extends React.Component<IProps, IState> {
                 roles
             });
 
-            await this.onUpdated(response);
+            await handleUpdated(response);
         } catch (e) {
-            await this.onError(e);
+            await handleErrorUpdatingUser(e);
         }
     }
 
-    private async onUpdated(response: AxiosResponse<IUser>) {
+    const handleUpdated = async (response: AxiosResponse<IUser>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'User Updated',
             text: 'The user was successfully updated.',
         });
 
-        this._formikRef.current?.resetForm();
-
-        this._waitToLoadRef.current?.load();
+        setUser(response.data);
     }
 
-    private async onError(err: unknown) {
+    const handleErrorUpdatingUser = async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -117,46 +109,36 @@ export default withRouter(class extends React.Component<IProps, IState> {
         });
     }
 
-    public render() {
-        const { } = this.props;
-        const { } = this.state;
+    return (
+        <>
+            <Helmet>
+                <title>Edit User</title>
+            </Helmet>
 
-        return (
-            <>
-                <Helmet>
-                    <title>Edit User</title>
-                </Helmet>
-
-                <Heading title='Edit User' />
+            <Heading title='Edit User' />
 
 
-                <Row className='justify-content-center'>
-                    <Col md={8}>
-                        <Card>
-                            <CardBody>
-                                <WaitToLoad<IUser> ref={this._waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={this.getUser}>
-                                    {(user, err) => (
-                                        <>
-                                            {err !== undefined && this.handleError(err)}
-                                            {
-                                                user !== undefined &&
-                                                <UserForm
-                                                    innerRef={this._formikRef}
-                                                    fields='edit'
-                                                    initialValues={this.getInitialValues(user)}
-                                                    buttonContent='Edit User'
-                                                    onSubmit={(values, helpers) => this.onSubmit(user, values, helpers)}
-                                                />
-                                            }
-                                        </>
-                                    )}
-                                </WaitToLoad>
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
+            <Row className='justify-content-center'>
+                <Col md={8}>
+                    <Card>
+                        <CardBody>
+                            {user !== undefined && (
+                                <UserForm
+                                    innerRef={formikRef}
+                                    fields='edit'
+                                    initialValues={initialValues}
+                                    buttonContent='Edit User'
+                                    onSubmit={(values, helpers) => handleSubmit(user, values, helpers)}
+                                />
+                            )}
+                            {user === undefined && <Loader display={{ type: 'over-element' }} />}
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
 
-            </>
-        );
-    }
-});
+        </>
+    );
+}
+
+export default withRouter(Edit);
