@@ -3,6 +3,7 @@
    * Cookie Alert
    * List supported markdown for comments
    * Display information from database
+   * Single Sign On (SSO)
  * Admin Panel
    * Manage Comments
    * Manage Tags
