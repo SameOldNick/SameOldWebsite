@@ -35,6 +35,7 @@ Route::namespace(Controllers\Main::class)->group(function () {
         ->where('month', '0?[1-9]|1[012]');
 
     Route::get('/blog/{article:slug}', 'BlogArticleController@single')->name('blog.single')->can('view', 'article');
+    Route::get('/blog/{article:slug}/preview', 'BlogArticleController@single')->name('blog.preview')->middleware(LaravelMiddleware\ValidateSignature::class)->withTrashed();
     Route::get('/blog/{article:slug}/{revision}', 'BlogArticleController@singleRevision')->name('blog.single.revision')->middleware(LaravelMiddleware\ValidateSignature::class);
 
     Route::middleware(Middleware\FileAccess::class)->group(function () {
