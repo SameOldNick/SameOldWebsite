@@ -22,7 +22,7 @@
             @endisset
 
             <p class="blog-article-text">
-                {{ Str::stripTags(Str::markdown($article->summary)) }}
+                {{ Str::stripTags(Str::markdown($article->revision->summary)) }}
             </p>
 
             <div class="blog-article-read-more">
