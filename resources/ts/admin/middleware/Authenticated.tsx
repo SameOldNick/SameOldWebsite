@@ -8,14 +8,13 @@ import { DateTime } from 'luxon';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-import accountSlice, { fetchUser as dispatchFetchUser } from '@admin/store/slices/account';
-
-import LoaderOverlay from '../components/Loader';
-import Heartbeat, { IHeartbeatCallbackParams } from '../components/Heartbeat';
+import LoaderOverlay from '@admin/components/Loader';
+import Heartbeat, { IHeartbeatCallbackParams } from '@admin/components/Heartbeat';
+import PageVisibilityWrapper from '@admin/components/PageVisibilityWrapper';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import PageVisibilityWrapper from '@admin/components/PageVisibilityWrapper';
+import accountSlice, { fetchUser as dispatchFetchUser } from '@admin/store/slices/account';
 
 const connector = connect(
     ({ account }: RootState) => ({ account }),
