@@ -1,9 +1,10 @@
 import React from 'react';
 import { Helmet } from "react-helmet";
 import { Outlet } from 'react-router-dom';
-
 import { IconContext } from 'react-icons';
 import { FaEnvelope, FaHome, FaList, FaNewspaper, FaTachometerAlt, FaUsers } from 'react-icons/fa';
+
+import { DateTime } from 'luxon';
 
 import Footer from './Footer';
 import Sidebar from './Sidebar';
@@ -15,100 +16,88 @@ interface IProps {
 
 type TProps = React.PropsWithChildren<IProps>;
 
-interface IState {
-}
+const AdminLayout: React.FC<TProps> = ({ }) => {
+    return (
+        <>
+            <Helmet>
+                <body id="pageTop" />
+            </Helmet>
 
-export default class AdminLayout extends React.Component<TProps, IState> {
-    constructor(props: Readonly<TProps>) {
-        super(props);
+            <IconContext.Provider value={{ className: 'react-icons' }}>
 
-        this.state = {
-        };
-    }
+                {/* Page Wrapper */}
+                <div id="wrapper">
 
-    public render() {
-        const { } = this.props;
+                    {/* Sidebar */}
+                    <Sidebar>
+                        <Sidebar.Item href='/admin/dashboard' icon={<FaTachometerAlt />}>Dashboard</Sidebar.Item>
 
-        return (
-            <>
-                <Helmet>
-                    <body id="pageTop" />
-                </Helmet>
+                        <Sidebar.Dropdown text='Homepage' icon={<FaHome />}>
+                            <Sidebar.DropdownItem href='/admin/homepage/profile'>Edit Profile</Sidebar.DropdownItem>
+                            <Sidebar.DropdownItem href='/admin/homepage/skills'>Update Skills</Sidebar.DropdownItem>
+                            <Sidebar.DropdownItem href='/admin/homepage/technologies'>Manage Technologies</Sidebar.DropdownItem>
+                        </Sidebar.Dropdown>
 
-                <IconContext.Provider value={{ className: 'react-icons' }}>
+                        <Sidebar.Dropdown text='Blog' icon={<FaNewspaper />}>
+                            <Sidebar.DropdownItem href='/admin/posts'>View All Posts</Sidebar.DropdownItem>
+                            <Sidebar.DropdownItem href='/admin/posts/create'>Create New Post</Sidebar.DropdownItem>
+                        </Sidebar.Dropdown>
 
-                    {/* Page Wrapper */}
-                    <div id="wrapper">
+                        <Sidebar.Dropdown text='Contact' icon={<FaEnvelope />}>
+                            <Sidebar.DropdownItem href='/admin/contact/messages'>View Messages</Sidebar.DropdownItem>
+                            <Sidebar.DropdownItem href='/admin/contact/settings'>Settings</Sidebar.DropdownItem>
+                        </Sidebar.Dropdown>
 
-                        {/* Sidebar */}
-                        <Sidebar>
-                            <Sidebar.Item href='/admin/dashboard' icon={<FaTachometerAlt />}>Dashboard</Sidebar.Item>
+                        <Sidebar.Dropdown text='Projects' icon={<FaList />}>
+                            <Sidebar.DropdownItem href='/admin/projects'>View All Projects</Sidebar.DropdownItem>
+                            <Sidebar.DropdownItem href='/admin/projects/create'>Create New Project</Sidebar.DropdownItem>
+                        </Sidebar.Dropdown>
 
-                            <Sidebar.Dropdown text='Homepage' icon={<FaHome />}>
-                                <Sidebar.DropdownItem href='/admin/homepage/profile'>Edit Profile</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/homepage/skills'>Update Skills</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/homepage/technologies'>Manage Technologies</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                        <Sidebar.Dropdown text='Users' icon={<FaUsers />}>
+                            <Sidebar.DropdownItem href='/admin/users'>View All Users</Sidebar.DropdownItem>
+                            <Sidebar.DropdownItem href='/admin/users/create'>Create New User</Sidebar.DropdownItem>
+                        </Sidebar.Dropdown>
+                    </Sidebar>
+                    {/* End of Sidebar */}
 
-                            <Sidebar.Dropdown text='Blog' icon={<FaNewspaper />}>
-                                <Sidebar.DropdownItem href='/admin/posts'>View All Posts</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/posts/create'>Create New Post</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                    {/* Content Wrapper */}
+                    <div id="content-wrapper" className="d-flex flex-column">
 
-                            <Sidebar.Dropdown text='Contact' icon={<FaEnvelope />}>
-                                <Sidebar.DropdownItem href='/admin/contact/messages'>View Messages</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/contact/settings'>Settings</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                        {/* Main Content */}
+                        <div id="content">
 
-                            <Sidebar.Dropdown text='Projects' icon={<FaList />}>
-                                <Sidebar.DropdownItem href='/admin/projects'>View All Projects</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/projects/create'>Create New Project</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                            {/* Topbar */}
+                            <Topbar />
+                            {/* End of Topbar */}
 
-                            <Sidebar.Dropdown text='Users' icon={<FaUsers />}>
-                                <Sidebar.DropdownItem href='/admin/users'>View All Users</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/users/create'>Create New User</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
-                        </Sidebar>
-                        {/* End of Sidebar */}
-
-                        {/* Content Wrapper */}
-                        <div id="content-wrapper" className="d-flex flex-column">
-
-                            {/* Main Content */}
-                            <div id="content">
-
-                                {/* Topbar */}
-                                <Topbar />
-                                {/* End of Topbar */}
-
-                                {/* Begin Page Content */}
-                                <div className="container-fluid">
-                                    <Outlet />
-                                </div>
-                                {/* /.container-fluid */}
-
+                            {/* Begin Page Content */}
+                            <div className="container-fluid">
+                                <Outlet />
                             </div>
-                            {/* End of Main Content */}
-
-                            {/* Footer */}
-                            <Footer>
-                                Copyright &copy; Little Apps, Ltd. 2021
-                            </Footer>
-                            {/* End of Footer */}
+                            {/* /.container-fluid */}
 
                         </div>
-                        {/* End of Content Wrapper */}
+                        {/* End of Main Content */}
+
+                        {/* Footer */}
+                        <Footer>
+                            Copyright &copy; Little Apps, Ltd. {DateTime.now().year}
+                        </Footer>
+                        {/* End of Footer */}
 
                     </div>
-                    {/* End of Page Wrapper */}
+                    {/* End of Content Wrapper */}
 
-                    {/* Scroll to Top Button*/}
-                    <ScrollToTop scrollTo='pageTop' />
+                </div>
+                {/* End of Page Wrapper */}
 
-                </IconContext.Provider>
+                {/* Scroll to Top Button*/}
+                <ScrollToTop scrollTo='pageTop' />
 
-            </>
-        );
-    }
+            </IconContext.Provider>
+
+        </>
+    );
 }
+
+export default AdminLayout;
