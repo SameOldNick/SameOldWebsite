@@ -34,9 +34,8 @@ export default withRouter(class extends React.Component<IProps, IState> {
                     <title>Profile</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>Profile</Heading.Title>
-                </Heading>
+
+                <Heading title='Profile' />
 
                 <Row className='justify-content-center'>
                     <Col md={4}>

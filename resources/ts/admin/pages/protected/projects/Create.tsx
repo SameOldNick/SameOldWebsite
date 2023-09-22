@@ -94,9 +94,7 @@ export default class extends React.Component<IProps, IState> {
                     <title>Create Project</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>Create Project</Heading.Title>
-                </Heading>
+                <Heading title='Create Project' />
 
                 <Card>
                     <CardBody>

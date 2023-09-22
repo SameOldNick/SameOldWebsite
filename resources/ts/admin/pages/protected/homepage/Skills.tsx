@@ -34,11 +34,7 @@ export default class extends React.Component<IProps, IState> {
                     <title>Skills</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>Skills</Heading.Title>
-                </Heading>
-
-
+                <Heading title='Skills' />
 
                 <Row className='justify-content-center mb-3'>
                     <Col md={8}>

@@ -182,9 +182,7 @@ export default connector(class Messages extends React.Component<TProps, IState> 
                     <title>Messages</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>Messages</Heading.Title>
-                </Heading>
+                <Heading title='Messages' />
 
                 {showNotification && <Messages.Modal notification={showNotification} onClose={() => this.setState({ showNotification: undefined })} />}
 

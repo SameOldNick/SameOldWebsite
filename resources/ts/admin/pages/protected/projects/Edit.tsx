@@ -121,11 +121,7 @@ export default withRouter(class extends React.Component<IProps, IState> {
                     <title>Edit Project</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>Edit Project</Heading.Title>
-
-
-                </Heading>
+                <Heading title='Edit Project' />
 
                 <>
                     <WaitToLoad<IProject> ref={this._waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={this.getProject}>

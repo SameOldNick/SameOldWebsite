@@ -32,9 +32,7 @@ export default withRouter(class extends React.Component<IProps, IState> {
                     <title>Contact Settings</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>Contact Settings</Heading.Title>
-                </Heading>
+                <Heading title='Contact Settings' />
 
                 <Row className='justify-content-center mb-3'>
                     <Col md={8}>

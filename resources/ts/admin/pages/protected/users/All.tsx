@@ -165,9 +165,7 @@ export default withRouter(class All extends React.Component<IProps, IState> {
                     <title>All Users</title>
                 </Helmet>
 
-                <Heading>
-                    <Heading.Title>All Users</Heading.Title>
-                </Heading>
+                <Heading title='All Users' />
 
                 <Card>
                     <CardBody>
