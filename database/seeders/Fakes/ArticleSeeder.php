@@ -30,8 +30,11 @@ class ArticleSeeder extends Seeder
 
                     if (fake()->boolean()) {
                         $article->currentRevision()->associate($revisions->random());
+                    } else {
+                        $article->currentRevision()->associate($revisions->last());
                     }
 
+                    // Assigns parent revision to each revision (except first)
                     if ($revisions->count() > 1) {
                         for ($i = 1; $i < $revisions->count(); $i++) {
                             $parent = $revisions->get($i - 1);
