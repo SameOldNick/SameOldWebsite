@@ -194,7 +194,7 @@
                                         </li>
                                     </ul>
                                     <p class="blog-post-summary card-text">
-                                        {{ Str::stripTags(Str::markdown($article->summary)) }}
+                                        {{ Str::stripTags(Str::markdown($article->revision->summary)) }}
                                         <span class="blog-post-read-more">{{ __('Continue reading') }} &rarr;</span>
                                     </p>
                                 </div>
