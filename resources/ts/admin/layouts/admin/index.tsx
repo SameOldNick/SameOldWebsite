@@ -18,7 +18,7 @@ type TProps = React.PropsWithChildren<IProps>;
 interface IState {
 }
 
-export default class extends React.Component<TProps, IState> {
+export default class AdminLayout extends React.Component<TProps, IState> {
     constructor(props: Readonly<TProps>) {
         super(props);
 
