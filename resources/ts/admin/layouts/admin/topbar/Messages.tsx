@@ -1,14 +1,15 @@
 import React from 'react';
 import { FaEnvelope } from 'react-icons/fa';
 import { Dropdown, DropdownToggle, Badge, DropdownMenu, DropdownItem } from 'reactstrap';
+
 import classNames from 'classnames';
-
-import user from '@images/user.png';
-
 import md5 from 'blueimp-md5';
 import { DateTime } from 'luxon';
 import { ConnectedProps, connect } from 'react-redux';
+
 import { fetchMessages } from '@admin/store/slices/notifications';
+
+import user from '@images/user.png';
 
 const connector = connect(
     ({ notifications: { messages } }: RootState) => ({ stored: messages }),
