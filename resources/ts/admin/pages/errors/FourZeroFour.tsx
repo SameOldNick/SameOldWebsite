@@ -19,7 +19,7 @@ type TProps = ConnectedProps<typeof connector> & IProps;
 interface IState {
 }
 
-class FourZeroFour extends React.Component<TProps, IState> {
+export default connector(class FourZeroFour extends React.Component<TProps, IState> {
     constructor(props: Readonly<TProps>) {
         super(props);
 
@@ -75,6 +75,4 @@ class FourZeroFour extends React.Component<TProps, IState> {
             </Layout>
         );
     }
-}
-
-export default connector(FourZeroFour);
+});

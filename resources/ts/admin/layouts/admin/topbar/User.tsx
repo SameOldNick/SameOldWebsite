@@ -30,7 +30,7 @@ const connector = connect(
 
 type TProps = ConnectedProps<typeof connector> & IProps;
 
-class User extends React.Component<TProps, IState> {
+export default connector(class User extends React.Component<TProps, IState> {
     constructor(props: Readonly<TProps>) {
         super(props);
 
@@ -99,6 +99,4 @@ class User extends React.Component<TProps, IState> {
             </>
         );
     }
-}
-
-export default connector(User);
+});
