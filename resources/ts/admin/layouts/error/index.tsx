@@ -11,7 +11,7 @@ interface IProps {
 interface IState {
 }
 
-export default class Layout extends React.Component<React.PropsWithChildren<IProps>, IState> {
+export default class ErrorLayout extends React.Component<React.PropsWithChildren<IProps>, IState> {
     public static Heading: React.FC<React.PropsWithChildren<ColProps>> = ({ children, className, ...props }) => (
         <Col md={12} className={classNames('text-center', className)} {...props}>
             {children}
