@@ -11,39 +11,27 @@ interface IProps extends IHasRouter {
 
 }
 
-interface IState {
+const Settings: React.FC<IProps> = ({ router }) => {
+    return (
+        <>
+            <Helmet>
+                <title>Contact Settings</title>
+            </Helmet>
+
+            <Heading title='Contact Settings' />
+
+            <Row className='justify-content-center mb-3'>
+                <Col md={8}>
+                    <Card>
+                        <CardBody>
+                            <ContactFormSettings router={router} />
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </>
+    );
 }
 
-export default withRouter(class extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
-        super(props);
+export default withRouter(Settings);
 
-        this.state = {
-        };
-    }
-
-    public render() {
-        const { router } = this.props;
-        const { } = this.state;
-
-        return (
-            <>
-                <Helmet>
-                    <title>Contact Settings</title>
-                </Helmet>
-
-                <Heading title='Contact Settings' />
-
-                <Row className='justify-content-center mb-3'>
-                    <Col md={8}>
-                        <Card>
-                            <CardBody>
-                                <ContactFormSettings router={router} />
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-            </>
-        );
-    }
-});
