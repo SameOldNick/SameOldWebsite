@@ -2,15 +2,13 @@
 
 namespace App\Components\Placeholders;
 
-use Closure;
 use Illuminate\Container\Container;
 
 class Factory
 {
     public function __construct(
         protected Container $container
-    )
-    {
+    ) {
     }
 
     /**
@@ -19,7 +17,8 @@ class Factory
      * @param callable $callback
      * @return PlaceholderCollection
      */
-    public function build(callable $callback) {
+    public function build(callable $callback)
+    {
         $options = new Options($this->container);
 
         $callback($options);
@@ -41,7 +40,8 @@ class Factory
      * @param array $placeholders
      * @return PlaceholderCollection
      */
-    protected function createCollection(array $placeholders) {
+    protected function createCollection(array $placeholders)
+    {
         return $this->container->makeWith(PlaceholderCollection::class, ['placeholders' => $placeholders]);
     }
 }

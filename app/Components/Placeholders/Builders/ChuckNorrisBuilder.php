@@ -4,19 +4,20 @@ namespace App\Components\Placeholders\Builders;
 
 use Illuminate\Support\Arr;
 
-class ChuckNorrisBuilder {
+class ChuckNorrisBuilder
+{
     public function __construct()
     {
-
     }
 
-    public function __invoke() {
+    public function __invoke()
+    {
         return [
-            'chuck-norris' => function() {
+            'chuck-norris' => function () {
                 $facts = config('chucknorris', []);
 
                 return Arr::random($facts);
-            }
+            },
         ];
     }
 }

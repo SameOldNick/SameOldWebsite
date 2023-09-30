@@ -2,9 +2,8 @@
 
 namespace App\Components\Placeholders\Builders;
 
-use Closure;
-
-class CustomBuilder {
+class CustomBuilder
+{
     protected $placeholders;
 
     public function __construct(array $placeholders = [])
@@ -12,23 +11,27 @@ class CustomBuilder {
         $this->placeholders = collect($placeholders);
     }
 
-    public function has(string $placeholder) {
+    public function has(string $placeholder)
+    {
         return $this->placeholders->has($placeholder);
     }
 
-    public function set(string $placeholder, callable $closure) {
+    public function set(string $placeholder, callable $closure)
+    {
         $this->placeholders[$placeholder] = $closure;
 
         return $this;
     }
 
-    public function remove(string $placeholder) {
+    public function remove(string $placeholder)
+    {
         unset($this->placeholders[$placeholder]);
 
         return $this;
     }
 
-    public function __invoke() {
+    public function __invoke()
+    {
         return $this->placeholders;
     }
 }
