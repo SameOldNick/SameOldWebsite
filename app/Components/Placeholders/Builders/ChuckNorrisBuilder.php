@@ -13,7 +13,7 @@ class ChuckNorrisBuilder
     public function __invoke()
     {
         return [
-            'chuck-norris' => function () {
+            'chuck-norris-fact' => function () {
                 $facts = config('chucknorris', []);
 
                 return Arr::random($facts);
