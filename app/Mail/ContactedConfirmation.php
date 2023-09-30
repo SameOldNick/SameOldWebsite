@@ -2,13 +2,14 @@
 
 namespace App\Mail;
 
+use App\Components\Placeholders\Factory as PlaceholdersFactory;
+use App\Components\Placeholders\Options;
+use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Settings\ContactPageSettings;
 use App\Http\Requests\ContactRequest;
 
 class ContactedConfirmation extends MarkdownTemplate
 {
-    use Concerns\HasPlaceholders;
-
     protected $content;
 
     public function __construct(
@@ -16,25 +17,29 @@ class ContactedConfirmation extends MarkdownTemplate
     ) {
     }
 
-    public function build(ContactPageSettings $settings)
+    public function build(ContactPageSettings $settings, PlaceholdersFactory $factory)
     {
         $replyTo = $settings->setting('sender_replyto');
         $subject = $settings->setting('sender_subject');
         $message = $settings->setting('sender_message');
 
-        $placeholders = $this->buildPlaceholders([
-            'name' => $this->request->name,
-            'email' => $this->request->email,
-            'subject' => $subject,
-            'message' => $this->request->message,
-        ]);
+        $collection = $factory->build(function (Options $options) use ($subject) {
+            $options
+                ->useDefaultBuilders()
+                ->set('name', $this->request->name)
+                ->set('email', $this->request->email)
+                ->set('subject', $subject)
+                ->set('message', $this->request->message);
+        });
 
-        $this->content = $this->fillPlaceholders($placeholders, $message);
+        $tagCompiler = new TagCompiler($collection);
+
+        $this->content = $tagCompiler->compile($message);
 
         $this
             ->to($this->request->email)
             ->replyTo($replyTo)
-            ->subject($this->fillPlaceholders($placeholders, $subject));
+            ->subject($tagCompiler->compile($subject));
     }
 
     protected function getContent()
