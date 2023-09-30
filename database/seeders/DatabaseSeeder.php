@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Components\Settings\ContactPageSettings;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
