@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Page;
 use App\Models\PageMetaData;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ContactPageSettingsSeeder extends Seeder
@@ -14,13 +13,13 @@ class ContactPageSettingsSeeder extends Seeder
      */
     public function run(): void
     {
-        $senderMessage = <<<END
+        $senderMessage = <<<'END'
 I will get back to you shortly.
 
 In the meantime, here's a random Chuck Norris fact: [chuck-norris-fact]
 END;
 
-        $recipientTemplate = <<<END
+        $recipientTemplate = <<<'END'
 Date: [date-time]
 Subject: [subject]
 
