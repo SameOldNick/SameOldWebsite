@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Components\Placeholders;
+namespace App\Components\Placeholders\Compilers;
 
 use function Safe\preg_match_all;
+
+use App\Components\Placeholders\PlaceholderCollection;
 
 class TagCompiler
 {
