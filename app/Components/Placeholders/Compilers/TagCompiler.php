@@ -2,9 +2,8 @@
 
 namespace App\Components\Placeholders\Compilers;
 
-use function Safe\preg_match_all;
-
 use App\Components\Placeholders\PlaceholderCollection;
+use function Safe\preg_match_all;
 
 class TagCompiler
 {
@@ -25,7 +24,8 @@ class TagCompiler
      *
      * @return PlaceholderCollection
      */
-    public function getCollection() {
+    public function getCollection()
+    {
         return $this->collection;
     }
 
@@ -35,15 +35,18 @@ class TagCompiler
      * @param string $content
      * @return string
      */
-    public function compile(string $content) {
-        if (!preg_match_all('/\[([^\]]+)\]/m', $content, $matches))
+    public function compile(string $content)
+    {
+        if (! preg_match_all('/\[([^\]]+)\]/m', $content, $matches)) {
             return $content;
+        }
 
         $compiled = $content;
 
         foreach ($matches[1] as $placeholder) {
-            if ($this->collection->has($placeholder))
+            if ($this->collection->has($placeholder)) {
                 $compiled = $this->replace($placeholder, $compiled);
+            }
         }
 
         return $compiled;
@@ -56,7 +59,8 @@ class TagCompiler
      * @param string $content
      * @return string
      */
-    protected function replace(string $placeholder, string $content) {
+    protected function replace(string $placeholder, string $content)
+    {
         $tag = sprintf('[%s]', $placeholder);
 
         $value = $this->collection->value($placeholder);

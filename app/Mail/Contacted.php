@@ -2,9 +2,9 @@
 
 namespace App\Mail;
 
+use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
-use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Settings\ContactPageSettings;
 use App\Http\Requests\ContactRequest;
 
@@ -12,7 +12,8 @@ class Contacted extends MarkdownTemplate
 {
     protected $content;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     public function build(ContactRequest $request, ContactPageSettings $settings, PlaceholdersFactory $factory)

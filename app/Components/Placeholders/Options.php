@@ -2,14 +2,16 @@
 
 namespace App\Components\Placeholders;
 
-use RuntimeException;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 class Options
 {
     protected $builders;
+
     protected $defaultBuilders;
+
     protected $customBuilder;
 
     /**
@@ -19,8 +21,7 @@ class Options
      */
     public function __construct(
         protected Container $container
-    )
-    {
+    ) {
         $this->builders = [];
         $this->defaultBuilders = false;
         $this->customBuilder = new Builders\CustomBuilder();
@@ -32,7 +33,8 @@ class Options
      * @param callable $builder
      * @return $this
      */
-    public function useBuilder(callable $builder) {
+    public function useBuilder(callable $builder)
+    {
         $this->builders = [...$this->builders, $builder];
 
         return $this;
@@ -41,10 +43,11 @@ class Options
     /**
      * Uses default builders
      *
-     * @param boolean $enabled If true, uses default builders. (default: true)
+     * @param bool $enabled If true, uses default builders. (default: true)
      * @return $this
      */
-    public function useDefaultBuilders(bool $enabled = true) {
+    public function useDefaultBuilders(bool $enabled = true)
+    {
         $this->defaultBuilders = $enabled;
 
         return $this;
@@ -54,9 +57,10 @@ class Options
      * Checks if custom placeholder exists
      *
      * @param string $placeholder
-     * @return boolean
+     * @return bool
      */
-    public function has(string $placeholder) {
+    public function has(string $placeholder)
+    {
         return $this->customBuilder->has($placeholder);
     }
 
@@ -67,8 +71,9 @@ class Options
      * @param string|callable $value
      * @return $this
      */
-    public function set(string $placeholder, $value) {
-        $value = !is_callable($value) ? fn () => $value : $value;
+    public function set(string $placeholder, $value)
+    {
+        $value = ! is_callable($value) ? fn () => $value : $value;
 
         $this->customBuilder->set($placeholder, $value);
 
@@ -81,7 +86,8 @@ class Options
      * @param string $placeholder
      * @return $this
      */
-    public function remove(string $placeholder) {
+    public function remove(string $placeholder)
+    {
         $this->customBuilder->remove($placeholder);
 
         return $this;
@@ -92,11 +98,13 @@ class Options
      *
      * @return array
      */
-    public function getBuilders() {
-        if ($this->defaultBuilders)
+    public function getBuilders()
+    {
+        if ($this->defaultBuilders) {
             return [...$this->getDefaultBuilders(), $this->customBuilder, ...$this->builders];
-        else
+        } else {
             return [$this->customBuilder, ...$this->builders];
+        }
     }
 
     /**
@@ -104,7 +112,8 @@ class Options
      *
      * @return array
      */
-    protected function getDefaultBuilders() {
+    protected function getDefaultBuilders()
+    {
         return [
             $this->container->make(Builders\GeneralBuilder::class),
             $this->container->make(Builders\RequestBuilder::class),
@@ -116,7 +125,7 @@ class Options
      * Checks if placeholder is set.
      *
      * @param string $name
-     * @return boolean
+     * @return bool
      */
     public function __isset($name)
     {
@@ -143,9 +152,11 @@ class Options
      * @param array $params
      * @return $this
      */
-    public function __call(string $method, array $params) {
-        if (count($params) === 0)
+    public function __call(string $method, array $params)
+    {
+        if (count($params) === 0) {
             throw new RuntimeException('No value specified for placeholder "' + $method + '" .');
+        }
 
         $placeholder = Str::kebab($method);
 

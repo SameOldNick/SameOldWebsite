@@ -2,9 +2,9 @@
 
 namespace App\Mail;
 
+use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
-use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Settings\ContactPageSettings;
 use App\Http\Requests\ContactRequest;
 use App\Models\PendingMessage;
