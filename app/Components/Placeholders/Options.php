@@ -108,6 +108,7 @@ class Options
         return [
             $this->container->make(Builders\GeneralBuilder::class),
             $this->container->make(Builders\RequestBuilder::class),
+            $this->container->make(Builders\ChuckNorrisBuilder::class),
         ];
     }
 
