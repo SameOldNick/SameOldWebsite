@@ -7,7 +7,7 @@ use Tests\TestCase;
 use App\Components\Placeholders\Factory;
 use App\Components\Placeholders\Options;
 use App\Components\Placeholders\PlaceholderCollection;
-use App\Components\Placeholders\TagCompiler;
+use App\Components\Placeholders\Compilers\TagCompiler;
 
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Contracts\Http\Kernel;
