@@ -1,3 +1,5 @@
 .react-icons {
     vertical-align: middle;
+    /* Fixes issue #82 with Bootstrap: https://github.com/twbs/icons/issues/82 */
+    vertical-align: -0.125em;
 }
