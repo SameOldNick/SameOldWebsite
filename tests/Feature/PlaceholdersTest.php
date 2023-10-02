@@ -143,4 +143,28 @@ class PlaceholdersTest extends TestCase
         $this->assertFalse(str_contains($compiled, request()->ip()));
         $this->assertEquals(0, preg_match('/[[^\]+]]/', $compiled));
     }
+
+    /**
+     * Tests the placeholder tags are escaped.
+     *
+     * @return void
+     */
+    public function test_placeholder_tags_escaped() {
+        $factory = app(Factory::class);
+
+        $collection = $factory->build(function (Options $options) {
+            $options
+                ->useDefaultBuilders();
+        });
+
+        $compiler = new TagCompiler($collection);
+
+        $template = '[[ip]]';
+
+        $compiled = $compiler->compile($template);
+
+        $this->assertNotEquals($template, $compiled);
+        $this->assertFalse(str_contains($compiled, request()->ip()));
+        $this->assertEquals('[ip]', $compiled);
+    }
 }
