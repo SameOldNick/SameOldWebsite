@@ -149,7 +149,8 @@ class PlaceholdersTest extends TestCase
      *
      * @return void
      */
-    public function test_placeholder_tags_escaped() {
+    public function test_placeholder_tags_escaped()
+    {
         $factory = app(Factory::class);
 
         $collection = $factory->build(function (Options $options) {
