@@ -77,7 +77,7 @@ export default withRouter(class All extends React.Component<IProps, IState> {
                             !user.deleted_at ?
                                 (
                                     <>
-                                        <Button tag={NavLink} to={`edit/${user.id}`} className='me-1'>
+                                        <Button color='primary' tag={NavLink} to={`edit/${user.id}`} className='me-1'>
                                             <FaEdit />
                                         </Button>
                                         <Button color='danger' onClick={onLockClicked} title='Lock account'>

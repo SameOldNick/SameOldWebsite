@@ -327,11 +327,11 @@ export default class TechnologyList extends React.Component<IProps, IState> {
                 <Row className="mb-3">
                     <Col className="d-flex justify-content-between">
                         <div>
-                            <Button onClick={() => this.setState({ addTechnology: true })}>Add Technology</Button>
+                            <Button color='primary' onClick={() => this.setState({ addTechnology: true })}>Add Technology</Button>
                         </div>
 
                         <div>
-                            <Button className="me-1" onClick={this.load}>
+                            <Button color='primary' className="me-1" onClick={this.load}>
                                 <span className='me-1'>
                                     <FaSync />
                                 </span>

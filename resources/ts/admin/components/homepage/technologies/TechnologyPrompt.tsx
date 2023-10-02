@@ -75,7 +75,7 @@ const TechnologyPrompt: React.FC<IProps> = ({ technology, onSubmitted, onClose }
                                             {selectedIcon && <Icon icon={selectedIcon} size={48} />}
                                         </Col>
                                         <Col xs={12} className='text-center'>
-                                            <Button onClick={() => setIconSelector(true)}>Choose Icon...</Button>
+                                            <Button color='primary' onClick={() => setIconSelector(true)}>Choose Icon...</Button>
                                         </Col>
                                     </Row>
 
