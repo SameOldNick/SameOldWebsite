@@ -62,9 +62,10 @@ class TagCompiler
      * Checks if tag is escaped.
      *
      * @param string $tag
-     * @return boolean
+     * @return bool
      */
-    protected function isEscaped(string $tag) {
+    protected function isEscaped(string $tag)
+    {
         return str_starts_with($tag, '[[') && str_ends_with($tag, ']]');
     }
 
@@ -75,7 +76,8 @@ class TagCompiler
      * @param string $content
      * @return string
      */
-    protected function escape(string $tag, string $content) {
+    protected function escape(string $tag, string $content)
+    {
         $value = substr($tag, 1, -1);
 
         return strtr($content, [$tag => $value]);
@@ -87,7 +89,8 @@ class TagCompiler
      * @param string $tag
      * @return string
      */
-    protected function extractPlaceholder(string $tag) {
+    protected function extractPlaceholder(string $tag)
+    {
         return trim($tag, '[]');
     }
 
