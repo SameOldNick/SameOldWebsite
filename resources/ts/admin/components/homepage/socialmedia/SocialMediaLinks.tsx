@@ -226,11 +226,11 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
                 <Row className="mb-3">
                     <Col className="d-flex justify-content-between">
                         <div>
-                            <Button onClick={() => this.setState({ addLink: true })}>Add Link</Button>
+                            <Button color='primary' onClick={() => this.setState({ addLink: true })}>Add Link</Button>
                         </div>
 
                         <div>
-                            <Button className="me-1" onClick={() => this.load()}>
+                            <Button color='primary' className="me-1" onClick={() => this.load()}>
                                 <span className='me-1'>
                                     <FaSync />
                                 </span>

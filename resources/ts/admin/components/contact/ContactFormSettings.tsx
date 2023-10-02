@@ -42,7 +42,7 @@ interface IState {
     recipientSubjectTooltipOpen: boolean;
 }
 
-export default class extends React.Component<IProps, IState> {
+export default class ContactFormSettings extends React.Component<IProps, IState> {
     private _waitToLoadRef = React.createRef<WaitToLoad<IPageMetaData[]>>();
 
     constructor(props: Readonly<IProps>) {
@@ -298,10 +298,10 @@ export default class extends React.Component<IProps, IState> {
 
                                                                     <List type='inline'>
                                                                         {
-                                                                            ['date-time', 'subject', 'message', 'user-agent', 'ip-address'].map(
+                                                                            ['date-time', 'subject', 'message', 'user-agent', 'ip-address', 'chuck-norris-fact'].map(
                                                                                 (value, index) => (
                                                                                     <ListInlineItem key={index}>
-                                                                                        <Badge color='secondary'>{`[${value}]`}</Badge>
+                                                                                        <Badge color='info'>{`[${value}]`}</Badge>
                                                                                     </ListInlineItem>
                                                                                 )
                                                                             )
@@ -464,7 +464,7 @@ export default class extends React.Component<IProps, IState> {
 
                                                     <Row>
                                                         <Col className='text-end'>
-                                                            <Button type='submit' disabled={isSubmitting}>
+                                                            <Button color='primary' type='submit' disabled={isSubmitting}>
                                                                 Save Settings
                                                             </Button>
                                                         </Col>

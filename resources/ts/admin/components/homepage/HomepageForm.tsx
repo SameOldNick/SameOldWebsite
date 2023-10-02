@@ -194,7 +194,7 @@ export default class extends React.Component<IProps, IState> {
 
                                                     <Row>
                                                         <Col className='text-end'>
-                                                            <Button type='submit' disabled={isSubmitting}>
+                                                            <Button color='primary' type='submit' disabled={isSubmitting}>
                                                                 Update Profile
                                                             </Button>
                                                         </Col>
