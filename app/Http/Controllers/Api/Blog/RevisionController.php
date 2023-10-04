@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Revision;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -30,8 +29,8 @@ class RevisionController extends Controller
             'parent' => [
                 'nullable',
                 'uuid',
-                Rule::exists(Revision::class, 'uuid')->where('article_id', $article->getKey())
-            ]
+                Rule::exists(Revision::class, 'uuid')->where('article_id', $article->getKey()),
+            ],
         ]);
 
         $revision = new Revision([
@@ -45,7 +44,7 @@ class RevisionController extends Controller
         } else {
             $latest = $article->revisions()->latest()->first();
 
-            if (!is_null($latest)) {
+            if (! is_null($latest)) {
                 $revision->parentRevision()->associate($latest);
             }
         }

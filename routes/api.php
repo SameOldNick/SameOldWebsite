@@ -62,7 +62,7 @@ Route::namespace(Api::class)->group(function () {
         Route::post('/user/notifications/{notification}/unread', [Api\NotificationsController::class, 'markUnread']);
         Route::delete('/user/notifications/{notification}', [Api\NotificationsController::class, 'destroy']);
 
-        Route::prefix('/blog')->group(function() {
+        Route::prefix('/blog')->group(function () {
             Route::apiResource('articles', Api\Blog\ArticleController::class);
             Route::apiResource('articles.revisions', Api\Blog\RevisionController::class)->except(['update']);
             Route::apiResource('articles.images', Api\Blog\ImageController::class)->except(['update']);
@@ -77,9 +77,7 @@ Route::namespace(Api::class)->group(function () {
             Route::post('/articles/{article}/tags', [Api\Blog\TagController::class, 'attach']);
             Route::put('/articles/{article}/tags', [Api\Blog\TagController::class, 'sync']);
             Route::delete('/articles/{article}/tags', [Api\Blog\TagController::class, 'detach']);
-
         });
-
     });
 
     Route::get('/user/{user}/avatar/download', [Api\AvatarController::class, 'downloadAvatar'])->middleware(['signed:t'])->name('avatar.download');

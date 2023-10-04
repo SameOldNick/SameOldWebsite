@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Models\Article;
-use App\Models\Revision;
-use App\Models\File;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Models\Article;
+use App\Models\Revision;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -119,7 +118,7 @@ class ArticleController extends Controller
             ],
         ]);
 
-        if (!is_null($request->revision)) {
+        if (! is_null($request->revision)) {
             $revision = Revision::find($request->revision);
             $article->currentRevision()->associate($revision);
         } else {
@@ -137,7 +136,8 @@ class ArticleController extends Controller
      * @param Article $article
      * @return array
      */
-    public function restore(Article $article) {
+    public function restore(Article $article)
+    {
         $article->restore();
 
         return [
