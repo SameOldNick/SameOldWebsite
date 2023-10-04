@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Rules\Slugified;
 
 class StoreArticleRequest extends FormRequest
 {
@@ -23,11 +25,17 @@ class StoreArticleRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
-            'summary' => 'nullable|string|max:255',
-            'content' => 'required|string',
-            'image' => 'sometimes|image',
-            'image_description' => 'sometimes|string|max:255',
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                new Slugified,
+                Rule::unique('articles')
+            ],
+            'revision' => 'required|array:content,summary',
+            'revision.content' => 'required|string',
+            'revision.summary' => 'nullable|string',
+            'published_at' => 'nullable|date'
         ];
     }
 }
