@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Slugified;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Rules\Slugified;
 
 class StoreArticleRequest extends FormRequest
 {
@@ -30,12 +30,12 @@ class StoreArticleRequest extends FormRequest
                 'string',
                 'max:255',
                 new Slugified,
-                Rule::unique('articles')
+                Rule::unique('articles'),
             ],
             'revision' => 'required|array:content,summary',
             'revision.content' => 'required|string',
             'revision.summary' => 'nullable|string',
-            'published_at' => 'nullable|date'
+            'published_at' => 'nullable|date',
         ];
     }
 }

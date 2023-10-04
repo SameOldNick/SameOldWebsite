@@ -24,7 +24,7 @@ class TagController extends Controller
     {
         $request->validate([
             'tags' => 'required|array',
-            'tags.*' => 'required|string|max:255'
+            'tags.*' => 'required|string|max:255',
         ]);
 
         $tags = $this->transformTags($request->tags);
@@ -41,7 +41,7 @@ class TagController extends Controller
     {
         $request->validate([
             'tags' => 'required|array',
-            'tags.*' => 'required|string|max:255'
+            'tags.*' => 'required|string|max:255',
         ]);
 
         $tags = $this->transformTags($request->tags);
@@ -58,7 +58,7 @@ class TagController extends Controller
     {
         $request->validate([
             'tags' => 'required|array',
-            'tags.*' => 'required|string|max:255'
+            'tags.*' => 'required|string|max:255',
         ]);
 
         $tags = $this->transformTags($request->tags);
@@ -74,7 +74,8 @@ class TagController extends Controller
      * @param array $tags
      * @return array
      */
-    protected function transformTags(array $tags) {
+    protected function transformTags(array $tags)
+    {
         return collect($tags)->map(fn ($tag) => Tag::firstOrCreate(['tag' => $tag])->getKey());
     }
 }
