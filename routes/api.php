@@ -72,6 +72,14 @@ Route::namespace(Api::class)->group(function () {
 
             Route::post('/articles/{article}/images/{image}/main-image', [Api\Blog\ImageController::class, 'mainImage']);
             Route::delete('/articles/{article}/main-image', [Api\Blog\ImageController::class, 'destroyMainImage']);
+
+            Route::get('/articles/{article}/tags', [Api\Blog\TagController::class, 'index']);
+            Route::post('/articles/{article}/tags', [Api\Blog\TagController::class, 'attach']);
+            Route::put('/articles/{article}/tags', [Api\Blog\TagController::class, 'sync']);
+            Route::delete('/articles/{article}/tags', [Api\Blog\TagController::class, 'detach']);
+
+        });
+
     });
 
     Route::get('/user/{user}/avatar/download', [Api\AvatarController::class, 'downloadAvatar'])->middleware(['signed:t'])->name('avatar.download');
