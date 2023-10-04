@@ -61,6 +61,12 @@ Route::namespace(Api::class)->group(function () {
         Route::post('/user/notifications/{notification}/read', [Api\NotificationsController::class, 'markRead']);
         Route::post('/user/notifications/{notification}/unread', [Api\NotificationsController::class, 'markUnread']);
         Route::delete('/user/notifications/{notification}', [Api\NotificationsController::class, 'destroy']);
+
+        Route::prefix('/blog')->group(function() {
+            Route::apiResource('articles', Api\Blog\ArticleController::class);
+
+            Route::post('/articles/restore/{article}', [Api\Blog\ArticleController::class, 'restore'])->withTrashed();
+            Route::post('/articles/{article}/revision', [Api\Blog\ArticleController::class, 'revision']);
     });
 
     Route::get('/user/{user}/avatar/download', [Api\AvatarController::class, 'downloadAvatar'])->middleware(['signed:t'])->name('avatar.download');
