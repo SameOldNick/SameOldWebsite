@@ -32,6 +32,10 @@ jobs:
         id: install
         run: npm ci
 
+      - name: Update Composer Dependencies
+        id: composer-update
+        run: composer update --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+
       - name: Lint Code Base
         id: super-linter
         uses: super-linter/super-linter/slim@v5
