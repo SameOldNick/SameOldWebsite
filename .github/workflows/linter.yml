@@ -28,8 +28,8 @@ jobs:
           node-version: 18
           cache: npm
 
-      - name: Install Dependencies
-        id: install
+      - name: Install NPM Dependencies
+        id: npm-install
         run: npm ci
 
       - name: Update Composer Dependencies
