@@ -65,9 +65,13 @@ Route::namespace(Api::class)->group(function () {
         Route::prefix('/blog')->group(function() {
             Route::apiResource('articles', Api\Blog\ArticleController::class);
             Route::apiResource('articles.revisions', Api\Blog\RevisionController::class)->except(['update']);
+            Route::apiResource('articles.images', Api\Blog\ImageController::class)->except(['update']);
 
             Route::post('/articles/restore/{article}', [Api\Blog\ArticleController::class, 'restore'])->withTrashed();
             Route::post('/articles/{article}/revision', [Api\Blog\ArticleController::class, 'revision']);
+
+            Route::post('/articles/{article}/images/{image}/main-image', [Api\Blog\ImageController::class, 'mainImage']);
+            Route::delete('/articles/{article}/main-image', [Api\Blog\ImageController::class, 'destroyMainImage']);
     });
 
     Route::get('/user/{user}/avatar/download', [Api\AvatarController::class, 'downloadAvatar'])->middleware(['signed:t'])->name('avatar.download');
