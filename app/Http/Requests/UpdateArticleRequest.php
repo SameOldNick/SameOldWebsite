@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+use App\Rules\Slugified;
 
 class UpdateArticleRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class UpdateArticleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +25,19 @@ class UpdateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'nullable|string|max:255',
+            'slug' => [
+                'nullable',
+                'string',
+                'max:255',
+                new Slugified
+            ],
+            'published_at' => 'nullable|date',
+            'current_revision' => [
+                'nullable',
+                'uuid',
+                Rule::exists(Revision::class, 'uuid')->where('article_id', $this->article->getKey())
+            ]
         ];
     }
 }
