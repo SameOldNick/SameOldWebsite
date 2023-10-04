@@ -46,3 +46,4 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_TYPESCRIPT_ES: true
           VALIDATE_TSX: true
+          ACTIONS_RUNNER_DEBUG: true
