@@ -239,7 +239,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
     const handleRevisionsClicked = () => setShowSelectRevisionModal(true);
 
     const handleRevisionSelected = (revision: IRevision) => {
-        if (!article.article.id || revision.uuid) {
+        if (!article.article.id || !revision.uuid) {
             console.error('Article ID or revision UUID is missing.', article, revision);
 
             return;
