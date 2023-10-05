@@ -29,6 +29,7 @@ import ContactSettings from './protected/contact/Settings';
 import Profile from './protected/homepage/Profile';
 import Skills from './protected/homepage/Skills';
 import Technologies from './protected/homepage/Technologies';
+import CurrentRevision from '@admin/components/blog/CurrentRevision';
 
 const Pages: React.FC = () => {
     return (
@@ -42,6 +43,7 @@ const Pages: React.FC = () => {
 
                         <Route path='posts'>
                             <Route path='create' element={<CreatePost />} />
+                            <Route path='edit/:article' element={<CurrentRevision />} />
                             <Route path='edit/:article/revisions/:revision' element={<EditPost />} />
 
                             <Route index element={<AllPosts />} />
