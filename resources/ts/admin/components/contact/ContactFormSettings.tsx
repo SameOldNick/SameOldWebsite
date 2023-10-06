@@ -348,7 +348,7 @@ export default class ContactFormSettings extends React.Component<IProps, IState>
                                                                 <Collapse isOpen={values.require_recaptcha}>
                                                                     <Row>
                                                                         <Col xs={12}>
-                                                                            <p className='mb-1'>Ensure reCAPTCHA is setup in the 'config/recaptcha.php' file.</p>
+                                                                            <p className='mb-1'>Ensure reCAPTCHA is setup in the &apos;config/recaptcha.php&apos; file.</p>
                                                                         </Col>
                                                                     </Row>
                                                                 </Collapse>

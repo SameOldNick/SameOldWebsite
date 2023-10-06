@@ -29,7 +29,7 @@ interface IProps extends IHasRouter {
 interface IState {
 }
 
-export default class extends React.Component<IProps, IState> {
+export default class HomepageForm extends React.Component<IProps, IState> {
     private _waitToLoadRef = React.createRef<WaitToLoad<IPageMetaData[]>>();
 
     constructor(props: Readonly<IProps>) {

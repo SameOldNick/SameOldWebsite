@@ -11,7 +11,7 @@ const shouldDisplayButton = () => window.scrollY > 100;
 const ScrollToTop: React.FC<IProps> = ({ scrollTo }) => {
     const [show, setShow] = React.useState(shouldDisplayButton());
 
-    const onScroll = (e: Event) => {
+    const onScroll = () => {
         const shouldDisplay = shouldDisplayButton();
 
         if (shouldDisplay && !show) {

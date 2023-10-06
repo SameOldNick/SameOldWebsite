@@ -23,7 +23,7 @@ interface IProps extends IHasRouter<'project'> {
 interface IState {
 }
 
-export default withRouter(class extends React.Component<IProps, IState> {
+export default withRouter(class Edit extends React.Component<IProps, IState> {
     private _waitToLoadRef = React.createRef<WaitToLoad<IProject>>();
 
     constructor(props: Readonly<IProps>) {
@@ -112,9 +112,6 @@ export default withRouter(class extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const { } = this.props;
-        const { } = this.state;
-
         return (
             <>
                 <Helmet>

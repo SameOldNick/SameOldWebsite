@@ -32,4 +32,6 @@ const CurrentAvatar = React.forwardRef<Avatar, ICurrentAvatarProps>(({ size }, r
     return <Avatar ref={ref} {...attrs} />
 });
 
+CurrentAvatar.displayName = 'CurrentAvatar';
+
 export default CurrentAvatar;

@@ -13,7 +13,7 @@ const LogoutModal: React.FC<IProps> = ({ show, onCancel, onLogout }) => (
             Ready to Leave?
         </ModalHeader>
         <ModalBody>
-            Select "Logout" below if you are ready to end your current session.
+            Select &quot;Logout&quot; below if you are ready to end your current session.
         </ModalBody>
         <ModalFooter>
             <Button color="secondary" onClick={onCancel}>

@@ -30,7 +30,7 @@ interface IState {
     tags: Tag[];
 }
 
-export default class extends React.Component<IProps, IState> {
+export default class ProjectForm extends React.Component<IProps, IState> {
     public static defaultProps = {
         initialTags: []
     };

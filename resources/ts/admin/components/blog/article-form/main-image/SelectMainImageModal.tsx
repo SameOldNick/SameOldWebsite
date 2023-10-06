@@ -21,10 +21,6 @@ interface IProps {
     onCancelled: () => void;
 }
 
-interface IState {
-    uploaded?: IUploaded;
-}
-
 const SelectMainImageModal: React.FC<IProps> = ({ onSelected, onCancelled }) => {
     const descriptionRef = React.createRef<HTMLInputElement>();
 
@@ -39,7 +35,7 @@ const SelectMainImageModal: React.FC<IProps> = ({ onSelected, onCancelled }) => 
 
     const handleFileRemoved = () => setUploaded(undefined);
 
-    const handleSelectClicked = (e: React.MouseEvent) => {
+    const handleSelectClicked = () => {
         if (!uploaded)
             return;
 

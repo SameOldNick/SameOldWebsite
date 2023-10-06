@@ -154,7 +154,7 @@ export default connector(class Messages extends React.Component<TProps, IState> 
 
     private async markUnread(notification: TMessageNotification) {
         try {
-            const response = await createAuthRequest().post<TMessageNotification>(`/user/notifications/${notification.id}/unread`, {});
+            await createAuthRequest().post<TMessageNotification>(`/user/notifications/${notification.id}/unread`, {});
 
             await this.fetchMessages();
         } catch (err) {
@@ -164,7 +164,7 @@ export default connector(class Messages extends React.Component<TProps, IState> 
 
     private async markRead(notification: TMessageNotification) {
         try {
-            const response = await createAuthRequest().post<TMessageNotification>(`/user/notifications/${notification.id}/read`, {});
+            await createAuthRequest().post<TMessageNotification>(`/user/notifications/${notification.id}/read`, {});
 
             await this.fetchMessages();
         } catch (err) {

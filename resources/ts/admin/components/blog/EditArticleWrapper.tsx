@@ -6,7 +6,7 @@ import axios from 'axios';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { DateTime } from 'luxon';
 
-import { IMainImageExisting, IMainImageNew, TMainImage, isMainImageNew } from './article-form/main-image';
+import { IMainImageExisting, TMainImage, isMainImageNew } from './article-form/main-image';
 import EditForm, { IArticleValues } from './EditForm';
 import Revision from '@admin/utils/api/models/Revision';
 import Article from '@admin/utils/api/models/Article';
@@ -17,7 +17,7 @@ import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import { createRevision, deleteMainImage, loadTags, setCurrentRevision, updateArticle, attachTags, uploadMainImage, setMainImage as setMainImageApi, syncTags } from '@admin/utils/api/calls/articles';
+import { createRevision, deleteMainImage, loadTags, setCurrentRevision, updateArticle, uploadMainImage, setMainImage as setMainImageApi, syncTags } from '@admin/utils/api/calls/articles';
 
 interface IEditArticleWrapperProps extends IHasRouter<'article' | 'revision'> {
     article: Article;

@@ -23,7 +23,7 @@ const Countries = React.forwardRef<Input, ICountriesProps>(({ ...props }, ref) =
 
             setCountries(newCountries);
         } catch (err) {
-
+            console.error(err);
         }
     }
 
@@ -43,5 +43,7 @@ const Countries = React.forwardRef<Input, ICountriesProps>(({ ...props }, ref) =
         </>
     )
 });
+
+Countries.displayName = 'Countries';
 
 export default Countries;

@@ -5,8 +5,7 @@ import withReactContent from "sweetalert2-react-content";
 
 import Swal from "sweetalert2";
 
-import SelectMainImageModal, { ISelected, IUploaded } from "./SelectMainImageModal";
-import { IconContext } from "react-icons";
+import SelectMainImageModal, { ISelected } from "./SelectMainImageModal";
 
 export interface IMainImageNew {
     file: File;
@@ -41,7 +40,7 @@ const SelectMainImage: React.FC<IProps> = ({ current, onChange, ...props }) => {
         showUploadModal(false);
     }
 
-    const handleDeleteClicked = async (e: React.MouseEvent) => {
+    const handleDeleteClicked = async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Remove Main Image?',
