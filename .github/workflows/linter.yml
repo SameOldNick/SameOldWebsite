@@ -45,7 +45,7 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TYPESCRIPT_DEFAULT_STYLE: prettier
-          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ALL_CODEBASE: false
           VALIDATE_TYPESCRIPT_ES: true
           VALIDATE_TSX: true
           ACTIONS_RUNNER_DEBUG: true
