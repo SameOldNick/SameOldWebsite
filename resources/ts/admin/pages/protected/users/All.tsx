@@ -1,21 +1,23 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Button, Card, CardBody, Col, Form, Input, Row, Table } from 'reactstrap';
+import { FaEdit, FaLock, FaPlus, FaRedo, FaUnlock } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
+import withReactContent from 'sweetalert2-react-content';
+
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { DateTime } from 'luxon';
 
 import Heading from '@admin/layouts/admin/Heading';
-import { Button, Card, CardBody, Col, Form, Input, Row, Table } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
-import { FaEdit, FaLock, FaPlus, FaRedo, FaTrash, FaUndo, FaUnlock } from 'react-icons/fa';
-import { createAuthRequest } from '@admin/utils/api/factories';
 import LockUserModal from '@admin/components/users/LockUserModal';
 import UnlockUserModal from '@admin/components/users/UnlockUserModal';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
-import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import axios from 'axios';
 import withRouter, { IHasRouter } from '@admin/components/hoc/withRouter';
-import { DateTime } from 'luxon';
+
+import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import { createAuthRequest } from '@admin/utils/api/factories';
 
 interface IProps extends IHasRouter {
 
