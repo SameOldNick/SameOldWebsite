@@ -14,27 +14,20 @@ interface IProps {
 interface IState {
 }
 
-export default class extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
-        super(props);
+const App: React.FC<IProps> = ({ }) => {
+    return (
+        <>
+            <Helmet titleTemplate='%s | Same Old Nick' />
 
-        this.state = {
-        };
-    }
-
-    public render() {
-        return (
-            <>
-                <Helmet titleTemplate='%s | Same Old Nick' />
-
-                <Provider store={store}>
-                    <IconContext.Provider value={{ className: 'react-icons' }}>
-                        <Router>
-                            <Pages />
-                        </Router>
-                    </IconContext.Provider>
-                </Provider>
-            </>
-        );
-    }
+            <Provider store={store}>
+                <IconContext.Provider value={{ className: 'react-icons' }}>
+                    <Router>
+                        <Pages />
+                    </Router>
+                </IconContext.Provider>
+            </Provider>
+        </>
+    );
 }
+
+export default App;
