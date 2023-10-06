@@ -28,11 +28,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: npm
+          cache: yarn
 
-      - name: Install NPM Dependencies
-        id: npm-install
-        run: npm ci
+      - name: Install Yarn Dependencies
+        id: yarn-install
+        run: yarn install --frozen-lockfile
 
       - name: Update Composer Dependencies
         id: composer-update
