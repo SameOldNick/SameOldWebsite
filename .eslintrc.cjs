@@ -31,5 +31,10 @@ module.exports = {
         "react"
     ],
     "rules": {
-    }
+    },
+    "settings": {
+        "jest": {
+            "version": import('jest/package.json').version,
+        },
+    },
 }
