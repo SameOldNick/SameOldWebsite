@@ -11,9 +11,6 @@ interface IProps {
 
 }
 
-interface IState {
-}
-
 const App: React.FC<IProps> = ({ }) => {
     return (
         <>
