@@ -57,7 +57,7 @@ export default connector(class User extends React.Component<TProps, IState> {
     }
 
     private async logout() {
-        const response = await createAuthRequest().post('logout', {});
+        await createAuthRequest().post('logout', {});
 
         this.props.dispatchAuthStage({ stage: 'none' });
     }

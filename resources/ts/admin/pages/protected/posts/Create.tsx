@@ -28,7 +28,7 @@ interface IState {
     mainImage: TMainImage | undefined;
 }
 
-export default class extends React.Component<IProps, IState> {
+export default class Create extends React.Component<IProps, IState> {
     constructor(props: Readonly<IProps>) {
         super(props);
 
@@ -154,7 +154,6 @@ export default class extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const { } = this.props;
         const { created, tags, mainImage } = this.state;
 
         return (

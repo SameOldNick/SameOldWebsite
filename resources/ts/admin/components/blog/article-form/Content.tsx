@@ -20,7 +20,7 @@ export const generateSlugFromTitle = (title: string) => {
     return slug;
 }
 
-const Content: React.FC<IProps> = ({ formikProps: { errors, touched, isSubmitting, values, handleChange, handleBlur, setFieldValue } }) => {
+const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, handleChange, handleBlur, setFieldValue } }) => {
     const [slugTooltipOpen, setSlugTooltipOpen] = React.useState(false);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

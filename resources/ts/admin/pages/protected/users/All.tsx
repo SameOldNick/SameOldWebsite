@@ -156,7 +156,6 @@ export default withRouter(class All extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const { } = this.props;
         const { show } = this.state;
 
         return (

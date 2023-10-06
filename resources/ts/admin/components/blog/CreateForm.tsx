@@ -93,4 +93,6 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
     );
 });
 
+CreateForm.displayName = 'CreateForm';
+
 export default CreateForm;

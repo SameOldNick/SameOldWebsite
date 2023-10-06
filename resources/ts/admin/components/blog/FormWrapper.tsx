@@ -60,4 +60,6 @@ const FormWrapper = React.forwardRef<FormikProps<IFormikValues>, IProps>(({ chil
     );
 });
 
+FormWrapper.displayName = 'FormWrapper';
+
 export default FormWrapper;

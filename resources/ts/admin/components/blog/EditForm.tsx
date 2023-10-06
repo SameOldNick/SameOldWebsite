@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormikProps } from 'formik';
-import { Badge, Button, Card, CardBody, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, List, Row, Tooltip } from 'reactstrap';
+import { Badge, Button, Card, CardBody, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 import withReactContent from 'sweetalert2-react-content';
 import { FaExternalLinkAlt, FaInfoCircle, FaUndo } from 'react-icons/fa';
 import { Tag } from 'react-tag-autocomplete';
@@ -79,7 +79,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
     const formikRef = React.useRef<FormikProps<IEditArticleFormValues> | null>();
     const waitToLoadRevisionsRef = React.createRef<WaitToLoad<IRevision[]>>();
 
-    const [renderCount, setRenderCount] = React.useState(0);
+    const [, setRenderCount] = React.useState(0);
     const [showSelectRevisionModal, setShowSelectRevisionModal] = React.useState(false);
     const [showScheduleModal, setShowScheduleModal] = React.useState(false);
     const [buttonDropdownOpen, setButtonDropdownOpen] = React.useState(false);
@@ -106,7 +106,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
             [article, revision]
         );
 
-    const handleSaveAsRevisionClicked = async (e: React.MouseEvent) => {
+    const handleSaveAsRevisionClicked = async () => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
@@ -123,7 +123,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
         });
     }
 
-    const handleUpdateClicked = async (e: React.MouseEvent) => {
+    const handleUpdateClicked = async () => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
@@ -140,7 +140,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
         });
     }
 
-    const handlePublishClicked = async (e: React.MouseEvent) => {
+    const handlePublishClicked = async () => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
@@ -157,7 +157,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
         }, DateTime.now());
     }
 
-    const handleUnpublishClicked = async (e: React.MouseEvent) => {
+    const handleUnpublishClicked = async () => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
@@ -174,7 +174,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
         });
     }
 
-    const handleScheduleClicked = async (e: React.MouseEvent) => {
+    const handleScheduleClicked = async () => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
@@ -202,7 +202,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
         setShowScheduleModal(false);
     }
 
-    const handleUnscheduleClicked = async (e: React.MouseEvent) => {
+    const handleUnscheduleClicked = async () => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
@@ -219,7 +219,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
         });
     }
 
-    const handleDeleteClicked = async (e: React.MouseEvent) => {
+    const handleDeleteClicked = async () => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
@@ -445,5 +445,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
         </>
     );
 });
+
+EditForm.displayName = 'EditForm';
 
 export default EditForm;

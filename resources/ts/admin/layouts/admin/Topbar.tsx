@@ -1,7 +1,6 @@
 import React from 'react';
 import { Nav, Navbar } from 'reactstrap';
 
-import Alerts from '@admin/layouts/admin/topbar/Alerts';
 import Messages from '@admin/layouts/admin/topbar/Messages';
 import Search from '@admin/layouts/admin/topbar/SearchDropdown';
 import SearchForm from '@admin/layouts/admin/topbar/SearchForm';

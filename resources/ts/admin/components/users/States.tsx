@@ -32,7 +32,7 @@ const States = React.forwardRef<Input, IStatesProps>(({ country, optional, ...pr
 
             setStates(newStates);
         } catch (err) {
-
+            console.error(err);
         }
     }
 
@@ -55,6 +55,8 @@ const States = React.forwardRef<Input, IStatesProps>(({ country, optional, ...pr
         </>
     )
 });
+
+States.displayName = 'States';
 
 States.defaultProps = {
     optional: false

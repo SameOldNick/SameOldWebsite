@@ -22,7 +22,7 @@ interface IState {
     user?: IUser;
 }
 
-export default class extends React.Component<IProps, IState> {
+export default class Create extends React.Component<IProps, IState> {
     constructor(props: Readonly<IProps>) {
         super(props);
 

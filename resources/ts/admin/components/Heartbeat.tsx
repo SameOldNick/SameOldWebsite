@@ -95,7 +95,6 @@ export default class Heartbeat extends React.Component<IProps, IState> {
 
     public componentDidUpdate(prevProps: Readonly<IProps>) {
         const { active } = this.props;
-        const { } = this.state;
 
         if (active !== prevProps.active) {
             if (active)
@@ -118,7 +117,6 @@ export default class Heartbeat extends React.Component<IProps, IState> {
      */
     private async beat(doCallback: boolean) {
         const { active, interval, callback, maxExecutionTimeMs } = this.props;
-        const { } = this.state;
 
         if (!active)
             return;
@@ -180,8 +178,6 @@ export default class Heartbeat extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const { } = this.props;
-
         return (
             <></>
         );

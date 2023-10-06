@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaCalendarAlt, FaEdit, FaExternalLinkAlt, FaFileAlt, FaPlus, FaPrint, FaSave, FaSync, FaToolbox, FaTrash, FaUndo } from 'react-icons/fa';
+import { FaCalendarAlt, FaEdit, FaExternalLinkAlt, FaFileAlt, FaPlus, FaSave, FaSync, FaToolbox, FaTrash, FaUndo } from 'react-icons/fa';
 import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Row, Table } from 'reactstrap';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -161,7 +161,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
 
         const deleteArticle = async () => {
             try {
-                const { success } = await deleteArticleApi(article);
+                await deleteArticleApi(article);
 
                 onUpdated();
             } catch (err) {
@@ -201,7 +201,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
 
         const restoreArticle = async () => {
             try {
-                const { success } = await restoreArticleApi(article);
+                await restoreArticleApi(article);
 
                 onUpdated();
             } catch (err) {

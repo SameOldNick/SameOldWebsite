@@ -34,7 +34,7 @@ interface IState {
     country?: ICountry;
 }
 
-export default class extends React.Component<TProps, IState> {
+export default class UserForm extends React.Component<TProps, IState> {
     constructor(props: Readonly<TProps>) {
         super(props);
 

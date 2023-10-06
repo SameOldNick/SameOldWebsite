@@ -44,8 +44,6 @@ export default connector(class FourZeroFour extends React.Component<TProps, ISta
     }
 
     public render() {
-        const { } = this.state;
-
         return (
             <Layout>
                 <Helmet>
