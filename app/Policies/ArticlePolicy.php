@@ -19,7 +19,7 @@ class ArticlePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Article $article)
+    public function view(?User $user, Article $article)
     {
         return ! is_null($article->published_at) && $article->published_at->isPast() ? Response::allow() : Response::denyAsNotFound();
     }
