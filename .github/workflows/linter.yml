@@ -28,6 +28,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: yarn
 
       - name: Install Yarn Dependencies
         id: yarn-install
