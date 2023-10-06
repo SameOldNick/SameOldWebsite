@@ -31,6 +31,9 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "@typescript-eslint/no-explicit-any": "warn",
+        "no-empty-pattern": "warn",
+        "@typescript-eslint/no-unused-vars": "warn"
     },
     "settings": {
         "jest": {
