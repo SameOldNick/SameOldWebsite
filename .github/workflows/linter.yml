@@ -31,7 +31,7 @@ jobs:
 
       - name: Install Yarn Dependencies
         id: yarn-install
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Update Composer Dependencies
         id: composer-update
