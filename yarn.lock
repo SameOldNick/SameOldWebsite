@@ -1382,10 +1382,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/aos@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "@types/aos@npm:3.0.4"
-  checksum: 55c54865df6e0758a32c8ab9a617b63318e0d8a7f7f0b6d02747aa541aa2638e3fd57a8d6f3a4277fcf9a0bffabf9d4e8c95b1d7b54f88859a85fbbd7e10bf2a
+"@types/aos@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@types/aos@npm:3.0.5"
+  checksum: 387275d0708410fe24641ba9417c45e3255485372804636a31af1f3ea259404911a0b525d9b6fb5fa721d2bdd703c03675cd94cb2c63cdb3d939197a0cd11149
   languageName: node
   linkType: hard
 
@@ -8251,7 +8251,7 @@ __metadata:
     "@fortawesome/fontawesome-free": ^6.1.1
     "@reduxjs/toolkit": ^1.8.4
     "@tinymce/tinymce-react": ^4.2.0
-    "@types/aos": ^3.0.4
+    "@types/aos": ^3.0.5
     "@types/blueimp-md5": ^2.18.0
     "@types/bootstrap": ^5.2.7
     "@types/codemirror": ^5.60.8
