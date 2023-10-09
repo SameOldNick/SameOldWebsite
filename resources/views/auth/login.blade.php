@@ -94,7 +94,7 @@
                                     </button>
                                 </div>
 
-                                <div class="login-or my-5">
+                                <div class="login-or mt-3">
                                     <hr class="hr-or bg-dark">
                                     <span class="span-or bg-white">or</span>
                                 </div>
