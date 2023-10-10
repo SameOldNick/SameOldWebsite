@@ -33,7 +33,10 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $with = ['post'];
+    protected $with = [
+        'post',
+        'article'
+    ];
 
     /**
      * The attributes that should be cast.
