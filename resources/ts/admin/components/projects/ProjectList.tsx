@@ -65,7 +65,7 @@ export default class ProjectList extends React.Component<IProps, IState> {
                     <td>{project.project}</td>
                     <td>{S(project.description).truncate(40).s}</td>
                     <td>
-                        <a href={project.url} target='_blank'>
+                        <a href={project.url} target='_blank' rel='noreferrer'>
                             {project.url}
                         </a>
                     </td>
