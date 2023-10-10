@@ -37,6 +37,7 @@ trait Postable
     {
         return
             $this->morphOne(Post::class, 'postable')
+                ->withTrashed()
                 ->withDefault(fn () => new Post);
     }
 
