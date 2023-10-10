@@ -14,6 +14,7 @@ interface IProps<TData = unknown> {
 }
 
 interface IState {
+    lastLink?: string;
     lastResponse: PaginateResponse;
 }
 
@@ -114,7 +115,7 @@ export default class PaginatedTable<TData> extends React.Component<IProps<TData>
     private onPageItemClick(e: React.MouseEvent, link: string) {
         e.preventDefault();
 
-        this.pullData(link);
+        this.setState({ lastLink: link }, () => this.pullData(link));
     }
 
     /**
@@ -231,6 +232,15 @@ export default class PaginatedTable<TData> extends React.Component<IProps<TData>
                 </div>
             </nav>
         );
+    }
+
+    public reload() {
+        const { lastLink } = this.state;
+
+        if (lastLink)
+            this.pullData(lastLink);
+        else
+            this.forceUpdate();
     }
 
     public render() {
