@@ -26,6 +26,16 @@ class Post extends Model
     protected $with = [];
 
     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<string>
+     */
+    protected $hidden = [
+        'postable_type',
+        'postable_id'
+    ];
+
+    /**
      * Gets the user who made this post.
      *
      * @return mixed
