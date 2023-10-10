@@ -35,7 +35,7 @@ class Comment extends Model
      */
     protected $with = [
         'post',
-        'article'
+        'article',
     ];
 
     /**
