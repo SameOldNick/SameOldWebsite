@@ -1,8 +1,7 @@
 import { buildUrl } from 'build-url-ts';
+import { AxiosRequestConfig } from 'axios';
 
 import store from '@admin/store';
-
-import { AxiosRequestConfig } from 'axios';
 
 import account from '@admin/store/slices/account';
 

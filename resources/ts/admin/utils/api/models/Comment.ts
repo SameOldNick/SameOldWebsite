@@ -1,6 +1,7 @@
-import { DateTime } from "luxon";
-import Article from "./Article";
 import { generatePath } from "react-router-dom";
+import { DateTime } from "luxon";
+
+import Article from "./Article";
 import User from "./User";
 
 export type TCommentStatuses = 'awaiting' | 'approved' | 'denied';

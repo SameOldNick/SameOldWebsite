@@ -2,9 +2,9 @@ import { Tag } from "react-tag-autocomplete";
 import { DateTime } from "luxon";
 
 import { IMainImageNew } from "@admin/components/blog/article-form/main-image";
-import Article from "../models/Article";
 import { createAuthRequest } from "../factories";
 
+import Article from "../models/Article";
 import Revision from "../models/Revision";
 
 /**
