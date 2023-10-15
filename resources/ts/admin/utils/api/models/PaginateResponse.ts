@@ -1,6 +1,11 @@
 import { excludeFromObject } from "@admin/utils";
 
 export default class PaginateResponse<T = unknown> {
+    /**
+     * Creates an instance of PaginateResponse.
+     * @param {(IPaginateResponse<T> | IPaginateResponseCollection<T>)} _response
+     * @memberof PaginateResponse
+     */
     constructor(
         private readonly _response: IPaginateResponse<T> | IPaginateResponseCollection<T>
     ) {
