@@ -163,6 +163,18 @@ declare global {
         description: string;
         file: IFile;
     }
+
+    interface IComment {
+        id?: number;
+        parent_id: number | null;
+        article_id: number;
+        post: IPost;
+        article: IArticle;
+        title: string | null;
+        comment: string;
+        approved_at: string | null;
+        approved_by: IUser | null;
+    }
 }
 
 export { };
