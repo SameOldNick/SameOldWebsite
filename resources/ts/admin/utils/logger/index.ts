@@ -42,7 +42,7 @@ export class Logger implements ILogDriver {
     }
 
     private formatMessage(message: any) {
-        if (typeof message === 'object' && !message.hasOwnProperty('toString'))
+        if (typeof message === 'object' && !Object.prototype.hasOwnProperty.call(message, 'toString'))
             return JSON.stringify(message);
         else
             return String(message);
