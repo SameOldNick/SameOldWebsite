@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Components\Settings;
+namespace App\Components\Settings\Drivers;
 
-use App\Models\Page;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Traits\ForwardsCalls;
+use Illuminate\Database\Eloquent\Collection;
 
-class ContactPageSettings implements Arrayable
-{
+class EloquentDriver {
     use ForwardsCalls;
 
-    protected $page;
-
-    protected $collection;
-
-    public function __construct(Page $page)
-    {
-        $this->page = $page;
-        $this->collection = $this->getPageMetaData($page);
+    /**
+     * Initializes Page Settings
+     *
+     * @param Page $page
+     */
+    public function __construct(
+        protected Collection $collection
+    ) {
     }
 
-    public function page()
-    {
-        return $this->page;
-    }
-
+    /**
+     * Gets setting value
+     *
+     * @param string $setting Key
+     * @param mixed $default
+     * @return mixed
+     */
     public function setting($setting, $default = null)
     {
         $found = $this->collection->firstWhere('key', $setting);
@@ -32,16 +32,17 @@ class ContactPageSettings implements Arrayable
         return ! is_null($found) ? $found->value : $default;
     }
 
+    /**
+     * Gets settings as array
+     *
+     * @param mixed ...$args Keys
+     * @return array
+     */
     public function settings(...$args)
     {
         $keys = ! is_array($args[0]) ? $args : $args[0];
 
         return $this->collection->whereIn('key', $keys)->mapWithKeys(fn ($model) => [$model->key => $model->value]);
-    }
-
-    protected function getPageMetaData(Page $page)
-    {
-        return $page->metaData;
     }
 
     /**
