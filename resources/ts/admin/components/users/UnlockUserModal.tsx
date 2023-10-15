@@ -6,9 +6,10 @@ import axios from 'axios';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import User from '@admin/utils/api/models/User';
 
 interface IProps {
-    user: IUser;
+    user: User;
     onUnlocked: () => void;
     onCanceled: () => void;
 }
@@ -18,7 +19,7 @@ const UnlockUserModal: React.FC<IProps> = ({ user, onUnlocked, onCanceled }) => 
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
-            text: `Do you really want to unlock the user with email "${user.email}"?`,
+            text: `Do you really want to unlock the user with email "${user.user.email}"?`,
             showCancelButton: true
         });
 
@@ -34,12 +35,12 @@ const UnlockUserModal: React.FC<IProps> = ({ user, onUnlocked, onCanceled }) => 
     // TODO: Move to seperate API class.
     const unlockUser = async () => {
         try {
-            const response = await createAuthRequest().post(`/users/restore/${user.id}`, {});
+            const response = await createAuthRequest().post(`/users/restore/${user.user.id}`, {});
 
             await withReactContent(Swal).fire({
                 icon: 'success',
                 title: 'Restored',
-                text: `User with email "${user.email}" has been unlocked.`,
+                text: `User with email "${user.user.email}" has been unlocked.`,
             });
         } catch (err) {
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -47,7 +48,7 @@ const UnlockUserModal: React.FC<IProps> = ({ user, onUnlocked, onCanceled }) => 
             await withReactContent(Swal).fire({
                 icon: 'error',
                 title: 'Ooops...',
-                text: `Unable to unlock user with email "${user.email}": ${message}`,
+                text: `Unable to unlock user with email "${user.user.email}": ${message}`,
             });
 
             onCanceled();
