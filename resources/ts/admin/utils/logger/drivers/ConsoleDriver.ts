@@ -24,6 +24,6 @@ export default class ConsoleDriver implements ILogDriver {
         if (context !== undefined)
             params.push(context);
 
-        browserConsole[level].apply(browserConsole, params);
+        browserConsole[level].call(browserConsole, ...params);
     }
 }
