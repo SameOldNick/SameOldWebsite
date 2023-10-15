@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Controller;
+use App\Events\PageUpdated;
+use App\Http\Controllers\Pages\HomepageController;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
-class MetaDataController extends Controller
+class MetaDataController extends HomepageController
 {
     public function show(Request $request)
     {
@@ -33,11 +34,8 @@ class MetaDataController extends Controller
             );
         }
 
-        return $page->metaData;
-    }
+        $this->pageUpdated();
 
-    private function getPage()
-    {
-        return Page::firstWhere(['page' => 'homepage']);
+        return $page->metaData;
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Pages\HomepageController;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class ProjectsController extends Controller
+class ProjectsController extends HomepageController
 {
     /**
      * Display a listing of the resource.
@@ -56,6 +56,8 @@ class ProjectsController extends Controller
 
         $project->push();
 
+        $this->pageUpdated();
+
         return $project;
     }
 
@@ -82,6 +84,8 @@ class ProjectsController extends Controller
 
         $project->save();
 
+        $this->pageUpdated();
+
         return $project;
     }
 
@@ -95,6 +99,8 @@ class ProjectsController extends Controller
     {
         $project->restore();
 
+        $this->pageUpdated();
+
         return [
             'success' => __('Project ":project" was restored.', ['project' => $project->project]),
         ];
@@ -106,6 +112,8 @@ class ProjectsController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
+
+        $this->pageUpdated();
 
         return [
             'success' => __('Project ":project" was removed.', ['project' => $project->project]),
