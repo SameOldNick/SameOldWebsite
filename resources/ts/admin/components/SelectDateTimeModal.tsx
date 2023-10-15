@@ -11,8 +11,9 @@ interface ISelectDateTimeModalProps {
 
 const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, onSelected, onCancelled }) => {
     const [currentDateTime, setCurrentDateTime] = React.useState<DateTime>(DateTime.now());
-    const [date, setDate] = React.useState<string>('');
-    const [time, setTime] = React.useState<string>('');
+
+    const [date, setDate] = React.useState<string>(existing?.toFormat('yyyy-MM-dd') ?? '');
+    const [time, setTime] = React.useState<string>(existing?.toFormat('HH:mm:ss') ?? '');
 
     const handleDateChanged = (newValue: string) => {
         setDate(newValue);
