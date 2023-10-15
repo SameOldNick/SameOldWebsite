@@ -2,16 +2,20 @@
 
 namespace App\Components\Settings\Drivers;
 
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\ForwardsCalls;
-use Illuminate\Contracts\Cache\Repository;
 
-class CacheDriver {
+class CacheDriver
+{
     use ForwardsCalls;
 
     protected $pageKey;
+
     protected $eloquentDriver;
+
     protected $eloquentDriverFactory;
+
     protected $cache;
 
     /**
@@ -19,7 +23,8 @@ class CacheDriver {
      *
      * @param Page $page
      */
-    public function __construct(string $pageKey, callable $eloquentDriverFactory, Repository $cache) {
+    public function __construct(string $pageKey, callable $eloquentDriverFactory, Repository $cache)
+    {
         $this->pageKey = $pageKey;
         $this->eloquentDriverFactory = $eloquentDriverFactory;
         $this->cache = $cache;
@@ -85,7 +90,8 @@ class CacheDriver {
      *
      * @return string
      */
-    protected function createCacheKey() {
+    protected function createCacheKey()
+    {
         return "pages.{$this->pageKey}";
     }
 
@@ -94,7 +100,8 @@ class CacheDriver {
      *
      * @return EloquentDriver
      */
-    protected function resolveEloquentDriver() {
+    protected function resolveEloquentDriver()
+    {
         if (is_null($this->eloquentDriver)) {
             $this->eloquentDriver = \call_user_func($this->eloquentDriverFactory);
         }

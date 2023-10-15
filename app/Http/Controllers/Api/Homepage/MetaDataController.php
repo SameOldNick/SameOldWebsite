@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Events\PageUpdated;
 use App\Http\Controllers\Pages\HomepageController;
-use App\Models\Page;
 use Illuminate\Http\Request;
 
 class MetaDataController extends HomepageController

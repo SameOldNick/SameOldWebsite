@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\PageUpdated;
 use App\Models\Page;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Console\Kernel as ConsoleKernelContract;
 
 class RefreshUpdatedPages
@@ -15,8 +13,7 @@ class RefreshUpdatedPages
      */
     public function __construct(
         protected ConsoleKernelContract $artisan
-    )
-    {
+    ) {
         //
     }
 
@@ -30,7 +27,8 @@ class RefreshUpdatedPages
         }
     }
 
-    protected function isPageValid(Page $page) {
+    protected function isPageValid(Page $page)
+    {
         $valid = ['homepage', 'contact'];
 
         return in_array($page->page, $valid);

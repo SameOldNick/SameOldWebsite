@@ -2,10 +2,11 @@
 
 namespace App\Components\Settings\Drivers;
 
-use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Traits\ForwardsCalls;
 
-class EloquentDriver {
+class EloquentDriver
+{
     use ForwardsCalls;
 
     /**

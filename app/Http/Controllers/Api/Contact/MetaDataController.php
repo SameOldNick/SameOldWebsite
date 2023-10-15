@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Contact;
 
-use App\Events\PageUpdated;
 use App\Http\Controllers\Pages\ContactController;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
