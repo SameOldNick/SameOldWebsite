@@ -256,9 +256,9 @@ const countries: ICountry[] = [
 ];
 
 export const getSortedByCode = (): ICountry[] =>
-    countries.sort((a, b) => a.code.localeCompare(b.code));;
+    countries.sort((a, b) => a.code.localeCompare(b.code));
 
 export const getSortedByCountry = (): ICountry[] =>
-    countries.sort((a, b) => a.country.localeCompare(b.country));;
+    countries.sort((a, b) => a.country.localeCompare(b.country));
 
 export default countries;

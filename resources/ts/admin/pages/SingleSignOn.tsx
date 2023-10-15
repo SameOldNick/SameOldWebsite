@@ -20,7 +20,7 @@ type TProps = ConnectedProps<typeof connector> & React.PropsWithChildren<IProps>
 interface IState {
 }
 
-export default connector(class extends React.Component<TProps, IState> {
+export default connector(class SingleSignOn extends React.Component<TProps, IState> {
     constructor(props: Readonly<TProps>) {
         super(props);
 
