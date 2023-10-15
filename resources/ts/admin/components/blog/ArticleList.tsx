@@ -14,7 +14,7 @@ import SelectDateTimeModal from '@admin/components/SelectDateTimeModal';
 import Article from '@admin/utils/api/models/Article';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
-import { updateArticle, restoreArticle as restoreArticleApi, deleteArticle as deleteArticleApi } from '@admin/utils/api/calls/articles';
+import { updateArticle, restoreArticle as restoreArticleApi, deleteArticle as deleteArticleApi } from '@admin/utils/api/endpoints/articles';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 interface IProps {

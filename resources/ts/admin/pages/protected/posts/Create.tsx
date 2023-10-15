@@ -15,8 +15,9 @@ import { TMainImage, isMainImageNew } from '@admin/components/blog/article-form/
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import { attachTags, createArticle, setMainImage, uploadMainImage } from '@admin/utils/api/endpoints/articles';
+
 import Article from '@admin/utils/api/models/Article';
-import { attachTags, createArticle, setMainImage, uploadMainImage } from '@admin/utils/api/calls/articles';
 
 interface IProps {
 

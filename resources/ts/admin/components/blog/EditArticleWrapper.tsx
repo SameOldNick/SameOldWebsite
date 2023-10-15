@@ -17,7 +17,7 @@ import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import { createRevision, deleteMainImage, loadTags, setCurrentRevision, updateArticle, uploadMainImage, setMainImage as setMainImageApi, syncTags } from '@admin/utils/api/calls/articles';
+import { createRevision, deleteMainImage, loadTags, setCurrentRevision, updateArticle, uploadMainImage, setMainImage as setMainImageApi, syncTags } from '@admin/utils/api/endpoints/articles';
 
 interface IEditArticleWrapperProps extends IHasRouter<'article' | 'revision'> {
     article: Article;
