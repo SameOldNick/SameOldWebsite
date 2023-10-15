@@ -7,8 +7,8 @@ use App\Http\Resources\CommentCollection;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class CommentController extends Controller
@@ -21,18 +21,18 @@ class CommentController extends Controller
         $request->validate([
             'show' => [
                 'sometimes',
-                Rule::in(['awaiting', 'approved', 'denied', 'all'])
+                Rule::in(['awaiting', 'approved', 'denied', 'all']),
             ],
             'article' => [
                 'sometimes',
                 'numeric',
-                Rule::exists(Article::class, 'id')
+                Rule::exists(Article::class, 'id'),
             ],
             'user' => [
                 'sometimes',
                 'numeric',
-                Rule::exists(User::class, 'id')
-            ]
+                Rule::exists(User::class, 'id'),
+            ],
         ]);
 
         $query = Comment::with(['approvedBy', 'post', 'post.user']);
@@ -40,28 +40,28 @@ class CommentController extends Controller
         $show = (string) $request->str('show', 'all');
 
         if ($show === 'awaiting') {
-            $query = $query->whereHas('post', function(Builder $query) use ($request) {
+            $query = $query->whereHas('post', function (Builder $query) use ($request) {
                 $query->whereNull('posts.deleted_at');
             })->whereNull('approved_at');
-        } else if ($show === 'approved') {
-            $query = $query->whereHas('post', function(Builder $query) use ($request) {
+        } elseif ($show === 'approved') {
+            $query = $query->whereHas('post', function (Builder $query) use ($request) {
                 $query->whereNull('posts.deleted_at');
             })->whereNotNull('approved_at');
-        } else if ($show === 'denied') {
-            $query = $query->whereHas('post', function(Builder $query) use ($request) {
+        } elseif ($show === 'denied') {
+            $query = $query->whereHas('post', function (Builder $query) use ($request) {
                 $query->whereNotNull('posts.deleted_at');
             })->whereNull('approved_at');
         }
 
-
-        if ($request->has('article'))
+        if ($request->has('article')) {
             $query = $query->where('article_id', $request->integer('article'));
+        }
 
-        if ($request->has('user'))
-            $query = $query->whereHas('post', function(Builder $query) use ($request) {
+        if ($request->has('user')) {
+            $query = $query->whereHas('post', function (Builder $query) use ($request) {
                 $query->where('posts.user_id', $request->integer('user'));
             });
-
+        }
 
         return new CommentCollection($query->paginate());
     }
@@ -104,7 +104,8 @@ class CommentController extends Controller
         return $comment;
     }
 
-    public function approve(Request $request, Comment $comment) {
+    public function approve(Request $request, Comment $comment)
+    {
         $request->validate([
             'approved_at' => 'nullable|date',
         ]);
@@ -112,8 +113,9 @@ class CommentController extends Controller
         $comment->approved_at = $request->date('approved_at') ?? now();
         $comment->approvedBy()->associate($request->user());
 
-        if ($comment->post->trashed())
+        if ($comment->post->trashed()) {
             $comment->post->restore();
+        }
 
         $comment->save();
 

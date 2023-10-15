@@ -48,7 +48,7 @@ Route::namespace(Api::class)->group(function () {
             'tags' => Api\TagController::class,
             'users' => Api\UsersController::class,
             'skills' => Api\Homepage\SkillController::class,
-            'technologies' => Api\Homepage\TechnologyController::class
+            'technologies' => Api\Homepage\TechnologyController::class,
         ]);
 
         Route::post('/projects/restore/{project}', [Api\Homepage\ProjectsController::class, 'restore'])->withTrashed();
