@@ -16,6 +16,8 @@ import CreatePost from '@admin/pages/protected/posts/Create';
 import EditPost from '@admin/pages/protected/posts/Edit';
 
 import AllComments from '@admin/pages/protected/comments/All';
+import EditComments from '@admin/pages/protected/comments/Edit';
+
 import AllProjects from '@admin/pages/protected/projects/All';
 import CreateProject from '@admin/pages/protected/projects/Create';
 import EditProject from '@admin/pages/protected/projects/Edit';
@@ -51,6 +53,7 @@ const Pages: React.FC = () => {
                         </Route>
 
                         <Route path='comments'>
+                            <Route path='edit/:comment' element={<EditComments />} />
                             <Route index element={<AllComments />} />
                         </Route>
 
