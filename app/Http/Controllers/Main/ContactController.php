@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use App\Components\Settings\ContactPageSettings;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Pages\ContactController as BaseContactController;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ConfirmMessage;
 use App\Mail\Contacted;
@@ -15,19 +15,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
-class ContactController extends Controller
+class ContactController extends BaseContactController
 {
     /**
      * Displays contact form
      *
      * @param Request $request
-     * @param ContactPageSettings $settings
      * @return mixed
      */
-    public function show(Request $request, ContactPageSettings $settings)
+    public function show(Request $request)
     {
         $data = [
-            'settings' => $settings->toArray(),
+            'settings' => $this->getSettings()->toArray(),
         ];
 
         return view('main.contact', $data);
@@ -37,16 +36,15 @@ class ContactController extends Controller
      * Processes contact form submission.
      *
      * @param ContactRequest $request
-     * @param ContactPageSettings $settings
      * @return mixed
      */
-    public function process(ContactRequest $request, ContactPageSettings $settings)
+    public function process(ContactRequest $request)
     {
         $requiresConfirmation = false;
 
-        if ($settings->setting('require_confirmation')) {
+        if ($this->getSettings()->setting('require_confirmation')) {
             $user = $request->email === optional($request->user())->email ? $request->user() : null;
-            $requiredBy = $settings->setting('confirmation_required_by');
+            $requiredBy = $this->getSettings()->setting('confirmation_required_by');
 
             if ($requiredBy == 'all_users') {
                 $requiresConfirmation = true;
@@ -70,7 +68,7 @@ class ContactController extends Controller
 
             return view('main.contact', [
                 'success' => __('Please check your e-mail for further instructions.'),
-                'settings' => $settings->toArray(),
+                'settings' => $this->getSettings()->toArray(),
             ]);
         } else {
             $admins = Role::firstWhere(['role' => 'admin'])->users;
@@ -81,7 +79,7 @@ class ContactController extends Controller
 
             return view('main.contact', [
                 'success' => __('Thank you for your message! You will receive a reply shortly.'),
-                'settings' => $settings->toArray(),
+                'settings' => $this->getSettings()->toArray(),
             ]);
         }
     }
@@ -91,16 +89,24 @@ class ContactController extends Controller
      *
      * @param Request $request
      * @param PendingMessage $pendingMessage
-     * @param ContactPageSettings $settings
      * @return mixed
      */
-    public function confirm(Request $request, PendingMessage $pendingMessage, ContactPageSettings $settings)
+    public function confirm(Request $request, PendingMessage $pendingMessage)
     {
         Mail::send($pendingMessage->message);
 
         return view('main.contact', [
             'success' => __('Thank you for your message! You will receive a reply shortly.'),
-            'settings' => $settings->toArray(),
+            'settings' => $this->getSettings()->toArray(),
         ]);
+    }
+
+    /**
+     * Gets Page Settings.
+     *
+     * @return PageSettings
+     */
+    protected function getSettings() {
+        return parent::getSettings()->driver('cache');
     }
 }
