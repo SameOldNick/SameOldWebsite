@@ -13,13 +13,14 @@ import UserForm, { IFormikValues } from '@admin/components/users/UserForm';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import User from '@admin/utils/api/models/User';
 
 interface IProps {
 
 }
 
 interface IState {
-    user?: IUser;
+    user?: User;
 }
 
 export default class Create extends React.Component<IProps, IState> {
@@ -68,7 +69,7 @@ export default class Create extends React.Component<IProps, IState> {
             text: 'The user was successfully created.',
         });
 
-        this.setState({ user: response.data });
+        this.setState({ user: new User(response.data) });
     }
 
     private async onError(err: unknown) {
@@ -87,7 +88,7 @@ export default class Create extends React.Component<IProps, IState> {
 
         if (user !== undefined) {
             return (
-                <Navigate to={`/admin/users/edit/${user.id}`} />
+                <Navigate to={user.generatePath()} />
             );
         }
 
