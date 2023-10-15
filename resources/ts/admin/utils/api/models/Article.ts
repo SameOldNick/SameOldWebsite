@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
 import S from "string";
+import { generatePath } from "react-router-dom";
 
 import Revision from "./Revision";
-import { generatePath } from "react-router-dom";
 
 export type TArticleStatusRevision = 'revision';
 export type TArticleStatusPublished = 'published';
