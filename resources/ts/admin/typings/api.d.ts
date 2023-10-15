@@ -50,19 +50,35 @@ declare global {
         active: boolean;
     }
 
-    export interface IPaginateResponse<T> {
+    export interface IPaginateResponseMeta {
         current_page: number;
-        data: T[];
-        first_page_url: string;
         from: number | null;
+        to: string | null;
         last_page: number;
-        last_page_url: string;
         links: IPaginateResponseLink[];
-        next_page_url: string | null;
         path: string;
         per_page: number;
-        prev_page_url: string | null;
-        to: string | null;
         total: number;
+
+        first_page_url: string;
+        last_page_url: string;
+        prev_page_url: string | null;
+        next_page_url: string | null;
+    }
+
+    export interface IPaginateResponse<T> extends IPaginateResponseMeta {
+        data: T[];
+    }
+
+    export interface IPaginateResponseCollection<T> {
+        data: T[];
+
+        links: {
+            first: string;
+            last: string;
+            prev: string | null;
+            next: string | null;
+        };
+        meta: Omit<IPaginateResponse<T>, 'first_page_url' | 'last_page_url' | 'prev_page_url' | 'next_page_url'>;
     }
 }
