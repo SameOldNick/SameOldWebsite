@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\Contact;
 
-use App\Components\Settings\ContactPageSettings;
-use App\Http\Controllers\Controller;
+use App\Events\PageUpdated;
+use App\Http\Controllers\Pages\ContactController;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class MetaDataController extends Controller
+class MetaDataController extends ContactController
 {
-    public function show(ContactPageSettings $settings)
+    public function show()
     {
         $keys = [
             'sender_replyto',
@@ -26,10 +26,10 @@ class MetaDataController extends Controller
             'honeypot_field_name',
         ];
 
-        return $settings->toQuery()->whereIn('key', $keys)->get();
+        return $this->getPage()->metaData()->whereIn('key', $keys)->get();
     }
 
-    public function update(Request $request, ContactPageSettings $settings)
+    public function update(Request $request)
     {
         $validated = $request->validate([
             'sender_replyto' => 'required|email|max:255',
@@ -51,12 +51,12 @@ class MetaDataController extends Controller
         ]);
 
         foreach ($validated as $key => $value) {
-            $settings->page()->metaData()->updateOrCreate(
+            $this->getPage()->metaData()->updateOrCreate(
                 ['key' => $key],
                 ['value' => $value]
             );
         }
 
-        return $settings->toQuery()->get();
+        return $this->pageUpdated()->getPage()->metaData;
     }
 }
