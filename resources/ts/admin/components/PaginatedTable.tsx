@@ -6,8 +6,8 @@ import PaginateResponse from '@admin/utils/api/models/PaginateResponse';
 type TChildrenCallback<TData = unknown> = (data: TData[]) => React.ReactNode;
 
 interface IProps<TData = unknown> {
-    initialResponse: IPaginateResponse<TData>;
-    pullData: (link?: string) => Promise<IPaginateResponse<TData>>;
+    initialResponse: IPaginateResponse<TData> | IPaginateResponseCollection<TData>;
+    pullData: (link?: string) => Promise<IPaginateResponse<TData> | IPaginateResponseCollection<TData>>;
     onUpdate?: (data: TData[]) => void;
     onError?: (e: unknown) => void;
     children: React.ReactNode | TChildrenCallback<TData>;
