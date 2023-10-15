@@ -128,6 +128,15 @@ declare global {
         technology: string;
     }
 
+    interface IPost {
+        id: number;
+        user_id: number;
+        user: IUser | null;
+        created_at: string;
+        updated_at: string;
+        deleted_at: string | null
+    }
+
     interface IArticle {
         id?: number;
         title: string;
