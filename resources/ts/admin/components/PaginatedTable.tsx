@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import PaginateResponse from '@admin/utils/api/PaginateResponse';
+import PaginateResponse from '@admin/utils/api/models/PaginateResponse';
 
 type TChildrenCallback<TData = unknown> = (data: TData[]) => React.ReactNode;
 
