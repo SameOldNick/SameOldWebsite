@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Http\Controllers\Controller;
 use App\Components\Settings\PageSettings;
-use App\Models\Page;
 use App\Events\PageUpdated;
+use App\Http\Controllers\Controller;
+use App\Models\Page;
 
 abstract class SettingsController extends Controller
 {
     private $page;
+
     private $settings;
 
     public function __construct()
@@ -23,7 +24,8 @@ abstract class SettingsController extends Controller
      *
      * @return Page
      */
-    protected function getPage() {
+    protected function getPage()
+    {
         return $this->page;
     }
 
@@ -32,7 +34,8 @@ abstract class SettingsController extends Controller
      *
      * @return $this
      */
-    protected function pageUpdated() {
+    protected function pageUpdated()
+    {
         PageUpdated::dispatch($this->getPage());
 
         return $this;
@@ -43,7 +46,8 @@ abstract class SettingsController extends Controller
      *
      * @return PageSettings
      */
-    protected function getSettings() {
+    protected function getSettings()
+    {
         return $this->settings;
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Main;
 
-use App\Components\Settings\ContactPageSettings;
 use App\Http\Controllers\Pages\ContactController as BaseContactController;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ConfirmMessage;
@@ -106,7 +105,8 @@ class ContactController extends BaseContactController
      *
      * @return PageSettings
      */
-    protected function getSettings() {
+    protected function getSettings()
+    {
         return parent::getSettings()->driver('cache');
     }
 }
