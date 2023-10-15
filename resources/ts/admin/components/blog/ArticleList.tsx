@@ -10,6 +10,9 @@ import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 
 import SelectDateTimeModal from '@admin/components/SelectDateTimeModal';
+import PaginatedTable from '@admin/components/PaginatedTable';
+import Loader from '@admin/components/Loader';
+import WaitToLoad from '@admin/components/WaitToLoad';
 
 import Article from '@admin/utils/api/models/Article';
 
@@ -22,7 +25,6 @@ interface IProps {
 }
 
 interface IState {
-    articles: Article[];
     show: string;
 }
 
@@ -291,42 +293,36 @@ export default class ArticleList extends React.Component<IProps, IState> {
         );
     }
 
+    private readonly _waitToLoadArticlesRef = React.createRef<WaitToLoad<IPaginateResponseCollection<IArticle>>>();
+    private readonly _paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
+
     constructor(props: Readonly<IProps>) {
         super(props);
 
         this.state = {
-            articles: [],
             show: 'all'
         };
 
         this.loadArticles = this.loadArticles.bind(this);
-        this.onUpdateFormSubmitted = this.onUpdateFormSubmitted.bind(this);
+        this.handleUpdateFormSubmitted = this.handleUpdateFormSubmitted.bind(this);
     }
 
-    componentDidMount(): void {
-        this.loadArticles();
-    }
-
-    private async loadArticles() {
+    private async loadArticles(link?: string) {
         const { show } = this.state;
 
-        try {
-            const response = await createAuthRequest().get<IArticle[]>('blog/articles', { show });
+        const response = await createAuthRequest().get<IPaginateResponseCollection<IArticle>>(link ?? 'blog/articles', { show });
 
-            this.setState({ articles: response.data.map((article) => new Article(article)) });
-        } catch (e) {
-            console.error(e);
-        }
+        return response.data;
     }
 
-    private async onUpdateFormSubmitted(e: React.FormEvent<HTMLFormElement>) {
+    private async handleUpdateFormSubmitted(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        this.loadArticles();
+        this._paginatedTableRef.current?.reload();
     }
 
     public render() {
-        const { articles, show } = this.state;
+        const { show } = this.state;
 
         return (
             <>
@@ -338,7 +334,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
                             </Button>
                         </div>
                         <div className="text-end">
-                            <Form className="row row-cols-lg-auto g-3" onSubmit={this.onUpdateFormSubmitted}>
+                            <Form className="row row-cols-lg-auto g-3" onSubmit={this.handleUpdateFormSubmitted}>
                                 <Col xs={12}>
                                     <label className="visually-hidden" htmlFor="show">Show</label>
 
@@ -360,26 +356,51 @@ export default class ArticleList extends React.Component<IProps, IState> {
                         </div>
                     </Col>
                     <Col xs={12}>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Summary</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {articles.map((article, index) =>
-                                    <ArticleList.Article
-                                        key={index}
-                                        article={article}
-                                        onUpdated={this.loadArticles}
-                                    />
-                                )}
-                            </tbody>
-                        </Table>
+                        <WaitToLoad
+                            ref={this._waitToLoadArticlesRef}
+                            callback={this.loadArticles}
+                            loading={<Loader display={{ type: 'over-element' }} />}
+                        >
+                            {(response, err) => (
+                                <>
+                                    {err && console.error(err)}
+                                    {response && (
+                                        <PaginatedTable ref={this._paginatedTableRef} initialResponse={response} pullData={this.loadArticles}>
+                                            {(data) => (
+                                                <Table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Title</th>
+                                                            <th>Summary</th>
+                                                            <th>Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {data.length === 0 && (
+                                                            <tr>
+                                                                <tr>
+                                                                    <td colSpan={5} className='text-center text-muted'>(No articles found)</td>
+                                                                </tr>
+                                                            </tr>
+                                                        )}
+                                                        {data.length > 0 && data.map((article, index) =>
+                                                            <ArticleList.Article
+                                                                key={index}
+                                                                article={new Article(article)}
+                                                                onUpdated={this.loadArticles}
+                                                            />
+                                                        )}
+                                                    </tbody>
+                                                </Table>
+                                            )}
+
+                                        </PaginatedTable>
+                                    )}
+                                </>
+                            )}
+                        </WaitToLoad>
                     </Col>
                 </Row>
 

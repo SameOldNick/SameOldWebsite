@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\Blog;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Resources\ArticleCollection as ArticleResourceCollection;
 use App\Models\Article;
+use App\Models\Collections\ArticleCollection;
 use App\Models\Revision;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -46,7 +48,7 @@ class ArticleController extends Controller
             $query = $query->withTrashed();
         }
 
-        return $query->get()->append('private_url');
+        return new ArticleResourceCollection($query->paginate());
     }
 
     /**
