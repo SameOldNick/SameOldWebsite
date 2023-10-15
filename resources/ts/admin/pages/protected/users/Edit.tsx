@@ -14,6 +14,7 @@ import UserForm, { IFormikValues, TForwardedRef } from '@admin/components/users/
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import User from '@admin/utils/api/models/User';
 
 interface IProps extends IHasRouter<'user'> {
 
@@ -22,7 +23,7 @@ interface IProps extends IHasRouter<'user'> {
 const Edit: React.FC<IProps> = ({ router }) => {
     const formikRef = React.createRef<TForwardedRef>();
 
-    const [user, setUser] = React.useState<IUser>();
+    const [user, setUser] = React.useState<User>();
 
     const getUser = async () => {
         const { params: { user } } = router;
@@ -30,7 +31,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
         try {
             const response = await createAuthRequest().get<IUser>(`/users/${user}`);
 
-            setUser(response.data);
+            setUser(new User(response.data));
         } catch (err) {
             await handleErrorGettingUser(err);
         }
@@ -58,22 +59,22 @@ const Edit: React.FC<IProps> = ({ router }) => {
     }
 
     const initialValues = React.useMemo(() => ({
-        name: user?.name || '',
-        email: user?.email || '',
+        name: user?.user.name || '',
+        email: user?.user.email || '',
         password: '',
         confirm_password: '',
-        state: user?.state?.code || '',
-        country: user?.country?.code || '',
-        roles: user?.roles.map(({ role }) => role) || []
+        state: user?.user.state?.code || '',
+        country: user?.user.country?.code || '',
+        roles: user?.roles || []
     }), [user]);
 
     React.useEffect(() => {
         getUser();
     }, [router.params.user]);
 
-    const handleSubmit = async(user: IUser, { name, email, password, confirm_password, state, country, roles }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = async(user: User, { name, email, password, confirm_password, state, country, roles }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         try {
-            const response = await createAuthRequest().put<IUser>(`users/${user.id}`, {
+            const response = await createAuthRequest().put<IUser>(`users/${user.user.id}`, {
                 name,
                 email,
                 password,
@@ -96,7 +97,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
             text: 'The user was successfully updated.',
         });
 
-        setUser(response.data);
+        setUser(new User(response.data));
     }
 
     const handleErrorUpdatingUser = async (err: unknown) => {
