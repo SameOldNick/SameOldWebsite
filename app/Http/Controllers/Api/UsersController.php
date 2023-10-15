@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserCollection;
 use App\Models\Country;
 use App\Models\Role;
 use App\Models\User;
@@ -36,7 +37,7 @@ class UsersController extends Controller
 
         $query = $query->orderBy($request->get('sort', 'id'), $request->get('order', 'asc'));
 
-        return $query->get()->makeVisible(['created_at', 'deleted_at']);
+        return new UserCollection($query->paginate());
     }
 
     /**
