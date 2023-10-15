@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 import { Outlet } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { FaEnvelope, FaHome, FaList, FaNewspaper, FaTachometerAlt, FaUsers } from 'react-icons/fa';
+import { FaComments, FaEnvelope, FaHome, FaList, FaNewspaper, FaTachometerAlt, FaUsers } from 'react-icons/fa';
 
 import { DateTime } from 'luxon';
 
@@ -41,6 +41,10 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
                         <Sidebar.Dropdown text='Blog' icon={<FaNewspaper />}>
                             <Sidebar.DropdownItem href='/admin/posts'>View All Posts</Sidebar.DropdownItem>
                             <Sidebar.DropdownItem href='/admin/posts/create'>Create New Post</Sidebar.DropdownItem>
+                        </Sidebar.Dropdown>
+
+                        <Sidebar.Dropdown text='Comments' icon={<FaComments />}>
+                            <Sidebar.DropdownItem href='/admin/comments'>View All Comments</Sidebar.DropdownItem>
                         </Sidebar.Dropdown>
 
                         <Sidebar.Dropdown text='Contact' icon={<FaEnvelope />}>

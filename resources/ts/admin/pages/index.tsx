@@ -15,6 +15,7 @@ import AllPosts from '@admin/pages/protected/posts/All';
 import CreatePost from '@admin/pages/protected/posts/Create';
 import EditPost from '@admin/pages/protected/posts/Edit';
 
+import AllComments from '@admin/pages/protected/comments/All';
 import AllProjects from '@admin/pages/protected/projects/All';
 import CreateProject from '@admin/pages/protected/projects/Create';
 import EditProject from '@admin/pages/protected/projects/Edit';
@@ -47,6 +48,10 @@ const Pages: React.FC = () => {
                             <Route path='edit/:article/revisions/:revision' element={<EditPost />} />
 
                             <Route index element={<AllPosts />} />
+                        </Route>
+
+                        <Route path='comments'>
+                            <Route index element={<AllComments />} />
                         </Route>
 
                         <Route path='projects'>
