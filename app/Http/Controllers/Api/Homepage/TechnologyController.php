@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Controller;
+use App\Events\PageUpdated;
+use App\Http\Controllers\Pages\HomepageController;
 use App\Models\Technology;
 use App\Rules\ValidBladeIcon;
 use Illuminate\Http\Request;
 
-class TechnologyController extends Controller
+class TechnologyController extends HomepageController
 {
     /**
      * Display a listing of the resource.
@@ -32,6 +33,8 @@ class TechnologyController extends Controller
         ]);
 
         $technology = Technology::create($validated);
+
+        $this->pageUpdated();
 
         return $technology;
     }
@@ -63,6 +66,8 @@ class TechnologyController extends Controller
 
         $technology->save();
 
+        $this->pageUpdated();
+
         return $technology;
     }
 
@@ -72,6 +77,8 @@ class TechnologyController extends Controller
     public function destroy(Technology $technology)
     {
         $technology->delete();
+
+        $this->pageUpdated();
 
         return [
             'success' => __('Skill ":technology" was removed.', ['technology' => $technology->technology]),

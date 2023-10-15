@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Controller;
-use App\Models\Page;
+use App\Events\PageUpdated;
+use App\Http\Controllers\Pages\HomepageController;
 use App\Rules\SocialMediaLink;
 use Illuminate\Http\Request;
 
-class SocialMediaController extends Controller
+class SocialMediaController extends HomepageController
 {
     public function show(Request $request)
     {
@@ -31,11 +31,8 @@ class SocialMediaController extends Controller
             ['value' => $request->links]
         );
 
-        return $model->value;
-    }
+        $this->pageUpdated();
 
-    private function getPage()
-    {
-        return Page::firstWhere(['page' => 'homepage']);
+        return $model->value;
     }
 }

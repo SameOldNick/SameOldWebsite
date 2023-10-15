@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Controller;
+use App\Events\PageUpdated;
+use App\Http\Controllers\Pages\HomepageController;
 use App\Models\Skill;
 use App\Rules\ValidBladeIcon;
 use Illuminate\Http\Request;
 
-class SkillController extends Controller
+class SkillController extends HomepageController
 {
     /**
      * Display a listing of the resource.
@@ -32,6 +33,8 @@ class SkillController extends Controller
         ]);
 
         $skill = Skill::create($validated);
+
+        $this->pageUpdated();
 
         return $skill;
     }
@@ -63,6 +66,8 @@ class SkillController extends Controller
 
         $skill->save();
 
+        $this->pageUpdated();
+
         return $skill;
     }
 
@@ -72,6 +77,8 @@ class SkillController extends Controller
     public function destroy(Skill $skill)
     {
         $skill->delete();
+
+        $this->pageUpdated();
 
         return [
             'success' => __('Skill ":skill" was removed.', ['skill' => $skill->skill]),
