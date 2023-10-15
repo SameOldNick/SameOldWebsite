@@ -429,7 +429,7 @@ export default class Tags {
             // Keyboard keys
             switch (key) {
                 case 13:
-                case "Enter":
+                case "Enter": {
                     event.preventDefault();
                     const selection = this.getActiveSelection();
                     if (selection) {
@@ -437,13 +437,14 @@ export default class Tags {
                     } else {
                         // We use what is typed if not selected and not empty
                         if (this._opts.allowNew && this._searchInput.value) {
-                            let text = this._searchInput.value;
+                            const text = this._searchInput.value;
                             this._add(text, null);
                         }
                     }
                     break;
+                }
                 case 38:
-                case "ArrowUp":
+                case "ArrowUp": {
                     event.preventDefault();
                     this._keyboardNavigation = true;
                     const newSelection = this._moveSelectionUp();
@@ -452,8 +453,9 @@ export default class Tags {
                         this._hideSuggestions();
                     }
                     break;
+                }
                 case 40:
-                case "ArrowDown":
+                case "ArrowDown": {
                     event.preventDefault();
                     this._keyboardNavigation = true;
                     this._moveSelectionDown();
@@ -462,19 +464,23 @@ export default class Tags {
                         this._showSuggestions();
                     }
                     break;
+                }
+
                 case 8:
-                case "Backspace":
+                case "Backspace": {
                     if (this._searchInput.value.length === 0) {
                         this.removeLastItem();
                         this._adjustWidth();
                         this._hideSuggestions();
                     }
                     break;
+                }
                 case 27:
-                case "Escape":
+                case "Escape": {
                     // We may wish to not use the suggestions
                     this._hideSuggestions();
                     break;
+                }
             }
         });
     }
@@ -505,7 +511,7 @@ export default class Tags {
             let prev = active.parentNode as HTMLElement;
             while (prev && prev.style.display === "none") {
                 prev = prev.previousSibling as HTMLElement;
-            };
+            }
 
             if (!prev) {
                 return null;
@@ -529,7 +535,7 @@ export default class Tags {
             next = active.parentNode as HTMLElement;
             while (next && next.style.display === "none") {
                 next = next.nextSibling as HTMLElement;
-            };
+            }
             if (!next) {
                 return null;
             }
@@ -821,7 +827,7 @@ export default class Tags {
      * @returns {Number}
      */
     private _getBootstrapVersion() {
-        let ver = 5;
+        const ver = 5;
 
         // Source: https://stackoverflow.com/a/57808392/533242
 
