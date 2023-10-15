@@ -7,7 +7,8 @@ import withReactContent from 'sweetalert2-react-content';
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { DateTime } from 'luxon';
+import classNames from 'classnames';
+import S from 'string';
 
 import Heading from '@admin/layouts/admin/Heading';
 import LockUserModal from '@admin/components/users/LockUserModal';
@@ -15,9 +16,12 @@ import UnlockUserModal from '@admin/components/users/UnlockUserModal';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import withRouter, { IHasRouter } from '@admin/components/hoc/withRouter';
+import PaginatedTable from '@admin/components/PaginatedTable';
 
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { createAuthRequest } from '@admin/utils/api/factories';
+import User from '@admin/utils/api/models/User';
+
 
 interface IProps extends IHasRouter {
 
@@ -28,7 +32,7 @@ interface IState {
 }
 
 interface IUserProps {
-    user: IUser;
+    user: User;
     onLocked: () => void;
     onUnlocked: () => void;
 }
@@ -70,39 +74,37 @@ export default withRouter(class All extends React.Component<IProps, IState> {
                 {showUnlockPrompt && <UnlockUserModal user={user} onUnlocked={onUnlockModalUnlocked} onCanceled={onUnlockModalCanceled} />}
 
                 <tr>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td title={user.created_at}>{DateTime.fromISO(user.created_at).toLocaleString()}</td>
+                    <td>{user.user.id}</td>
+                    <td className={classNames({ 'text-muted': !user.user.name })}>{user.user.name || '(Empty)'}</td>
+                    <td>{user.user.email}</td>
+                    <td title={user.createdAt.toISO() || ''}>{user.createdAt.toLocaleString()}</td>
+                    <td>{S(user.status).humanize().s}</td>
                     <td>
-                        {
-                            !user.deleted_at ?
-                                (
-                                    <>
-                                        <Button color='primary' tag={NavLink} to={`edit/${user.id}`} className='me-1'>
-                                            <FaEdit />
-                                        </Button>
-                                        <Button color='danger' onClick={onLockClicked} title='Lock account'>
-                                            <FaLock />
-                                        </Button>
-                                    </>
-                                ) :
-                                (
-                                    <>
-                                        <Button color='primary' onClick={onUnlockClicked} title='Unlock account'>
-                                            <FaUnlock />
-                                        </Button>
-                                    </>
-                                )
-                        }
+                        {!user.deletedAt && (
+                            <>
+                                <Button color='primary' tag={NavLink} to={user.generatePath()} className='me-1'>
+                                    <FaEdit />
+                                </Button>
+                                <Button color='danger' onClick={onLockClicked} title='Lock account'>
+                                    <FaLock />
+                                </Button>
+                            </>
+                        )}
 
+                        {user.deletedAt && (
+                            <>
+                                <Button color='primary' onClick={onUnlockClicked} title='Unlock account'>
+                                    <FaUnlock />
+                                </Button>
+                            </>
+                        )}
                     </td>
                 </tr>
             </>
         );
     }
 
-    private _waitToLoadRef = React.createRef<WaitToLoad<IUser[]>>();
+    private _waitToLoadRef = React.createRef<WaitToLoad<IPaginateResponseCollection<IUser>>>();
 
     constructor(props: Readonly<IProps>) {
         super(props);
@@ -116,10 +118,10 @@ export default withRouter(class All extends React.Component<IProps, IState> {
         this.onUpdateFormSubmitted = this.onUpdateFormSubmitted.bind(this);
     }
 
-    private async fetchUsers() {
+    private async fetchUsers(link?: string) {
         const { show } = this.state;
 
-        const response = await createAuthRequest().get<IUser[]>('users', { show });
+        const response = await createAuthRequest().get<IPaginateResponseCollection<IUser>>(link ?? 'users', { show });
 
         return response.data;
     }
@@ -198,31 +200,46 @@ export default withRouter(class All extends React.Component<IProps, IState> {
                                 </div>
                             </Col>
                             <Col xs={12}>
-                                <WaitToLoad<IUser[]> ref={this._waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={this.fetchUsers}>
-                                    {(users, err, { reload }) => (
+                                <WaitToLoad
+                                    ref={this._waitToLoadRef}
+                                    loading={<Loader display={{ type: 'over-element' }} />}
+                                    callback={this.fetchUsers}
+                                >
+                                    {(response, err, { reload }) => (
                                         <>
                                             {err !== undefined && this.handleError(err)}
-                                            {
-                                                users !== undefined &&
-                                                (
+                                            {response !== undefined && (
+                                                <PaginatedTable initialResponse={response} pullData={this.fetchUsers}>
+                                                    {(data) => (
+                                                        <Table>
+                                                            <thead>
+                                                                <tr>
+                                                                    {/* TODO: Sort columns */}
+                                                                    <th>ID</th>
+                                                                    <th>Name</th>
+                                                                    <th>E-mail</th>
+                                                                    <th>Created</th>
+                                                                    <th>Status</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {data.length === 0 && (
+                                                                    <tr>
+                                                                        <tr>
+                                                                            <td colSpan={6} className='text-center text-muted'>(No users found)</td>
+                                                                        </tr>
+                                                                    </tr>
+                                                                )}
+                                                                {data.length > 0 && data.map((user, index) => (
+                                                                    <All.User key={index} user={new User(user)} onLocked={reload} onUnlocked={reload} />)
+                                                                )}
+                                                            </tbody>
+                                                        </Table>
+                                                    )}
 
-                                                    <Table>
-                                                        <thead>
-                                                            <tr>
-                                                                {/* TODO: Sort columns */}
-                                                                <th>ID</th>
-                                                                <th>Name</th>
-                                                                <th>E-mail</th>
-                                                                <th>Created</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {users.map((user, index) => <All.User key={index} user={user} onLocked={reload} onUnlocked={reload} />)}
-                                                        </tbody>
-                                                    </Table>
-                                                )
-                                            }
+                                                </PaginatedTable>
+                                            )}
                                         </>
                                     )}
                                 </WaitToLoad>
