@@ -85,7 +85,7 @@
         "redux": "^4.2.0",
         "redux-logger": "^3.0.6",
         "redux-thunk": "^2.4.1",
-        "rehype-sanitize": "^5.0.1",
+        "rehype-sanitize": "^6.0.0",
         "sass": "^1.66.1",
         "shiki": "^0.14.4",
         "store2": "^2.14.2",
