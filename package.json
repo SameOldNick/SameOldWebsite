@@ -70,7 +70,7 @@
         "laravel-vite-plugin": "^0.8.1",
         "lodash": "^4.17.19",
         "luxon": "^3.0.1",
-        "postcss": "^8.1.14",
+        "postcss": "^8.4.31",
         "react": "^18",
         "react-dom": "^18",
         "react-dropzone": "^14.2.2",
