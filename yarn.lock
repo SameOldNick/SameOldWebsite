@@ -1618,12 +1618,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/owl.carousel@npm:^2.3.4":
-  version: 2.3.4
-  resolution: "@types/owl.carousel@npm:2.3.4"
+"@types/owl.carousel@npm:^2.3.5":
+  version: 2.3.5
+  resolution: "@types/owl.carousel@npm:2.3.5"
   dependencies:
     "@types/jquery": "*"
-  checksum: 48baee2167b100a37c319dc9fbee86bfde83225ba46161885c2692959bb38b5b2f7813da9f0cc1d7ce9108ba024fbb4553ef94df16e0e81254bdcebe0d18f2a3
+  checksum: 818fbe602d955f828d3d3fe5b092ba719f5283a8a25c927e7b479cc949646322ac8cff792c4923009c2ffb0156cdc88e2c88d0d0e3e2acd724cb538de04d9817
   languageName: node
   linkType: hard
 
@@ -8358,7 +8358,7 @@ __metadata:
     "@types/dropzone": ^5.7.4
     "@types/jquery": ^3.5.14
     "@types/luxon": ^3.0.0
-    "@types/owl.carousel": ^2.3.4
+    "@types/owl.carousel": ^2.3.5
     "@types/react-dom": ^18.0.6
     "@types/react-helmet": ^6.1.7
     "@types/react-page-visibility": ^6.4.1
