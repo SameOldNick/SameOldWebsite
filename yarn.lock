@@ -7834,12 +7834,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-tag-autocomplete@npm:^7.0.0":
-  version: 7.0.1
-  resolution: "react-tag-autocomplete@npm:7.0.1"
+"react-tag-autocomplete@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "react-tag-autocomplete@npm:7.1.0"
   peerDependencies:
     react: ^18.0.0
-  checksum: 3f1f443f292713031aa5d417d600483071d8bcd9d19c939514da3c977151046d23ab28127ec3696d6baedb3b1fdafad9c312989419436b46eac8fb03fba87662
+  checksum: 9648dc2f3529bfdb330c9481d094fc937f27f1b628ec057c6eb1731365880e3e45cf88b90349d5575ed8944c9c850592c2b094c8caf12b0d84eb329d7f2a60a6
   languageName: node
   linkType: hard
 
@@ -8413,7 +8413,7 @@ __metadata:
     react-redux: ^8.0.2
     react-router-dom: ^6.3.0
     react-spinners: ^0.13.4
-    react-tag-autocomplete: ^7.0.0
+    react-tag-autocomplete: ^7.1.0
     reactstrap: ^9.1.3
     redux: ^4.2.0
     redux-logger: ^3.0.6
