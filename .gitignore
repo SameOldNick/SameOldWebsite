@@ -25,3 +25,4 @@ Homestead.json
 
 .phpunit.cache
 .phpunit.result.cache
+.pnp.cjs
