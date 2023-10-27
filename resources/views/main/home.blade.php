@@ -64,33 +64,8 @@
 
                 <x-homepage.technologies />
 
+                <x-homepage.projects />
 
-                <section id="projects" class="row mb-4 projects">
-                    <div class="col-12 mb-3">
-                        <h2 class="h3 fw-bold">Projects</h2>
-                    </div>
-                    <div class="col-12">
-                        <div class="row row-cols-1 row-cols-md-2 g-3">
-                            @for ($i = 0; $i < 5; $i++)
-                            <div class="col">
-                                <div class="card project">
-                                    <a href="#">
-                                        <div class="card-body">
-                                            <h3 class="h5 card-title">Electrux</h3>
-                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                            <p class="card-text">
-                                                <span class="badge bg-primary">React</span>
-                                                <span class="badge bg-primary">React</span>
-                                                <span class="badge bg-primary">React</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            @endfor
-                        </div>
-                    </div>
-                </section>
 
                 <section id="blogPosts" class="row blog-posts">
                     <div class="col-12 mb-3">
