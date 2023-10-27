@@ -60,37 +60,11 @@
             <main class="col">
                 <x-homepage.biography />
 
-                <section id="skills" class="row mb-4 skills">
-                    <div class="col-12 mb-3">
-                        <h2 class="h3 fw-bold">Skills</h2>
-                    </div>
-
-                    <div class="showcase row-cols-3">
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-solid fa-code"></i>
-                            </div>
-                            <h4 class="showcase-item-text">Web Development</h4>
-                        </div>
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </div>
-                            <h4 class="showcase-item-text">Education</h4>
-                        </div>
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-solid fa-mobile-screen"></i>
-                            </div>
-                            <h4 class="showcase-item-text">Mobile Development</h4>
-                        </div>
-                    </div>
-
-                </section>
                 <section id="technologies" class="row mb-4 technologies">
                     <div class="col-12 mb-3">
                         <h2 class="h3 fw-bold">Technologies</h2>
                     </div>
+                <x-homepage.skills />
 
                     <div class="showcase row-cols-3">
                         <div class="showcase-item">
