@@ -41,17 +41,7 @@ class AvatarController extends Controller
             'size' => 'sometimes|numeric|min:1',
         ]);
 
-        if (! is_null($user->avatar)) {
-            return Storage::download($user->avatar);
-        } else {
-            $url = sprintf('https://www.gravatar.com/avatar/%s', md5(strtolower($user->email)));
-
-            if ($request->has('size')) {
-                $url .= sprintf('?s=%d', $request->size);
-            }
-
-            return redirect()->away($url);
-        }
+        return $this->respondWithAvatar($user, $request->input('size'));
     }
 
     /**
