@@ -9,13 +9,7 @@
                 <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
             </a>
 
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2">About</a></li>
-            </ul>
+            <x-menu name="main" renderer="footer" />
         </div>
     </div>
 
