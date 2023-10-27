@@ -6,7 +6,8 @@ use App\Components\Settings\PageSettings;
 
 trait HasPageSettings
 {
-    protected function getPageSettings(string $pageKey) {
+    protected function getPageSettings(string $pageKey)
+    {
         return app(PageSettings::class, ['key' => $pageKey]);
     }
 }

@@ -2,11 +2,10 @@
 
 namespace App\View\Components\Homepage;
 
+use App\Models\Project;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-
-use App\Models\Project;
 
 class Projects extends Component
 {
@@ -18,7 +17,8 @@ class Projects extends Component
         //
     }
 
-    public function projects() {
+    public function projects()
+    {
         return Project::all();
     }
 
