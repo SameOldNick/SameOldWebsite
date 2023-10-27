@@ -100,25 +100,23 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <a class="btn-social btn-social-facebook" href="#">
-                                        <i class="fa-brands fa-facebook-f"></i>
+                                    @if (OAuth::configured('github'))
+                                    <a class="btn-social btn-social-githubdark" href="{{ route('oauth.redirect.github') }}">
+                                        @svg('fab-github')
                                     </a>
+                                    @endif
 
-                                    <a class="btn-social btn-social-twitter" href="#">
-                                        <i class="fa-brands fa-twitter"></i>
+                                    @if (OAuth::configured('google'))
+                                    <a class="btn-social btn-social-googleblue" href="{{ route('oauth.redirect.google') }}">
+                                        @svg('fab-google')
                                     </a>
+                                    @endif
 
-                                    <a class="btn-social btn-social-instagrammagenta" href="#">
-                                        <i class="fa-brands fa-instagram"></i>
+                                    @if (OAuth::configured('twitter'))
+                                    <a class="btn-social btn-social-x-twitter" href="{{ route('oauth.redirect.twitter') }}">
+                                        @svg('fab-x-twitter')
                                     </a>
-
-                                    <a class="btn-social btn-social-googleblue" href="#">
-                                        <i class="fa-brands fa-google"></i>
-                                    </a>
-
-                                    <a class="btn-social btn-social-youtube" href="#">
-                                        <i class="fa-brands fa-youtube"></i>
-                                    </a>
+                                    @endif
                                 </div>
 
                                 @if (Route::has('register'))
