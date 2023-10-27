@@ -2,10 +2,8 @@
 
 namespace App\View\Components\Homepage;
 
-use Closure;
-
 use App\Models\Article;
-
+use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -19,7 +17,8 @@ class Articles extends Component
         //
     }
 
-    public function articles() {
+    public function articles()
+    {
         return
             Article::published()
                 ->latest('published_at')
