@@ -12,6 +12,30 @@ main.page-home {
                 max-height: 350px;
             }
         }
+
+        .social-media-links {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            justify-content: center;
+
+
+            .social-media-link {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                color: $dark;
+                padding: 5px;
+                border-radius: $border-radius;
+
+                @each $icon, $color in $social-media-colors {
+                    &.social-media-link-#{$icon}:hover {
+                        color: $color;
+                        background-color: color-contrast($color);
+                    }
+                }
+            }
+        }
     }
 
     .sections-submenu {
