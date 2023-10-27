@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes(['verify' => true]);
+Route::oauth();
 
 Route::namespace(Controllers\Main::class)->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
