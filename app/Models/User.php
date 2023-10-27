@@ -182,7 +182,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         if ($providers->count() > 0) {
             foreach ($providers->get() as $provider) {
-                if (!empty($provider->avatar_url)) {
+                if (! empty($provider->avatar_url)) {
                     $url = Str::of($provider->avatar_url);
                     break;
                 }

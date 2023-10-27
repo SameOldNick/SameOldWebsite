@@ -4,8 +4,8 @@ namespace App\Components\OAuth;
 
 use App\Components\OAuth\Socialite\SocialiteManager;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laravel\Socialite\Contracts\Factory;
 
 class ServiceProvider extends BaseServiceProvider
@@ -17,7 +17,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(OAuth::class, function($app) {
+        $this->app->singleton(OAuth::class, function ($app) {
             return $this->setupDrivers(new OAuth($app));
         });
 
@@ -39,7 +39,8 @@ class ServiceProvider extends BaseServiceProvider
     {
     }
 
-    protected function setupDrivers(OAuth $oauth) {
+    protected function setupDrivers(OAuth $oauth)
+    {
         foreach ($this->getDrivers() as $driver => $concrete) {
             $oauth->extend($driver, function ($app) use ($concrete) {
                 return $app->make($concrete);
@@ -49,7 +50,8 @@ class ServiceProvider extends BaseServiceProvider
         return $oauth;
     }
 
-    protected function getDrivers() {
+    protected function getDrivers()
+    {
         return [
             'github' => Drivers\GitHub::class,
             'google' => Drivers\Google::class,

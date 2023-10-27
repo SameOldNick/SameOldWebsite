@@ -2,7 +2,8 @@
 
 namespace App\Components\OAuth\Exceptions;
 
-class UserHasCredentialsException extends OAuthException {
+class UserHasCredentialsException extends OAuthException
+{
     /**
      * Render the exception.
      *
