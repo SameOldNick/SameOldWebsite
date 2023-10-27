@@ -39,7 +39,7 @@ class CommentSeeder extends Seeder
             $factory =
                 $baseFactory
                     ->has($nestedFactory->count(fake()->numberBetween(1, 5)), 'children')
-                    ->has($$nestedFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
+                    ->has($nestedFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
             //->has($baseFactory->count(fake()->numberBetween(1, 5)), 'children')
             //->has($baseFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
 
