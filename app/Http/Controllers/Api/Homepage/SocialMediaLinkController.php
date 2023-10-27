@@ -28,7 +28,7 @@ class SocialMediaLinkController extends HomepageController
                 'required',
                 new SocialMediaLinkRule,
                 Rule::unique(SocialMediaLink::class),
-            ]
+            ],
         ]);
 
         return SocialMediaLink::create(['link' => $request->link]);
@@ -52,7 +52,7 @@ class SocialMediaLinkController extends HomepageController
                 'required',
                 new SocialMediaLinkRule,
                 Rule::unique(SocialMediaLink::class)->ignore($socialMedium),
-            ]
+            ],
         ]);
 
         $socialMedium->link = $request->link;
