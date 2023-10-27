@@ -50,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $with = ['roles', 'state', 'country'];
+    protected $with = ['roles', 'state', 'country', 'oauthProviders'];
 
     /**
      * The attributes that should be cast.
@@ -183,5 +183,8 @@ class User extends Authenticatable implements MustVerifyEmail
         $query = Arr::query(array_merge($defaults, $options));
 
         return (string) Str::of($this->email)->trim()->lower()->pipe('md5')->prepend('https://www.gravatar.com/avatar/')->append($query ? '?'.$query : '');
+    public function oauthProviders()
+    {
+        return $this->hasMany(OAuthProvider::class);
     }
 }
