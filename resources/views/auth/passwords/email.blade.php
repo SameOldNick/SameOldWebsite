@@ -25,8 +25,14 @@
                                 <span class="input-group-text bg-primary">
                                     <i class="fa-solid fa-at text-white"></i>
                                 </span>
-                                <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email Address') }}"
-                                    required autocomplete="email" autofocus>
+                                <input
+                                    name="email"
+                                    type="text"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    placeholder="{{ __('Email Address') }}"
+                                    required
+                                    autocomplete="email"
+                                    autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">

@@ -33,8 +33,7 @@
                                     value="{{ old('email') }}"
                                     required
                                     autocomplete="email"
-                                    autofocus
-                                >
+                                    autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -55,8 +54,7 @@
                                         class="form-control @error('password') is-invalid @enderror"
                                         placeholder="{{ __('Password') }}"
                                         required
-                                        autocomplete="password"
-                                    >
+                                        autocomplete="password">
                                     <a href="#" class="ibc-button" role="button">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
@@ -76,7 +74,9 @@
 
                                 <select name="country" class="selectpicker form-control" data-live-search="true" id="country">
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->code }}" @selected(old('country', 'USA') == $country->code)>{{ __($country->country) }} ({{ $country->code }})</option>
+                                        <option value="{{ $country->code }}" @selected(old('country', 'USA') == $country->code)>
+                                            {{ __($country->country) }} ({{ $country->code }})
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -90,8 +90,7 @@
                                         value="yes"
                                         id="termsConditions"
                                         aria-describedby="invalidTermsConditions"
-                                        required
-                                    >
+                                        required>
                                     <label class="form-check-label" for="termsConditions">
                                         I agree to the <a href="#" target="_blank">terms and conditions</a>
                                     </label>
