@@ -31,4 +31,21 @@ class ArrMixin
             return ! Arr::isKeyIndex($array, $key);
         };
     }
+
+    /**
+     * Checks if keys are filled in array (using built-in filled function in Laravel).
+     *
+     * @return callable
+     */
+    public function filled() {
+        return function($array, $keys) {
+            if (empty($array))
+                return empty($keys);
+
+            $found = Arr::only($array, $keys);
+            $filtered = array_filter($found, fn ($value) => filled($value));
+
+            return count($filtered) === count($keys);
+        };
+    }
 }
