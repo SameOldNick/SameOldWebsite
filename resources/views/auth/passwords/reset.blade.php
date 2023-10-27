@@ -24,8 +24,14 @@
                                 <span class="input-group-text bg-primary">
                                     <i class="fa-solid fa-at text-white"></i>
                                 </span>
-                                <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email Address') }}"
-                                    value="{{ $email ?? old('email') }}" required autocomplete="email">
+                                <input
+                                    name="email"
+                                    type="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    placeholder="{{ __('Email Address') }}"
+                                    value="{{ $email ?? old('email') }}"
+                                    required
+                                    autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -40,8 +46,13 @@
                                 </span>
 
                                 <div class="ibc-container showhide-password flex-grow-1">
-                                    <input name="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                                        placeholder="{{ __('Password') }}" required autocomplete="new-password">
+                                    <input
+                                        name="password"
+                                        type="password"
+                                        class="form-control @error('password') is-invalid @enderror"
+                                        placeholder="{{ __('Password') }}"
+                                        required
+                                        autocomplete="new-password">
                                     <a href="#" class="ibc-button" role="button">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>

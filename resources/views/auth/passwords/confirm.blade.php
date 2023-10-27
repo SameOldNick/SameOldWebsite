@@ -19,8 +19,14 @@
                                 <span class="input-group-text bg-primary">
                                     <i class="fa-solid fa-key text-white"></i>
                                 </span>
-                                <input name="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                                    placeholder="{{ __('Password') }}" required autocomplete="current-password" autofocus>
+                                <input
+                                    name="password"
+                                    type="password"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    placeholder="{{ __('Password') }}"
+                                    required
+                                    autocomplete="current-password"
+                                    autofocus>
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
