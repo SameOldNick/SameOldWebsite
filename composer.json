@@ -14,6 +14,7 @@
         "guzzlehttp/guzzle": "^7.5",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.9",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "little-apps/littlejwt": "^1.3",
