@@ -5,18 +5,6 @@
         <div class="row">
             <aside class="col-md-4 profile">
                 <div class="profile-sticky">
-
-                    <div class="d-flex justify-content-center">
-                        <div class="">
-                            <a class="btn-social btn-social-facebook" href="#">
-                                <i class="fa-brands fa-facebook-f"></i>
-                            </a>
-
-                            <a class="btn-social btn-social-twitter" href="#">
-                                <i class="fa-brands fa-twitter"></i>
-                            </a>
-                        </div>
-                    </div>
                     <x-homepage.avatar />
                     <h1 class="h2 text-center">
                         {{-- Nick Hamnett --}}
@@ -32,6 +20,7 @@
                         {{ $settings->setting('location') }}
                     </p>
 
+                    <x-homepage.social-media />
 
                     <nav class="navbar navbar-expand-md sections-submenu">
                         <div class="container-fluid">
