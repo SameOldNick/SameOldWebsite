@@ -17,7 +17,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
-            <x-menu name="main.top"/>
+            <x-menu name="main"/>
 
             <ul class="navbar-nav gap-2">
                 <li class="nav-item dropdown dropdown-search">
