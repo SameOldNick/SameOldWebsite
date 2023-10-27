@@ -57,17 +57,8 @@
                 </div>
             </aside>
 
-            <div id="sectionsScrollspyContainer" class="col" data-bs-spy="scroll" data-bs-target=".sections-submenu" data-bs-root-margin="0px 0px -70% 0px" data-bs-smooth-scroll="true" tabindex="0">
-                <section id="biography" class="row biography">
-                    <div class="col">
-                        <h2 class="h3 fw-bold">Biography</h2>
-                        <p>Hello 👋</p>
-
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis consequat risus. Donec at dictum nisi, vel faucibus ex. Etiam ac erat ac urna finibus maximus sed a ligula. Ut pharetra scelerisque sapien, laoreet tempus massa blandit vel. Vestibulum lectus dui, bibendum vitae lorem eu, tincidunt maximus ex. Nunc interdum porta nisi molestie hendrerit. Praesent at ultricies lectus, id pharetra est. Quisque nec fringilla diam. Morbi et ligula sed tortor congue ornare quis vitae augue.</p>
-
-                        <p>Duis ligula arcu, viverra rhoncus gravida vel, venenatis ut diam. Donec id condimentum nunc, at mattis nunc. Sed ultricies convallis ipsum nec posuere. Nulla non sem imperdiet nibh porttitor tincidunt. Nam velit dolor, sagittis quis congue non, mattis sit amet nibh. Vestibulum vel libero dolor. Phasellus a massa vitae urna dictum tincidunt. Sed vulputate lacus id eros consectetur, non dignissim metus viverra. In sollicitudin sem purus, vel vulputate mi ultrices sed. Pellentesque porttitor, nisi et elementum auctor, augue mauris semper leo, at blandit leo turpis sed ante. Nulla sem ante, sodales sed sapien at, lacinia interdum augue. In ullamcorper tristique tortor eget rutrum. Vivamus congue urna interdum est ullamcorper, vel ultricies velit viverra.</p>
-                    </div>
-                </section>
+            <main class="col">
+                <x-homepage.biography />
 
                 <section id="skills" class="row mb-4 skills">
                     <div class="col-12 mb-3">
@@ -201,6 +192,7 @@
                     </div>
                 </section>
             </div>
+            </main>
         </div>
     </div>
 
