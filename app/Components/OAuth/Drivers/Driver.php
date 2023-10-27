@@ -7,11 +7,10 @@ use App\Components\OAuth\Exceptions\UserHasCredentialsException;
 use App\Models\OAuthProvider;
 use App\Models\User;
 use Exception;
-
 use Illuminate\Container\Container;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
@@ -21,16 +20,16 @@ abstract class Driver
 {
     public function __construct(
         protected Container $container
-    )
-    {
+    ) {
     }
 
     /**
      * Checks if driver is configured.
      *
-     * @return boolean
+     * @return bool
      */
-    public function isConfigured() {
+    public function isConfigured()
+    {
         return Arr::filled($this->getConfig(), ['client_id', 'client_secret']);
     }
 
@@ -39,7 +38,8 @@ abstract class Driver
      *
      * @return array
      */
-    public function getConfig(): array {
+    public function getConfig(): array
+    {
         $defaults = [
             'client_id' => '',
             'client_secret' => '',
@@ -55,7 +55,8 @@ abstract class Driver
      *
      * @return mixed
      */
-    public function handleRedirect() {
+    public function handleRedirect()
+    {
         return $this->prepareRedirectResponse()->provider()->redirect();
     }
 
@@ -64,10 +65,10 @@ abstract class Driver
      *
      * @return mixed
      */
-    public function handleCallback() {
+    public function handleCallback()
+    {
         try {
             $socialiteUser = $this->provider()->user();
-
         } catch (InvalidStateException $ex) {
             /**
              * This happens when the provider sent a response back to the app that it wasn't expecting.
@@ -89,7 +90,8 @@ abstract class Driver
      * @param Router $router
      * @return $this
      */
-    public function registerRoutes(Router $router) {
+    public function registerRoutes(Router $router)
+    {
         $suffix = $this->routerSuffix();
 
         $router
@@ -109,7 +111,8 @@ abstract class Driver
      *
      * @return $this
      */
-    protected function prepareRedirectResponse() {
+    protected function prepareRedirectResponse()
+    {
         return $this;
     }
 
@@ -120,7 +123,8 @@ abstract class Driver
      * @param SocialiteUser $socialiteUser
      * @return $this
      */
-    protected function prepareCallbackResponse(SocialiteUser $socialiteUser) {
+    protected function prepareCallbackResponse(SocialiteUser $socialiteUser)
+    {
         $user = $this->createOrUpdateUser($socialiteUser);
 
         return $this->login($user);
@@ -132,7 +136,8 @@ abstract class Driver
      * @param User $user
      * @return $this
      */
-    protected function login(User $user) {
+    protected function login(User $user)
+    {
         Auth::login($user);
 
         return $this;
@@ -143,7 +148,8 @@ abstract class Driver
      *
      * @return mixed
      */
-    protected function generateCallbackResponse() {
+    protected function generateCallbackResponse()
+    {
         return redirect()->route('user.profile');
     }
 
@@ -152,7 +158,8 @@ abstract class Driver
      *
      * @return AbstractProvider
      */
-    protected function provider() {
+    protected function provider()
+    {
         return Socialite::driver($this->providerName());
     }
 
@@ -162,7 +169,8 @@ abstract class Driver
      * @param SocialiteUser $oauthUser
      * @return User
      */
-    protected function createOrUpdateUser(SocialiteUser $oauthUser): User {
+    protected function createOrUpdateUser(SocialiteUser $oauthUser): User
+    {
         // Check if a user with this email exists in the database.
         $existingUser = User::where('email', $oauthUser->getEmail())->first();
 
@@ -196,7 +204,8 @@ abstract class Driver
         }
     }
 
-    protected function mapToOAuthProvider(SocialiteUser $oauthUser): OAuthProvider {
+    protected function mapToOAuthProvider(SocialiteUser $oauthUser): OAuthProvider
+    {
         $oauthProvider = new OAuthProvider();
 
         $oauthProvider->provider_name = $this->providerName();
@@ -214,7 +223,8 @@ abstract class Driver
      *
      * @return string
      */
-    protected function routerSuffix(): string {
+    protected function routerSuffix(): string
+    {
         return $this->providerName();
     }
 
