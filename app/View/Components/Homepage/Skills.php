@@ -2,8 +2,8 @@
 
 namespace App\View\Components\Homepage;
 
-use Closure;
 use App\Models\Skill;
+use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -17,7 +17,8 @@ class Skills extends Component
         //
     }
 
-    public function skills() {
+    public function skills()
+    {
         return Skill::all();
     }
 
