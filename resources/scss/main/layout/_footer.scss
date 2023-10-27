@@ -4,7 +4,7 @@ footer {
 
     .brand {
         a {
-            color: $text-muted;
+            color: $light;
             font-family: $font-family-cursive;
             text-decoration: none;
 
@@ -18,7 +18,7 @@ footer {
 	.nav {
 		.nav-item {
 			.nav-link {
-				color: $text-muted;
+				color: $light;
 
 				&:hover {
 					color: $dark-link-hover-color;
