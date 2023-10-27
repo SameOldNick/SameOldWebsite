@@ -27,6 +27,7 @@
                         <form method="POST" name="user-change-password" action="{{ route('user.change-password') }}">
                             @csrf
 
+                            @if(Auth::user()->password)
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <label for="current_password" class="form-label">{{ __('Current Password') }}</label>
@@ -39,6 +40,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            @endif
 
                             <div class="row mb-3">
                                 <div class="col-12">

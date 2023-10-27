@@ -3,6 +3,7 @@
 @can('view', $comment)
 <article class="blog-article-comment" id="{{ sprintf('comment-%d', $comment->getKey()) }}">
     <section class="blog-article-comment-left">
+        {{-- TODO: Pull using RespondsWithAvatar trait --}}
         <img src="{{ $comment->post->user->getAvatarUrl() }}" alt="{{ __('Avatar for: :name', ['name' => $comment->post->user->name]) }}" class="blog-article-comment-avatar" />
     </section>
     <section class="blog-article-comment-right">

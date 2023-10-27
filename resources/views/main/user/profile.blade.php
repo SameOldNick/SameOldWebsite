@@ -80,6 +80,7 @@
                                     <label for="country" class="form-label">{{ __('Country') }}</label>
 
                                     <select name="country" id="country" class="form-control" title="{{ __('Select Country') }}" data-searchable-modal="true">
+                                        <option value="" disabled @selected(is_null(Auth::user()->country_code))></option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->code }}" @selected(old('country', Auth::user()->country_code) == $country->code)>{{ __($country->country) }} ({{ $country->code }})</option>
                                         @endforeach

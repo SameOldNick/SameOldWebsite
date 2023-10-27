@@ -143,7 +143,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isStateAssociated()
     {
-        return $this->country->states->count() > 0;
+        return !is_null($this->country_code) && $this->country->states->count() > 0;
     }
 
     /**
