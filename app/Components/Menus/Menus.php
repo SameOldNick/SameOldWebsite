@@ -38,7 +38,7 @@ class Menus
      */
     public function get($name)
     {
-        if (!$this->menus->has($name)) {
+        if (! $this->menus->has($name)) {
             throw new OutOfBoundsException("Menu '{$name}' does not exist.");
         }
 
