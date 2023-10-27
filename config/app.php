@@ -216,6 +216,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Menus' => \App\Components\Menus\Facades\Menus::class,
+        'OAuth' => \App\Components\OAuth\Facades\OAuth::class,
     ])->toArray(),
 
 ];
