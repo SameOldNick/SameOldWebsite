@@ -2,6 +2,8 @@
 
 namespace App\Components\Menus;
 
+use OutOfBoundsException;
+
 class Menus
 {
     protected $menus;
@@ -32,9 +34,14 @@ class Menus
      *
      * @param string $name
      * @return Menu
+     * @throws OutOfBoundsException Thrown if menu doesn't exist.
      */
     public function get($name)
     {
+        if (!$this->menus->has($name)) {
+            throw new OutOfBoundsException("Menu '{$name}' does not exist.");
+        }
+
         return $this->menus[$name];
     }
 }
