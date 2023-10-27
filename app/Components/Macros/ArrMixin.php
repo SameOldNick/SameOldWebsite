@@ -37,10 +37,12 @@ class ArrMixin
      *
      * @return callable
      */
-    public function filled() {
-        return function($array, $keys) {
-            if (empty($array))
+    public function filled()
+    {
+        return function ($array, $keys) {
+            if (empty($array)) {
                 return empty($keys);
+            }
 
             $found = Arr::only($array, $keys);
             $filtered = array_filter($found, fn ($value) => filled($value));
