@@ -2,8 +2,8 @@
 
 namespace App\View\Components\Homepage;
 
-use Closure;
 use App\Traits\Support\HasPageSettings;
+use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -19,7 +19,8 @@ class Biography extends Component
         //
     }
 
-    public function biography() {
+    public function biography()
+    {
         return $this->getPageSettings('homepage')->setting('biography');
     }
 

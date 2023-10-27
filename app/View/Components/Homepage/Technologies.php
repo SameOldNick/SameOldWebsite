@@ -2,10 +2,8 @@
 
 namespace App\View\Components\Homepage;
 
-use Closure;
-
 use App\Models\Technology;
-
+use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -19,7 +17,8 @@ class Technologies extends Component
         //
     }
 
-    public function technologies() {
+    public function technologies()
+    {
         return Technology::all();
     }
 
