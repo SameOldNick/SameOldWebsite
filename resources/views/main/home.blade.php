@@ -60,52 +60,10 @@
             <main class="col">
                 <x-homepage.biography />
 
-                <section id="technologies" class="row mb-4 technologies">
-                    <div class="col-12 mb-3">
-                        <h2 class="h3 fw-bold">Technologies</h2>
-                    </div>
                 <x-homepage.skills />
 
-                    <div class="showcase row-cols-3">
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-brands fa-php"></i>
-                            </div>
-                            <h4 class="showcase-item-text">PHP</h4>
-                        </div>
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-brands fa-js"></i>
-                            </div>
-                            <h4 class="showcase-item-text">JavaScript &amp; TypeScript</h4>
-                        </div>
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-brands fa-java"></i>
-                            </div>
-                            <h4 class="showcase-item-text">Java</h4>
-                        </div>
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-brands fa-react"></i>
-                            </div>
-                            <h4 class="showcase-item-text">React</h4>
-                        </div>
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-brands fa-node"></i>
-                            </div>
-                            <h4 class="showcase-item-text">NodeJS</h4>
-                        </div>
-                        <div class="showcase-item">
-                            <div class="showcase-item-icon">
-                                <i class="fa-brands fa-laravel"></i>
-                            </div>
-                            <h4 class="showcase-item-text">Laravel</h4>
-                        </div>
-                    </div>
+                <x-homepage.technologies />
 
-                </section>
 
                 <section id="projects" class="row mb-4 projects">
                     <div class="col-12 mb-3">
