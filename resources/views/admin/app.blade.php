@@ -19,12 +19,16 @@
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root"></div>
 
-        @isset($accessToken)
+
         <script>
+            @isset($accessToken)
             window.accessToken = @js($accessToken);
+            @endisset
+
+            @isset($refreshToken)
             window.refreshToken = @js($refreshToken);
+            @endisset
         </script>
-        @endisset
 
         @viteReactRefresh
         @vite('resources/ts/admin/index.tsx')
