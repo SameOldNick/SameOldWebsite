@@ -3,10 +3,7 @@
 namespace Database\Seeders\Initial;
 
 use App\Models\Skill;
-
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
 
 class SkillSeeder extends Seeder
 {
@@ -18,16 +15,16 @@ class SkillSeeder extends Seeder
         $skills = [
             [
                 'icon' => 'fas-code',
-                'skill' => 'Web Development'
+                'skill' => 'Web Development',
             ],
             [
                 'icon' => 'fas-graduation-cap',
-                'skill' => 'Education'
+                'skill' => 'Education',
             ],
             [
                 'icon' => 'fas-mobile-alt',
-                'skill' => 'Mobile Development'
-            ]
+                'skill' => 'Mobile Development',
+            ],
         ];
 
         foreach ($skills as $skill) {

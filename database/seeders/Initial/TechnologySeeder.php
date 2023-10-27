@@ -2,9 +2,8 @@
 
 namespace Database\Seeders\Initial;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Technology;
+use Illuminate\Database\Seeder;
 
 class TechnologySeeder extends Seeder
 {
@@ -16,27 +15,27 @@ class TechnologySeeder extends Seeder
         $technologies = [
             [
                 'icon' => 'fab-php',
-                'technology' => 'PHP'
+                'technology' => 'PHP',
             ],
             [
                 'icon' => 'fab-js',
-                'technology' => 'JavaScript & TypeScript'
+                'technology' => 'JavaScript & TypeScript',
             ],
             [
                 'icon' => 'fab-java',
-                'technology' => 'Java'
+                'technology' => 'Java',
             ],
             [
                 'icon' => 'fab-react',
-                'technology' => 'React'
+                'technology' => 'React',
             ],
             [
                 'icon' => 'fab-node',
-                'technology' => 'NodeJS'
+                'technology' => 'NodeJS',
             ],
             [
                 'icon' => 'fab-laravel',
-                'technology' => 'Laravel'
+                'technology' => 'Laravel',
             ],
         ];
 
