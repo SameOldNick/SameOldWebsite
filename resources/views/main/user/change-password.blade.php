@@ -18,6 +18,15 @@
                             </div>
                         @endisset
 
+                        @if(!Auth::user()->password)
+                            <div class="mb-4">
+                                <x-alert type="warning">
+                                    <strong>{{ __('Important Notice:') }}</strong>
+                                    {{ __('Once a password is set, it must be entered when using OAuth (Open Authorization) to access the website.') }}
+                                </x-alert>
+                            </div>
+                        @endif
+
                         @if ($errors->any())
                             <div class="mb-4">
                                 <x-alerts type="danger" :messages="$errors->all()"></x-alerts>
