@@ -5,10 +5,6 @@
         <div class="row">
             <aside class="col-md-4 profile">
                 <div class="profile-sticky">
-                    <h1 class="h2 text-center">Nick Hamnett</h1>
-
-                    <p class="text-center mb-0 fw-bold">Instructor / Coder</p>
-                    <p class="text-center mb-0">Calgary, Canada</p>
 
                     <div class="d-flex justify-content-center">
                         <div class="">
@@ -22,6 +18,20 @@
                         </div>
                     </div>
                     <x-homepage.avatar />
+                    <h1 class="h2 text-center">
+                        {{-- Nick Hamnett --}}
+                        {{ $settings->setting('name') }}
+                    </h1>
+
+                    <p class="text-center mb-0 fw-bold">
+                        {{-- Instructor / Coder --}}
+                        {{ $settings->setting('headline') }}
+                    </p>
+                    <p class="text-center mb-0">
+                        {{-- Calgary, Canada --}}
+                        {{ $settings->setting('location') }}
+                    </p>
+
 
                     <nav class="navbar navbar-expand-md sections-submenu">
                         <div class="container-fluid">
