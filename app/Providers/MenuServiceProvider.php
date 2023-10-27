@@ -32,7 +32,7 @@ class MenuServiceProvider extends ServiceProvider
             return;
         }
 
-        Menus::create('main.top', function (Menu $menu) {
+        Menus::create('main', function (Menu $menu) {
             $menu
                 ->route('home', 'Home', $this->applyIcon('fa-solid fa-house'))
                 ->route('blog', 'Blog', $this->applyIcon('fa-solid fa-newspaper'))
