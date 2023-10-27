@@ -21,6 +21,7 @@ Auth::routes(['verify' => true]);
 
 Route::namespace(Controllers\Main::class)->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/avatar', 'HomeController@avatar')->name('home.avatar');
 
     Route::get('/contact', 'ContactController@show')->name('contact');
     Route::post('/contact', 'ContactController@process');

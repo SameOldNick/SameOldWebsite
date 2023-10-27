@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\User;
+use App\Traits\Controllers\RespondsWithUsersAvatar;
 
 class HomeController extends Controller
 {
@@ -15,6 +17,7 @@ class HomeController extends Controller
     public function __construct()
     {
     }
+    use RespondsWithUsersAvatar;
 
     /**
      * Show the homepage.
@@ -30,5 +33,10 @@ class HomeController extends Controller
                 ->get();
 
         return view('main.home', compact('articles'));
+    public function avatar(Request $request) {
+        $user = User::find(config('pages.homepage.user', 1));
+
+        return $this->respondWithAvatar($user, $request->input('size'));
+    }
     }
 }
