@@ -116,6 +116,13 @@ declare global {
 
     type TSocialMediaLink = string;
 
+    interface ISocialMediaLink {
+        id?: number;
+        link: string;
+        created_at: string;
+        updated_at: string;
+    }
+
     interface ISkill {
         id?: number;
         icon: string;
@@ -175,6 +182,8 @@ declare global {
         approved_at: string | null;
         approved_by: IUser | null;
     }
+
+
 }
 
 export { };

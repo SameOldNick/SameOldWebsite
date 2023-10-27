@@ -21,7 +21,7 @@ interface IState {
 }
 
 interface ISocialMediaLinkProps {
-    link: string;
+    link: ISocialMediaLink;
     selected: boolean;
 
     onEditClicked: () => void;
@@ -30,7 +30,7 @@ interface ISocialMediaLinkProps {
 }
 
 interface ISocialMediaLinkItem {
-    link: TSocialMediaLink;
+    link: ISocialMediaLink;
     selected: boolean;
 }
 
@@ -40,7 +40,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
             <ListGroupItem className="d-flex justify-content-between">
                 <span>
                     <Input type="checkbox" className="align-middle" checked={selected} onChange={(e) => onSelected(e.target.checked)} />
-                    <Button tag='a' color='link' href={link} target='_blank'>{link}</Button>
+                    <Button tag='a' color='link' href={link.link} target='_blank'>{link.link}</Button>
                 </span>
 
                 <span>
@@ -64,8 +64,8 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
         };
 
         this.addLink = this.addLink.bind(this);
-        this.editLink = this.editLink.bind(this);
-        this.deleteLinks = this.deleteLinks.bind(this);
+        this.promptDeleteLink = this.promptDeleteLink.bind(this);
+        this.promptDeleteLinks = this.promptDeleteLinks.bind(this);
 
     }
 
@@ -75,7 +75,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
 
     private async load() {
         try {
-            const response = await createAuthRequest().get<TSocialMediaLink[]>('/pages/homepage/social-media');
+            const response = await createAuthRequest().get<ISocialMediaLink[]>('social-media');
 
             this.setState({
                 links: response.data.map<ISocialMediaLinkItem>((link) => ({ link, selected: false }))
@@ -98,38 +98,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
 
     }
 
-    private async update(links: TSocialMediaLink[]) {
-        try {
-            const response = await createAuthRequest().post<TSocialMediaLink[]>('/pages/homepage/social-media', { links });
-
-            this.setState({
-                links: response.data.map<ISocialMediaLinkItem>((link) => ({ link, selected: false }))
-            });
-
-            await withReactContent(Swal).fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Social media links have been updated.'
-            });
-        } catch (err) {
-            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-            const result = await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `Unable to update social media links: ${message}`,
-                confirmButtonText: 'Try Again',
-                showConfirmButton: true,
-                showCancelButton: true
-            });
-
-            if (result.isConfirmed)
-                await this.update(links);
-        }
-
-    }
-
-    private onItemSelected(link: TSocialMediaLink, selected: boolean) {
+    private onItemSelected(link: ISocialMediaLink, selected: boolean) {
         this.setState(({ links }) => ({ links: links.map((item) => item.link === link ? { link, selected } : item) }));
     }
 
@@ -137,25 +106,73 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
         this.setState({ editLink: link });
     }
 
-    private async addLink(newLink: TSocialMediaLink) {
-        const { links } = this.state;
+    private async addLink(link: string) {
+        try {
+            const response = await createAuthRequest().post<ISocialMediaLink[]>('social-media', { link });
 
-        await this.update([...links.map(({ link }) => link), newLink]);
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Social media link has been added.'
+            });
+
+            this.load();
+        } catch (err) {
+            console.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to add social media link: ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
+
+            if (result.isConfirmed)
+                await this.addLink(link);
+        }
     }
 
-    private async editLink(item: ISocialMediaLinkItem, newLink: TSocialMediaLink) {
-        const { links } = this.state;
+    private async updateLink(item: ISocialMediaLinkItem, updatedLink: string) {
+        try {
+            const response = await createAuthRequest().put<ISocialMediaLink[]>(`social-media/${item.link.id}`, { link: updatedLink });
 
-        await this.update(links.map((value) => value.link === item.link ? newLink : value.link));
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Social media link has been updated.'
+            });
+
+            this.load();
+        } catch (err) {
+            console.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to update social media link: ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
+
+            if (result.isConfirmed)
+                await this.updateLink(item, updatedLink);
+        }
     }
 
-    private async deleteLink(link: TSocialMediaLink) {
+    private async promptDeleteLink(link: ISocialMediaLink) {
         const { links } = this.state;
 
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
-            text: `Do you really want to remove "${link}"?`,
+            text: `Do you really want to remove "${link.link}"?`,
             showConfirmButton: true,
             showCancelButton: true
         });
@@ -163,16 +180,47 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
         if (!result.isConfirmed)
             return;
 
-        await this.update(links.filter((value) => value.link !== link).map((value) => value.link));
+        await this.deleteLink(link);
 
     }
 
-    private async deleteLinks() {
+    private async deleteLink(link: ISocialMediaLink) {
+         try {
+            const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${link.id}`);
+
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Social media link has been deleted.'
+            });
+
+            this.load();
+        } catch (err) {
+            console.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to delete social media link: ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
+
+            if (result.isConfirmed)
+                await this.deleteLink(link);
+        }
+
+    }
+
+    private async promptDeleteLinks() {
         const { links } = this.state;
 
-        const toKeep = links.filter((value) => !value.selected);
+        const toDelete = links.filter((value) => value.selected);
 
-        if (toKeep.length === links.length) {
+        if (toDelete.length === 0) {
             await withReactContent(Swal).fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -185,7 +233,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
-            text: `Do you really want to remove ${links.length - toKeep.length} link(s)?`,
+            text: `Do you really want to remove ${toDelete.length} link(s)?`,
             showConfirmButton: true,
             showCancelButton: true
         });
@@ -193,7 +241,34 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
         if (!result.isConfirmed)
             return;
 
-        await this.update(toKeep.map((value) => value.link));
+        for (const item of toDelete) {
+            this.deleteLinksOne(item);
+        }
+
+        await this.load();
+    }
+
+    private async deleteLinksOne(item: ISocialMediaLinkItem) {
+        try {
+            const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${item.link.id}`);
+
+        } catch (err) {
+            console.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to delete social media link ID "${item.link.id}": ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
+
+            if (result.isConfirmed)
+                await this.deleteLinksOne(item);
+        }
     }
 
     render() {
@@ -212,6 +287,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
             <>
                 {addLink && (
                     <SocialMediaLinkPrompt
+                        link={false}
                         onSubmitted={this.addLink}
                         onClose={() => this.setState({ addLink: false })}
                     />
@@ -219,7 +295,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
                 {editLink && (
                     <SocialMediaLinkPrompt
                         link={editLink.link}
-                        onSubmitted={(newLink) => this.editLink(editLink, newLink)}
+                        onSubmitted={(newLink) => this.updateLink(editLink, newLink)}
                         onClose={() => this.setState({ editLink: undefined })}
                     />
                 )}
@@ -237,7 +313,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
                                 Update
                             </Button>
 
-                            <Button color="danger" disabled={!hasSelected()} onClick={this.deleteLinks}>
+                            <Button color="danger" disabled={!hasSelected()} onClick={this.promptDeleteLinks}>
                                 <span className='me-1'>
                                     <FaTrash />
                                 </span>
@@ -259,7 +335,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
                                         selected={selected}
                                         onSelected={(selected) => this.onItemSelected(link, selected)}
                                         onEditClicked={() => this.displayEditLink({ link, selected })}
-                                        onDeleteClicked={() => this.deleteLink(link)}
+                                        onDeleteClicked={() => this.promptDeleteLink(link)}
                                     />
                                 ))
                                 : (

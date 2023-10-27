@@ -9,13 +9,21 @@ interface IFormikValues {
     link: string;
 }
 
-interface IProps {
-    link?: TSocialMediaLink;
+interface ISocialMediaLinkPromptAddProps {
+    link: false;
     onSubmitted: (newLink: string) => Promise<void>;
     onClose: () => void;
 }
 
-const SocialMediaLinkPrompt: React.FC<IProps> = ({ link, onSubmitted, onClose }) => {
+interface ISocialMediaLinkPromptEditProps {
+    link: ISocialMediaLink;
+    onSubmitted: (updatedLink: string) => Promise<void>;
+    onClose: () => void;
+}
+
+type TProps = ISocialMediaLinkPromptAddProps | ISocialMediaLinkPromptEditProps;
+
+const SocialMediaLinkPrompt: React.FC<TProps> = ({ link, onSubmitted, onClose }) => {
     const handleSubmit = async ({ link }: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
         await onSubmitted(link);
 
@@ -26,7 +34,7 @@ const SocialMediaLinkPrompt: React.FC<IProps> = ({ link, onSubmitted, onClose })
         link: Yup.string().required('Link is required').max(255),
     });
 
-    const initialValues: IFormikValues = { link: link || '' };
+    const initialValues: IFormikValues = { link: link ? link.link : '' };
 
     return (
         <Modal isOpen backdrop='static'>
