@@ -5,9 +5,6 @@
         <div class="row">
             <aside class="col-md-4 profile">
                 <div class="profile-sticky">
-                    <div class="avatar-container mb-4">
-                        <img src="https://via.placeholder.com/500" alt="{{ __('Avatar') }}" class="img-fluid rounded-circle">
-                    </div>
                     <h1 class="h2 text-center">Nick Hamnett</h1>
 
                     <p class="text-center mb-0 fw-bold">Instructor / Coder</p>
@@ -24,6 +21,7 @@
                             </a>
                         </div>
                     </div>
+                    <x-homepage.avatar />
 
                     <nav class="navbar navbar-expand-md sections-submenu">
                         <div class="container-fluid">
