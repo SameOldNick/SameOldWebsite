@@ -2,21 +2,15 @@
 
 namespace App\Http\Controllers\Main;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Pages\HomepageController as BaseController;
 use App\Models\Article;
 use App\Models\User;
 use App\Traits\Controllers\RespondsWithUsersAvatar;
 
-class HomeController extends Controller
+use Illuminate\Http\Request;
+
+class HomeController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
     use RespondsWithUsersAvatar;
 
     /**
@@ -26,17 +20,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $articles =
-            Article::published()
-                ->latest('published_at')
-                ->limit(5)
-                ->get();
+        return view('main.home', [
+            'settings' => $this->getSettings()
+        ]);
+    }
 
-        return view('main.home', compact('articles'));
     public function avatar(Request $request) {
         $user = User::find(config('pages.homepage.user', 1));
 
         return $this->respondWithAvatar($user, $request->input('size'));
     }
+
+    /**
+     * Gets Page Settings.
+     *
+     * @return PageSettings
+     */
+    protected function getSettings() {
+        return parent::getSettings()->driver('cache');
     }
 }
