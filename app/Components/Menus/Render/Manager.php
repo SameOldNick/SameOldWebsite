@@ -38,6 +38,16 @@ class Manager extends SupportManager
     }
 
     /**
+     * Creates footer driver
+     *
+     * @return \App\Components\Menus\Render\Adapter
+     */
+    protected function createFooterDriver()
+    {
+        return $this->createAdapter($this->container->make(Drivers\FooterRenderer::class));
+    }
+
+    /**
      * Create render adapter for driver
      *
      * @param SingleLevelRenderer $driver
