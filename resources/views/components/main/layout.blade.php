@@ -43,9 +43,6 @@
 
     @vite('resources/ts/main/index.ts')
 
-    {{-- <script src="{{ Str::uniqueUrl(mix('/js/manifest.js')) }}"></script>
-    <script src="{{ Str::uniqueUrl(mix('/js/main-vendor.js')) }}"></script>
-    <script src="{{ Str::uniqueUrl(mix('/js/main.js')) }}"></script> --}}
     @stack('scripts')
 </body>
 
