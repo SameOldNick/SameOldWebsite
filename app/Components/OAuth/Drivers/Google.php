@@ -4,7 +4,8 @@ namespace App\Components\OAuth\Drivers;
 
 class Google extends Driver
 {
-    protected function providerName(): string {
+    protected function providerName(): string
+    {
         return 'google';
     }
 
@@ -14,8 +15,4 @@ class Google extends Driver
 
         return $this;
     }
-
-
-
-
 }

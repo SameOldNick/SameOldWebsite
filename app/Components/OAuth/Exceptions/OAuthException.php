@@ -5,7 +5,8 @@ namespace App\Components\OAuth\Exceptions;
 use Exception;
 use Illuminate\Http\Response;
 
-class OAuthException extends Exception {
+class OAuthException extends Exception
+{
     /**
      * Render the exception.
      *

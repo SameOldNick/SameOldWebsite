@@ -6,7 +6,8 @@ use Laravel\Socialite\Contracts\User as SocialiteUser;
 
 class Twitter extends Driver
 {
-    protected function providerName(): string {
+    protected function providerName(): string
+    {
         return 'twitter';
     }
 
@@ -24,7 +25,8 @@ class Twitter extends Driver
      * @param SocialiteUser $socialiteUser
      * @return $this
      */
-    protected function prepareCallbackResponse(SocialiteUser $socialiteUser) {
+    protected function prepareCallbackResponse(SocialiteUser $socialiteUser)
+    {
         if (empty($socialiteUser->getEmail())) {
             $socialiteUser->email = $this->generateEmail($socialiteUser);
         }
@@ -32,7 +34,8 @@ class Twitter extends Driver
         return parent::prepareCallbackResponse($socialiteUser);
     }
 
-    protected function generateEmail(SocialiteUser $socialiteUser) {
+    protected function generateEmail(SocialiteUser $socialiteUser)
+    {
         return sprintf('%s@x.com', $socialiteUser->getId());
     }
 }

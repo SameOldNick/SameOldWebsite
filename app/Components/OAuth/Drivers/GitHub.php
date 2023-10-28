@@ -4,7 +4,8 @@ namespace App\Components\OAuth\Drivers;
 
 class GitHub extends Driver
 {
-    protected function providerName(): string {
+    protected function providerName(): string
+    {
         return 'github';
     }
 
