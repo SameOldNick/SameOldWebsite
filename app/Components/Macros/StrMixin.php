@@ -64,7 +64,8 @@ class StrMixin
         };
     }
 
-    public function appendQuery() {
+    public function appendQuery()
+    {
         return function ($url, $query, $replace = false) {
             $query = is_string($query) ? $query : Arr::query($query);
             $lastQuestionMarkPos = strrpos($url, '?');
@@ -77,7 +78,7 @@ class StrMixin
             return implode('', [
                 $url,
                 $lastQuestionMarkPos !== false ? '&' : '?',
-                $query
+                $query,
             ]);
         };
     }
