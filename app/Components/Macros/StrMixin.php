@@ -63,4 +63,22 @@ class StrMixin
             return $asHtml ? new HtmlString($url) : $url;
         };
     }
+
+    public function appendQuery() {
+        return function ($url, $query, $replace = false) {
+            $query = is_string($query) ? $query : Arr::query($query);
+            $lastQuestionMarkPos = strrpos($url, '?');
+
+            if ($replace && $lastQuestionMarkPos !== false) {
+                $url = Str::substr($url, 0, $lastQuestionMarkPos);
+                $lastQuestionMarkPos = false;
+            }
+
+            return implode('', [
+                $url,
+                $lastQuestionMarkPos !== false ? '&' : '?',
+                $query
+            ]);
+        };
+    }
 }
