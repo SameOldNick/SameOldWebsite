@@ -48,7 +48,7 @@ trait RespondsWithUsersAvatar
         $url = sprintf('https://www.gravatar.com/avatar/%s', md5(strtolower($user->email)));
 
         if ($size) {
-            $url .= sprintf('?s=%d', $size);
+            $url = Str::appendQuery($url, ['s' => $size]);
         }
 
         return redirect()->away($url);
