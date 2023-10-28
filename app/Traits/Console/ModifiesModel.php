@@ -26,7 +26,7 @@ trait ModifiesModel
             return 1;
         }
 
-        $variableName = $variableName ?? Str::camel(Str::shortName($class));
+        $variableName = $variableName ?? Str::camel(class_basename($class));
 
         $filename = Str::random().'.php';
         $contents =

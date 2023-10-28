@@ -29,15 +29,6 @@ class StrMixin
         };
     }
 
-    public function shortName()
-    {
-        return function ($class) {
-            $parts = explode('\\', $class);
-
-            return array_pop($parts);
-        };
-    }
-
     public function stripTags()
     {
         return function ($value, $allowed = null) {
