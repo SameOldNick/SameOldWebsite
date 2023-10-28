@@ -12,8 +12,8 @@ return [
              * Extra attributes for <img> tag.
              */
             'attrs' => [
-                'alt' => 'Same Old Nick'
-            ]
+                'alt' => 'Same Old Nick',
+            ],
         ],
-    ]
+    ],
 ];
