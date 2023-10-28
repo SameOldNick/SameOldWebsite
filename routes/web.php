@@ -56,4 +56,6 @@ Route::namespace(Controllers\Main::class)->group(function () {
             Route::post('/user/password', 'ChangePasswordController@update');
         });
     });
+
+    Route::get('/user/{user}/avatar', [Controllers\Main\User\AvatarController::class, 'view'])->name('user.avatar');
 });
