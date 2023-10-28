@@ -6,9 +6,9 @@ use App\Components\Compiler\ServiceProvider as CompilerServiceProvider;
 use App\Components\LittleJWT\ServiceProvider as LittleJWTServiceProvider;
 use App\Components\Macros\ServiceProvider as MacrosServiceProvider;
 use App\Components\Menus\ServiceProvider as MenusServiceProvider;
+use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use App\Components\Settings\ServiceProvider as SettingsServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
-use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider

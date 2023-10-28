@@ -2,11 +2,7 @@
 
 namespace App\Components\OAuth;
 
-use Illuminate\Container\Container;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
-use Illuminate\Support\Str;
-use Illuminate\Routing\Router;
 
 class OAuth extends Manager
 {
@@ -15,7 +11,8 @@ class OAuth extends Manager
      *
      * @return array
      */
-    public function all() {
+    public function all()
+    {
         return array_unique([...array_keys($this->customCreators), ...array_keys($this->drivers)]);
     }
 
@@ -24,7 +21,8 @@ class OAuth extends Manager
      *
      * @return array
      */
-    public function configured() {
+    public function configured()
+    {
         return array_filter($this->all(), fn ($driver) => $this->driver($driver)->isConfigured());
     }
 

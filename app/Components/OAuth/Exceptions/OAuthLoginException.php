@@ -4,10 +4,10 @@ namespace App\Components\OAuth\Exceptions;
 
 use Exception;
 
-class OAuthLoginException extends OAuthException {
+class OAuthLoginException extends OAuthException
+{
     public function __construct(public ?Exception $original = null)
     {
-
     }
 
     /**
@@ -19,7 +19,7 @@ class OAuthLoginException extends OAuthException {
     {
         $message = __('An unknown error occurred. Please try again.');
 
-        if (!is_null($this->original) && !app()->isProduction()) {
+        if (! is_null($this->original) && ! app()->isProduction()) {
             if ($this->original->getMessage()) {
                 $message = sprintf('Exception "%s" was thrown: %s', get_class($this->original), $this->original->getMessage());
             } else {

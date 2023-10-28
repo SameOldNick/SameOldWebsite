@@ -3,17 +3,16 @@
 namespace App\Components\OAuth\Socialite;
 
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Str;
-use Laravel\Socialite\Contracts\Factory;
+use Illuminate\Support\Traits\ForwardsCalls;
 use Laravel\Socialite\SocialiteManager as BaseSocialiteManager;
 
 class SocialiteManager extends BaseSocialiteManager
 {
     use ForwardsCalls;
 
-    static $aliases = [
-        'twitter' => 'twitter-oauth-2'
+    public static $aliases = [
+        'twitter' => 'twitter-oauth-2',
     ];
 
     public function __construct(
@@ -50,13 +49,15 @@ class SocialiteManager extends BaseSocialiteManager
         return $this->createTwitterOAuth2Driver();
     }
 
-    protected function determineProviderName(string $class) {
+    protected function determineProviderName(string $class)
+    {
         $base = class_basename($class);
 
         return Str::kebab(Str::remove('Provider', $base));
     }
 
-    protected function getConfig(string $name) {
+    protected function getConfig(string $name)
+    {
         $config = $this->config->get("oauth.{$name}", []);
 
         if (empty($config) && $this->hasProviderAlias($name)) {
@@ -64,22 +65,25 @@ class SocialiteManager extends BaseSocialiteManager
             $config = $this->config->get("oauth.{$alias}", []);
         }
 
-        if (!isset($config['redirect'])) {
+        if (! isset($config['redirect'])) {
             $config['redirect'] = $this->getCallbackUrl($name);
         }
 
         return $config;
     }
 
-    protected function hasProviderAlias(string $name) {
+    protected function hasProviderAlias(string $name)
+    {
         return \array_key_exists($name, static::$aliases);
     }
 
-    protected function getProviderAlias(string $name) {
+    protected function getProviderAlias(string $name)
+    {
         return static::$aliases[$name];
     }
 
-    protected function getCallbackUrl(string $name) {
+    protected function getCallbackUrl(string $name)
+    {
         return route("oauth.callback.{$name}");
     }
 }
