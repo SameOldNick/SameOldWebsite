@@ -49,7 +49,7 @@
                                     value="{{ old('email') }}"
                                     required
                                     autocomplete="email"
-                                    autofocus
+                                    @if(!old('email')) autofocus @endif
                                 >
 
                                 @error('email')
@@ -69,6 +69,7 @@
                                     placeholder="{{ __('Password') }}"
                                     required
                                     autocomplete="current-password"
+                                    @if(old('email')) autofocus @endif
                                 >
 
                                 @error('password')
