@@ -178,26 +178,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatarUrl(array $options = [])
     {
-        $providers = $this->oauthProviders()->latest();
-
-        if ($providers->count() > 0) {
-            foreach ($providers->get() as $provider) {
-                if (! empty($provider->avatar_url)) {
-                    $url = Str::of($provider->avatar_url);
-                    break;
-                }
-            }
-        }
-
-        if (empty($url)) {
-            $url = Str::of($this->email)->trim()->lower()->pipe('md5')->prepend('https://www.gravatar.com/avatar/');
-        }
-
-        $defaults = [];
-
-        $query = Arr::query(array_merge($defaults, $options));
-
-        return (string) $url->append($query ? '?'.$query : '');
+        return route('user.avatar', [...$options, 'user' => $this]);
     }
 
     public function oauthProviders()
