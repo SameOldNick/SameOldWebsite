@@ -22,7 +22,7 @@
                             <div class="mb-4">
                                 <x-alert type="warning">
                                     <strong>{{ __('Important Notice:') }}</strong>
-                                    {{ __('Once a password is set, it must be entered when using OAuth (Open Authorization) to access the website.') }}
+                                    {{ __('After setting a password, you will need to input it when utilizing OAuth (Open Authorization) for website access.') }}
                                 </x-alert>
                             </div>
                         @endif
