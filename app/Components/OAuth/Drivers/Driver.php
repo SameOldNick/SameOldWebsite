@@ -173,7 +173,7 @@ abstract class Driver
             if ($existingUser->password) {
                 // User must login with their username and password.
 
-                throw new UserHasCredentialsException;
+                throw new UserHasCredentialsException($existingUser);
             } else {
                 $oauthProvider = $this->mapToOAuthProvider($oauthUser);
 

@@ -2,7 +2,18 @@
 
 namespace App\Components\OAuth\Exceptions;
 
+use Exception;
+use App\Models\User;
+
 class UserHasCredentialsException extends OAuthException {
+    public function __construct(
+        public User $user,
+        ?Exception $original = null
+    )
+    {
+        parent::__construct($original);
+    }
+
     /**
      * Render the exception.
      *
