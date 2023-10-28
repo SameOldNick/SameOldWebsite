@@ -48,12 +48,12 @@ Route::namespace(Controllers\Main::class)->group(function () {
         Route::post('/blog/{article:slug}/comment', 'BlogCommentController@comment')->name('blog.comment');
         Route::post('/blog/{article:slug}/comments/{parent}', 'BlogCommentController@replyTo')->name('blog.comment.reply-to');
 
-        Route::name('user.')->group(function () {
-            Route::get('/user', 'UserController@viewProfile')->name('profile');
-            Route::post('/user', 'UserController@updateProfile');
+        Route::name('user.')->namespace('User')->group(function () {
+            Route::get('/user', 'ProfileController@view')->name('profile');
+            Route::post('/user', 'ProfileController@update');
 
-            Route::get('/user/password', 'UserController@viewChangePassword')->name('change-password');
-            Route::post('/user/password', 'UserController@updateChangePassword');
+            Route::get('/user/password', 'ChangePasswordController@view')->name('change-password');
+            Route::post('/user/password', 'ChangePasswordController@update');
         });
     });
 });
