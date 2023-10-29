@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-const clearLoaderCallback = () => $('.loader').removeClass('show');;
+const clearLoaderCallback = () => $('.loader').removeClass('show');
 
 let loaderTimeout: ReturnType<typeof setTimeout> | undefined = setTimeout(() => {
 	clearLoaderCallback();
