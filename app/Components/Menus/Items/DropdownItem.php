@@ -15,6 +15,8 @@ class DropdownItem extends Item
 
     protected $text;
 
+    protected $props;
+
     protected $menu;
 
     public function __construct(Menu $parent, string $text, array $props = [])
