@@ -3,8 +3,9 @@ import { ClipLoader } from 'react-spinners';
 
 import { DateTime } from 'luxon';
 
-import { createAuthRequest, createUrl } from '@admin/utils/api/factories';
+import { createAuthRequest } from '@admin/utils/api/factories';
 import LazyLoadImage from './hoc/LazyLoadImage';
+import queryString from 'query-string';
 
 interface ICurrentUserAvatarProps {
     current: true;
@@ -16,6 +17,7 @@ interface IUserAvatarProps {
 }
 
 interface ISharedProps extends Omit<React.HTMLProps<HTMLImageElement>, 'ref' | 'src' | 'placeholder' | 'onError'> {
+    size?: number;
 }
 
 type TAvatarProps = (ICurrentUserAvatarProps | IUserAvatarProps) & ISharedProps;
@@ -64,10 +66,16 @@ export default class Avatar extends React.Component<TAvatarProps, IState> {
     }
 
     private get src() {
+        const { size } = this.props;
         const { src, lastRefreshed } = this.state;
 
         if (src !== undefined) {
-            return `${src}${src.includes('?') ? '&' : '?'}t=${lastRefreshed.toUnixInteger()}`;
+            const query = queryString.stringify({
+                t: lastRefreshed.toUnixInteger(),
+                size
+            });
+
+            return `${src}${src.includes('?') ? '&' : '?'}${query}`;
         } else {
             return '';
         }
