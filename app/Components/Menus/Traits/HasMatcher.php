@@ -2,7 +2,7 @@
 
 namespace App\Components\Menus\Traits;
 
-use App\Components\Menus\Links\Matchers\Matcher;
+use App\Components\Menus\Contracts\Matcher;
 
 trait HasMatcher
 {
