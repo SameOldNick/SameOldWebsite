@@ -12,7 +12,6 @@ import LogoutModal from '@root/admin/components/LogoutModal';
 
 import accountSlice  from '@admin/store/slices/account';
 import { createAuthRequest } from '@admin/utils/api/factories';
-import CurrentAvatar from '@admin/components/hoc/CurrentAvatar';
 
 interface IProps {
 
@@ -70,7 +69,7 @@ export default connector(class User extends React.Component<TProps, IState> {
             <>
                 <Dropdown nav className='no-arrow me-md-3' isOpen={open} toggle={() => this.setState((prevState) => ({ open: !prevState.open }))}>
                     <DropdownToggle nav tag='a' href='#' id="userDropdown">
-                        <CurrentAvatar />
+                        <Avatar current />
                         <span className={classNames("ms-2 d-none d-lg-inline text-gray-600 small", { placeholder: user === undefined })}>
                             {user !== undefined && <>{user.email} <FaCaretDown /></>}
                         </span>
