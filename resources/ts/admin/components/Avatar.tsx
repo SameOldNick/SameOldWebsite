@@ -2,10 +2,10 @@ import React from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import { DateTime } from 'luxon';
+import queryString from 'query-string';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import LazyLoadImage from './hoc/LazyLoadImage';
-import queryString from 'query-string';
 
 interface ICurrentUserAvatarProps {
     current: true;
