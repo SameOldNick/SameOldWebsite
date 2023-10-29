@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\FileUploadException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Traits\Controllers\RespondsWithUsersAvatar;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 
 class AvatarController extends Controller
 {
