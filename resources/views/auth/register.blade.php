@@ -3,7 +3,7 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
-            <div class="card card-container shadow-lg bg-light mt-3">
+            <div class="card card-container shadow-lg mt-3">
 
                 <div class="card-header card-header-banner">
                     <h2 class="text-center">{{ __('Register') }}</h2>
@@ -22,8 +22,8 @@
                             <x-return-url-input :returnUrl="$returnUrl ?? old('return_url')" />
 
                             <div class="input-group mb-3 has-validation">
-                                <span class="input-group-text bg-primary">
-                                    <i class="fa-solid fa-at text-white"></i>
+                                <span class="input-group-text bg-secondary text-white">
+                                    <i class="fa-solid fa-at"></i>
                                 </span>
                                 <input
                                     name="email"
@@ -43,7 +43,7 @@
                             </div>
 
                             <div class="input-group mb-3 has-validation">
-                                <span class="input-group-text bg-primary text-white">
+                                <span class="input-group-text bg-secondary text-white">
                                     <i class="fa-solid fa-key"></i>
                                 </span>
 
@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="input-group mb-3 has-validation">
-                                <span class="input-group-text bg-primary text-white">
+                                <span class="input-group-text bg-secondary text-white">
                                     <i class="fa-solid fa-globe"></i>
                                 </span>
 
@@ -105,7 +105,7 @@
 
                             <div class="d-flex flex-column mt-2">
                                 <div class="mx-auto mb-3">
-                                    <button class="btn btn-primary text-center" type="submit">
+                                    <button class="btn btn-secondary text-center" type="submit">
                                         {{ __('Register') }}
                                     </button>
                                 </div>
@@ -113,13 +113,13 @@
                                 @if (Route::has('login'))
                                 <p class="text-center">
                                     Already have an account?
-                                    <a href="{{ route('login') }}" class="text-primary">{{ __('Login') }}</a>
+                                    <a href="{{ route('login') }}" class="text-secondary">{{ __('Login') }}</a>
                                 </p>
                                 @endif
 
                                 @if (Route::has('password.request'))
                                 <p class="text-center">
-                                    <a href="{{ route('password.request') }}" class="text-primary">{{ __('Forgot your password?') }}</a>
+                                    <a href="{{ route('password.request') }}" class="text-secondary">{{ __('Forgot your password?') }}</a>
                                 </p>
                                 @endif
                             </div>

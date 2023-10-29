@@ -3,7 +3,7 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
-            <div class="card card-container shadow-lg bg-light mt-3">
+            <div class="card card-container shadow-lg mt-3">
 
                 <div class="card-header card-header-banner">
                     <h2 class="text-center">{{ __('Confirm Password') }}</h2>
@@ -16,7 +16,7 @@
                             @csrf
 
                             <div class="input-group mb-3 has-validation">
-                                <span class="input-group-text bg-primary">
+                                <span class="input-group-text bg-secondary">
                                     <i class="fa-solid fa-key text-white"></i>
                                 </span>
                                 <input
@@ -37,14 +37,14 @@
 
                             <div class="d-flex justify-content-center flex-column">
                                 <div class="mx-auto mt-2 mb-4">
-                                    <button class="btn btn-primary text-center fs-5" type="submit">
+                                    <button class="btn btn-secondary text-center fs-5" type="submit">
                                         {{ __('Confirm Password') }}
                                     </button>
                                 </div>
 
                                 @if (Route::has('password.request'))
                                 <p class="text-center">
-                                    <a href="{{ route('password.request') }}" class="text-primary">
+                                    <a href="{{ route('password.request') }}" class="text-secondary">
                                         {{ __('Forgot your password?') }}
                                     </a>
                                 </p>
