@@ -9,7 +9,7 @@
                 <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
             </a>
 
-            <x-menu name="main" renderer="footer" />
+            <x-menu name="footer" renderer="footer" />
         </div>
     </div>
 
