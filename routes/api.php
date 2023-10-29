@@ -28,7 +28,6 @@ Route::namespace(Api::class)->group(function () {
 
         Route::get('/user', [Api\UserController::class, 'show'])->withoutMiddleware(['throttle:api']);
 
-        Route::get('/user/avatar', [Api\AvatarController::class, 'avatar'])->name('avatar');
         Route::post('/user/avatar', [Api\AvatarController::class, 'uploadAvatar'])->name('avatar.upload');
         Route::delete('/user/avatar', [Api\AvatarController::class, 'deleteAvatar'])->name('avatar.delete');
 
@@ -83,6 +82,4 @@ Route::namespace(Api::class)->group(function () {
             Route::delete('/articles/{article}/tags', [Api\Blog\TagController::class, 'detach']);
         });
     });
-
-    Route::get('/user/{user}/avatar/download', [Api\AvatarController::class, 'downloadAvatar'])->middleware(['signed:t'])->name('avatar.download');
 });

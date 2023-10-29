@@ -3,16 +3,30 @@ import { ClipLoader } from 'react-spinners';
 
 import { DateTime } from 'luxon';
 
-interface IProps extends Omit<React.HTMLProps<HTMLImageElement>, 'ref'> {
-    innerRef?: React.Ref<HTMLImageElement>;
+import { createAuthRequest, createUrl } from '@admin/utils/api/factories';
+import LazyLoadImage from './hoc/LazyLoadImage';
+
+interface ICurrentUserAvatarProps {
+    current: true;
 }
 
+interface IUserAvatarProps {
+    current: undefined;
+    user: IUser;
+}
+
+interface ISharedProps extends Omit<React.HTMLProps<HTMLImageElement>, 'ref' | 'src' | 'placeholder' | 'onError'> {
+}
+
+type TAvatarProps = (ICurrentUserAvatarProps | IUserAvatarProps) & ISharedProps;
+
 interface IState {
+    src?: string;
     lastRefreshed: DateTime;
 }
 
-export default class Avatar extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
+export default class Avatar extends React.Component<TAvatarProps, IState> {
+    constructor(props: Readonly<TAvatarProps>) {
         super(props);
 
         this.state = {
@@ -20,24 +34,55 @@ export default class Avatar extends React.Component<IProps, IState> {
         };
     }
 
+    componentDidMount(): void {
+        this.fetchAvatarSrc();
+    }
+
+    private async fetchAvatarSrc() {
+        try {
+            let response;
+
+            if (this.props.current === true) {
+                response = await createAuthRequest().get<IUser>(`/user`);
+            } else {
+                response = await createAuthRequest().get<IUser>(`/users/${this.props.user.id}`);
+            }
+
+            this.setState({ src: response.data.avatar_url, lastRefreshed: DateTime.now() });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    /**
+     * Refreshes the avatar.
+     *
+     * @memberof Avatar
+     */
     public refresh() {
-        this.setState({ lastRefreshed: DateTime.now() });
+        this.fetchAvatarSrc();
+    }
+
+    private get src() {
+        const { src, lastRefreshed } = this.state;
+
+        if (src !== undefined) {
+            return `${src}${src.includes('?') ? '&' : '?'}t=${lastRefreshed.toUnixInteger()}`;
+        } else {
+            return '';
+        }
     }
 
     render() {
-        const { src, innerRef, ...props } = this.props;
-        const { lastRefreshed } = this.state;
+        const { current, ...props } = this.props;
 
-        if (src === undefined) {
-            return (
-                <ClipLoader color='#858796' className='img-profile' />
-            );
-        } else {
-            const url = `${src}${src.includes('?') ? '&' : '?'}t=${lastRefreshed.toUnixInteger()}`;
-
-            return (
-                <img ref={innerRef} className="img-profile rounded-circle" src={url} {...props} />
-            );
-        }
+        return (
+            <LazyLoadImage
+                placeholder={<ClipLoader color='#858796' className='img-profile' />}
+                className="img-profile rounded-circle"
+                src={this.src}
+                {...props}
+            />
+        );
     }
 }

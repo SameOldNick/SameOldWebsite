@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\FileUploadException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Traits\Controllers\RespondsWithUsersAvatar;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -12,38 +13,6 @@ use Illuminate\Support\Facades\URL;
 
 class AvatarController extends Controller
 {
-    /**
-     * Gets the URL to the current avatar for the user.
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function avatar(Request $request)
-    {
-        $request->validate([
-            'size' => 'sometimes|numeric|min:1',
-        ]);
-
-        $url = URL::temporarySignedRoute('api.avatar.download', now()->addMinutes(30), ['user' => $request->user(), 'size' => $request->size]);
-
-        return compact('url');
-    }
-
-    /**
-     * Download the current avatar for the user.
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function downloadAvatar(Request $request, User $user)
-    {
-        $request->validate([
-            'size' => 'sometimes|numeric|min:1',
-        ]);
-
-        return $this->respondWithAvatar($user, $request->input('size'));
-    }
-
     /**
      * Uploads a new avatar for the user.
      *

@@ -9,7 +9,6 @@ import Upload from './UploadAvatarModal';
 import Remove from './RemoveAvatarModal';
 
 import AvatarImage from '@admin/components/Avatar';
-import CurrentAvatar from '@admin/components/hoc/CurrentAvatar';
 
 interface IProps {
 }
@@ -65,7 +64,7 @@ export default class Avatar extends React.Component<IProps, IState> {
             <>
                 <Row className='mb-3'>
                     <Col style={{ textAlign: 'center' }}>
-                        <CurrentAvatar ref={this._avatarRef} size={125} />
+                        <AvatarImage ref={this._avatarRef} current size={125} />
                     </Col>
                 </Row>
                 <Row>
