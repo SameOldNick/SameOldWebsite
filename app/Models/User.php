@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,6 +51,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $with = ['roles', 'state', 'country', 'oauthProviders'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['avatar_url'];
 
     /**
      * The attributes that should be cast.
@@ -183,5 +191,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function oauthProviders()
     {
         return $this->hasMany(OAuthProvider::class);
+    }
+
+    /**
+     * Interact with the slug.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function avatarUrl(): Attribute
+    {
+        return Attribute::get(fn () => $this->getAvatarUrl())->shouldCache();
     }
 }
