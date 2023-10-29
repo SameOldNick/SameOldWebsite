@@ -92,7 +92,7 @@
                                         aria-describedby="invalidTermsConditions"
                                         required>
                                     <label class="form-check-label" for="termsConditions">
-                                        I agree to the <a href="#" target="_blank">terms and conditions</a>
+                                        I agree to the <a href="{{ route('terms-conditions') }}" target="_blank" class="text-secondary">terms and conditions</a>
                                     </label>
                                     @error('terms_conditions')
                                         <div id="invalidTermsConditions" class="invalid-feedback">
