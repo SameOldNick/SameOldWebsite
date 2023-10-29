@@ -3,7 +3,7 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
-            <div class="card card-container shadow-lg bg-light mt-3">
+            <div class="card card-container shadow-lg mt-3">
 
                 <div class="card-header card-header-banner">
                     <h2 class="text-center">{{ __('Reset Password') }}</h2>
@@ -22,7 +22,7 @@
                             @csrf
 
                             <div class="input-group mb-3 has-validation">
-                                <span class="input-group-text bg-primary">
+                                <span class="input-group-text bg-secondary">
                                     <i class="fa-solid fa-at text-white"></i>
                                 </span>
                                 <input
@@ -43,7 +43,7 @@
 
                             <div class="d-flex justify-content-center flex-column">
                                 <div class="mx-auto mt-2 mb-4">
-                                    <button class="btn btn-primary text-center fs-5" type="submit">
+                                    <button class="btn btn-secondary text-center fs-5" type="submit">
                                         {{ __('Send Password Reset Link') }}
                                     </button>
                                 </div>
@@ -51,14 +51,14 @@
                                 @if (Route::has('login'))
                                 <p class="text-center">
                                     Know your password?
-                                    <a href="{{ route('login') }}" class="text-primary">{{ __('Login') }}</a>
+                                    <a href="{{ route('login') }}" class="text-secondary">{{ __('Login') }}</a>
                                 </p>
                                 @endif
 
                                 @if (Route::has('register'))
                                 <p class="text-center">
                                     Don't have an account?
-                                    <a href="{{ route('register') }}" class="text-primary">{{ __('Register') }}</a>
+                                    <a href="{{ route('register') }}" class="text-secondary">{{ __('Register') }}</a>
                                 </p>
                                 @endif
                             </div>
