@@ -61,7 +61,8 @@ class MenuServiceProvider extends ServiceProvider
         });
     }
 
-    private function createSharedMenu(Menu $menu) {
+    private function createSharedMenu(Menu $menu)
+    {
         return $menu
             ->route('home', 'Home', $this->applyIcon('fa-solid fa-house'))
             ->route('blog', 'Blog', $this->applyIcon('fa-solid fa-newspaper'))
