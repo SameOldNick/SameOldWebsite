@@ -28,6 +28,9 @@ Route::namespace(Controllers\Main::class)->group(function () {
     Route::post('/contact', 'ContactController@process');
     Route::get('/contact/confirm/{pendingMessage}', 'ContactController@confirm')->name('contact.confirm')->middleware(['signed']);
 
+    Route::view('/terms-conditions', 'main.terms-conditions')->name('terms-conditions');
+    Route::view('/privacy-policy', 'main.privacy-policy')->name('privacy-policy');
+
     Route::get('/blog', 'BlogController@index')->name('blog');
     Route::match(['get', 'post'], '/blog/search', 'BlogController@search')->name('blog.search');
 
