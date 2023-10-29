@@ -24,9 +24,9 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </a>
-                    <form class="dropdown-menu dropdown-menu-dark dropdown-menu-end p-4">
+                    <form action="{{ route('blog.search') }}" class="dropdown-menu dropdown-menu-dark dropdown-menu-end p-4">
                         <div class="ibc-container">
-                            <input type="search" class="form-control" placeholder="Search" aria-label="Search">
+                            <input type="search" name="q" class="form-control" placeholder="Search" aria-label="Search">
                             <button class="ibc-button"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
