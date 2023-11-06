@@ -28,13 +28,13 @@ Route::namespace(Api::class)->group(function () {
         Route::get('/countries', [Api\CountriesController::class, 'countries']);
         Route::get('/countries/{country}', [Api\CountriesController::class, 'country']);
 
-        Route::prefix('/user')->group(function() {
+        Route::prefix('/user')->group(function () {
             Route::get('/', [Api\UserController::class, 'show'])->withoutMiddleware(['throttle:api'])->name('user');
 
             Route::post('/avatar', [Api\AvatarController::class, 'uploadAvatar'])->name('avatar.upload');
             Route::delete('/avatar', [Api\AvatarController::class, 'deleteAvatar'])->name('avatar.delete');
 
-            Route::prefix('/notifications')->group(function() {
+            Route::prefix('/notifications')->group(function () {
                 Route::get('/', [Api\NotificationsController::class, 'index']);
                 Route::get('/read', [Api\NotificationsController::class, 'read']);
                 Route::get('/unread', [Api\NotificationsController::class, 'unread']);
@@ -45,7 +45,7 @@ Route::namespace(Api::class)->group(function () {
             });
         });
 
-        Route::prefix('/pages')->group(function() {
+        Route::prefix('/pages')->group(function () {
             Route::get('/homepage', [Api\Homepage\MetaDataController::class, 'show']);
             Route::post('/homepage', [Api\Homepage\MetaDataController::class, 'update']);
 
