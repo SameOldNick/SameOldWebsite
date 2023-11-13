@@ -4,7 +4,8 @@ namespace App\Components\Analytics;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class ServiceProvider extends BaseServiceProvider {
+class ServiceProvider extends BaseServiceProvider
+{
     /**
      * Register any application services.
      *
@@ -12,7 +13,7 @@ class ServiceProvider extends BaseServiceProvider {
      */
     public function register()
     {
-        $this->app->singleton(ChartManager::class, function($app) {
+        $this->app->singleton(ChartManager::class, function ($app) {
             return new ChartManager($app);
         });
 

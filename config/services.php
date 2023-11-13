@@ -35,7 +35,7 @@ return [
         'analytics' => [
             'property_id' => env('GOOGLE_ANALYTICS_PROPERTY_ID', ''),
             'credentials' => env('GOOGLE_ANALYTICS_CREDENTIALS', ''),
-        ]
-    ]
+        ],
+    ],
 
 ];

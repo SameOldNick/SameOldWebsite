@@ -8,17 +8,19 @@ use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
 
-trait CreatesCarbons {
+trait CreatesCarbons
+{
     /**
      * Determines appropriate interval unit.
      * This is useful in figuring out the best interval unit to pass to the range method to get the number of desired dates.
      *
      * @param CarbonInterface $from Start date/time
      * @param CarbonInterface $to End date/time
-     * @param integer $count How many dates there should be between from and to.
+     * @param int $count How many dates there should be between from and to.
      * @return string Interval unit (year, month, week, etc.)
      */
-    public function determineIntervalUnit(CarbonInterface $from, CarbonInterface $to, int $count) {
+    public function determineIntervalUnit(CarbonInterface $from, CarbonInterface $to, int $count)
+    {
         $interval = $to->diffAsCarbonInterval($from);
 
         $secondsPerInterval = $interval->total('seconds') / $count;
@@ -30,7 +32,7 @@ trait CreatesCarbons {
             'day',
             'hour',
             'minute',
-            'second'
+            'second',
         ];
 
         // Determine if interval length is closest to year, month, week, etc.
@@ -57,15 +59,18 @@ trait CreatesCarbons {
      * @param int $max Max. number of periods. 0 is unlimited. (default: 0)
      * @return array|false Array of dates or false if from, to, or unit is invalid.
      */
-    public function createPeriods(CarbonInterface $from, CarbonInterface $to, string $unit, int $max = 0) {
+    public function createPeriods(CarbonInterface $from, CarbonInterface $to, string $unit, int $max = 0)
+    {
         $secondsPerInterval = CarbonInterval::getFactor('seconds', $unit);
         $intervalCount = $to->diffAsCarbonInterval($from)->total('seconds') / $secondsPerInterval;
 
-        if (is_null($secondsPerInterval) || $max > $intervalCount)
+        if (is_null($secondsPerInterval) || $max > $intervalCount) {
             return false;
+        }
 
-        if ($max === 0)
+        if ($max === 0) {
             $max = $intervalCount;
+        }
 
         $periods = [];
 
@@ -86,17 +91,17 @@ trait CreatesCarbons {
         return $periods;
     }
 
-
     /**
      * Creates a single CarbonPeriod instance
      *
      * @param CarbonInterface $start
      * @param CarbonInterface $end
      * @param string $unit
-     * @param integer $entries
+     * @param int $entries
      * @return CarbonPeriod
      */
-    public function createPeriod(int $entries = 1) {
+    public function createPeriod(int $entries = 1)
+    {
         /**
          * From the starting and ending date/time, we need to figure out how long
          * the interval (time between) needs to be in order for there to be
