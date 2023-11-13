@@ -5,15 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Components\Analytics\AnalyticsRequest;
 use App\Components\Analytics\ChartManager;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function __construct(
         protected ChartManager $chartManager
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -61,11 +58,10 @@ class DashboardController extends Controller
         return $data;
     }
 
-    public function recentActivity() {
+    public function recentActivity()
+    {
         // Get recent comments
 
         // Get recent blog articles
-
-
     }
 }

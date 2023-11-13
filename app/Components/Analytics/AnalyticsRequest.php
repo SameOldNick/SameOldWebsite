@@ -11,6 +11,7 @@ class AnalyticsRequest extends FormRequest
     use CreatesCarbons;
 
     const DEFAULT_START = '-5 years';
+
     const DEFAULT_END = 'today';
 
     /**
@@ -35,25 +36,28 @@ class AnalyticsRequest extends FormRequest
             'start' => [
                 'sometimes',
                 'date',
-                'before:end'
+                'before:end',
             ],
             'end' => [
                 'sometimes',
                 'date',
-                'after:start'
+                'after:start',
             ],
         ];
     }
 
-    public function start() {
+    public function start()
+    {
         return new Carbon($this->start ?? static::DEFAULT_START);
     }
 
-    public function end() {
+    public function end()
+    {
         return new Carbon($this->end ?? static::DEFAULT_END);
     }
 
-    public function unit(int $count = 5) {
+    public function unit(int $count = 5)
+    {
         return $this->determineIntervalUnit($this->start(), $this->end(), $count);
     }
 

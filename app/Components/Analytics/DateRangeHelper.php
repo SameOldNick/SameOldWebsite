@@ -4,7 +4,6 @@ namespace App\Components\Analytics;
 
 use ArrayAccess;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use Carbon\CarbonPeriodImmutable;
 use Countable;
@@ -104,10 +103,11 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Gets date/time at index.
      *
-     * @param integer $index
+     * @param int $index
      * @return Carbon
      */
-    public function getDate(int $index) {
+    public function getDate(int $index)
+    {
         return $this->range[$index][0];
     }
 
@@ -116,7 +116,8 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
      *
      * @return Carbon
      */
-    public function getStart() {
+    public function getStart()
+    {
         return $this->getDate(0);
     }
 
@@ -125,7 +126,8 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
      *
      * @return Carbon
      */
-    public function getEnd() {
+    public function getEnd()
+    {
         return $this->getDate($this->count() - 1);
     }
 
@@ -142,31 +144,34 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Checks if index exists.
      *
-     * @param integer $index
-     * @return boolean
+     * @param int $index
+     * @return bool
      */
-    public function has(int $index): bool {
+    public function has(int $index): bool
+    {
         return isset($this->range[$index]);
     }
 
     /**
      * Gets the value at index.
      *
-     * @param integer $index
+     * @param int $index
      * @return mixed
      */
-    public function getValue(int $index) {
+    public function getValue(int $index)
+    {
         return $this->range[$index][1];
     }
 
     /**
      * Sets the value at index
      *
-     * @param integer $index
+     * @param int $index
      * @param mixed $value Static value or callable that receives existing value as argument.
      * @return $this
      */
-    public function setValue(int $index, $value) {
+    public function setValue(int $index, $value)
+    {
         $value = value($value, $this->getValue($index));
 
         $this->range[$index][1] = $value;
@@ -178,9 +183,10 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
      * Checks if date/time is within range of this instance.
      *
      * @param DateTimeInterface $dateTime
-     * @return boolean
+     * @return bool
      */
-    public function isWithinRange(DateTimeInterface $dateTime) {
+    public function isWithinRange(DateTimeInterface $dateTime)
+    {
         return $this->getStart()->lte($dateTime) && $this->getEnd()->gte($dateTime);
     }
 
@@ -195,7 +201,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     {
         $differences = array_filter(
             array_map(
-                fn ($value) => Carbon::instance($dateTime)->diffInRealSeconds($value, !$closestBefore),
+                fn ($value) => Carbon::instance($dateTime)->diffInRealSeconds($value, ! $closestBefore),
                 $this->getDates()
             ),
             fn ($value) => $value >= 0
@@ -283,7 +289,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Gets the number of items in the range.
      *
-     * @return integer
+     * @return int
      */
     public function count(): int
     {
