@@ -10,6 +10,7 @@ use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use App\Components\Settings\ServiceProvider as SettingsServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
+use App\Components\Analytics\ServiceProvider as AnalyticsServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider
 {
@@ -26,5 +27,6 @@ class ComponentServiceProvider extends AggregateServiceProvider
         LittleJWTServiceProvider::class,
         SettingsServiceProvider::class,
         OAuthServiceProvider::class,
+        AnalyticsServiceProvider::class,
     ];
 }
