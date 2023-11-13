@@ -76,6 +76,12 @@ Route::namespace(Api::class)->group(function () {
             Route::delete('/articles/{article}/tags', [Api\Blog\TagController::class, 'detach']);
         });
 
+        Route::prefix('/charts')->group(function() {
+            Route::get('/visitors', [Api\DashboardController::class, 'visitors']);
+            Route::get('/links', [Api\DashboardController::class, 'links']);
+            Route::get('/browsers', [Api\DashboardController::class, 'browsers']);
+        });
+
         Route::apiResources([
             'projects' => Api\Homepage\ProjectsController::class,
             'tags' => Api\TagController::class,
