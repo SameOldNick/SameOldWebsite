@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'analytics' => [
+            'property_id' => env('GOOGLE_ANALYTICS_PROPERTY_ID', ''),
+            'credentials' => env('GOOGLE_ANALYTICS_CREDENTIALS', ''),
+        ]
+    ]
+
 ];
