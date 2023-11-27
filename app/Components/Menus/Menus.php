@@ -7,6 +7,7 @@ use OutOfBoundsException;
 class Menus
 {
     protected $callbacks;
+    protected $afterCreated;
 
     protected $menus;
 
@@ -14,6 +15,7 @@ class Menus
     {
         $this->menus = collect();
         $this->callbacks = [];
+        $this->afterCreated = [];
     }
 
     /**
@@ -29,6 +31,12 @@ class Menus
 
         $callback($this->menus[$name]);
 
+        if (isset($this->afterCreated[$name])) {
+            foreach ($this->afterCreated[$name] as $afterCreatedCallback) {
+                $afterCreatedCallback($this->menus[$name]);
+            }
+        }
+
         return $this->menus[$name];
     }
 
@@ -42,6 +50,24 @@ class Menus
     public function add(string $name, callable $callback)
     {
         $this->callbacks[$name] = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Adds callback for after menu is created.
+     *
+     * @param string $name
+     * @param callable $callback
+     * @return $this
+     */
+    public function afterCreated(string $name, callable $callback)
+    {
+        if (!isset($this->afterCreated[$name])) {
+            $this->afterCreated[$name] = [];
+        }
+
+        array_push($this->afterCreated[$name], $callback);
 
         return $this;
     }
