@@ -210,9 +210,9 @@ class Article extends Model
      * @param bool $absolute
      * @return string
      */
-    public function createPublicLink(bool $absolute = true)
+    public function createPublicLink(bool $absolute = true, array $params = [])
     {
-        return URL::route('blog.single', ['article' => $this], $absolute);
+        return URL::route('blog.single', [...$params, 'article' => $this], $absolute);
     }
 
     /**
@@ -220,10 +220,11 @@ class Article extends Model
      *
      * @param int $minutes Minutes until URL expires (default: 30)
      * @param bool $absolute If true, absolute URL is returned. (default: true)
+     * @param array $params Any extra parameters to include in URL
      * @return string
      */
-    public function createPrivateUrl(int $minutes = 30, bool $absolute = true)
+    public function createPrivateUrl(int $minutes = 30, bool $absolute = true, array $params = [])
     {
-        return URL::temporarySignedRoute('blog.preview', $minutes * 60, ['article' => $this], $absolute);
+        return URL::temporarySignedRoute('blog.preview', $minutes * 60, [...$params, 'article' => $this], $absolute);
     }
 }
