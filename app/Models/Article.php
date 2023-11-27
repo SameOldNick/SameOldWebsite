@@ -175,6 +175,16 @@ class Article extends Model
     }
 
     /**
+     * Checks if article is scheduled to be published.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function isScheduled(): Attribute
+    {
+        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isFuture());
+    }
+
+    /**
      * Get the URL for the article.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
