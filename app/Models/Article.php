@@ -208,6 +208,7 @@ class Article extends Model
      * Creates public link to this article
      *
      * @param bool $absolute
+     * @param array $params Any extra parameters to include in URL
      * @return string
      */
     public function createPublicLink(bool $absolute = true, array $params = [])
