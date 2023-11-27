@@ -8086,7 +8086,7 @@ __metadata:
     string: ^3.3.3
     sweetalert2: ^11.4.23
     sweetalert2-react-content: ^5.0.0
-    tinymce: ^6.7.0
+    tinymce: ^6.8.0
     ts-deepmerge: ^6.2.0
     typescript: ^4.7.2
     uniqid: ^5.4.0
@@ -8670,10 +8670,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinymce@npm:^6.3.1, tinymce@npm:^6.7.0":
+"tinymce@npm:^6.3.1":
   version: 6.7.2
   resolution: "tinymce@npm:6.7.2"
   checksum: 46d90d4d807e295fda277e542e8877a39db089bca90df51f6fa2950c979dd3447cf430364c45efd631b2df923001fbdb1955eb50f4c8c6e759395552461fe461
+  languageName: node
+  linkType: hard
+
+"tinymce@npm:^6.8.0":
+  version: 6.8.0
+  resolution: "tinymce@npm:6.8.0"
+  checksum: 34dcac2e21a1969f85f009047daeb8ba0ba39544b776226aa9052807edc53b0fa36e2620d8040c2a965d32a8f862f36dd82737a06063f794d9b78ec97c66f499
   languageName: node
   linkType: hard
 
