@@ -33,13 +33,13 @@ class Menus
     }
 
     /**
-     * Lazily creates a menu.
+     * Adds menu that is created lazily.
      *
      * @param string $name
      * @param callable $callback Called when menu is first accessed.
      * @return $this
      */
-    public function lazyCreate(string $name, callable $callback)
+    public function add(string $name, callable $callback)
     {
         $this->callbacks[$name] = $callback;
 
