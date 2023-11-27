@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers\Api\Blog;
 
+use App\Events\Articles\ArticleCreated;
+use App\Events\Articles\ArticleDeleted;
+use App\Events\Articles\ArticlePublished;
+use App\Events\Articles\ArticleRestored;
+use App\Events\Articles\ArticleRevisionUpdated;
+use App\Events\Articles\ArticleScheduled;
+use App\Events\Articles\ArticleUnpublished;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
@@ -73,6 +80,10 @@ class ArticleController extends Controller
 
         $article->push();
 
+        ArticleCreated::dispatch($article);
+        ArticlePublished::dispatchIf($article->is_published, $article);
+        ArticleScheduled::dispatchIf($article->is_scheduled, $article);
+
         return $article;
     }
 
@@ -98,6 +109,12 @@ class ArticleController extends Controller
         $article->published_at = $request->date('published_at');
 
         $article->save();
+
+        if ($article->wasChanged('published_at')) {
+            ArticlePublished::dispatchIf($article->is_published, $article);
+            ArticleScheduled::dispatchIf($article->is_scheduled, $article);
+            ArticleUnpublished::dispatchUnless($article->is_published, $article);
+        }
 
         return $article;
     }
@@ -128,6 +145,8 @@ class ArticleController extends Controller
 
         $article->save();
 
+        ArticleRevisionUpdated::dispatch($article);
+
         return $article;
     }
 
@@ -141,6 +160,8 @@ class ArticleController extends Controller
     {
         $article->restore();
 
+        ArticleRestored::dispatch($article);
+
         return [
             'success' => __('Article ":title" was restored.', ['title' => $article->title]),
         ];
@@ -152,6 +173,8 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
+
+        ArticleDeleted::dispatch($article);
 
         return [
             'success' => __('Article ":title" was removed.', ['title' => $article->title]),
