@@ -33,11 +33,11 @@ class MenuServiceProvider extends ServiceProvider
             return;
         }
 
-        Menus::lazyCreate('main', function (Menu $menu) {
+        Menus::add('main', function (Menu $menu) {
             $this->createSharedMenu($menu);
         });
 
-        Menus::lazyCreate('footer', function (Menu $menu) {
+        Menus::add('footer', function (Menu $menu) {
             $this->createSharedMenu($menu)
                 ->dropdown('Legal', function (DropdownItem $dropdown) {
                     $dropdown
@@ -47,7 +47,7 @@ class MenuServiceProvider extends ServiceProvider
                 });
         });
 
-        Menus::lazyCreate('blog.sidebar.archives', function (Menu $menu) {
+        Menus::add('blog.sidebar.archives', function (Menu $menu) {
             $yearMonths = Article::published()
                 ->get()
                     ->groupedByDateTime('Y-m')
