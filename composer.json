@@ -22,7 +22,8 @@
         "owenvoke/blade-fontawesome": "^2.4",
         "paquettg/php-html-parser": "^3.1",
         "pelmered/fake-car": "^1.7",
-        "spatie/commonmark-shiki-highlighter": "^2.1"
+        "spatie/commonmark-shiki-highlighter": "^2.1",
+        "spatie/url": "^2.2",
         "starkbank/ecdsa": "^2.1",
         "thecodingmachine/safe": "^2.5"
     },

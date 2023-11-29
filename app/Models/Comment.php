@@ -6,6 +6,7 @@ use App\Traits\Models\Displayable;
 use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Url\Url as SpatieUrl;
 
 class Comment extends Model
 {
@@ -117,6 +118,40 @@ class Comment extends Model
     public function approvedBy()
     {
         return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    /**
+     * Creates public link to this comment.
+     *
+     * @param bool $absolute
+     * @return string
+     */
+    public function createPublicLink(bool $absolute = true)
+    {
+        $params = ['comment' => $this];
+        $fragment = $this->generateElementId();
+
+
+        $url = SpatieUrl::fromString($this->article->createPublicLink($absolute, $params))->withFragment($fragment);
+
+        return (string) $url;
+    }
+
+    /**
+     * Creates temporary signed URL to this comment.
+     *
+     * @param int $minutes Minutes until URL expires (default: 30)
+     * @param bool $absolute If true, absolute URL is returned. (default: true)
+     * @return string
+     */
+    public function createPrivateUrl(int $minutes = 30, bool $absolute = true)
+    {
+        $params = ['comment' => $this];
+        $fragment = $this->generateElementId();
+
+        $url = SpatieUrl::fromString($this->article->createPrivateUrl($minutes, $absolute, $params))->withFragment($fragment);
+
+        return (string) $url;
     }
 
     /**
