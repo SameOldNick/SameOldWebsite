@@ -21,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         CommentApproved::class => [
         ],
+        CommentApproved::class => [
+            NotifyArticleAuthorCommentPosted::class,
+            NotifyCommentRepliedTo::class,
+        ]
     ];
 
     /**
