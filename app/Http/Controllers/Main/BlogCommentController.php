@@ -12,6 +12,30 @@ use App\Models\Comment;
 class BlogCommentController extends Controller
 {
     /**
+     * Shows the comment (if user has access)
+     *
+     * @param Article $article
+     * @param Comment $comment
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function show(Article $article, Comment $comment) {
+        $this->authorize('view', [Comment::class, $article]);
+
+        return redirect()->away($comment->createPublicLink());
+    }
+
+    /**
+     * Previews a comment for a blog article
+     *
+     * @param Article $article
+     * @param Comment $comment
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function preview(Article $article, Comment $comment) {
+        return redirect()->away($comment->createPrivateUrl());
+    }
+
+    /**
      * Processes submitted comment
      *
      * @param PostCommentRequest $request
