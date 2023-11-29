@@ -69,6 +69,16 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * Get the entity's notifications.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable')->latest();
+    }
+
+    /**
      * The roles that belong to the user.
      *
      * @return mixed
