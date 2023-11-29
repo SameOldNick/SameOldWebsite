@@ -43,6 +43,9 @@ Route::namespace(Controllers\Main::class)->group(function () {
     Route::get('/blog/{article:slug}/preview', 'BlogArticleController@single')->name('blog.preview')->middleware(LaravelMiddleware\ValidateSignature::class)->withTrashed();
     Route::get('/blog/{article:slug}/{revision}', 'BlogArticleController@singleRevision')->name('blog.single.revision')->middleware(LaravelMiddleware\ValidateSignature::class);
 
+    Route::get('/blog/{article:slug}/comment/{comment}', 'BlogCommentController@show')->name('blog.comment.show')->can('view', 'comment');
+    Route::get('/blog/{article:slug}/comment/{comment}/preview', 'BlogCommentController@show')->name('blog.comment.preview')->middleware(LaravelMiddleware\ValidateSignature::class)->withTrashed();
+
     Route::middleware(Middleware\FileAccess::class)->group(function () {
         Route::get('/files/{file}', 'FileController@retrieve')->name('file');
     });
