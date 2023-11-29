@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\AggregateServiceProvider;
+
 use App\Components\Analytics\ServiceProvider as AnalyticsServiceProvider;
 use App\Components\Compiler\ServiceProvider as CompilerServiceProvider;
 use App\Components\Encryption\ServiceProvider as EncryptionServiceProvider;
@@ -10,7 +12,6 @@ use App\Components\Macros\ServiceProvider as MacrosServiceProvider;
 use App\Components\Menus\ServiceProvider as MenusServiceProvider;
 use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
-use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider
 {
