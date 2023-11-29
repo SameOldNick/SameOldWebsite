@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Setup;
 
 use App\Models\Country;
 use App\Models\State;

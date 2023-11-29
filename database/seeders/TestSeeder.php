@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class TestSeeder extends Seeder
 {
     use WithoutModelEvents;
 
@@ -16,7 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Don't use this default seeder!
-        // Use the root seeders instead.
+        $this->call([
+            Setup\SlimCountryStateSeeder::class,
+            Setup\RoleSeeder::class,
+            Setup\PageSeeder::class,
+            Setup\ContactPageSettingsSeeder::class,
+        ]);
     }
 }
