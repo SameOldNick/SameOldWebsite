@@ -5,14 +5,15 @@ namespace App\Mail;
 use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
-use App\Traits\Support\HasPageSettings;
 use App\Http\Requests\ContactRequest;
+use App\Traits\Support\HasPageSettings;
 
 class ContactedConfirmation extends MarkdownTemplate
 {
     use HasPageSettings;
 
     protected $content;
+
     protected $settings;
 
     public function __construct(
