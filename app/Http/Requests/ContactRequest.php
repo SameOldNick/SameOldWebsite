@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Components\Settings\ContactPageSettings;
+use App\Components\Settings\PageSettings;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
@@ -20,8 +20,10 @@ class ContactRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(ContactPageSettings $settings): array
+    public function rules(): array
     {
+        $settings = $this->container->make(PageSettings::class, ['key' => 'contact'])->driver('cache');
+
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
