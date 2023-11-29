@@ -11,7 +11,8 @@ trait Displayable
      *
      * @return string
      */
-    public function generateElementId() {
+    public function generateElementId()
+    {
         $prefix = class_basename(static::class);
 
         return sprintf('%s-%s', Str::kebab($prefix), $this->getElementIdSuffix());
@@ -22,7 +23,8 @@ trait Displayable
      *
      * @return string
      */
-    protected function getElementIdSuffix(): string {
+    protected function getElementIdSuffix(): string
+    {
         return $this->getKey();
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Components\Encryption;
 
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Illuminate\Console\Application as Artisan;
 use App\Components\Encryption\Commands\GenerateKeyCommand;
+use Illuminate\Console\Application as Artisan;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 final class ServiceProvider extends BaseServiceProvider
 {

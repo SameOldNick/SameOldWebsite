@@ -2,7 +2,8 @@
 
 namespace App\Components\Encryption\Signers;
 
-interface Signer {
+interface Signer
+{
     /**
      * Creates signature for message.
      *
@@ -16,7 +17,7 @@ interface Signer {
      *
      * @param string $message
      * @param string $signature
-     * @return boolean
+     * @return bool
      */
     public function verify(string $message, string $signature): bool;
 

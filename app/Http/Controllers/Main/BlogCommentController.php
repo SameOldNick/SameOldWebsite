@@ -18,7 +18,8 @@ class BlogCommentController extends Controller
      * @param Comment $comment
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function show(Article $article, Comment $comment) {
+    public function show(Article $article, Comment $comment)
+    {
         $this->authorize('view', [Comment::class, $article]);
 
         return redirect()->away($comment->createPublicLink());
@@ -31,7 +32,8 @@ class BlogCommentController extends Controller
      * @param Comment $comment
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function preview(Article $article, Comment $comment) {
+    public function preview(Article $article, Comment $comment)
+    {
         return redirect()->away($comment->createPrivateUrl());
     }
 
