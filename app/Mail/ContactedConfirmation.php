@@ -5,23 +5,27 @@ namespace App\Mail;
 use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
-use App\Components\Settings\ContactPageSettings;
+use App\Traits\Support\HasPageSettings;
 use App\Http\Requests\ContactRequest;
 
 class ContactedConfirmation extends MarkdownTemplate
 {
+    use HasPageSettings;
+
     protected $content;
+    protected $settings;
 
     public function __construct(
         protected ContactRequest $request
     ) {
+        $this->settings = $this->getPageSettings('contact');
     }
 
-    public function build(ContactPageSettings $settings, PlaceholdersFactory $factory)
+    public function build(PlaceholdersFactory $factory)
     {
-        $replyTo = $settings->setting('sender_replyto');
-        $subject = $settings->setting('sender_subject');
-        $message = $settings->setting('sender_message');
+        $replyTo = $this->settings->setting('sender_replyto');
+        $subject = $this->settings->setting('sender_subject');
+        $message = $this->settings->setting('sender_message');
 
         $collection = $factory->build(function (Options $options) use ($subject) {
             $options
