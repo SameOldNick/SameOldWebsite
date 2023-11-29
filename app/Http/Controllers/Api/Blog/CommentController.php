@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Blog;
 
+use App\Events\Comments\CommentApproved;
+use App\Events\Comments\CommentRemoved;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CommentCollection;
 use App\Models\Article;
@@ -101,6 +103,8 @@ class CommentController extends Controller
 
         $comment->save();
 
+        CommentApproved::dispatch($comment);
+
         return $comment;
     }
 
@@ -128,6 +132,8 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         $comment->post->delete();
+
+        CommentRemoved::dispatch($comment);
 
         return [
             'success' => __('Comment was removed.'),
