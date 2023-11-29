@@ -6,6 +6,7 @@ use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
 use App\Components\Settings\ContactPageSettings;
+use App\Traits\Support\HasPageSettings;
 use App\Http\Requests\ContactRequest;
 use App\Models\PendingMessage;
 use Illuminate\Bus\Queueable;
@@ -15,6 +16,9 @@ use Illuminate\Mail\Mailables\Content;
 class ConfirmMessage extends Mailable
 {
     use Queueable;
+    use HasPageSettings;
+
+    protected $settings;
 
     /**
      * Create a new message instance.
@@ -23,12 +27,13 @@ class ConfirmMessage extends Mailable
         protected ContactRequest $request,
         protected PendingMessage $pendingMessage
     ) {
+        $this->settings = $this->getPageSettings('contact');
     }
 
-    public function build(ContactPageSettings $settings, PlaceholdersFactory $factory)
+    public function build(PlaceholdersFactory $factory)
     {
-        $replyTo = $settings->setting('sender_replyto');
-        $subject = $settings->setting('confirmation_subject');
+        $replyTo = $this->settings->setting('sender_replyto');
+        $subject = $this->settings->setting('confirmation_subject');
 
         $collection = $factory->build(function (Options $options) use ($subject) {
             $options
