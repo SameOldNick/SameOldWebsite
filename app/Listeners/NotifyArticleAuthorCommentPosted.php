@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\Comments\CommentApproved;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Notifications\CommentPosted;
 
 class NotifyArticleAuthorCommentPosted
