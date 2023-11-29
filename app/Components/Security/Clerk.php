@@ -3,8 +3,8 @@
 namespace App\Components\Security;
 
 use App\Components\Security\Clerks\EloquentClerk\EloquentClerk;
-use App\Components\Security\Clerks\StackClerk;
 use App\Components\Security\Clerks\NotificationClerk\NotificationClerk;
+use App\Components\Security\Clerks\StackClerk;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 
@@ -19,8 +19,9 @@ final class Clerk extends Manager
     {
         $key = config('security.clerk');
 
-        if (is_null($key))
+        if (is_null($key)) {
             return null;
+        }
 
         return $this->determineDriverNameFor($key);
     }
@@ -57,6 +58,7 @@ final class Clerk extends Manager
     protected function createNotificationDriver()
     {
         $config = $this->getConfig('notification');
+
         return new NotificationClerk($config);
     }
 
@@ -67,7 +69,8 @@ final class Clerk extends Manager
      * @param mixed $default
      * @return mixed
      */
-    private function getConfig(string $key, $default = []) {
+    private function getConfig(string $key, $default = [])
+    {
         return config(sprintf('security.clerks.%s', $key), $default);
     }
 
@@ -78,7 +81,8 @@ final class Clerk extends Manager
      * @param mixed $default
      * @return mixed
      */
-    private function determineDriverNameFor(string $key, $default = null) {
+    private function determineDriverNameFor(string $key, $default = null)
+    {
         return Arr::get($this->getConfig($key), 'driver', $default);
     }
 }

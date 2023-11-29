@@ -2,7 +2,7 @@
 
 return [
     'defaults' => [
-        'signer' => 'ecdsa'
+        'signer' => 'ecdsa',
     ],
 
     'drivers' => [
@@ -25,7 +25,6 @@ return [
              */
             'contents' => env('ENCRYPTION_ECDSA_KEY_CONTENTS'),
 
-
-        ]
-    ]
+        ],
+    ],
 ];

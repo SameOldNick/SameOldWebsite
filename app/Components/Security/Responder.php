@@ -18,8 +18,9 @@ final class Responder extends Manager
     {
         $key = config('security.responder');
 
-        if (is_null($key))
+        if (is_null($key)) {
             return null;
+        }
 
         return $this->determineDriverNameFor($key);
     }
@@ -29,13 +30,14 @@ final class Responder extends Manager
      *
      * @return StackResponder
      */
-    protected function createStackDriver() {
+    protected function createStackDriver()
+    {
         $keys = Arr::get($this->getConfig('stack'), 'stack', []);
 
         $stack = array_map(function ($key) {
             $name = $this->determineDriverNameFor($key);
 
-            if (!is_null($name)) {
+            if (! is_null($name)) {
                 return $this->driver($name);
             }
 
@@ -62,7 +64,8 @@ final class Responder extends Manager
      * @param mixed $default
      * @return mixed
      */
-    private function getConfig(string $key, $default = []) {
+    private function getConfig(string $key, $default = [])
+    {
         return config(sprintf('security.responders.%s', $key), $default);
     }
 
@@ -73,7 +76,8 @@ final class Responder extends Manager
      * @param mixed $default
      * @return mixed
      */
-    private function determineDriverNameFor(string $key, $default = null) {
+    private function determineDriverNameFor(string $key, $default = null)
+    {
         return Arr::get($this->getConfig($key), 'driver', $default);
     }
 }

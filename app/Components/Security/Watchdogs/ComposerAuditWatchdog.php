@@ -2,16 +2,16 @@
 
 namespace App\Components\Security\Watchdogs;
 
+use App\Components\Security\Enums\Severity;
 use App\Components\Security\Exceptions\WatchdogException;
 use App\Components\Security\Issues\ComposerAuditAbandonedAdvisory;
 use App\Components\Security\Issues\ComposerAuditSecurityAdvisory;
-use App\Components\Security\Enums\Severity;
 use Composer\Console\Application;
-use Illuminate\Support\Arr;
 use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Illuminate\Support\Facades\Log;
 
 final class ComposerAuditWatchdog implements WatchdogDriver
 {
@@ -19,8 +19,7 @@ final class ComposerAuditWatchdog implements WatchdogDriver
 
     public function __construct(
         protected readonly array $config
-    )
-    {
+    ) {
     }
 
     /**
@@ -30,7 +29,7 @@ final class ComposerAuditWatchdog implements WatchdogDriver
      */
     public function initialize(): void
     {
-        putenv('COMPOSER_HOME=' . base_path('/vendor/bin/composer'));
+        putenv('COMPOSER_HOME='.base_path('/vendor/bin/composer'));
 
         $this->application = new Application();
         $this->application->setAutoExit(false);
@@ -101,11 +100,10 @@ final class ComposerAuditWatchdog implements WatchdogDriver
          *       }
          *  }
          */
-
         try {
             $decoded = json_decode($contents, true, 100, JSON_THROW_ON_ERROR);
 
-            if (!is_array($decoded)) {
+            if (! is_array($decoded)) {
                 throw new Exception('JSON response is not an array.');
             }
         } catch (Exception $ex) {

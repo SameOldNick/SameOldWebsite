@@ -4,10 +4,9 @@ namespace App\Components\Security\Clerks\NotificationClerk;
 
 use App\Components\Security\Issues\Issue;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Str;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Str;
 
 class IssueNotification extends Notification
 {
@@ -20,8 +19,7 @@ class IssueNotification extends Notification
      */
     public function __construct(
         public readonly array $data
-    )
-    {
+    ) {
         //
     }
 
@@ -30,7 +28,8 @@ class IssueNotification extends Notification
      *
      * @return string
      */
-    public function databaseType() {
+    public function databaseType()
+    {
         return static::DATABASE_TYPE_UUID;
     }
 
@@ -39,15 +38,18 @@ class IssueNotification extends Notification
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return sha1($this->data['id']);
     }
 
-    public function getSeverity() {
+    public function getSeverity()
+    {
         return $this->data['severity'];
     }
 
-    public function getMessage() {
+    public function getMessage()
+    {
         return $this->data['message'];
     }
 
@@ -83,7 +85,7 @@ class IssueNotification extends Notification
     {
         return [
             'id' => $this->getId(),
-            'issue' => $this->data
+            'issue' => $this->data,
         ];
     }
 
@@ -93,7 +95,8 @@ class IssueNotification extends Notification
      * @param Issue $issue
      * @return static
      */
-    public static function createFromIssue(Issue $issue) {
+    public static function createFromIssue(Issue $issue)
+    {
         return new static($issue->toArray());
     }
 }

@@ -12,22 +12,24 @@ class NotificationClerk implements ClerkDriver
 {
     public function __construct(
         private readonly array $config
-    )
-    {
+    ) {
     }
 
     /**
      * Checks if the issue is fresh/new.
      *
      * @param Issue $issue
-     * @return boolean
+     * @return bool
      */
-    public function isFresh(Issue $issue): bool {
-        if (!$this->hasNotifiables())
+    public function isFresh(Issue $issue): bool
+    {
+        if (! $this->hasNotifiables()) {
             return false;
+        }
 
-        if (!$this->isNotificationFresh($issue))
+        if (! $this->isNotificationFresh($issue)) {
             return false;
+        }
 
         return true;
     }
@@ -38,8 +40,8 @@ class NotificationClerk implements ClerkDriver
      * @param Issue $issue
      * @return void
      */
-    public function file(Issue $issue): void {
-
+    public function file(Issue $issue): void
+    {
         Notification::send($this->getNotifiables(), $this->createNotificationFromIssue($issue));
     }
 
@@ -48,16 +50,18 @@ class NotificationClerk implements ClerkDriver
      *
      * @return string|null
      */
-    protected function getRole() {
+    protected function getRole()
+    {
         return Arr::get($this->config, 'role');
     }
 
     /**
      * Check if notifiables exist.
      *
-     * @return boolean
+     * @return bool
      */
-    protected function hasNotifiables() {
+    protected function hasNotifiables()
+    {
         return count($this->getNotifiables()) > 0;
     }
 
@@ -66,9 +70,11 @@ class NotificationClerk implements ClerkDriver
      *
      * @return array
      */
-    protected function getNotifiables() {
-        if (is_null($this->getRole()))
+    protected function getNotifiables()
+    {
+        if (is_null($this->getRole())) {
             return [];
+        }
 
         return Role::firstWhere(['role' => $this->getRole()])->users;
     }
@@ -77,9 +83,10 @@ class NotificationClerk implements ClerkDriver
      * Checks if issue is fresh/new.
      *
      * @param Issue $issue
-     * @return boolean
+     * @return bool
      */
-    protected function isNotificationFresh(Issue $issue) {
+    protected function isNotificationFresh(Issue $issue)
+    {
         $notificationIssue = $this->createNotificationFromIssue($issue);
 
         $id = $notificationIssue->getId();
@@ -102,7 +109,8 @@ class NotificationClerk implements ClerkDriver
      * @param Issue $issue
      * @return IssueNotification
      */
-    protected function createNotificationFromIssue(Issue $issue) {
+    protected function createNotificationFromIssue(Issue $issue)
+    {
         return IssueNotification::createFromIssue($issue);
     }
 }

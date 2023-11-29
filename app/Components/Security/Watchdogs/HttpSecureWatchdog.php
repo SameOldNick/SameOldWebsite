@@ -2,20 +2,19 @@
 
 namespace App\Components\Security\Watchdogs;
 
+use App\Components\Security\Enums\Severity;
 use App\Components\Security\Issues\SecureConnectionAdvisory;
 use GuzzleHttp\Exception\ConnectException;
-use Illuminate\Support\Facades\Http;
-use Throwable;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Arr;
-use App\Components\Security\Enums\Severity;
+use Illuminate\Support\Facades\Http;
+use Throwable;
 
 final class HttpSecureWatchdog implements WatchdogDriver
 {
     public function __construct(
         protected readonly array $config
-    )
-    {
+    ) {
     }
 
     /**
@@ -25,7 +24,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
      */
     public function initialize(): void
     {
-
     }
 
     /**
@@ -40,7 +38,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
 
         try {
             $response = Http::get($url);
-
         } catch (Throwable $ex) {
             if ($this->isSecureConnectionError($ex)) {
                 $issue = $this->transformExceptionToIssue($ex);
@@ -48,7 +45,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
                 array_push($issues, $issue);
             }
         }
-
 
         return $issues;
     }
@@ -60,7 +56,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
      */
     public function cleanup()
     {
-
     }
 
     /**
@@ -68,7 +63,8 @@ final class HttpSecureWatchdog implements WatchdogDriver
      *
      * @return string
      */
-    protected function getSecureUrl() {
+    protected function getSecureUrl()
+    {
         return $this->config['url'] ?? secure_url('');
     }
 
@@ -77,7 +73,8 @@ final class HttpSecureWatchdog implements WatchdogDriver
      *
      * @return array
      */
-    protected function getCurlErrorCodes(): array {
+    protected function getCurlErrorCodes(): array
+    {
         return [
             CURLE_SSL_CONNECT_ERROR,
             CURLE_SSL_CERTPROBLEM,
@@ -93,7 +90,8 @@ final class HttpSecureWatchdog implements WatchdogDriver
      * @param Throwable $ex
      * @return int|null
      */
-    protected function getCurlErrorCode(Throwable $ex) {
+    protected function getCurlErrorCode(Throwable $ex)
+    {
         $context = method_exists($ex, 'getHandlerContext') ? $ex->getHandlerContext() : [];
 
         return Arr::get($context, 'errno');
@@ -102,10 +100,11 @@ final class HttpSecureWatchdog implements WatchdogDriver
     /**
      * Gets error message from curl error code.
      *
-     * @param integer $errorCode
+     * @param int $errorCode
      * @return string|null
      */
-    protected function getCurlErrorMessage(int $errorCode): string {
+    protected function getCurlErrorMessage(int $errorCode): string
+    {
         return curl_strerror($errorCode);
     }
 
@@ -113,10 +112,11 @@ final class HttpSecureWatchdog implements WatchdogDriver
      * Checks if exception is SSL connection exception.
      *
      * @param Throwable $ex
-     * @return boolean
+     * @return bool
      */
-    protected function isSecureConnectionError(Throwable $ex) {
-        if (!($ex instanceof RequestException || $ex instanceof ConnectException)) {
+    protected function isSecureConnectionError(Throwable $ex)
+    {
+        if (! ($ex instanceof RequestException || $ex instanceof ConnectException)) {
             return false;
         }
 
@@ -135,7 +135,8 @@ final class HttpSecureWatchdog implements WatchdogDriver
      * @param Throwable $ex
      * @return SecureConnectionAdvisory
      */
-    protected function transformExceptionToIssue(Throwable $ex) {
+    protected function transformExceptionToIssue(Throwable $ex)
+    {
         $severity = Severity::from($this->config['level']);
 
         $code = $this->getCurlErrorCode($ex);

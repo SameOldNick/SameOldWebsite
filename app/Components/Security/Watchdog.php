@@ -19,8 +19,9 @@ final class Watchdog extends Manager
     {
         $key = config('security.watchdog');
 
-        if (is_null($key))
+        if (is_null($key)) {
             return null;
+        }
 
         return $this->determineDriverNameFor($key);
     }
@@ -66,7 +67,8 @@ final class Watchdog extends Manager
      * @param mixed $default
      * @return mixed
      */
-    private function getConfig(string $key, $default = []) {
+    private function getConfig(string $key, $default = [])
+    {
         return config(sprintf('security.watchdogs.%s', $key), $default);
     }
 
@@ -77,7 +79,8 @@ final class Watchdog extends Manager
      * @param mixed $default
      * @return string
      */
-    private function determineDriverNameFor(string $key, $default = null) {
+    private function determineDriverNameFor(string $key, $default = null)
+    {
         return Arr::get($this->getConfig($key), 'driver', $default);
     }
 }

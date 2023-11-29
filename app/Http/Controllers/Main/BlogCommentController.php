@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Main;
 use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Components\SweetAlert\SweetAlerts;
 use App\Events\Comments\CommentApproved;
+use App\Events\Comments\CommentCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCommentRequest;
 use App\Models\Article;
 use App\Models\Comment;
-use App\Events\Comments\CommentCreated;
-
 
 class BlogCommentController extends Controller
 {
