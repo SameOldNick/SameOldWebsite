@@ -103,8 +103,6 @@ class CommentController extends Controller
 
         $comment->save();
 
-        CommentApproved::dispatch($comment);
-
         return $comment;
     }
 
@@ -122,6 +120,8 @@ class CommentController extends Controller
         }
 
         $comment->save();
+
+        CommentApproved::dispatch($comment);
 
         return $comment;
     }
