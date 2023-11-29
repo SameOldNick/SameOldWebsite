@@ -10,7 +10,7 @@ interface ResponderDriver
      * Determines if issue should be handled.
      *
      * @param Issue $issue
-     * @return boolean
+     * @return bool
      */
     public function shouldHandle(Issue $issue): bool;
 

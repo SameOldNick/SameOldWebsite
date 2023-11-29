@@ -2,10 +2,11 @@
 
 namespace App\Components\Security\Issues;
 
-use Carbon\Carbon;
 use App\Components\Security\Enums\Severity;
+use Carbon\Carbon;
 
-class ComposerAuditSecurityAdvisory extends Issue {
+class ComposerAuditSecurityAdvisory extends Issue
+{
     private Carbon $dateTime;
 
     public function __construct(
@@ -13,8 +14,7 @@ class ComposerAuditSecurityAdvisory extends Issue {
         public readonly array $advisories,
         ?Carbon $dateTime = null,
         protected readonly ?Severity $severity = null
-    )
-    {
+    ) {
         $this->dateTime = $dateTime ?? Carbon::now();
     }
 
@@ -49,7 +49,7 @@ class ComposerAuditSecurityAdvisory extends Issue {
     {
         return [
             'package' => $this->package,
-            'advisories' => $this->advisories
+            'advisories' => $this->advisories,
         ];
     }
 }

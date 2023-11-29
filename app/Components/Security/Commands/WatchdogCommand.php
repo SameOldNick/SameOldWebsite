@@ -4,9 +4,7 @@ namespace App\Components\Security\Commands;
 
 use App\Components\Security\Clerk;
 use App\Components\Security\Responder;
-use App\Components\Security\Watchdogs\ComposerAuditWatchdog;
 use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Throwable;
 
@@ -39,7 +37,7 @@ class WatchdogCommand extends Command
             return static::FAILURE;
         }
 
-        if (!$this->option('sniff')) {
+        if (! $this->option('sniff')) {
             try {
                 $clerk = $this->getLaravel()->make(Clerk::class)->driver($this->option('clerk'));
             } catch (InvalidArgumentException) {
@@ -56,7 +54,6 @@ class WatchdogCommand extends Command
                 return static::FAILURE;
             }
         }
-
 
         $issues = [];
 
@@ -81,7 +78,7 @@ class WatchdogCommand extends Command
 
         $this->info('Finished sniffing.');
 
-        if (!$this->option('sniff')) {
+        if (! $this->option('sniff')) {
             $this->info('Filing issues with clerk...');
 
             foreach ($issues as $issue) {

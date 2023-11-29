@@ -2,15 +2,11 @@
 
 namespace App\Components\Security\Watchdogs;
 
-use Illuminate\Contracts\Container\Container;
-
 final class StackWatchdog implements WatchdogDriver
 {
     public function __construct(
         protected readonly array $drivers
-    )
-    {
-
+    ) {
     }
 
     /**

@@ -10,7 +10,7 @@ interface ClerkDriver
      * Checks if the issue is fresh/new.
      *
      * @param Issue $issue
-     * @return boolean
+     * @return bool
      */
     public function isFresh(Issue $issue): bool;
 

@@ -3,8 +3,8 @@
 namespace App\Components\Security;
 
 use App\Components\Security\Commands\WatchdogCommand;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Console\Application as Artisan;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 final class ServiceProvider extends BaseServiceProvider
 {

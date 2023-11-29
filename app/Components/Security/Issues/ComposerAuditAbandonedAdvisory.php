@@ -2,10 +2,11 @@
 
 namespace App\Components\Security\Issues;
 
-use Carbon\Carbon;
 use App\Components\Security\Enums\Severity;
+use Carbon\Carbon;
 
-class ComposerAuditAbandonedAdvisory extends Issue {
+class ComposerAuditAbandonedAdvisory extends Issue
+{
     private Carbon $dateTime;
 
     public function __construct(
@@ -13,8 +14,7 @@ class ComposerAuditAbandonedAdvisory extends Issue {
         public readonly ?string $replacement,
         ?Carbon $dateTime = null,
         protected readonly ?Severity $severity = null
-    )
-    {
+    ) {
         $this->dateTime = $dateTime ?? Carbon::now();
     }
 
@@ -30,7 +30,7 @@ class ComposerAuditAbandonedAdvisory extends Issue {
 
     public function getIdentifier(): string
     {
-        return !is_null($this->replacement) ? implode('|', [$this->package, $this->replacement]) : $this->package;
+        return ! is_null($this->replacement) ? implode('|', [$this->package, $this->replacement]) : $this->package;
     }
 
     public function getMessage(): string
@@ -42,7 +42,7 @@ class ComposerAuditAbandonedAdvisory extends Issue {
     {
         return [
             'package' => $this->package,
-            'replacement' => $this->replacement
+            'replacement' => $this->replacement,
         ];
     }
 }

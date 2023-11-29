@@ -2,11 +2,12 @@
 
 namespace App\Components\Security\Issues;
 
+use App\Components\Security\Enums\Severity;
 use Carbon\Carbon;
 use Exception;
-use App\Components\Security\Enums\Severity;
 
-class SecureConnectionAdvisory extends Issue {
+class SecureConnectionAdvisory extends Issue
+{
     private Carbon $dateTime;
 
     public function __construct(
@@ -15,8 +16,7 @@ class SecureConnectionAdvisory extends Issue {
         protected readonly Exception $exception,
         ?Carbon $dateTime = null,
         protected readonly ?Severity $severity = null
-    )
-    {
+    ) {
         $this->dateTime = $dateTime ?? Carbon::now();
     }
 
@@ -44,7 +44,7 @@ class SecureConnectionAdvisory extends Issue {
     {
         return [
             'url' => $this->url,
-            'message' => $this->message
+            'message' => $this->message,
         ];
     }
 }

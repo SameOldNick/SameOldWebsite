@@ -3,7 +3,6 @@
 namespace App\Components\Security\Integrations;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Monolog\Logger as Monolog;
 
 final class ServiceProvider extends BaseServiceProvider
 {

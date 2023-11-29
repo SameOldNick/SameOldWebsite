@@ -2,11 +2,12 @@
 
 namespace App\Components\Security\Issues;
 
+use App\Components\Security\Enums\Severity;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
-use App\Components\Security\Enums\Severity;
 
-abstract class Issue implements Arrayable {
+abstract class Issue implements Arrayable
+{
     /**
      * Gets the issue severity.
      *
@@ -67,7 +68,7 @@ abstract class Issue implements Arrayable {
             'severity' => $this->getSeverity()->value,
             'datetime' => $this->getDateTime(),
             'message' => $this->getMessage(),
-            'context' => $this->getContext()
+            'context' => $this->getContext(),
         ];
     }
 }
