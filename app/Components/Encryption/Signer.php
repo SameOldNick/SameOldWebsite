@@ -5,7 +5,8 @@ namespace App\Components\Encryption;
 use App\Components\Encryption\Signers\EcdsaSigner;
 use Illuminate\Support\Manager as BaseManager;
 
-class Signer extends BaseManager {
+class Signer extends BaseManager
+{
     /**
      * Get the default driver name.
      *
@@ -21,7 +22,8 @@ class Signer extends BaseManager {
      *
      * @return EcdsaSigner
      */
-    protected function createEcdsaDriver() {
+    protected function createEcdsaDriver()
+    {
         $config = $this->getConfigFor('ecdsa');
 
         return new EcdsaSigner($config);
@@ -33,7 +35,8 @@ class Signer extends BaseManager {
      * @param string $name
      * @return array
      */
-    protected function getConfigFor(string $name) {
+    protected function getConfigFor(string $name)
+    {
         return config("encryption.drivers.{$name}");
     }
 }

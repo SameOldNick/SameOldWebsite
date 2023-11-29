@@ -13,9 +13,7 @@ class CommentPolicy
 
     public function __construct(
         protected readonly Request $request
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -46,18 +44,16 @@ class CommentPolicy
         if ($this->request->has('comment') && $this->request->hasValidSignature()) {
             $selected = Comment::find($this->request->input('comment'));
 
-            if (!is_null($selected)) {
+            if (! is_null($selected)) {
                 // Check if comment input ID matches Comment model ID or comment input ID is one of Comment model's children ID.
                 if ($comment->is($selected)) {
                     return true;
-                } else if ($comment->allChildren()->contains(fn ($item) => $item->is($selected))) {
+                } elseif ($comment->allChildren()->contains(fn ($item) => $item->is($selected))) {
                     return true;
-                } else if ($selected->allChildren()->contains(fn ($item) => $item->is($comment))) {
+                } elseif ($selected->allChildren()->contains(fn ($item) => $item->is($comment))) {
                     return true;
                 }
             }
-
-
         }
 
         return ! is_null($user) && $comment->post->user->is($user);

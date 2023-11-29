@@ -2,11 +2,9 @@
 
 namespace App\Components\Encryption\Commands;
 
-use Illuminate\Console\Command;
 use Exception;
-
+use Illuminate\Console\Command;
 use function Safe\file_put_contents;
-use function Safe\realpath;
 
 class GenerateKeyCommand extends Command
 {
@@ -36,17 +34,17 @@ class GenerateKeyCommand extends Command
 
             $path = $this->argument('path');
 
-            if (!is_null($path)) {
+            if (! is_null($path)) {
                 $fullPath = base_path($path);
 
                 if (file_exists($fullPath)) {
-                    if (!is_writable($fullPath)) {
+                    if (! is_writable($fullPath)) {
                         $this->error(sprintf('File "%s" is not writable.', $fullPath));
 
                         return static::FAILURE;
                     }
 
-                    if (!$this->option('force') && !$this->confirm(sprintf('File "%s" already exists. Would you like to overwrite it?', $fullPath))) {
+                    if (! $this->option('force') && ! $this->confirm(sprintf('File "%s" already exists. Would you like to overwrite it?', $fullPath))) {
                         return static::FAILURE;
                     }
                 }
@@ -57,8 +55,8 @@ class GenerateKeyCommand extends Command
             } else {
                 $this->line($contents);
             }
-
-        } catch (Exception $ex) { dd($ex);
+        } catch (Exception $ex) {
+            dd($ex);
             $this->error($ex->getMessage());
 
             return static::FAILURE;

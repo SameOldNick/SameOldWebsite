@@ -7,6 +7,7 @@ use OutOfBoundsException;
 class Menus
 {
     protected $callbacks;
+
     protected $afterCreated;
 
     protected $menus;
@@ -63,7 +64,7 @@ class Menus
      */
     public function afterCreated(string $name, callable $callback)
     {
-        if (!isset($this->afterCreated[$name])) {
+        if (! isset($this->afterCreated[$name])) {
             $this->afterCreated[$name] = [];
         }
 

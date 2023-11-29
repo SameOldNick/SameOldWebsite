@@ -131,7 +131,6 @@ class Comment extends Model
         $params = ['comment' => $this];
         $fragment = $this->generateElementId();
 
-
         $url = SpatieUrl::fromString($this->article->createPublicLink($absolute, $params))->withFragment($fragment);
 
         return (string) $url;

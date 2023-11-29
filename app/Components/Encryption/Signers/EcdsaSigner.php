@@ -3,22 +3,22 @@
 namespace App\Components\Encryption\Signers;
 
 use App\Components\Encryption\Exceptions\InvalidConfigurationException;
-use EllipticCurve\PrivateKey;
 use EllipticCurve\Ecdsa;
+use EllipticCurve\PrivateKey;
 use EllipticCurve\Signature;
 use Exception;
 use Illuminate\Support\Arr;
-
 use function Safe\file_get_contents;
 
-class EcdsaSigner implements Signer {
+class EcdsaSigner implements Signer
+{
     public function __construct(
         private readonly array $config
-    )
-    {
+    ) {
     }
 
-    public function sign(string $message): string {
+    public function sign(string $message): string
+    {
         $key = $this->getPrivateKey();
 
         $signature = Ecdsa::sign($message, $key);
@@ -26,7 +26,8 @@ class EcdsaSigner implements Signer {
         return $signature->toBase64();
     }
 
-    public function verify(string $message, string $signatureBase64): bool {
+    public function verify(string $message, string $signatureBase64): bool
+    {
         try {
             $signature = Signature::fromBase64($signatureBase64);
             $key = $this->getPrivateKey();
@@ -37,28 +38,31 @@ class EcdsaSigner implements Signer {
         }
     }
 
-    public function generate(): string {
+    public function generate(): string
+    {
         $privateKey = new PrivateKey;
 
         return $privateKey->toPem();
     }
 
-    private function getPrivateKey() {
+    private function getPrivateKey()
+    {
         $type = Arr::get($this->config, 'type');
 
         if ($type === 'file') {
             return $this->getPrivateKeyFromFile();
-        } else if ($type === 'string') {
+        } elseif ($type === 'string') {
             return $this->getPrivateKeyFromContents();
         }
 
         throw new InvalidConfigurationException("Private key file type '{$type}' is invalid.");
     }
 
-    private function getPrivateKeyFromFile() {
+    private function getPrivateKeyFromFile()
+    {
         $path = Arr::get($this->config, 'path');
 
-        if (!is_readable($path)) {
+        if (! is_readable($path)) {
             throw new InvalidConfigurationException("File '{$path}' is not readable.");
         }
 
@@ -67,13 +71,15 @@ class EcdsaSigner implements Signer {
         return $this->createPrivateKey($contents);
     }
 
-    private function getPrivateKeyFromContents() {
+    private function getPrivateKeyFromContents()
+    {
         $contents = Arr::get($this->config, 'contents');
 
         return $this->createPrivateKey($contents);
     }
 
-    private function createPrivateKey(string $contents) {
+    private function createPrivateKey(string $contents)
+    {
         return PrivateKey::fromPem($contents);
     }
 }
