@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Article;
 use App\Models\Post;
 use App\Models\User;
+use App\Traits\Database\Factories\CreatesPostable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -13,6 +14,8 @@ use Illuminate\Support\Str;
  */
 class ArticleFactory extends Factory
 {
+    use CreatesPostable;
+
     /**
      * Define the model's default state.
      *
@@ -35,7 +38,8 @@ class ArticleFactory extends Factory
      */
     public function configure()
     {
-        return $this->has(Post::factory(1)->for(User::factory()));
+        return $this;
+    }
     }
 
     /**

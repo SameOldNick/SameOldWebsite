@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CommentFactory extends Factory
 {
+    use CreatesPostable;
+
     /**
      * Define the model's default state.
      *
@@ -20,7 +22,6 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'article_id' => Article::factory(),
             'title' => $this->faker->boolean() ? $this->faker->words(3, true) : null,
             'comment' => $this->faker->paragraphs(2, true),
         ];
@@ -33,7 +34,7 @@ class CommentFactory extends Factory
      */
     public function configure()
     {
-        return $this->has(Post::factory(1)->for(User::factory()));
+        return $this;
     }
 
     /**
