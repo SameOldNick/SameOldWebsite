@@ -5,15 +5,17 @@ namespace App\Traits\Database\Factories;
 use App\Models\Post;
 use App\Models\User;
 
-trait CreatesPostable {
+trait CreatesPostable
+{
     /**
      * Include post with user.
      *
      * @param User|null $user
      * @param Post|null $post
-     * @return boolean
+     * @return bool
      */
-    public function hasPostWithUser(User $user = null, Post $post = null) {
+    public function hasPostWithUser(User $user = null, Post $post = null)
+    {
         $post = $post ?? Post::factory(1);
         $user = $user ?? User::factory();
 
