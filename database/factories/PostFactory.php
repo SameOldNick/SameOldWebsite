@@ -31,10 +31,8 @@ class PostFactory extends Factory
      */
     public function deleted()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'deleted_at' => $this->faker->dateTimeBetween($attributes['created_at'], 'now'),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'deleted_at' => $this->faker->dateTimeBetween($attributes['created_at'], 'now'),
+        ]);
     }
 }
