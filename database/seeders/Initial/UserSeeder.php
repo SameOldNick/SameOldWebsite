@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
         // ]);
 
         $user = User::factory()->create([
+            'uuid' => (string) Str::uuid(),
             'name' => 'Same Old Nick',
             'email' => 'admin@sameoldnick.com',
             'country_code' => 'CAN',
