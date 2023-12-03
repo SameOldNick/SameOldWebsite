@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Traits\Database\Factories\CreatesPostable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
