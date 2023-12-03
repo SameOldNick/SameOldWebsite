@@ -13,38 +13,34 @@ class CommentSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Article $article)
     {
-        $articles = Article::all();
+        $baseFactory = Comment::factory()->hasPostWithUser()->for($article);
 
-        foreach ($articles as $article) {
-            $baseFactory = Comment::factory()->for($article);
+        $nestedFactory =
+            $baseFactory
+                ->has(
+                    $baseFactory->count(fake()->numberBetween(1, 5))
+                        ->has(
+                            $baseFactory
+                                ->count(fake()->numberBetween(1, 5))
+                                ->has(
+                                    $baseFactory->count(fake()->numberBetween(1, 5)),
+                                    'children'
+                                ),
+                            'children'
+                        ),
+                    'children'
+                );
 
-            $nestedFactory =
-                $baseFactory
-                    ->has(
-                        $baseFactory->count(fake()->numberBetween(1, 5))
-                            ->has(
-                                $baseFactory
-                                    ->count(fake()->numberBetween(1, 5))
-                                    ->has(
-                                        $baseFactory->count(fake()->numberBetween(1, 5)),
-                                        'children'
-                                    ),
-                                'children'
-                            ),
-                        'children'
-                    );
+        $factory =
+            $baseFactory
+                ->has($nestedFactory->count(fake()->numberBetween(1, 5)), 'children')
+                ->has($nestedFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
+        //->has($baseFactory->count(fake()->numberBetween(1, 5)), 'children')
+        //->has($baseFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
 
-            $factory =
-                $baseFactory
-                    ->has($nestedFactory->count(fake()->numberBetween(1, 5)), 'children')
-                    ->has($nestedFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
-            //->has($baseFactory->count(fake()->numberBetween(1, 5)), 'children')
-            //->has($baseFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
-
-            $factory->count(fake()->numberBetween(1, 5))->approved()->create();
-            $factory->count(fake()->numberBetween(1, 5))->create();
-        }
+        $factory->count(fake()->numberBetween(1, 5))->approved()->create();
+        $factory->count(fake()->numberBetween(1, 5))->create();
     }
 }
