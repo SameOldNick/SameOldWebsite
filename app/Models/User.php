@@ -114,6 +114,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Gets files uploaded by this user.
+     *
+     * @return mixed
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
+    /**
      * Gets comments approved by this user.
      *
      * @return mixed

@@ -90,6 +90,16 @@ class File extends Model
     }
 
     /**
+     * Gets the user who uploaded this file.
+     *
+     * @return mixed
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Sets model to include URL in serialization.
      *
      * @param bool $enabled
