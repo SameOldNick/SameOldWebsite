@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\Comments\CommentApproved;
+use App\Events\Contact\ContactSubmissionApproved;
 use App\Events\Contact\ContactSubmissionRequiresApproval;
+
 use App\Listeners\NotifyArticleAuthorCommentPosted;
 use App\Listeners\NotifyCommentRepliedTo;
 use Illuminate\Auth\Events\Registered;
@@ -12,6 +14,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 
 use App\Listeners\Contact\SendConfirmMessage;
+use App\Listeners\Contact\SendContactedMessages;
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -26,6 +29,8 @@ class EventServiceProvider extends ServiceProvider
         ContactSubmissionRequiresApproval::class => [
             SendConfirmMessage::class,
         ],
+        ContactSubmissionApproved::class => [
+            SendContactedMessages::class,
         ],
         CommentApproved::class => [
             NotifyArticleAuthorCommentPosted::class,
