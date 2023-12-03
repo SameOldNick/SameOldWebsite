@@ -22,7 +22,7 @@ declare global {
         type: string;
     }
 
-    type TMessageNotification = INotification<'App\\Notifications\\MessageNotification', IMessageData>;
+    type TMessageNotification = INotification<'6414fd8c-847a-492b-a919-a5fc539456e8', IMessageData>;
 }
 
 export { };

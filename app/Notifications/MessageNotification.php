@@ -10,6 +10,8 @@ class MessageNotification extends Notification
 {
     use Queueable;
 
+    const DATABASE_TYPE_UUID = '6414fd8c-847a-492b-a919-a5fc539456e8';
+
     private $factory;
 
     /**
@@ -18,6 +20,15 @@ class MessageNotification extends Notification
     public function __construct(
         private Mailable $mailable
     ) {
+    }
+
+    /**
+     * Gets the type to store in the 'type' column in the database table.
+     *
+     * @return string
+     */
+    public function databaseType() {
+        return static::DATABASE_TYPE_UUID;
     }
 
     /**
