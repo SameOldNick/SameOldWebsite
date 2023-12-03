@@ -2,19 +2,15 @@
 
 namespace App\Events\Contact;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-use App\Models\PendingMessage;
-
 class ContactSubmissionRequiresApproval
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * Create a new event instance.
@@ -23,8 +19,7 @@ class ContactSubmissionRequiresApproval
         public readonly string $name,
         public readonly string $email,
         public readonly string $message
-    )
-    {
+    ) {
         //
     }
 }

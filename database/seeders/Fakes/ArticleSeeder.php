@@ -3,8 +3,6 @@
 namespace Database\Seeders\Fakes;
 
 use App\Models\Article;
-use App\Models\ArticleImage;
-use App\Models\File;
 use App\Models\Revision;
 use App\Models\Tag;
 use App\Models\User;

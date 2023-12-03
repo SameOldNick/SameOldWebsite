@@ -5,18 +5,15 @@ namespace App\Providers;
 use App\Events\Comments\CommentApproved;
 use App\Events\Contact\ContactSubmissionApproved;
 use App\Events\Contact\ContactSubmissionRequiresApproval;
-
+use App\Listeners\Contact\SendConfirmMessage;
+use App\Listeners\Contact\SendContactedConfirmationMessage;
+use App\Listeners\Contact\SendContactedMessages;
 use App\Listeners\NotifyArticleAuthorCommentPosted;
 use App\Listeners\NotifyCommentRepliedTo;
-
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-
-use App\Listeners\Contact\SendConfirmMessage;
-use App\Listeners\Contact\SendContactedMessages;
-use App\Listeners\Contact\SendContactedConfirmationMessage;
 
 class EventServiceProvider extends ServiceProvider
 {

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Main\Blog;
 
-use App\Events\Comments\CommentCreated;
 use App\Events\Comments\CommentApproved;
+use App\Events\Comments\CommentCreated;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
@@ -25,7 +25,8 @@ class BlogCommentTest extends TestCase
      *
      * @return void
      */
-    public function testGuestPostComment() {
+    public function testGuestPostComment()
+    {
         Event::fake();
 
         $article = Article::factory()->create();
@@ -109,13 +110,14 @@ class BlogCommentTest extends TestCase
      *
      * @return void
      */
-    public function testGuestReplyToComment() {
+    public function testGuestReplyToComment()
+    {
         Event::fake();
 
         $user = User::factory()->create();
         $article = Article::factory()->create();
         $parent = Comment::factory()->hasPostWithUser($user)->state([
-            'article_id' => $article
+            'article_id' => $article,
         ])->create();
 
         $text = $this->faker()->paragraphs(3, true);
@@ -145,7 +147,7 @@ class BlogCommentTest extends TestCase
         $user = User::factory()->create();
         $article = Article::factory()->create();
         $parent = Comment::factory()->hasPostWithUser($user)->state([
-            'article_id' => $article
+            'article_id' => $article,
         ])->create();
 
         // Authenticate a user and test the replyTo method with valid input
@@ -180,7 +182,7 @@ class BlogCommentTest extends TestCase
         $user = User::factory()->create();
         $article = Article::factory()->create();
         $parent = Comment::factory()->hasPostWithUser($user)->state([
-            'article_id' => $article
+            'article_id' => $article,
         ])->create();
 
         // Authenticate a user and test the replyTo method with valid input
@@ -210,7 +212,8 @@ class BlogCommentTest extends TestCase
      *
      * @return void
      */
-    public function testArticleAuthorNotifiedOfComment() {
+    public function testArticleAuthorNotifiedOfComment()
+    {
         Notification::fake();
 
         config(['blog.comments.require_approval' => false]);
@@ -236,7 +239,8 @@ class BlogCommentTest extends TestCase
      *
      * @return void
      */
-    public function testReplyToNotifiesCommentors() {
+    public function testReplyToNotifiesCommentors()
+    {
         Notification::fake();
 
         config(['blog.comments.require_approval' => false]);
@@ -249,12 +253,12 @@ class BlogCommentTest extends TestCase
         $article = Article::factory()->hasPostWithUser()->create();
 
         $first = Comment::factory()->hasPostWithUser($user1)->state([
-            'article_id' => $article
+            'article_id' => $article,
         ])->create();
 
         $second = Comment::factory()->hasPostWithUser($user2)->state([
             'article_id' => $article,
-            'parent_id' => $first
+            'parent_id' => $first,
         ])->create();
 
         // Authenticate a user and test the comment method with valid input

@@ -2,20 +2,10 @@
 
 namespace Tests\Feature\Main\Blog;
 
-use App\Events\Comments\CommentCreated;
-use App\Events\Comments\CommentApproved;
 use App\Models\Article;
-use App\Models\Comment;
-use App\Models\Revision;
-use App\Models\User;
-use App\Notifications\CommentPosted;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
 class BlogTest extends TestCase
@@ -28,7 +18,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewDraftArticle() {
+    public function testViewDraftArticle()
+    {
         $this->withoutVite();
 
         $article = Article::factory()->hasPostWithUser()->withRevision()->create();
@@ -43,7 +34,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewPublishedArticle() {
+    public function testViewPublishedArticle()
+    {
         $this->withoutVite();
 
         $article = Article::factory()->hasPostWithUser()->withRevision()->published()->create();
@@ -58,7 +50,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewScheduledArticle() {
+    public function testViewScheduledArticle()
+    {
         $this->withoutVite();
 
         $article = Article::factory()->hasPostWithUser()->withRevision()->published($this->faker->dateTimeBetween('+1 week', '+3 weeks'))->create();
@@ -73,7 +66,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewScheduledArticleInFuture() {
+    public function testViewScheduledArticleInFuture()
+    {
         $this->withoutVite();
 
         $published = Carbon::instance($this->faker->dateTimeBetween('+1 week', '+3 weeks'));
@@ -92,7 +86,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewDeletedArticle() {
+    public function testViewDeletedArticle()
+    {
         $this->withoutVite();
 
         $article = Article::factory()->hasPostWithUser()->withRevision()->deleted()->create();
@@ -107,7 +102,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testPreviewDraftArticle() {
+    public function testPreviewDraftArticle()
+    {
         $this->withoutVite();
 
         $article = Article::factory()->hasPostWithUser()->withRevision()->create();
@@ -122,7 +118,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testPreviewPublishedArticle() {
+    public function testPreviewPublishedArticle()
+    {
         $this->withoutVite();
 
         $article = Article::factory()->hasPostWithUser()->withRevision()->published()->create();
@@ -137,7 +134,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testPreviewScheduledArticle() {
+    public function testPreviewScheduledArticle()
+    {
         $this->withoutVite();
 
         $article = Article::factory()->hasPostWithUser()->withRevision()->published($this->faker->dateTimeBetween('+1 week', '+3 weeks'))->create();
@@ -152,7 +150,8 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testPreviewDeletedArticle() {
+    public function testPreviewDeletedArticle()
+    {
         $this->withoutVite();
 
         $article = Article::factory()->hasPostWithUser()->withRevision()->deleted()->create();

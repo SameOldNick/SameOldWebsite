@@ -3,12 +3,8 @@
 namespace App\Listeners\Contact;
 
 use App\Events\Contact\ContactSubmissionApproved;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
-
 use App\Mail\ContactedConfirmation;
+use Illuminate\Support\Facades\Mail;
 
 class SendContactedConfirmationMessage
 {

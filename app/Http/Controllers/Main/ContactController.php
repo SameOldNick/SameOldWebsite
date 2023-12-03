@@ -3,19 +3,13 @@
 namespace App\Http\Controllers\Main;
 
 use App\Events\Contact\ContactSubmissionApproved;
-use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Events\Contact\ContactSubmissionConfirmed;
+use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Http\Controllers\Pages\ContactController as BaseContactController;
 use App\Http\Requests\ContactRequest;
-use App\Mail\ConfirmMessage;
-use App\Mail\Contacted;
-use App\Mail\ContactedConfirmation;
 use App\Models\PendingMessage;
-use App\Models\Role;
-use App\Notifications\MessageNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 
 class ContactController extends BaseContactController
 {
