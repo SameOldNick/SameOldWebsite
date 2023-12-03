@@ -208,6 +208,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return route('user.avatar', [...$options, 'user' => $this]);
     }
 
+    /**
+     * Gets the OAuth providers for this user.
+     *
+     * @return void
+     */
     public function oauthProviders()
     {
         return $this->hasMany(OAuthProvider::class);
