@@ -19,6 +19,8 @@ class PendingMessage extends Model
      * @var array<string>
      */
     protected $fillable = [
+        'name',
+        'email',
         'message',
         'expires_at',
     ];
@@ -36,7 +38,6 @@ class PendingMessage extends Model
      * @var array
      */
     protected $casts = [
-        'message' => Serialize::class,
         'expires_at' => 'datetime',
     ];
 

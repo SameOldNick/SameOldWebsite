@@ -12,6 +12,8 @@ return new class extends Migration {
     {
         Schema::create('pending_messages', function (Blueprint $table) {
             $table->uuid()->primary();
+            $table->string('name');
+            $table->string('email');
             $table->text('message');
             $table->timestamps();
             $table->timestamp('expires_at');
