@@ -45,7 +45,7 @@ END;
             'honeypot_field_name' => 'is_robot',
         ];
 
-        $models = collect($defaults)->map(fn ($value, $key) => new PageMetaData(['key' => $key, 'value' => json_encode($value)]));
+        $models = collect($defaults)->map(fn ($value, $key) => new PageMetaData(['key' => $key, 'value' => $value]));
 
         Page::firstWhere(['page' => 'contact'])->metaData()->saveMany($models);
     }
