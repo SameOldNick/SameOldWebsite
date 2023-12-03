@@ -4,6 +4,7 @@ namespace Database\Seeders\Fakes;
 
 use App\Models\Article;
 use App\Models\ArticleImage;
+use App\Models\File;
 use App\Models\Revision;
 use App\Models\Tag;
 use App\Models\User;
@@ -53,10 +54,10 @@ class ArticleSeeder extends Seeder
                     $article->save();
                 });
 
-        $factory->count(10)->published()->create();
+        $factory->count(5)->published()->create();
 
-        $factory->count(10)->deleted()->create();
+        $factory->count(5)->deleted()->create();
 
-        $factory->count(10)->create();
+        $factory->count(5)->create();
     }
 }
