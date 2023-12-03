@@ -27,7 +27,8 @@ class MessageNotification extends Notification
      *
      * @return string
      */
-    public function databaseType() {
+    public function databaseType()
+    {
         return static::DATABASE_TYPE_UUID;
     }
 
