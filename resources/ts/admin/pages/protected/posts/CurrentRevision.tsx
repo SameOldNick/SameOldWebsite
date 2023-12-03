@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import WithArticle from './WithArticle';
+import WithArticle from '../../../components/blog/WithArticle';
 import withRouter, { IHasRouter } from '@admin/components/hoc/withRouter';
 
 interface IProps extends IHasRouter<'article'> {

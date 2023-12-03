@@ -14,6 +14,7 @@ import FourZeroThree from '@admin/pages/errors/FourZeroThree';
 import AllPosts from '@admin/pages/protected/posts/All';
 import CreatePost from '@admin/pages/protected/posts/Create';
 import EditPost from '@admin/pages/protected/posts/Edit';
+import CurrentRevision from '@admin/pages/protected/posts/CurrentRevision';
 
 import AllComments from '@admin/pages/protected/comments/All';
 import EditComments from '@admin/pages/protected/comments/Edit';
@@ -32,7 +33,7 @@ import ContactSettings from './protected/contact/Settings';
 import Profile from './protected/homepage/Profile';
 import Skills from './protected/homepage/Skills';
 import Technologies from './protected/homepage/Technologies';
-import CurrentRevision from '@admin/components/blog/CurrentRevision';
+
 
 const Pages: React.FC = () => {
     return (
