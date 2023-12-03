@@ -27,6 +27,8 @@ class ArticleSeeder extends Seeder
                     $article->tags()->attach(Tag::all()->random(5));
 
                     $this->callWith(ArticleImageSeeder::class, ['article' => $article, 'count' => fake()->numberBetween(0, 3), 'options' => []]);
+                    $this->callWith(CommentSeeder::class, ['article' => $article]);
+
                     $revisions = $article->revisions;
 
                     $article->currentRevision()->associate(fake()->boolean() ? $revisions->random() : $revisions->last());
