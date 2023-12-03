@@ -2,22 +2,22 @@
 
 namespace Tests\Feature\Main;
 
-use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Events\Contact\ContactSubmissionApproved;
 use App\Events\Contact\ContactSubmissionConfirmed;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Mail;
-use Tests\TestCase;
-use Tests\Feature\Traits\DisablesVite;
-use Tests\Feature\Traits\ManagesPageSettings;
-use Tests\Feature\Traits\CreatesUser;
+use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Mail\ConfirmMessage;
 use App\Mail\Contacted;
 use App\Mail\ContactedConfirmation;
 use App\Models\PendingMessage;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Tests\Feature\Traits\CreatesUser;
+use Tests\Feature\Traits\DisablesVite;
+use Tests\Feature\Traits\ManagesPageSettings;
+use Tests\TestCase;
 
 class ContactTest extends TestCase
 {
@@ -32,7 +32,8 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactSubmissionApprovedEventFired() {
+    public function testContactSubmissionApprovedEventFired()
+    {
         Event::fake();
 
         $this->pageSetting('contact', [
@@ -42,7 +43,7 @@ class ContactTest extends TestCase
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $this
@@ -58,7 +59,8 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactSubmissionRequiresConfirmationEventFired() {
+    public function testContactSubmissionRequiresConfirmationEventFired()
+    {
         Event::fake();
 
         $this->pageSetting('contact', [
@@ -68,7 +70,7 @@ class ContactTest extends TestCase
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $this
@@ -90,13 +92,13 @@ class ContactTest extends TestCase
 
         $this->pageSetting('contact', [
             'require_confirmation' => true,
-            'confirmation_required_by' => 'all_users'
+            'confirmation_required_by' => 'all_users',
         ]);
 
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -122,13 +124,13 @@ class ContactTest extends TestCase
 
         $this->pageSetting('contact', [
             'require_confirmation' => true,
-            'confirmation_required_by' => 'all_users'
+            'confirmation_required_by' => 'all_users',
         ]);
 
         $data = [
             'name' => $this->user->getDisplayName(),
             'email' => $this->user->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -154,13 +156,13 @@ class ContactTest extends TestCase
 
         $this->pageSetting('contact', [
             'require_confirmation' => true,
-            'confirmation_required_by' => 'unregistered_users'
+            'confirmation_required_by' => 'unregistered_users',
         ]);
 
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -187,13 +189,13 @@ class ContactTest extends TestCase
         $this->pageSetting('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'unregistered_users',
-            'recipient_email' => $this->faker->email
+            'recipient_email' => $this->faker->email,
         ]);
 
         $data = [
             'name' => $this->user->getDisplayName(),
             'email' => $this->user->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -220,13 +222,13 @@ class ContactTest extends TestCase
 
         $this->pageSetting('contact', [
             'require_confirmation' => true,
-            'confirmation_required_by' => 'unregistered_unverified_users'
+            'confirmation_required_by' => 'unregistered_unverified_users',
         ]);
 
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -252,7 +254,7 @@ class ContactTest extends TestCase
 
         $this->pageSetting('contact', [
             'require_confirmation' => true,
-            'confirmation_required_by' => 'unregistered_unverified_users'
+            'confirmation_required_by' => 'unregistered_unverified_users',
         ]);
 
         $user = User::factory()->unverified()->create();
@@ -260,7 +262,7 @@ class ContactTest extends TestCase
         $data = [
             'name' => $user->getDisplayName(),
             'email' => $user->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -287,13 +289,13 @@ class ContactTest extends TestCase
         $this->pageSetting('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'unregistered_unverified_users',
-            'recipient_email' => $this->faker->email
+            'recipient_email' => $this->faker->email,
         ]);
 
         $data = [
             'name' => $this->user->getDisplayName(),
             'email' => $this->user->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -320,13 +322,13 @@ class ContactTest extends TestCase
 
         $this->pageSetting('contact', [
             'require_confirmation' => false,
-            'recipient_email' => $this->faker->email
+            'recipient_email' => $this->faker->email,
         ]);
 
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -353,13 +355,13 @@ class ContactTest extends TestCase
 
         $this->pageSetting('contact', [
             'require_confirmation' => false,
-            'recipient_email' => $this->faker->email
+            'recipient_email' => $this->faker->email,
         ]);
 
         $data = [
             'name' => $this->user->getDisplayName(),
             'email' => $this->user->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $response =
@@ -387,13 +389,13 @@ class ContactTest extends TestCase
         $this->pageSetting('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'all_users',
-            'recipient_email' => $this->faker->email
+            'recipient_email' => $this->faker->email,
         ]);
 
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ];
 
         $this
@@ -427,7 +429,7 @@ class ContactTest extends TestCase
         $pendingMessage = PendingMessage::make([
             'name' => $this->faker->name,
             'email' => $this->faker->email,
-            'message' => $this->faker->paragraphs(3, true)
+            'message' => $this->faker->paragraphs(3, true),
         ])->useDefaultExpiresAt();
 
         $pendingMessage->save();
@@ -453,7 +455,7 @@ class ContactTest extends TestCase
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'message' => $this->faker->paragraphs(3, true),
-            'expires_at' => $this->faker->dateTimeBetween()
+            'expires_at' => $this->faker->dateTimeBetween(),
         ]);
 
         $pendingMessage->save();

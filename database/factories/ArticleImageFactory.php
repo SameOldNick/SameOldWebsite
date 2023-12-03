@@ -2,11 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
-
 use App\Models\File;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ArticleImage>
@@ -34,7 +31,7 @@ class ArticleImageFactory extends Factory
     public function picsum(string $path, array $meta, bool $public)
     {
         return $this->state([
-            'description' => sprintf('Author: %s'.PHP_EOL.'Source: %s', $meta['author'], $meta['url'])
+            'description' => sprintf('Author: %s'.PHP_EOL.'Source: %s', $meta['author'], $meta['url']),
         ])->has(
             File::factory()->state([
                 'path' => $path,

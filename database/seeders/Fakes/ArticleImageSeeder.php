@@ -4,15 +4,10 @@ namespace Database\Seeders\Fakes;
 
 use App\Models\Article;
 use App\Models\ArticleImage;
-use App\Models\File;
-use App\Models\Revision;
-use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ArticleImageSeeder extends Seeder
 {
@@ -27,7 +22,7 @@ class ArticleImageSeeder extends Seeder
             'ext' => '.jpg',
             'width' => 1024,
             'height' => 768,
-            'public' => true
+            'public' => true,
         ];
 
         $options = array_merge($defaults, $options);

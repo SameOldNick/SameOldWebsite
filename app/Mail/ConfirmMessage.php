@@ -5,8 +5,6 @@ namespace App\Mail;
 use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
-use App\Http\Requests\ContactRequest;
-use App\Mail\Concerns\BuildsMessage;
 use App\Models\PendingMessage;
 use App\Traits\Support\BuildsFromContainer;
 use App\Traits\Support\HasPageSettings;

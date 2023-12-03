@@ -2,9 +2,8 @@
 
 namespace Tests\Feature\Traits;
 
-use App\Models\Page;
-use App\Models\PageMetaData;
 use App\Components\Settings\PageSettings;
+use App\Models\Page;
 
 trait ManagesPageSettings
 {
@@ -12,16 +11,15 @@ trait ManagesPageSettings
     {
     }
 
-
     public function tearManagesPageSettings()
     {
-
     }
 
-    public function pageSetting(string $page, $setting, $default = null) {
+    public function pageSetting(string $page, $setting, $default = null)
+    {
         if (is_string($setting)) {
             return $this->pageSettings($page)->setting($setting, $default);
-        } else if (is_array($setting)) {
+        } elseif (is_array($setting)) {
             $page = Page::firstWhere('page', $page);
 
             foreach ($setting as $key => $value) {
@@ -32,11 +30,13 @@ trait ManagesPageSettings
         return $this;
     }
 
-    public function pageSettings(string $page) {
+    public function pageSettings(string $page)
+    {
         return $this->getPageSettingsFor($page);
     }
 
-    protected function getPageSettingsFor(string $page) {
+    protected function getPageSettingsFor(string $page)
+    {
         return $this->app->make(PageSettings::class, ['key' => $page]);
     }
 }

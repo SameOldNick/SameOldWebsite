@@ -13,9 +13,7 @@ trait CreatesUser
         $this->user = User::factory()->create();
     }
 
-
     public function tearDownCreatesUser()
     {
-
     }
 }
