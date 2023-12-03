@@ -22,8 +22,8 @@ class ArticleSeeder extends Seeder
             Article::factory()
                 ->recycle(User::find(1))
                 ->hasPostWithUser()
-                ->has(Revision::factory()->count(5), 'revisions')
                 ->has(ArticleImage::factory(3)->picsum(), 'images')
+                ->withRevision(fake()->numberBetween(1, 5))
                 ->afterCreating(function (Article $article) {
                     $article->tags()->attach(Tag::all()->random(5));
 
