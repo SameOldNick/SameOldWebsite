@@ -59,13 +59,11 @@ class ArticleFactory extends Factory
      *
      * @return $this
      */
-    public function published()
+    public function published(DateTime $dateTime = null)
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'published_at' => $this->faker->dateTimeBetween('-3 years', 'now'),
-            ];
-        });
+        return $this->state([
+            'published_at' => $dateTime ?? $this->faker->dateTimeBetween('-3 years', 'now'),
+        ]);
     }
 
     /**
