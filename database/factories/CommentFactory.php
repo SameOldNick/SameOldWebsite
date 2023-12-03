@@ -43,10 +43,8 @@ class CommentFactory extends Factory
      */
     public function approved($user = null)
     {
-        return $this->for($user ?? User::factory(), 'approvedBy')->state(function (array $attributes) {
-            return [
-                'approved_at' => $this->faker->dateTimeBetween('-3 years', 'now'),
-            ];
-        });
+        return $this->for($user ?? User::factory(), 'approvedBy')->state([
+            'approved_at' => $this->faker->dateTimeBetween('-3 years', 'now'),
+        ]);
     }
 }

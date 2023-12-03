@@ -28,10 +28,8 @@ class TagFactory extends Factory
      */
     public function slugged()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'slug' => $this->faker->unique()->slug(3),
-            ];
-        });
+        return $this->state(fn () => [
+            'slug' => $this->faker->unique()->slug(3),
+        ]);
     }
 }
