@@ -57,6 +57,7 @@ class ArticleFactory extends Factory
     /**
      * Indicate that the model should be published.
      *
+     * @param DateTime $dateTime When the article is published. If null, a date between 3 years ago and now is used.
      * @return $this
      */
     public function published(DateTime $dateTime = null)
