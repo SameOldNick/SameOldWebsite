@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Main;
 
+use App\Events\Contact\ContactSubmissionApproved;
+use App\Events\Contact\ContactSubmissionRequiresApproval;
+use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Http\Controllers\Pages\ContactController as BaseContactController;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ConfirmMessage;
@@ -54,27 +57,15 @@ class ContactController extends BaseContactController
             }
         }
 
-        $contacted = new Contacted($request);
-
         if ($requiresConfirmation) {
-            $pendingMessage = (new PendingMessage([
-                'message' => $contacted,
-            ]))->useDefaultExpiresAt();
-
-            $pendingMessage->save();
-
-            Mail::send(new ConfirmMessage($request, $pendingMessage));
+            ContactSubmissionRequiresApproval::dispatch($request->name, $request->email, $request->message);
 
             return view('main.contact', [
                 'success' => __('Please check your e-mail for further instructions.'),
                 'settings' => $this->getSettings()->toArray(),
             ]);
         } else {
-            $admins = Role::firstWhere(['role' => 'admin'])->users;
-
-            Notification::send($admins, new MessageNotification($contacted));
-
-            Mail::send(new ContactedConfirmation($request));
+            ContactSubmissionApproved::dispatch($request->name, $request->email, $request->message);
 
             return view('main.contact', [
                 'success' => __('Thank you for your message! You will receive a reply shortly.'),
@@ -92,7 +83,8 @@ class ContactController extends BaseContactController
      */
     public function confirm(Request $request, PendingMessage $pendingMessage)
     {
-        Mail::send($pendingMessage->message);
+        ContactSubmissionConfirmed::dispatch($pendingMessage);
+        ContactSubmissionApproved::dispatch($pendingMessage->name, $pendingMessage->email, $pendingMessage->message);
 
         return view('main.contact', [
             'success' => __('Thank you for your message! You will receive a reply shortly.'),
