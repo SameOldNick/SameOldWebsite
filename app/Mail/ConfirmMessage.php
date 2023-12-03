@@ -6,7 +6,9 @@ use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
 use App\Http\Requests\ContactRequest;
+use App\Mail\Concerns\BuildsMessage;
 use App\Models\PendingMessage;
+use App\Traits\Support\BuildsFromContainer;
 use App\Traits\Support\HasPageSettings;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -16,6 +18,7 @@ class ConfirmMessage extends Mailable
 {
     use Queueable;
     use HasPageSettings;
+    use BuildsFromContainer;
 
     protected $settings;
 
@@ -23,13 +26,15 @@ class ConfirmMessage extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        protected ContactRequest $request,
-        protected PendingMessage $pendingMessage
+        protected readonly string $name,
+        protected readonly string $email,
+        protected readonly string $message,
+        protected readonly PendingMessage $pendingMessage
     ) {
         $this->settings = $this->getPageSettings('contact');
     }
 
-    public function build(PlaceholdersFactory $factory)
+    public function doBuild(PlaceholdersFactory $factory)
     {
         $replyTo = $this->settings->setting('sender_replyto');
         $subject = $this->settings->setting('confirmation_subject');
@@ -37,18 +42,19 @@ class ConfirmMessage extends Mailable
         $collection = $factory->build(function (Options $options) use ($subject) {
             $options
                 ->useDefaultBuilders()
-                ->set('name', $this->request->name)
-                ->set('email', $this->request->email)
+                ->set('name', $this->name)
+                ->set('email', $this->email)
                 ->set('subject', $subject)
-                ->set('message', $this->request->message);
+                ->set('message', $this->message);
         });
 
         $tagCompiler = new TagCompiler($collection);
 
-        $this
-            ->to($this->request->email)
-            ->replyTo($replyTo)
-            ->subject($tagCompiler->compile($subject));
+        return
+            $this
+                ->to($this->email)
+                ->replyTo($replyTo)
+                ->subject($tagCompiler->compile($subject));
     }
 
     /**
