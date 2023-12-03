@@ -22,11 +22,11 @@ class ArticleSeeder extends Seeder
             Article::factory()
                 ->recycle(User::find(1))
                 ->hasPostWithUser()
-                ->has(ArticleImage::factory(3)->picsum(), 'images')
                 ->withRevision(fake()->numberBetween(1, 5))
                 ->afterCreating(function (Article $article) {
                     $article->tags()->attach(Tag::all()->random(5));
 
+                    $this->callWith(ArticleImageSeeder::class, ['article' => $article, 'count' => fake()->numberBetween(0, 3), 'options' => []]);
                     $revisions = $article->revisions;
 
                     $article->currentRevision()->associate(fake()->boolean() ? $revisions->random() : $revisions->last());
@@ -43,7 +43,7 @@ class ArticleSeeder extends Seeder
                         }
                     }
 
-                    if (fake()->boolean()) {
+                    if (fake()->boolean() && $article->images->isNotEmpty()) {
                         $images = $article->images;
                         $article->mainImage()->associate($images->random());
                     }
