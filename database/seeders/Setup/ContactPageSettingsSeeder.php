@@ -38,7 +38,7 @@ END;
             'recipient_subject' => 'Message Received',
             'recipient_template' => $recipientTemplate,
             'require_recaptcha' => false,
-            'require_confirmation' => false,
+            'require_confirmation' => true,
             'confirmation_required_by' => 'all_users',
             'confirmation_subject' => 'Confirmation Required',
             'honeypot_field' => false,
