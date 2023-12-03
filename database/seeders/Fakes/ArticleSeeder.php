@@ -21,6 +21,7 @@ class ArticleSeeder extends Seeder
         $factory =
             Article::factory()
                 ->recycle(User::find(1))
+                ->hasPostWithUser()
                 ->has(Revision::factory()->count(5), 'revisions')
                 ->has(ArticleImage::factory(3)->picsum(), 'images')
                 ->afterCreating(function (Article $article) {
