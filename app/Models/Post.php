@@ -33,6 +33,10 @@ class Post extends Model
     protected $hidden = [
         'postable_type',
         'postable_id',
+        /**
+         * Prevents circular serialization (Postable -> Post -> Postable -> Post...)
+         */
+        'postable',
     ];
 
     /**
