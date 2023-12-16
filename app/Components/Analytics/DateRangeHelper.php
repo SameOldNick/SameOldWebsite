@@ -11,6 +11,7 @@ use DatePeriod;
 use DateTime;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 
 class DateRangeHelper implements ArrayAccess, Arrayable, Countable
 {
@@ -199,15 +200,15 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
      */
     public function findClosestKey(DateTimeInterface $dateTime, bool $closestBefore = false)
     {
-        $differences = array_filter(
-            array_map(
-                fn ($value) => Carbon::instance($dateTime)->diffInRealSeconds($value, ! $closestBefore),
-                $this->getDates()
+        $differences = Arr::where(
+            Arr::map(
+                $this->getDates(),
+                fn ($value) => Carbon::instance($dateTime)->diffInRealSeconds($value, ! $closestBefore)
             ),
             fn ($value) => $value >= 0
         );
 
-        asort($differences);
+        $sorted = Arr::sort($differences);
 
         return key($differences);
     }
