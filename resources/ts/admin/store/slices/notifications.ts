@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
 import { createAuthRequest } from "@admin/utils/api/factories";
+import { all, isNotificationType } from "@admin/utils/api/endpoints/notifications";
 
 export interface INotificationsState {
     messages: TMessageNotification[];
@@ -14,15 +15,15 @@ const initialState: INotificationsState = {
 
 const messageNotificationType = '6414fd8c-847a-492b-a919-a5fc539456e8';
 
-export const isMessageNotification = (notification: INotification): notification is TMessageNotification => notification.type === messageNotificationType;
+export const isMessageNotification = (notification: INotification) => isNotificationType(notification, messageNotificationType);
 
 export const fetchMessages = createAsyncThunk<TMessageNotification[], void>(
     'notifications/fetch-messages',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await createAuthRequest().get<INotification[]>('/user/notifications');
+            const data = await all();
 
-            return response.data.filter((notification) => isMessageNotification(notification as INotification)) as TMessageNotification[];
+            return data.filter((notification) => isMessageNotification(notification as INotification)) as TMessageNotification[];
         } catch (e) {
             if (!axios.isAxiosError(e) && import.meta.env.VITE_APP_DEBUG) {
                 logger.error(e);
