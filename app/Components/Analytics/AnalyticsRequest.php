@@ -46,16 +46,32 @@ class AnalyticsRequest extends FormRequest
         ];
     }
 
+    /**
+     * Gets the start date/time
+     *
+     * @return Carbon
+     */
     public function start()
     {
         return new Carbon($this->start ?? static::DEFAULT_START);
     }
 
+    /**
+     * Gets the end date/time
+     *
+     * @return Carbon
+     */
     public function end()
     {
         return new Carbon($this->end ?? static::DEFAULT_END);
     }
 
+    /**
+     * Gets the interval unit
+     *
+     * @param integer $count
+     * @return string
+     */
     public function unit(int $count = 5)
     {
         return $this->determineIntervalUnit($this->start(), $this->end(), $count);

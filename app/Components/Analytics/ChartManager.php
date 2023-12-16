@@ -24,6 +24,11 @@ class ChartManager
         $this->factories = [];
     }
 
+    /**
+     * Adds factories from config file.
+     *
+     * @return $this
+     */
     public function addFromConfigFile()
     {
         $this->factories = [...$this->factories, ...config('analytics.factories', [])];
@@ -45,6 +50,12 @@ class ChartManager
         return $this;
     }
 
+    /**
+     * Creates factory to create chart.
+     *
+     * @param string $id
+     * @return callable
+     */
     public function createFactory(string $id)
     {
         $class = Arr::get($this->factories, $id);
@@ -60,6 +71,12 @@ class ChartManager
         return $this->app->make($class);
     }
 
+    /**
+     * Creates the chart.
+     *
+     * @param string $id
+     * @return Charts\Chart
+     */
     public function create(string $id)
     {
         $factory = $this->createFactory($id);
