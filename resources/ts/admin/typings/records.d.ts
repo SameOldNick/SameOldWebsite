@@ -184,7 +184,20 @@ declare global {
         approved_by: IUser | null;
     }
 
+    interface IChartVisitors {
+        [dateISO8601: string]: {
+            newUsers: number;
+            totalUsers: number;
+        };
+    }
 
+    interface IChartLinks {
+        [url: string]: number;
+    }
+
+    interface IChartBrowsers {
+        [browser: string]: number;
+    }
 }
 
 export { };
