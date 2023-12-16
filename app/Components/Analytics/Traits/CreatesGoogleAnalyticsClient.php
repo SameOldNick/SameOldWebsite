@@ -31,9 +31,10 @@ trait CreatesGoogleAnalyticsClient
      *
      * @return array
      */
-    protected function getDataClientOptions() {
+    protected function getDataClientOptions()
+    {
         return [
-            'credentials' => base_path(config('services.google.analytics.credentials'))
+            'credentials' => base_path(config('services.google.analytics.credentials')),
         ];
     }
 }

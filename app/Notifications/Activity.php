@@ -2,17 +2,10 @@
 
 namespace App\Notifications;
 
-use App\Models\Comment;
-use App\Models\User;
 use App\Enums\Notifications\ActivityEvent;
 use DateTimeInterface;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Arr;
 
 class Activity extends Notification
 {
@@ -28,8 +21,7 @@ class Activity extends Notification
         public readonly DateTimeInterface $dateTime,
         public readonly string $message,
         public readonly array $context
-    )
-    {
+    ) {
         //
     }
 
@@ -64,7 +56,7 @@ class Activity extends Notification
             'dateTime' => $this->dateTime,
             'event' => $this->event->value,
             'message' => $this->message,
-            'context' => $this->context
+            'context' => $this->context,
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Listeners\RecentActivity;
 
+use App\Enums\Notifications\ActivityEvent;
 use App\Events\Articles\ArticleDeleted;
 use App\Notifications\Activity;
-use App\Enums\Notifications\ActivityEvent;
 
 class LogArticleDeleted extends LogActivity
 {
@@ -27,7 +27,7 @@ class LogArticleDeleted extends LogActivity
         $message = __('Article ":article" was deleted by ":user".', ['article' => $article->title, 'user' => $user->getDisplayName()]);
         $context = [
             'article' => $article,
-            'user' => $user
+            'user' => $user,
         ];
 
         $this->log(new Activity(ActivityEvent::ArticleDeleted, $article->post->deleted_at ?? now(), $message, $context));

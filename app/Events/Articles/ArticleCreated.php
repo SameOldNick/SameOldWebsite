@@ -3,7 +3,6 @@
 namespace App\Events\Articles;
 
 use App\Models\Article;
-use App\Models\User;
 use App\Traits\Support\HasUser;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;

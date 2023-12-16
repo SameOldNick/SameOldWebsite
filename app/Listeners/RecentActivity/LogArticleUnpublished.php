@@ -2,11 +2,9 @@
 
 namespace App\Listeners\RecentActivity;
 
-use App\Events\Articles\ArticleCreated;
-use App\Events\Articles\ArticlePublished;
+use App\Enums\Notifications\ActivityEvent;
 use App\Events\Articles\ArticleUnpublished;
 use App\Notifications\Activity;
-use App\Enums\Notifications\ActivityEvent;
 
 class LogArticleUnpublished extends LogActivity
 {
@@ -29,7 +27,7 @@ class LogArticleUnpublished extends LogActivity
         $message = __('Article ":article" was unpublished by ":user".', ['article' => $article->title, 'user' => $user->getDisplayName()]);
         $context = [
             'article' => $article,
-            'user' => $user
+            'user' => $user,
         ];
 
         $this->log(new Activity(ActivityEvent::ArticleUnpublished, now(), $message, $context));

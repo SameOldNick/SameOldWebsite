@@ -14,7 +14,8 @@ abstract class LogActivity
      *
      * @return string
      */
-    protected function getRole() {
+    protected function getRole()
+    {
         return 'admin';
     }
 
@@ -24,7 +25,8 @@ abstract class LogActivity
      * @param RecentActivity $recentActivity
      * @return $this
      */
-    protected function log(Activity $recentActivity) {
+    protected function log(Activity $recentActivity)
+    {
         $this->notifyRoles($this->getRole(), $recentActivity);
 
         return $this;

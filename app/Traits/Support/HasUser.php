@@ -13,7 +13,8 @@ trait HasUser
      *
      * @return User|null
      */
-    public function user() {
+    public function user()
+    {
         return $this->getUser();
     }
 
@@ -22,7 +23,8 @@ trait HasUser
      *
      * @return User|null
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user ?? $this->getDefaultUser();
     }
 
@@ -31,7 +33,8 @@ trait HasUser
      *
      * @return User|null
      */
-    protected function getDefaultUser() {
+    protected function getDefaultUser()
+    {
         return request()->user();
     }
 }

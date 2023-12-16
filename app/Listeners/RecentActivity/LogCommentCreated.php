@@ -2,9 +2,9 @@
 
 namespace App\Listeners\RecentActivity;
 
-use App\Notifications\Activity;
 use App\Enums\Notifications\ActivityEvent;
 use App\Events\Comments\CommentCreated;
+use App\Notifications\Activity;
 
 class LogCommentCreated extends LogActivity
 {
@@ -29,7 +29,7 @@ class LogCommentCreated extends LogActivity
         $context = [
             'comment' => $comment,
             'article' => $article,
-            'user' => $user
+            'user' => $user,
         ];
 
         $this->log(new Activity(ActivityEvent::CommentCreated, $comment->post->created_at ?? now(), $message, $context));

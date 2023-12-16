@@ -155,7 +155,7 @@ return [
     'Chuck Norris can reverse any one-way function.',
     'The quicksort was originally called the Chuck Norris sort.',
     "Chuck Norris doesn't use sorting algorithms, sorting algorithms use Chuck Norris.",
-    "Chuck Norris does not sort, he orders.",
+    'Chuck Norris does not sort, he orders.',
     "Chuck Norris doesn't use strongly-typed languages. He uses strong languages.",
     "Chuck Norris doesn't use versions because his programs are always 100%.",
     "It's impossible to catch the ChuckNorrisException.",

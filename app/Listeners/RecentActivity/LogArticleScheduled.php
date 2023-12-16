@@ -2,11 +2,9 @@
 
 namespace App\Listeners\RecentActivity;
 
-use App\Events\Articles\ArticleCreated;
-use App\Events\Articles\ArticlePublished;
+use App\Enums\Notifications\ActivityEvent;
 use App\Events\Articles\ArticleScheduled;
 use App\Notifications\Activity;
-use App\Enums\Notifications\ActivityEvent;
 
 class LogArticleScheduled extends LogActivity
 {
@@ -29,11 +27,11 @@ class LogArticleScheduled extends LogActivity
         $message = __('Article ":article" was scheduled for :dateTime by ":user".', [
             'article' => $article->title,
             'dateTime' => $article->published_at->toDateTimeString(),
-            'user' => $user->getDisplayName()
+            'user' => $user->getDisplayName(),
         ]);
         $context = [
             'article' => $article,
-            'user' => $user
+            'user' => $user,
         ];
 
         $this->log(new Activity(ActivityEvent::ArticleScheduled, now(), $message, $context));
