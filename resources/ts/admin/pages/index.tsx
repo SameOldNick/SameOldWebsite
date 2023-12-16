@@ -6,7 +6,7 @@ import Layout from '@admin/layouts/admin';
 import Authenticated from '@admin/middleware/Authenticated';
 
 import SingleSignOn from '@admin/pages/SingleSignOn';
-import Dashboard from '@admin/pages/protected/Dashboard';
+import Dashboard from '@admin/pages/protected/dashboard/Dashboard';
 
 import FourZeroFour from '@admin/pages/errors/FourZeroFour';
 import FourZeroThree from '@admin/pages/errors/FourZeroThree';

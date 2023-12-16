@@ -7,6 +7,20 @@ import { createAuthRequest } from "../factories";
 import Article from "../models/Article";
 import Revision from "../models/Revision";
 
+export enum ArticleStatuses {
+    unpublished = 'unpublished',
+    published = 'published',
+    scheduled = 'scheduled',
+    removed = 'removed',
+    all = 'all'
+}
+
+export const fetchArticles = async (show?: ArticleStatuses) => {
+    const response = await createAuthRequest().get<IPaginateResponseCollection<IArticle>>('blog/articles', { show });
+
+    return response.data;
+}
+
 /**
  * Loads tags for article
  * @param article Article to get tags
