@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCaretDown, FaKey, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { FaCaretDown, FaHome, FaKey, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { connect, ConnectedProps } from 'react-redux';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import { IconContext } from 'react-icons';
@@ -78,6 +78,10 @@ export default connector(class User extends React.Component<TProps, IState> {
                     {/* Dropdown - User Information */}
                     <DropdownMenu end className='shadow animated--fade-in'>
                         <IconContext.Provider value={{ className: 'fa-sm fa-fw me-2 text-gray-400' }}>
+                            <DropdownItem href='/' target='_blank'>
+                                <FaHome />
+                                Main Site
+                            </DropdownItem>
                             <DropdownItem href='#'>
                                 <FaUser />
                                 Profile
