@@ -18,6 +18,7 @@ import SecurityAlerts from './SecurityAlerts';
 import RecentActivity from './RecentActivity';
 
 import { fetchPopularBrowsers, fetchPopularLinks, fetchVisitorsOverTime } from '@admin/utils/api/endpoints/dashboard';
+import QuickLinks from './QuickLinks';
 
 interface IProps {
 
@@ -123,18 +124,7 @@ const Dashboard: React.FC<IProps> = ({ }) => {
                         </Col>
 
                         <Col>
-                            <Card className='shadow mb-3'>
-                                <CardHeader className="py-3">
-                                    <h6 className="m-0 fw-bold text-primary">Quick Links</h6>
-                                </CardHeader>
-                                <ListGroup flush>
-                                    <ListGroupItem><a href="#">Manage Blog Articles</a></ListGroupItem>
-                                    <ListGroupItem><a href="#">View Comments</a></ListGroupItem>
-                                    <ListGroupItem><a href="#">Read Contact Messages</a></ListGroupItem>
-                                    <ListGroupItem><a href="#">Manage Projects</a></ListGroupItem>
-                                    <ListGroupItem><a href="#">User Management</a></ListGroupItem>
-                                </ListGroup>
-                            </Card>
+                            <QuickLinks />
                         </Col>
 
                         <Col>
