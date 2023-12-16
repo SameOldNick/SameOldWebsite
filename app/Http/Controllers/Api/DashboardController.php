@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller
 {
     public function __construct(
-        protected ChartManager $chartManager
+        protected readonly ChartManager $chartManager
     ) {
     }
 
