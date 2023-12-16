@@ -37,6 +37,7 @@ class Post extends Model
          * Prevents circular serialization (Postable -> Post -> Postable -> Post...)
          */
         'postable',
+        'user'
     ];
 
     /**
