@@ -47,7 +47,7 @@ class Comment extends Model
      * @var array
      */
     protected $casts = [
-        'approved_at' => 'timestamp',
+        'approved_at' => 'datetime',
     ];
 
     /**
