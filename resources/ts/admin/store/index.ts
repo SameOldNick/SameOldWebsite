@@ -20,7 +20,7 @@ const createRootReducer = () => combineReducers({
     main: mainSlice.reducer,
     account: accountSlice.reducer,
     alerts: alertsSlice.reducer,
-    notifications: notificationsSlice.reducer
+    notifications: notificationsSlice.reducer,
 });
 
 const createRootMiddlwares = () => {
