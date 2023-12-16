@@ -14,7 +14,7 @@ import PaginatedTable from '@admin/components/PaginatedTable';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 
-import { approve, deny } from '@admin/utils/api/endpoints/comments';
+import { CommentStatuses, approve, deny, loadAll } from '@admin/utils/api/endpoints/comments';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 import Article from '@admin/utils/api/models/Article';
@@ -150,12 +150,30 @@ const CommentList: React.FC<IProps> = ({ }) => {
 
     const [selectArticleModal, showSelectArticleModal] = React.useState(false);
     const [selectUserModal, showSelectUserModal] = React.useState(false);
-    const [show, setShow] = React.useState('all');
+    const [show, setShow] = React.useState<CommentStatuses>(CommentStatuses.All);
     const [article, setArticle] = React.useState<Article | undefined>();
     const [user, setUser] = React.useState<User | undefined>();
 
     const load = async (link?: string) => {
-        const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>(link ?? 'blog/comments', {
+        return link === undefined ? loadInitial() : loadUpdate(link);
+    }
+
+    const loadInitial = async () => {
+        const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>('blog/comments', {
+            show,
+            article: article ? article.article.id : undefined,
+            user: user ? user.user.id : undefined
+        });
+
+        return loadAll({
+            show,
+            article: article ? article.article.id : undefined,
+            user: user ? user.user.id : undefined
+        });
+    }
+
+    const loadUpdate = async (link: string) => {
+        const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>(link, {
             show,
             article: article ? article.article.id : undefined,
             user: user ? user.user.id : undefined
@@ -227,11 +245,11 @@ const CommentList: React.FC<IProps> = ({ }) => {
                             <Col xs={12}>
                                 <label className="visually-hidden" htmlFor="show">Show</label>
 
-                                <Input type='select' name='show' id='show' value={show} onChange={(e) => setShow(e.target.value)}>
-                                    <option value="awaiting">Awaiting Only</option>
-                                    <option value="approved">Approved Only</option>
-                                    <option value="denied">Denied Only</option>
-                                    <option value="all">All</option>
+                                <Input type='select' name='show' id='show' value={show} onChange={(e) => setShow(e.target.value as CommentStatuses)}>
+                                    <option value={CommentStatuses.Awaiting}>Awaiting Only</option>
+                                    <option value={CommentStatuses.Approved}>Approved Only</option>
+                                    <option value={CommentStatuses.Denied}>Denied Only</option>
+                                    <option value={CommentStatuses.All}>All</option>
                                 </Input>
                             </Col>
                             <Col xs={12}>

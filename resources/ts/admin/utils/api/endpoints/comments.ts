@@ -3,6 +3,23 @@ import { DateTime } from "luxon";
 import { createAuthRequest } from "../factories";
 import Comment from "../models/Comment";
 
+export enum CommentStatuses {
+    Awaiting = 'awaiting',
+    Approved = 'approved',
+    Denied = 'denied',
+    All = 'all'
+}
+
+export const loadAll = async ({ show, article, user }: { show?: CommentStatuses; article?: number; user?: number; } = {}) => {
+    const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>('blog/comments', {
+        show,
+        article,
+        user
+    });
+
+    return response.data;
+}
+
 /**
  * Loads a comment
  * @param id Comment ID
