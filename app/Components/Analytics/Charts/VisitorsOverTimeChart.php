@@ -18,7 +18,7 @@ class VisitorsOverTimeChart extends Chart
     const DATETIME_FORMAT = 'Y-m-d';
 
     public function __construct(
-        protected DateRangeHelper $dateRangeHelper
+        protected readonly DateRangeHelper $dateRangeHelper
     ) {
     }
 
