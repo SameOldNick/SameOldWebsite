@@ -17,7 +17,7 @@ import WaitToLoad from '@admin/components/WaitToLoad';
 import Article from '@admin/utils/api/models/Article';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
-import { updateArticle, restoreArticle as restoreArticleApi, deleteArticle as deleteArticleApi } from '@admin/utils/api/endpoints/articles';
+import { updateArticle, restoreArticle as restoreArticleApi, deleteArticle as deleteArticleApi, fetchArticles, ArticleStatuses } from '@admin/utils/api/endpoints/articles';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 interface IProps {
@@ -25,7 +25,7 @@ interface IProps {
 }
 
 interface IState {
-    show: string;
+    show: ArticleStatuses;
 }
 
 interface IArticleProps {
@@ -300,17 +300,29 @@ export default class ArticleList extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            show: 'all'
+            show: ArticleStatuses.all
         };
 
         this.loadArticles = this.loadArticles.bind(this);
+        this.loadInitialArticles = this.loadInitialArticles.bind(this);
+        this.updateArticles = this.updateArticles.bind(this);
         this.handleUpdateFormSubmitted = this.handleUpdateFormSubmitted.bind(this);
     }
 
     private async loadArticles(link?: string) {
+        return link === undefined ? this.loadInitialArticles() : this.updateArticles(link);
+    }
+
+    private async loadInitialArticles() {
         const { show } = this.state;
 
-        const response = await createAuthRequest().get<IPaginateResponseCollection<IArticle>>(link ?? 'blog/articles', { show });
+        return fetchArticles(show);
+    }
+
+    private async updateArticles(link: string) {
+        const { show } = this.state;
+
+        const response = await createAuthRequest().get<IPaginateResponseCollection<IArticle>>(link, { show });
 
         return response.data;
     }
@@ -338,12 +350,12 @@ export default class ArticleList extends React.Component<IProps, IState> {
                                 <Col xs={12}>
                                     <label className="visually-hidden" htmlFor="show">Show</label>
 
-                                    <Input type='select' name='show' id='show' value={show} onChange={(e) => this.setState({ show: e.target.value })}>
-                                        <option value="unpublished">Unpublished Only</option>
-                                        <option value="published">Published Only</option>
-                                        <option value="scheduled">Scheduled Only</option>
-                                        <option value="removed">Deleted Only</option>
-                                        <option value="all">All</option>
+                                    <Input type='select' name='show' id='show' value={show} onChange={(e) => this.setState({ show: e.target.value as ArticleStatuses })}>
+                                        <option value={ArticleStatuses.unpublished}>Unpublished Only</option>
+                                        <option value={ArticleStatuses.published}>Published Only</option>
+                                        <option value={ArticleStatuses.scheduled}>Scheduled Only</option>
+                                        <option value={ArticleStatuses.removed}>Deleted Only</option>
+                                        <option value={ArticleStatuses.all}>All</option>
                                     </Input>
                                 </Col>
                                 <Col xs={12}>
@@ -358,7 +370,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
                     <Col xs={12}>
                         <WaitToLoad
                             ref={this._waitToLoadArticlesRef}
-                            callback={this.loadArticles}
+                            callback={this.loadInitialArticles}
                             loading={<Loader display={{ type: 'over-element' }} />}
                         >
                             {(response, err) => (
