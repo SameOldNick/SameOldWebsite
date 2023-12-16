@@ -57,11 +57,4 @@ class DashboardController extends Controller
 
         return $data;
     }
-
-    public function recentActivity()
-    {
-        // Get recent comments
-
-        // Get recent blog articles
-    }
 }
