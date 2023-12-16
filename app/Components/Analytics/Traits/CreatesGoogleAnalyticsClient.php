@@ -23,8 +23,17 @@ trait CreatesGoogleAnalyticsClient
      */
     protected function createDataClient()
     {
-        return new BetaAnalyticsDataClient([
-            'credentials' => base_path(config('services.google.analytics.credentials')),
-        ]);
+        return new BetaAnalyticsDataClient($this->getDataClientOptions());
+    }
+
+    /**
+     * Gets the options used to create Google Analytics data client.
+     *
+     * @return array
+     */
+    protected function getDataClientOptions() {
+        return [
+            'credentials' => base_path(config('services.google.analytics.credentials'))
+        ];
     }
 }
