@@ -82,11 +82,11 @@ export default connector(class User extends React.Component<TProps, IState> {
                                 <FaHome />
                                 Main Site
                             </DropdownItem>
-                            <DropdownItem href='#'>
+                            <DropdownItem href='/user' target='_blank'>
                                 <FaUser />
                                 Profile
                             </DropdownItem>
-                            <DropdownItem href='#'>
+                            <DropdownItem href='/user/password' target='_blank'>
                                 <FaKey />
                                 Change Password
                             </DropdownItem>
