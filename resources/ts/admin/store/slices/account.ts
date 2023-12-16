@@ -9,7 +9,7 @@ import * as types from "./types/account";
 export interface IAccountState {
     loading: boolean;
     user?: IUser;
-    fetchUser: TSliceApiState<IUser, AxiosError>;
+    fetchUser: TApiState<IUser, AxiosError>;
     stage: types.TAuthStages;
     signout: boolean;
 }

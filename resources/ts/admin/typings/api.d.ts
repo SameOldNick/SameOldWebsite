@@ -1,25 +1,25 @@
 import { AxiosResponse, AxiosError } from 'axios';
 
 declare global {
-    export interface ISliceApiStateNone {
+    export interface IApiStateNone {
         status: 'none';
     }
 
-    export interface ISliceApiStatePending {
+    export interface IApiStatePending {
         status: 'pending';
     }
 
-    export interface ISliceApiStateFulfilled<TResponse> {
+    export interface IApiStateFulfilled<TResponse> {
         status: 'fulfilled';
         response: TResponse;
     }
 
-    export interface ISliceApiStateRejected<TError> {
+    export interface IApiStateRejected<TError> {
         status: 'rejected';
         error: TError;
     }
 
-    export type TSliceApiState<TResponse = any, TError = Error> = ISliceApiStateNone | ISliceApiStatePending | ISliceApiStateFulfilled<TResponse> | ISliceApiStateRejected<TError>;
+    export type TApiState<TResponse = any, TError = Error> = IApiStateNone | IApiStatePending | IApiStateFulfilled<TResponse> | IApiStateRejected<TError>;
 
     export interface IValidationExceptionResponse<TErrorsKey = string> {
         message: string;
