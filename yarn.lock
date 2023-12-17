@@ -1067,13 +1067,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kurkle/color@npm:^0.3.0":
-  version: 0.3.2
-  resolution: "@kurkle/color@npm:0.3.2"
-  checksum: 79e97b31f8f6efb28c69d373f94b0c7480226fe8ec95221f518ac998e156444a496727ce47de6d728eb5c3369288e794cba82cae34253deb0d472d3bfe080e49
-  languageName: node
-  linkType: hard
-
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -2595,15 +2588,6 @@ __metadata:
   version: 2.0.1
   resolution: "character-reference-invalid@npm:2.0.1"
   checksum: 98d3b1a52ae510b7329e6ee7f6210df14f1e318c5415975d4c9e7ee0ef4c07875d47c6e74230c64551f12f556b4a8ccc24d9f3691a2aa197019e72a95e9297ee
-  languageName: node
-  linkType: hard
-
-"chart.js@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "chart.js@npm:4.4.0"
-  dependencies:
-    "@kurkle/color": ^0.3.0
-  checksum: 5ee2d99b78608025525b5790af17178fdaa5adc3294e082deba2718029b0496109ba124f1b08dd1e4c8a04d6e842be7f384f2cfe9a11df8d1c6fe884acece52b
   languageName: node
   linkType: hard
 
@@ -7325,16 +7309,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-chartjs-2@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "react-chartjs-2@npm:5.2.0"
-  peerDependencies:
-    chart.js: ^4.1.1
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: ace702185be1450e5888a8bcd8b5fc1995067e3b11d236764a67f5567a3d7c32ff16923b8d48d3d39bda6e45135da6c044c9b43fbe8e1978f95aca9d2c0ce348
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:18":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -8065,7 +8039,6 @@ __metadata:
     bootstrap-select: ^1.14.0-beta3
     build-url-ts: ^6.1.3
     bytemd: ^1.21.0
-    chart.js: ^4.4.0
     classnames: ^2.3.1
     counterup2: ^2.0.2
     css-spinners: ^1.0.1
@@ -8093,7 +8066,6 @@ __metadata:
     postcss: ^8.4.31
     query-string: ^8.1.0
     react: 18
-    react-chartjs-2: ^5.2.0
     react-dom: 18
     react-dropzone: ^14.2.2
     react-helmet: ^6.1.0
@@ -8114,7 +8086,7 @@ __metadata:
     string: ^3.3.3
     sweetalert2: ^11.10.1
     sweetalert2-react-content: ^5.0.0
-    tinymce: ^6.7.0
+    tinymce: ^6.8.2
     ts-deepmerge: ^6.2.0
     typescript: ^4.7.2
     uniqid: ^5.4.0
@@ -8698,10 +8670,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinymce@npm:^6.3.1, tinymce@npm:^6.7.0":
+"tinymce@npm:^6.3.1":
   version: 6.7.2
   resolution: "tinymce@npm:6.7.2"
   checksum: 46d90d4d807e295fda277e542e8877a39db089bca90df51f6fa2950c979dd3447cf430364c45efd631b2df923001fbdb1955eb50f4c8c6e759395552461fe461
+  languageName: node
+  linkType: hard
+
+"tinymce@npm:^6.8.2":
+  version: 6.8.2
+  resolution: "tinymce@npm:6.8.2"
+  checksum: 57ed21bc0f59fac108a357f0a90d4336319be289f251befa373e06d993a8d6eb794692e39149ac6064e482f4129a02ec8cfcea91a1255800a5c267984ccaefd9
   languageName: node
   linkType: hard
 
