@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Outlet } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { FaComments, FaEnvelope, FaHome, FaList, FaNewspaper, FaTachometerAlt, FaUsers } from 'react-icons/fa';
+import { Container } from 'reactstrap';
 
 import { DateTime } from 'luxon';
 
@@ -75,9 +76,9 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
                             {/* End of Topbar */}
 
                             {/* Begin Page Content */}
-                            <div className="container-fluid">
+                            <Container fluid>
                                 <Outlet />
-                            </div>
+                            </Container>
                             {/* /.container-fluid */}
 
                         </div>
