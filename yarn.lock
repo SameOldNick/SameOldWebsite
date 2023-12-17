@@ -1429,10 +1429,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:^3.0.0":
-  version: 3.3.3
-  resolution: "@types/luxon@npm:3.3.3"
-  checksum: 072dd39eea3f63453788fab2fcfc83eb33917afcaffe178ce08ecd8b016824b8ab3bfa991f66266f2fc1927768a56b4334945f2eb1d83638e325c0c43d7d0e86
+"@types/luxon@npm:^3.3.7":
+  version: 3.3.7
+  resolution: "@types/luxon@npm:3.3.7"
+  checksum: 97026557e92bcba308a5592f981591cd200d493fc8997874d79acecf6a2ec41debeded3ac5cd80c371ef7f6f56cc0d1be0a5aca846e03d3e6b4a2be37256fe2f
   languageName: node
   linkType: hard
 
@@ -5952,10 +5952,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.0.1":
-  version: 3.4.3
-  resolution: "luxon@npm:3.4.3"
-  checksum: 3eade81506224d038ed24035a0cd0dd4887848d7eba9361dce9ad8ef81380596a68153240be3988721f9690c624fb449fcf8fd8c3fc0681a6a8496faf48e92a3
+"luxon@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "luxon@npm:3.4.4"
+  checksum: 36c1f99c4796ee4bfddf7dc94fa87815add43ebc44c8934c924946260a58512f0fd2743a629302885df7f35ccbd2d13f178c15df046d0e3b6eb71db178f1c60c
   languageName: node
   linkType: hard
 
@@ -8042,7 +8042,7 @@ __metadata:
     "@types/codemirror": ^5.60.8
     "@types/dropzone": ^5.7.4
     "@types/jquery": ^3.5.14
-    "@types/luxon": ^3.0.0
+    "@types/luxon": ^3.3.7
     "@types/owl.carousel": ^2.3.5
     "@types/react": 18
     "@types/react-dom": 18
@@ -8086,7 +8086,7 @@ __metadata:
     jquery.easing: ^1.4.1
     laravel-vite-plugin: ^0.8.1
     lodash: ^4.17.19
-    luxon: ^3.0.1
+    luxon: ^3.4.4
     moment: ^2.29.3
     owl.carousel: ^2.3.4
     popper.js: ^1.16.1
