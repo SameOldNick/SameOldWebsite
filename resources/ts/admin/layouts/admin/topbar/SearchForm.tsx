@@ -9,8 +9,6 @@ interface IProps extends FormProps {
 }
 
 const SearchForm: React.FC<IProps> = ({ className, ...props }) => {
-    const [open, setOpen] = React.useState(false);
-
     return (
         <>
             <Form className={classNames("navbar-search", className)} {...props}>
