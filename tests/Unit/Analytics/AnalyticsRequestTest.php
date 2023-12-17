@@ -2,11 +2,9 @@
 
 namespace Tests\Unit\Analytics;
 
-use PHPUnit\Framework\TestCase;
-
 use App\Components\Analytics\AnalyticsRequest;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
+use PHPUnit\Framework\TestCase;
 
 class AnalyticsRequestTest extends TestCase
 {
