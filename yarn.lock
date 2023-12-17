@@ -8122,7 +8122,7 @@ __metadata:
     vite: ^4.4.9
     vite-plugin-external: ^1.2.8
     vite-plugin-global-const: ^0.0.3
-    vite-plugin-static-copy: ^0.17.0
+    vite-plugin-static-copy: ^0.17.1
     web-vitals: ^3.0.2
     yup: ^1.3.2
   languageName: unknown
@@ -9196,17 +9196,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-static-copy@npm:^0.17.0":
-  version: 0.17.0
-  resolution: "vite-plugin-static-copy@npm:0.17.0"
+"vite-plugin-static-copy@npm:^0.17.1":
+  version: 0.17.1
+  resolution: "vite-plugin-static-copy@npm:0.17.1"
   dependencies:
     chokidar: ^3.5.3
     fast-glob: ^3.2.11
     fs-extra: ^11.1.0
     picocolors: ^1.0.0
   peerDependencies:
-    vite: ^3.0.0 || ^4.0.0
-  checksum: b73f001f080517d7c2342ad5b0779c1e5ec8b5820e85a57280e8f979d095946a32ab717a59eaae60e3f715784a138785208619aa6d936cd9a80e6a03e364e4fc
+    vite: ^3.0.0 || ^4.0.0 || ^5.0.0
+  checksum: 33a0cf0bb6b99b4b4746f466655a681cd2267a2f70412afab70dac0457cafe5813ee4b55f011fce3056ca299d998437f0ba1db9e5942a4520b86f8a5188126c9
   languageName: node
   linkType: hard
 
