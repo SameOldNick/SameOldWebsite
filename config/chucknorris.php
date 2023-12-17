@@ -59,7 +59,7 @@ return [
     'Chuck Norris programs occupy 150% of CPU, even when they are not executing.',
     'Chuck Norris can spawn threads that complete before they are started.',
     'Chuck Norris programs do not accept input.',
-    "Chuck Norris can install Internet Explorer without installing Windows.",
+    'Chuck Norris can install Internet Explorer without installing Windows.',
     "Chuck Norris doesn't need an operating system.",
     "Chuck Norris's OSI network model has only one layer - Physical.",
     'Chuck Norris can compile syntax errors.',
@@ -160,5 +160,5 @@ return [
     "It's impossible to catch the ChuckNorrisException.",
     'Chuck Norris can write multi-threaded applications with a single thread.',
     "Chuck Norris doesn't use a computer because a computer does everything slower than Chuck Norris.",
-    'ChatGPT is too scared to tell Chuck Norris jokes.'
+    'ChatGPT is too scared to tell Chuck Norris jokes.',
 ];
