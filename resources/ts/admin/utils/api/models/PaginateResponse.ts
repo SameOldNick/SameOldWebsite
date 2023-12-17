@@ -42,6 +42,8 @@ export default class PaginateResponse<T = unknown> {
         return currentPage === 1;
     }
 
+    // TODO: Add methods for fetching previous and next responses.
+
     /**
      * Gets URL to previous page.
      *

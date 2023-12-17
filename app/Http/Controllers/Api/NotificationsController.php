@@ -51,6 +51,7 @@ class NotificationsController extends Controller
      */
     public function show(Request $request, Notification $notification)
     {
+        // TODO: Create policy for notifications.
         if ($request->user()->isNot($notification->notifiable)) {
             abort(Response::HTTP_NOT_FOUND);
         }

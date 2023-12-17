@@ -84,6 +84,8 @@ const StatCards: React.FC<IStatCardsProps> = ({ visitors }) => {
         ]);
     }, []);
 
+    // TODO: Add count-up animation
+
     return (
         <Row>
             <Col md={6} xl={3} className="mb-4">

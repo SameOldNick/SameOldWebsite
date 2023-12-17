@@ -21,6 +21,7 @@ class DashboardController extends Controller
      */
     public function visitors(AnalyticsRequest $request)
     {
+        // TODO: Cache chart data to improve performance
         $chart = $this->chartManager->create('dashboard.visitors');
 
         $data = $chart->generate();
