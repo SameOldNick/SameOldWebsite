@@ -52,7 +52,6 @@ return [
     'If Chuck Norris writes code with bugs, the bugs fix themselves.',
     'Chuck Norris hosting is 101% uptime guaranteed.',
     "Chuck Norris's keyboard has the Any key.",
-    'Chuck Norris can access the DB from the UI.',
     "Chuck Norris' programs never exit, they terminate.",
     'Chuck Norris insists on strongly-typed programming languages.',
     'Chuck Norris protocol design method has no status, requests or responses, only commands.',
