@@ -1649,12 +1649,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-page-visibility@npm:^6.4.1":
-  version: 6.4.3
-  resolution: "@types/react-page-visibility@npm:6.4.3"
+"@types/react-page-visibility@npm:^6.4.4":
+  version: 6.4.4
+  resolution: "@types/react-page-visibility@npm:6.4.4"
   dependencies:
     "@types/react": "*"
-  checksum: 1efc2817a3a97cd5d3d2df257337ecd8763d0f228246230a2a87e3d340feb20d33c7cec6f7560596d78d34c04a2de2290d9e9ef0a2c0814f205d292ad6ae13ed
+  checksum: 64544854cdfa4b5a3a451d6272f6f23616546f1ab3502a735c07148b0bae159aecb9a82dc7428e2d2eddbe6be53a382de92ae02b2a9dab05b29a51196a751a65
   languageName: node
   linkType: hard
 
@@ -8187,7 +8187,7 @@ __metadata:
     "@types/react": 18
     "@types/react-dom": 18
     "@types/react-helmet": ^6.1.7
-    "@types/react-page-visibility": ^6.4.1
+    "@types/react-page-visibility": ^6.4.4
     "@types/redux-logger": ^3.0.12
     "@types/string": ^0.0.31
     "@types/uniqid": ^5.3.2
