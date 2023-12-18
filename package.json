@@ -51,7 +51,7 @@
         "@typescript-eslint/parser": "latest",
         "@vitejs/plugin-react": "^4.2.1",
         "animated-scroll-to": "^2.3.0",
-        "axios": "^1.5.1",
+        "axios": "^1.6.2",
         "blueimp-md5": "^2.19.0",
         "bootstrap-select": "^1.14.0-beta3",
         "build-url-ts": "^6.1.3",
