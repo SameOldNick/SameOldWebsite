@@ -1601,12 +1601,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/owl.carousel@npm:^2.3.5":
-  version: 2.3.5
-  resolution: "@types/owl.carousel@npm:2.3.5"
+"@types/owl.carousel@npm:^2.3.6":
+  version: 2.3.6
+  resolution: "@types/owl.carousel@npm:2.3.6"
   dependencies:
     "@types/jquery": "*"
-  checksum: 818fbe602d955f828d3d3fe5b092ba719f5283a8a25c927e7b479cc949646322ac8cff792c4923009c2ffb0156cdc88e2c88d0d0e3e2acd724cb538de04d9817
+  checksum: 3d475795d59bdec1f724eac94cf054f0e0f6db892aa6b579310a3467fb12efbd1a98db12ef09c4059b3575cfc205f8f19646e59f3e0d4cb174ae801ccaa9683a
   languageName: node
   linkType: hard
 
@@ -8183,7 +8183,7 @@ __metadata:
     "@types/dropzone": ^5.7.4
     "@types/jquery": ^3.5.14
     "@types/luxon": ^3.3.7
-    "@types/owl.carousel": ^2.3.5
+    "@types/owl.carousel": ^2.3.6
     "@types/react": 18
     "@types/react-dom": 18
     "@types/react-helmet": ^6.1.7
