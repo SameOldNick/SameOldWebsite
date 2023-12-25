@@ -233,7 +233,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Interact with the slug.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function avatarUrl(): Attribute
     {

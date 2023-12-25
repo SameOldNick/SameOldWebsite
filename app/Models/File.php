@@ -143,7 +143,7 @@ class File extends Model
     /**
      * Gets whether the file exists or not
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function fileExists(): Attribute
     {
@@ -153,7 +153,7 @@ class File extends Model
     /**
      * Get and set the filename
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function name(): Attribute
     {
@@ -166,7 +166,7 @@ class File extends Model
     /**
      * Get the URL for the file
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function url(): Attribute
     {
@@ -176,7 +176,7 @@ class File extends Model
     /**
      * Get the meta-data for the file
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function meta(): Attribute
     {

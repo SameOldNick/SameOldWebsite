@@ -60,7 +60,7 @@ class ArticleImage extends Model
     /**
      * Gets the alt-text for this image.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function alternativeText(): Attribute
     {

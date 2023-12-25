@@ -31,7 +31,7 @@ class CollectionMixin
      * @param  int  $perPage
      * @param  int  $currentPage
      * @param  array  $options
-     * @return \Illuminate\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
     protected static function paginator()
     {

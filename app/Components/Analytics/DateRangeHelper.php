@@ -74,7 +74,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Gets the date period.
      *
-     * @return \DatePeriod
+     * @return DatePeriod
      */
     public function getPeriod()
     {

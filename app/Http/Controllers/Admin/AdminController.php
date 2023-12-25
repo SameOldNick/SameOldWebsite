@@ -43,7 +43,7 @@ class AdminController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request  $request
      * @return \Illuminate\Http\Response
      */
     public function app(Request $request)

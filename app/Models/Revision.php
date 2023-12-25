@@ -63,7 +63,7 @@ class Revision extends Model
     /**
      * Get the compiled contents as HTML
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function compiled(): Attribute
     {
@@ -73,7 +73,7 @@ class Revision extends Model
     /**
      * Get and set the summary
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function summary(): Attribute
     {
@@ -96,7 +96,7 @@ class Revision extends Model
     /**
      * Checks if summary is auto generated
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     public function summaryAuto(): Attribute
     {

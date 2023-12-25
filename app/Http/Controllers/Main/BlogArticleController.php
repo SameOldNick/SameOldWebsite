@@ -13,7 +13,7 @@ class BlogArticleController extends Controller
     /**
      * Display the specified article.
      *
-     * @param  \App\Models\Article  $article
+     * @param Article  $article
      * @return \Illuminate\Http\Response
      */
     public function single(Request $request, Article $article)

@@ -157,7 +157,7 @@ class Article extends Model
     /**
      * Gets the revision for this article.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function revision(): Attribute
     {
@@ -167,7 +167,7 @@ class Article extends Model
     /**
      * Checks if article is published.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function isPublished(): Attribute
     {
@@ -177,7 +177,7 @@ class Article extends Model
     /**
      * Checks if article is scheduled to be published.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function isScheduled(): Attribute
     {
@@ -187,7 +187,7 @@ class Article extends Model
     /**
      * Get the URL for the article.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function url(): Attribute
     {
@@ -197,7 +197,7 @@ class Article extends Model
     /**
      * Get the public URL for the article.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function publicUrl(): Attribute
     {
@@ -207,7 +207,7 @@ class Article extends Model
     /**
      * Get the private URL for the article.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function privateUrl(): Attribute
     {

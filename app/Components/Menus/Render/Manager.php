@@ -20,7 +20,7 @@ class Manager extends SupportManager
     /**
      * Creates navbar driver
      *
-     * @return \App\Components\Menus\Render\Adapter
+     * @return Adapter
      */
     protected function createNavbarDriver()
     {
@@ -30,7 +30,7 @@ class Manager extends SupportManager
     /**
      * Creates list group driver
      *
-     * @return \App\Components\Menus\Render\Adapter
+     * @return Adapter
      */
     protected function createListGroupDriver()
     {
@@ -40,7 +40,7 @@ class Manager extends SupportManager
     /**
      * Creates footer driver
      *
-     * @return \App\Components\Menus\Render\Adapter
+     * @return Adapter
      */
     protected function createFooterDriver()
     {
@@ -51,7 +51,7 @@ class Manager extends SupportManager
      * Create render adapter for driver
      *
      * @param SingleLevelRenderer $driver
-     * @return \App\Components\Menus\Render\Adapter
+     * @return Adapter
      */
     protected function createAdapter(SingleLevelRenderer $driver)
     {

@@ -10,7 +10,7 @@ class OAuthException extends Exception
     /**
      * Render the exception.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function render()
     {

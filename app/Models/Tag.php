@@ -73,7 +73,7 @@ class Tag extends Model
     /**
      * Interact with the slug.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     protected function slug(): Attribute
     {

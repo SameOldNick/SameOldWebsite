@@ -12,7 +12,7 @@ class NotificationsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request  $request
      * @return \Illuminate\Support\Collection
      */
     public function index(Request $request)
@@ -45,9 +45,9 @@ class NotificationsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param \Illuminate\Notifications\Notification $notification
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Request $request, Notification $notification)
     {
@@ -62,9 +62,9 @@ class NotificationsController extends Controller
     /**
      * Marks notification as read.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param \Illuminate\Notifications\Notification $notification
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function markRead(Request $request, Notification $notification)
     {
@@ -78,9 +78,9 @@ class NotificationsController extends Controller
     /**
      * Marks notification as unread.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param \Illuminate\Notifications\Notification $notification
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function markUnread(Request $request, Notification $notification)
     {
@@ -94,9 +94,9 @@ class NotificationsController extends Controller
     /**
      * Destroys notification.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param \Illuminate\Notifications\Notification $notification
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Request $request, Notification $notification)
     {
