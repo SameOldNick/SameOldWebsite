@@ -30,7 +30,7 @@ class CommentPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User|null  $user
+     * @param  User|null  $user
      * @param Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
