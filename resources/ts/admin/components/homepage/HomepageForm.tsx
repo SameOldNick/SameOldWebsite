@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import MarkdownEditor from '@admin/components/MarkdownEditor';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import { IHasRouter } from '@admin/components/hoc/withRouter';
+import { IHasRouter } from '@admin/components/hoc/WithRouter';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';

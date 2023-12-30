@@ -15,7 +15,7 @@ import LockUserModal from '@admin/components/users/LockUserModal';
 import UnlockUserModal from '@admin/components/users/UnlockUserModal';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import withRouter, { IHasRouter } from '@admin/components/hoc/withRouter';
+import withRouter, { IHasRouter } from '@admin/components/hoc/WithRouter';
 import PaginatedTable from '@admin/components/PaginatedTable';
 
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';

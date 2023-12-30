@@ -11,7 +11,7 @@ import EditForm, { IArticleValues } from './EditForm';
 import Revision from '@admin/utils/api/models/Revision';
 import Article from '@admin/utils/api/models/Article';
 
-import { IHasRouter } from '@admin/components/hoc/withRouter';
+import { IHasRouter } from '@admin/components/hoc/WithRouter';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 

@@ -5,7 +5,7 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 import Heading from '@admin/layouts/admin/Heading';
 
 import ContactFormSettings from '@admin/components/contact/ContactFormSettings';
-import withRouter, { IHasRouter } from '@admin/components/hoc/withRouter';
+import withRouter, { IHasRouter } from '@admin/components/hoc/WithRouter';
 
 interface IProps extends IHasRouter {
 

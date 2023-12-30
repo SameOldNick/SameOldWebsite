@@ -20,7 +20,7 @@ import UnsavedChangesWarning from '@admin/components/UnsavedChangesWarning';
 import Heading, { HeadingTitle } from '@admin/layouts/admin/Heading';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import { IHasRouter } from '@admin/components/hoc/withRouter';
+import { IHasRouter } from '@admin/components/hoc/WithRouter';
 import SelectDateTimeModal from '@admin/components/SelectDateTimeModal';
 import ArticleInfoModal from './ArticleInfoModal';
 
