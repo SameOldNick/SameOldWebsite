@@ -11,6 +11,8 @@ use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentCreated;
 use App\Events\Contact\ContactSubmissionApproved;
 use App\Events\Contact\ContactSubmissionRequiresApproval;
+use App\Events\PageUpdated;
+use App\Listeners\RefreshUpdatedPages;
 use App\Listeners\Contact\SendConfirmMessage;
 use App\Listeners\Contact\SendContactedConfirmationMessage;
 use App\Listeners\Contact\SendContactedMessages;
@@ -69,6 +71,9 @@ class EventServiceProvider extends ServiceProvider
             NotifyArticleAuthorCommentPosted::class,
             NotifyCommentRepliedTo::class,
         ],
+        PageUpdated::class => [
+            RefreshUpdatedPages::class
+        ]
     ];
 
     /**
