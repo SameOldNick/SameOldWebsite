@@ -1,5 +1,5 @@
-@extends('errors::layout')
+@extends('errors.layouts.basic')
 
 @section('title', __('Server Error'))
 @section('code', '500')
-@section('message', __('Internal Server Error! Something went wrong on my server.'))
+@section('message', __('Something went wrong on my server.'))
