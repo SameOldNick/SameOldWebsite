@@ -23,7 +23,8 @@ class RefreshUpdatedPages
     public function handle(PageUpdated $event): void
     {
         if ($this->isPageValid($event->page)) {
-            $this->artisan->call('view:cache');
+            // TODO: Call settings cache driver directly to handle purge.
+            $this->artisan->call('cache:clear');
         }
     }
 
