@@ -7,7 +7,7 @@
 
                 <div class="card-header card-header-banner">
                     <h2 class="text-center">
-                        <span>@yield('code'):</span>
+                        <span>Error @yield('code') &mdash;</span>
                         <span>@yield('title')</span>
                     </h2>
                 </div>
