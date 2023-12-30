@@ -12,7 +12,6 @@ use App\Events\Comments\CommentCreated;
 use App\Events\Contact\ContactSubmissionApproved;
 use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Events\PageUpdated;
-use App\Listeners\RefreshUpdatedPages;
 use App\Listeners\Contact\SendConfirmMessage;
 use App\Listeners\Contact\SendContactedConfirmationMessage;
 use App\Listeners\Contact\SendContactedMessages;
@@ -25,6 +24,7 @@ use App\Listeners\RecentActivity\LogArticleScheduled;
 use App\Listeners\RecentActivity\LogArticleUnpublished;
 use App\Listeners\RecentActivity\LogCommentCreated;
 use App\Listeners\RecentActivity\LogUserRegistered;
+use App\Listeners\RefreshUpdatedPages;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -72,8 +72,8 @@ class EventServiceProvider extends ServiceProvider
             NotifyCommentRepliedTo::class,
         ],
         PageUpdated::class => [
-            RefreshUpdatedPages::class
-        ]
+            RefreshUpdatedPages::class,
+        ],
     ];
 
     /**
