@@ -1,15 +1,13 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import account from '@admin/store/slices/account';
+import FourZeroThree from './errors/FourZeroThree';
 
 const connector = connect(
     ({ account: { stage } }: RootState) => ({ stage }),
-    (dispatch) => bindActionCreators({
-        setAuthStage: account.actions.authStage
-    }, dispatch)
+    { setAuthStage: account.actions.authStage }
 );
 
 interface IProps {
@@ -17,34 +15,24 @@ interface IProps {
 
 type TProps = ConnectedProps<typeof connector> & React.PropsWithChildren<IProps>;
 
-interface IState {
-}
+const SingleSignOn = ({ stage, setAuthStage }: TProps) => {
+    const [loaded, setLoaded] = React.useState(false);
 
-export default connector(class SingleSignOn extends React.Component<TProps, IState> {
-    constructor(props: Readonly<TProps>) {
-        super(props);
-
-        this.state = {
-        };
-    }
-
-    public componentDidMount() {
-        const { setAuthStage } = this.props;
+    React.useEffect(() => {
         const { accessToken, refreshToken } = window;
 
         if (accessToken && refreshToken) {
             setAuthStage({ stage: 'authenticated', accessToken, refreshToken });
         }
-    }
 
-    public render() {
-        const { stage } = this.props;
-        const { } = this.state;
+        setLoaded(true);
+    }, []);
 
-        return (
-            <>
-                {stage.stage === 'authenticated' ? <Navigate to='/admin' replace /> : undefined}
-            </>
-        );
+    if (loaded) {
+        return stage.stage === 'authenticated' ? <Navigate to='/admin' replace /> : <FourZeroThree />;
+    } else {
+        return <></>;
     }
-});
+}
+
+export default connector(SingleSignOn);
