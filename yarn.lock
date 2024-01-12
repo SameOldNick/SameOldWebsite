@@ -1740,10 +1740,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/string@npm:^0.0.31":
-  version: 0.0.31
-  resolution: "@types/string@npm:0.0.31"
-  checksum: 197fa9be009186d14b80444e5dab2e07d15539361261fffd23d37b3e4af1f08ed49b10d6e398dfcb5c1c9a75da85b05f299a38c4ee3dbb48501608977320127b
+"@types/string@npm:^0.0.34":
+  version: 0.0.34
+  resolution: "@types/string@npm:0.0.34"
+  checksum: 9427fde4c0d442c3d09c822c4be1080d32d7dd2133061b28c14d15580ccd4ff4ad7726989a39903c4b03268a62a5c980674aee1129559d2d76a6aa915143fa2c
   languageName: node
   linkType: hard
 
@@ -9033,7 +9033,7 @@ __metadata:
     "@types/react-helmet": ^6.1.7
     "@types/react-page-visibility": ^6.4.4
     "@types/redux-logger": ^3.0.12
-    "@types/string": ^0.0.31
+    "@types/string": ^0.0.34
     "@types/uniqid": ^5.3.2
     "@types/uuid": ^9.0.3
     "@typescript-eslint/eslint-plugin": latest
