@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace(Api::class)->group(function () {
     Route::prefix('/auth')->group(function () {
         Route::post('refresh', [Api\AuthController::class, 'refresh'])
-            ->middleware([Middleware\AuthenticateJWTWithAdapter::adapter(\App\Components\LittleJWT\RefreshTokenGuardAdapter::class)]);
+            ->middleware([Middleware\AuthenticateJWTWithAdapter::adapter(App\Components\LittleJWT\RefreshTokenGuardAdapter::class)]);
     });
 
     Route::middleware(['auth:jwt', 'can:admin'])->group(function () {
