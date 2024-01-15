@@ -4192,17 +4192,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^10.0.0":
-  version: 10.1.0
-  resolution: "fs-extra@npm:10.1.0"
-  dependencies:
-    graceful-fs: ^4.2.0
-    jsonfile: ^6.0.1
-    universalify: ^2.0.0
-  checksum: dc94ab37096f813cc3ca12f0f1b5ad6744dfed9ed21e953d72530d103cea193c2f81584a39e9dee1bea36de5ee66805678c0dddc048e8af1427ac19c00fffc50
-  languageName: node
-  linkType: hard
-
 "fs-extra@npm:^11.1.0":
   version: 11.1.1
   resolution: "fs-extra@npm:11.1.1"
@@ -4211,6 +4200,17 @@ __metadata:
     jsonfile: ^6.0.1
     universalify: ^2.0.0
   checksum: fb883c68245b2d777fbc1f2082c9efb084eaa2bbf9fddaa366130d196c03608eebef7fb490541276429ee1ca99f317e2d73e96f5ca0999eefedf5a624ae1edfd
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:^11.1.1":
+  version: 11.2.0
+  resolution: "fs-extra@npm:11.2.0"
+  dependencies:
+    graceful-fs: ^4.2.0
+    jsonfile: ^6.0.1
+    universalify: ^2.0.0
+  checksum: b12e42fa40ba47104202f57b8480dd098aa931c2724565e5e70779ab87605665594e76ee5fb00545f772ab9ace167fe06d2ab009c416dc8c842c5ae6df7aa7e8
   languageName: node
   linkType: hard
 
@@ -9120,7 +9120,7 @@ __metadata:
     uniqid: ^5.4.0
     uuid: ^9.0.0
     vite: ^4.4.9
-    vite-plugin-external: ^1.2.8
+    vite-plugin-external: ^4.2.1
     vite-plugin-global-const: ^0.0.3
     vite-plugin-static-copy: ^0.17.1
     web-vitals: ^3.0.2
@@ -10270,12 +10270,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-external@npm:^1.2.8":
-  version: 1.2.8
-  resolution: "vite-plugin-external@npm:1.2.8"
+"vite-plugin-external@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "vite-plugin-external@npm:4.2.1"
   dependencies:
-    fs-extra: ^10.0.0
-  checksum: e7e2e22ce6a838bb7fe161cb838ab8ec3c06f79911478a265c1e1e9c34774b836c8b286e3c697473e9d2b7cb48d01b5f27098f4086df9a28519fb36ce3e48fa8
+    fs-extra: ^11.1.1
+  checksum: 49c338448fc9b5c99d959234723634c8f9d14181b0d18f025eada812667b9384e98b570e573f1015651a1407edf46035c69a83a25d6721898c6290b2a7a0bcf8
   languageName: node
   linkType: hard
 
