@@ -31,7 +31,7 @@
         "@bytemd/plugin-medium-zoom": "^1.21.0",
         "@bytemd/react": "^1.21.0",
         "@reduxjs/toolkit": "^1.8.4",
-        "@tinymce/tinymce-react": "^4.2.0",
+        "@tinymce/tinymce-react": "^4.3.2",
         "@types/aos": "^3.0.5",
         "@types/blueimp-md5": "^2.18.0",
         "@types/bootstrap": "^5.2.7",
