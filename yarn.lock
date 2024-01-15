@@ -1337,16 +1337,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tinymce/tinymce-react@npm:^4.2.0":
-  version: 4.3.0
-  resolution: "@tinymce/tinymce-react@npm:4.3.0"
+"@tinymce/tinymce-react@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "@tinymce/tinymce-react@npm:4.3.2"
   dependencies:
     prop-types: ^15.6.2
-    tinymce: ^6.3.1
+    tinymce: ^6.0.0 || ^5.5.1
   peerDependencies:
     react: ^18.0.0 || ^17.0.1 || ^16.7.0
     react-dom: ^18.0.0 || ^17.0.1 || ^16.7.0
-  checksum: 73b3765ae9bacc58df760c1bb8968fc6c8dd498373a8f99f782292f0c3bbc4c1ff71d6aaa1d8ac66349a79ebfc6091698c2891532c3efd8f795399b59bb427b8
+  checksum: 7c28a8c59296b73070ddb6fefa04ee96d13cf52bdc3b406dc18e339991c8523daa839f11fc11654644e78b9aff689e66aa5eb47c8b852ebb97c40b87a9d3752c
   languageName: node
   linkType: hard
 
@@ -9035,7 +9035,7 @@ __metadata:
     "@bytemd/react": ^1.21.0
     "@fortawesome/fontawesome-free": ^6.1.1
     "@reduxjs/toolkit": ^1.8.4
-    "@tinymce/tinymce-react": ^4.2.0
+    "@tinymce/tinymce-react": ^4.3.2
     "@types/aos": ^3.0.5
     "@types/blueimp-md5": ^2.18.0
     "@types/bootstrap": ^5.2.7
@@ -9698,14 +9698,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinymce@npm:^6.3.1":
-  version: 6.7.2
-  resolution: "tinymce@npm:6.7.2"
-  checksum: 46d90d4d807e295fda277e542e8877a39db089bca90df51f6fa2950c979dd3447cf430364c45efd631b2df923001fbdb1955eb50f4c8c6e759395552461fe461
-  languageName: node
-  linkType: hard
-
-"tinymce@npm:^6.8.2":
+"tinymce@npm:^6.0.0 || ^5.5.1, tinymce@npm:^6.8.2":
   version: 6.8.2
   resolution: "tinymce@npm:6.8.2"
   checksum: 57ed21bc0f59fac108a357f0a90d4336319be289f251befa373e06d993a8d6eb794692e39149ac6064e482f4129a02ec8cfcea91a1255800a5c267984ccaefd9
