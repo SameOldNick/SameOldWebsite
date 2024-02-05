@@ -2,25 +2,15 @@
 
 namespace App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode;
 
-use App\Components\MFA\Contracts\MultiAuthenticatable;
-use App\Components\MFA\Contracts\OneTimePasscode\Factory;
-use App\Components\MFA\Facades\MFA;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\HashbasedFactory;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimeAuthenticatable;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimePasscode;
-use OTPHP\OTPInterface;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Traits\ForwardsCalls;
-use Illuminate\Support\Str;
 use OTPHP\OTP;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\SecretResolver;
+use OTPHP\OTPInterface;
 
-class SetupConfiguration implements Arrayable {
+class SetupConfiguration implements Arrayable
+{
     public function __construct(
         protected readonly OTPInterface $otp
-    )
-    {
+    ) {
     }
 
     /**
@@ -58,11 +48,12 @@ class SetupConfiguration implements Arrayable {
      *
      * @return array
      */
-    public function getConfiguration(): array {
+    public function getConfiguration(): array
+    {
         return [
             'accountName' => $this->getAccountName(),
             'url' => $this->getUrl(),
-            'secret' => $this->getSecret()
+            'secret' => $this->getSecret(),
         ];
     }
 

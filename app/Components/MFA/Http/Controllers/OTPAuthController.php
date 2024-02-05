@@ -6,19 +6,16 @@ use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Facades\MFA;
 use App\Components\MFA\Rules\CurrentAuthCode;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimeAuthenticatable;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimePasscode;
 use App\Components\MFA\Services\Persist\PersistService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
-class OTPAuthController extends Controller {
+class OTPAuthController extends Controller
+{
     public function __construct(
         protected readonly AuthenticatorService $authenticatorService,
         protected readonly PersistService $persistService
-    )
-    {
+    ) {
         // TODO: Add rate limiting
     }
 
@@ -44,8 +41,8 @@ class OTPAuthController extends Controller {
         $request->validate([
             'code' => [
                 'required',
-                new CurrentAuthCode($this->getAuthenticatable($request))
-            ]
+                new CurrentAuthCode($this->getAuthenticatable($request)),
+            ],
         ]);
 
         $this->verifiedMFACodeAuth($request);
@@ -59,7 +56,8 @@ class OTPAuthController extends Controller {
      * @param Request $request
      * @return void
      */
-    protected function verifiedMFACodeAuth(Request $request) {
+    protected function verifiedMFACodeAuth(Request $request)
+    {
         // TODO: Fire event that user is MFA
 
         $this->persistService->markVerified($this->getAuthenticatable($request));
@@ -71,7 +69,8 @@ class OTPAuthController extends Controller {
      * @param Request $request
      * @return mixed
      */
-    protected function verifiedMFACodeResponse(Request $request) {
+    protected function verifiedMFACodeResponse(Request $request)
+    {
         return redirect()->to($this->getIntendedUrl($request));
     }
 
@@ -81,7 +80,8 @@ class OTPAuthController extends Controller {
      * @param Request $request
      * @return MultiAuthenticatable
      */
-    protected function getAuthenticatable(Request $request): MultiAuthenticatable {
+    protected function getAuthenticatable(Request $request): MultiAuthenticatable
+    {
         return $request->user();
     }
 
@@ -91,7 +91,8 @@ class OTPAuthController extends Controller {
      * @param Request $request
      * @return string
      */
-    protected function getIntendedUrl(Request $request): string {
+    protected function getIntendedUrl(Request $request): string
+    {
         return redirect()->getIntendedUrl() ?? route('user.profile');
     }
 }

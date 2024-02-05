@@ -2,11 +2,10 @@
 
 namespace App\Components\MFA\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
-use App\Models\User;
 
 class OneTimePasscodeSecret extends Model
 {
@@ -33,7 +32,7 @@ class OneTimePasscodeSecret extends Model
      */
     protected $fillable = [
         'auth_secret',
-        'backup_secret'
+        'backup_secret',
     ];
 
     /**
@@ -43,7 +42,7 @@ class OneTimePasscodeSecret extends Model
      */
     protected $hidden = [
         'auth_secret',
-        'backup_secret'
+        'backup_secret',
     ];
 
     /**

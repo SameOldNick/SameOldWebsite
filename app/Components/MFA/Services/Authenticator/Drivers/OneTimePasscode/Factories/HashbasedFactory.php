@@ -5,12 +5,11 @@ namespace App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Fact
 use App\Components\MFA\Concerns\InitializesOneTimePasscode;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Contracts\OneTimePasscode\Factory;
-use App\Components\MFA\Contracts\OneTimePasscode\SecretResolver;
-use Illuminate\Contracts\Auth\Authenticatable;
 use OTPHP\HOTP;
 use OTPHP\OTPInterface;
 
-class HashbasedFactory implements Factory {
+class HashbasedFactory implements Factory
+{
     use InitializesOneTimePasscode;
 
     /**
@@ -20,7 +19,6 @@ class HashbasedFactory implements Factory {
     {
         return $this->initialize(HOTP::createFromSecret($secret), null);
     }
-
 
     /**
      * @inheritDoc

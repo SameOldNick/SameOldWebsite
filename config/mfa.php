@@ -13,8 +13,8 @@ return [
                  * How many backup codes to generate.
                  */
                 'codes' => 6,
-            ]
-        ]
+            ],
+        ],
     ],
 
     'persist' => [
@@ -27,7 +27,7 @@ return [
                  * 0 means no expiry.
                  */
                 'expiry' => 0,
-            ]
-        ]
+            ],
+        ],
     ],
 ];

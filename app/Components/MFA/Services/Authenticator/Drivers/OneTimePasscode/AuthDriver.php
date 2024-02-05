@@ -3,37 +3,30 @@
 namespace App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode;
 
 use App\Components\MFA\Contracts\AuthServiceInterface;
-use App\Components\MFA\Contracts\MultiAuthProvider;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Contracts\OneTimePasscode\Factory;
-use App\Components\MFA\Contracts\OneTimePasscode\SecretAuthenticatable;
 use App\Components\MFA\Exceptions\MultiAuthNotConfiguredException;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\HashbasedFactory;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\TimebasedFactory;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\SecretResolver;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use OTPHP\OTP;
 use OTPHP\OTPInterface;
-use OTPHP\TOTP;
 
-class AuthDriver implements AuthServiceInterface {
+class AuthDriver implements AuthServiceInterface
+{
     public function __construct(
         protected readonly Factory $factory
-    )
-    {
-
+    ) {
     }
 
     /**
      * @inheritDoc
      */
-    public function isConfigured(MultiAuthenticatable $authenticatable): bool {
+    public function isConfigured(MultiAuthenticatable $authenticatable): bool
+    {
         try {
             $secret = $this->createOneTimeAuthenticatable($authenticatable)->resolveSecret();
 
-            return !is_null($secret);
+            return ! is_null($secret);
         } catch (MultiAuthNotConfiguredException $ex) {
             return false;
         }
@@ -56,7 +49,8 @@ class AuthDriver implements AuthServiceInterface {
      * @param string $secret
      * @return SetupConfiguration
      */
-    public function setup(MultiAuthenticatable $authenticatable, string $secret) {
+    public function setup(MultiAuthenticatable $authenticatable, string $secret)
+    {
         $otp = (new TimebasedFactory())->createForAuthenticatable($secret, $authenticatable);
 
         return new SetupConfiguration($otp);
@@ -70,10 +64,11 @@ class AuthDriver implements AuthServiceInterface {
      * @param string $backupSecret
      * @return mixed
      */
-    public function install(MultiAuthenticatable $authenticatable, string $authSecret, string $backupSecret) {
+    public function install(MultiAuthenticatable $authenticatable, string $authSecret, string $backupSecret)
+    {
         return $authenticatable->oneTimePasscodeSecrets()->create([
             'auth_secret' => $authSecret,
-            'backup_secret' => $backupSecret
+            'backup_secret' => $backupSecret,
         ]);
     }
 
@@ -83,7 +78,8 @@ class AuthDriver implements AuthServiceInterface {
      * @param Authenticatable $authenticatable
      * @return mixed
      */
-    public function uninstall(Authenticatable $authenticatable) {
+    public function uninstall(Authenticatable $authenticatable)
+    {
         return $authenticatable->oneTimePasscodeSecrets()->delete();
     }
 
@@ -93,7 +89,8 @@ class AuthDriver implements AuthServiceInterface {
      * @param OneTimeAuthenticatable $authenticatable
      * @return OTPInterface
      */
-    protected function createOtp(OneTimeAuthenticatable $authenticatable): OTPInterface {
+    protected function createOtp(OneTimeAuthenticatable $authenticatable): OTPInterface
+    {
         return $this->factory->create($authenticatable->resolveSecret());
     }
 
@@ -105,8 +102,9 @@ class AuthDriver implements AuthServiceInterface {
      */
     protected function createOneTimeAuthenticatable(MultiAuthenticatable $authenticatable): OneTimeAuthenticatable
     {
-        if ($authenticatable instanceof OneTimeAuthenticatable)
+        if ($authenticatable instanceof OneTimeAuthenticatable) {
             return $authenticatable;
+        }
 
         return OneTimeAuthenticatable::auth($authenticatable);
     }

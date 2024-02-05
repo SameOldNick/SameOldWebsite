@@ -48,7 +48,7 @@ return [
         ],
         'mfa' => [
             'driver' => 'mfa',
-        ]
+        ],
     ],
 
     /*

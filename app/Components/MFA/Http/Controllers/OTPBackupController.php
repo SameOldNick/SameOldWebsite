@@ -7,18 +7,16 @@ use App\Components\MFA\Facades\MFA;
 use App\Components\MFA\Rules\CurrentAuthCode;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimeAuthenticatable;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimePasscode;
 use App\Components\MFA\Services\Persist\PersistService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
-class OTPBackupController extends Controller {
+class OTPBackupController extends Controller
+{
     public function __construct(
         protected readonly AuthenticatorService $authenticatorService,
         protected readonly PersistService $persistService
-    )
-    {
+    ) {
         // TODO: Add rate limiting
     }
 
@@ -28,7 +26,8 @@ class OTPBackupController extends Controller {
      * @param Request $request
      * @return mixed
      */
-    public function showBackupCodePrompt(Request $request) {
+    public function showBackupCodePrompt(Request $request)
+    {
         return view('mfa::otp.backup');
     }
 
@@ -39,12 +38,13 @@ class OTPBackupController extends Controller {
      * @param AuthenticatorService $authService
      * @return mixed
      */
-    public function verifyBackupCode(Request $request, AuthenticatorService $authService) {
+    public function verifyBackupCode(Request $request, AuthenticatorService $authService)
+    {
         $request->validate([
             'code' => [
                 'required',
-                new CurrentAuthCode(OneTimeAuthenticatable::backup($this->getAuthenticatable($request)), $authService->driver('backup'))
-            ]
+                new CurrentAuthCode(OneTimeAuthenticatable::backup($this->getAuthenticatable($request)), $authService->driver('backup')),
+            ],
         ]);
 
         $this->verifiedBackupCode($request);
@@ -58,7 +58,8 @@ class OTPBackupController extends Controller {
      * @param Request $request
      * @return void
      */
-    protected function verifiedBackupCode(Request $request) {
+    protected function verifiedBackupCode(Request $request)
+    {
         // TODO: Fire backup code verified event.
 
         // Disable MFA for user
@@ -71,7 +72,8 @@ class OTPBackupController extends Controller {
      * @param Request $request
      * @return mixed
      */
-    protected function verifiedBackupCodeResponse(Request $request) {
+    protected function verifiedBackupCodeResponse(Request $request)
+    {
         return redirect()->to($this->getIntendedUrl($request));
     }
 
@@ -81,7 +83,8 @@ class OTPBackupController extends Controller {
      * @param Request $request
      * @return MultiAuthenticatable
      */
-    protected function getAuthenticatable(Request $request): MultiAuthenticatable {
+    protected function getAuthenticatable(Request $request): MultiAuthenticatable
+    {
         return $request->user();
     }
 
@@ -91,7 +94,8 @@ class OTPBackupController extends Controller {
      * @param Request $request
      * @return string
      */
-    protected function getIntendedUrl(Request $request): string {
+    protected function getIntendedUrl(Request $request): string
+    {
         return redirect()->getIntendedUrl() ?? route('user.profile');
     }
 }

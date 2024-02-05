@@ -2,17 +2,14 @@
 
 namespace App\Components\MFA\Services\Authenticator;
 
-use App\Components\MFA\Contracts\AuthServiceInterface;
-use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\AuthDriver;
+use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\BackupDriver;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\HashbasedFactory;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\TimebasedFactory;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\BackupDriver;
 use Illuminate\Support\Manager;
-use Illuminate\Support\Traits\ForwardsCalls;
-use Illuminate\Support\Traits\Macroable;
 
-class AuthenticatorService extends Manager {
+class AuthenticatorService extends Manager
+{
     /**
      * Get the default driver name.
      *
@@ -28,7 +25,8 @@ class AuthenticatorService extends Manager {
      *
      * @return AuthDriver
      */
-    protected function createTotpDriver() {
+    protected function createTotpDriver()
+    {
         return new AuthDriver(new TimebasedFactory);
     }
 
@@ -37,7 +35,8 @@ class AuthenticatorService extends Manager {
      *
      * @return AuthDriver
      */
-    protected function createHotpDriver() {
+    protected function createHotpDriver()
+    {
         return new AuthDriver(new HashbasedFactory);
     }
 
@@ -46,7 +45,8 @@ class AuthenticatorService extends Manager {
      *
      * @return BackupDriver
      */
-    protected function createBackupDriver() {
+    protected function createBackupDriver()
+    {
         $config = $this->getConfig('backup');
 
         return new BackupDriver($config);
@@ -58,7 +58,8 @@ class AuthenticatorService extends Manager {
      * @param string $key
      * @return array
      */
-    protected function getConfig(string $key) {
+    protected function getConfig(string $key)
+    {
         return config("mfa.authenticator.drivers.{$key}", []);
     }
 }

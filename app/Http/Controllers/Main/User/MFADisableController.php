@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Main\User;
 
-use App\Components\MFA\Concerns\UsesMultiFactorAuthenticator;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimePasscode;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimeAuthenticatable;
-use Illuminate\Support\Facades\Session;
 use App\Components\MFA\Rules\CurrentAuthCode;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Setup\Backup;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class MFADisableController extends Controller
 {
@@ -24,7 +19,7 @@ class MFADisableController extends Controller
     {
         $request->validate([
             'password' => 'required|current_password',
-            'current_otp' => ['required', new CurrentAuthCode]
+            'current_otp' => ['required', new CurrentAuthCode],
         ]);
 
         $authenticatorService->uninstall($request->user());

@@ -4,8 +4,6 @@ namespace App\Components\MFA\Rules;
 
 use App\Components\MFA\Contracts\AuthServiceInterface;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
-use App\Components\MFA\Facades\MFA;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\SecretResolver;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -14,9 +12,7 @@ class CurrentAuthCode implements ValidationRule
     public function __construct(
         protected ?MultiAuthenticatable $authenticatable = null,
         protected ?AuthServiceInterface $service = null,
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -26,8 +22,9 @@ class CurrentAuthCode implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!$this->getService()->verifyCode($this->getAuthenticatable(), $value))
+        if (! $this->getService()->verifyCode($this->getAuthenticatable(), $value)) {
             $fail('Multi-factor authentication code is incorrect.');
+        }
     }
 
     /**
@@ -35,7 +32,8 @@ class CurrentAuthCode implements ValidationRule
      *
      * @return AuthServiceInterface
      */
-    protected function getService() {
+    protected function getService()
+    {
         return $this->service ?? app('mfa.auth');
     }
 
@@ -44,7 +42,8 @@ class CurrentAuthCode implements ValidationRule
      *
      * @return MultiAuthenticatable
      */
-    protected function getAuthenticatable() {
+    protected function getAuthenticatable()
+    {
         return $this->authenticatable ?? auth()->user();
     }
 }

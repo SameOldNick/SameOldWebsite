@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 /**
  * Exception for when a user needs MFA.
  */
-class MFARequiredException extends Exception {
+class MFARequiredException extends Exception
+{
     protected $mfaPath;
 
     /**
@@ -51,7 +52,8 @@ class MFARequiredException extends Exception {
      * @param string $mfaPath Path to MFA prompt
      * @return static
      */
-    public static function throw(string $mfaPath): static {
+    public static function throw(string $mfaPath): static
+    {
         throw new static($mfaPath);
     }
 }

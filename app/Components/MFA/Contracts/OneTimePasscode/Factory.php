@@ -2,10 +2,11 @@
 
 namespace App\Components\MFA\Contracts\OneTimePasscode;
 
-use OTPHP\OTPInterface;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
+use OTPHP\OTPInterface;
 
-interface Factory {
+interface Factory
+{
     /**
      * Creates instance of OTPInterface
      *

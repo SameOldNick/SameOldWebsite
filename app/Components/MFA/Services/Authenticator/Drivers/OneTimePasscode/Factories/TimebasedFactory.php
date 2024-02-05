@@ -2,14 +2,14 @@
 
 namespace App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories;
 
-use App\Components\MFA\Contracts\OneTimePasscode\Factory;
 use App\Components\MFA\Concerns\InitializesOneTimePasscode;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
-use Illuminate\Contracts\Auth\Authenticatable;
+use App\Components\MFA\Contracts\OneTimePasscode\Factory;
 use OTPHP\OTPInterface;
 use OTPHP\TOTP;
 
-class TimebasedFactory implements Factory {
+class TimebasedFactory implements Factory
+{
     use InitializesOneTimePasscode;
 
     /**
@@ -19,7 +19,6 @@ class TimebasedFactory implements Factory {
     {
         return $this->initialize(TOTP::createFromSecret($secret), null);
     }
-
 
     /**
      * @inheritDoc

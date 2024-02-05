@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers\Main\User;
 
-use App\Components\MFA\Concerns\UsesMultiFactorAuthenticator;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimePasscode;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimeAuthenticatable;
-use Illuminate\Support\Facades\Session;
 use App\Components\MFA\Rules\CurrentAuthCode;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
+use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimeAuthenticatable;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Setup\Backup;
 use App\Components\MFA\Services\Persist\PersistService;
+use App\Http\Controllers\Controller;
 use App\Http\Middleware\MFASetupInitialized;
+use Illuminate\Http\Request;
 
 class MFASetupController extends Controller
 {
     public function __construct(
         protected readonly AuthenticatorService $authenticatorService,
         protected readonly PersistService $persistService
-    )
-    {
+    ) {
         $this->middleware(MFASetupInitialized::class)->except('confirmPassword');
     }
-
 
     /**
      * Confirms the user entered the current password.
@@ -34,7 +29,7 @@ class MFASetupController extends Controller
     public function confirmPassword(Request $request)
     {
         $request->validate([
-            'password' => 'required|current_password'
+            'password' => 'required|current_password',
         ]);
 
         $request->session()->put('mfa_secret', OneTimeAuthenticatable::generate()->resolveSecret());
@@ -65,7 +60,7 @@ class MFASetupController extends Controller
     public function confirmMFA(Request $request)
     {
         $request->validate([
-            'code' => ['required', new CurrentAuthCode(OneTimeAuthenticatable::string($request->session()->get('mfa_secret')))]
+            'code' => ['required', new CurrentAuthCode(OneTimeAuthenticatable::string($request->session()->get('mfa_secret')))],
         ]);
 
         // Redirect to show backup codes
@@ -82,14 +77,15 @@ class MFASetupController extends Controller
     {
         $setupConfig = $this->authenticatorService->setup($request->user(), $request->session()->get('mfa_secret'));
 
-        if (!$request->session()->has('mfa_backup_secret'))
+        if (! $request->session()->has('mfa_backup_secret')) {
             $request->session()->put('mfa_backup_secret', OneTimeAuthenticatable::generate()->resolveSecret());
+        }
 
         $codes = $this->authenticatorService->driver('backup')->getCodes($request->session()->get('mfa_backup_secret'));
 
         return view('main.user.tfa.backup', [
             'codes' => $codes,
-            'backupSecret' => $request->session()->get('mfa_backup_secret')
+            'backupSecret' => $request->session()->get('mfa_backup_secret'),
         ] + $setupConfig->getConfiguration());
     }
 

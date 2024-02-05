@@ -5,8 +5,8 @@ namespace App\Components\MFA;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
 use App\Components\MFA\Services\Persist\PersistService;
-use Illuminate\Contracts\Auth\Guard as GuardContract;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Guard as GuardContract;
 
 class Guard implements GuardContract
 {
@@ -14,9 +14,7 @@ class Guard implements GuardContract
         protected readonly GuardContract $guard,
         protected readonly AuthenticatorService $authenticator,
         protected readonly PersistService $persist
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -28,11 +26,12 @@ class Guard implements GuardContract
     {
         $user = $this->user();
 
-        if (is_null($user))
+        if (is_null($user)) {
             return false;
+        }
 
         if ($user instanceof MultiAuthenticatable) {
-            if ($this->authenticator->isConfigured($user) && !$this->persist->isVerified($user)) {
+            if ($this->authenticator->isConfigured($user) && ! $this->persist->isVerified($user)) {
                 return false;
             }
         }
@@ -94,7 +93,7 @@ class Guard implements GuardContract
     /**
      * Set the current user.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  Authenticatable  $user
      * @return void
      */
     public function setUser(Authenticatable $user)
@@ -107,7 +106,8 @@ class Guard implements GuardContract
      *
      * @return GuardContract
      */
-    public function getGuard(): GuardContract {
+    public function getGuard(): GuardContract
+    {
         return $this->guard;
     }
 }

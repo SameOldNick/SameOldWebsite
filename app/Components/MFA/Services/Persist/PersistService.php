@@ -4,7 +4,8 @@ namespace App\Components\MFA\Services\Persist;
 
 use Illuminate\Support\Manager;
 
-class PersistService extends Manager {
+class PersistService extends Manager
+{
     /**
      * Get the default driver name.
      *

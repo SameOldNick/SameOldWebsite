@@ -8,23 +8,24 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Carbon;
 
-class SessionDriver implements PersistServiceDriver {
+class SessionDriver implements PersistServiceDriver
+{
     public function __construct(
         protected readonly SessionManager $sessionManager,
         protected readonly array $config
-    )
-    {
-
+    ) {
     }
 
     /**
      * @inheritDoc
      */
-    public function isVerified(Authenticatable $user): bool {
+    public function isVerified(Authenticatable $user): bool
+    {
         $key = $this->getSessionKey($user);
 
-        if (!$this->sessionManager->has($key))
+        if (! $this->sessionManager->has($key)) {
             return false;
+        }
 
         $expires = Carbon::fromSerialized($this->sessionManager->get($key));
 
@@ -40,22 +41,24 @@ class SessionDriver implements PersistServiceDriver {
     /**
      * @inheritDoc
      */
-    public function markVerified(Authenticatable $user, DateTimeInterface $expiry = null) {
+    public function markVerified(Authenticatable $user, DateTimeInterface $expiry = null)
+    {
         $this->sessionManager->put($this->getSessionKey($user), serialize($expiry ?? $this->getDefaultVerifiedExpiry()));
     }
 
     /**
      * @inheritDoc
      */
-    public function clearVerified(Authenticatable $user) {
+    public function clearVerified(Authenticatable $user)
+    {
         $this->sessionManager->forget($this->getSessionKey($user));
     }
 
     /**
      * @inheritDoc
      */
-    public function purge() {
-
+    public function purge()
+    {
     }
 
     /**
@@ -64,7 +67,8 @@ class SessionDriver implements PersistServiceDriver {
      * @param Authenticatable $user
      * @return string
      */
-    protected function getSessionKey(Authenticatable $user) {
+    protected function getSessionKey(Authenticatable $user)
+    {
         return "tfa_verified_{$user->getAuthIdentifier()}";
     }
 
@@ -73,7 +77,8 @@ class SessionDriver implements PersistServiceDriver {
      *
      * @return Carbon
      */
-    protected function getDefaultVerifiedExpiry() {
+    protected function getDefaultVerifiedExpiry()
+    {
         return $this->config['expiry'] > 0 ? Carbon::now()->addSeconds($this->config['expiry']) : Carbon::maxValue();
     }
 }

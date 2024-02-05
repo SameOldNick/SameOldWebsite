@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Auth\Access\AuthorizationException;
 
 class MFASetupInitialized
 {
@@ -16,8 +16,9 @@ class MFASetupInitialized
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->session()->has('mfa_secret'))
+        if (! $request->session()->has('mfa_secret')) {
             throw (new AuthorizationException('You must start the setup from the beginning.'))->setResponse(redirect()->route('user.security'));
+        }
 
         return $next($request);
     }

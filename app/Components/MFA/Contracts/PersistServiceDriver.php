@@ -5,12 +5,13 @@ namespace App\Components\MFA\Contracts;
 use DateTimeInterface;
 use Illuminate\Contracts\Auth\Authenticatable;
 
-interface PersistServiceDriver {
+interface PersistServiceDriver
+{
     /**
      * Checks if user is two-factor authenticated.
      *
      * @param Authenticatable $user
-     * @return boolean
+     * @return bool
      */
     public function isVerified(Authenticatable $user): bool;
 

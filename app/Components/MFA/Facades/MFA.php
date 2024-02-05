@@ -4,7 +4,8 @@ namespace App\Components\MFA\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class MFA extends Facade {
+class MFA extends Facade
+{
     /**
      * Get the registered name of the component.
      *

@@ -7,7 +7,8 @@ use Exception;
 /**
  * Exception for when MFA is not configured.
  */
-class MultiAuthNotConfiguredException extends Exception {
+class MultiAuthNotConfiguredException extends Exception
+{
     /**
      * Initializes exception
      */
@@ -21,7 +22,8 @@ class MultiAuthNotConfiguredException extends Exception {
      *
      * @return static
      */
-    public static function throw(): static {
+    public static function throw(): static
+    {
         throw new static();
     }
 }

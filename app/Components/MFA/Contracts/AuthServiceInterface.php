@@ -2,14 +2,13 @@
 
 namespace App\Components\MFA\Contracts;
 
-use App\Components\MFA\Contracts\MultiAuthenticatable;
-
-interface AuthServiceInterface {
+interface AuthServiceInterface
+{
     /**
      * Checks if MFA is configured for authenticatable.
      *
      * @param MultiAuthenticatable $authenticatable
-     * @return boolean
+     * @return bool
      */
     public function isConfigured(MultiAuthenticatable $authenticatable): bool;
 
@@ -18,7 +17,7 @@ interface AuthServiceInterface {
      *
      * @param MultiAuthenticatable $authenticatable
      * @param string $code
-     * @return boolean
+     * @return bool
      */
     public function verifyCode(MultiAuthenticatable $authenticatable, string $code): bool;
 }

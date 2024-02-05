@@ -6,22 +6,17 @@ use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Exceptions\MFARequiredException;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
 use App\Components\MFA\Services\Persist\PersistService;
-use Illuminate\Auth\Middleware\Authenticate;
 use Closure;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Request;
 
 class MultiFactorAuthenticate
 {
     public function __construct(
         protected readonly AuthenticatorService $authenticator,
         protected readonly PersistService $persist
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -33,11 +28,11 @@ class MultiFactorAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$this->isAuthenticated($request)) {
+        if (! $this->isAuthenticated($request)) {
             return $this->unauthenticated($request);
         }
 
-        if (!$this->isMultiFactorAuthenticated($request)) {
+        if (! $this->isMultiFactorAuthenticated($request)) {
             return $this->notMultiFactorAuthenticated($request);
         }
 
@@ -50,7 +45,8 @@ class MultiFactorAuthenticate
      * @param Request $request
      * @return MultiAuthenticatable
      */
-    protected function getAuthenticatable(Request $request): MultiAuthenticatable {
+    protected function getAuthenticatable(Request $request): MultiAuthenticatable
+    {
         return $request->user();
     }
 
@@ -58,11 +54,11 @@ class MultiFactorAuthenticate
      * Checks if user is authenticated (not multi-factor authenticated)
      *
      * @param Request $request
-     * @return boolean
+     * @return bool
      */
     protected function isAuthenticated(Request $request): bool
     {
-        return !is_null($this->getAuthenticatable($request));
+        return ! is_null($this->getAuthenticatable($request));
     }
 
     /**
@@ -71,7 +67,8 @@ class MultiFactorAuthenticate
      * @param Request $request
      * @return mixed
      */
-    protected function unauthenticated(Request $request) {
+    protected function unauthenticated(Request $request)
+    {
         throw new AuthenticationException(
             'Unauthenticated.', [], $this->redirectToAuthenticate($request)
         );
@@ -83,7 +80,8 @@ class MultiFactorAuthenticate
      * @param Request $request
      * @return string
      */
-    protected function redirectToAuthenticate(Request $request) {
+    protected function redirectToAuthenticate(Request $request)
+    {
         return route('login');
     }
 
@@ -91,12 +89,13 @@ class MultiFactorAuthenticate
      * Checks if user is multi-factor authenticated.
      *
      * @param Request $request
-     * @return boolean
+     * @return bool
      */
-    protected function isMultiFactorAuthenticated(Request $request): bool {
+    protected function isMultiFactorAuthenticated(Request $request): bool
+    {
         $authenticatable = $this->getAuthenticatable($request);
 
-        if ($this->authenticator->isConfigured($authenticatable) && !$this->persist->isVerified($authenticatable)) {
+        if ($this->authenticator->isConfigured($authenticatable) && ! $this->persist->isVerified($authenticatable)) {
             return false;
         }
 
@@ -109,7 +108,8 @@ class MultiFactorAuthenticate
      * @param Request $request
      * @return mixed
      */
-    protected function notMultiFactorAuthenticated(Request $request) {
+    protected function notMultiFactorAuthenticated(Request $request)
+    {
         MFARequiredException::throw($this->redirectToMFA($request));
     }
 
@@ -119,7 +119,8 @@ class MultiFactorAuthenticate
      * @param Request $request
      * @return string
      */
-    protected function redirectToMFA(Request $request) {
+    protected function redirectToMFA(Request $request)
+    {
         return route('auth.mfa');
     }
 }

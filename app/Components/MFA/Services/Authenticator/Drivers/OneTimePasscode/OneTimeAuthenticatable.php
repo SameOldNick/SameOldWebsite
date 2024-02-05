@@ -3,18 +3,15 @@
 namespace App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode;
 
 use App\Components\MFA\Contracts\MultiAuthenticatable;
-use App\Components\MFA\Contracts\MultiAuthServiceOptions;
 use App\Components\MFA\Exceptions\MultiAuthNotConfiguredException;
 use Closure;
-use OTPHP\OTPInterface;
 use OTPHP\TOTP;
 
-class OneTimeAuthenticatable implements MultiAuthenticatable {
+class OneTimeAuthenticatable implements MultiAuthenticatable
+{
     public function __construct(
         protected readonly Closure $resolver
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -22,7 +19,8 @@ class OneTimeAuthenticatable implements MultiAuthenticatable {
      *
      * @return string
      */
-    public function resolveSecret() {
+    public function resolveSecret()
+    {
         return call_user_func($this->resolver);
     }
 
@@ -31,11 +29,12 @@ class OneTimeAuthenticatable implements MultiAuthenticatable {
      *
      * @return static
      */
-    public static function generate(): static {
+    public static function generate(): static
+    {
         // TOTP and HOTP use the same algorithm to generate secrets.
         $totp = TOTP::generate();
 
-        return new static(fn() => $totp->getSecret());
+        return new static(fn () => $totp->getSecret());
     }
 
     /**
@@ -44,8 +43,9 @@ class OneTimeAuthenticatable implements MultiAuthenticatable {
      * @param string $secret
      * @return static
      */
-    public static function string(string $secret): static {
-        return new static(fn() => $secret);
+    public static function string(string $secret): static
+    {
+        return new static(fn () => $secret);
     }
 
     /**
@@ -54,8 +54,9 @@ class OneTimeAuthenticatable implements MultiAuthenticatable {
      * @param MultiAuthenticatable $authenticatable
      * @return static
      */
-    public static function auth(MultiAuthenticatable $authenticatable): static {
-        return new static(fn() => optional($authenticatable->oneTimePasscodeSecrets)->auth_secret ?? MultiAuthNotConfiguredException::throw());
+    public static function auth(MultiAuthenticatable $authenticatable): static
+    {
+        return new static(fn () => optional($authenticatable->oneTimePasscodeSecrets)->auth_secret ?? MultiAuthNotConfiguredException::throw());
     }
 
     /**
@@ -64,7 +65,8 @@ class OneTimeAuthenticatable implements MultiAuthenticatable {
      * @param MultiAuthenticatable $authenticatable
      * @return static
      */
-    public static function backup(MultiAuthenticatable $authenticatable): static {
-        return new static(fn() => optional($authenticatable->oneTimePasscodeSecrets)->backup_secret ?? MultiAuthNotConfiguredException::throw());
+    public static function backup(MultiAuthenticatable $authenticatable): static
+    {
+        return new static(fn () => optional($authenticatable->oneTimePasscodeSecrets)->backup_secret ?? MultiAuthNotConfiguredException::throw());
     }
 }

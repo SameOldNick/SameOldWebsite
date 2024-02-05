@@ -14,13 +14,13 @@ trait InitializesOneTimePasscode
      * @param MultiAuthenticatable|null $authenticatable
      * @return OTPInterface
      */
-    protected function initialize(OTPInterface $otp, ?MultiAuthenticatable $authenticatable): OTPInterface {
-        if (!is_null($authenticatable)) {
+    protected function initialize(OTPInterface $otp, ?MultiAuthenticatable $authenticatable): OTPInterface
+    {
+        if (! is_null($authenticatable)) {
             $otp->setIssuer($this->getIssuer());
             $otp->setLabel($this->getLabel($authenticatable));
         } else {
             $otp->setLabel($this->getIssuer());
-
         }
 
         return $otp;
@@ -42,7 +42,8 @@ trait InitializesOneTimePasscode
      * @param MultiAuthenticatable $authenticatable
      * @return string
      */
-    protected function getLabel(MultiAuthenticatable $authenticatable): string {
+    protected function getLabel(MultiAuthenticatable $authenticatable): string
+    {
         return method_exists($authenticatable, 'getOneTimePasscodeLabel') ? $authenticatable->getOneTimePasscodeLabel() : $authenticatable->email;
     }
 }
