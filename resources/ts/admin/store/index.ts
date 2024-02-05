@@ -1,7 +1,7 @@
 
 import { combineReducers, Middleware } from 'redux';
 import { configureStore } from '@reduxjs/toolkit'
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 import logger from 'redux-logger';
 
 import accountSlice from './slices/account';
