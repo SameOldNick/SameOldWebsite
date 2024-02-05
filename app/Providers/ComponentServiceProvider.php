@@ -11,6 +11,7 @@ use App\Components\Menus\ServiceProvider as MenusServiceProvider;
 use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use App\Components\Security\ServiceProvider as SecurityServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
+use App\Components\MFA\ServiceProvider as MFAServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider
@@ -30,5 +31,6 @@ class ComponentServiceProvider extends AggregateServiceProvider
         AnalyticsServiceProvider::class,
         SecurityServiceProvider::class,
         EncryptionServiceProvider::class,
+        MFAServiceProvider::class,
     ];
 }

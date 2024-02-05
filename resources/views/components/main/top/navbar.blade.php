@@ -74,6 +74,11 @@
                                 {{ __('Change Password') }}
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('user.security') }}">
+                                {{ __('Security') }}
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item" id="logoutFormLink" href="{{ route('logout') }}">

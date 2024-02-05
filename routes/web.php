@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 Route::oauth();
+Route::mfa();
 
 Route::namespace(Controllers\Main::class)->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -50,7 +51,7 @@ Route::namespace(Controllers\Main::class)->group(function () {
         Route::get('/files/{file}', 'FileController@retrieve')->name('file');
     });
 
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'auth.mfa'])->group(function () {
         Route::post('/blog/{article:slug}/comment', 'BlogCommentController@comment')->name('blog.comment');
         Route::post('/blog/{article:slug}/comments/{parent}', 'BlogCommentController@replyTo')->name('blog.comment.reply-to');
 
@@ -60,6 +61,17 @@ Route::namespace(Controllers\Main::class)->group(function () {
 
             Route::get('/user/password', 'ChangePasswordController@view')->name('change-password');
             Route::post('/user/password', 'ChangePasswordController@update');
+
+            Route::get('/user/security', 'SecurityController@view')->name('security');
+
+            Route::post('/user/mfa/setup/password', 'MFASetupController@confirmPassword')->name('security.mfa.confirm-password');
+            Route::get('/user/mfa/setup/install', 'MFASetupController@showInstallationInstructions');
+            Route::post('/user/mfa/setup/install', 'MFASetupController@confirmMFA')->name('security.mfa.confirm-mfa');
+            Route::get('/user/mfa/setup/backup-codes', 'MFASetupController@showBackupCodes');
+            Route::post('/user/mfa/setup/backup-codes', 'MFASetupController@acknowledgeBackupCodes')->name('security.mfa.confirm-backup');
+            Route::get('/user/mfa/setup/complete', 'MFASetupController@completeSetup');
+
+            Route::post('/user/mfa/setup/disable', 'MFADisableController@disableMFA')->name('security.mfa.disable');
         });
     });
 
