@@ -47,7 +47,7 @@ class OTPAuthController extends Controller
 
         $this->verifiedMFACodeAuth($request);
 
-        return $this->verifiedAuthResponse($request);
+        return $this->verifiedMFACodeResponse($request);
     }
 
     /**
