@@ -46,6 +46,9 @@ return [
             'provider' => 'users',
             'input_key' => 'token',
         ],
+        'mfa' => [
+            'driver' => 'mfa',
+        ]
     ],
 
     /*
