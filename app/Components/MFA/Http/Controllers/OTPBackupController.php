@@ -67,7 +67,7 @@ class OTPBackupController extends Controller
         BackupCodeVerified::dispatch($authenticatable);
 
         // Disable MFA for user
-        $this->authenticatorService->uninstall($request->user());
+        $this->authenticatorService->uninstall($authenticatable);
     }
 
     /**
