@@ -3,6 +3,7 @@
 namespace App\Components\MFA\Http\Controllers;
 
 use App\Components\MFA\Contracts\MultiAuthenticatable;
+use App\Components\MFA\Events\OTP\AuthCodeVerified;
 use App\Components\MFA\Facades\MFA;
 use App\Components\MFA\Rules\CurrentAuthCode;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
@@ -58,8 +59,12 @@ class OTPAuthController extends Controller
      */
     protected function verifiedMFACodeAuth(Request $request)
     {
-        // TODO: Fire event that user is MFA
+        $authenticatable = $this->getAuthenticatable($request);
 
+        // Fire event that user is authenticated.
+        AuthCodeVerified::dispatch($authenticatable);
+
+        // Set user as authenticated.
         $this->persistService->markVerified($this->getAuthenticatable($request));
     }
 

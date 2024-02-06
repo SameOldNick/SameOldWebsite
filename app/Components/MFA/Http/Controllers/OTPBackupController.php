@@ -3,6 +3,7 @@
 namespace App\Components\MFA\Http\Controllers;
 
 use App\Components\MFA\Contracts\MultiAuthenticatable;
+use App\Components\MFA\Events\OTP\BackupCodeVerified;
 use App\Components\MFA\Facades\MFA;
 use App\Components\MFA\Rules\CurrentAuthCode;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
@@ -60,7 +61,10 @@ class OTPBackupController extends Controller
      */
     protected function verifiedBackupCode(Request $request)
     {
-        // TODO: Fire backup code verified event.
+        $authenticatable = $this->getAuthenticatable($request);
+
+        // Fire backup code verified event
+        BackupCodeVerified::dispatch($authenticatable);
 
         // Disable MFA for user
         $this->authenticatorService->uninstall($request->user());
