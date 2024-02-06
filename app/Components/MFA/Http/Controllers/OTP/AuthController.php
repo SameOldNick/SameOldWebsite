@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Components\MFA\Http\Controllers;
+namespace App\Components\MFA\Http\Controllers\OTP;
 
 use App\Components\MFA\Contracts\MultiAuthenticatable;
-use App\Components\MFA\Events\OTP\BackupCodeVerified;
+use App\Components\MFA\Events\OTP\AuthCodeVerified;
 use App\Components\MFA\Facades\MFA;
 use App\Components\MFA\Rules\CurrentAuthCode;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
-use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\OneTimeAuthenticatable;
 use App\Components\MFA\Services\Persist\PersistService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class OTPBackupController extends Controller
+class AuthController extends Controller
 {
     public function __construct(
         protected readonly AuthenticatorService $authenticatorService,
@@ -22,61 +21,60 @@ class OTPBackupController extends Controller
     }
 
     /**
-     * Shows backup code prompt.
+     * Displays prompt for MFA code.
      *
      * @param Request $request
      * @return mixed
      */
-    public function showBackupCodePrompt(Request $request)
+    public function showMFAPrompt(Request $request)
     {
-        return view('mfa::otp.backup');
+        return view('mfa::otp.prompt');
     }
 
     /**
-     * Verifies backup code.
+     * Verifies MFA code.
      *
      * @param Request $request
-     * @param AuthenticatorService $authService
      * @return mixed
      */
-    public function verifyBackupCode(Request $request, AuthenticatorService $authService)
+    public function verifyMFACode(Request $request)
     {
         $request->validate([
             'code' => [
                 'required',
-                new CurrentAuthCode(OneTimeAuthenticatable::backup($this->getAuthenticatable($request)), $authService->driver('backup')),
+                new CurrentAuthCode($this->getAuthenticatable($request)),
             ],
         ]);
 
-        $this->verifiedBackupCode($request);
+        $this->verifiedMFACodeAuth($request);
 
-        return $this->verifiedBackupCodeResponse($request);
+        return $this->verifiedMFACodeResponse($request);
     }
 
     /**
-     * Handles verified backup code
+     * Handles verified MFA code.
      *
      * @param Request $request
      * @return void
      */
-    protected function verifiedBackupCode(Request $request)
+    protected function verifiedMFACodeAuth(Request $request)
     {
         $authenticatable = $this->getAuthenticatable($request);
 
-        // Fire backup code verified event
-        BackupCodeVerified::dispatch($authenticatable);
+        // Fire event that user is authenticated.
+        AuthCodeVerified::dispatch($authenticatable);
 
-        // Disable MFA for user
-        $this->authenticatorService->uninstall($authenticatable);
+        // Set user as authenticated.
+        $this->persistService->markVerified($this->getAuthenticatable($request));
     }
 
     /**
-     * Creates response for when backup code is verified.
+     * Creates response for when MFA code is verified.
      *
      * @param Request $request
      * @return mixed
      */
-    protected function verifiedBackupCodeResponse(Request $request)
+    protected function verifiedMFACodeResponse(Request $request)
     {
         return redirect()->to($this->getIntendedUrl($request));
     }
