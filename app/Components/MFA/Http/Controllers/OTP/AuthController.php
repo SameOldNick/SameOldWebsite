@@ -17,7 +17,6 @@ class AuthController extends Controller
         protected readonly AuthenticatorService $authenticatorService,
         protected readonly PersistService $persistService
     ) {
-        // TODO: Add rate limiting
     }
 
     /**
