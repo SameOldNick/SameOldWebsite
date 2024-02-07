@@ -19,14 +19,14 @@ class RouteMethods
                     'enabled' => true,
                     'redirect_if_authenticated' => [
                         'enabled' => true,
-                        'guard' => 'mfa'
+                        'guard' => 'mfa',
                     ],
                     'throttle' => [
                         'enabled' => true,
                         'max_attempts' => 30,
                         'decay_minutes' => 1,
-                        'prefix' => 'mfa'
-                    ]
+                        'prefix' => 'mfa',
+                    ],
                 ],
             ];
 
