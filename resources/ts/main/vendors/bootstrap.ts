@@ -1,1 +1,3 @@
-import '@modules/bootstrap';
+import '@popperjs/core';
+import 'bootstrap';
+

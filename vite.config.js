@@ -27,8 +27,6 @@ export default defineConfig({
                 $: 'jquery',
                 jQuery: 'jquery',
                 'window.jQuery': 'jquery',
-                bootstrap: 'bootstrap',
-                'window.bootstrap': 'bootstrap'
             }
         }),
         laravel({
@@ -47,7 +45,6 @@ export default defineConfig({
             '@images': '/resources/images',
             '@admin': '/resources/ts/admin',
             '@root': '/resources/ts',
-            '@modules': '/node_modules',
 
         },
     }
