@@ -1,4 +1,4 @@
-<x-main.layout class="my-5 page-home">
+<x-main.layout class="page-home">
     <x-slot:title>Home</x-slot:title>
 
     <div class="container">

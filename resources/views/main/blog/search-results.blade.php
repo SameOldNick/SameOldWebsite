@@ -1,4 +1,4 @@
-<x-main.layout class="my-5 page-blog">
+<x-main.layout class="page-blog-search">
     <x-slot:title>{{ __('Results for: :query', ['query' => $request->q]) }}</x-slot:title>
 
     <div class="container">

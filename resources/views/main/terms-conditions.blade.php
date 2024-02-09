@@ -1,4 +1,4 @@
-<x-main.layout class="container my-5">
+<x-main.layout class="container">
     <x-slot:title>{{ __('Terms and Conditions') }}</x-slot:title>
 
     <div class="row justify-content-center">

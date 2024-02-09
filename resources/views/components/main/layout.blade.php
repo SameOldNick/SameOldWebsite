@@ -21,12 +21,12 @@
     @stack('head')
 </head>
 
-<body class="bg-light">
+<body class="bg-dark">
     <header class="bg-secondary sticky-top">
         <x-main.top.navbar />
     </header>
 
-    <main {{ $attributes->merge(['class' => '']) }}>
+    <main {{ $attributes->merge(['class' => 'bg-light py-5']) }}>
         {{ $slot }}
     </main>
 
