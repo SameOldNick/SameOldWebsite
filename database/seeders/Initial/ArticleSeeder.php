@@ -31,7 +31,8 @@ class ArticleSeeder extends Seeder
         $article->push();
     }
 
-    protected function getContent(): string {
+    protected function getContent(): string
+    {
         return <<<'EOD'
 Hey there, tech enthusiasts, curious wanderers, and everyone in between! Welcome to Same Old Nick's cozy corner of the internet, where pixels meet passion and bytes blend with boundless curiosity.
 
