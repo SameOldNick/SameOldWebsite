@@ -16,6 +16,7 @@ class InitialSeeder extends Seeder
             Initial\SkillSeeder::class,
             Initial\TechnologySeeder::class,
             Initial\UserSeeder::class,
+            Initial\ArticleSeeder::class,
         ]);
     }
 }
