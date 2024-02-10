@@ -1,4 +1,4 @@
-<x-main.layout class="page-blog-main">
+<x-main.layout class="page-blog page-blog-main">
     <x-slot:title>Blog</x-slot:title>
 
     <div class="container">

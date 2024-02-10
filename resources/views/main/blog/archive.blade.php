@@ -1,4 +1,4 @@
-<x-main.layout class="page-blog-archive">
+<x-main.layout class="page-blog page-blog-archive">
     <x-slot:title>{{ __('Articles From :yearMonth', ['yearMonth' => $dateTime->format('F Y')]) }}</x-slot:title>
 
     <div class="container">
