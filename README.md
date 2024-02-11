@@ -13,3 +13,7 @@ Contributions, feedback, and suggestions are all warmly welcome! Whether you're 
  * Follow Nick on Twitter: @SameOldNick
  * Connect on LinkedIn: Nick Profile
  * Subscribe to the Newsletter: Stay Updated
+
+## 💽 Installing Same Old Website
+
+Installation instructions are located in the [INSTALL.md](INSTALL.md) file.
