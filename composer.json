@@ -1,7 +1,7 @@
 {
     "name": "sameoldnick/sameoldwebsite",
     "type": "project",
-    "description": "This project serves as the digital canvas for Same Old Nick, where creativity meets code.",
+    "description": "Here, you'll find the code that powers Nick's personal corner of the internet.",
     "license": "MIT",
     "require": {
         "php": "^8.1",
