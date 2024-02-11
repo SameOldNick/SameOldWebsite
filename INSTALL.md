@@ -75,14 +75,21 @@ sed "s/^LITTLEJWT_KEY_PHRASE_REFRESH=.*/LITTLEJWT_KEY_PHRASE_REFRESH=$(php artis
    # Using Yarn:
    yarn run build
    ```
-   
-12.  Optimize web app by caching files (production only):
-```bash
-php artisan optimize
-```
 
-13.  Serve the web app:
+12.  Serve the web app:
 
 ```bash
 php artisan serve
 ```
+
+13. Open the web app in your web browser.
+
+## Additional
+
+If the initial seeder was used, the default username / password is `admin@sameoldnick.com` / `secret`.
+
+You can optimize the web app by caching files (production only):
+```bash
+php artisan optimize
+```
+
