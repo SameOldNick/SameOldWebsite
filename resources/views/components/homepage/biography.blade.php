@@ -4,4 +4,5 @@
 
         {!! Str::markdown($biography) !!}
 
+    </div>
 </section>
