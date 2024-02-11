@@ -8,9 +8,9 @@
    * ~~Single Sign On (SSO)~~
    * Users can subscribe to articles and comments
    * Users can be tagged in comments
-   * 2FA
+   * ~~2FA~~
  * Admin Panel
-   * Dashboard
+   * ~~Dashboard~~
    * ~~Manage Comments~~
    * Manage Tags
    * Search
