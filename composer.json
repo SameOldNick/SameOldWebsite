@@ -10,7 +10,7 @@
         "biscolab/laravel-recaptcha": "^6.0",
         "blade-ui-kit/blade-icons": "^1.5",
         "composer/composer": "^2.6",
-        "doctrine/dbal": "^4.0",
+        "doctrine/dbal": "^3.0",
         "geoip2/geoip2": "~3.0",
         "google/analytics-data": "^0.11.1",
         "guzzlehttp/guzzle": "^7.8",
