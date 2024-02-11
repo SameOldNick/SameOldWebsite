@@ -1,8 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "sameoldnick/sameoldwebsite",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "This project serves as the digital canvas for Same Old Nick, where creativity meets code.",
     "license": "MIT",
     "require": {
         "php": "^8.1",
