@@ -50,7 +50,8 @@ class AuthDriver implements AuthServiceInterface
     /**
      * @inheritDoc
      */
-    public function registerRoutes(Router $router, array $options) {
+    public function registerRoutes(Router $router, array $options)
+    {
         $router->middleware($this->getMiddleware($options))->group(function () use ($router) {
             $router->get('/auth/mfa', [AuthController::class, 'showMFAPrompt'])->name('auth.mfa');
             $router->post('/auth/mfa', [AuthController::class, 'verifyMFACode'])->name('auth.mfa.verify');
@@ -104,14 +105,17 @@ class AuthDriver implements AuthServiceInterface
      * @param array $options
      * @return array
      */
-    protected function getMiddleware(array $options) {
+    protected function getMiddleware(array $options)
+    {
         $middleware = [];
 
-        if (Arr::get($options, 'otp.redirect_if_authenticated.enabled', false))
+        if (Arr::get($options, 'otp.redirect_if_authenticated.enabled', false)) {
             array_push($middleware, sprintf('%s:%s', RedirectIfAuthenticated::class, Arr::get($options, 'otp.redirect_if_authenticated.guard', null)));
+        }
 
-        if (Arr::get($options, 'otp.throttle.enabled', false))
+        if (Arr::get($options, 'otp.throttle.enabled', false)) {
             array_push($middleware, ThrottleRequests::with(Arr::get($options, 'otp.throttle.max_attempts'), Arr::get($options, 'otp.throttle.decay_minutes'), Arr::get($options, 'otp.throttle.prefix')));
+        }
 
         return $middleware;
     }

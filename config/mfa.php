@@ -19,8 +19,8 @@ return [
         /** Which drivers to register routes for. */
         'routes' => [
             'totp',
-            'backup'
-        ]
+            'backup',
+        ],
     ],
 
     'persist' => [

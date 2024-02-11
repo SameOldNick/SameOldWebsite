@@ -3,11 +3,6 @@
 namespace App\Components\MFA;
 
 use App\Components\MFA\Facades\MFA;
-use App\Components\MFA\Http\Controllers\OTP\AuthController;
-use App\Components\MFA\Http\Controllers\OTP\BackupController;
-use App\Http\Middleware\RedirectIfAuthenticated;
-use Illuminate\Routing\Middleware\ThrottleRequests;
-use Illuminate\Support\Arr;
 
 class RouteMethods
 {

@@ -49,7 +49,8 @@ class BackupDriver extends AuthDriver
     /**
      * @inheritDoc
      */
-    public function registerRoutes(Router $router, array $options) {
+    public function registerRoutes(Router $router, array $options)
+    {
         $router->middleware($this->getMiddleware($options))->group(function () use ($router) {
             $router->get('/auth/mfa/backup', [BackupController::class, 'showBackupCodePrompt'])->name('auth.mfa.backup');
             $router->post('/auth/mfa/backup', [BackupController::class, 'verifyBackupCode'])->name('auth.mfa.backup.verify');
