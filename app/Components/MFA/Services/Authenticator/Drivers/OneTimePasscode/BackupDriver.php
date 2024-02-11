@@ -3,7 +3,9 @@
 namespace App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode;
 
 use App\Components\MFA\Contracts\MultiAuthenticatable;
+use App\Components\MFA\Http\Controllers\OTP\BackupController;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\HashbasedFactory;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 
 class BackupDriver extends AuthDriver
@@ -42,6 +44,16 @@ class BackupDriver extends AuthDriver
         $oneTimeAuthenticatable = $this->createOneTimeAuthenticatable($authenticatable);
 
         return $this->createOtp($oneTimeAuthenticatable)->verify($code, null, $this->getBackupCodeCount());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function registerRoutes(Router $router, array $options) {
+        $router->middleware($this->getMiddleware($options))->group(function () use ($router) {
+            $router->get('/auth/mfa/backup', [BackupController::class, 'showBackupCodePrompt'])->name('auth.mfa.backup');
+            $router->post('/auth/mfa/backup', [BackupController::class, 'verifyBackupCode'])->name('auth.mfa.backup.verify');
+        });
     }
 
     /**

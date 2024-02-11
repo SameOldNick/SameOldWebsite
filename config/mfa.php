@@ -15,6 +15,12 @@ return [
                 'codes' => 6,
             ],
         ],
+
+        /** Which drivers to register routes for. */
+        'routes' => [
+            'totp',
+            'backup'
+        ]
     ],
 
     'persist' => [

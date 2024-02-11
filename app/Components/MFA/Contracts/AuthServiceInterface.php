@@ -2,6 +2,8 @@
 
 namespace App\Components\MFA\Contracts;
 
+use Illuminate\Routing\Router;
+
 interface AuthServiceInterface
 {
     /**
@@ -20,4 +22,13 @@ interface AuthServiceInterface
      * @return bool
      */
     public function verifyCode(MultiAuthenticatable $authenticatable, string $code): bool;
+
+    /**
+     * Registers routes for this service driver.
+     *
+     * @param Router $router
+     * @param array $options Options passed to Route::mfa() method.
+     * @return void
+     */
+    public function registerRoutes(Router $router, array $options);
 }
