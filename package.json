@@ -97,7 +97,7 @@
         "string": "^3.3.3",
         "sweetalert2": "^11.10.1",
         "sweetalert2-react-content": "^5.0.0",
-        "tinymce": "^6.8.2",
+        "tinymce": "^6.8.3",
         "ts-deepmerge": "^6.2.0",
         "typescript": "^5.3.3",
         "uniqid": "^5.4.0",
