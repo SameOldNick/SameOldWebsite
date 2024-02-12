@@ -48,7 +48,7 @@
                                     <!-- Current OTP Input -->
                                     <div class="col-8 mb-3">
                                         <label for="currentOtp" class="form-label">Current OTP</label>
-                                        <input type="number" class="form-control" id="currentOtp" name="current_otp" required>
+                                        <input type="number" class="form-control" id="currentOtp" name="current_otp" autocomplete="off" required>
                                     </div>
 
                                     <div class="col-12 text-center">
@@ -65,7 +65,7 @@
                                     <div class="col-6">
                                         <div class="input-group mb-3">
                                             <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                                            <input name="password" type="password" required class="form-control" placeholder="{{ __('Enter Your Current Password') }}" aria-label="{{ __('Enter Your Current Password') }}">
+                                            <input name="password" type="password" class="form-control" placeholder="{{ __('Enter Your Current Password') }}" aria-label="{{ __('Enter Your Current Password') }}" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="col-auto">

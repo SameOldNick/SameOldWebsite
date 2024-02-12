@@ -82,7 +82,7 @@
                                 <div class="col-6">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                                        <input type="number" name="code" id="code" class="form-control" placeholder="{{ __('Enter Authenticator Code') }}" aria-label="{{ __('Enter Authenticator Code') }}">
+                                        <input type="number" name="code" id="code" class="form-control" placeholder="{{ __('Enter Authenticator Code') }}" aria-label="{{ __('Enter Authenticator Code') }}" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="col-auto">
