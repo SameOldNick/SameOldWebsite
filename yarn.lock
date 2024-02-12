@@ -3,7 +3,7 @@
 
 __metadata:
   version: 8
-  cacheKey: 10
+  cacheKey: 10c0
 
 "@aashutoshrathi/word-wrap@npm:^1.2.3":
   version: 1.2.6
@@ -8919,7 +8919,7 @@ __metadata:
     vite: "npm:^5.0.11"
     vite-plugin-external: "npm:^1.2.8"
     vite-plugin-global-const: "npm:^0.0.5"
-    vite-plugin-static-copy: "npm:^0.17.1"
+    vite-plugin-static-copy: "npm:^1.0.1"
     web-vitals: "npm:^3.0.2"
     yup: "npm:^1.3.2"
   languageName: unknown
@@ -10057,17 +10057,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-static-copy@npm:^0.17.1":
-  version: 0.17.1
-  resolution: "vite-plugin-static-copy@npm:0.17.1"
+"vite-plugin-static-copy@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "vite-plugin-static-copy@npm:1.0.1"
   dependencies:
     chokidar: "npm:^3.5.3"
     fast-glob: "npm:^3.2.11"
     fs-extra: "npm:^11.1.0"
     picocolors: "npm:^1.0.0"
   peerDependencies:
-    vite: ^3.0.0 || ^4.0.0 || ^5.0.0
-  checksum: 10/53762f6504ea65148d92603b0e01ea7c67008d6c1adab2cc5575c0d76d8f456e5b4a88c9379376ed6415bea1348042b2648a1a91f6a3a92ab87f49ec80471855
+    vite: ^5.0.0
+  checksum: 10c0/fbec6188dd118799e26c1107b71189c6e452856500ad72ced0a9f6b0008acb6e06496467faad74f633cfd8268f0a89e3b1f726f0606f9883716bbabb6faac2df
   languageName: node
   linkType: hard
 
