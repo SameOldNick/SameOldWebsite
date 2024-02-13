@@ -17,7 +17,7 @@ export interface IHasRouter<ParamsOrKey extends string = string> {
  * @param {React.ComponentType<IHasRouter>} Component
  * @returns Wrapper that sends router prop when called
  */
-export default function withRouter<TProps extends IHasRouter>(Component: React.ComponentType<TProps>) {
+export function withRouter<TProps extends IHasRouter>(Component: React.ComponentType<TProps>) {
     const element: React.FC = (props: any) => {
         const location = useLocation();
         const navigate = useNavigate();
@@ -31,4 +31,4 @@ export default function withRouter<TProps extends IHasRouter>(Component: React.C
     element.displayName = `withRouter(${Component.displayName || Component.name})`
 
     return element;
-};
+}
