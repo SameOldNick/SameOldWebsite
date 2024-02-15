@@ -1,6 +1,6 @@
 
 import { combineReducers, Middleware } from 'redux';
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, Tuple } from '@reduxjs/toolkit'
 import { thunk } from 'redux-thunk';
 import logger from 'redux-logger';
 
@@ -29,7 +29,7 @@ const createRootMiddlwares = () => {
     if (import.meta.env.VITE_APP_DEBUG)
         middleware.push(logger);
 
-    return middleware;
+    return new Tuple(...middleware);
 }
 
 const createStore = () => configureStore({
