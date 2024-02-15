@@ -21,7 +21,7 @@
     @stack('head')
 </head>
 
-<body class="bg-dark">
+<body class="bg-secondary">
     <header class="bg-secondary sticky-top">
         <x-main.top.navbar />
     </header>

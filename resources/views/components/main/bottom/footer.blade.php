@@ -1,4 +1,4 @@
-<footer class="bg-dark py-5">
+<footer class="bg-secondary py-5">
     <div class="container">
         <div class="row flex-wrap justify-content-between align-items-center">
             <p class="col-md-4 mb-0 brand">
