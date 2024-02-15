@@ -1,8 +1,8 @@
 <nav id="topNavbar" class="navbar navbar-expand-lg bg-black navbar-dark">
     <div class="container">
         <div class="logo">
-            <a class="navbar-brand text-cursive fs-3" href="{{ url('/') }}">
-                SameOldNick.com
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="{{ Vite::asset('resources/images/sameoldnick-text.png') }}" alt="{{ __('Same Old Nick') }}" style="max-height: 55px;">
             </a>
         </div>
         <button
