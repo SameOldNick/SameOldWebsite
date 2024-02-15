@@ -34,7 +34,7 @@ const createRootMiddlwares = () => {
 
 const createStore = () => configureStore({
     reducer: createRootReducer(),
-    middleware: createRootMiddlwares()
+    middleware: createRootMiddlwares
 });
 
 const store = createStore();
