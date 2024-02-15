@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 
 import classNames from 'classnames';
 
-import Avatar from '@root/admin/components/Avatar';
+import Avatar from '@admin/components/UserAvatar';
 import LogoutModal from '@root/admin/components/LogoutModal';
 
 import accountSlice  from '@admin/store/slices/account';
@@ -69,7 +69,7 @@ export default connector(class User extends React.Component<TProps, IState> {
             <>
                 <Dropdown nav className='no-arrow me-md-3' isOpen={open} toggle={() => this.setState((prevState) => ({ open: !prevState.open }))}>
                     <DropdownToggle nav tag='a' href='#' id="userDropdown">
-                        <Avatar current />
+                        <Avatar user='current' />
                         <span className={classNames("ms-2 d-none d-lg-inline text-gray-600 small", { placeholder: user === undefined })}>
                             {user !== undefined && <>{user.email} <FaCaretDown /></>}
                         </span>

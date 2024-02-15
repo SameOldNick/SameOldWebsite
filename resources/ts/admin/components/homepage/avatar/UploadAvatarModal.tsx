@@ -77,7 +77,7 @@ const UploadAvatarModal: React.FC<IProps> = ({ onUploaded, onCancelled }) => {
                         </Col>
                     </Row>
                     <DragDropFile multiple={false} accept="image/*" onFileSelected={onFileSelected} onFileRemoved={onFileRemoved}>
-                        {uploaded && <Avatar src={uploaded.src} alt='Avatar to upload' />}
+                        {uploaded && <Avatar src={uploaded.src} alt='Avatar to upload' style={{ maxWidth: '100%' }} />}
                     </DragDropFile>
                 </ModalBody>
                 <ModalFooter>

@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import Upload from './UploadAvatarModal';
 import Remove from './RemoveAvatarModal';
 
-import AvatarImage from '@admin/components/Avatar';
+import UserAvatar from '@admin/components/UserAvatar';
 
 interface IProps {
 }
@@ -16,19 +16,17 @@ interface IProps {
 interface IState {
     uploadModal: boolean;
     removeModal: boolean;
+    avatarKey: number;
 }
 
 export default class Avatar extends React.Component<IProps, IState> {
-    private readonly _avatarRef: React.RefObject<AvatarImage>;
-
     constructor(props: Readonly<IProps>) {
         super(props);
 
-        this._avatarRef = React.createRef();
-
         this.state = {
             uploadModal: false,
-            removeModal: false
+            removeModal: false,
+            avatarKey: 0
         };
 
         this.onUploaded = this.onUploaded.bind(this);
@@ -43,7 +41,7 @@ export default class Avatar extends React.Component<IProps, IState> {
             title: 'Avatar Updated Successfully'
         });
 
-        this._avatarRef.current?.refresh();
+        this.setState(({ avatarKey }) => ({ avatarKey: avatarKey + 1 }));
     }
 
     private async onRemoved() {
@@ -54,17 +52,17 @@ export default class Avatar extends React.Component<IProps, IState> {
             title: 'Avatar Removed Successfully'
         });
 
-        this._avatarRef.current?.refresh();
+        this.setState(({ avatarKey }) => ({ avatarKey: avatarKey + 1 }));
     }
 
     public render() {
-        const { uploadModal, removeModal } = this.state;
+        const { uploadModal, removeModal, avatarKey } = this.state;
 
         return (
             <>
                 <Row className='mb-3'>
                     <Col style={{ textAlign: 'center' }}>
-                        <AvatarImage ref={this._avatarRef} current size={125} />
+                        <UserAvatar key={avatarKey} user='current' style={{ maxWidth: '100%' }} />
                     </Col>
                 </Row>
                 <Row>
