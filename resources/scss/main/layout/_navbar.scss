@@ -1,17 +1,80 @@
+//$top-navbar-background: #333333;
+$top-navbar-background: rgb(85, 85, 85);
+
+$top-navbar-base-color: rgb(254, 194, 14);
+$top-navbar-color: rgba($top-navbar-base-color, 0.85);
+$top-navbar-hover-color: rgba($top-navbar-base-color, 0.95);
+$top-navbar-active-color: $top-navbar-base-color;
+$top-navbar-disabled-color: rgba($top-navbar-base-color, 0.25);
+$top-navbar-text-shadow-thickness: 3px;
+$top-navbar-text-shadow-color: rgba(25, 41, 84, 1);
+
 header {
     nav.navbar {
+        background-color: $top-navbar-background;
+
+        font-family: "Titan One", sans-serif !important;
+        font-weight: 400;
+        font-style: normal;
+        text-transform: uppercase;
+
+
+        --bs-navbar-color: #{$top-navbar-color} !important;
+        --bs-navbar-active-color: #{$top-navbar-active-color} !important;
+        --bs-navbar-hover-color: #{$top-navbar-hover-color} !important;
+        --bs-navbar-disabled-color: #{$top-navbar-disabled-color} !important;
+
+        .navbar-nav {
+            .nav-item {
+                .nav-link {
+                    text-shadow: none;
+
+                    &:hover, &:focus, &.active {
+                        @include full-text-shadow($top-navbar-text-shadow-thickness, $top-navbar-text-shadow-color);
+
+                    }
+                }
+            }
+        }
+
+
+
+        i {
+            text-shadow: none;
+        }
+
         .dropdown {
             .dropdown-toggle > i {
                 font-size: 1.25rem;
             }
 
             .dropdown-menu {
-                margin-top: 7px;
+                --bs-dropdown-color: #{$top-navbar-color} !important;
+                --bs-dropdown-bg: #{$top-navbar-background} !important;
+                --bs-dropdown-link-color: #{$top-navbar-color} !important;
+                --bs-dropdown-link-hover-color: #{$top-navbar-hover-color} !important;
+                --bs-dropdown-link-active-color: #{$top-navbar-active-color} !important;
+                --bs-dropdown-link-disabled-color: #{$top-navbar-disabled-color} !important;
+
+                text-shadow: none;
+
+                margin-top: 14px;
+
                 border-top-left-radius: 0px;
                 border-top-right-radius: 0px;
+                border-top-width: 0px;
             }
 
             &.dropdown.dropdown-search {
+                .ibc-container {
+                    --ibc-input-font-family: #{$font-family-base};
+                    --ibc-input-color: #{$light};
+
+                    --ibc-button-color: #{$light};
+                    --ibc-button-focus-color: #{tint-color($light, 15%)};
+                    --ibc-button-hover-color: #{tint-color($light, 25%)};
+                }
+
                 .dropdown-menu {
                     min-width: 350px !important;
                 }

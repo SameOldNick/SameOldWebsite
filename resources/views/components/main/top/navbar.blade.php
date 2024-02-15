@@ -1,4 +1,4 @@
-<nav id="topNavbar" class="navbar navbar-expand-lg bg-black navbar-dark">
+<nav id="topNavbar" class="navbar navbar-expand-lg" data-bs-theme="dark">
     <div class="container">
         <div class="logo">
             <a class="navbar-brand" href="{{ url('/') }}">
@@ -24,7 +24,7 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </a>
-                    <form action="{{ route('blog.search') }}" class="dropdown-menu dropdown-menu-dark dropdown-menu-end p-4">
+                    <form action="{{ route('blog.search') }}" class="dropdown-menu dropdown-menu-end p-4">
                         <div class="ibc-container">
                             <input type="search" name="q" class="form-control" placeholder="Search" aria-label="Search">
                             <button class="ibc-button"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -39,7 +39,7 @@
                         <i class="fa-solid fa-lock-open"></i>
                         <span class="visually-hidden-focusable">{{ __('Authentication') }}</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
+                    <ul class="dropdown-menu">
                         @if (Route::has('login'))
                         <li><a href="{{ route('login') }}" class="dropdown-item">{{ __('Login') }}</a></li>
                         @endif
@@ -55,7 +55,7 @@
                         <i class="fa-solid fa-user me-1"></i>
                         {{ Auth::user()->email }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-black">
                         @can('admin')
                         <li>
                             <a class="dropdown-item" href="{{ URL::temporarySignedRoute('admin.sso', now()->addMinutes(15), ['user' => Auth::user()->getKey()]) }}">

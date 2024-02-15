@@ -1,3 +1,12 @@
+$bottom-navbar-base-color: rgb(254, 194, 14);
+$bottom-navbar-color: rgba($bottom-navbar-base-color, 0.85);
+$bottom-navbar-active-color: $bottom-navbar-base-color;
+$bottom-navbar-hover-color: rgba($bottom-navbar-base-color, 0.95);
+$bottom-navbar-disabled-color: rgba($bottom-navbar-base-color, 0.25);
+
+$bottom-navbar-text-shadow-thickness: 3px;
+$bottom-navbar-text-shadow-color: rgba(25, 41, 84, 1);
+
 footer {
 	color: $white;
 
@@ -15,18 +24,34 @@ footer {
     }
 
 	.nav {
+        --#{$prefix}nav-link-color: #{$bottom-navbar-color};
+        --#{$prefix}nav-link-hover-color: #{$bottom-navbar-hover-color};
+        --#{$prefix}nav-link-disabled-color: #{$bottom-navbar-disabled-color};
+
+        font-family: "Titan One", sans-serif !important;
+        font-weight: 400;
+        font-style: normal;
+        text-transform: uppercase;
+
 		.nav-item {
 			.nav-link {
-				color: $light;
+				text-shadow: none;
 
-				&:hover {
-					color: $dark-link-hover-color;
-				}
+                &:hover, &:focus, &.active {
+                    @include full-text-shadow($bottom-navbar-text-shadow-thickness, $bottom-navbar-text-shadow-color);
 
-				&:active {
-					color: $dark-link-active-color;
-				}
+                }
 			}
+
+            .dropdown-menu {
+                --bs-dropdown-color: #{$bottom-navbar-color} !important;
+                --bs-dropdown-link-color: #{$bottom-navbar-color} !important;
+                --bs-dropdown-link-hover-color: #{$bottom-navbar-hover-color} !important;
+                --bs-dropdown-link-active-color: #{$bottom-navbar-active-color} !important;
+                --bs-dropdown-link-disabled-color: #{$bottom-navbar-disabled-color} !important;
+
+                text-shadow: none;
+            }
 		}
 	}
 }
