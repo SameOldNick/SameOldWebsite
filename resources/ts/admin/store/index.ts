@@ -23,7 +23,7 @@ const createRootReducer = () => combineReducers({
     notifications: notificationsSlice.reducer,
 });
 
-const createRootMiddlwares = () => {
+const createRootMiddlewares = () => {
     const middleware: Middleware[] = [thunk];
 
     if (import.meta.env.VITE_APP_DEBUG)
@@ -34,7 +34,7 @@ const createRootMiddlwares = () => {
 
 const createStore = () => configureStore({
     reducer: createRootReducer(),
-    middleware: createRootMiddlwares
+    middleware: createRootMiddlewares
 });
 
 const store = createStore();
