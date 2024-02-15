@@ -55,7 +55,7 @@
                         <i class="fa-solid fa-user me-1"></i>
                         {{ Auth::user()->email }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark bg-black">
+                    <ul class="dropdown-menu">
                         @can('admin')
                         <li>
                             <a class="dropdown-item" href="{{ URL::temporarySignedRoute('admin.sso', now()->addMinutes(15), ['user' => Auth::user()->getKey()]) }}">
