@@ -20,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
                 $class = is_object($object) ? get_class($object) : $object;
 
                 if (Str::startsWith($class, \Faker\Generator::class)) {
-                    $object->addProvider(new \Faker\Provider\Fakecar($object));
                     $object->addProvider(new \DavidBadura\FakerMarkdownGenerator\FakerProvider($object));
                 }
             });
