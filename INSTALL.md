@@ -34,9 +34,9 @@
 5. Generate secrets for JSON Web Tokens (JWTs):
 ```bash
 # Generates secret for authentication tokens:
-sed "s/^LITTLEJWT_KEY_PHRASE=.*/LITTLEJWT_KEY_PHRASE=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+sed -i "s/^LITTLEJWT_KEY_PHRASE=.*/LITTLEJWT_KEY_PHRASE=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
 # Generates secret for refresh tokens:
-sed "s/^LITTLEJWT_KEY_PHRASE_REFRESH=.*/LITTLEJWT_KEY_PHRASE_REFRESH=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+sed -i "s/^LITTLEJWT_KEY_PHRASE_REFRESH=.*/LITTLEJWT_KEY_PHRASE_REFRESH=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
 ```
 
 6. Update the database connection settings and any other configuration variables in the .env file according to your environment.
