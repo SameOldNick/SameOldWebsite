@@ -96,7 +96,14 @@ $(() => {
         }
 
         updateMenuTimeout = setTimeout(() => {
-            const visibleEl = findClosestElementToZero(targetEls);
+            let visibleEl: Element | null;
+
+            // If scrolled to bottom, automatically go with last nav item.
+            if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
+                visibleEl = targetEls[targetEls.length - 1];
+            } else {
+                visibleEl = findClosestElementToZero(targetEls);
+            }
 
             let foundActiveLink = false;
 
