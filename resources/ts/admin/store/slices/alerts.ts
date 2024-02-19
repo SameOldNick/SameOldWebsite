@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import merge from "ts-deepmerge";
+import { merge } from "ts-deepmerge";
 import { v4 as uuidv4 } from 'uuid';
 import { SweetAlertOptions } from "sweetalert2";
 
