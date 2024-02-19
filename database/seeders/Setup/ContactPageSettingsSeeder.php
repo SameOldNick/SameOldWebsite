@@ -20,7 +20,7 @@ In the meantime, here's a random Chuck Norris fact: [chuck-norris-fact]
 END;
 
         $recipientTemplate = <<<'END'
-Date: [date-time]
+Date: [datetime]
 Subject: [subject]
 
 Message:
