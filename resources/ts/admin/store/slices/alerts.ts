@@ -21,7 +21,7 @@ export interface IAlertParams {
     alert: IAlert;
 }
 
-export interface ISweetAlertParams extends SweetAlertOptions {
+export interface ISweetAlertParams {
     content?: React.ReactNode;
     beforeConfirmed?: (response?: any) => boolean | void;
     afterConfirmed?: (response?: any) => void;
@@ -31,7 +31,7 @@ export interface ISweetAlertParams extends SweetAlertOptions {
 
 export type TAlertsState = {
     alerts: Record<TComponent, IStoredAlert[]>
-    sweetalert?: ISweetAlertParams;
+    sweetalert?: ISweetAlertParams & SweetAlertOptions;
 };
 
 const initialState: TAlertsState = {
@@ -42,8 +42,8 @@ export default createSlice({
     name: "alerts",
     initialState,
     reducers: {
-        addAlert: (state, { payload: { component, alert } }: PayloadAction<IAlertParams>) => merge(state, { alerts: { [component]: [{ id: uuidv4(), ...alert }] } }),
-        clearAlerts: (state, { payload }: PayloadAction<TComponent>) => merge.withOptions({ mergeArrays: false }, state, { alerts: { [payload]: [] } }),
+        addAlert: (state, { payload: { component, alert } }: PayloadAction<IAlertParams>) => merge(state, { alerts: { [component]: [{ id: uuidv4(), ...alert }] } }) as TAlertsState,
+        clearAlerts: (state, { payload }: PayloadAction<TComponent>) => merge.withOptions({ mergeArrays: false }, state, { alerts: { [payload]: [] } }) as TAlertsState,
         displaySweetAlert: (state, { payload }: PayloadAction<ISweetAlertParams>) => ({ ...state, sweetalert: payload }),
         clearSweetAlert: (state) => ({ ...state, sweetalert: undefined })
     }
