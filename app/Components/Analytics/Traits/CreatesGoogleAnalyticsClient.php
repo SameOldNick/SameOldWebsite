@@ -25,8 +25,8 @@ trait CreatesGoogleAnalyticsClient
     protected function isGoogleAnalyticsConfigured(): bool
     {
         return
-            ! is_null($this->getPropertyId()) &&
-            ! is_null($this->getCredentialsFile()) && is_readable($this->getCredentialsFilePath());
+            ! empty($this->getPropertyId()) &&
+            ! empty($this->getCredentialsFile()) && is_readable($this->getCredentialsFilePath());
     }
 
     /**
