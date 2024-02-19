@@ -103,7 +103,7 @@
         "uniqid": "^5.4.0",
         "uuid": "^9.0.0",
         "vite": "^5.0.11",
-        "vite-plugin-external": "^1.2.8",
+        "vite-plugin-external": "^4.3.0",
         "vite-plugin-global-const": "^0.0.5",
         "vite-plugin-static-copy": "^1.0.1",
         "web-vitals": "^3.0.2",
