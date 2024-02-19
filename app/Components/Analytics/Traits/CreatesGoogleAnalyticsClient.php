@@ -2,6 +2,7 @@
 
 namespace App\Components\Analytics\Traits;
 
+use App\Components\Analytics\Exceptions\GoogleAnalyticsNotConfiguredException;
 use Google\Analytics\Data\V1beta\Client\BetaAnalyticsDataClient;
 
 trait CreatesGoogleAnalyticsClient
@@ -17,12 +18,27 @@ trait CreatesGoogleAnalyticsClient
     }
 
     /**
+     * Checks if Google Analytics has been configured.
+     *
+     * @return boolean
+     */
+    protected function isGoogleAnalyticsConfigured(): bool {
+        return
+            !is_null($this->getPropertyId()) &&
+            !is_null($this->getCredentialsFile()) && is_readable($this->getCredentialsFilePath());
+    }
+
+    /**
      * Creates Google Analytics data client.
      *
      * @return BetaAnalyticsDataClient
+     * @throws GoogleAnalyticsNotConfiguredException Thrown if not configured correctly.
      */
     protected function createDataClient()
     {
+        if (!$this->isGoogleAnalyticsConfigured())
+            throw new GoogleAnalyticsNotConfiguredException;
+
         return new BetaAnalyticsDataClient($this->getDataClientOptions());
     }
 
