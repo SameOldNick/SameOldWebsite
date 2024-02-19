@@ -27,8 +27,6 @@ class SendContactedMessages
     {
         $contacted = Contacted::create($event->name, $event->email, $event->message);
 
-        Mail::send($contacted);
-
         $this->notifyRoles('admin', new MessageNotification($contacted));
     }
 }
