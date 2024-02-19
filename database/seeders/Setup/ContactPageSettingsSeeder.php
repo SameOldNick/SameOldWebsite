@@ -14,9 +14,9 @@ class ContactPageSettingsSeeder extends Seeder
     public function run(): void
     {
         $senderMessage = <<<'END'
-I will get back to you shortly.
+Thank you for reaching out. I'll be in touch shortly.
 
-In the meantime, here's a random Chuck Norris fact: [chuck-norris-fact]
+In the meantime, here's a Chuck Norris fact: [chuck-norris-fact]
 END;
 
         $recipientTemplate = <<<'END'
