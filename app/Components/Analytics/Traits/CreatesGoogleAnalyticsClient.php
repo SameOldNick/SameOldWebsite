@@ -20,12 +20,13 @@ trait CreatesGoogleAnalyticsClient
     /**
      * Checks if Google Analytics has been configured.
      *
-     * @return boolean
+     * @return bool
      */
-    protected function isGoogleAnalyticsConfigured(): bool {
+    protected function isGoogleAnalyticsConfigured(): bool
+    {
         return
-            !is_null($this->getPropertyId()) &&
-            !is_null($this->getCredentialsFile()) && is_readable($this->getCredentialsFilePath());
+            ! is_null($this->getPropertyId()) &&
+            ! is_null($this->getCredentialsFile()) && is_readable($this->getCredentialsFilePath());
     }
 
     /**
@@ -36,8 +37,9 @@ trait CreatesGoogleAnalyticsClient
      */
     protected function createDataClient()
     {
-        if (!$this->isGoogleAnalyticsConfigured())
+        if (! $this->isGoogleAnalyticsConfigured()) {
             throw new GoogleAnalyticsNotConfiguredException;
+        }
 
         return new BetaAnalyticsDataClient($this->getDataClientOptions());
     }
@@ -59,7 +61,8 @@ trait CreatesGoogleAnalyticsClient
      *
      * @return string
      */
-    protected function getCredentialsFilePath() {
+    protected function getCredentialsFilePath()
+    {
         return base_path($this->getCredentialsFile());
     }
 
@@ -68,7 +71,8 @@ trait CreatesGoogleAnalyticsClient
      *
      * @return string|null
      */
-    protected function getCredentialsFile() {
+    protected function getCredentialsFile()
+    {
         return config('services.google.analytics.credentials');
     }
 }
