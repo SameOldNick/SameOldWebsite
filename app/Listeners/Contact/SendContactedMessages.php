@@ -6,7 +6,6 @@ use App\Events\Contact\ContactSubmissionApproved;
 use App\Mail\Contacted;
 use App\Notifications\MessageNotification;
 use App\Traits\Support\NotifiesRoles;
-use Illuminate\Support\Facades\Mail;
 
 class SendContactedMessages
 {
