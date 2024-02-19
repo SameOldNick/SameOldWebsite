@@ -26,7 +26,7 @@ class MarkdownTemplate extends Mailable
         return new Content(
             markdown: 'emails.template',
             with: [
-                'content' => $this->getContent(),
+                'content' => nl2br($this->getContent()),
             ]
         );
     }
