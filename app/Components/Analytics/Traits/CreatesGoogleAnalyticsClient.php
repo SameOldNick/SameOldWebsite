@@ -34,7 +34,25 @@ trait CreatesGoogleAnalyticsClient
     protected function getDataClientOptions()
     {
         return [
-            'credentials' => base_path(config('services.google.analytics.credentials')),
+            'credentials' => $this->getCredentialsFilePath(),
         ];
+    }
+
+    /**
+     * Gets the path to the credentials file.
+     *
+     * @return string
+     */
+    protected function getCredentialsFilePath() {
+        return base_path($this->getCredentialsFile());
+    }
+
+    /**
+     * Gets the path to the credentials file.
+     *
+     * @return string|null
+     */
+    protected function getCredentialsFile() {
+        return config('services.google.analytics.credentials');
     }
 }
