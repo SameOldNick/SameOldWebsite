@@ -18,7 +18,7 @@ class MessageNotification extends Notification
      * Create a new notification instance.
      */
     public function __construct(
-        private Mailable $mailable
+        public readonly Mailable $mailable
     ) {
     }
 
