@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Traits;
 
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
 
 trait CreatesUser
 {
