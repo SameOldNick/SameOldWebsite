@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Article;
-use App\Models\Post;
-use App\Models\User;
 use App\Models\Revision;
 use App\Traits\Database\Factories\CreatesPostable;
 use DateTime;
@@ -46,7 +44,7 @@ class ArticleFactory extends Factory
     /**
      * Includes revision(s) with article.
      *
-     * @param integer $count
+     * @param int $count
      * @return $this
      */
     public function withRevision(int $count = 1)
@@ -63,7 +61,7 @@ class ArticleFactory extends Factory
     public function currentRevision(Revision $revision)
     {
         return $this->state([
-            'current_revision' => $revision
+            'current_revision' => $revision,
         ]);
     }
 
