@@ -25,8 +25,10 @@ jobs:
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
     - name: Generate key
       run: php artisan key:generate
-    - name: Generate LittleJWT phrase
-      run: php artisan littlejwt:phrase
+    - name: Generate LittleJWT phrase for auth tokens
+      run: sed -i "s/^LITTLEJWT_KEY_PHRASE=.*/LITTLEJWT_KEY_PHRASE=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+    - name: Generate LittleJWT phrase for refresh tokens
+      run: sed -i "s/^LITTLEJWT_KEY_PHRASE_REFRESH=.*/LITTLEJWT_KEY_PHRASE_REFRESH=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
