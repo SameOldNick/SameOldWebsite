@@ -52,6 +52,18 @@ class ArticleFactory extends Factory
     {
         return $this->has(Revision::factory()->count($count), 'revisions');
     }
+
+    /**
+     * Sets current revision for article.
+     *
+     * @param Revision $revision
+     * @return $this
+     */
+    public function currentRevision(Revision $revision)
+    {
+        return $this->state([
+            'current_revision' => $revision
+        ]);
     }
 
     /**
