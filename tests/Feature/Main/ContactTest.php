@@ -10,10 +10,12 @@ use App\Mail\Contacted;
 use App\Mail\ContactedConfirmation;
 use App\Models\PendingMessage;
 use App\Models\User;
+use App\Notifications\MessageNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\DisablesVite;
 use Tests\Feature\Traits\ManagesPageSettings;
@@ -185,6 +187,7 @@ class ContactTest extends TestCase
     public function testAuthenticatedUserContactFormSubmissionRequiresUnregisteredUserConfirmation()
     {
         Mail::fake();
+        Notification::fake();
 
         $this->pageSetting('contact', [
             'require_confirmation' => true,
@@ -208,7 +211,7 @@ class ContactTest extends TestCase
             ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
         Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
-        Mail::assertSent(Contacted::class, fn (Contacted $mail) => $mail->hasTo($this->pageSetting('contact', 'recipient_email')));
+        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
@@ -285,6 +288,7 @@ class ContactTest extends TestCase
     public function testVerifiedUserContactFormSubmissionRequiresUnregisteredOrUnverifiedUserConfirmation()
     {
         Mail::fake();
+        Notification::fake();
 
         $this->pageSetting('contact', [
             'require_confirmation' => true,
@@ -308,7 +312,7 @@ class ContactTest extends TestCase
             ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
         Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
-        Mail::assertSent(Contacted::class, fn (Contacted $mail) => $mail->hasTo($this->pageSetting('contact', 'recipient_email')));
+        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
@@ -319,6 +323,7 @@ class ContactTest extends TestCase
     public function testGuestContactFormSubmissionNoConfirmationRequired()
     {
         Mail::fake();
+        Notification::fake();
 
         $this->pageSetting('contact', [
             'require_confirmation' => false,
@@ -341,7 +346,7 @@ class ContactTest extends TestCase
             ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
         Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
-        Mail::assertSent(Contacted::class, fn (Contacted $mail) => $mail->hasTo($this->pageSetting('contact', 'recipient_email')));
+        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
@@ -352,6 +357,7 @@ class ContactTest extends TestCase
     public function testAuthenticatedUserContactFormSubmissionNoConfirmationRequired()
     {
         Mail::fake();
+        Notification::fake();
 
         $this->pageSetting('contact', [
             'require_confirmation' => false,
@@ -374,7 +380,7 @@ class ContactTest extends TestCase
             ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
         Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
-        Mail::assertSent(Contacted::class, fn (Contacted $mail) => $mail->hasTo($this->pageSetting('contact', 'recipient_email')));
+        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
@@ -385,6 +391,7 @@ class ContactTest extends TestCase
     public function testVerifyEmailFollowingSubmission()
     {
         Mail::fake();
+        Notification::fake();
 
         $this->pageSetting('contact', [
             'require_confirmation' => true,
@@ -414,7 +421,7 @@ class ContactTest extends TestCase
             ->get($content->with['url'])
             ->assertSuccessful();
 
-        Mail::assertSent(Contacted::class, fn (Contacted $mail) => $mail->hasTo($this->pageSetting('contact', 'recipient_email')));
+        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
