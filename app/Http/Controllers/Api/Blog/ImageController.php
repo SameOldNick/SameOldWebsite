@@ -37,7 +37,7 @@ class ImageController extends Controller
 
         $article->images()->save($articleImage)->file()->save($file);
 
-        return $articleImage;
+        return $articleImage->load('file');
     }
 
     /**
