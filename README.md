@@ -1,5 +1,7 @@
 # Same Old Website
 
+[![PHPUnit Tests](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml/badge.svg)](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml)
+
 Welcome to the Same Old Website GitHub repository! This repository serves as the digital canvas for Same Old Nick, where creativity meets code. Here, you'll find the code that powers Nick's personal corner of the internet. 
 
 ## 🚀 Goals
