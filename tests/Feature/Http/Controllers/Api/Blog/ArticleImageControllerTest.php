@@ -36,7 +36,7 @@ class ArticleImageControllerTest extends TestCase
                 ->create();
 
         $response = $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images', $article->getKey()), [
-            'image' => $file
+            'image' => $file,
         ]);
 
         $response
@@ -51,9 +51,9 @@ class ArticleImageControllerTest extends TestCase
                     'meta' => [
                         'size',
                         'last_modified',
-                        'mime_type'
-                    ]
-                ]
+                        'mime_type',
+                    ],
+                ],
             ]);
 
         Storage::assertExists(sprintf('images/%s', $file->hashName()));
@@ -77,7 +77,7 @@ class ArticleImageControllerTest extends TestCase
                 ->create();
 
         $response = $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images', $article->getKey()), [
-            'image' => $file
+            'image' => $file,
         ]);
 
         $response
