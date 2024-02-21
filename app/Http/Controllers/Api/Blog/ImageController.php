@@ -75,6 +75,8 @@ class ImageController extends Controller
      */
     public function destroy(Article $article, ArticleImage $image)
     {
+        // TODO: Don't allow if set as main image.
+
         $image->delete();
 
         return [
