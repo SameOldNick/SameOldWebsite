@@ -127,4 +127,44 @@ class ArticleImageControllerTest extends TestCase
         $this->assertTrue($article->refresh()->mainImage->is($articleImage));
     }
 
+    /**
+     * Tests a image is set as main image for other article.
+     */
+    public function test_upload_main_image_other_article(): void
+    {
+        Storage::fake();
+
+        /**
+         * @var \App\Models\Article $first
+         * @var \App\Models\Article $second
+         */
+        [$first, $second] =
+            Article::factory(2)
+                ->recycle($this->admin)
+                ->hasPostWithUser()
+                ->withRevision(1)
+                ->published()
+                ->create();
+
+        $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images', $first->getKey()), [
+            'image' => UploadedFile::fake()->image(sprintf('%s.jpg', $this->faker->sha1)),
+        ]);
+
+        $articleImage = $first->refresh()->images()->first();
+
+        $response =
+            $this
+                ->actingAs($this->admin)
+                ->postJson(sprintf('/api/blog/articles/%d/images/%d/main-image', $second->getKey(), $articleImage->getKey()), []);
+
+        // Allow image to be shared.
+        $response
+            ->assertSuccessful()
+            ->assertJson([
+                'id' => $second->getKey()
+            ]);
+
+        $this->assertTrue($second->refresh()->mainImage->is($articleImage));
+    }
+
 }
