@@ -3,6 +3,8 @@
 namespace Tests\Feature\Http\Controllers\Api\Blog;
 
 use App\Models\Article;
+use App\Models\ArticleImage;
+use Database\Seeders\Fakes\ArticleImageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -86,4 +88,43 @@ class ArticleImageControllerTest extends TestCase
 
         Storage::assertMissing(sprintf('images/%s', $file->hashName()));
     }
+
+    /**
+     * Tests a valid image is uploaded as main image.
+     */
+    public function test_upload_main_image(): void
+    {
+        Storage::fake();
+
+        /**
+         * @var \App\Models\Article $article
+         */
+        $article =
+            Article::factory()
+                ->recycle($this->admin)
+                ->hasPostWithUser()
+                ->withRevision(1)
+                ->published()
+                ->create();
+
+        $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images', $article->getKey()), [
+            'image' => UploadedFile::fake()->image(sprintf('%s.jpg', $this->faker->sha1)),
+        ]);
+
+        $articleImage = $article->refresh()->images()->first();
+
+        $response =
+            $this
+                ->actingAs($this->admin)
+                ->postJson(sprintf('/api/blog/articles/%d/images/%d/main-image', $article->getKey(), $articleImage->getKey()), []);
+
+        $response
+            ->assertSuccessful()
+            ->assertJson([
+                'id' => $article->getKey()
+            ]);
+
+        $this->assertTrue($article->refresh()->mainImage->is($articleImage));
+    }
+
 }
