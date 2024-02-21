@@ -3,8 +3,6 @@
 namespace Tests\Feature\Http\Controllers\Api\Blog;
 
 use App\Models\Article;
-use App\Models\ArticleImage;
-use Database\Seeders\Fakes\ArticleImageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -97,7 +95,7 @@ class ArticleImageControllerTest extends TestCase
         Storage::fake();
 
         /**
-         * @var \App\Models\Article $article
+         * @var Article $article
          */
         $article =
             Article::factory()
@@ -121,10 +119,9 @@ class ArticleImageControllerTest extends TestCase
         $response
             ->assertSuccessful()
             ->assertJson([
-                'id' => $article->getKey()
+                'id' => $article->getKey(),
             ]);
 
         $this->assertTrue($article->refresh()->mainImage->is($articleImage));
     }
-
 }
