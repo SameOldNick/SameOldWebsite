@@ -133,8 +133,8 @@ class ArticleImageControllerTest extends TestCase
         Storage::fake();
 
         /**
-         * @var \App\Models\Article $first
-         * @var \App\Models\Article $second
+         * @var Article $first
+         * @var Article $second
          */
         [$first, $second] =
             Article::factory(2)
@@ -159,10 +159,9 @@ class ArticleImageControllerTest extends TestCase
         $response
             ->assertSuccessful()
             ->assertJson([
-                'id' => $second->getKey()
+                'id' => $second->getKey(),
             ]);
 
         $this->assertTrue($second->refresh()->mainImage->is($articleImage));
     }
-
 }
