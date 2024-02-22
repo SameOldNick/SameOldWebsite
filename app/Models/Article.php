@@ -129,7 +129,7 @@ class Article extends Model
      */
     public function mainImage()
     {
-        return $this->belongsTo(ArticleImage::class, 'main_image');
+        return $this->belongsTo(ArticleImage::class, 'main_image', 'uuid');
     }
 
     /**

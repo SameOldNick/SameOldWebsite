@@ -64,8 +64,8 @@ export default class Create extends React.Component<IProps, IState> {
         } catch (err) {
             console.error(err);
 
-            if (articleImage && articleImage.id) {
-                createAuthRequest().delete(`blog/articles/${article?.article.id}/images/${articleImage.id}`);
+            if (articleImage && articleImage.uuid) {
+                createAuthRequest().delete(`blog/articles/${article?.article.id}/images/${articleImage.uuid}`);
             }
 
             if (article && article.article.revision && article.article.revision.uuid) {

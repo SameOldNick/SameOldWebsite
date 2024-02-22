@@ -55,7 +55,7 @@ export const uploadMainImage = async (article: Article, image: IMainImageNew) =>
 }
 
 export const setMainImage = async (article: Article, articleImage: IArticleImage) => {
-    const response = await createAuthRequest().post<IArticle>(`blog/articles/${article.article.id}/images/${articleImage.id}/main-image`, {});
+    const response = await createAuthRequest().post<IArticle>(`blog/articles/${article.article.id}/images/${articleImage.uuid}/main-image`, {});
 
     return new Article(response.data);
 }

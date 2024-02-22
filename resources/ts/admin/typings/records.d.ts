@@ -167,7 +167,7 @@ declare global {
     }
 
     interface IArticleImage {
-        id?: number;
+        uuid?: string;
         description: string;
         file: IFile;
     }

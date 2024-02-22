@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('path')->unique();
             $table->string('name')->nullable();
             $table->boolean('is_public');
-            $table->nullableMorphs('fileable');
+            $table->nullableUuidMorphs('fileable');
             $table->timestamps();
             $table->softDeletes();
         });

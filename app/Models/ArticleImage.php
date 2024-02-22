@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Models\Fileable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -12,6 +13,7 @@ class ArticleImage extends Model
 {
     use HasFactory;
     use Fileable;
+    use HasUuids;
 
     /**
      * Indicates if the model should be timestamped.
@@ -19,6 +21,13 @@ class ArticleImage extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
 
     /**
      * The attributes that are mass assignable.
@@ -35,7 +44,7 @@ class ArticleImage extends Model
      * @var array<string>
      */
     protected $visible = [
-        'id',
+        'uuid',
         'description',
         'file',
     ];
