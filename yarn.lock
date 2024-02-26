@@ -1269,10 +1269,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/core@npm:1.1.5":
-  version: 1.1.5
-  resolution: "@shikijs/core@npm:1.1.5"
-  checksum: 10/08d205d901247374b1e22c787b1ef3b41606aa06b66d28460a74e15a4e000b6567bd6f7c30ae2568b93eebde144da021c0d3127397083c6e438000a176d8f57d
+"@shikijs/core@npm:1.1.7":
+  version: 1.1.7
+  resolution: "@shikijs/core@npm:1.1.7"
+  checksum: 10/5bb9bef8341064a92aca556fcd1757f4b71a44830862ee63d0359712a4cae5b5bf33a9048a39828d6e9275b5317ff262f32469e9872a23455063752a67d09786
   languageName: node
   linkType: hard
 
@@ -9050,7 +9050,7 @@ __metadata:
     redux-thunk: "npm:^3.1.0"
     rehype-sanitize: "npm:^6.0.0"
     sass: "npm:^1.69.7"
-    shiki: "npm:^1.1.5"
+    shiki: "npm:^1.1.7"
     store2: "npm:^2.14.2"
     string: "npm:^3.3.3"
     sweetalert2: "npm:^11.10.1"
@@ -9207,12 +9207,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^1.1.5":
-  version: 1.1.5
-  resolution: "shiki@npm:1.1.5"
+"shiki@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "shiki@npm:1.1.7"
   dependencies:
-    "@shikijs/core": "npm:1.1.5"
-  checksum: 10/b42bf1ef0c5a474cdb1abff00006cf0de7caff90737a9de3e0a354193ecc75bea43b8db1db07ea8befda496f5e36bcc36dbd474c24032c40ae7b32b5b7aa8207
+    "@shikijs/core": "npm:1.1.7"
+  checksum: 10/c107d8709d383b44e5535e01971df6cb9bada85a33a29ce34f987ce130d36d11ef91bb6965dbd6e483ab4fc2d1af36ad5ff26453ceefbe24ed82f5cc84b56101
   languageName: node
   linkType: hard
 
