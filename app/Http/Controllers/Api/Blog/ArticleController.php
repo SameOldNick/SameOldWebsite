@@ -62,23 +62,24 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        $article = new Article([
-            'title' => $request->title,
-            'slug' => $request->slug,
-        ]);
+        $article = Article::createWithPost(function (Article $article) use ($request) {
+            $article->fill([
+                'title' => $request->title,
+                'slug' => $request->slug,
+            ]);
 
-        $article->published_at = $request->date('published_at');
+            $article->published_at = $request->date('published_at');
+        });
 
-        $article->save();
-
-        $revision = $article->revisions()->make([
+        $revision = $article->revisions()->create([
             'content' => $request->string('revision.content'),
             'summary' => $request->string('revision.summary'),
         ]);
 
         $article->currentRevision()->associate($revision);
 
-        $article->push();
+        // Don't use push because it will cause post is a circular dependency.
+        $article->save();
 
         ArticleCreated::dispatch($article);
         ArticlePublished::dispatchIf($article->is_published, $article);
