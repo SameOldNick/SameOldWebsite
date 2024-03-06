@@ -4,6 +4,7 @@ declare global {
         [P in Exclude<keyof T1, keyof T2>]: T1[P]
     } & T2;
     type PartialRecord<K extends string | number | symbol, T> = { [P in K]?: T; };
+    type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
 }
 
 export default { };
