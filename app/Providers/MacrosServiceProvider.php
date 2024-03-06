@@ -42,6 +42,10 @@ class MacrosServiceProvider extends ServiceProvider
     protected function urlGeneratorMacros()
     {
         UrlGenerator::macro('hasValidSignatureNoPath', function (Request $request) {
+            /**
+             * @var UrlGenerator $this
+             */
+
             $parameters = Arr::except($request->query(), 'signature') + $request->route()->parameters();
 
             ksort($parameters);
@@ -57,6 +61,10 @@ class MacrosServiceProvider extends ServiceProvider
         });
 
         UrlGenerator::macro('signedRouteNoPath', function ($name, $parameters = [], $expiration = null, $absolute = true) {
+            /**
+             * @var UrlGenerator $this
+             */
+
             $parameters = $this->formatParameters($parameters);
 
             if ($expiration) {
@@ -73,6 +81,10 @@ class MacrosServiceProvider extends ServiceProvider
         });
 
         UrlGenerator::macro('temporarySignedRouteNoPath', function ($name, $expiration, $parameters = [], $absolute = true) {
+            /**
+             * @var UrlGenerator $this
+             */
+
             return $this->signedRouteNoPath($name, $parameters, $expiration, $absolute);
         });
     }
