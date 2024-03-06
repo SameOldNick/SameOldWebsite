@@ -48,7 +48,6 @@ class MacrosServiceProvider extends ServiceProvider
             /**
              * @var UrlGenerator $this
              */
-
             $parameters = Arr::except($request->query(), 'signature') + $request->route()->parameters();
 
             ksort($parameters);
@@ -67,7 +66,6 @@ class MacrosServiceProvider extends ServiceProvider
             /**
              * @var UrlGenerator $this
              */
-
             $parameters = $this->formatParameters($parameters);
 
             if ($expiration) {
@@ -129,7 +127,8 @@ class MacrosServiceProvider extends ServiceProvider
         });
     }
 
-    protected function databaseMacros() {
+    protected function databaseMacros()
+    {
         /**
          * SQLite doesn't support dropping foreign keys.
          * Source: https://github.com/laravel/framework/issues/23461
@@ -138,7 +137,6 @@ class MacrosServiceProvider extends ServiceProvider
             /**
              * @var Blueprint $this
              */
-
             if (app('db.connection') instanceof SQLiteConnection) {
                 // Do nothing
                 /** @see Blueprint::ensureCommandsAreValid */
