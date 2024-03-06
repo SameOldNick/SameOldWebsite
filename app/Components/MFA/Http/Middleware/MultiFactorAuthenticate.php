@@ -43,9 +43,9 @@ class MultiFactorAuthenticate
      * Gets the authenticatable subject.
      *
      * @param Request $request
-     * @return MultiAuthenticatable
+     * @return ?MultiAuthenticatable
      */
-    protected function getAuthenticatable(Request $request): MultiAuthenticatable
+    protected function getAuthenticatable(Request $request): ?MultiAuthenticatable
     {
         return $request->user();
     }
