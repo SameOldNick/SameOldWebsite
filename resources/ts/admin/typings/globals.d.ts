@@ -1,4 +1,4 @@
-import { Logger } from 'utils/logger';
+import { Logger } from '@admin/utils/logger';
 
 declare global {
     // These values are automatically filled in using the Webpack DefinePlugin
