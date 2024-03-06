@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\SQLiteConnection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\UrlGenerator;
@@ -37,6 +39,7 @@ class MacrosServiceProvider extends ServiceProvider
         $this->strMacros();
         $this->responseMacros();
         $this->notificationMacros();
+        $this->databaseMacros();
     }
 
     protected function urlGeneratorMacros()
@@ -123,6 +126,25 @@ class MacrosServiceProvider extends ServiceProvider
                     'hash' => sha1($notifiable->getEmailForVerification()),
                 ]
             );
+        });
+    }
+
+    protected function databaseMacros() {
+        /**
+         * SQLite doesn't support dropping foreign keys.
+         * Source: https://github.com/laravel/framework/issues/23461
+         */
+        Blueprint::macro('dropForeignSafe', function ($args) {
+            /**
+             * @var Blueprint $this
+             */
+
+            if (app('db.connection') instanceof SQLiteConnection) {
+                // Do nothing
+                /** @see Blueprint::ensureCommandsAreValid */
+            } else {
+                $this->dropForeign($args);
+            }
         });
     }
 }
