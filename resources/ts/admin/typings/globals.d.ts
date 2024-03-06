@@ -16,7 +16,7 @@ declare global {
 
     //var __webpack_nonce__: string;
 
-    var logger: Logger;
+    const logger: Logger;
 
     export interface Window {
         logger: Logger;
