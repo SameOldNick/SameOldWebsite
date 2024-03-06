@@ -28,6 +28,11 @@
                                         {{ trans_choice('{0} No comments|{1} :count comment|[2,*] :count comments', $article->comments()->approved()->count()) }}
                                     </a>
                                 </li>
+
+                                <li class="list-inline-item">
+                                    <i class="fa-solid fa-user-pen me-1"></i>
+                                    {{ $article->post->user->getDisplayName() }}
+                                </li>
                             </ul>
                         </section>
 
