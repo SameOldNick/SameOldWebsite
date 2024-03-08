@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Api\Blog;
 
 use App\Models\Article;
+use App\Models\Image;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -19,13 +20,11 @@ class ArticleImageControllerTest extends TestCase
     use WithFaker;
 
     /**
-     * Tests a valid image is uploaded.
+     * Tests article images are fetched.
      */
-    public function test_upload_image(): void
+    public function test_get_all_article_images(): void
     {
         Storage::fake();
-
-        $file = UploadedFile::fake()->image(sprintf('%s.jpg', $this->faker->sha1));
 
         $article =
             Article::factory()
@@ -33,40 +32,38 @@ class ArticleImageControllerTest extends TestCase
                 ->hasPostWithUser()
                 ->withRevision(1)
                 ->published()
+                ->has(Image::factory(5)->fakedImage(user: $this->admin))
                 ->create();
 
-        $response = $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images', $article->getKey()), [
-            'image' => $file,
-        ]);
+        $response = $this->actingAs($this->admin)->getJson(sprintf('/api/blog/articles/%d/images', $article->getKey()));
 
         $response
             ->assertSuccessful()
+            ->assertJsonCount(5)
             ->assertJsonStructure([
-                'id',
-                'description',
-                'file' => [
-                    'id',
-                    'name',
-                    'url',
-                    'meta' => [
-                        'size',
-                        'last_modified',
-                        'mime_type',
+                '*' => [
+                    'uuid',
+                    'description',
+                    'file' => [
+                        'id',
+                        'name',
+                        'url',
+                        'meta' => [
+                            'size',
+                            'last_modified',
+                            'mime_type',
+                        ],
                     ],
                 ],
             ]);
-
-        Storage::assertExists(sprintf('images/%s', $file->hashName()));
     }
 
     /**
-     * Tests a non-image file is uploaded.
+     * Tests a image is attached to article.
      */
-    public function test_upload_non_image(): void
+    public function test_attach_article_image(): void
     {
         Storage::fake();
-
-        $file = UploadedFile::fake()->image(sprintf('%s.php', $this->faker->sha1));
 
         $article =
             Article::factory()
@@ -76,92 +73,105 @@ class ArticleImageControllerTest extends TestCase
                 ->published()
                 ->create();
 
-        $response = $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images', $article->getKey()), [
-            'image' => $file,
-        ]);
+        $image = Image::factory()->fakedImage(user: $this->admin)->create();
+
+        $response = $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images/%s', $article->getKey(), $image->getKey()));
 
         $response
-            ->assertUnprocessable()
-            ->assertJsonValidationErrors('image');
-
-        Storage::assertMissing(sprintf('images/%s', $file->hashName()));
+            ->assertSuccessful()
+            ->assertJsonCount(1)
+            ->assertJson([
+                ['uuid' => $image->getKey()]
+            ]);
     }
 
     /**
-     * Tests a valid image is uploaded as main image.
+     * Tests a image is attached to article.
      */
-    public function test_upload_main_image(): void
+    public function test_detach_article_image(): void
     {
         Storage::fake();
 
-        /**
-         * @var Article $article
-         */
+        $articleFactory =
+            Article::factory(1)
+                ->recycle($this->admin)
+                ->hasPostWithUser()
+                ->withRevision(1)
+                ->published();
+
+        $image = Image::factory()->fakedImage(user: $this->admin)->has($articleFactory)->create();
+
+        $article = $image->articles[0];
+
+        $response = $this->actingAs($this->admin)->deleteJson(sprintf('/api/blog/articles/%d/images/%s', $article->getKey(), $image->getKey()));
+
+        $response
+            ->assertSuccessful()
+            ->assertExactJson([]);
+
+        $this->assertEmpty($article->refresh()->images);
+        $this->assertEmpty($image->refresh()->articles);
+    }
+
+    /**
+     * Tests a image is set as the main image.
+     */
+    public function test_set_main_image(): void
+    {
+        Storage::fake();
+
         $article =
             Article::factory()
                 ->recycle($this->admin)
                 ->hasPostWithUser()
                 ->withRevision(1)
                 ->published()
+                ->has(Image::factory()->fakedImage(user: $this->admin))
                 ->create();
 
-        $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images', $article->getKey()), [
-            'image' => UploadedFile::fake()->image(sprintf('%s.jpg', $this->faker->sha1)),
-        ]);
+        $image = $article->images->random();
 
-        $articleImage = $article->refresh()->images()->first();
-
-        $response =
-            $this
-                ->actingAs($this->admin)
-                ->postJson(sprintf('/api/blog/articles/%d/images/%d/main-image', $article->getKey(), $articleImage->getKey()), []);
+        $response = $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images/%s/main-image', $article->getKey(), $image->getKey()));
 
         $response
             ->assertSuccessful()
             ->assertJson([
-                'id' => $article->getKey(),
+                'main_image' => [
+                    'uuid' => $image->getKey()
+                ]
             ]);
 
-        $this->assertTrue($article->refresh()->mainImage->is($articleImage));
+        $this->assertTrue($article->refresh()->mainImage->is($image));
     }
 
     /**
-     * Tests a image is set as main image for other article.
+     * Tests a image is unset from the main image.
      */
-    public function test_upload_main_image_other_article(): void
+    public function test_unset_main_image(): void
     {
         Storage::fake();
 
-        /**
-         * @var Article $first
-         * @var Article $second
-         */
-        [$first, $second] =
-            Article::factory(2)
+        $article =
+            Article::factory()
                 ->recycle($this->admin)
                 ->hasPostWithUser()
                 ->withRevision(1)
                 ->published()
+                ->has(Image::factory()->fakedImage(user: $this->admin))
                 ->create();
 
-        $this->actingAs($this->admin)->postJson(sprintf('/api/blog/articles/%d/images', $first->getKey()), [
-            'image' => UploadedFile::fake()->image(sprintf('%s.jpg', $this->faker->sha1)),
-        ]);
+        $image = $article->images->random();
 
-        $articleImage = $first->refresh()->images()->first();
+        $article->mainImage()->associate($image);
 
-        $response =
-            $this
-                ->actingAs($this->admin)
-                ->postJson(sprintf('/api/blog/articles/%d/images/%d/main-image', $second->getKey(), $articleImage->getKey()), []);
+        $response = $this->actingAs($this->admin)->deleteJson(sprintf('/api/blog/articles/%d/main-image', $article->getKey()));
 
-        // Allow image to be shared.
         $response
             ->assertSuccessful()
             ->assertJson([
-                'id' => $second->getKey(),
+                'main_image' => null
             ]);
 
-        $this->assertTrue($second->refresh()->mainImage->is($articleImage));
+        $this->assertNull($article->refresh()->mainImage);
     }
 }

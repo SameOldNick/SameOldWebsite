@@ -32,5 +32,6 @@ class UserSeeder extends Seeder
             $this->callWith(CommentSeeder::class, ['article' => $article, 'users' => $commentUsers]);
         }
 
+        //$this->callWith(CommentSeeder::class, ['article' => $article, 'userFactory' => $userFactory]);
     }
 }
