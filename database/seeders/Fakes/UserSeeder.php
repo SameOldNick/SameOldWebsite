@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         $articleUsers = User::factory(5)->create();
 
-        $articleFactory = Article::factory(5)->faked(fn() => $articleUsers->random(), Revision::factory(fake()->numberBetween(1, 3)));
+        $articleFactory = Article::factory(5)->faked(fn () => $articleUsers->random(), Revision::factory(fake()->numberBetween(1, 3)));
 
         $published = $articleFactory->published()->create();
         $deleted = $articleFactory->deleted()->create();

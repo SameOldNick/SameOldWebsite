@@ -44,20 +44,21 @@ class ArticleImageSeeder extends Seeder
 
             $file = File::createFromFilePath($path, null, true);
 
-            if (!is_null($user))
+            if (! is_null($user)) {
                 $file->user()->associate($user);
+            }
 
             $image = Image::create([
-                'description' => sprintf('Author: %s'.PHP_EOL.'Source: %s', $meta['author'], $meta['url'])
+                'description' => sprintf('Author: %s'.PHP_EOL.'Source: %s', $meta['author'], $meta['url']),
             ]);
 
             $image->file()->save($file);
 
-            if (!is_null($article))
+            if (! is_null($article)) {
                 $image->articles()->attach($article);
+            }
 
             $images->push($image);
-
         }
 
         if (fake()->boolean() && $images->isNotEmpty()) {

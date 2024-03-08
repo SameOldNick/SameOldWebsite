@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Article;
 use App\Models\Revision;
-use App\Models\User;
 use App\Traits\Database\Factories\CreatesPostable;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -42,14 +41,13 @@ class ArticleFactory extends Factory
         return $this;
     }
 
-    public function faked($user = null, RevisionFactory $revisionFactory) {
-
+    public function faked($user, RevisionFactory $revisionFactory)
+    {
         return
             $this
                 ->hasPostWithUser(is_callable($user) ? $user() : $user)
                 ->has($revisionFactory)
                 ->afterCreating(function (Article $article) {
-
                     $revisions = $article->revisions;
 
                     $article->currentRevision()->associate($revisions->random());
@@ -65,7 +63,6 @@ class ArticleFactory extends Factory
                             $current->save();
                         }
                     }
-
 
                     $article->save();
                 });

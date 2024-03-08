@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Image;
-use App\Models\File;
 use Illuminate\Http\Request;
 
 class ArticleImageController extends Controller
@@ -73,6 +72,4 @@ class ArticleImageController extends Controller
 
         return $article;
     }
-
-
 }
