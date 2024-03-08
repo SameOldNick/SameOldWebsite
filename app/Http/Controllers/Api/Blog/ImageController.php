@@ -14,7 +14,7 @@ class ImageController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('index', Image::class);
+        $this->authorize(Image::class);
 
         return $request->user()->hasRoles(['admin']) ? Image::all() : Image::owned($request->user())->get();
     }
@@ -24,7 +24,7 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Image::class);
+        $this->authorize(Image::class);
 
         $request->validate([
             'image' => 'required|image',
@@ -52,7 +52,7 @@ class ImageController extends Controller
      */
     public function show(Image $image)
     {
-        $this->authorize('view', $image);
+        $this->authorize($image);
 
         return $image;
     }
@@ -62,7 +62,7 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        $this->authorize('delete', $image);
+        $this->authorize($image);
 
         $image->delete();
 
