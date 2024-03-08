@@ -17,7 +17,7 @@ const CurrentRevision = withRouter(({ router }: IProps) => {
             <WithArticle articleId={Number(router.params.article)}>
                 {(article, err) => (
                     <>
-                        {article && <Navigate to={`revisions/${article.article.current_revision?.uuid}`} />}
+                        {article && <Navigate to={article.generatePath(article.article.current_revision?.uuid)} />}
                         {err && console.error(err)}
                     </>
                 )}
