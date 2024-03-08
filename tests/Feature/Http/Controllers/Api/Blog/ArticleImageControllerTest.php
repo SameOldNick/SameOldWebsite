@@ -6,7 +6,6 @@ use App\Models\Article;
 use App\Models\Image;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\InteractsWithJWT;
@@ -81,7 +80,7 @@ class ArticleImageControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonCount(1)
             ->assertJson([
-                ['uuid' => $image->getKey()]
+                ['uuid' => $image->getKey()],
             ]);
     }
 
@@ -137,8 +136,8 @@ class ArticleImageControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJson([
                 'main_image' => [
-                    'uuid' => $image->getKey()
-                ]
+                    'uuid' => $image->getKey(),
+                ],
             ]);
 
         $this->assertTrue($article->refresh()->mainImage->is($image));
@@ -169,7 +168,7 @@ class ArticleImageControllerTest extends TestCase
         $response
             ->assertSuccessful()
             ->assertJson([
-                'main_image' => null
+                'main_image' => null,
             ]);
 
         $this->assertNull($article->refresh()->mainImage);

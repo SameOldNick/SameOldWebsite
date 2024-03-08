@@ -2,9 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use App\Models\File;
 use App\Models\Image;
-use Database\Seeders\Fakes\ImageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -20,7 +18,8 @@ class ImageControllerTest extends TestCase
     use InteractsWithJWT;
     use WithFaker;
 
-    public function test_get_all_images() {
+    public function test_get_all_images()
+    {
         Image::factory(5)->fakedImage()->create();
 
         $response = $this->actingAs($this->admin)->getJson('/api/images');
@@ -42,7 +41,7 @@ class ImageControllerTest extends TestCase
                             'mime_type',
                         ],
                     ],
-                ]
+                ],
             ]);
     }
 
@@ -51,7 +50,8 @@ class ImageControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_retrieve_image() {
+    public function test_retrieve_image()
+    {
         Storage::fake();
 
         $image = Image::factory()->fakedImage(user: $this->admin)->create();
@@ -120,7 +120,8 @@ class ImageControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_delete_image() {
+    public function test_delete_image()
+    {
         Storage::fake();
 
         $image = Image::factory()->fakedImage(user: $this->admin)->create();

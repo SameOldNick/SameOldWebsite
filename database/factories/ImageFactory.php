@@ -3,12 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\File;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
@@ -23,17 +19,19 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->sentence
+            'description' => $this->faker->sentence,
         ];
     }
 
-    public function fakedImage(array $exts = ['jpg', 'png', 'bmp'], $user = null) {
+    public function fakedImage(array $exts = ['jpg', 'png', 'bmp'], $user = null)
+    {
         return $this->has(File::factory(1)->uploadedFile(
-            fn() => UploadedFile::fake()->image(sprintf('%s.%s', $this->faker->uuid, $this->faker->randomElement($exts)))
+            fn () => UploadedFile::fake()->image(sprintf('%s.%s', $this->faker->uuid, $this->faker->randomElement($exts)))
         )->for($user));
     }
 
-    public function withFile(string $path, string $name, bool $public) {
+    public function withFile(string $path, string $name, bool $public)
+    {
         return $this->has(
             File::factory()->state([
                 'path' => $path,

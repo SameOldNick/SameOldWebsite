@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
 use App\Models\File;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller

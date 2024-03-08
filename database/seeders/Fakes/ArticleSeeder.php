@@ -5,9 +5,6 @@ namespace Database\Seeders\Fakes;
 use App\Models\Article;
 use App\Models\Revision;
 use App\Models\Tag;
-use App\Models\User;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
 
 class ArticleSeeder extends Seeder
@@ -45,7 +42,6 @@ class ArticleSeeder extends Seeder
                             $current->save();
                         }
                     }
-
 
                     $article->save();
                 });
