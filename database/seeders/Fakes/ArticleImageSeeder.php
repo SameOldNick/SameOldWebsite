@@ -3,7 +3,9 @@
 namespace Database\Seeders\Fakes;
 
 use App\Models\Article;
-use App\Models\ArticleImage;
+use App\Models\File;
+use App\Models\Image;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -16,16 +18,16 @@ class ArticleImageSeeder extends Seeder
      *
      * @return void
      */
-    public function run(Article $article = null, int $count = 1, array $options = [])
+    public function run(Article $article = null, int $count = 1, array $options = [], ?User $user = null)
     {
-        $defaults = [
+        $options = array_merge([
             'ext' => '.jpg',
             'width' => 1024,
             'height' => 768,
             'public' => true,
-        ];
+        ], $options);
 
-        $options = array_merge($defaults, $options);
+        $images = collect();
 
         for ($n = 0; $n < $count; $n++) {
             $url = sprintf('https://picsum.photos/%d/%d%s', $options['width'], $options['height'], $options['ext']);
@@ -40,7 +42,26 @@ class ArticleImageSeeder extends Seeder
 
             Storage::put($path, $response->body());
 
-            ArticleImage::factory()->for($article)->picsum($path, $meta, true)->create();
+            $file = File::createFromFilePath($path, null, true);
+
+            if (!is_null($user))
+                $file->user()->associate($user);
+
+            $image = Image::create([
+                'description' => sprintf('Author: %s'.PHP_EOL.'Source: %s', $meta['author'], $meta['url'])
+            ]);
+
+            $image->file()->save($file);
+
+            if (!is_null($article))
+                $image->articles()->attach($article);
+
+            $images->push($image);
+
+        }
+
+        if (fake()->boolean() && $images->isNotEmpty()) {
+            $article->mainImage()->associate($images->random())->save();
         }
     }
 }

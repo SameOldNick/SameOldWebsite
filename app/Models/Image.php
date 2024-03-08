@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
-class ArticleImage extends Model
+class Image extends Model
 {
     use HasFactory;
     use Fileable;
@@ -57,13 +58,24 @@ class ArticleImage extends Model
     protected $with = ['file'];
 
     /**
-     * Gets the article this belongs to
+     * Gets the articles this image belongs to
      *
-     * @return mixed
+     * @return BelongsToMany
      */
-    public function article()
+    public function articles(): BelongsToMany
     {
-        return $this->belongsTo(Article::class);
+        return $this->belongsToMany(Article::class);
+    }
+
+    /**
+     * Scope a query to only include images owned by a user.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOwned($query, User $user)
+    {
+        return $query->join('files', 'images.uuid', '=', 'files.fileable_id')->where('files.user_id', $user->getKey());
     }
 
     /**

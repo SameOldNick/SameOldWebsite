@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Article;
 use App\Models\Revision;
+use App\Models\User;
 use App\Traits\Database\Factories\CreatesPostable;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -39,6 +40,35 @@ class ArticleFactory extends Factory
     public function configure()
     {
         return $this;
+    }
+
+    public function faked($user = null, RevisionFactory $revisionFactory) {
+
+        return
+            $this
+                ->hasPostWithUser(is_callable($user) ? $user() : $user)
+                ->has($revisionFactory)
+                ->afterCreating(function (Article $article) {
+
+                    $revisions = $article->revisions;
+
+                    $article->currentRevision()->associate($revisions->random());
+
+                    // Assigns parent revision to each revision (except first)
+                    if ($revisions->count() > 1) {
+                        for ($i = 1; $i < $revisions->count(); $i++) {
+                            $parent = $revisions->get($i - 1);
+                            $current = $revisions->get($i);
+
+                            $current->parentRevision()->associate($parent);
+
+                            $current->save();
+                        }
+                    }
+
+
+                    $article->save();
+                });
     }
 
     /**

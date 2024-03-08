@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +21,20 @@ class FileFactory extends Factory
     {
         return [
             'created_at' => now(),
+            'is_public' => true
         ];
+    }
+
+    public function fileable($factory) {
+        return $this->for(
+            $factory, 'fileable'
+        );
+    }
+
+    public function uploadedFile($uploadedFile, string $path = '') {
+        return $this->state(fn () => [
+            'path' => value($uploadedFile)->store($path),
+        ]);
     }
 
     public function fromContents(string $fileName, string $contents, bool $public = false)

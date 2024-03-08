@@ -7,6 +7,7 @@ use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\URL;
 
@@ -113,13 +114,13 @@ class Article extends Model
     }
 
     /**
-     * Gets images for this article.
+     * Gets the images that belong to this article.
      *
-     * @return mixed
+     * @return BelongsToMany
      */
-    public function images()
+    public function images(): BelongsToMany
     {
-        return $this->hasMany(ArticleImage::class);
+        return $this->belongsToMany(Image::class);
     }
 
     /**
@@ -129,7 +130,7 @@ class Article extends Model
      */
     public function mainImage()
     {
-        return $this->belongsTo(ArticleImage::class, 'main_image', 'uuid');
+        return $this->belongsTo(Image::class, 'main_image', 'uuid');
     }
 
     /**

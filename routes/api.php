@@ -56,10 +56,11 @@ Route::namespace(Api::class)->group(function () {
             Route::post('/contact', [Api\Contact\MetaDataController::class, 'update']);
         });
 
+        Route::apiResource('images', Api\Blog\ImageController::class)->except(['update']);
+
         Route::prefix('/blog')->group(function () {
             Route::apiResource('articles', Api\Blog\ArticleController::class);
             Route::apiResource('articles.revisions', Api\Blog\RevisionController::class)->except(['update']);
-            Route::apiResource('articles.images', Api\Blog\ImageController::class)->except(['update']);
             Route::apiResource('comments', Api\Blog\CommentController::class)->except(['store']);
 
             Route::post('/comments/{comment}/approve', [Api\Blog\CommentController::class, 'approve'])->withTrashed();
@@ -67,8 +68,12 @@ Route::namespace(Api::class)->group(function () {
             Route::post('/articles/restore/{article}', [Api\Blog\ArticleController::class, 'restore'])->withTrashed();
             Route::post('/articles/{article}/revision', [Api\Blog\ArticleController::class, 'revision']);
 
-            Route::post('/articles/{article}/images/{image}/main-image', [Api\Blog\ImageController::class, 'mainImage']);
-            Route::delete('/articles/{article}/main-image', [Api\Blog\ImageController::class, 'destroyMainImage']);
+            Route::get('/articles/{article}/images', [Api\Blog\ArticleImageController::class, 'index']);
+            Route::post('/articles/{article}/images/{image}', [Api\Blog\ArticleImageController::class, 'attach']);
+            Route::delete('/articles/{article}/images/{image}', [Api\Blog\ArticleImageController::class, 'detach']);
+
+            Route::post('/articles/{article}/images/{image}/main-image', [Api\Blog\ArticleImageController::class, 'mainImage']);
+            Route::delete('/articles/{article}/main-image', [Api\Blog\ArticleImageController::class, 'destroyMainImage']);
 
             Route::get('/articles/{article}/tags', [Api\Blog\TagController::class, 'index']);
             Route::post('/articles/{article}/tags', [Api\Blog\TagController::class, 'attach']);

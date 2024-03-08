@@ -6,6 +6,8 @@ use App\Models\Article;
 use App\Models\Revision;
 use App\Models\Tag;
 use App\Models\User;
+use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
 
 class ArticleSeeder extends Seeder
@@ -15,22 +17,22 @@ class ArticleSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run($user = null)
     {
+        $revisionFactory = Revision::factory(fake()->numberBetween(1, 3));
+
         $factory =
             Article::factory()
-                ->recycle(User::find(1))
-                ->hasPostWithUser()
-                ->withRevision(fake()->numberBetween(1, 5))
+                ->hasPostWithUser($user)
+                ->has($revisionFactory)
                 ->afterCreating(function (Article $article) {
-                    $article->tags()->attach(Tag::all()->random(5));
+                    $article->tags()->attach(Tag::all()->random(fake()->numberBetween(1, 3)));
 
-                    $this->callWith(ArticleImageSeeder::class, ['article' => $article, 'count' => fake()->numberBetween(0, 3), 'options' => []]);
-                    $this->callWith(CommentSeeder::class, ['article' => $article]);
+                    $this->callWith(ArticleImageSeeder::class, ['article' => $article, 'count' => fake()->numberBetween(0, 3), 'options' => [], 'user' => $article->post->user]);
 
                     $revisions = $article->revisions;
 
-                    $article->currentRevision()->associate(fake()->boolean() ? $revisions->random() : $revisions->last());
+                    $article->currentRevision()->associate($revisions->random());
 
                     // Assigns parent revision to each revision (except first)
                     if ($revisions->count() > 1) {
@@ -44,10 +46,6 @@ class ArticleSeeder extends Seeder
                         }
                     }
 
-                    if (fake()->boolean() && $article->images->isNotEmpty()) {
-                        $images = $article->images;
-                        $article->mainImage()->associate($images->random());
-                    }
 
                     $article->save();
                 });

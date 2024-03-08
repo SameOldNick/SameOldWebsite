@@ -4,21 +4,22 @@ namespace App\Traits\Database\Factories;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 trait CreatesPostable
 {
     /**
      * Include post with user.
      *
-     * @param User|null $user
-     * @param Post|null $post
-     * @return bool
+     * @param User|null $userFactory
+     * @param Post|null $postFactory
+     * @return static
      */
-    public function hasPostWithUser(User $user = null, Post $post = null)
+    public function hasPostWithUser($userFactory = null, Factory $postFactory = null)
     {
-        $post = $post ?? Post::factory(1);
-        $user = $user ?? User::factory();
+        $postFactory = $postFactory ?? Post::factory();
+        $userFactory = $userFactory ?? User::factory();
 
-        return $this->has($post->for($user));
+        return $this->has($postFactory->for($userFactory));
     }
 }

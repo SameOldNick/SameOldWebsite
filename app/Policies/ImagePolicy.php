@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Article;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class ArticlePolicy
+class ImagePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,9 +19,9 @@ class ArticlePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(?User $user, Article $article)
+    public function view(User $user, Image $image): bool
     {
-        return ! is_null($article->published_at) && $article->published_at->isPast() ? Response::allow() : Response::denyAsNotFound();
+        return $image->file->user->is($user) || $user->hasRoles(['admin']);
     }
 
     /**
@@ -29,29 +29,29 @@ class ArticlePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Article $article): bool
+    public function update(User $user, Image $image): bool
     {
-        return ($article->post->user && $article->post->user->is($user)) || $user->hasRoles(['admin']);
+        return ($image->file->user && $image->file->user->is($user)) || $user->hasRoles(['admin']);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Article $article): bool
+    public function delete(User $user, Image $image): bool
     {
-        //
+        return ($image->file->user && $image->file->user->is($user)) || $user->hasRoles(['admin']);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Article $article): bool
+    public function restore(User $user, Image $image): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class ArticlePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Article $article): bool
+    public function forceDelete(User $user, Image $image): bool
     {
         //
     }

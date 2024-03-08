@@ -3,6 +3,7 @@
 namespace Database\Seeders\Initial;
 
 use App\Models\Article;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 
@@ -13,22 +14,24 @@ class ArticleSeeder extends Seeder
      */
     public function run(): void
     {
-        $article = new Article([
-            'title' => 'Welcome to Same Old Nick\'s Corner of the Internet! 🚀',
-            'slug' => 'welcome',
-        ]);
+        $user = User::find(1);
 
-        $article->published_at = Carbon::now();
+        $article = Article::createWithPost(function (Article $article) {
+            $article->fill([
+                'title' => 'Welcome to Same Old Nick\'s Corner of the Internet! 🚀',
+                'slug' => 'welcome',
+            ]);
 
-        $article->save();
+            $article->published_at = Carbon::now();
+        }, $user);
 
-        $revision = $article->revisions()->make([
+        $revision = $article->revisions()->create([
             'content' => $this->getContent(),
         ]);
 
         $article->currentRevision()->associate($revision);
 
-        $article->push();
+        $article->save();
     }
 
     protected function getContent(): string
