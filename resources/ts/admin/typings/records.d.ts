@@ -146,7 +146,7 @@ declare global {
     }
 
     interface IArticle {
-        id?: number;
+        id: number;
         title: string;
         slug: string;
         main_image: IArticleImage | null;
@@ -158,7 +158,7 @@ declare global {
     }
 
     interface IRevision {
-        uuid?: string;
+        uuid: string;
         content: string;
         summary: string;
         summary_auto: boolean;
@@ -167,7 +167,7 @@ declare global {
     }
 
     interface IArticleImage {
-        uuid?: string;
+        uuid: string;
         description: string;
         file: IFile;
     }
