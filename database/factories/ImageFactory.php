@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\File;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
 
@@ -27,7 +28,7 @@ class ImageFactory extends Factory
     {
         return $this->has(File::factory(1)->uploadedFile(
             fn () => UploadedFile::fake()->image(sprintf('%s.%s', $this->faker->uuid, $this->faker->randomElement($exts)))
-        )->for($user));
+        )->for($user ?? User::factory()));
     }
 
     public function withFile(string $path, string $name, bool $public)
