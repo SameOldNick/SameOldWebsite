@@ -9,7 +9,7 @@ import gemoji from '@bytemd/plugin-gemoji';
 import highlight from '@bytemd/plugin-highlight';
 import mediumZoom from '@bytemd/plugin-medium-zoom';
 
-interface IMarkdownEditorProps extends EditorProps {
+export interface IMarkdownEditorProps extends EditorProps {
 
 }
 
