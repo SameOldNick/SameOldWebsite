@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Article;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -62,5 +63,37 @@ class ArticlePolicy
     public function forceDelete(User $user, Article $article): bool
     {
         //
+    }
+
+    /**
+     * Determine if image can be attached to article.
+     */
+    public function attach(User $user, Article $article, Image $image): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine if image can be detached from article.
+     */
+    public function detach(User $user, Article $article, Image $image): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine if image can be set as main image for article.
+     */
+    public function mainImage(User $user, Article $article, Image $image): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine if main image can be removed from article.
+     */
+    public function destroyMainImage(User $user, Article $article): bool
+    {
+        return true;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Image;
+use App\Policies\ArticleImagePolicy;
 use Illuminate\Http\Request;
 
 class ArticleImageController extends Controller
@@ -14,7 +15,7 @@ class ArticleImageController extends Controller
      */
     public function index(Article $article)
     {
-        $this->authorize('view', $article);
+        $this->authorize($article);
 
         return $article->images;
     }
@@ -24,8 +25,7 @@ class ArticleImageController extends Controller
      */
     public function attach(Article $article, Image $image)
     {
-        $this->authorize('update', $article);
-        $this->authorize('update', $image);
+        $this->authorize([$article, $image]);
 
         $article->images()->attach($image);
 
@@ -37,8 +37,8 @@ class ArticleImageController extends Controller
      */
     public function detach(Article $article, Image $image)
     {
-        $this->authorize('update', $article);
-        $this->authorize('update', $image);
+        $this->authorize([$article, $image]);
+
         // TODO: Don't allow if set as main image.
 
         $article->images()->detach($image);
@@ -51,8 +51,7 @@ class ArticleImageController extends Controller
      */
     public function mainImage(Request $request, Article $article, Image $image)
     {
-        $this->authorize('update', $article);
-        $this->authorize('update', $image);
+        $this->authorize([$article, $image]);
 
         $article->mainImage()->associate($image);
         $article->save();
@@ -65,7 +64,7 @@ class ArticleImageController extends Controller
      */
     public function destroyMainImage(Request $request, Article $article)
     {
-        $this->authorize('update', $article);
+        $this->authorize([$article]);
 
         $article->mainImage()->dissociate();
         $article->save();
