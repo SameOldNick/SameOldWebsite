@@ -83,7 +83,7 @@ export default class RefreshAccessTokenHttpRequest implements IHttpRequest {
                         return await performRequest();
 
                     } catch (innerErr) {
-
+                        logger.error(innerErr);
                     }
                 }
             }
