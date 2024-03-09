@@ -20,7 +20,7 @@ class ImageControllerTest extends TestCase
 
     public function test_get_all_images()
     {
-        Image::factory(5)->fakedImage()->create();
+        Image::factory(5)->fakedImage(user: $this->admin)->create();
 
         $response = $this->actingAs($this->admin)->getJson('/api/images');
 
