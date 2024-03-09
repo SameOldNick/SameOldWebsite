@@ -25,14 +25,6 @@ export default class Article {
         this.currentRevision = this.article.current_revision !== null ? new Revision(this.article.current_revision) : null;
     }
 
-    public get isNew() {
-        return this.article.id === undefined;
-    }
-
-    public get isExisting() {
-        return this.article.id !== undefined;
-    }
-
     public get createdAt() {
         return this.currentRevision ? this.currentRevision.createdAt : null;
     }
