@@ -1,350 +1,279 @@
 import React from 'react';
 import { FormikProps } from 'formik';
 import { Badge, Button, Card, CardBody, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
-import withReactContent from 'sweetalert2-react-content';
 import { FaExternalLinkAlt, FaInfoCircle, FaUndo } from 'react-icons/fa';
 import { Tag } from 'react-tag-autocomplete';
 
 import { DateTime } from 'luxon';
-import axios from 'axios';
-import Swal from 'sweetalert2';
 import S from 'string';
 
 import FormWrapper, { IArticleFormValues } from './FormWrapper';
-import SelectMainImage, { TMainImage } from './article-form/main-image';
+import MainImage from './article-form/MainImage';
 import Tags from './article-form/Tags';
-import Content from './article-form/Content';
-import SelectRevisionModal from './article-form/SelectRevisionModal';
+import Content, { TUploadImagesCallback } from './article-form/Content';
+import UploadImageModal from './UploadImageModal';
 
 import UnsavedChangesWarning from '@admin/components/UnsavedChangesWarning';
 import Heading, { HeadingTitle } from '@admin/layouts/admin/Heading';
-import WaitToLoad from '@admin/components/WaitToLoad';
-import Loader from '@admin/components/Loader';
-import { IHasRouter } from '@admin/components/hoc/WithRouter';
 import SelectDateTimeModal from '@admin/components/SelectDateTimeModal';
-import ArticleInfoModal from './ArticleInfoModal';
-
-import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import { createAuthRequest } from '@admin/utils/api/factories';
 
 import Revision from '@admin/utils/api/models/Revision';
-import Article from '@admin/utils/api/models/Article';
-
-export interface IEditArticleFormValues extends IArticleFormValues {
-
-}
+import Article, { TArticleStatus } from '@admin/utils/api/models/Article';
+import { uploadImage } from '@admin/utils/api/endpoints/articles';
+import awaitModalPrompt from '@admin/utils/modals';
 
 export interface IArticleValues {
     title: string;
     slug: string;
     content: string;
     summary: string | null;
-    parentRevision?: Revision;
 }
 
-interface IProps extends IHasRouter<'article'> {
+
+export type TArticleActions = 'save-as-revision' | 'update' | 'publish' | 'schedule' | 'unpublish' | 'unschedule' | 'delete';
+
+export interface IEditArticleValues {
+    article: IArticleFormValues;
+    mainImage?: IImage;
+    tags: Tag[];
+}
+
+export interface IArticleActionInputs {
+    title: string,
+    slug: string,
+    content: string;
+    summary: string | null;
+    publishedAt: DateTime | null;
+    images: IImage[];
+    mainImage?: IImage;
+    tags: Tag[];
+}
+
+export type TArticleActionDirtyValues = Record<keyof Omit<IArticleActionInputs, 'publishedAt'>, boolean>;
+
+export interface IEditFormProps {
     article: Article;
     revision: Revision;
-    tags: Tag[];
-    mainImage: TMainImage | undefined;
+    original: IEditArticleValues;
+    status: TArticleStatus;
 
-    setTags: (tags: Tag[]) => void;
-    setMainImage: (image: TMainImage | undefined) => void;
+    onArticleInformationClicked: () => void;
+    onRestoreRevisionClicked: () => void;
+    onPreviewArticleClicked: () => void;
+    onActionButtonClicked: (action: TArticleActions, inputs: IArticleActionInputs, dirty: TArticleActionDirtyValues) => Promise<void>;
 
-    onSaveAsRevision: (values: IArticleValues) => Promise<void>;
     onUpdate: (values: IArticleValues) => Promise<void>;
     onPublish: (values: IArticleValues, dateTime: DateTime) => Promise<void>;
     onUnpublish: (values: IArticleValues) => Promise<void>;
     onUnschedule: (values: IArticleValues) => Promise<void>;
-    onDelete: (values: IArticleValues) => Promise<void>;
 }
 
-const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((props, ref) => {
+const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProps>((props, ref) => {
     const {
-        router,
         article,
         revision,
-        tags,
-        mainImage,
-        setTags,
-        setMainImage,
-        onUpdate,
-        onSaveAsRevision,
-        onPublish,
-        onUnpublish,
-        onUnschedule,
-        onDelete
+        original,
+        status,
+        onArticleInformationClicked,
+        onRestoreRevisionClicked,
+        onPreviewArticleClicked,
+        onActionButtonClicked
     } = props;
 
-    const formikRef = React.useRef<FormikProps<IEditArticleFormValues> | null>();
-    const waitToLoadRevisionsRef = React.createRef<WaitToLoad<IRevision[]>>();
+    const formikRef = React.useRef<FormikProps<IArticleFormValues> | null>();
 
-    const [, setRenderCount] = React.useState(0);
-    const [showSelectRevisionModal, setShowSelectRevisionModal] = React.useState(false);
-    const [showScheduleModal, setShowScheduleModal] = React.useState(false);
+
     const [buttonDropdownOpen, setButtonDropdownOpen] = React.useState(false);
-    const [showArticleInfoModal, setShowArticleInfoModal] = React.useState(false);
-    const [dirty, setDirty] = React.useState({
-        mainImage: false,
-        tags: false
-    });
+
+    const [tags, setTags] = React.useState<Tag[]>(original.tags);
+    const [mainImage, setMainImage] = React.useState<IImage | undefined>(original.mainImage);
+    const [images, setImages] = React.useState<IImage[]>([]);
 
     React.useEffect(() => {
-        setRenderCount((count) => count + 1);
-    }, [router.location.pathname, router.params]);
+        if (original.tags !== tags)
+            setTags(original.tags);
+    }, [original.tags]);
 
-    const initialValues =
-        React.useMemo(
-            () => ({
-                title: article.article.title,
-                content: revision.revision.content,
-                summary: revision.revision.summary,
-                summary_auto_generate: revision.revision.summary_auto,
-                slug: article.article.slug,
-                slug_auto_generate: article.isSlugAutoGenerated
-            }),
-            [article, revision]
-        );
+    React.useEffect(() => {
+        console.log(mainImage, original.mainImage);
+        if (original.mainImage !== mainImage)
+            setMainImage(original.mainImage);
+    }, [original.mainImage]);
 
-    const handleSaveAsRevisionClicked = async () => {
+
+    const getDirty = React.useCallback((values: IArticleFormValues): TArticleActionDirtyValues => {
+        const { content, summary_auto_generate, summary, title, slug } = values;
+
+        return {
+            title: title !== original.article.title,
+            slug: slug !== original.article.slug,
+            content: content !== original.article.content,
+            summary: summary !== original.article.summary || summary_auto_generate !== original.article.summary_auto_generate,
+            mainImage: mainImage !== original.mainImage,
+            tags: tags !== original.tags,
+            images: images.length > 0
+        };
+    }, [original, images]);
+
+    const hasDirty = React.useCallback((values: IArticleFormValues): boolean => Object.values(getDirty(values)).includes(true), []);
+
+    const handleActionButtonClick = async (action: TArticleActions) => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
         }
 
-        const { values: { content, summary_auto_generate, summary, title, slug } } = formikRef.current;
+        const { values: { content, summary_auto_generate, summary, title, slug }, values } = formikRef.current;
 
-        onSaveAsRevision({
-            title,
-            slug,
-            content,
-            summary: !summary_auto_generate ? summary : null,
-            parentRevision: revision
-        });
-    }
+        const dirty = getDirty(values);
 
-    const handleUpdateClicked = async () => {
-        if (!formikRef.current) {
-            console.error('No reference to formik.');
-            return;
-        }
+        // TODO: Indicate loading to user
 
-        const { values: { content, summary_auto_generate, summary, title, slug } } = formikRef.current;
+        switch (action) {
+            case 'save-as-revision':
+            case 'update': {
+                onActionButtonClicked(action, {
+                    title,
+                    slug,
+                    content,
+                    summary: !summary_auto_generate ? summary : null,
+                    publishedAt: article.publishedAt,
+                    mainImage,
+                    images,
+                    tags
+                }, dirty);
 
-        onUpdate({
-            title,
-            slug,
-            content,
-            summary: !summary_auto_generate ? summary : null,
-            parentRevision: revision
-        });
-    }
+                break;
+            }
 
-    const handlePublishClicked = async () => {
-        if (!formikRef.current) {
-            console.error('No reference to formik.');
-            return;
-        }
+            case 'publish': {
+                onActionButtonClicked(action, {
+                    title,
+                    slug,
+                    content,
+                    summary: !summary_auto_generate ? summary : null,
+                    publishedAt: DateTime.now(),
+                    mainImage,
+                    images,
+                    tags
+                }, dirty);
 
-        const { values: { content, summary_auto_generate, summary, title, slug } } = formikRef.current;
+                break;
+            }
 
-        onPublish({
-            title,
-            slug,
-            content,
-            summary: !summary_auto_generate ? summary : null,
-            parentRevision: revision
-        }, DateTime.now());
-    }
+            case 'schedule': {
+                const dateTime = await awaitModalPrompt(SelectDateTimeModal);
 
-    const handleUnpublishClicked = async () => {
-        if (!formikRef.current) {
-            console.error('No reference to formik.');
-            return;
-        }
+                onActionButtonClicked(action, {
+                    title,
+                    slug,
+                    content,
+                    summary: !summary_auto_generate ? summary : null,
+                    publishedAt: dateTime,
+                    mainImage,
+                    images,
+                    tags
+                }, dirty);
 
-        const { values: { content, summary_auto_generate, summary, title, slug } } = formikRef.current;
+                break;
+            }
 
-        onUnpublish({
-            title,
-            slug,
-            content,
-            summary: !summary_auto_generate ? summary : null,
-            parentRevision: revision
-        });
-    }
+            case 'unpublish':
+            case 'unschedule': {
+                onActionButtonClicked(action, {
+                    title,
+                    slug,
+                    content,
+                    summary: !summary_auto_generate ? summary : null,
+                    publishedAt: null,
+                    mainImage,
+                    images,
+                    tags
+                }, dirty);
 
-    const handleScheduleClicked = async () => {
-        if (!formikRef.current) {
-            console.error('No reference to formik.');
-            return;
-        }
+                break;
+            }
 
-        setShowScheduleModal(true);
-    }
+            case 'delete': {
+                onActionButtonClicked('delete', {
+                    title,
+                    slug,
+                    content,
+                    summary: !summary_auto_generate ? summary : null,
+                    publishedAt: null,
+                    mainImage,
+                    images,
+                    tags
+                }, dirty);
 
-    const handleScheduleDateTimeSelected = (selected: DateTime) => {
-        if (!formikRef.current) {
-            console.error('No reference to formik.');
-            return;
-        }
-
-        const { values: { content, summary_auto_generate, summary, title, slug } } = formikRef.current;
-
-        onPublish({
-            title,
-            slug,
-            content,
-            summary: !summary_auto_generate ? summary : null,
-            parentRevision: revision
-        }, selected);
-
-        setShowScheduleModal(false);
-    }
-
-    const handleUnscheduleClicked = async () => {
-        if (!formikRef.current) {
-            console.error('No reference to formik.');
-            return;
-        }
-
-        const { values: { content, summary_auto_generate, summary, title, slug } } = formikRef.current;
-
-        onUnschedule({
-            title,
-            slug,
-            content,
-            summary: !summary_auto_generate ? summary : null,
-            parentRevision: revision
-        });
-    }
-
-    const handleDeleteClicked = async () => {
-        if (!formikRef.current) {
-            console.error('No reference to formik.');
-            return;
-        }
-
-        const { values: { content, summary_auto_generate, summary, title, slug } } = formikRef.current;
-
-        onDelete({
-            title,
-            slug,
-            content,
-            summary: !summary_auto_generate ? summary : null,
-            parentRevision: revision
-        });
-    }
-
-    const handleRevisionsClicked = () => setShowSelectRevisionModal(true);
-
-    const handleRevisionSelected = (revision: IRevision) => {
-        if (!article.article.id || !revision.uuid) {
-            console.error('Article ID or revision UUID is missing.', article, revision);
-
-            return;
-        }
-
-        router.navigate(article.generatePath(revision.uuid));
-
-        formikRef.current?.resetForm();
-    }
-
-    const handleArticleInfoClicked = () => setShowArticleInfoModal(true);
-
-    const handleCloseArticleInfoModal = () => setShowArticleInfoModal(false);
-
-    const loadRevisions = async () => {
-        const response = await createAuthRequest().get<IRevision[]>(`blog/articles/${article.article.id}/revisions`);
-
-        return response.data;
-    }
-
-    const handleLoadRevisionsError = async (err: unknown) => {
-        const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-        const result = await withReactContent(Swal).fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `An error occurred loading revisions: ${message}`,
-            confirmButtonText: 'Try Again',
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            waitToLoadRevisionsRef.current?.load();
-        } else {
-            router.navigate(-1);
+                break;
+            }
         }
     }
 
-    const handleMainImageChanged = (image?: TMainImage) => {
-        setMainImage(image);
-        setDirty((prev) => ({ ...prev, mainImage: true }))
+    const handleSaveAsRevisionClicked = () => handleActionButtonClick('save-as-revision');
+    const handleUpdateClicked = () => handleActionButtonClick('update');
+    const handlePublishClicked = () => handleActionButtonClick('publish');
+    const handleUnpublishClicked = () => handleActionButtonClick('unpublish');
+    const handleScheduleClicked = () => handleActionButtonClick('schedule');
+    const handleUnscheduleClicked = () => handleActionButtonClick('unschedule');
+    const handleDeleteClicked = () => handleActionButtonClick('delete');
+    const handleUploadMainImageClicked = async () => {
+        try {
+            const uploaded = await awaitModalPrompt(UploadImageModal);
+
+            setMainImage(uploaded);
+
+        } catch (e) {
+            // Modal was cancelled.
+        }
+    }
+
+    const handleRemoveMainImageClicked = async () => {
+        // TODO: Confirm with user first
+        setMainImage(undefined);
     }
 
     const handleTagsChanged = (tags: Tag[]) => {
         setTags(tags);
-        setDirty((prev) => ({ ...prev, tags: true }))
     }
 
-    const hasUnsavedChanges = () => dirty.mainImage || dirty.tags || formikRef.current?.dirty ? true : false;
+    const handleUploadImages: TUploadImagesCallback = async (files: File[]) => {
+        const images: Awaited<ReturnType<TUploadImagesCallback>> = [];
+
+        for (const file of files) {
+            const uploaded = await uploadImage(file);
+
+            setImages((prev) => prev.concat(uploaded));
+
+
+            images.push({
+                url: uploaded.file.url as string,
+                alt: uploaded.description,
+                title: uploaded.file.name
+            });
+        }
+
+        return images;
+    }
 
     return (
         <>
-            {showSelectRevisionModal && (
-                <WaitToLoad<IRevision[]>
-                    ref={waitToLoadRevisionsRef}
-                    loading={<Loader display={{ type: 'over-element' }} />}
-                    callback={loadRevisions}
-                >
-                    {(revisions, err) => (
-                        <>
-                            {err && handleLoadRevisionsError(err)}
-                            {revisions && (
-                                <SelectRevisionModal
-                                    existing={revision}
-                                    revisions={revisions}
-                                    onSelected={handleRevisionSelected}
-                                    onCancelled={() => setShowSelectRevisionModal(false)}
-                                />
-                            )}
-
-                        </>
-                    )}
-                </WaitToLoad>
-            )}
-
-            {showScheduleModal && (
-                <SelectDateTimeModal
-                    onSelected={handleScheduleDateTimeSelected}
-                    onCancelled={() => setShowScheduleModal(false)}
-                />
-            )}
-
-            {showArticleInfoModal && (
-                <ArticleInfoModal
-                    article={article}
-                    onClosed={handleCloseArticleInfoModal}
-                />
-            )}
-
             <FormWrapper
                 ref={(instance) => formikRef.current = React.assignRef(ref, instance)}
                 enableReinitialize
-                initialValues={initialValues}
+                initialValues={original.article}
                 onSubmit={() => console.error('Form submit is not implemented.')}
                 {...props}
             >
                 {(formikProps) => (
                     <>
-                        <UnsavedChangesWarning enabled={hasUnsavedChanges()} />
+                        <UnsavedChangesWarning enabled={hasDirty(formikProps.values)} />
 
                         <Heading>
                             <HeadingTitle>
                                 Edit Post
-                                {hasUnsavedChanges() && (
+                                {hasDirty(formikProps.values) && (
                                     <small className='ms-1 text-body-secondary'>
                                         <Badge color='secondary'>Unsaved Changes</Badge>
                                     </small>
@@ -357,7 +286,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
                                     outline
                                     className='me-1'
                                     title='Article Information'
-                                    onClick={handleArticleInfoClicked}
+                                    onClick={onArticleInformationClicked}
                                 >
                                     <FaInfoCircle />
                                 </Button>
@@ -367,29 +296,28 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
                                     outline
                                     className='me-1'
                                     title='Restore Revision'
-                                    onClick={handleRevisionsClicked}
+                                    onClick={onRestoreRevisionClicked}
                                 >
                                     <FaUndo />
                                 </Button>
 
                                 <Button
-                                    tag='a'
                                     color='primary'
                                     outline
                                     className='me-1'
                                     title='Preview Article'
-                                    href={article.article.private_url}
-                                    target='_blank'
+                                    onClick={onPreviewArticleClicked}
                                 >
                                     <FaExternalLinkAlt />
                                 </Button>
 
+                                {/* TODO: Move dropdown to seperate component. */}
                                 <Dropdown toggle={() => setButtonDropdownOpen((prev) => !prev)} isOpen={buttonDropdownOpen}>
                                     <DropdownToggle caret color='primary'>
-                                        {`Status: ${S(article.status).capitalize().s}`}
+                                        {`Status: ${S(status).capitalize().s}`}
                                     </DropdownToggle>
                                     <DropdownMenu>
-                                        {article.status === Article.ARTICLE_STATUS_PUBLISHED && (
+                                        {status === Article.ARTICLE_STATUS_PUBLISHED && (
                                             <>
                                                 <DropdownItem onClick={handleSaveAsRevisionClicked}>Save as Revision</DropdownItem>
                                                 <DropdownItem onClick={handleUpdateClicked}>Update</DropdownItem>
@@ -399,7 +327,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
                                                 <DropdownItem onClick={handleDeleteClicked}>Delete</DropdownItem>
                                             </>
                                         )}
-                                        {article.status === Article.ARTICLE_STATUS_UNPUBLISHED && (
+                                        {status === Article.ARTICLE_STATUS_UNPUBLISHED && (
                                             <>
                                                 <DropdownItem onClick={handleSaveAsRevisionClicked}>Save as Revision</DropdownItem>
                                                 <DropdownItem onClick={handlePublishClicked}>Save &amp; Publish</DropdownItem>
@@ -408,7 +336,7 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
                                                 <DropdownItem onClick={handleDeleteClicked}>Delete</DropdownItem>
                                             </>
                                         )}
-                                        {article.status === Article.ARTICLE_STATUS_SCHEDULED && (
+                                        {status === Article.ARTICLE_STATUS_SCHEDULED && (
                                             <>
                                                 <DropdownItem onClick={handleSaveAsRevisionClicked}>Save as Revision</DropdownItem>
                                                 <DropdownItem onClick={handleUpdateClicked}>Update</DropdownItem>
@@ -428,13 +356,21 @@ const EditForm = React.forwardRef<FormikProps<IEditArticleFormValues>, IProps>((
                             <Col md={8}>
                                 <Card>
                                     <CardBody>
-                                        <Content formikProps={formikProps} />
+                                        <Content
+                                            formikProps={formikProps}
+                                            uploadImages={handleUploadImages}
+                                        />
                                     </CardBody>
                                 </Card>
                             </Col>
 
                             <Col md={4}>
-                                <SelectMainImage className='mb-3' current={mainImage} onChange={handleMainImageChanged} />
+                                <MainImage
+                                    className='mb-3'
+                                    current={mainImage}
+                                    onUploadClicked={handleUploadMainImageClicked}
+                                    onRemoveClicked={handleRemoveMainImageClicked}
+                                />
 
                                 <Tags tags={tags} onTagsChanged={handleTagsChanged} />
                             </Col>

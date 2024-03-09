@@ -3,29 +3,42 @@ import { FormikHelpers, FormikProps } from 'formik';
 import { Button, Card, CardBody, Col, Row } from 'reactstrap';
 import { Tag } from 'react-tag-autocomplete';
 
-import FormWrapper, { IArticleFormValues } from './FormWrapper';
-import SelectMainImage, { TMainImage } from './article-form/main-image';
-import Tags from './article-form/Tags';
-import Content from './article-form/Content';
+import { DateTime } from 'luxon';
 
+import FormWrapper, { IArticleFormValues } from './FormWrapper';
+import MainImage from './article-form/MainImage';
+import Tags from './article-form/Tags';
+import Content, { TMarkdownImage, TUploadImagesCallback, transformImageToMarkdownImage } from './article-form/Content';
+import UploadImageModal from './UploadImageModal';
 import UnsavedChangesWarning from '@admin/components/UnsavedChangesWarning';
 
-export interface ICreateArticleFormValues extends IArticleFormValues {
+import { uploadImage } from '@admin/utils/api/endpoints/articles';
+import awaitModalPrompt from '@admin/utils/modals';
 
+export interface ICreateArticleFormValues extends IArticleFormValues {
 }
+
+interface ISaveArticleParamsBase {
+    article: {
+        title: string;
+        slug: string;
+        content: string;
+        summary?: string;
+    }
+    mainImage?: IImage;
+    images: IImage[];
+    tags: Tag[];
+}
+
+export type TSaveArticleParams = ISaveArticleParamsBase;
+export type TSaveAndPublishArticleParams = ISaveArticleParamsBase & { article: { publishedAt: DateTime; } };
 
 interface IProps {
-    tags: Tag[];
-    mainImage: TMainImage | undefined;
-
-    onTagsChanged: (tags: Tag[]) => void;
-    onMainImageChanged: (image: TMainImage | undefined) => void;
-
-    onSaveClicked: (values: ICreateArticleFormValues, helpers: FormikHelpers<ICreateArticleFormValues>) => Promise<void>;
-    onFormSubmit: (values: ICreateArticleFormValues, helpers: FormikHelpers<ICreateArticleFormValues>) => Promise<void>;
+    onSaveClicked: (params: TSaveArticleParams) => Promise<void>;
+    onSaveAndPublishClicked: (params: TSaveAndPublishArticleParams) => Promise<void>;
 }
 
-const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProps>(({ tags, mainImage, onTagsChanged, onMainImageChanged, onSaveClicked, onFormSubmit, ...props }, ref) => {
+const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProps>(({ onSaveClicked, onSaveAndPublishClicked, ...props }, ref) => {
     const initialValues = React.useMemo(
         () => ({
             title: '',
@@ -38,9 +51,89 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
         []
     );
 
+    const [mainImage, setMainImage] = React.useState<IImage | undefined>(undefined);
+    const [images, setImages] = React.useState<IImage[]>([]);
+    const [tags, setTags] = React.useState<Tag[]>([]);
+
+    const handleUploadMainImageClicked = async () => {
+        try {
+            const uploaded = await awaitModalPrompt(UploadImageModal);
+
+            setMainImage(uploaded);
+        } catch (e) {
+            // Modal was cancelled.
+        }
+
+    }
+
+    const handleRemoveMainImageClicked = async () => {
+        setMainImage(undefined);
+    }
+
+    const handleImageUpload: TUploadImagesCallback = async (files) => {
+        const uploaded: TMarkdownImage[] = [];
+
+        // Upload images
+        for (const file of files) {
+            const image = await uploadImage(file);
+
+            uploaded.push(transformImageToMarkdownImage(image));
+
+            // Add image to state so they're attached to article once it's created
+            setImages((images) => [...images, image]);
+        }
+
+        return uploaded;
+    }
+
+    const handleFormSubmit = async (values: ICreateArticleFormValues, { setSubmitting }: FormikHelpers<ICreateArticleFormValues>) => {
+        try {
+            setSubmitting(true);
+
+            const publishedAt = DateTime.now();
+
+            onSaveAndPublishClicked({
+                article: {
+                    title: values.title,
+                    slug: values.slug,
+                    content: values.content,
+                    summary: !values.summary_auto_generate ? values.summary : undefined,
+                    publishedAt
+                },
+                mainImage,
+                images,
+                tags
+            });
+        } finally {
+            setSubmitting(false);
+        }
+    }
+
+    const handleSaveButtonClicked = async (e: React.MouseEvent<HTMLButtonElement>, { values, setSubmitting }: FormikProps<ICreateArticleFormValues>) => {
+        try {
+            e.preventDefault();
+
+            setSubmitting(true);
+
+            onSaveClicked({
+                article: {
+                    title: values.title,
+                    slug: values.slug,
+                    content: values.content,
+                    summary: !values.summary_auto_generate ? values.summary : undefined
+                },
+                mainImage,
+                images,
+                tags
+            });
+        } finally {
+            setSubmitting(false);
+        }
+    }
+
     return (
         <>
-            <FormWrapper ref={ref} initialValues={initialValues} onSubmit={onFormSubmit} {...props}>
+            <FormWrapper ref={ref} initialValues={initialValues} onSubmit={handleFormSubmit} {...props}>
                 {(formikProps) => (
                     <>
                         <UnsavedChangesWarning enabled={Object.values(formikProps.touched).filter((value) => value).length > 0} />
@@ -49,16 +142,20 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
                             <Col md={8}>
                                 <Card>
                                     <CardBody>
-                                        <Content formikProps={formikProps} />
-
+                                        <Content formikProps={formikProps} uploadImages={handleImageUpload} />
                                     </CardBody>
                                 </Card>
                             </Col>
 
                             <Col md={4}>
-                                <SelectMainImage className='mb-3' current={mainImage} onChange={(image) => onMainImageChanged(image)} />
+                                <MainImage
+                                    className='mb-3'
+                                    current={mainImage}
+                                    onUploadClicked={handleUploadMainImageClicked}
+                                    onRemoveClicked={handleRemoveMainImageClicked}
+                                />
 
-                                <Tags className='mb-3' tags={tags} onTagsChanged={onTagsChanged} />
+                                <Tags className='mb-3' tags={tags} onTagsChanged={(tags) => setTags(tags)} />
 
                                 <Card>
                                     <CardBody>
@@ -69,7 +166,7 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
                                                     color='primary'
                                                     disabled={formikProps.isSubmitting}
                                                     className='me-1'
-                                                    onClick={() => onSaveClicked(formikProps.values, formikProps)}
+                                                    onClick={(e) => handleSaveButtonClicked(e, formikProps)}
                                                 >
                                                     Save
                                                 </Button>

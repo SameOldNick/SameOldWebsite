@@ -1,53 +1,53 @@
 import React from 'react';
 import { Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 
+import axios from 'axios';
+
 import DragDropFile from '@admin/components/DragDropFile';
 import Alerts, { IAlert } from '@admin/components/Alerts';
 
 import { createBase64UrlFromFile } from '@admin/utils';
+import { IPromptModalProps } from '@admin/utils/modals';
+import { uploadImage } from '@admin/utils/api/endpoints/articles';
+import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
-export interface IUploaded {
+export interface ISelectedImage {
     file: File;
     src: string;
 }
 
-export interface ISelected {
-    uploaded: IUploaded;
-    description: string;
-}
-
-interface IProps {
-    onSelected: (selected: ISelected) => void;
-    onCancelled: () => void;
-}
-
-const SelectMainImageModal: React.FC<IProps> = ({ onSelected, onCancelled }) => {
+const UploadImageModal: React.FC<IPromptModalProps<IImage>> = ({ onSuccess, onCancelled }) => {
     const descriptionRef = React.createRef<HTMLInputElement>();
 
-    const [uploaded, setUploaded] = React.useState<IUploaded | undefined>(undefined);
+    const [selected, setSelected] = React.useState<ISelectedImage | undefined>(undefined);
     const [alerts, setAlerts] = React.useState<IAlert[]>([]);
 
     const handleFileSelected = async (file: File) => {
         const src = await createBase64UrlFromFile(file);
 
-        setUploaded({ file, src });
+        setSelected({ file, src });
     }
 
-    const handleFileRemoved = () => setUploaded(undefined);
+    const handleFileRemoved = () => setSelected(undefined);
 
-    const handleSelectClicked = () => {
-        if (!uploaded)
+    const handleSelectClicked = async () => {
+        if (!selected)
             return;
 
-        onSelected({
-            uploaded,
-            description: descriptionRef.current?.value || ''
-        });
+        try {
+            const uploaded = await uploadImage(selected.file, descriptionRef.current?.value || '');
+
+            onSuccess(uploaded);
+        } catch (err) {
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+            setAlerts([...alerts, { type: 'danger', message }]);
+        }
     }
 
     React.useEffect(() => {
         return () => {
-            setUploaded(undefined);
+            setSelected(undefined);
             setAlerts([]);
         };
     }, []);
@@ -66,7 +66,7 @@ const SelectMainImageModal: React.FC<IProps> = ({ onSelected, onCancelled }) => 
 
                         <Col xs={12}>
                             <DragDropFile multiple={false} accept="image/*" onFileSelected={handleFileSelected} onFileRemoved={handleFileRemoved}>
-                                {uploaded && <img src={uploaded.src} alt='Main image' className='img-fluid' />}
+                                {selected && <img src={selected.src} alt='Main image' className='img-fluid' />}
                             </DragDropFile>
                         </Col>
 
@@ -87,7 +87,7 @@ const SelectMainImageModal: React.FC<IProps> = ({ onSelected, onCancelled }) => 
                     </Row>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={handleSelectClicked} disabled={uploaded === undefined}>
+                    <Button color="primary" onClick={handleSelectClicked} disabled={selected === undefined}>
                         Select
                     </Button>
                     {' '}
@@ -100,4 +100,4 @@ const SelectMainImageModal: React.FC<IProps> = ({ onSelected, onCancelled }) => 
     );
 }
 
-export default SelectMainImageModal;
+export default UploadImageModal;

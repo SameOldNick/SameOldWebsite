@@ -2,18 +2,22 @@ import React from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Row, Col, FormGroup, Label, Input, Form } from 'reactstrap';
 
 import { DateTime } from 'luxon';
+import { IPromptModalProps } from '../utils/modals';
 
-interface ISelectDateTimeModalProps {
+interface ISelectDateTimeModalProps extends IPromptModalProps<DateTime> {
     existing?: DateTime;
-    onSelected: (dateTime: DateTime) => void;
-    onCancelled: () => void;
 }
 
-const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, onSelected, onCancelled }) => {
+const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, onSuccess, onCancelled }) => {
     const [currentDateTime, setCurrentDateTime] = React.useState<DateTime>(DateTime.now());
 
     const [date, setDate] = React.useState<string>(existing?.toFormat('yyyy-MM-dd') ?? '');
     const [time, setTime] = React.useState<string>(existing?.toFormat('HH:mm:ss') ?? '');
+
+    React.useEffect(() => {
+        if (existing !== currentDateTime)
+            setCurrentDateTime(existing ?? DateTime.now());
+    }, [existing]);
 
     const handleDateChanged = (newValue: string) => {
         setDate(newValue);
@@ -28,7 +32,7 @@ const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, on
 
         const selected = DateTime.fromISO(`${date}T${time}`);
 
-        onSelected(selected);
+        onSuccess(selected);
     }
 
     return (

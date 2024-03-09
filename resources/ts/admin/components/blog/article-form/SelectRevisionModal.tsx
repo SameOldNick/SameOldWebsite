@@ -1,19 +1,54 @@
 import React from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Table } from 'reactstrap';
 
+import axios from 'axios';
 import { DateTime } from 'luxon';
 import classNames from 'classnames';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+import WaitToLoad from '@admin/components/WaitToLoad';
+import Loader from '@admin/components/Loader';
+
+import { createAuthRequest } from '@admin/utils/api/factories';
+
+import { IPromptModalProps } from '@admin/utils/modals';
+import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import Revision from '@admin/utils/api/models/Revision';
 
-interface ISelectRevisionModalProps {
+export interface ISelectRevisionModalProps extends IPromptModalProps<IRevision> {
+    articleId: number;
     existing?: Revision;
-    revisions: IRevision[];
-    onSelected: (revision: IRevision) => void;
-    onCancelled: () => void;
 }
 
-const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ existing, revisions, onSelected, onCancelled }) => {
+const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, existing, onSuccess, onCancelled }) => {
+    const waitToLoadRevisionsRef = React.createRef<WaitToLoad<IRevision[]>>();
     const [selected, setSelected] = React.useState<IRevision>();
+
+    const loadRevisions = async () => {
+        const response = await createAuthRequest().get<IRevision[]>(`blog/articles/${articleId}/revisions`);
+
+        return response.data;
+    }
+
+    const handleLoadRevisionsError = async (err: unknown) => {
+        const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+        const result = await withReactContent(Swal).fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `An error occurred loading revisions: ${message}`,
+            confirmButtonText: 'Try Again',
+            showConfirmButton: true,
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            waitToLoadRevisionsRef.current?.load();
+        } else {
+            onCancelled();
+        }
+    }
 
     const isSelected = (revision: IRevision) => {
         if (selected !== undefined)
@@ -39,23 +74,35 @@ const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ existing, re
                             </tr>
                         </thead>
                         <tbody>
-                            {(revisions).map((revision, index) => (
-                                <tr
-                                    key={index}
-                                    title={`Created: ${revision.created_at}`}
-                                    className={classNames({ 'table-active': isSelected(revision) })}
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => setSelected(revision)}
-                                >
-                                    <td>{revision.uuid}</td>
-                                    <td>{DateTime.fromISO(revision.created_at).toRelative()}</td>
-                                </tr>
-                            ))}
+                            <WaitToLoad<IRevision[]>
+                                ref={waitToLoadRevisionsRef}
+                                loading={<Loader display={{ type: 'over-element' }} />}
+                                callback={loadRevisions}
+                            >
+                                {(revisions, err) => (
+                                    <>
+                                        {err && handleLoadRevisionsError(err)}
+                                        {revisions && (revisions).map((revision, index) => (
+                                            <tr
+                                                key={index}
+                                                title={`Created: ${revision.created_at}`}
+                                                className={classNames({ 'table-active': isSelected(revision) })}
+                                                style={{ cursor: 'pointer' }}
+                                                onClick={() => setSelected(revision)}
+                                            >
+                                                <td>{revision.uuid}</td>
+                                                <td>{DateTime.fromISO(revision.created_at).toRelative()}</td>
+                                            </tr>
+                                        ))}
+
+                                    </>
+                                )}
+                            </WaitToLoad>
                         </tbody>
                     </Table>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" disabled={selected === undefined} onClick={() => selected && onSelected(selected)}>
+                    <Button color="primary" disabled={selected === undefined} onClick={() => selected && onSuccess(selected)}>
                         Select
                     </Button>{' '}
                     <Button color="secondary" onClick={onCancelled}>

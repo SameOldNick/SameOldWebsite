@@ -3,19 +3,16 @@ import { Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Tag } from 'react-tag-autocomplete';
 import withReactContent from 'sweetalert2-react-content';
-import { FormikHelpers } from 'formik';
 
 import { DateTime } from 'luxon';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import Heading from '@admin/layouts/admin/Heading';
-import CreateForm, { ICreateArticleFormValues } from '@admin/components/blog/CreateForm';
-import { TMainImage, isMainImageNew } from '@admin/components/blog/article-form/main-image';
+import CreateForm, { TSaveArticleParams, TSaveAndPublishArticleParams } from '@admin/components/blog/CreateForm';
 
-import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import { attachTags, createArticle, setMainImage, uploadMainImage } from '@admin/utils/api/endpoints/articles';
+import { attachImage, attachTags, createArticle, setMainImage } from '@admin/utils/api/endpoints/articles';
 
 import Article from '@admin/utils/api/models/Article';
 
@@ -25,8 +22,6 @@ interface IProps {
 
 interface IState {
     created?: Article;
-    tags: Tag[];
-    mainImage: TMainImage | undefined;
 }
 
 export default class Create extends React.Component<IProps, IState> {
@@ -34,128 +29,123 @@ export default class Create extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            tags: [],
-            mainImage: undefined
         };
 
         this.handleSave = this.handleSave.bind(this);
         this.handleSaveAndPublish = this.handleSaveAndPublish.bind(this);
     }
 
-    private async saveArticle(values: ICreateArticleFormValues, publishedAt: DateTime | null) {
-        const { tags, mainImage } = this.state;
+    private async saveArticle(title: string, slug: string, content: string, summary?: string, publishedAt?: DateTime) {
+        return createArticle(title, slug, content, summary || null, publishedAt || null);
+    }
 
-        let article: Article | undefined;
-        let articleImage: IArticleImage | undefined;
+    private async setMainImage(article: Article, mainImage: IImage) {
+        await attachImage(article.article.id, mainImage.uuid);
+        await setMainImage(article.article.id, mainImage.uuid);
+    }
 
+    private async associateImages(article: Article, images: IImage[]) {
+        for (const image of images) {
+            await attachImage(article.article.id, image.uuid);
+        }
+    }
+
+    private async associateTags(article: Article, tags: Tag[]) {
+        await attachTags(article.article.id, tags);
+    }
+
+    private async handleSave(params: TSaveArticleParams) {
         try {
-            article = await createArticle(values.title, values.slug, values.content, !values.summary_auto_generate ? values.summary : null, publishedAt);
+            const { article, mainImage, images, tags } = params;
 
-            if (mainImage !== undefined && isMainImageNew(mainImage)) {
-                articleImage = await uploadMainImage(article, mainImage);
+            const created = await this.saveArticle(article.title, article.slug, article.content, article.summary);
 
-                //articleImage = await this.uploadMainImage(article, mainImage);
-                await setMainImage(article, articleImage);
+            if (mainImage !== undefined) {
+                await this.setMainImage(created, mainImage);
             }
 
-            await attachTags(article, tags);
+            if (images.length > 0) {
+                await this.associateImages(created, images);
+            }
 
-            return article;
+            if (tags.length > 0) {
+                this.associateTags(created, tags);
+            }
+
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Success!',
+                text: `The article has been saved.`
+            });
+
+            this.setState({ created });
         } catch (err) {
             console.error(err);
 
-            if (articleImage && articleImage.uuid) {
-                createAuthRequest().delete(`blog/articles/${article?.article.id}/images/${articleImage.uuid}`);
-            }
+            // TODO: Revert API calls that were successful.
 
-            if (article && article.article.revision && article.article.revision.uuid) {
-                createAuthRequest().delete(`blog/articles/${article?.article.id}/revisions/${article.article.revision.uuid}`);
-            }
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
-            if (article && article.article.id) {
-                createAuthRequest().delete(`blog/articles/${article?.article.id}`);
-            }
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to save article: ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
 
-            throw err;
+            if (result.isConfirmed)
+                await this.handleSave(params);
         }
     }
 
-    private async handleSave(values: ICreateArticleFormValues, { setSubmitting }: FormikHelpers<ICreateArticleFormValues>) {
-        const trySaveArticle = async () => {
-            try {
-                const article = await this.saveArticle(values, null);
+    private async handleSaveAndPublish(params: TSaveAndPublishArticleParams) {
+        try {
+            const { article, mainImage, images, tags } = params;
 
-                await withReactContent(Swal).fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: `The article has been saved.`
-                });
+            const created = await this.saveArticle(article.title, article.slug, article.content, article.summary, article.publishedAt);
 
-                this.setState({ created: article });
-            } catch (err) {
-                console.error(err);
-
-                const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-                const result = await withReactContent(Swal).fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `Unable to save article: ${message}`,
-                    confirmButtonText: 'Try Again',
-                    showConfirmButton: true,
-                    showCancelButton: true
-                });
-
-                if (result.isConfirmed)
-                    await trySaveArticle();
+            if (mainImage !== undefined) {
+                await this.setMainImage(created, mainImage);
             }
-        }
 
-        setSubmitting(true);
-
-        await trySaveArticle();
-
-        setSubmitting(false);
-    }
-
-    private async handleSaveAndPublish(values: ICreateArticleFormValues) {
-        const publishedAt = DateTime.now();
-
-        const trySaveArticle = async () => {
-            try {
-                const article = await this.saveArticle(values, publishedAt);
-
-                await withReactContent(Swal).fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: `The article has been saved and published.`
-                });
-
-                this.setState({ created: article });
-            } catch (err) {
-                console.error(err);
-
-                const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-                const result = await withReactContent(Swal).fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `Unable to save and publish article: ${message}`,
-                    confirmButtonText: 'Try Again',
-                    showConfirmButton: true,
-                    showCancelButton: true
-                });
-
-                if (result.isConfirmed)
-                    await trySaveArticle();
+            if (images.length > 0) {
+                await this.associateImages(created, images);
             }
-        }
 
-        await trySaveArticle();
+            if (tags.length > 0) {
+                this.associateTags(created, tags);
+            }
+
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Success!',
+                text: `The article has been saved and published.`
+            });
+
+            this.setState({ created });
+        } catch (err) {
+            console.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to save and publish article: ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
+
+            if (result.isConfirmed)
+                await this.handleSaveAndPublish(params);
+        }
     }
 
     public render() {
-        const { created, tags, mainImage } = this.state;
+        const { created } = this.state;
 
         return (
             <>
@@ -168,12 +158,8 @@ export default class Create extends React.Component<IProps, IState> {
                 {created !== undefined && <Navigate to={created.generatePath()} />}
 
                 <CreateForm
-                    tags={tags}
-                    mainImage={mainImage}
-                    onTagsChanged={(tags) => this.setState({ tags })}
-                    onMainImageChanged={(image) => this.setState({ mainImage: image })}
                     onSaveClicked={this.handleSave}
-                    onFormSubmit={this.handleSaveAndPublish}
+                    onSaveAndPublishClicked={this.handleSaveAndPublish}
                 />
             </>
         );

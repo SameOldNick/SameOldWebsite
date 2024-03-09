@@ -22,29 +22,26 @@ interface IProps extends TFormikProps {
 
 }
 
-const FormWrapper = React.forwardRef<FormikProps<IFormikValues>, IProps>(({ children, ...props }, ref) => {
-    const formikRef = React.useRef<FormikProps<IFormikValues> | null>();
+const FormWrapper = React.forwardRef<FormikProps<IArticleFormValues>, IProps>(({ children, ...props }, ref) => {
+    const formikRef = React.useRef<FormikProps<IArticleFormValues> | null>();
 
     const schema =
-        React.useMemo(
-            () => Yup.object().shape({
-                title: Yup.string().required('Title is required').max(255),
-                content: Yup.string().required('Content is required'),
-                summary: Yup.string().when('summary_auto_generate', {
-                    is: false,
-                    then: (schema) => schema.required('Summary is required.'),
-                    otherwise: (schema) => schema.optional()
-                }),
-                summary_auto_generate: Yup.boolean(),
-                slug: Yup.string().required('Slug is required').matches(/^[a-z][a-z\d]*(-[a-z\d]+)*$/i),
-                slug_auto_generate: Yup.boolean()
+        React.useMemo(() => Yup.object().shape({
+            title: Yup.string().required('Title is required').max(255),
+            content: Yup.string().required('Content is required'),
+            summary: Yup.string().when('summary_auto_generate', {
+                is: false,
+                then: (schema) => schema.required('Summary is required.'),
+                otherwise: (schema) => schema.optional()
             }),
-            []
-        );
+            summary_auto_generate: Yup.boolean(),
+            slug: Yup.string().required('Slug is required').matches(/^[a-z][a-z\d]*(-[a-z\d]+)*$/i),
+            slug_auto_generate: Yup.boolean()
+        }), []);
 
     return (
         <>
-            <Formik<IFormikValues>
+            <Formik<IArticleFormValues>
                 innerRef={(instance) => formikRef.current = React.assignRef(ref, instance)}
                 validationSchema={schema}
                 {...props}

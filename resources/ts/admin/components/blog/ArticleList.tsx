@@ -19,6 +19,7 @@ import Article from '@admin/utils/api/models/Article';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { updateArticle, restoreArticle as restoreArticleApi, deleteArticle as deleteArticleApi, fetchArticles, ArticleStatuses } from '@admin/utils/api/endpoints/articles';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import awaitModalPrompt from '@admin/utils/modals';
 
 interface IProps {
 
@@ -36,7 +37,6 @@ interface IArticleProps {
 export default class ArticleList extends React.Component<IProps, IState> {
     static Article: React.FC<IArticleProps> = ({ article, onUpdated }) => {
         const [actionDropdown, setActionDropdown] = React.useState(false);
-        const [showScheduleModal, setShowScheduleModal] = React.useState(false);
 
         const handlePublishClicked = async () => {
             const result = await withReactContent(Swal).fire({
@@ -56,7 +56,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
 
         const publishArticle = async () => {
             try {
-                await updateArticle(article, article.article.title, article.article.slug, DateTime.now());
+                await updateArticle(article.article.id, article.article.title, article.article.slug, DateTime.now());
             } catch (err) {
                 console.error(err);
 
@@ -78,14 +78,18 @@ export default class ArticleList extends React.Component<IProps, IState> {
         }
 
         const handleScheduleClicked = async () => {
-            setShowScheduleModal(true);
+            try {
+                const dateTime = await awaitModalPrompt(SelectDateTimeModal);
+
+                scheduleArticle(dateTime);
+            } catch (err) {
+                // User cancelled modal.
+            }
         }
 
         const scheduleArticle = async (dateTime: DateTime) => {
             try {
-                await updateArticle(article, article.article.title, article.article.slug, dateTime);
-
-                setShowScheduleModal(false);
+                await updateArticle(article.article.id, article.article.title, article.article.slug, dateTime);
 
                 onUpdated();
             } catch (err) {
@@ -125,7 +129,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
 
         const unpublishArticle = async () => {
             try {
-                await updateArticle(article, article.article.title, article.article.slug, null);
+                await updateArticle(article.article.id, article.article.title, article.article.slug, null);
             } catch (err) {
                 console.error(err);
 
@@ -163,7 +167,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
 
         const deleteArticle = async () => {
             try {
-                await deleteArticleApi(article);
+                await deleteArticleApi(article.article.id);
 
                 onUpdated();
             } catch (err) {
@@ -203,7 +207,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
 
         const restoreArticle = async () => {
             try {
-                await restoreArticleApi(article);
+                await restoreArticleApi(article.article.id);
 
                 onUpdated();
             } catch (err) {
@@ -228,9 +232,6 @@ export default class ArticleList extends React.Component<IProps, IState> {
 
         return (
             <>
-                {showScheduleModal && (
-                    <SelectDateTimeModal onSelected={scheduleArticle} onCancelled={() => setShowScheduleModal(false)} />
-                )}
                 <tr>
                     <td>{article.article.id}</td>
                     <td>{article.article.title}</td>
@@ -247,7 +248,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem href={article.article.private_url} target='_blank'><FaExternalLinkAlt />{' '}Preview</DropdownItem>
-                                            <DropdownItem href={`edit/${article.article.id}`}><FaEdit />{' '}Edit</DropdownItem>
+                                            <DropdownItem href={`posts/edit/${article.article.id}`}><FaEdit />{' '}Edit</DropdownItem>
                                             <DropdownItem onClick={handlePublishClicked}><FaSave />{' '}Publish Now</DropdownItem>
                                             <DropdownItem onClick={handleScheduleClicked}><FaCalendarAlt />{' '}Schedule</DropdownItem>
                                             <DropdownItem onClick={handleDeleteClicked}><FaTrash />{' '}Delete</DropdownItem>

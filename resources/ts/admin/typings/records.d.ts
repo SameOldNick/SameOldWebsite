@@ -149,7 +149,7 @@ declare global {
         id: number;
         title: string;
         slug: string;
-        main_image: IArticleImage | null;
+        main_image: IImage | null;
         revision?: IRevision;
         current_revision: IRevision | null;
         published_at: string | null;
@@ -166,7 +166,7 @@ declare global {
         updated_at: string;
     }
 
-    interface IArticleImage {
+    interface IImage {
         uuid: string;
         description: string;
         file: IFile;

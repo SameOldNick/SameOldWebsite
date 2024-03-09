@@ -1,66 +1,30 @@
 import React from 'react';
-import { Tag } from 'react-tag-autocomplete';
 import withReactContent from 'sweetalert2-react-content';
 
 import axios from 'axios';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
-import { DateTime } from 'luxon';
 
-import { IMainImageExisting, TMainImage, isMainImageNew } from './article-form/main-image';
-import EditForm, { IArticleValues } from './EditForm';
+import EditForm, { IArticleActionInputs, IEditFormProps, TArticleActionDirtyValues, TArticleActions } from './EditForm';
 import Revision from '@admin/utils/api/models/Revision';
 import Article from '@admin/utils/api/models/Article';
 
 import { IHasRouter } from '@admin/components/hoc/WithRouter';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
+import ArticleInfoModal from './ArticleInfoModal';
+import SelectRevisionModal from './article-form/SelectRevisionModal';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import { createRevision, deleteMainImage, loadTags, setCurrentRevision, updateArticle, uploadMainImage, setMainImage as setMainImageApi, syncTags } from '@admin/utils/api/endpoints/articles';
+import { createRevision, loadTags, setCurrentRevision, updateArticle, syncTags, setMainImage, unsetMainImage } from '@admin/utils/api/endpoints/articles';
+import awaitModalPrompt from '@admin/utils/modals';
 
 interface IEditArticleWrapperProps extends IHasRouter<'article' | 'revision'> {
     article: Article;
 }
 
 const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, router }) => {
-    const waitToLoadRevisionRef = React.createRef<WaitToLoad<Revision>>();
-
-    const [tags, setTags] = React.useState<Tag[]>([]);
-    const [mainImage, setMainImage] = React.useState<TMainImage | undefined>();
-    const [dirty, setDirty] = React.useState({
-        mainImage: false,
-        tags: false
-    });
-
-    const loadMainImage = async ({ article }: Article): Promise<IMainImageExisting | undefined> => {
-        if (article.main_image) {
-            return {
-                src: article.main_image.file.url || '',
-                description: article.main_image.description,
-            };
-        } else {
-            return undefined;
-        }
-    }
-
-    const loadImagesAndTags = async () => {
-        return tryApiCall(async () => {
-            const mainImage = await loadMainImage(article);
-            setMainImage(mainImage);
-
-            const tags = await loadTags(article);
-            setTags(tags);
-        });
-    }
-
-    async function tryApiCall<TTryAgainReturn = void>(apiCall: () => Promise<TTryAgainReturn>): Promise<TTryAgainReturn> {
-        try {
-            return apiCall();
-        } catch (err) {
-            return handleApiError(err, () => tryApiCall(apiCall));
-        }
-    }
+    const waitToLoadRef = React.createRef<WaitToLoad<IEditFormProps>>();
 
     async function handleApiError<TTryAgainReturn = void>(err: unknown, onTryAgain: () => Promise<TTryAgainReturn>) {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -81,17 +45,6 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
         }
     }
 
-    const updateMainImage = async (article: Article, mainImage: TMainImage | null) => {
-        return tryApiCall(async () => {
-            if (mainImage && isMainImageNew(mainImage)) {
-                const image = await uploadMainImage(article, mainImage);
-                await setMainImageApi(article, image);
-            }
-            else // if (mainImage === null)
-                return deleteMainImage(article);
-        });
-    }
-
     const displaySuccess = async (message: string, extra: SweetAlertOptions = {}) => {
         return withReactContent(Swal).fire({
             icon: 'success',
@@ -101,207 +54,282 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
         });
     }
 
-    const handleSaveAsRevision = async ({ title, slug, content, summary, parentRevision }: IArticleValues) => {
-        try {
-            let newArticle = article;
-
-            if (article.article.title !== title || article.article.slug !== slug) {
-                //newArticle = await updateArticle(title, slug, article.article.published_at ? DateTime.fromISO(article.article.published_at) : null);
-                newArticle = await tryApiCall(() => updateArticle(article, title, slug, article.article.published_at ? DateTime.fromISO(article.article.published_at) : null));
-            }
-
-            if (!newArticle.article.id)
-                throw new Error(`ID is missing from article: ${JSON.stringify(article)}`);
-
-            if (dirty.mainImage) {
-                await updateMainImage(newArticle, mainImage || null);
-            }
-
-            if (dirty.tags) {
-                await tryApiCall(() => syncTags(newArticle, tags));
-            }
-
-            const revision = await tryApiCall(() => createRevision(newArticle, content, summary, parentRevision));
-
-            await displaySuccess('Revision was saved.');
-
-            router.navigate(newArticle.generatePath(revision.revision.uuid));
-        } catch (err) {
-            // What happens if an error occurred and user didn't try again.
-            console.error(err);
-        }
-
-    }
-
-    const handleUpdate = async ({ title, slug, content, summary, parentRevision }: IArticleValues) => {
-        try {
-            let newArticle = article;
-
-            if (article.article.title !== title || article.article.slug !== slug) {
-                newArticle = await updateArticle(article, title, slug, article.article.published_at ? DateTime.fromISO(article.article.published_at) : null);
-            }
-
-            if (!newArticle.article.id)
-                throw new Error(`ID is missing from article: ${JSON.stringify(article)}`);
-
-            if (dirty.mainImage) {
-                await updateMainImage(newArticle, mainImage || null);
-            }
-
-            if (dirty.tags) {
-                await syncTags(newArticle, tags);
-            }
-
-            const revision = await createRevision(newArticle, content, summary, parentRevision);
-
-            await tryApiCall(() => setCurrentRevision(newArticle, revision));
-
-            await displaySuccess('Article was updated.');
-
-            router.navigate(newArticle.generatePath(revision.revision.uuid));
-        } catch (err) {
-            // What happens if an error occurred and user didn't try again.
-            console.error(err);
-        }
-    }
-
-    // This is for both unpublishing and unscheduling
-    const handleUnpublish = async ({ title, slug, content, summary, parentRevision }: IArticleValues) => {
-        try {
-            if (!article.article.id)
-                throw new Error(`ID is missing from article: ${JSON.stringify(article)}`);
-
-            const newArticle = await updateArticle(article, title, slug, null);
-
-            if (dirty.mainImage) {
-                await updateMainImage(newArticle, mainImage || null);
-            }
-
-            if (dirty.tags) {
-                await syncTags(newArticle, tags);
-            }
-
-            const revision = await createRevision(newArticle, content, summary, parentRevision);
-
-            await setCurrentRevision(newArticle, revision);
-
-            await displaySuccess('Article is no longer published.');
-
-            router.navigate(newArticle.generatePath(revision.revision.uuid));
-        } catch (err) {
-            // What happens if an error occurred and user didn't try again.
-            console.error(err);
-        }
-    }
-
-    const handlePublish = async ({ title, slug, content, summary, parentRevision }: IArticleValues, dateTime: DateTime) => {
-        try {
-            if (!article.article.id)
-                throw new Error(`ID is missing from article: ${JSON.stringify(article)}`);
-
-            const newArticle = await updateArticle(article, title, slug, dateTime);
-
-            if (!newArticle.article.id)
-                throw new Error(`ID is missing from article: ${JSON.stringify(article)}`);
-
-            if (dirty.mainImage) {
-                await updateMainImage(newArticle, mainImage || null);
-            }
-
-            if (dirty.tags) {
-                await syncTags(newArticle, tags);
-            }
-
-            const revision = await createRevision(newArticle, content, summary, parentRevision);
-
-            await setCurrentRevision(newArticle, revision);
-
-            await displaySuccess(Math.abs(dateTime.diffNow().toMillis()) < 60 * 1000 ? 'The article has been published.' : 'The article has been scheduled.');
-
-            router.navigate(newArticle.generatePath(revision.revision.uuid));
-        } catch (err) {
-            // What happens if an error occurred and user didn't try again.
-            console.error(err);
-        }
-    }
-
-    const handleDelete = async ({ }: IArticleValues) => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `You will be able to restore the article.`,
-            showConfirmButton: true,
-            confirmButtonColor: 'red',
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            const response = await createAuthRequest().delete<Record<'success', string>>(`blog/articles/${article.article.id}`);
-
-            await displaySuccess(response.data.success);
-
-            router.navigate('/admin/posts');
-        }
-    }
-
-    const handleTagsChanged = (tags: Tag[]) => {
-        setTags(tags);
-        setDirty((prev) => ({
-            ...prev,
-            tags: true
-        }));
-    }
-
-    const handleMainImageChanged = (image: TMainImage | undefined) => {
-        setMainImage(image);
-        setDirty((prev) => ({
-            ...prev,
-            mainImage: true
-        }));
-    }
-
     const loadRevision = async () => {
         const response = await createAuthRequest().get<IRevision>(`blog/articles/${article.article.id}/revisions/${router.params.revision}`);
 
         return new Revision(response.data);
     }
 
-    React.useEffect(() => {
-        loadImagesAndTags();
-    }, [article]);
+    const handleActionButtonClicked = async (action: TArticleActions, inputs: IArticleActionInputs, dirty: TArticleActionDirtyValues, currentRevision?: Revision) => {
+        const {
+            title,
+            slug,
+            publishedAt,
+            mainImage,
+            tags
+        } = inputs;
 
-    React.useEffect(() => {
-        waitToLoadRevisionRef.current?.load();
-    }, [router.params.revision]);
+        const isDirty = (keys: (keyof TArticleActionDirtyValues)[]) =>
+            Object.entries(dirty).filter(([key, value]) => value && keys.includes(key as keyof TArticleActionDirtyValues)).length > 0;
+
+        try {
+            switch (action) {
+                case 'save-as-revision': {
+                    // Update article title or slug if changed
+                    if (isDirty(['title', 'slug'])) {
+                        await updateArticle(article.article.id, title, slug, publishedAt);
+                    }
+
+                    // Update main image if needed
+                    if (isDirty(['mainImage'])) {
+                        if (mainImage)
+                            await setMainImage(article.article.id, mainImage.uuid);
+                        else
+                            await unsetMainImage(article.article.id);
+                    }
+
+                    // Update tags if needed
+                    if (isDirty(['tags'])) {
+                        await syncTags(article.article.id, tags);
+                    }
+
+                    // Create revision for article
+                    const revision = await createRevision(article.article.id, inputs.content, inputs.summary, currentRevision ? currentRevision.revision.uuid : undefined);
+
+                    // Display message
+                    await displaySuccess('Revision was saved.');
+
+                    // Redirect to revision
+                    router.navigate(article.generatePath(revision.revision.uuid));
+
+                    break;
+                }
+
+                case 'update': {
+                    // Update article title or slug if changed
+                    if (isDirty(['title', 'slug'])) {
+                        await updateArticle(article.article.id, title, slug, publishedAt);
+                    }
+
+                    // Update main image if needed
+                    if (isDirty(['mainImage'])) {
+                        if (mainImage)
+                            await setMainImage(article.article.id, mainImage.uuid);
+                        else
+                            await unsetMainImage(article.article.id);
+                    }
+
+                    // Update tags if needed
+                    if (isDirty(['tags'])) {
+                        await syncTags(article.article.id, tags);
+                    }
+
+                    // Create revision for article
+                    const revision = await createRevision(article.article.id, inputs.content, inputs.summary, currentRevision ? currentRevision.revision.uuid : undefined);
+
+                    // Set as current revision
+                    setCurrentRevision(article.article.id, revision.revision.uuid);
+
+                    // Display message
+                    await displaySuccess('Article was updated.');
+
+                    // Redirect to revision
+                    router.navigate(article.generatePath(revision.revision.uuid));
+
+                    break;
+                }
+
+                case 'publish': {
+                    // Update article title or slug and set published date/time
+                    await updateArticle(article.article.id, title, slug, publishedAt);
+
+                    // Update main image if needed
+                    if (isDirty(['mainImage'])) {
+                        if (mainImage)
+                            await setMainImage(article.article.id, mainImage.uuid);
+                        else
+                            await unsetMainImage(article.article.id);
+                    }
+
+                    // Update tags if needed
+                    if (isDirty(['tags'])) {
+                        await syncTags(article.article.id, tags);
+                    }
+
+                    const message = `Article has been published.`;
+
+                    // Check if content is changed
+                    if (isDirty(['content'])) {
+                        // Create revision for article
+                        const revision = await createRevision(article.article.id, inputs.content, inputs.summary, currentRevision ? currentRevision.revision.uuid : undefined);
+
+                        // Set as current revision
+                        setCurrentRevision(article.article.id, revision.revision.uuid);
+
+                        // Display message
+                        await displaySuccess(message);
+
+                        // Redirect to revision
+                        router.navigate(article.generatePath(revision.revision.uuid));
+                    } else {
+                        // Display message
+                        await displaySuccess(message);
+
+                        // Refresh current revision
+                        window.location.reload();
+                    }
+
+                    break;
+                }
+
+                case 'unpublish':
+                case 'unschedule': {
+                    // Update article title or slug if changed
+                    // Clear published at date/time
+                    await updateArticle(article.article.id, title, slug, null);
+
+                    // Update main image if needed
+                    if (isDirty(['mainImage'])) {
+                        if (mainImage)
+                            await setMainImage(article.article.id, mainImage.uuid);
+                        else
+                            await unsetMainImage(article.article.id);
+                    }
+
+                    // Update tags if needed
+                    if (isDirty(['tags'])) {
+                        await syncTags(article.article.id, tags);
+                    }
+
+                    const message = `Article has been ${action}ed.`;
+
+                    // Check if content is changed
+                    if (isDirty(['content'])) {
+                        // Create revision for article
+                        const revision = await createRevision(article.article.id, inputs.content, inputs.summary, currentRevision ? currentRevision.revision.uuid : undefined);
+
+                        // Set as current revision
+                        await setCurrentRevision(article.article.id, revision.revision.uuid);
+
+                        // Display message
+                        await displaySuccess(message);
+
+                        // Redirect to revision
+                        router.navigate(article.generatePath(revision.revision.uuid));
+                    } else {
+                        // Display message
+                        await displaySuccess(message);
+
+                        // Refresh current revision
+                        window.location.reload();
+                    }
+
+                    break;
+                }
+
+                case 'delete': {
+                    // Prompt user to confirm deletion
+                    const result = await withReactContent(Swal).fire({
+                        icon: 'question',
+                        title: 'Are You Sure?',
+                        text: `You will be able to restore the article.`,
+                        showConfirmButton: true,
+                        confirmButtonColor: 'red',
+                        showCancelButton: true
+                    });
+
+                    // Check if user confirmed
+                    if (result.isConfirmed) {
+                        // Delete article
+                        const response = await createAuthRequest().delete<Record<'success', string>>(`blog/articles/${article.article.id}`);
+
+                        // Display message
+                        await displaySuccess(response.data.success);
+
+                        // Redirect to posts
+                        router.navigate('/admin/posts');
+                    }
+
+                    break;
+                }
+            }
+
+        } catch (err) {
+            // What happens if an error occurred and user didn't try again.
+            logger.error(err);
+
+            await handleApiError(err, () => handleActionButtonClicked(action, inputs, dirty));
+        }
+
+    }
+
+    const handleRestoreRevisionClicked = async () => {
+        try {
+            const selected = await awaitModalPrompt(SelectRevisionModal, { articleId: article.article.id });
+
+            router.navigate(article.generatePath(selected.uuid));
+        } catch (e) {
+            // Modal was cancelled.
+        }
+    }
+
+    const handlePreviewArticleClicked = () => {
+        window.open(article.article.private_url, '_blank')?.focus();
+    }
+
+    const [articleInfoModal, setArticleInfoModal] = React.useState(false);
+
+    const createEditFormPropsFromRevision = async (revision: Revision): Promise<IEditFormProps> => {
+        const tags = await loadTags(article.article.id);
+
+        return {
+            article,
+            revision,
+            original: {
+                article: {
+                    title: article.article.title,
+                    content: revision.revision.content,
+                    summary: revision.revision.summary,
+                    summary_auto_generate: revision.revision.summary_auto,
+                    slug: article.article.slug,
+                    slug_auto_generate: article.isSlugAutoGenerated,
+                },
+                mainImage: article.article.main_image ?? undefined,
+                tags,
+            },
+            status: article.status,
+
+            onArticleInformationClicked: () => setArticleInfoModal(true),
+            onRestoreRevisionClicked: handleRestoreRevisionClicked,
+            onPreviewArticleClicked: handlePreviewArticleClicked,
+            onActionButtonClicked: (action, inputs, dirty) => handleActionButtonClicked(action, inputs, dirty, revision)
+        }
+    }
+
+    const createEditFormProps = async () => {
+        const revision = await loadRevision();
+
+        return createEditFormPropsFromRevision(revision);
+    }
 
     return (
         <>
+            {articleInfoModal && (
+                <ArticleInfoModal
+                    article={article}
+                    onClosed={() => setArticleInfoModal(false)}
+                />
+            )}
 
             <WaitToLoad
-                ref={waitToLoadRevisionRef}
-                callback={loadRevision}
+                ref={waitToLoadRef}
+                callback={createEditFormProps}
                 loading={<Loader display={{ type: 'over-element' }} />}
             >
-                {(revision, err) => (
+                {(props, err) => (
                     <>
                         {err && console.error(err)}
-                        {revision && (
-                            <EditForm
-                                router={router}
-                                article={article}
-                                revision={revision}
-                                tags={tags}
-                                mainImage={mainImage}
-                                setTags={handleTagsChanged}
-                                setMainImage={handleMainImageChanged}
-                                onUpdate={handleUpdate}
-                                onSaveAsRevision={handleSaveAsRevision}
-                                onPublish={handlePublish}
-                                onUnpublish={handleUnpublish}
-                                onUnschedule={handleUnpublish}
-                                onDelete={handleDelete}
-                            />
-                        )}
+                        {props && <EditForm {...props} />}
                     </>
                 )}
             </WaitToLoad>

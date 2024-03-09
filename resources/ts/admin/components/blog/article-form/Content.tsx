@@ -6,13 +6,23 @@ import { FaInfoCircle } from 'react-icons/fa';
 import classNames from 'classnames';
 import S from 'string';
 
-import MarkdownEditor from '@admin/components/MarkdownEditor';
+import MarkdownEditor, { IMarkdownEditorProps } from '@admin/components/MarkdownEditor';
 import { IArticleFormValues } from '../FormWrapper';
 
+export type TUploadImagesCallback = NonNullable<IMarkdownEditorProps['uploadImages']>;
+export type TMarkdownImage = ArrayElement<Awaited<ReturnType<TUploadImagesCallback>>>;
 
 interface IProps {
     formikProps: FormikProps<IArticleFormValues>;
+    uploadImages: TUploadImagesCallback;
 }
+
+// TODO: Move to services file
+export const transformImageToMarkdownImage = (source: IImage): TMarkdownImage => ({
+    url: source.file.url as string,
+    alt: source.description,
+    title: source.file.name
+});
 
 export const generateSlugFromTitle = (title: string) => {
     const slug = S(title).slugify().s;
@@ -20,7 +30,7 @@ export const generateSlugFromTitle = (title: string) => {
     return slug;
 }
 
-const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, handleChange, handleBlur, setFieldValue } }) => {
+const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, handleChange, handleBlur, setFieldValue }, uploadImages }) => {
     const [slugTooltipOpen, setSlugTooltipOpen] = React.useState(false);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +46,8 @@ const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, han
         if (values.slug_auto_generate)
             setFieldValue('slug', generateSlugFromTitle(e.target.value));
     }
+
+    const handleUploadImages: TUploadImagesCallback = (files: File[]) => uploadImages(files);
 
     return (
         <>
@@ -103,7 +115,12 @@ const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, han
                     <FormGroup className='has-validation'>
                         <Label for='description'>Content:</Label>
 
-                        <MarkdownEditor mode='split' value={values.content} onChange={(v) => setFieldValue('content', v)} />
+                        <MarkdownEditor
+                            mode='split'
+                            value={values.content}
+                            onChange={(v) => setFieldValue('content', v)}
+                            uploadImages={handleUploadImages}
+                        />
 
                         <ErrorMessage name='description' component='div' className='invalid-feedback' />
                     </FormGroup>

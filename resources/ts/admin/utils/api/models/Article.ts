@@ -63,14 +63,21 @@ export default class Article {
         return Article.generateSlugFromTitle(this.article.title) === this.article.slug;
     }
 
-    public generatePath(revision?: string) {
+    /**
+     * Generates path to edit article.
+     *
+     * @param {string} [revisionUuid]
+     * @returns Path to article
+     * @memberof Article
+     */
+    public generatePath(revisionUuid?: string) {
         if (!this.article.id)
             throw new Error('Article is missing ID.');
 
-        if (revision)
+        if (revisionUuid)
             return generatePath(`/admin/posts/edit/:article/revisions/:revision`, {
                 article: this.article.id.toString(),
-                revision: revision
+                revision: revisionUuid
             });
         else
             return generatePath(`/admin/posts/edit/:article`, {
