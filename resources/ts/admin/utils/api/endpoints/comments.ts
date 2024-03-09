@@ -10,12 +10,20 @@ export enum CommentStatuses {
     All = 'all'
 }
 
-export const loadAll = async ({ show, article, user }: { show?: CommentStatuses; article?: number; user?: number; } = {}) => {
+interface ICommentFilters {
+    show?: CommentStatuses;
+    article?: number;
+    user?: number;
+}
+
 /**
  * Loads all comments
  * @param filters
  * @returns Paginated response of IComment objects
  */
+export const loadAll = async (filters: ICommentFilters = {}) => {
+    const { show, article, user } = filters;
+
     const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>('blog/comments', {
         show,
         article,
