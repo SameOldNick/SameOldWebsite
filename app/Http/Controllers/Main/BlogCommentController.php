@@ -61,8 +61,10 @@ class BlogCommentController extends Controller
                 }
             });
 
+        // TODO: Notify article author of comment.
         CommentCreated::dispatch($comment);
         CommentApproved::dispatchIf($comment->isApproved(), $comment);
+
         $swal->success(function (SweetAlertBuilder $builder) use ($comment) {
             $builder
                 ->title('Success')
@@ -97,8 +99,11 @@ class BlogCommentController extends Controller
                 }
             });
 
+        // TODO: Notify original comment author of reply.
+
         CommentCreated::dispatch($comment);
         CommentApproved::dispatchIf($comment->isApproved(), $comment);
+
         $swal->success(function (SweetAlertBuilder $builder) use ($comment) {
             $builder
                 ->title('Success')
