@@ -11,6 +11,11 @@ export enum CommentStatuses {
 }
 
 export const loadAll = async ({ show, article, user }: { show?: CommentStatuses; article?: number; user?: number; } = {}) => {
+/**
+ * Loads all comments
+ * @param filters
+ * @returns Paginated response of IComment objects
+ */
     const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>('blog/comments', {
         show,
         article,

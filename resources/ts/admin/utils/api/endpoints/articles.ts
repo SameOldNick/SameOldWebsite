@@ -34,6 +34,12 @@ export const loadTags = async (articleId: number): Promise<Tag[]> => {
     }));
 }
 
+/**
+ * Uploads an image
+ * @param file File to upload
+ * @param description Description (if any)
+ * @returns IImage object
+ */
 export const uploadImage = async (file: File, description?: string) => {
     const data = new FormData();
 
@@ -47,20 +53,36 @@ export const uploadImage = async (file: File, description?: string) => {
     return response.data;
 }
 
-
-
+/**
+ * Attaches article to image
+ * @param articleId Article ID
+ * @param imageUuid Image UUID
+ * @returns IImage object
+ */
 export const attachImage = async (articleId: number, imageUuid: string) => {
     const response = await createAuthRequest().post<IImage>(`blog/articles/${articleId}/images/${imageUuid}`, {});
 
     return response.data;
 }
 
+/**
+ * Detaches image from article
+ * @param articleId Article ID
+ * @param imageUuid Image UUID
+ * @returns True
+ */
 export const detachImage = async (articleId: number, imageUuid: string) => {
     const response = await createAuthRequest().delete(`blog/articles/${articleId}/images/${imageUuid}`, {});
 
     return true;
 }
 
+/**
+ * Sets main image for article
+ * @param articleId
+ * @param imageUuid
+ * @returns Article object
+ */
 export const setMainImage = async (articleId: number, imageUuid: string) => {
     const response = await createAuthRequest().post<IArticle>(`blog/articles/${articleId}/images/${imageUuid}/main-image`, {});
 
@@ -106,6 +128,15 @@ export const syncTags = async (articleId: number, tags: Tag[]): Promise<ITag[]> 
     return response.data;
 }
 
+/**
+ * Creates article
+ * @param title Title
+ * @param slug Slug
+ * @param content Initial content
+ * @param summary Summary
+ * @param publishedAt When article is published
+ * @returns Article object
+ */
 export const createArticle = async (title: string, slug: string, content: string, summary: string | null, publishedAt: DateTime | null): Promise<Article> => {
     const response = await createAuthRequest().post<IArticle>('blog/articles', {
         title,
@@ -118,7 +149,6 @@ export const createArticle = async (title: string, slug: string, content: string
     });
 
     return new Article(response.data);
-
 }
 
 /**
@@ -137,7 +167,6 @@ export const updateArticle = async (articleId: number, title: string, slug: stri
     });
 
     return new Article(response.data);
-
 }
 
 /**
