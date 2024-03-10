@@ -56,7 +56,7 @@ const DeleteProjectModal: React.FC<IProps> = ({ project, onDeleted, onCanceled }
 
     React.useEffect(() => {
         displayPrompt();
-    });
+    }, []);
 
     return (
         <>
