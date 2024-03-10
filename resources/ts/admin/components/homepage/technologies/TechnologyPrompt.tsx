@@ -8,29 +8,26 @@ import * as Yup from 'yup';
 import IconSelector, { IIconType } from '@admin/components/icon-selector/IconSelector';
 import { lookupIcon } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
+import { IPromptModalProps } from '@admin/utils/modals';
 
 interface IFormikValues {
     technology: string;
 }
 
-interface IProps {
-    technology?: ITechnology;
-    onSubmitted: (technology: ITechnology) => Promise<void>;
-    onClose: () => void;
+interface IProps extends IPromptModalProps<ITechnology> {
+    existing?: ITechnology;
 }
 
-const TechnologyPrompt: React.FC<IProps> = ({ technology, onSubmitted, onClose }) => {
+const TechnologyPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }) => {
     const [iconSelector, setIconSelector] = React.useState(false);
-    const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(technology !== undefined ? lookupIcon(technology.icon) : undefined);
+    const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(existing !== undefined ? lookupIcon(existing.icon) : undefined);
 
     const handleSubmit = async (values: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
-        await onSubmitted({
-            id: technology?.id,
+        await onSuccess({
+            id: existing?.id,
             icon: `${selectedIcon?.prefix}-${selectedIcon?.name}`,
             technology: values.technology
         });
-
-        onClose();
     }
 
     const schema = React.useMemo(() =>
@@ -39,7 +36,7 @@ const TechnologyPrompt: React.FC<IProps> = ({ technology, onSubmitted, onClose }
         })
     , []);
 
-    const initialValues = React.useMemo<IFormikValues>(() => ({ technology: technology?.technology || '' }), [technology]);
+    const initialValues = React.useMemo<IFormikValues>(() => ({ technology: existing?.technology || '' }), [existing]);
 
     const handleIconSelect = (icon: IIconType) => {
         setSelectedIcon(icon);
@@ -67,7 +64,7 @@ const TechnologyPrompt: React.FC<IProps> = ({ technology, onSubmitted, onClose }
                             <Form>
 
                                 <ModalHeader>
-                                    {technology ? 'Update Technology' : 'Add Technology'}
+                                    {existing ? 'Update Technology' : 'Add Technology'}
                                 </ModalHeader>
                                 <ModalBody>
                                     <Row className="mb-3">
@@ -96,10 +93,10 @@ const TechnologyPrompt: React.FC<IProps> = ({ technology, onSubmitted, onClose }
                                 </ModalBody>
                                 <ModalFooter>
                                     <Button color="primary" type='submit' disabled={selectedIcon === undefined || Object.keys(errors).length > 0}>
-                                        {technology ? 'Update' : 'Create'}
+                                        {existing ? 'Update' : 'Create'}
                                     </Button>
                                     {' '}
-                                    <Button color="secondary" onClick={onClose}>
+                                    <Button color="secondary" onClick={() => onCancelled()}>
                                         Cancel
                                     </Button>
                                 </ModalFooter>

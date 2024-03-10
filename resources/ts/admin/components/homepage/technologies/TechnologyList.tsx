@@ -13,6 +13,7 @@ import TechnologyPrompt from './TechnologyPrompt';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { lookupIcon } from '@admin/components/icon-selector/utils';
+import awaitModalPrompt from '@admin/utils/modals';
 
 interface IProps {
 
@@ -87,8 +88,6 @@ const Technology: React.FC<ITechnologyProps> = ({ technology, selected, onSelect
 
 const TechnologyList: React.FC<IProps> = ({ }) => {
     const [renderCount, setRenderCount] = React.useState(1);
-    const [addTechnologyPrompt, setAddTechnologyPrompt] = React.useState(false);
-    const [editTechnologyPrompt, setEditTechnologyPrompt] = React.useState<ITechnology | undefined>();
     const [technologies, setTechnologies] = React.useState<ITechnologyItem[]>([]);
 
     const load = async () => {
@@ -259,11 +258,20 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
         await load();
     }
 
+    const handleAddButtonClicked = async () => {
+        const technology = await awaitModalPrompt(TechnologyPrompt);
+
+        await addTechnology(technology);
+    }
+
+    const handleEditButtonClicked = async (technology: ITechnology) => {
+        const updated = await awaitModalPrompt(TechnologyPrompt, { existing: technology });
+
+        await editTechnology(updated);
+    }
 
     const onItemSelected = (technology: ITechnology, selected: boolean) =>
         setTechnologies((technologies) => technologies.map((item) => item.technology === technology ? { technology, selected } : item));
-
-    const displayEditTechnology = (technology: ITechnology) => setEditTechnologyPrompt(technology);
 
     React.useEffect(() => {
         load();
@@ -280,26 +288,10 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
 
     return (
         <>
-
-            {addTechnologyPrompt && (
-                <TechnologyPrompt
-                    onSubmitted={addTechnology}
-                    onClose={() => setAddTechnologyPrompt(false)}
-                />
-            )}
-
-            {editTechnologyPrompt && (
-                <TechnologyPrompt
-                    technology={editTechnologyPrompt}
-                    onSubmitted={editTechnology}
-                    onClose={() => setEditTechnologyPrompt(undefined)}
-                />
-            )}
-
             <Row className="mb-3">
                 <Col className="d-flex justify-content-between">
                     <div>
-                        <Button color='primary' onClick={() => setAddTechnologyPrompt(true)}>Add Technology</Button>
+                        <Button color='primary' onClick={handleAddButtonClicked}>Add Technology</Button>
                     </div>
 
                     <div>
@@ -327,7 +319,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
                         technology={technology}
                         selected={selected}
                         onSelected={(selected) => onItemSelected(technology, selected)}
-                        onEditClicked={() => displayEditTechnology(technology)}
+                        onEditClicked={() => handleEditButtonClicked(technology)}
                         onDeleteClicked={() => promptDeleteTechnology(technology)}
                     />
                 ))}
