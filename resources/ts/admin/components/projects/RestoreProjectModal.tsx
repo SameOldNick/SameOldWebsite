@@ -6,14 +6,13 @@ import axios from 'axios';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import { IPromptModalProps } from '@admin/utils/modals';
 
-interface IProps {
+interface IProps extends IPromptModalProps {
     project: IProject;
-    onRestored: () => void;
-    onCanceled: () => void;
 }
 
-const RestoreProjectModal: React.FC<IProps> = ({ project, onRestored, onCanceled }) => {
+const RestoreProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled }) => {
     const displayPrompt = async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
@@ -25,9 +24,9 @@ const RestoreProjectModal: React.FC<IProps> = ({ project, onRestored, onCanceled
         if (result.isConfirmed) {
             await restoreProject();
 
-            onRestored();
+            onSuccess();
         } else {
-            onCanceled();
+            onCancelled();
         }
     }
 
@@ -49,7 +48,7 @@ const RestoreProjectModal: React.FC<IProps> = ({ project, onRestored, onCanceled
                 text: `Unable to restore the "${project.project}" project: ${message}`,
             });
 
-            onCanceled();
+            onCancelled();
         }
     }
 

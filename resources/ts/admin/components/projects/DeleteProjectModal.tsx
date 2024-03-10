@@ -6,14 +6,13 @@ import axios from 'axios';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import { IPromptModalProps } from '@admin/utils/modals';
 
-interface IProps {
+interface IProps extends IPromptModalProps {
     project: IProject;
-    onDeleted: () => void;
-    onCanceled: () => void;
 }
 
-const DeleteProjectModal: React.FC<IProps> = ({ project, onDeleted, onCanceled }) => {
+const DeleteProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled }) => {
     const displayPrompt = async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
@@ -26,9 +25,9 @@ const DeleteProjectModal: React.FC<IProps> = ({ project, onDeleted, onCanceled }
         if (result.isConfirmed) {
             await deleteProject();
 
-            onDeleted();
+            onSuccess();
         } else {
-            onCanceled();
+            onCancelled();
         }
     }
 
@@ -50,7 +49,7 @@ const DeleteProjectModal: React.FC<IProps> = ({ project, onDeleted, onCanceled }
                 text: `Unable to remove the "${project.project}" project: ${message}`,
             });
 
-            onCanceled();
+            onCancelled();
         }
     }
 
