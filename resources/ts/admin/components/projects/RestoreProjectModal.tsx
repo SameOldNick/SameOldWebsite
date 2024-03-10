@@ -54,7 +54,7 @@ const RestoreProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled
 
     React.useEffect(() => {
         displayPrompt();
-    });
+    }, []);
 
     return (
         <>
