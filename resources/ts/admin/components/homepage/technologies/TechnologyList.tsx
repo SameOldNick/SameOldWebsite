@@ -8,11 +8,11 @@ import axios from 'axios';
 import classNames from 'classnames';
 
 import Icon from '@admin/components/icon-selector/Icon';
+import TechnologyPrompt from './TechnologyPrompt';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { lookupIcon } from '@admin/components/icon-selector/utils';
-import TechnologyPrompt from './TechnologyPrompt';
 
 interface IProps {
 
@@ -32,93 +32,70 @@ interface ITechnologyItem {
     selected: boolean;
 }
 
-interface IState {
-    addTechnology: boolean;
-    editTechnology?: ITechnology;
-    technologies: ITechnologyItem[];
+const Technology: React.FC<ITechnologyProps> = ({ technology, selected, onSelected, onEditClicked, onDeleteClicked }) => {
+    const icon = React.useMemo(() => lookupIcon(technology.icon), [technology]);
+
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        onSelected(!selected)
+    }
+
+    const handleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        onEditClicked();
+    }
+
+    const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        onDeleteClicked();
+    }
+
+    return (
+        <Col
+            xs={3}
+            className={classNames('border rounded p-3', { 'bg-body-secondary': selected })}
+            onClick={handleClick}
+            style={{ cursor: 'pointer' }}
+        >
+            <div className='d-flex justify-content-center'>
+                <div
+                    className={classNames('d-flex justify-content-center align-items-center rounded-circle')}
+                    style={{ backgroundColor: '#8cbb45', width: 100, height: 100 }}
+                >
+                    {icon && <Icon icon={icon} size={45} />}
+                </div>
+            </div>
+            <h2 className={classNames('text-center')}>
+                {technology.technology}
+            </h2>
+            <div className='d-flex justify-content-center'>
+                <Button color="primary" className='align-middle me-1' onClick={handleEditClick}>
+                    <span className='me-1'>
+                        <FaEdit />
+                    </span>
+                    Edit
+                </Button>
+                <Button color="danger" className='align-middle' onClick={handleDeleteClick}>
+                    <span className='me-1'>
+                        <FaTimesCircle />
+                    </span>
+                    Delete
+                </Button>
+            </div>
+        </Col>
+    );
 }
 
-export default class TechnologyList extends React.Component<IProps, IState> {
-    static Technology: React.FC<ITechnologyProps> = ({ technology, selected, onSelected, onEditClicked, onDeleteClicked }) => {
-        const icon = React.useMemo(() => lookupIcon(technology.icon), [technology]);
+const TechnologyList: React.FC<IProps> = ({ }) => {
+    const [renderCount, setRenderCount] = React.useState(1);
+    const [addTechnologyPrompt, setAddTechnologyPrompt] = React.useState(false);
+    const [editTechnologyPrompt, setEditTechnologyPrompt] = React.useState<ITechnology | undefined>();
+    const [technologies, setTechnologies] = React.useState<ITechnologyItem[]>([]);
 
-        const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-            onSelected(!selected)
-        }
-
-        const handleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-            onEditClicked();
-        }
-
-        const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-            onDeleteClicked();
-        }
-
-        return (
-            <Col
-                xs={3}
-                className={classNames('border rounded p-3', { 'bg-body-secondary': selected })}
-                onClick={handleClick}
-                style={{ cursor: 'pointer' }}
-            >
-                <div className='d-flex justify-content-center'>
-                    <div
-                        className={classNames('d-flex justify-content-center align-items-center rounded-circle')}
-                        style={{ backgroundColor: '#8cbb45', width: 100, height: 100 }}
-                    >
-                        {icon && <Icon icon={icon} size={45} />}
-                    </div>
-                </div>
-                <h2 className={classNames('text-center')}>
-                    {technology.technology}
-                </h2>
-                <div className='d-flex justify-content-center'>
-                    <Button color="primary" className='align-middle me-1' onClick={handleEditClick}>
-                        <span className='me-1'>
-                            <FaEdit />
-                        </span>
-                        Edit
-                    </Button>
-                    <Button color="danger" className='align-middle' onClick={handleDeleteClick}>
-                        <span className='me-1'>
-                            <FaTimesCircle />
-                        </span>
-                        Delete
-                    </Button>
-                </div>
-            </Col>
-        );
-    }
-
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-            addTechnology: false,
-            technologies: []
-        };
-
-        this.load = this.load.bind(this);
-        this.addTechnology = this.addTechnology.bind(this);
-        this.editTechnology = this.editTechnology.bind(this);
-        this.deleteTechnology = this.deleteTechnology.bind(this);
-        this.deleteTechnologies = this.deleteTechnologies.bind(this);
-        this.promptDeleteTechnology = this.promptDeleteTechnology.bind(this);
-        this.onItemSelected = this.onItemSelected.bind(this);
-        this.displayEditTechnology = this.displayEditTechnology.bind(this);
-    }
-
-    componentDidMount() {
-        this.load();
-    }
-
-    private async load() {
+    const load = async () => {
         try {
             const response = await createAuthRequest().get<ITechnology[]>('technologies');
 
-            this.setState({ technologies: response.data.map((technology) => ({ technology, selected: false })) });
+            setTechnologies(response.data.map((technology) => ({ technology, selected: false })));
         } catch (err) {
             console.error(err);
 
@@ -132,11 +109,11 @@ export default class TechnologyList extends React.Component<IProps, IState> {
             });
 
             if (result.isConfirmed)
-                await this.load();
+                await load();
         }
     }
 
-    private async addTechnology(newTechnology: ITechnology) {
+    const addTechnology = async (newTechnology: ITechnology) => {
         try {
             const response = await createAuthRequest().post('technologies', newTechnology);
 
@@ -146,7 +123,7 @@ export default class TechnologyList extends React.Component<IProps, IState> {
                 text: 'Technology has been added.'
             });
 
-            await this.load();
+            await load();
         } catch (err) {
             console.error(err);
 
@@ -162,11 +139,11 @@ export default class TechnologyList extends React.Component<IProps, IState> {
             });
 
             if (result.isConfirmed)
-                await this.addTechnology(newTechnology);
+                await addTechnology(newTechnology);
         }
     }
 
-    private async editTechnology(technology: ITechnology) {
+    const editTechnology = async (technology: ITechnology) => {
         try {
             const response = await createAuthRequest().put(`technologies/${technology.id}`, technology);
 
@@ -176,7 +153,7 @@ export default class TechnologyList extends React.Component<IProps, IState> {
                 text: 'Technology has been updated.'
             });
 
-            await this.load();
+            await load();
         } catch (err) {
             console.error(err);
 
@@ -192,11 +169,11 @@ export default class TechnologyList extends React.Component<IProps, IState> {
             });
 
             if (result.isConfirmed)
-                await this.editTechnology(technology);
+                await editTechnology(technology);
         }
     }
 
-    private async promptDeleteTechnology(technology: ITechnology) {
+    const promptDeleteTechnology = async (technology: ITechnology) => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -208,7 +185,7 @@ export default class TechnologyList extends React.Component<IProps, IState> {
         if (!result.isConfirmed)
             return;
 
-        const data = await this.deleteTechnology(technology);
+        const data = await deleteTechnology(technology);
 
         if (data !== false) {
             await withReactContent(Swal).fire({
@@ -218,10 +195,10 @@ export default class TechnologyList extends React.Component<IProps, IState> {
             });
         }
 
-        await this.load();
+        await load();
     }
 
-    private async deleteTechnology(technology: ITechnology): Promise<Record<'success', string> | false> {
+    const deleteTechnology = async (technology: ITechnology): Promise<Record<'success', string> | false> => {
         try {
             const response = await createAuthRequest().delete<Record<'success', string>>(`technologies/${technology.id}`);
 
@@ -241,15 +218,13 @@ export default class TechnologyList extends React.Component<IProps, IState> {
             });
 
             if (result.isConfirmed)
-                return await this.deleteTechnology(technology);
+                return await deleteTechnology(technology);
             else
                 return false;
         }
     }
 
-    private async deleteTechnologies() {
-        const { technologies } = this.state;
-
+    const deleteTechnologies = async () => {
         const toDelete = technologies.filter((value) => value.selected);
 
         if (toDelete.length === 0) {
@@ -273,7 +248,7 @@ export default class TechnologyList extends React.Component<IProps, IState> {
         if (!result.isConfirmed)
             return;
 
-        await Promise.all(toDelete.map(({ technology }) => this.deleteTechnology(technology)));
+        await Promise.all(toDelete.map(({ technology }) => deleteTechnology(technology)));
 
         await withReactContent(Swal).fire({
             icon: 'success',
@@ -281,87 +256,85 @@ export default class TechnologyList extends React.Component<IProps, IState> {
             text: `Deleted ${toDelete.length} technologies.`
         });
 
-        await this.load();
+        await load();
     }
 
 
-    private onItemSelected(technology: ITechnology, selected: boolean) {
-        this.setState(({ technologies }) => ({ technologies: technologies.map((item) => item.technology === technology ? { technology, selected } : item) }));
-    }
+    const onItemSelected = (technology: ITechnology, selected: boolean) =>
+        setTechnologies((technologies) => technologies.map((item) => item.technology === technology ? { technology, selected } : item));
 
-    private displayEditTechnology(technology: ITechnology) {
-        this.setState({ editTechnology: technology });
-    }
+    const displayEditTechnology = (technology: ITechnology) => setEditTechnologyPrompt(technology);
 
-    public render() {
-        const { } = this.props;
-        const { addTechnology, editTechnology, technologies } = this.state;
+    React.useEffect(() => {
+        load();
+    }, [renderCount]);
 
-        const hasSelected = () => {
-            for (const { selected } of technologies) {
-                if (selected)
-                    return true;
-            }
-
-            return false;
+    const hasSelected = React.useMemo(() => {
+        for (const { selected } of technologies) {
+            if (selected)
+                return true;
         }
 
-        return (
-            <>
+        return false;
+    }, [technologies]);
 
-                {addTechnology && (
-                    <TechnologyPrompt
-                        onSubmitted={this.addTechnology}
-                        onClose={() => this.setState({ addTechnology: false })}
+    return (
+        <>
+
+            {addTechnologyPrompt && (
+                <TechnologyPrompt
+                    onSubmitted={addTechnology}
+                    onClose={() => setAddTechnologyPrompt(false)}
+                />
+            )}
+
+            {editTechnologyPrompt && (
+                <TechnologyPrompt
+                    technology={editTechnologyPrompt}
+                    onSubmitted={editTechnology}
+                    onClose={() => setEditTechnologyPrompt(undefined)}
+                />
+            )}
+
+            <Row className="mb-3">
+                <Col className="d-flex justify-content-between">
+                    <div>
+                        <Button color='primary' onClick={() => setAddTechnologyPrompt(true)}>Add Technology</Button>
+                    </div>
+
+                    <div>
+                        <Button color='primary' className="me-1" onClick={load}>
+                            <span className='me-1'>
+                                <FaSync />
+                            </span>
+                            Update
+                        </Button>
+
+                        <Button color="danger" disabled={!hasSelected} onClick={deleteTechnologies}>
+                            <span className='me-1'>
+                                <FaTrash />
+                            </span>
+                            Delete Selected
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+
+            <Row className='mx-1 gap-2 justify-content-center'>
+                {technologies.length > 0 && technologies.map(({ technology, selected }, index) => (
+                    <Technology
+                        key={index}
+                        technology={technology}
+                        selected={selected}
+                        onSelected={(selected) => onItemSelected(technology, selected)}
+                        onEditClicked={() => displayEditTechnology(technology)}
+                        onDeleteClicked={() => promptDeleteTechnology(technology)}
                     />
-                )}
-
-                {editTechnology && (
-                    <TechnologyPrompt
-                        technology={editTechnology}
-                        onSubmitted={this.editTechnology}
-                        onClose={() => this.setState({ editTechnology: undefined })}
-                    />
-                )}
-
-                <Row className="mb-3">
-                    <Col className="d-flex justify-content-between">
-                        <div>
-                            <Button color='primary' onClick={() => this.setState({ addTechnology: true })}>Add Technology</Button>
-                        </div>
-
-                        <div>
-                            <Button color='primary' className="me-1" onClick={this.load}>
-                                <span className='me-1'>
-                                    <FaSync />
-                                </span>
-                                Update
-                            </Button>
-
-                            <Button color="danger" disabled={!hasSelected()} onClick={this.deleteTechnologies}>
-                                <span className='me-1'>
-                                    <FaTrash />
-                                </span>
-                                Delete Selected
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
-
-                <Row className='mx-1 gap-2 justify-content-center'>
-                    {technologies.length > 0 && technologies.map(({ technology, selected }, index) => (
-                        <TechnologyList.Technology
-                            key={index}
-                            technology={technology}
-                            selected={selected}
-                            onSelected={(selected) => this.onItemSelected(technology, selected)}
-                            onEditClicked={() => this.displayEditTechnology(technology)}
-                            onDeleteClicked={() => this.promptDeleteTechnology(technology)}
-                        />
-                    ))}
-                    {technologies.length === 0 && <div>No technologies found.</div>}
-                </Row>
-            </>
-        );
-    }
+                ))}
+                {technologies.length === 0 && <div>No technologies found.</div>}
+            </Row>
+        </>
+    );
 }
+
+export default TechnologyList;
