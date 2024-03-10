@@ -348,7 +348,7 @@ export default class SkillList extends React.Component<IProps, IState> {
                     </Col>
                 </Row>
 
-                <Row className='mx-1 gap-2'>
+                <Row className='mx-1 gap-2 justify-content-center'>
                     {skills.length > 0 && skills.map(({ skill, selected }, index) => (
                         <SkillList.Skill
                             key={index}

@@ -348,7 +348,7 @@ export default class TechnologyList extends React.Component<IProps, IState> {
                     </Col>
                 </Row>
 
-                <Row className='mx-1 gap-2'>
+                <Row className='mx-1 gap-2 justify-content-center'>
                     {technologies.length > 0 && technologies.map(({ technology, selected }, index) => (
                         <TechnologyList.Technology
                             key={index}
