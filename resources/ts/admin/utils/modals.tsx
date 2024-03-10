@@ -2,7 +2,7 @@ import React from 'react';
 import ReactClient from 'react-dom/client';
 
 export interface IPromptModalProps<TResult = void> {
-    onSuccess: (result: TResult) => void;
+    onSuccess: (result: TResult) => Promise<void>;
     onCancelled: (reason?: any) => void;
 }
 
