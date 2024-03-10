@@ -4,31 +4,28 @@ import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHe
 
 import classNames from 'classnames';
 import * as Yup from 'yup';
+import { IPromptModalProps } from '@admin/utils/modals';
 
 interface IFormikValues {
     link: string;
 }
 
 interface ISocialMediaLinkPromptAddProps {
-    link: false;
-    onSubmitted: (newLink: string) => Promise<void>;
-    onClose: () => void;
+    link: undefined;
 }
 
 interface ISocialMediaLinkPromptEditProps {
     link: ISocialMediaLink;
-    onSubmitted: (updatedLink: string) => Promise<void>;
-    onClose: () => void;
 }
 
-type TProps = ISocialMediaLinkPromptAddProps | ISocialMediaLinkPromptEditProps;
+type TProps = (ISocialMediaLinkPromptAddProps | ISocialMediaLinkPromptEditProps) & IPromptModalProps<string>;
 
-const SocialMediaLinkPrompt: React.FC<TProps> = ({ link, onSubmitted, onClose }) => {
+const SocialMediaLinkPrompt: React.FC<TProps> = ({ link, onSuccess, onCancelled }) => {
     const handleSubmit = async ({ link }: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
-        await onSubmitted(link);
-
-        onClose();
+        await onSuccess(link);
     }
+
+    const handleCancel = () => onCancelled();
 
     const schema = Yup.object().shape({
         link: Yup.string().required('Link is required').max(255),
@@ -70,7 +67,7 @@ const SocialMediaLinkPrompt: React.FC<TProps> = ({ link, onSubmitted, onClose })
                                     {link ? 'Update' : 'Create'}
                                 </Button>
                                 {' '}
-                                <Button color="secondary" onClick={onClose}>
+                                <Button color="secondary" onClick={handleCancel}>
                                     Cancel
                                 </Button>
                             </ModalFooter>

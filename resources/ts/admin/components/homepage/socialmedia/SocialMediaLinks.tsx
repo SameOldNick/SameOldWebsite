@@ -10,14 +10,9 @@ import SocialMediaLinkPrompt from "./SocialMediaLinkPrompt";
 
 import { createAuthRequest } from "@admin/utils/api/factories";
 import { defaultFormatter } from "@admin/utils/response-formatter/factories";
+import awaitModalPrompt from "@admin/utils/modals";
 
 interface ISocialMediaLinksProps {
-}
-
-interface IState {
-    links: ISocialMediaLinkItem[];
-    addLink: boolean;
-    editLink?: ISocialMediaLinkItem;
 }
 
 interface ISocialMediaLinkProps {
@@ -34,52 +29,32 @@ interface ISocialMediaLinkItem {
     selected: boolean;
 }
 
-export default class SocialMediaLinks extends React.Component<ISocialMediaLinksProps, IState> {
-    static SocialMediaLink: React.FC<ISocialMediaLinkProps> = ({ link, selected, onSelected, onEditClicked, onDeleteClicked }) => {
-        return (
-            <ListGroupItem className="d-flex justify-content-between">
-                <span>
-                    <Input type="checkbox" className="align-middle" checked={selected} onChange={(e) => onSelected(e.target.checked)} />
-                    <Button tag='a' color='link' href={link.link} target='_blank'>{link.link}</Button>
-                </span>
+const SocialMediaLink: React.FC<ISocialMediaLinkProps> = ({ link, selected, onSelected, onEditClicked, onDeleteClicked }) => (
+    <ListGroupItem className="d-flex justify-content-between">
+        <span>
+            <Input type="checkbox" className="align-middle" checked={selected} onChange={(e) => onSelected(e.target.checked)} />
+            <Button tag='a' color='link' href={link.link} target='_blank'>{link.link}</Button>
+        </span>
 
-                <span>
-                    <Button color="link" onClick={() => onEditClicked()}>
-                        <FaEdit />
-                    </Button>
-                    <Button color="link" className="text-danger" onClick={() => onDeleteClicked()}>
-                        <FaTimesCircle />
-                    </Button>
-                </span>
-            </ListGroupItem>
-        );
-    }
+        <span>
+            <Button color="link" onClick={() => onEditClicked()}>
+                <FaEdit />
+            </Button>
+            <Button color="link" className="text-danger" onClick={() => onDeleteClicked()}>
+                <FaTimesCircle />
+            </Button>
+        </span>
+    </ListGroupItem>
+);
 
-    constructor(props: Readonly<ISocialMediaLinksProps>) {
-        super(props);
+const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
+    const [links, setLinks] = React.useState<ISocialMediaLinkItem[]>([]);
 
-        this.state = {
-            links: [],
-            addLink: false
-        };
-
-        this.addLink = this.addLink.bind(this);
-        this.promptDeleteLink = this.promptDeleteLink.bind(this);
-        this.promptDeleteLinks = this.promptDeleteLinks.bind(this);
-
-    }
-
-    componentDidMount() {
-        this.load();
-    }
-
-    private async load() {
+    const load = async () => {
         try {
             const response = await createAuthRequest().get<ISocialMediaLink[]>('social-media');
 
-            this.setState({
-                links: response.data.map<ISocialMediaLinkItem>((link) => ({ link, selected: false }))
-            });
+            setLinks(response.data.map<ISocialMediaLinkItem>((link) => ({ link, selected: false })));
         } catch (err) {
             console.error(err);
 
@@ -93,20 +68,12 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
             });
 
             if (result.isConfirmed)
-                await this.load();
+                await load();
         }
 
     }
 
-    private onItemSelected(link: ISocialMediaLink, selected: boolean) {
-        this.setState(({ links }) => ({ links: links.map((item) => item.link === link ? { link, selected } : item) }));
-    }
-
-    private displayEditLink(link: ISocialMediaLinkItem) {
-        this.setState({ editLink: link });
-    }
-
-    private async addLink(link: string) {
+    const addLink = async (link: string) => {
         try {
             const response = await createAuthRequest().post<ISocialMediaLink[]>('social-media', { link });
 
@@ -116,7 +83,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
                 text: 'Social media link has been added.'
             });
 
-            this.load();
+            load();
         } catch (err) {
             console.error(err);
 
@@ -132,11 +99,11 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
             });
 
             if (result.isConfirmed)
-                await this.addLink(link);
+                await addLink(link);
         }
     }
 
-    private async updateLink(item: ISocialMediaLinkItem, updatedLink: string) {
+    const updateLink = async (item: ISocialMediaLinkItem, updatedLink: string) => {
         try {
             const response = await createAuthRequest().put<ISocialMediaLink[]>(`social-media/${item.link.id}`, { link: updatedLink });
 
@@ -146,7 +113,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
                 text: 'Social media link has been updated.'
             });
 
-            this.load();
+            load();
         } catch (err) {
             console.error(err);
 
@@ -162,13 +129,11 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
             });
 
             if (result.isConfirmed)
-                await this.updateLink(item, updatedLink);
+                await updateLink(item, updatedLink);
         }
     }
 
-    private async promptDeleteLink(link: ISocialMediaLink) {
-        const { links } = this.state;
-
+    const promptDeleteLink = async (link: ISocialMediaLink) => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -180,11 +145,11 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
         if (!result.isConfirmed)
             return;
 
-        await this.deleteLink(link);
+        await deleteLink(link);
 
     }
 
-    private async deleteLink(link: ISocialMediaLink) {
+    const deleteLink = async (link: ISocialMediaLink) => {
          try {
             const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${link.id}`);
 
@@ -194,7 +159,7 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
                 text: 'Social media link has been deleted.'
             });
 
-            this.load();
+            load();
         } catch (err) {
             console.error(err);
 
@@ -210,14 +175,12 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
             });
 
             if (result.isConfirmed)
-                await this.deleteLink(link);
+                await deleteLink(link);
         }
 
     }
 
-    private async promptDeleteLinks() {
-        const { links } = this.state;
-
+    const promptDeleteLinks = async () => {
         const toDelete = links.filter((value) => value.selected);
 
         if (toDelete.length === 0) {
@@ -242,13 +205,13 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
             return;
 
         for (const item of toDelete) {
-            this.deleteLinksOne(item);
+            deleteLinksOne(item);
         }
 
-        await this.load();
+        await load();
     }
 
-    private async deleteLinksOne(item: ISocialMediaLinkItem) {
+    const deleteLinksOne = async (item: ISocialMediaLinkItem) => {
         try {
             const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${item.link.id}`);
 
@@ -267,85 +230,96 @@ export default class SocialMediaLinks extends React.Component<ISocialMediaLinksP
             });
 
             if (result.isConfirmed)
-                await this.deleteLinksOne(item);
+                await deleteLinksOne(item);
         }
     }
 
-    render() {
-        const { links, addLink, editLink } = this.state;
+    React.useEffect(() => {
+        load();
+    }, []);
 
-        const hasSelected = () => {
-            for (const { selected } of links) {
-                if (selected)
-                    return true;
-            }
-
-            return false;
+    const hasSelected = React.useMemo(() => {
+        for (const { selected } of links) {
+            if (selected)
+                return true;
         }
 
-        return (
-            <>
-                {addLink && (
-                    <SocialMediaLinkPrompt
-                        link={false}
-                        onSubmitted={this.addLink}
-                        onClose={() => this.setState({ addLink: false })}
-                    />
-                )}
-                {editLink && (
-                    <SocialMediaLinkPrompt
-                        link={editLink.link}
-                        onSubmitted={(newLink) => this.updateLink(editLink, newLink)}
-                        onClose={() => this.setState({ editLink: undefined })}
-                    />
-                )}
-                <Row className="mb-3">
-                    <Col className="d-flex justify-content-between">
-                        <div>
-                            <Button color='primary' onClick={() => this.setState({ addLink: true })}>Add Link</Button>
-                        </div>
+        return false;
+    }, [links]);
 
-                        <div>
-                            <Button color='primary' className="me-1" onClick={() => this.load()}>
-                                <span className='me-1'>
-                                    <FaSync />
-                                </span>
-                                Update
-                            </Button>
-
-                            <Button color="danger" disabled={!hasSelected()} onClick={this.promptDeleteLinks}>
-                                <span className='me-1'>
-                                    <FaTrash />
-                                </span>
-                                Delete Selected
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
-
-                <Row className="mb-3">
-                    <Col>
-                        <ListGroup>
-
-                            {links.length > 0 ?
-                                links.map(({ link, selected }, index) => (
-                                    <SocialMediaLinks.SocialMediaLink
-                                        key={index}
-                                        link={link}
-                                        selected={selected}
-                                        onSelected={(selected) => this.onItemSelected(link, selected)}
-                                        onEditClicked={() => this.displayEditLink({ link, selected })}
-                                        onDeleteClicked={() => this.promptDeleteLink(link)}
-                                    />
-                                ))
-                                : (
-                                    <ListGroupItem disabled>No links found.</ListGroupItem>
-                                )
-                            }
-                        </ListGroup>
-                    </Col>
-                </Row>
-            </>
-        )
+    const onItemSelected = (link: ISocialMediaLink, selected: boolean) => {
+        setLinks((links) => links.map((item) => item.link === link ? { link, selected } : item));
     }
+
+    const handleAddLinkClicked = async () => {
+        try {
+            const link = await awaitModalPrompt(SocialMediaLinkPrompt);
+
+            await addLink(link);
+        } catch (err) {
+            // Modal was cancelled.
+        }
+    }
+
+    const handleEditLinkClicked = async (item: ISocialMediaLinkItem) => {
+        try {
+            const updated = await awaitModalPrompt(SocialMediaLinkPrompt, { link: item.link });
+
+            await updateLink(item, updated);
+        } catch (err) {
+            // Modal was cancelled.
+        }
+    }
+
+    return (
+        <>
+            <Row className="mb-3">
+                <Col className="d-flex justify-content-between">
+                    <div>
+                        <Button color='primary' onClick={handleAddLinkClicked}>Add Link</Button>
+                    </div>
+
+                    <div>
+                        <Button color='primary' className="me-1" onClick={() => load()}>
+                            <span className='me-1'>
+                                <FaSync />
+                            </span>
+                            Update
+                        </Button>
+
+                        <Button color="danger" disabled={!hasSelected} onClick={promptDeleteLinks}>
+                            <span className='me-1'>
+                                <FaTrash />
+                            </span>
+                            Delete Selected
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+
+            <Row className="mb-3">
+                <Col>
+                    <ListGroup>
+                        {links.length > 0 ?
+                            links.map((item, index) => (
+                                <SocialMediaLink
+                                    key={index}
+                                    link={item.link}
+                                    selected={item.selected}
+                                    onSelected={(selected) => onItemSelected(item.link, selected)}
+                                    onEditClicked={() => handleEditLinkClicked(item)}
+                                    onDeleteClicked={() => promptDeleteLink(item.link)}
+                                />
+                            ))
+                            : (
+                                <ListGroupItem disabled>No links found.</ListGroupItem>
+                            )
+                        }
+                    </ListGroup>
+                </Col>
+            </Row>
+        </>
+    );
 }
+
+export default SocialMediaLinks;
