@@ -32,93 +32,69 @@ interface ISkillItem {
     selected: boolean;
 }
 
-interface IState {
-    addSkill: boolean;
-    editSkill?: ISkill;
-    skills: ISkillItem[];
+const Skill: React.FC<ISkillProps> = ({ skill, selected, onSelected, onEditClicked, onDeleteClicked }) => {
+    const icon = React.useMemo(() => lookupIcon(skill.icon), [skill]);
+
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        onSelected(!selected)
+    }
+
+    const handleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        onEditClicked();
+    }
+
+    const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        onDeleteClicked();
+    }
+
+    return (
+        <Col
+            xs={3}
+            className={classNames('border rounded p-3', { 'bg-body-secondary': selected })}
+            onClick={handleClick}
+            style={{ cursor: 'pointer' }}
+        >
+            <div className='d-flex justify-content-center'>
+                <div
+                    className={classNames('d-flex justify-content-center align-items-center rounded-circle')}
+                    style={{ backgroundColor: '#8cbb45', width: 100, height: 100 }}
+                >
+                    {icon && <Icon icon={icon} size={45} />}
+                </div>
+            </div>
+            <h2 className={classNames('text-center')}>
+                {skill.skill}
+            </h2>
+            <div className='d-flex justify-content-center'>
+                <Button color="primary" className='align-middle me-1' onClick={handleEditClick}>
+                    <span className='me-1'>
+                        <FaEdit />
+                    </span>
+                    Edit
+                </Button>
+                <Button color="danger" className='align-middle' onClick={handleDeleteClick}>
+                    <span className='me-1'>
+                        <FaTimesCircle />
+                    </span>
+                    Delete
+                </Button>
+            </div>
+        </Col>
+    );
 }
 
-export default class SkillList extends React.Component<IProps, IState> {
-    static Skill: React.FC<ISkillProps> = ({ skill, selected, onSelected, onEditClicked, onDeleteClicked }) => {
-        const icon = React.useMemo(() => lookupIcon(skill.icon), [skill]);
+const SkillList: React.FC<IProps> = ({ }) => {
+    const [addSkillPrompt, setAddSkillPrompt] = React.useState(false);
+    const [editSkillPrompt, setEditSkillPrompt] = React.useState<ISkill | undefined>();
+    const [skills, setSkills] = React.useState<ISkillItem[]>([]);
 
-        const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-            onSelected(!selected)
-        }
-
-        const handleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-            onEditClicked();
-        }
-
-        const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-            onDeleteClicked();
-        }
-
-        return (
-            <Col
-                xs={3}
-                className={classNames('border rounded p-3', { 'bg-body-secondary': selected })}
-                onClick={handleClick}
-                style={{ cursor: 'pointer' }}
-            >
-                <div className='d-flex justify-content-center'>
-                    <div
-                        className={classNames('d-flex justify-content-center align-items-center rounded-circle')}
-                        style={{ backgroundColor: '#8cbb45', width: 100, height: 100 }}
-                    >
-                        {icon && <Icon icon={icon} size={45} />}
-                    </div>
-                </div>
-                <h2 className={classNames('text-center')}>
-                    {skill.skill}
-                </h2>
-                <div className='d-flex justify-content-center'>
-                    <Button color="primary" className='align-middle me-1' onClick={handleEditClick}>
-                        <span className='me-1'>
-                            <FaEdit />
-                        </span>
-                        Edit
-                    </Button>
-                    <Button color="danger" className='align-middle' onClick={handleDeleteClick}>
-                        <span className='me-1'>
-                            <FaTimesCircle />
-                        </span>
-                        Delete
-                    </Button>
-                </div>
-            </Col>
-        );
-    }
-
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-            addSkill: false,
-            skills: []
-        };
-
-        this.load = this.load.bind(this);
-        this.addSkill = this.addSkill.bind(this);
-        this.editSkill = this.editSkill.bind(this);
-        this.deleteSkill = this.deleteSkill.bind(this);
-        this.deleteSkills = this.deleteSkills.bind(this);
-        this.promptDeleteSkill = this.promptDeleteSkill.bind(this);
-        this.onItemSelected = this.onItemSelected.bind(this);
-        this.displayEditSkill = this.displayEditSkill.bind(this);
-    }
-
-    componentDidMount() {
-        this.load();
-    }
-
-    private async load() {
+    const load = async () => {
         try {
             const response = await createAuthRequest().get<ISkill[]>('skills');
 
-            this.setState({ skills: response.data.map((skill) => ({ skill, selected: false })) });
+            setSkills(response.data.map((skill) => ({ skill, selected: false })));
         } catch (err) {
             console.error(err);
 
@@ -132,11 +108,11 @@ export default class SkillList extends React.Component<IProps, IState> {
             });
 
             if (result.isConfirmed)
-                await this.load();
+                await load();
         }
     }
 
-    private async addSkill(newSkill: ISkill) {
+    const addSkill = async (newSkill: ISkill) => {
         try {
             const response = await createAuthRequest().post('skills', newSkill);
 
@@ -146,7 +122,7 @@ export default class SkillList extends React.Component<IProps, IState> {
                 text: 'Skill has been added.'
             });
 
-            await this.load();
+            await load();
         } catch (err) {
             console.error(err);
 
@@ -162,11 +138,11 @@ export default class SkillList extends React.Component<IProps, IState> {
             });
 
             if (result.isConfirmed)
-                await this.addSkill(newSkill);
+                await addSkill(newSkill);
         }
     }
 
-    private async editSkill(skill: ISkill) {
+    const editSkill = async (skill: ISkill) => {
         try {
             const response = await createAuthRequest().put(`skills/${skill.id}`, skill);
 
@@ -176,7 +152,7 @@ export default class SkillList extends React.Component<IProps, IState> {
                 text: 'Skill has been updated.'
             });
 
-            await this.load();
+            await load();
         } catch (err) {
             console.error(err);
 
@@ -192,11 +168,11 @@ export default class SkillList extends React.Component<IProps, IState> {
             });
 
             if (result.isConfirmed)
-                await this.editSkill(skill);
+                await editSkill(skill);
         }
     }
 
-    private async promptDeleteSkill(skill: ISkill) {
+    const promptDeleteSkill = async (skill: ISkill) => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -208,7 +184,7 @@ export default class SkillList extends React.Component<IProps, IState> {
         if (!result.isConfirmed)
             return;
 
-        const data = await this.deleteSkill(skill);
+        const data = await deleteSkill(skill);
 
         if (data !== false) {
             await withReactContent(Swal).fire({
@@ -218,10 +194,10 @@ export default class SkillList extends React.Component<IProps, IState> {
             });
         }
 
-        await this.load();
+        await load();
     }
 
-    private async deleteSkill(skill: ISkill): Promise<Record<'success', string> | false> {
+    const deleteSkill = async (skill: ISkill): Promise<Record<'success', string> | false> => {
         try {
             const response = await createAuthRequest().delete<Record<'success', string>>(`skills/${skill.id}`);
 
@@ -241,15 +217,13 @@ export default class SkillList extends React.Component<IProps, IState> {
             });
 
             if (result.isConfirmed)
-                return await this.deleteSkill(skill);
+                return await deleteSkill(skill);
             else
                 return false;
         }
     }
 
-    private async deleteSkills() {
-        const { skills } = this.state;
-
+    const deleteSkills = async () => {
         const toDelete = skills.filter((value) => value.selected);
 
         if (toDelete.length === 0) {
@@ -273,7 +247,7 @@ export default class SkillList extends React.Component<IProps, IState> {
         if (!result.isConfirmed)
             return;
 
-        await Promise.all(toDelete.map(({ skill }) => this.deleteSkill(skill)));
+        await Promise.all(toDelete.map(({ skill }) => deleteSkill(skill)));
 
         await withReactContent(Swal).fire({
             icon: 'success',
@@ -281,87 +255,87 @@ export default class SkillList extends React.Component<IProps, IState> {
             text: `Deleted ${toDelete.length} skills.`
         });
 
-        await this.load();
+        await load();
     }
 
-
-    private onItemSelected(skill: ISkill, selected: boolean) {
-        this.setState(({ skills }) => ({ skills: skills.map((item) => item.skill === skill ? { skill, selected } : item) }));
+    const onItemSelected = (skill: ISkill, selected: boolean) => {
+        setSkills((skills) => skills.map((item) => item.skill === skill ? { skill, selected } : item));
     }
 
-    private displayEditSkill(skill: ISkill) {
-        this.setState({ editSkill: skill });
+    const displayEditSkill = (skill: ISkill) => {
+        setEditSkillPrompt(skill);
     }
 
-    public render() {
-        const { } = this.props;
-        const { addSkill, editSkill, skills } = this.state;
+    React.useEffect(() => {
+        load();
+    }, []);
 
-        const hasSelected = () => {
-            for (const { selected } of skills) {
-                if (selected)
-                    return true;
-            }
-
-            return false;
+    const hasSelected = React.useMemo(() => {
+        for (const { selected } of skills) {
+            if (selected)
+                return true;
         }
 
-        return (
-            <>
+        return false;
+    }, [skills]);
 
-                {addSkill && (
-                    <SkillPrompt
-                        onSubmitted={this.addSkill}
-                        onClose={() => this.setState({ addSkill: false })}
+    return (
+        <>
+
+            {addSkillPrompt && (
+                <SkillPrompt
+                    onSubmitted={addSkill}
+                    onClose={() => setAddSkillPrompt(false)}
+                />
+            )}
+
+            {editSkillPrompt && (
+                <SkillPrompt
+                    skill={editSkillPrompt}
+                    onSubmitted={editSkill}
+                    onClose={() => setEditSkillPrompt(undefined)}
+                />
+            )}
+
+            <Row className="mb-3">
+                <Col className="d-flex justify-content-between">
+                    <div>
+                        <Button color='primary' onClick={() => setAddSkillPrompt(true)}>Add Skill</Button>
+                    </div>
+
+                    <div>
+                        <Button color='primary' className="me-1" onClick={load}>
+                            <span className='me-1'>
+                                <FaSync />
+                            </span>
+                            Update
+                        </Button>
+
+                        <Button color="danger" disabled={!hasSelected} onClick={deleteSkills}>
+                            <span className='me-1'>
+                                <FaTrash />
+                            </span>
+                            Delete Selected
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+
+            <Row className='mx-1 gap-2 justify-content-center'>
+                {skills.length > 0 && skills.map(({ skill, selected }, index) => (
+                    <Skill
+                        key={index}
+                        skill={skill}
+                        selected={selected}
+                        onSelected={(selected) => onItemSelected(skill, selected)}
+                        onEditClicked={() => displayEditSkill(skill)}
+                        onDeleteClicked={() => promptDeleteSkill(skill)}
                     />
-                )}
-
-                {editSkill && (
-                    <SkillPrompt
-                        skill={editSkill}
-                        onSubmitted={this.editSkill}
-                        onClose={() => this.setState({ editSkill: undefined })}
-                    />
-                )}
-
-                <Row className="mb-3">
-                    <Col className="d-flex justify-content-between">
-                        <div>
-                            <Button color='primary' onClick={() => this.setState({ addSkill: true })}>Add Skill</Button>
-                        </div>
-
-                        <div>
-                            <Button color='primary' className="me-1" onClick={this.load}>
-                                <span className='me-1'>
-                                    <FaSync />
-                                </span>
-                                Update
-                            </Button>
-
-                            <Button color="danger" disabled={!hasSelected()} onClick={this.deleteSkills}>
-                                <span className='me-1'>
-                                    <FaTrash />
-                                </span>
-                                Delete Selected
-                            </Button>
-                        </div>
-                    </Col>
-                </Row>
-
-                <Row className='mx-1 gap-2 justify-content-center'>
-                    {skills.length > 0 && skills.map(({ skill, selected }, index) => (
-                        <SkillList.Skill
-                            key={index}
-                            skill={skill}
-                            selected={selected}
-                            onSelected={(selected) => this.onItemSelected(skill, selected)}
-                            onEditClicked={() => this.displayEditSkill(skill)}
-                            onDeleteClicked={() => this.promptDeleteSkill(skill)}
-                        />
-                    ))}
-                    {skills.length === 0 && <div>No skills found.</div>}
-                </Row>
-            </>
-        );
-    }
+                ))}
+                {skills.length === 0 && <div>No skills found.</div>}
+            </Row>
+        </>
+    );
 }
+
+export default SkillList;
