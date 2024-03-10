@@ -17,6 +17,8 @@
    * Sort articles and users
    * File manager
    * Block comment senders
+   * Auto-save blog posts
+   * Generate backups
 
 * ~~Custom error pages (404, etc.)~~
 * ~~Terms and conditions~~
