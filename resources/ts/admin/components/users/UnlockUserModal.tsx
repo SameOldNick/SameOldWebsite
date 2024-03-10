@@ -7,14 +7,13 @@ import axios from 'axios';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import User from '@admin/utils/api/models/User';
+import { IPromptModalProps } from '@admin/utils/modals';
 
-interface IProps {
+interface IProps extends IPromptModalProps {
     user: User;
-    onUnlocked: () => void;
-    onCanceled: () => void;
 }
 
-const UnlockUserModal: React.FC<IProps> = ({ user, onUnlocked, onCanceled }) => {
+const UnlockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => {
     const displayPrompt = async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
@@ -26,9 +25,9 @@ const UnlockUserModal: React.FC<IProps> = ({ user, onUnlocked, onCanceled }) => 
         if (result.isConfirmed) {
             await unlockUser();
 
-            onUnlocked();
+            onSuccess();
         } else {
-            onCanceled();
+            onCancelled();
         }
     }
 
@@ -51,7 +50,7 @@ const UnlockUserModal: React.FC<IProps> = ({ user, onUnlocked, onCanceled }) => 
                 text: `Unable to unlock user with email "${user.user.email}": ${message}`,
             });
 
-            onCanceled();
+            onCancelled();
         }
     }
 

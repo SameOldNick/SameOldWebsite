@@ -30,24 +30,8 @@ export type TForwardedRef = FormikProps<IFormikValues>;
 
 type TProps = IProps & Omit<TFormikProps, 'onSubmit' | 'ref'>;
 
-interface IState {
-    country?: ICountry;
-}
-
-export default class UserForm extends React.Component<TProps, IState> {
-    constructor(props: Readonly<TProps>) {
-        super(props);
-
-        this.state = {
-        };
-
-        this.onSubmit = this.onSubmit.bind(this);
-    }
-
-
-    private get schema() {
-        const { fields } = this.props;
-
+const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props }) => {
+    const schema = React.useMemo(() => {
         if (fields === 'create') {
             return Yup.object().shape({
                 name: Yup.string().required('Name is required').min(1, 'Name cannot be empty'),
@@ -69,110 +53,103 @@ export default class UserForm extends React.Component<TProps, IState> {
                 roles: Yup.array().optional().of(Yup.string().oneOf(['admin']))
             });
         }
+    }, [fields]);
 
-    }
-
-    private async onSubmit(values: IFormikValues, helpers: FormikHelpers<IFormikValues>) {
-        const { onSubmit } = this.props;
-        const { } = this.state;
-
+    const handleSubmit = async (values: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         await onSubmit({ ...values }, helpers);
 
         return Promise.resolve();
     }
 
-    public render() {
-        const { buttonContent, onSubmit, ...props } = this.props;
-        const { } = this.state;
+    return (
+        <>
+            <Formik<IFormikValues> validationSchema={schema} onSubmit={handleSubmit} {...props}>
+                {({ errors, touched, isSubmitting, values, ...helpers }) => (
+                    <>
+                        <Form>
 
-        return (
-            <>
-                <Formik<IFormikValues> validationSchema={this.schema} onSubmit={this.onSubmit} {...props}>
-                    {({ errors, touched, isSubmitting, values, ...helpers }) => (
-                        <>
-                            <Form>
+                            <Row>
+                                <Col md={6}>
+                                    <FormGroup className='has-validation'>
+                                        <Label for='name'>Name:</Label>
+                                        <Field as={Input} type='text' name='name' id='name' className={classNames({ 'is-invalid': errors.name && touched.name })} />
+                                        <ErrorMessage name='name' component='div' className='invalid-feedback' />
 
-                                <Row>
-                                    <Col md={6}>
-                                        <FormGroup className='has-validation'>
-                                            <Label for='name'>Name:</Label>
-                                            <Field as={Input} type='text' name='name' id='name' className={classNames({ 'is-invalid': errors.name && touched.name })} />
-                                            <ErrorMessage name='name' component='div' className='invalid-feedback' />
+                                    </FormGroup>
+                                </Col>
+                                <Col md={6}>
+                                    <FormGroup className='has-validation'>
+                                        <Label for='email'>E-mail:</Label>
+                                        <Field as={Input} type='email' name='email' id='email' className={classNames({ 'is-invalid': errors.email && touched.email })} />
+                                        <ErrorMessage name='email' component='div' className='invalid-feedback' />
+                                    </FormGroup>
+                                </Col>
 
+
+                            </Row>
+
+                            <Row>
+                                <Col md={6}>
+                                    <FormGroup className='has-validation'>
+                                        <Label for='password'>Password:</Label>
+                                        <Field as={Input} type='password' name='password' id='password' className={classNames({ 'is-invalid': errors.password && touched.password })} />
+                                        <ErrorMessage name='password' component='div' className='invalid-feedback' />
+                                    </FormGroup>
+                                </Col>
+
+                                <Col md={6}>
+                                    <FormGroup className='has-validation'>
+                                        <Label for='confirm_password'>Confirm Password:</Label>
+                                        <Field as={Input} type='password' name='confirm_password' id='confirm_password' className={classNames({ 'is-invalid': errors.confirm_password && touched.confirm_password })} />
+                                        <ErrorMessage name='confirm_password' component='div' className='invalid-feedback' />
+                                    </FormGroup>
+                                </Col>
+
+                            </Row>
+                            <Row>
+
+                                <Col md={4}>
+                                    <FormGroup className='has-validation'>
+                                        <Label for='country'>Country:</Label>
+                                        <Field as={Countries} name='country' id='country' className={classNames({ 'is-invalid': errors.country && touched.country })} />
+                                        <ErrorMessage name='country' component='div' className='invalid-feedback' />
+                                    </FormGroup>
+                                </Col>
+                                <Col md={3}>
+                                    <FormGroup className='has-validation'>
+                                        <Label for='state'>State/Province:</Label>
+                                        <Field as={States} name='state' id='state' optional country={values.country} className={classNames({ 'is-invalid': errors.state && touched.state })} />
+                                        <ErrorMessage name='state' component='div' className='invalid-feedback' />
+                                    </FormGroup>
+                                </Col>
+                                <Col md={5}>
+                                    <FormGroup className='has-validation'>
+                                        <Label for='roles'>Roles:</Label>
+
+                                        <FormGroup check>
+                                            <Field as={Input} type='checkbox' name='roles' value='admin' />
+                                            <Label check>Admin</Label>
                                         </FormGroup>
-                                    </Col>
-                                    <Col md={6}>
-                                        <FormGroup className='has-validation'>
-                                            <Label for='email'>E-mail:</Label>
-                                            <Field as={Input} type='email' name='email' id='email' className={classNames({ 'is-invalid': errors.email && touched.email })} />
-                                            <ErrorMessage name='email' component='div' className='invalid-feedback' />
-                                        </FormGroup>
-                                    </Col>
 
+                                        <ErrorMessage name='roles' component='div' className='invalid-feedback' />
+                                    </FormGroup>
+                                </Col>
 
-                                </Row>
+                            </Row>
 
-                                <Row>
-                                    <Col md={6}>
-                                        <FormGroup className='has-validation'>
-                                            <Label for='password'>Password:</Label>
-                                            <Field as={Input} type='password' name='password' id='password' className={classNames({ 'is-invalid': errors.password && touched.password })} />
-                                            <ErrorMessage name='password' component='div' className='invalid-feedback' />
-                                        </FormGroup>
-                                    </Col>
-
-                                    <Col md={6}>
-                                        <FormGroup className='has-validation'>
-                                            <Label for='confirm_password'>Confirm Password:</Label>
-                                            <Field as={Input} type='password' name='confirm_password' id='confirm_password' className={classNames({ 'is-invalid': errors.confirm_password && touched.confirm_password })} />
-                                            <ErrorMessage name='confirm_password' component='div' className='invalid-feedback' />
-                                        </FormGroup>
-                                    </Col>
-
-                                </Row>
-                                <Row>
-
-                                    <Col md={4}>
-                                        <FormGroup className='has-validation'>
-                                            <Label for='country'>Country:</Label>
-                                            <Field as={Countries} name='country' id='country' className={classNames({ 'is-invalid': errors.country && touched.country })} />
-                                            <ErrorMessage name='country' component='div' className='invalid-feedback' />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col md={3}>
-                                        <FormGroup className='has-validation'>
-                                            <Label for='state'>State/Province:</Label>
-                                            <Field as={States} name='state' id='state' optional country={values.country} className={classNames({ 'is-invalid': errors.state && touched.state })} />
-                                            <ErrorMessage name='state' component='div' className='invalid-feedback' />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col md={5}>
-                                        <FormGroup className='has-validation'>
-                                            <Label for='roles'>Roles:</Label>
-
-                                            <FormGroup check>
-                                                <Field as={Input} type='checkbox' name='roles' value='admin' />
-                                                <Label check>Admin</Label>
-                                            </FormGroup>
-
-                                            <ErrorMessage name='roles' component='div' className='invalid-feedback' />
-                                        </FormGroup>
-                                    </Col>
-
-                                </Row>
-
-                                <Row>
-                                    <Col className='text-end'>
-                                        <Button color='primary' type='submit' disabled={isSubmitting}>
-                                            {buttonContent}
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        </>
-                    )}
-                </Formik>
-            </>
-        );
-    }
+                            <Row>
+                                <Col className='text-end'>
+                                    <Button color='primary' type='submit' disabled={isSubmitting}>
+                                        {buttonContent}
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </>
+                )}
+            </Formik>
+        </>
+    );
 }
+
+export default UserForm;
