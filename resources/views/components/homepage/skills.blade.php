@@ -3,7 +3,11 @@
         <h2 class="h3 fw-bold">Skills</h2>
     </div>
 
-    <div class="showcase row-cols-3">
+    <div @class([
+        'showcase',
+        'row-cols-2' => $skills->count() % 2 === 0,
+        'row-cols-3' => $skills->count() % 2 !== 0,
+    ])>
         @foreach ($skills as $skill)
             <div class="showcase-item">
                 <div class="showcase-item-icon">
