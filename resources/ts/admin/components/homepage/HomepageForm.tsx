@@ -26,41 +26,24 @@ export interface IFormikValues {
 interface IProps extends IHasRouter {
 }
 
-interface IState {
-}
+const HomepageForm: React.FC<IProps> = (props) => {
+    const waitToLoadRef = React.createRef<WaitToLoad<IPageMetaData[]>>();
 
-export default class HomepageForm extends React.Component<IProps, IState> {
-    private _waitToLoadRef = React.createRef<WaitToLoad<IPageMetaData[]>>();
-
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-        };
-
-        this.getHomepageMetaData = this.getHomepageMetaData.bind(this);
-        this.onHomepageFormSubmitted = this.onHomepageFormSubmitted.bind(this);
-        this.handleError = this.handleError.bind(this);
-        this.getInitialHomePageValues = this.getInitialHomePageValues.bind(this);
-    }
-
-
-    private get schema() {
-        return Yup.object().shape({
+    const schema = React.useMemo(() =>
+        Yup.object().shape({
             name: Yup.string().required('Name is required').max(255),
             headline: Yup.string().required('Headline is required').max(255),
             location: Yup.string().required('Location is required').max(255),
             biography: Yup.string().required('Biography is required'),
-        });
-    }
+        }), []);
 
-    private async getHomepageMetaData() {
+    const getHomepageMetaData = async () => {
         const response = await createAuthRequest().get<IPageMetaData[]>('/pages/homepage');
 
         return response.data;
     }
 
-    private getInitialHomePageValues(metaData: IPageMetaData[]) {
+    const getInitialHomePageValues = (metaData: IPageMetaData[]) => {
         const initialValues = {
             name: '',
             headline: '',
@@ -77,7 +60,7 @@ export default class HomepageForm extends React.Component<IProps, IState> {
         return initialValues;
     }
 
-    private async onHomepageFormSubmitted({ name, headline, location, biography }: IFormikValues, helpers: FormikHelpers<IFormikValues>) {
+    const onHomepageFormSubmitted = async ({ name, headline, location, biography }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().post<IPageMetaData[]>('/pages/homepage', {
                 name,
@@ -86,23 +69,23 @@ export default class HomepageForm extends React.Component<IProps, IState> {
                 biography
             });
 
-            await this.onUpdated(response);
+            await onUpdated(response);
         } catch (e) {
-            await this.onError(e);
+            await onError(e);
         }
     }
 
-    private async onUpdated(response: AxiosResponse<IPageMetaData[]>) {
+    const onUpdated = async (response: AxiosResponse<IPageMetaData[]>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Updated',
             text: 'The homepage was successfully updated.',
         });
 
-        this._waitToLoadRef.current?.load();
+        waitToLoadRef.current?.load();
     }
 
-    private async onError(err: unknown) {
+    const onError = async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -112,8 +95,8 @@ export default class HomepageForm extends React.Component<IProps, IState> {
         });
     }
 
-    private async handleError(err: unknown) {
-        const { router: { navigate } } = this.props;
+    const handleError = async (err: unknown) => {
+        const { router: { navigate } } = props;
 
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -127,89 +110,86 @@ export default class HomepageForm extends React.Component<IProps, IState> {
         });
 
         if (result.isConfirmed) {
-            this._waitToLoadRef.current?.load();
+            waitToLoadRef.current?.load();
         } else {
             navigate(-1);
         }
     }
 
-    public render() {
-        const { } = this.props;
-        const { } = this.state;
+    return (
+        <>
+            <WaitToLoad ref={waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={getHomepageMetaData}>
+                {(metaData, err) => (
+                    <>
+                        {err !== undefined && handleError(err)}
+                        {metaData !== undefined && (
+                            <>
+                                <Formik<IFormikValues>
+                                    validationSchema={schema}
+                                    initialValues={getInitialHomePageValues(metaData)}
+                                    onSubmit={onHomepageFormSubmitted}
+                                >
+                                    {({ errors, touched, isSubmitting, values, setFieldValue }) => (
+                                        <>
+                                            <Form>
 
-        return (
-            <>
-                <WaitToLoad ref={this._waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={this.getHomepageMetaData}>
-                    {(metaData, err) => (
-                        <>
-                            {err !== undefined && this.handleError(err)}
-                            {metaData !== undefined && (
-                                <>
-                                    <Formik<IFormikValues>
-                                        validationSchema={this.schema}
-                                        initialValues={this.getInitialHomePageValues(metaData)}
-                                        onSubmit={this.onHomepageFormSubmitted}
-                                    >
-                                        {({ errors, touched, isSubmitting, values, setFieldValue }) => (
-                                            <>
-                                                <Form>
+                                                <Row>
+                                                    <Col md={12}>
+                                                        <FormGroup className='has-validation'>
+                                                            <Label for='name'>Name:</Label>
+                                                            <Field as={Input} type='text' name='name' id='name' className={classNames({ 'is-invalid': errors.name && touched.name })} />
+                                                            <ErrorMessage name='name' component='div' className='invalid-feedback' />
 
-                                                    <Row>
-                                                        <Col md={12}>
-                                                            <FormGroup className='has-validation'>
-                                                                <Label for='name'>Name:</Label>
-                                                                <Field as={Input} type='text' name='name' id='name' className={classNames({ 'is-invalid': errors.name && touched.name })} />
-                                                                <ErrorMessage name='name' component='div' className='invalid-feedback' />
+                                                        </FormGroup>
+                                                    </Col>
 
-                                                            </FormGroup>
-                                                        </Col>
+                                                    <Col md={12}>
+                                                        <FormGroup className='has-validation'>
+                                                            <Label for='headline'>Headline:</Label>
+                                                            <Field as={Input} type='text' name='headline' id='headline' className={classNames({ 'is-invalid': errors.headline && touched.headline })} />
+                                                            <ErrorMessage name='headline' component='div' className='invalid-feedback' />
 
-                                                        <Col md={12}>
-                                                            <FormGroup className='has-validation'>
-                                                                <Label for='headline'>Headline:</Label>
-                                                                <Field as={Input} type='text' name='headline' id='headline' className={classNames({ 'is-invalid': errors.headline && touched.headline })} />
-                                                                <ErrorMessage name='headline' component='div' className='invalid-feedback' />
+                                                        </FormGroup>
+                                                    </Col>
 
-                                                            </FormGroup>
-                                                        </Col>
+                                                    <Col md={12}>
+                                                        <FormGroup className='has-validation'>
+                                                            <Label for='location'>Location:</Label>
+                                                            <Field as={Input} type='text' name='location' id='location' className={classNames({ 'is-invalid': errors.location && touched.location })} />
+                                                            <ErrorMessage name='location' component='div' className='invalid-feedback' />
 
-                                                        <Col md={12}>
-                                                            <FormGroup className='has-validation'>
-                                                                <Label for='location'>Location:</Label>
-                                                                <Field as={Input} type='text' name='location' id='location' className={classNames({ 'is-invalid': errors.location && touched.location })} />
-                                                                <ErrorMessage name='location' component='div' className='invalid-feedback' />
+                                                        </FormGroup>
+                                                    </Col>
 
-                                                            </FormGroup>
-                                                        </Col>
+                                                    <Col md={12}>
+                                                        <FormGroup className='has-validation'>
+                                                            <Label for='biography'>Biography:</Label>
+                                                            <MarkdownEditor mode='split' value={values.biography} onChange={(v) => setFieldValue('biography', v)} />
+                                                            {/* TODO: Fix error message not being displayed. */}
+                                                            <ErrorMessage name='biography' component='div' className='invalid-feedback' />
 
-                                                        <Col md={12}>
-                                                            <FormGroup className='has-validation'>
-                                                                <Label for='biography'>Biography:</Label>
-                                                                <MarkdownEditor mode='split' value={values.biography} onChange={(v) => setFieldValue('biography', v)} />
-                                                                <ErrorMessage name='biography' component='div' className='invalid-feedback' />
+                                                        </FormGroup>
+                                                    </Col>
+                                                </Row>
 
-                                                            </FormGroup>
-                                                        </Col>
-                                                    </Row>
-
-                                                    <Row>
-                                                        <Col className='text-end'>
-                                                            <Button color='primary' type='submit' disabled={isSubmitting}>
-                                                                Update Profile
-                                                            </Button>
-                                                        </Col>
-                                                    </Row>
-                                                </Form>
-                                            </>
-                                        )}
-                                    </Formik>
-                                </>
-                            )}
-                        </>
-                    )}
-                </WaitToLoad>
-
-            </>
-        );
-    }
+                                                <Row>
+                                                    <Col className='text-end'>
+                                                        <Button color='primary' type='submit' disabled={isSubmitting}>
+                                                            Update Profile
+                                                        </Button>
+                                                    </Col>
+                                                </Row>
+                                            </Form>
+                                        </>
+                                    )}
+                                </Formik>
+                            </>
+                        )}
+                    </>
+                )}
+            </WaitToLoad>
+        </>
+    );
 }
+
+export default HomepageForm;
