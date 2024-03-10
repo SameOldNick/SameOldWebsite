@@ -13,6 +13,7 @@ class OAuthRouteMethods
                 'prefix' => 'oauth',
             ], function () use ($options) {
                 /** @var \Illuminate\Routing\Router $this */
+                /** @var OAuth $oauth */
                 $oauth = $this->container->make(OAuth::class);
 
                 foreach ($oauth->configured() as $driver) {
