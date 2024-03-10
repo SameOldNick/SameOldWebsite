@@ -5,6 +5,7 @@
 
     <div @class([
         'showcase',
+        'justify-content-center',
         'row-cols-2' => $skills->count() % 2 === 0,
         'row-cols-3' => $skills->count() % 2 !== 0,
     ])>

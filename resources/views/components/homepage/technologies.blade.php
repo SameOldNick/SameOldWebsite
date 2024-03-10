@@ -3,7 +3,7 @@
         <h2 class="h3 fw-bold">Technologies</h2>
     </div>
 
-    <div class="showcase row-cols-3">
+    <div class="showcase row-cols-3 justify-content-center">
         @foreach ($technologies as $technology)
             <div class="showcase-item">
                 <div class="showcase-item-icon">
