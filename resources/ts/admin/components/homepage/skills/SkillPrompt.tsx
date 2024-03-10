@@ -8,29 +8,26 @@ import * as Yup from 'yup';
 import IconSelector, { IIconType } from '@admin/components/icon-selector/IconSelector';
 import { lookupIcon } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
+import { IPromptModalProps } from '@admin/utils/modals';
 
 interface IFormikValues {
     skill: string;
 }
 
-interface IProps {
-    skill?: ISkill;
-    onSubmitted: (skill: ISkill) => Promise<void>;
-    onClose: () => void;
+interface IProps extends IPromptModalProps<ISkill> {
+    existing?: ISkill;
 }
 
-const SkillPrompt: React.FC<IProps> = ({ skill, onSubmitted, onClose }) => {
+const SkillPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }) => {
     const [iconSelector, setIconSelector] = React.useState(false);
-    const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(skill !== undefined ? lookupIcon(skill.icon) : undefined);
+    const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(existing !== undefined ? lookupIcon(existing.icon) : undefined);
 
     const handleSubmit = async (values: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
-        await onSubmitted({
-            id: skill?.id,
+        await onSuccess({
+            id: existing?.id,
             icon: `${selectedIcon?.prefix}-${selectedIcon?.name}`,
             skill: values.skill
         });
-
-        onClose();
     }
 
     const schema = React.useMemo(() =>
@@ -39,7 +36,7 @@ const SkillPrompt: React.FC<IProps> = ({ skill, onSubmitted, onClose }) => {
         })
     , []);
 
-    const initialValues = React.useMemo<IFormikValues>(() => ({ skill: skill?.skill || '' }), [skill]);
+    const initialValues = React.useMemo<IFormikValues>(() => ({ skill: existing?.skill || '' }), [existing]);
 
     const handleIconSelect = (icon: IIconType) => {
         setSelectedIcon(icon);
@@ -67,7 +64,7 @@ const SkillPrompt: React.FC<IProps> = ({ skill, onSubmitted, onClose }) => {
                             <Form>
 
                                 <ModalHeader>
-                                    {skill ? 'Update Skill' : 'Add Skill'}
+                                    {existing ? 'Update Skill' : 'Add Skill'}
                                 </ModalHeader>
                                 <ModalBody>
                                     <Row className="mb-3">
@@ -96,10 +93,10 @@ const SkillPrompt: React.FC<IProps> = ({ skill, onSubmitted, onClose }) => {
                                 </ModalBody>
                                 <ModalFooter>
                                     <Button color="primary" type='submit' disabled={selectedIcon === undefined || Object.keys(errors).length > 0}>
-                                        {skill ? 'Update' : 'Create'}
+                                        {existing ? 'Update' : 'Create'}
                                     </Button>
                                     {' '}
-                                    <Button color="secondary" onClick={onClose}>
+                                    <Button color="secondary" onClick={() => onCancelled()}>
                                         Cancel
                                     </Button>
                                 </ModalFooter>

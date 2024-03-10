@@ -13,6 +13,7 @@ import Icon from '@admin/components/icon-selector/Icon';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { lookupIcon } from '@admin/components/icon-selector/utils';
+import awaitModalPrompt from '@admin/utils/modals';
 
 interface IProps {
 
@@ -262,8 +263,16 @@ const SkillList: React.FC<IProps> = ({ }) => {
         setSkills((skills) => skills.map((item) => item.skill === skill ? { skill, selected } : item));
     }
 
-    const displayEditSkill = (skill: ISkill) => {
-        setEditSkillPrompt(skill);
+    const handleAddButtonClicked = async () => {
+        const skill = await awaitModalPrompt(SkillPrompt);
+
+        await addSkill(skill);
+    }
+
+    const handleEditButtonClicked = async (skill: ISkill) => {
+        const updated = await awaitModalPrompt(SkillPrompt, { existing: skill });
+
+        await editSkill(updated);
     }
 
     React.useEffect(() => {
@@ -281,26 +290,10 @@ const SkillList: React.FC<IProps> = ({ }) => {
 
     return (
         <>
-
-            {addSkillPrompt && (
-                <SkillPrompt
-                    onSubmitted={addSkill}
-                    onClose={() => setAddSkillPrompt(false)}
-                />
-            )}
-
-            {editSkillPrompt && (
-                <SkillPrompt
-                    skill={editSkillPrompt}
-                    onSubmitted={editSkill}
-                    onClose={() => setEditSkillPrompt(undefined)}
-                />
-            )}
-
             <Row className="mb-3">
                 <Col className="d-flex justify-content-between">
                     <div>
-                        <Button color='primary' onClick={() => setAddSkillPrompt(true)}>Add Skill</Button>
+                        <Button color='primary' onClick={handleAddButtonClicked}>Add Skill</Button>
                     </div>
 
                     <div>
@@ -328,7 +321,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
                         skill={skill}
                         selected={selected}
                         onSelected={(selected) => onItemSelected(skill, selected)}
-                        onEditClicked={() => displayEditSkill(skill)}
+                        onEditClicked={() => handleEditButtonClicked(skill)}
                         onDeleteClicked={() => promptDeleteSkill(skill)}
                     />
                 ))}
