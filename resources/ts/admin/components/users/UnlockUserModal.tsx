@@ -56,7 +56,7 @@ const UnlockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => 
 
     React.useEffect(() => {
         displayPrompt();
-    });
+    }, []);
 
     return (
         <>

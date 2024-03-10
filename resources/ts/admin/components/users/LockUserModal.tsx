@@ -57,7 +57,7 @@ const LockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => {
 
     React.useEffect(() => {
         displayPrompt();
-    });
+    }, []);
 
     return (
         <>
