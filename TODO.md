@@ -21,6 +21,7 @@
 * ~~Custom error pages (404, etc.)~~
 * ~~Terms and conditions~~
 * ~~Privacy policy~~
+* Migrate from WordPress
 
 ## Functionality
  * Organize App/Traits folder
