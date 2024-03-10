@@ -10,22 +10,14 @@ import Alerts, { IAlert } from '@admin/components/Alerts';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { createBase64UrlFromFile } from '@admin/utils';
+import { IPromptModalProps } from '@admin/utils/modals';
 
 export interface IAvatarUploaded {
     file: File;
     src: string;
 }
 
-interface IProps {
-    onUploaded: () => void;
-    onCancelled: () => void;
-}
-
-interface IState {
-    uploaded?: IAvatarUploaded;
-}
-
-const UploadAvatarModal: React.FC<IProps> = ({ onUploaded, onCancelled }) => {
+const UploadAvatarModal: React.FC<IPromptModalProps> = ({ onSuccess, onCancelled }) => {
     const [uploaded, setUploaded] = React.useState<IAvatarUploaded | undefined>(undefined);
     const [alerts, setAlerts] = React.useState<IAlert[]>([]);
 
@@ -40,7 +32,7 @@ const UploadAvatarModal: React.FC<IProps> = ({ onUploaded, onCancelled }) => {
 
             const response = await createAuthRequest().post<IMessageResponse>('user/avatar', data, { headers: { 'Content-Type': 'multipart/form-data' } });
 
-            onUploaded();
+            onSuccess();
         } catch (err) {
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

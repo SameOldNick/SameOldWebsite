@@ -6,13 +6,12 @@ import Swal from 'sweetalert2';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import { IPromptModalProps } from '@admin/utils/modals';
 
-interface IProps {
-    onRemoved: () => void;
-    onCancelled: () => void;
+interface IProps extends IPromptModalProps {
 }
 
-const RemoveAvatarModal: React.FC<IProps> = ({ onRemoved, onCancelled }) => {
+const RemoveAvatarModal: React.FC<IProps> = ({ onSuccess, onCancelled }) => {
     const displayPrompt = async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
@@ -36,7 +35,7 @@ const RemoveAvatarModal: React.FC<IProps> = ({ onRemoved, onCancelled }) => {
         try {
             const response = await createAuthRequest().delete<IMessageResponse>('user/avatar');
 
-            onRemoved();
+            onSuccess();
         } catch (err) {
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

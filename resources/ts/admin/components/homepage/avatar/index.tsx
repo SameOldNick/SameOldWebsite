@@ -9,82 +9,72 @@ import Upload from './UploadAvatarModal';
 import Remove from './RemoveAvatarModal';
 
 import UserAvatar from '@admin/components/UserAvatar';
+import awaitModalPrompt from '@admin/utils/modals';
 
 interface IProps {
 }
 
-interface IState {
-    uploadModal: boolean;
-    removeModal: boolean;
-    avatarKey: number;
+const Avatar: React.FC<IProps> = ({ }) => {
+    const [avatarKey, setAvatarKey] = React.useState(0);
+
+    const handleUploadClicked = async () => {
+        try {
+            await awaitModalPrompt(Upload);
+
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Avatar Updated Successfully'
+            });
+
+            setAvatarKey((avatarKey) => avatarKey + 1);
+        } catch (err) {
+            // User cancelled modal
+            logger.error(err);
+        }
+
+    }
+
+    const handleRemoveClicked = async () => {
+        try {
+            await awaitModalPrompt(Remove);
+
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Avatar Removed Successfully'
+            });
+
+            setAvatarKey((avatarKey) => avatarKey + 1);
+        } catch (err) {
+            // User cancelled modal
+            logger.error(err);
+        }
+    }
+
+    return (
+        <>
+            <Row className='mb-3'>
+                <Col style={{ textAlign: 'center' }}>
+                    <UserAvatar key={avatarKey} user='current' style={{ maxWidth: '100%' }} />
+                </Col>
+            </Row>
+            <Row>
+                <Col style={{ textAlign: 'center' }}>
+                    <Button color='primary' size='md' className='me-3' onClick={handleUploadClicked}>
+                        <span className='me-1'>
+                            <FaUpload />
+                        </span>
+                        Upload...
+                    </Button>
+                    <Button color='danger' size='md' onClick={handleRemoveClicked}>
+                        <span className='me-1'>
+                            <FaTrash />
+                        </span>
+                        Remove
+                    </Button>
+                </Col>
+            </Row>
+        </>
+    );
 }
 
-export default class Avatar extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-            uploadModal: false,
-            removeModal: false,
-            avatarKey: 0
-        };
-
-        this.onUploaded = this.onUploaded.bind(this);
-        this.onRemoved = this.onRemoved.bind(this);
-    }
-
-    private async onUploaded() {
-        this.setStateAndResolve({ uploadModal: false });
-
-        await withReactContent(Swal).fire({
-            icon: 'success',
-            title: 'Avatar Updated Successfully'
-        });
-
-        this.setState(({ avatarKey }) => ({ avatarKey: avatarKey + 1 }));
-    }
-
-    private async onRemoved() {
-        this.setStateAndResolve({ removeModal: false });
-
-        await withReactContent(Swal).fire({
-            icon: 'success',
-            title: 'Avatar Removed Successfully'
-        });
-
-        this.setState(({ avatarKey }) => ({ avatarKey: avatarKey + 1 }));
-    }
-
-    public render() {
-        const { uploadModal, removeModal, avatarKey } = this.state;
-
-        return (
-            <>
-                <Row className='mb-3'>
-                    <Col style={{ textAlign: 'center' }}>
-                        <UserAvatar key={avatarKey} user='current' style={{ maxWidth: '100%' }} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col style={{ textAlign: 'center' }}>
-                        <Button color='primary' size='md' className='me-3' onClick={() => this.setState({ uploadModal: true })}>
-                            <span className='me-1'>
-                                <FaUpload />
-                            </span>
-                            Upload...
-                        </Button>
-                        <Button color='danger' size='md' onClick={() => this.setState({ removeModal: true })}>
-                            <span className='me-1'>
-                                <FaTrash />
-                            </span>
-                            Remove
-                        </Button>
-                    </Col>
-                </Row>
-
-                {uploadModal && <Upload onUploaded={this.onUploaded} onCancelled={() => this.setState({ uploadModal: false })} />}
-                {removeModal && <Remove onRemoved={this.onRemoved} onCancelled={() => this.setState({ removeModal: false })} />}
-            </>
-        );
-    }
-}
+export default Avatar;
