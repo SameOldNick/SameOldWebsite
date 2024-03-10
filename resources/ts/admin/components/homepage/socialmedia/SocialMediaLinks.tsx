@@ -284,7 +284,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
                             <span className='me-1'>
                                 <FaSync />
                             </span>
-                            Update
+                            Refresh
                         </Button>
 
                         <Button color="danger" disabled={!hasSelected} onClick={promptDeleteLinks}>
