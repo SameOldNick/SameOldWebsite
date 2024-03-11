@@ -17,11 +17,6 @@ interface IProps {
 
 }
 
-interface IState {
-    open: boolean;
-    logoutModal: boolean;
-}
-
 const connector = connect(
     ({ account }: RootState) => ({ account }),
     (dispatch) => bindActionCreators({ dispatchAuthStage: accountSlice.actions.authStage }, dispatch)
@@ -29,77 +24,63 @@ const connector = connect(
 
 type TProps = ConnectedProps<typeof connector> & IProps;
 
-export default connector(class User extends React.Component<TProps, IState> {
-    constructor(props: Readonly<TProps>) {
-        super(props);
+const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage }) => {
+    const [open, setOpen] = React.useState(false);
+    const [logoutModal, setLogoutModal] = React.useState(false);
 
-        this.state = {
-            open: false,
-            logoutModal: false
-        };
-
-        this.closeLogoutModal = this.closeLogoutModal.bind(this);
-        this.logout = this.logout.bind(this);
+    const closeLogoutModal = () => {
+        setLogoutModal(false);
     }
 
-    public componentDidUpdate(props: Readonly<TProps>) {
-        const { account } = this.props;
+    const logout = async () => {
+        await createAuthRequest().post('logout', {});
 
-        if (props.account.stage !== account.stage && account.stage.stage === 'none') {
+        dispatchAuthStage({ stage: 'none' });
+    }
+
+    React.useEffect(() => {
+        if (stage.stage === 'none') {
             // Redirect to home page (externally)
             window.location.href = '/';
         }
-    }
+    }, [stage]);
 
-    private closeLogoutModal() {
-        this.setState({ logoutModal: false });
-    }
+    return (
+        <>
+            <Dropdown nav className='no-arrow me-md-3' isOpen={open} toggle={() => setOpen((prev) => !prev)}>
+                <DropdownToggle nav tag='a' href='#' id="userDropdown">
+                    <Avatar user='current' />
+                    <span className={classNames("ms-2 d-none d-lg-inline text-gray-600 small", { placeholder: user === undefined })}>
+                        {user !== undefined && <>{user.email} <FaCaretDown /></>}
+                    </span>
+                </DropdownToggle>
 
-    private async logout() {
-        await createAuthRequest().post('logout', {});
+                {/* Dropdown - User Information */}
+                <DropdownMenu end className='shadow animated--fade-in'>
+                    <IconContext.Provider value={{ className: 'fa-sm fa-fw me-2 text-gray-400' }}>
+                        <DropdownItem href='/' target='_blank'>
+                            <FaHome />
+                            Main Site
+                        </DropdownItem>
+                        <DropdownItem href='/user' target='_blank'>
+                            <FaUser />
+                            Profile
+                        </DropdownItem>
+                        <DropdownItem href='/user/password' target='_blank'>
+                            <FaKey />
+                            Change Password
+                        </DropdownItem>
+                        <DropdownItem href='#' onClick={() => setLogoutModal(true)}>
+                            <FaSignOutAlt />
+                            Logout
+                        </DropdownItem>
+                    </IconContext.Provider>
+                </DropdownMenu>
+            </Dropdown>
 
-        this.props.dispatchAuthStage({ stage: 'none' });
-    }
+            <LogoutModal show={logoutModal} onLogout={logout} onCancel={closeLogoutModal} />
+        </>
+    );
+}
 
-    public render() {
-        const { account: { user } } = this.props;
-        const { open, logoutModal } = this.state;
-
-        return (
-            <>
-                <Dropdown nav className='no-arrow me-md-3' isOpen={open} toggle={() => this.setState((prevState) => ({ open: !prevState.open }))}>
-                    <DropdownToggle nav tag='a' href='#' id="userDropdown">
-                        <Avatar user='current' />
-                        <span className={classNames("ms-2 d-none d-lg-inline text-gray-600 small", { placeholder: user === undefined })}>
-                            {user !== undefined && <>{user.email} <FaCaretDown /></>}
-                        </span>
-                    </DropdownToggle>
-
-                    {/* Dropdown - User Information */}
-                    <DropdownMenu end className='shadow animated--fade-in'>
-                        <IconContext.Provider value={{ className: 'fa-sm fa-fw me-2 text-gray-400' }}>
-                            <DropdownItem href='/' target='_blank'>
-                                <FaHome />
-                                Main Site
-                            </DropdownItem>
-                            <DropdownItem href='/user' target='_blank'>
-                                <FaUser />
-                                Profile
-                            </DropdownItem>
-                            <DropdownItem href='/user/password' target='_blank'>
-                                <FaKey />
-                                Change Password
-                            </DropdownItem>
-                            <DropdownItem href='#' onClick={() => this.setState({ logoutModal: true })}>
-                                <FaSignOutAlt />
-                                Logout
-                            </DropdownItem>
-                        </IconContext.Provider>
-                    </DropdownMenu>
-                </Dropdown>
-
-                <LogoutModal show={logoutModal} onLogout={this.logout} onCancel={this.closeLogoutModal} />
-            </>
-        );
-    }
-});
+export default connector(User);
