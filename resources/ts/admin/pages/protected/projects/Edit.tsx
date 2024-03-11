@@ -20,32 +20,16 @@ interface IProps extends IHasRouter<'project'> {
 
 }
 
-interface IState {
-}
+const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) => {
+    const waitToLoadRef = React.createRef<WaitToLoad<IProject>>();
 
-export default withRouter(class Edit extends React.Component<IProps, IState> {
-    private _waitToLoadRef = React.createRef<WaitToLoad<IProject>>();
-
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-        };
-
-        this.getProject = this.getProject.bind(this);
-    }
-
-    private async getProject() {
-        const { router: { params: { project }} } = this.props;
-
+    const getProject = async () => {
         const response = await createAuthRequest().get<IProject>(`/projects/${project}`);
 
         return response.data;
     }
 
-    private async handleError(err: unknown) {
-        const { router: { navigate } } = this.props;
-
+    const handleError = async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         const result = await withReactContent(Swal).fire({
@@ -58,25 +42,25 @@ export default withRouter(class Edit extends React.Component<IProps, IState> {
         });
 
         if (result.isConfirmed) {
-            this._waitToLoadRef.current?.load();
+            waitToLoadRef.current?.load();
         } else {
             navigate(-1);
         }
     }
 
-    private getInitialValues(project: IProject) {
+    const getInitialValues = React.useCallback((project: IProject) => {
         return {
             name: project.project,
             description: project.description,
             url: project.url
         };
-    }
+    }, []);
 
-    private transformProjectTags(tags: ITag[]): Tag[] {
+    const transformProjectTags = (tags: ITag[]): Tag[] => {
         return tags.map(({ tag, slug }, index) => ({ label: tag, value: slug ?? index }));
     }
 
-    private async onSubmit(project: IProject, { name, description, url, tags }: IOnSubmitValues, helpers: FormikHelpers<IFormikValues>) {
+    const onSubmit = async (project: IProject, { name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().put<IProject>(`projects/${project.id}`, {
                 title: name,
@@ -85,23 +69,23 @@ export default withRouter(class Edit extends React.Component<IProps, IState> {
                 tags: tags.map(({ label }) => label)
             });
 
-            await this.onUpdated(response);
+            await onUpdated(response);
         } catch (e) {
-            await this.onError(e);
+            await onError(e);
         }
     }
 
-    private async onUpdated(response: AxiosResponse<IProject>) {
+    const onUpdated = async ({ }: AxiosResponse<IProject>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Project Updated',
             text: 'The project was successfully updated.',
         });
 
-        this._waitToLoadRef.current?.load();
+        waitToLoadRef.current?.load();
     }
 
-    private async onError(err: unknown) {
+    const onError = async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -111,34 +95,34 @@ export default withRouter(class Edit extends React.Component<IProps, IState> {
         });
     }
 
-    public render() {
-        return (
+    return (
+        <>
+            <Helmet>
+                <title>Edit Project</title>
+            </Helmet>
+
+            <Heading title='Edit Project' />
+
             <>
-                <Helmet>
-                    <title>Edit Project</title>
-                </Helmet>
-
-                <Heading title='Edit Project' />
-
-                <>
-                    <WaitToLoad<IProject> ref={this._waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={this.getProject}>
-                        {(project, err) => (
-                            <>
-                                {err !== undefined && this.handleError(err)}
-                                {
-                                    project !== undefined &&
-                                    <ProjectForm
-                                        initialValues={this.getInitialValues(project)}
-                                        initialTags={this.transformProjectTags(project.tags)}
-                                        buttonContent='Edit Project'
-                                        onSubmit={(values, helpers) => this.onSubmit(project, values, helpers)}
-                                    />
-                                }
-                            </>
-                        )}
-                    </WaitToLoad>
-                </>
+                <WaitToLoad<IProject> ref={waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={getProject}>
+                    {(project, err) => (
+                        <>
+                            {err !== undefined && handleError(err)}
+                            {
+                                project !== undefined &&
+                                <ProjectForm
+                                    initialValues={getInitialValues(project)}
+                                    initialTags={transformProjectTags(project.tags)}
+                                    buttonContent='Edit Project'
+                                    onSubmit={(values, helpers) => onSubmit(project, values, helpers)}
+                                />
+                            }
+                        </>
+                    )}
+                </WaitToLoad>
             </>
-        );
-    }
-});
+        </>
+    );
+}
+
+export default withRouter(Edit);
