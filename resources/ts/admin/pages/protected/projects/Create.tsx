@@ -4,7 +4,6 @@ import { FormikHelpers } from 'formik';
 import { Card, CardBody } from 'reactstrap';
 import { Navigate } from 'react-router-dom';
 import withReactContent from 'sweetalert2-react-content';
-import { Tag } from 'react-tag-autocomplete';
 
 import axios, { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
@@ -19,31 +18,10 @@ interface IProps {
 
 }
 
-interface IState {
-    tags: Tag[];
-    project?: IProject;
-}
+const Create: React.FC<IProps> = ({ }) => {
+    const [project, setProject] = React.useState<IProject | undefined>();
 
-export default class Create extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
-        super(props);
-
-        this.state = {
-            tags: []
-        };
-
-        this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    private get initialValues() {
-        return {
-            name: '',
-            description: '',
-            url: ''
-        };
-    }
-
-    private async onSubmit({ name, description, url, tags }: IOnSubmitValues, helpers: FormikHelpers<IFormikValues>) {
+    const handleSubmit = async ({ name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().post<IProject>('projects', {
                 title: name,
@@ -52,23 +30,23 @@ export default class Create extends React.Component<IProps, IState> {
                 tags: tags.map(({ label }) => label)
             });
 
-            await this.onCreated(response);
+            await onCreated(response);
         } catch (e) {
-            await this.onError(e);
+            await onError(e);
         }
     }
 
-    private async onCreated(response: AxiosResponse<IProject>) {
+    const onCreated = async (response: AxiosResponse<IProject>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Project Created',
             text: 'The project was successfully created.',
         });
 
-        this.setState({ project: response.data });
+        setProject(response.data);
     }
 
-    private async onError(err: unknown) {
+    const onError = async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -78,34 +56,37 @@ export default class Create extends React.Component<IProps, IState> {
         });
     }
 
-    public render() {
-        const { } = this.props;
-        const { project } = this.state;
+    const initialValues = React.useMemo(() => ({
+        name: '',
+        description: '',
+        url: ''
+    }), []);
 
-        if (project !== undefined) {
-            return (
-                <Navigate to={`/admin/projects/edit/${project.id}`} />
-            );
-        }
-
+    if (project !== undefined) {
         return (
-            <>
-                <Helmet>
-                    <title>Create Project</title>
-                </Helmet>
-
-                <Heading title='Create Project' />
-
-                <Card>
-                    <CardBody>
-                        <ProjectForm
-                            buttonContent='Create Project'
-                            initialValues={this.initialValues}
-                            onSubmit={this.onSubmit}
-                        />
-                    </CardBody>
-                </Card>
-            </>
+            <Navigate to={`/admin/projects/edit/${project.id}`} />
         );
     }
+
+    return (
+        <>
+            <Helmet>
+                <title>Create Project</title>
+            </Helmet>
+
+            <Heading title='Create Project' />
+
+            <Card>
+                <CardBody>
+                    <ProjectForm
+                        buttonContent='Create Project'
+                        initialValues={initialValues}
+                        onSubmit={handleSubmit}
+                    />
+                </CardBody>
+            </Card>
+        </>
+    );
 }
+
+export default Create;
