@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { connect, ConnectedProps } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Layout from '@admin/layouts/error';
+import Layout, { BigText, Button, Content, Heading, SmallText } from '@admin/layouts/error';
 import { FaArrowLeft, FaHome } from 'react-icons/fa';
 
 const connector = connect(
@@ -14,63 +14,44 @@ const connector = connect(
 interface IProps {
 }
 
-type TProps = ConnectedProps<typeof connector> & IProps;
-
-interface IState {
-}
-
-export default connector(class FourZeroFour extends React.Component<TProps, IState> {
-    constructor(props: Readonly<TProps>) {
-        super(props);
-
-        this.state = {
-        };
-
-        this.goBack = this.goBack.bind(this);
-        this.goHome = this.goHome.bind(this);
-    }
-
-    private goBack(e: React.MouseEvent) {
+const FourZeroThree: React.FC<IProps> = ({ }) => {
+    const goBack = (e: React.MouseEvent) => {
         e.preventDefault();
 
         window.history.back();
     }
 
-    private goHome(e: React.MouseEvent) {
+    const goHome = (e: React.MouseEvent) => {
         e.preventDefault();
 
         // Need to use window.location, trying to use push from connect-react-router will try to load it in react.
         window.location.href = '/';
     }
 
-    public render() {
-        return (
-            <Layout>
-                <Helmet>
-                    <title>403 Forbidden</title>
-                </Helmet>
+    return (
+        <Layout title='403 Forbidden'>
+            <Heading>
+                <BigText>Oops!</BigText>
+                <SmallText>403 - Page is Forbidden</SmallText>
+            </Heading>
 
-                <Layout.Heading>
-                    <Layout.BigText>Oops!</Layout.BigText>
-                    <Layout.SmallText>403 - Page is Forbidden</Layout.SmallText>
-                </Layout.Heading>
+            <Content>
+                <p>You do not have permission to access this page.</p>
 
-                <Layout.Content>
-                    <p>You do not have permission to access this page.</p>
+                <Button href='#' onClick={goBack}>
+                    <FaArrowLeft className='me-1' />
+                    Go Back
+                </Button>
 
-                    <Layout.Button href='#' onClick={this.goBack}>
-                        <FaArrowLeft className='me-1' />
-                        Go Back
-                    </Layout.Button>
+                <SmallText className='my-3'>Or</SmallText>
 
-                    <Layout.SmallText className='my-3'>Or</Layout.SmallText>
+                <Button href='#' onClick={goHome}>
+                    <FaHome className='me-1' />
+                    Go To Home Page
+                </Button>
+            </Content>
+        </Layout>
+    );
+}
 
-                    <Layout.Button href='#' onClick={this.goHome}>
-                        <FaHome className='me-1' />
-                        Go To Home Page
-                    </Layout.Button>
-                </Layout.Content>
-            </Layout>
-        );
-    }
-});
+export default FourZeroThree;

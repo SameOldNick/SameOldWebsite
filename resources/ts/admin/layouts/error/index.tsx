@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { IconContext } from 'react-icons';
 
 interface IProps {
-
+    title: string;
 }
 
 const Heading: React.FC<React.PropsWithChildren<ColProps>> = ({ children, className, ...props }) => (
@@ -35,11 +35,11 @@ const Button: React.FC<React.PropsWithChildren & React.HTMLProps<HTMLAnchorEleme
     </>
 );
 
-const ErrorLayout: React.FC<React.PropsWithChildren<IProps>> = ({ children }) => {
+const ErrorLayout: React.FC<React.PropsWithChildren<IProps>> = ({ title, children }) => {
     return (
         <>
             <Helmet>
-                <title>404 Not Found</title>
+                <title>{title}</title>
                 <body className="error-page" />
             </Helmet>
 
