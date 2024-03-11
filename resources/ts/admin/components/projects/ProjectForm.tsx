@@ -21,7 +21,7 @@ export interface IOnSubmitValues extends IFormikValues {
 type TFormikProps = React.ComponentProps<typeof Formik<IFormikValues>>;
 
 interface IProps extends Omit<TFormikProps, 'onSubmit'> {
-    initialTags: Tag[];
+    initialTags?: Tag[];
     buttonContent: React.ReactNode;
     onSubmit: (values: IOnSubmitValues, helpers: Parameters<TFormikProps['onSubmit']>[1]) => Promise<void>;
 }
