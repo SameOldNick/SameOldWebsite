@@ -1,15 +1,7 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import { connect, ConnectedProps } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import Layout, { BigText, Button, Content, Heading, SmallText } from '@admin/layouts/error';
 import { FaArrowLeft, FaHome } from 'react-icons/fa';
-
-const connector = connect(
-    ({ }: RootState) => ({ }),
-	(dispatch) => bindActionCreators({ }, dispatch)
-);
 
 interface IProps {
 }
