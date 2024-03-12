@@ -27,64 +27,21 @@ interface IProps {
 
 type TProps = ConnectedProps<typeof connector> & React.PropsWithChildren<IProps>;
 
-interface IReauthenticateModal {
-    type: 'reauthenticate';
-    message: string;
-}
+const Authenticated: React.FC<TProps> = ({ account: { fetchUser, user }, setUser, dispatchFetchUser, errorElement }) => {
+    const [performHeartbeat, setPerformHeartbeat] = React.useState(true);
+    const [lastChecked, setLastChecked] = React.useState<DateTime | undefined>();
 
-type TModals = IReauthenticateModal;
-
-interface IState {
-    loading: boolean;
-    lastChecked?: DateTime;
-    modal?: TModals;
-    performHeartbeat: boolean;
-}
-
-export default connector(class Authenticated extends React.Component<TProps, IState> {
-    constructor(props: Readonly<TProps>) {
-        super(props);
-
-        this.state = {
-            loading: false,
-            performHeartbeat: true
-        };
-
-        this.ping = this.ping.bind(this);
-    }
-
-    public componentDidMount() {
-        this.props.dispatchFetchUser();
-    }
-
-    public componentDidUpdate(prevProps: Readonly<TProps>) {
-        const { account: { fetchUser, user }, setUser } = this.props;
-        const { lastChecked } = this.state;
-
-        if (lastChecked === undefined && (fetchUser.status === 'fulfilled' || fetchUser.status === 'rejected')) {
-            this.setState({ lastChecked: DateTime.now() });
-        }
-
-        if (fetchUser.status === 'fulfilled' && fetchUser.response && fetchUser.response !== user) {
-            setUser(fetchUser.response);
-        }
-    }
-
-    public componentWillUnmount() {
-        this.setState({ lastChecked: undefined });
-    }
-
-    private async ping(params: IHeartbeatCallbackParams) {
+    const ping = async (params: IHeartbeatCallbackParams) => {
         try {
             await createAuthRequest().get<IUser>('user');
         } catch (e) {
-            await this.onPingFailed(e);
+            await onPingFailed(e);
         }
     }
 
-    private async onPingFailed(e: unknown) {
+    const onPingFailed = async (e: unknown) => {
         // Disable heartbeat from displaying alert over and over
-        this.setState({ performHeartbeat: false });
+        setPerformHeartbeat(false);
 
         const message =
             defaultFormatter()
@@ -105,28 +62,39 @@ export default connector(class Authenticated extends React.Component<TProps, ISt
         }
     }
 
-    public render() {
-        const { account: { fetchUser }, errorElement } = this.props;
-        const { lastChecked, performHeartbeat } = this.state;
+    React.useEffect(() => {
+        dispatchFetchUser();
+    }, []);
 
-        if (lastChecked === undefined || fetchUser.status === 'pending') {
-            return (
-                <LoaderOverlay display={{ type: 'page', show: true }} />
-            );
+    React.useEffect(() => {
+        if (lastChecked === undefined && (fetchUser.status === 'fulfilled' || fetchUser.status === 'rejected')) {
+            setLastChecked(DateTime.now());
         }
 
-        if (fetchUser.status === 'fulfilled') {
-            return (
-                <>
-                    <PageVisibilityWrapper>
-                        {(visible) => <Heartbeat active={performHeartbeat && visible} interval={90 * 1000} callback={this.ping} />}
-                    </PageVisibilityWrapper>
-
-                    <Outlet />
-                </>
-            );
-        } else {
-            return errorElement;
+        if (fetchUser.status === 'fulfilled' && fetchUser.response && fetchUser.response !== user) {
+            setUser(fetchUser.response);
         }
+    }, [fetchUser]);
+
+    if (lastChecked === undefined || fetchUser.status === 'pending') {
+        return (
+            <LoaderOverlay display={{ type: 'page', show: true }} />
+        );
     }
-});
+
+    if (fetchUser.status === 'fulfilled') {
+        return (
+            <>
+                <PageVisibilityWrapper>
+                    {(visible) => <Heartbeat active={performHeartbeat && visible} interval={90 * 1000} callback={ping} />}
+                </PageVisibilityWrapper>
+
+                <Outlet />
+            </>
+        );
+    } else {
+        return errorElement;
+    }
+}
+
+export default connector(Authenticated);
