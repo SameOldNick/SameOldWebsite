@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import S from 'string';
 import classNames from 'classnames';
 
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import PaginatedTable from '@admin/components/PaginatedTable';
 
@@ -53,7 +53,7 @@ const ArticleRow: React.FC<IArticleRowProps> = ({ article, selected, onSelected 
 }
 
 const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allowAll, onSelected, onCancelled }) => {
-    const waitToLoadArticlesRef = React.createRef<WaitToLoad<IPaginateResponseCollection<IArticle>>>();
+    const waitToLoadArticlesRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
 
     const [selected, setSelected] = React.useState<Article | undefined>(existing);

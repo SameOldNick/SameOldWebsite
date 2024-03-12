@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import Heading from '@admin/layouts/admin/Heading';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import ProjectForm, { IFormikValues, IOnSubmitValues } from '@admin/components/projects/ProjectForm';
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
@@ -21,7 +21,7 @@ interface IProps extends IHasRouter<'project'> {
 }
 
 const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) => {
-    const waitToLoadRef = React.createRef<WaitToLoad<IProject>>();
+    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
     const getProject = async () => {
         const response = await createAuthRequest().get<IProject>(`/projects/${project}`);

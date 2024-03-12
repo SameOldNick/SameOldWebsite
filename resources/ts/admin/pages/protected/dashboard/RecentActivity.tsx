@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 import Loader from '@admin/components/Loader';
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import Article from '@admin/utils/api/models/Article';
@@ -129,7 +129,7 @@ const ActivityRow: React.FC<IActivityRowProps> = ({ activity, onMarkReadClicked,
 }
 
 const RecentActivity: React.FC<IRecentActivityProps> = ({ }) => {
-    const waitToLoadRef = React.createRef<WaitToLoad<TActivityNotification[]>>();
+    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
     const fetchRecentActivity = async () => {
         const activities: TActivityNotification[] = [];

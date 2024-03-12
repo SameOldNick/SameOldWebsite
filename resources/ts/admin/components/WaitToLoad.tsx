@@ -30,99 +30,107 @@ interface IErrorState {
 type TIsNotLoadingStates<T> = IFinishedState<T> | IErrorState;
 type TState<T> = IIsLoadingState | TIsNotLoadingStates<T>;
 
-export default class WaitToLoad<TReturnValue> extends React.Component<IProps<TReturnValue>, TState<TReturnValue>> {
-	private _waitTimeout?: Timeout;
+export interface IWaitToLoadHandle {
+    load: () => void;
+}
 
-	constructor(props: Readonly<IProps<TReturnValue>>) {
-		super(props);
+function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime }: IProps<TReturnValue>, ref: React.ForwardedRef<IWaitToLoadHandle>) {
+    let waitTimeout: Timeout | undefined;
 
-		this.state = {
-			loading: true
-		};
-	}
+    const [state, setState] = React.useState<TState<TReturnValue>>({ loading: true });
 
-	componentDidMount() {
-		this.load();
-	}
+    React.useImperativeHandle(ref, () => ({
+        /**
+         * Calls the load function.
+         * @deprecated Use helpers passed to children function instead.
+         */
+        load() {
+            load();
+        }
+    }));
 
-	componentWillUnmount() {
-		const { maxTime } = this.props;
-
-		if (maxTime || this._waitTimeout) {
-			clearTimeout(this._waitTimeout);
-			this._waitTimeout = undefined;
-		}
-	}
-
-    public async load() {
-        const { callback, maxTime } = this.props;
-
+    const load = async () => {
         try {
-            await this.setStateAndResolve({ loading: true });
+            setState({ loading: true });
 
             const value = await callback();
 
-            this.resolved(value);
+            resolved(value);
         } catch (e) {
             console.error(e);
 
-            this.error(e);
+            error(e);
         }
 
 		if (maxTime) {
-			this._waitTimeout = setTimeout(() => this.state.loading && this.setState({ loading: false }), maxTime);
+			waitTimeout = setTimeout(() => state.loading && setState({ loading: false, error: 'Maximum wait time reached.' }), maxTime);
 		}
     }
 
-    private get helpers(): IWaitToLoadHelpers {
-        return {
-            reload: () => this.load()
-        };
+    const helpers: IWaitToLoadHelpers = {
+        reload: () => load()
     }
 
-	private resolved(value: TReturnValue) {
-		this.setState({ loading: false, returnValue: value });
+	const resolved = (value: TReturnValue) => {
+		setState({ loading: false, returnValue: value });
 	}
 
-	private error(err: unknown) {
-		this.setState({ loading: false, error: err });
+	const error = (err: unknown) => {
+		setState({ loading: false, error: err });
 	}
 
-	private isChildrenCallback(value: any): value is TWaitToLoadCallback<any> {
+	const isChildrenCallback = (value: any): value is TWaitToLoadCallback<any> => {
 		return typeof value === 'function';
 	}
 
-	private isNotLoadingState(state: TState<TReturnValue>): state is TIsNotLoadingStates<TReturnValue> {
+	const isNotLoadingState = (state: TState<TReturnValue>): state is TIsNotLoadingStates<TReturnValue> => {
 		return !state.loading;
 	}
 
-	private isErrorState(state: any): state is IErrorState {
+	const isErrorState = (state: any): state is IErrorState => {
 		return !state.loading && state.error !== undefined && state.returnValue === undefined;
 	}
 
-	private isFinishedState(state: any): state is IFinishedState<TReturnValue> {
+	const isFinishedState = (state: any): state is IFinishedState<TReturnValue> => {
 		return !state.loading && state.error === undefined && state.returnValue !== undefined;
 	}
 
-	private renderChildren(state: TIsNotLoadingStates<TReturnValue>) {
-		const { children } = this.props;
-
-		if (this.isChildrenCallback(children) && this.isFinishedState(state)) {
-			return children(state.returnValue, undefined, this.helpers);
-		} else if (this.isErrorState(state) && this.isChildrenCallback(children)) {
-			return children(undefined, state.error, this.helpers);
+	const renderChildren = (state: TIsNotLoadingStates<TReturnValue>) => {
+		if (isChildrenCallback(children) && isFinishedState(state)) {
+			return children(state.returnValue, undefined, helpers);
+		} else if (isErrorState(state) && isChildrenCallback(children)) {
+			return children(undefined, state.error, helpers);
 		} else {
 			return children;
 		}
 	}
 
-	render() {
-		const { loading } = this.props;
+    React.useEffect(() => {
+        load();
 
-		return (
-			<>
-				{!this.isNotLoadingState(this.state) ? loading : this.renderChildren(this.state)}
-			</>
-		);
-	}
+        return () => {
+            if (maxTime || waitTimeout) {
+                clearTimeout(waitTimeout);
+                waitTimeout = undefined;
+            }
+        }
+    }, []);
+
+    return (
+        <>
+            {!isNotLoadingState(state) ? loading : renderChildren(state)}
+        </>
+    );
 }
+
+/**
+ * This essentially hacks TSX so that a generic type is required when using the component.
+ * React.forwardRef by itself doesn't work with generic types.
+ */
+interface GenericForwardedRefComponent<T> {
+    <TReturnValue>(props: React.PropsWithoutRef<IProps<TReturnValue>> & React.RefAttributes<T>): React.ReactNode;
+}
+
+const ForwardedWaitToLoad: GenericForwardedRefComponent<IWaitToLoadHandle> = React.forwardRef<IWaitToLoadHandle, IProps<any>>(WaitToLoad);
+
+export default ForwardedWaitToLoad;

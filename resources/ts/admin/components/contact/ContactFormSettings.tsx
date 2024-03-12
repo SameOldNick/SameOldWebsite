@@ -10,7 +10,7 @@ import axios, { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
 import S from 'string';
 
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import { IHasRouter } from '@admin/components/hoc/WithRouter';
 import MarkdownEditor from '@admin/components/MarkdownEditor';
@@ -43,7 +43,7 @@ interface IState {
 }
 
 export default class ContactFormSettings extends React.Component<IProps, IState> {
-    private _waitToLoadRef = React.createRef<WaitToLoad<IPageMetaData[]>>();
+    private _waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
     constructor(props: Readonly<IProps>) {
         super(props);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const WithArticle: React.FC<IProps> = ({ articleId, children }) => {
-    const waitToLoadArticleRef = React.createRef<WaitToLoad<IArticle>>;
+    const waitToLoadArticleRef = React.createRef<IWaitToLoadHandle>;
 
     const loadArticle = async () => {
         const response = await createAuthRequest().get<IArticle>(`blog/articles/${articleId}`);

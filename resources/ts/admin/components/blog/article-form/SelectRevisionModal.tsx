@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
@@ -22,7 +22,7 @@ export interface ISelectRevisionModalProps extends IPromptModalProps<IRevision> 
 }
 
 const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, existing, onSuccess, onCancelled }) => {
-    const waitToLoadRevisionsRef = React.createRef<WaitToLoad<IRevision[]>>();
+    const waitToLoadRevisionsRef = React.createRef<IWaitToLoadHandle>();
     const [selected, setSelected] = React.useState<IRevision>();
 
     const loadRevisions = async () => {

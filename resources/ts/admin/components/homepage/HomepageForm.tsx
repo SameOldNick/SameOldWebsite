@@ -9,7 +9,7 @@ import axios, { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
 
 import MarkdownEditor from '@admin/components/MarkdownEditor';
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import { IHasRouter } from '@admin/components/hoc/WithRouter';
 
@@ -27,7 +27,7 @@ interface IProps extends IHasRouter {
 }
 
 const HomepageForm: React.FC<IProps> = (props) => {
-    const waitToLoadRef = React.createRef<WaitToLoad<IPageMetaData[]>>();
+    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
     const schema = React.useMemo(() =>
         Yup.object().shape({

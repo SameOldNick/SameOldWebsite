@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import S from 'string';
 import classNames from 'classnames';
 
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import PaginatedTable from '@admin/components/PaginatedTable';
 
@@ -53,7 +53,7 @@ const CommentRow: React.FC<ICommentRowProps> = ({ comment, selected, onSelected 
 }
 
 const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allowAll, onSelected, onCancelled }) => {
-    const waitToLoadCommentsRef = React.createRef<WaitToLoad<IPaginateResponseCollection<IComment>>>();
+    const waitToLoadCommentsRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IComment>>();
 
     const [selected, setSelected] = React.useState<Comment | undefined>(existing);

@@ -9,7 +9,7 @@ import Revision from '@admin/utils/api/models/Revision';
 import Article from '@admin/utils/api/models/Article';
 
 import { IHasRouter } from '@admin/components/hoc/WithRouter';
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import ArticleInfoModal from './ArticleInfoModal';
 import SelectRevisionModal from './article-form/SelectRevisionModal';
@@ -24,7 +24,7 @@ interface IEditArticleWrapperProps extends IHasRouter<'article' | 'revision'> {
 }
 
 const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, router }) => {
-    const waitToLoadRef = React.createRef<WaitToLoad<IEditFormProps>>();
+    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
     async function handleApiError<TTryAgainReturn = void>(err: unknown, onTryAgain: () => Promise<TTryAgainReturn>) {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);

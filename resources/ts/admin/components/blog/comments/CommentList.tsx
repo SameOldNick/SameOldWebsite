@@ -11,7 +11,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 import PaginatedTable from '@admin/components/PaginatedTable';
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 
 import { CommentStatuses, approve, deny, loadAll } from '@admin/utils/api/endpoints/comments';
@@ -145,7 +145,7 @@ const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle
 }
 
 const CommentList: React.FC<IProps> = ({ }) => {
-    const waitToLoadCommentsRef = React.createRef<WaitToLoad<IPaginateResponseCollection<IComment>>>();
+    const waitToLoadCommentsRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IComment>>();
 
     const [selectArticleModal, showSelectArticleModal] = React.useState(false);

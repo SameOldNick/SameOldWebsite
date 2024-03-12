@@ -13,7 +13,7 @@ import S from 'string';
 import Heading from '@admin/layouts/admin/Heading';
 import LockUserModal from '@admin/components/users/LockUserModal';
 import UnlockUserModal from '@admin/components/users/UnlockUserModal';
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import PaginatedTable from '@admin/components/PaginatedTable';
@@ -88,7 +88,7 @@ const User: React.FC<IUserProps> = ({ user, onLocked, onUnlocked }) => {
 }
 
 const All: React.FC<IProps> = ({ router: { navigate } }) => {
-    const waitToLoadRef = React.createRef<WaitToLoad<IPaginateResponseCollection<IUser>>>();
+    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
     const [show, setShow] = React.useState('both');
 

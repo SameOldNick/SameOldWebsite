@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 
 import classNames from 'classnames';
 
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import PaginatedTable from '@admin/components/PaginatedTable';
 
@@ -51,7 +51,7 @@ const UserRow: React.FC<IUserRowProps> = ({ user, selected, onSelected }) => {
 }
 
 const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, onSelected, onCancelled }) => {
-    const waitToLoadUsersRef = React.createRef<WaitToLoad<IPaginateResponseCollection<IUser>>>();
+    const waitToLoadUsersRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IUser>>();
 
     const [selected, setSelected] = React.useState<User | undefined>(existing);

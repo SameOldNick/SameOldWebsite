@@ -12,7 +12,7 @@ import { DateTime } from 'luxon';
 import SelectDateTimeModal from '@admin/components/SelectDateTimeModal';
 import PaginatedTable from '@admin/components/PaginatedTable';
 import Loader from '@admin/components/Loader';
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 
 import Article from '@admin/utils/api/models/Article';
 
@@ -294,7 +294,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
         );
     }
 
-    private readonly _waitToLoadArticlesRef = React.createRef<WaitToLoad<IPaginateResponseCollection<IArticle>>>();
+    private readonly _waitToLoadArticlesRef = React.createRef<IWaitToLoadHandle>();
     private readonly _paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
 
     constructor(props: Readonly<IProps>) {

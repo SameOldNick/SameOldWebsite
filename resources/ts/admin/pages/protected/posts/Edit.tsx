@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
-import WaitToLoad from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import EditArticleWrapper from '@admin/components/blog/EditArticleWrapper';
 
@@ -19,7 +19,7 @@ interface IProps extends IHasRouter<'article' | 'revision'> {
 }
 
 const Edit = withRouter(({ router }: IProps) => {
-    const waitToLoadArticleRef = React.createRef<WaitToLoad<Article>>();
+    const waitToLoadArticleRef = React.createRef<IWaitToLoadHandle>();
 
     const [renderCount, setRenderCount] = React.useState(0);
 
