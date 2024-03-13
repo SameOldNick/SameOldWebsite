@@ -22,7 +22,7 @@ interface IProjectProps {
 }
 
 const Project: React.FC<IProjectProps> = ({ project, onDeleted, onRestored }) => {
-    const handleDeleteClicked = async () => {
+    const handleDeleteClicked = React.useCallback(async () => {
         try {
             await awaitModalPrompt(DeleteProjectModal, { project });
 
@@ -30,9 +30,9 @@ const Project: React.FC<IProjectProps> = ({ project, onDeleted, onRestored }) =>
         } catch (err) {
             // Modal was cancelled.
         }
-    }
+    }, [onDeleted]);
 
-    const handleRestoreClicked = async () => {
+    const handleRestoreClicked = React.useCallback(async () => {
         try {
             await awaitModalPrompt(RestoreProjectModal, { project });
 
@@ -40,7 +40,7 @@ const Project: React.FC<IProjectProps> = ({ project, onDeleted, onRestored }) =>
         } catch (err) {
             // Modal was cancelled.
         }
-    }
+    }, [onRestored]);
 
     return (
         <>
@@ -85,7 +85,7 @@ const ProjectList: React.FC<IProps> = ({ }) => {
     const [projects, setProjects] = React.useState<IProject[]>([]);
     const [show, setShow] = React.useState('both');
 
-    const fetchProjects = async () => {
+    const fetchProjects = React.useCallback(async () => {
 
         try {
             const response = await createAuthRequest().get<IProject[]>('projects', { show });
@@ -94,13 +94,13 @@ const ProjectList: React.FC<IProps> = ({ }) => {
         } catch (e) {
             console.error(e);
         }
-    }
+    }, [show]);
 
-    const onUpdateFormSubmitted = async (e: React.FormEvent<HTMLFormElement>) => {
+    const onUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         fetchProjects();
-    }
+    }, []);
 
     React.useEffect(() => {
         fetchProjects();
