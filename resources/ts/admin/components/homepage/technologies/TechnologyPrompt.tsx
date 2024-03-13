@@ -22,13 +22,13 @@ const TechnologyPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }
     const [iconSelector, setIconSelector] = React.useState(false);
     const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(existing !== undefined ? lookupIcon(existing.icon) : undefined);
 
-    const handleSubmit = async (values: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = React.useCallback(async (values: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
         await onSuccess({
             id: existing?.id,
             icon: `${selectedIcon?.prefix}-${selectedIcon?.name}`,
             technology: values.technology
         });
-    }
+    }, [existing, selectedIcon]);
 
     const schema = React.useMemo(() =>
         Yup.object().shape({
@@ -38,11 +38,11 @@ const TechnologyPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }
 
     const initialValues = React.useMemo<IFormikValues>(() => ({ technology: existing?.technology || '' }), [existing]);
 
-    const handleIconSelect = (icon: IIconType) => {
+    const handleIconSelect = React.useCallback((icon: IIconType) => {
         setSelectedIcon(icon);
 
         setIconSelector(false);
-    }
+    }, []);
 
     return (
         <>
