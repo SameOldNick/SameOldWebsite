@@ -52,7 +52,7 @@ const Message: React.FC<IMessageProps> = ({ message }) => {
 const Messages: React.FC<TProps> = ({ stored, fetchMessages }) => {
     const [open, setOpen] = React.useState(false);
 
-    const buildGravatarUrl = (email: string) => `https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}`;
+    const buildGravatarUrl = React.useCallback((email: string) => `https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}`, []);
 
     React.useEffect(() => {
         fetchMessages();
