@@ -13,7 +13,7 @@ type TStates = Record<string, string>;
 const States = React.forwardRef<Input, IStatesProps>(({ country, optional, ...props }, ref) => {
     const [states, setStates] = React.useState<TStates>({});
 
-    const fetchStates = async (code: string) => {
+    const fetchStates = React.useCallback(async (code: string) => {
         try {
             const response = await createAuthRequest().get<ICountry>(`/countries/${code}`);
 
@@ -34,7 +34,7 @@ const States = React.forwardRef<Input, IStatesProps>(({ country, optional, ...pr
         } catch (err) {
             console.error(err);
         }
-    }
+    }, []);
 
     React.useEffect(() => {
         if (country)
