@@ -19,21 +19,21 @@ const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, on
             setCurrentDateTime(existing ?? DateTime.now());
     }, [existing]);
 
-    const handleDateChanged = (newValue: string) => {
+    const handleDateChanged = React.useCallback((newValue: string) => {
         setDate(newValue);
-    }
+    }, []);
 
-    const handleTimeChanged = (newValue: string) => {
+    const handleTimeChanged = React.useCallback((newValue: string) => {
         setTime(newValue);
-    }
+    }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = React.useCallback((e: React.FormEvent) => {
         e.preventDefault();
 
         const selected = DateTime.fromISO(`${date}T${time}`);
 
         onSuccess(selected);
-    }
+    }, [date, time, onSuccess]);
 
     return (
         <>
