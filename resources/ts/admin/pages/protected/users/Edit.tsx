@@ -25,7 +25,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
 
     const [user, setUser] = React.useState<User>();
 
-    const getUser = async () => {
+    const getUser = React.useCallback(async () => {
         const { params: { user } } = router;
 
         try {
@@ -35,9 +35,9 @@ const Edit: React.FC<IProps> = ({ router }) => {
         } catch (err) {
             await handleErrorGettingUser(err);
         }
-    }
+    }, [router.params]);
 
-    const handleErrorGettingUser = async (err: unknown) => {
+    const handleErrorGettingUser = React.useCallback(async (err: unknown) => {
         const { navigate } = router;
 
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -56,7 +56,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
         } else {
             navigate(-1);
         }
-    }
+    }, []);
 
     const initialValues = React.useMemo(() => ({
         name: user?.user.name || '',
@@ -72,7 +72,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
         getUser();
     }, [router.params.user]);
 
-    const handleSubmit = async(user: User, { name, email, password, confirm_password, state, country, roles }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = React.useCallback(async(user: User, { name, email, password, confirm_password, state, country, roles }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().put<IUser>(`users/${user.user.id}`, {
                 name,
@@ -88,9 +88,9 @@ const Edit: React.FC<IProps> = ({ router }) => {
         } catch (e) {
             await handleErrorUpdatingUser(e);
         }
-    }
+    }, []);
 
-    const handleUpdated = async (response: AxiosResponse<IUser>) => {
+    const handleUpdated = React.useCallback(async (response: AxiosResponse<IUser>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'User Updated',
@@ -98,9 +98,9 @@ const Edit: React.FC<IProps> = ({ router }) => {
         });
 
         setUser(new User(response.data));
-    }
+    }, []);
 
-    const handleErrorUpdatingUser = async (err: unknown) => {
+    const handleErrorUpdatingUser = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -108,7 +108,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
             title: 'Oops...',
             text: `An error occurred: ${message}`,
         });
-    }
+    }, []);
 
     return (
         <>
