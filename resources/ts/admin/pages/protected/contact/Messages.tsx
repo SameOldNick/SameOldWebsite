@@ -35,7 +35,7 @@ const MessageRow: React.FC<IRowProps> = ({ notification, onViewClicked, onMarkRe
     const message = S(notification.data.view.text).truncate(75).s;
 
     const isRead = React.useMemo(() => notification.read_at !== null, [notification]);
-    const styles: React.CSSProperties = !isRead ? { fontWeight: 'bold' } : {};
+    const styles: React.CSSProperties = React.useMemo(() => !isRead ? { fontWeight: 'bold' } : {}, [isRead]);
 
     return (
         <tr>
@@ -65,7 +65,7 @@ const MessageRow: React.FC<IRowProps> = ({ notification, onViewClicked, onMarkRe
 }
 
 const MessageModal: React.FC<IModalProps> = ({ notification, onClose }) => {
-    const toggle = () => onClose();
+    const toggle = React.useCallback(() => onClose(), []);
 
     return (
         <Modal isOpen={true} toggle={toggle} scrollable size='xl'>
@@ -131,15 +131,15 @@ const MessageModal: React.FC<IModalProps> = ({ notification, onClose }) => {
 const Messages: React.FC<TProps> = (props) => {
     const [showNotification, setShowNotification] = React.useState<TMessageNotification | undefined>();
 
-    const fetchMessages = async () => {
+    const fetchMessages = React.useCallback(async () => {
         await props.fetchMessages();
-    }
+    }, [props.fetchMessages]);
 
-    const viewNotification = (notification: TMessageNotification) => {
+    const viewNotification = React.useCallback((notification: TMessageNotification) => {
         setShowNotification(notification);
-    }
+    }, []);
 
-    const markUnread = async (notification: TMessageNotification) => {
+    const markUnread = React.useCallback(async (notification: TMessageNotification) => {
         try {
             await createAuthRequest().post<TMessageNotification>(`/user/notifications/${notification.id}/unread`, {});
 
@@ -147,9 +147,9 @@ const Messages: React.FC<TProps> = (props) => {
         } catch (err) {
             console.error(err);
         }
-    }
+    }, []);
 
-    const markRead = async (notification: TMessageNotification) => {
+    const markRead = React.useCallback(async (notification: TMessageNotification) => {
         try {
             await createAuthRequest().post<TMessageNotification>(`/user/notifications/${notification.id}/read`, {});
 
@@ -157,7 +157,7 @@ const Messages: React.FC<TProps> = (props) => {
         } catch (err) {
             console.error(err);
         }
-    }
+    }, []);
 
     React.useEffect(() => {
         fetchMessages();
