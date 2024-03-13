@@ -9,9 +9,9 @@ interface IPageVisibilityWrapperProps {
 const PageVisibilityWrapper: React.FC<IPageVisibilityWrapperProps> = ({ children }) => {
     const [isVisible, setIsVisible] = React.useState(false);
 
-    const handleVisibilityChange = (isVisible: boolean) => {
+    const handleVisibilityChange = React.useCallback((isVisible: boolean) => {
         setIsVisible(isVisible);
-    }
+    }, []);
 
     return (
         <>
