@@ -13,7 +13,7 @@ interface IProps extends IPromptModalProps {
 }
 
 const RestoreProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled }) => {
-    const displayPrompt = async () => {
+    const displayPrompt = React.useCallback(async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -28,9 +28,9 @@ const RestoreProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled
         } else {
             onCancelled();
         }
-    }
+    }, [onSuccess, onCancelled]);
 
-    const restoreProject = async () => {
+    const restoreProject = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().post(`/projects/restore/${project.id}`, {});
 
@@ -50,7 +50,7 @@ const RestoreProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled
 
             onCancelled();
         }
-    }
+    }, [onCancelled]);
 
     React.useEffect(() => {
         displayPrompt();
