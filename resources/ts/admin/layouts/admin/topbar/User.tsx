@@ -28,15 +28,15 @@ const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage })
     const [open, setOpen] = React.useState(false);
     const [logoutModal, setLogoutModal] = React.useState(false);
 
-    const closeLogoutModal = () => {
+    const closeLogoutModal = React.useCallback(() => {
         setLogoutModal(false);
-    }
+    }, []);
 
-    const logout = async () => {
+    const logout = React.useCallback(async () => {
         await createAuthRequest().post('logout', {});
 
         dispatchAuthStage({ stage: 'none' });
-    }
+    }, [dispatchAuthStage]);
 
     React.useEffect(() => {
         if (stage.stage === 'none') {
