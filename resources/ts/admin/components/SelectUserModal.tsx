@@ -58,13 +58,13 @@ const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, 
     const [show, setShow] = React.useState('both');
     const [search, setSearch] = React.useState('');
 
-    const loadUsers = async (link?: string) => {
+    const loadUsers = React.useCallback(async (link?: string) => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IUser>>(link ?? 'users', { show });
 
         return response.data;
-    }
+    }, [show]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = React.useCallback((e: React.FormEvent) => {
         e.preventDefault();
 
         if (allowAll) {
@@ -77,9 +77,9 @@ const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, 
 
             onSelected(selected);
         }
-    }
+    }, [allowAll, onSelected]);
 
-    const passUsersThru = (users: IUser[]) => {
+    const passUsersThru = React.useCallback((users: IUser[]) => {
         return users
             .map((user) => new User(user))
             .filter((user) =>
@@ -87,11 +87,11 @@ const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, 
                 user.user.name.includes(search) ||
                 user.user.email.includes(search)
             );
-    }
+    }, []);
 
-    const handleUserSelected = (selected: boolean, user: User) => {
+    const handleUserSelected = React.useCallback((selected: boolean, user: User) => {
         setSelected(selected ? user : undefined);
-    }
+    }, []);
 
     return (
         <>
