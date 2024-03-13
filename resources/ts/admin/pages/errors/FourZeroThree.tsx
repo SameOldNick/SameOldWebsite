@@ -7,18 +7,18 @@ interface IProps {
 }
 
 const FourZeroThree: React.FC<IProps> = ({ }) => {
-    const goBack = (e: React.MouseEvent) => {
+    const goBack = React.useCallback((e: React.MouseEvent) => {
         e.preventDefault();
 
         window.history.back();
-    }
+    }, []);
 
-    const goHome = (e: React.MouseEvent) => {
+    const goHome = React.useCallback((e: React.MouseEvent) => {
         e.preventDefault();
 
         // Need to use window.location, trying to use push from connect-react-router will try to load it in react.
         window.location.href = '/';
-    }
+    }, []);
 
     return (
         <Layout title='403 Forbidden'>
