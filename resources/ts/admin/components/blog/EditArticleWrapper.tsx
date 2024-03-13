@@ -45,23 +45,22 @@ async function handleApiError<TTryAgainReturn = void>(err: unknown, onTryAgain: 
 const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, router }) => {
     const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
-
-    const displaySuccess = async (message: string, extra: SweetAlertOptions = {}) => {
+    const displaySuccess = React.useCallback(async (message: string, extra: SweetAlertOptions = {}) => {
         return withReactContent(Swal).fire({
             icon: 'success',
             title: 'Success!',
             text: message,
             ...extra
         });
-    }
+    }, []);
 
-    const loadRevision = async () => {
+    const loadRevision = React.useCallback(async () => {
         const response = await createAuthRequest().get<IRevision>(`blog/articles/${article.article.id}/revisions/${router.params.revision}`);
 
         return new Revision(response.data);
-    }
+    }, [article, router.params]);
 
-    const handleActionButtonClicked = async (action: TArticleActions, inputs: IArticleActionInputs, dirty: TArticleActionDirtyValues, currentRevision?: Revision) => {
+    const handleActionButtonClicked = React.useCallback(async (action: TArticleActions, inputs: IArticleActionInputs, dirty: TArticleActionDirtyValues, currentRevision?: Revision) => {
         const {
             title,
             slug,
@@ -262,9 +261,9 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
             await handleApiError(err, () => handleActionButtonClicked(action, inputs, dirty));
         }
 
-    }
+    }, [article]);
 
-    const handleRestoreRevisionClicked = async () => {
+    const handleRestoreRevisionClicked = React.useCallback(async () => {
         try {
             const selected = await awaitModalPrompt(SelectRevisionModal, { articleId: article.article.id });
 
@@ -272,15 +271,15 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
         } catch (e) {
             // Modal was cancelled.
         }
-    }
+    }, [router, article]);
 
-    const handlePreviewArticleClicked = () => {
+    const handlePreviewArticleClicked = React.useCallback(() => {
         window.open(article.article.private_url, '_blank')?.focus();
-    }
+    }, []);
 
     const [articleInfoModal, setArticleInfoModal] = React.useState(false);
 
-    const createEditFormPropsFromRevision = async (revision: Revision): Promise<IEditFormProps> => {
+    const createEditFormPropsFromRevision = React.useCallback(async (revision: Revision): Promise<IEditFormProps> => {
         const tags = await loadTags(article.article.id);
 
         return {
@@ -305,13 +304,13 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
             onPreviewArticleClicked: handlePreviewArticleClicked,
             onActionButtonClicked: (action, inputs, dirty) => handleActionButtonClicked(action, inputs, dirty, revision)
         }
-    }
+    }, [article]);
 
-    const createEditFormProps = async () => {
+    const createEditFormProps = React.useCallback(async () => {
         const revision = await loadRevision();
 
         return createEditFormPropsFromRevision(revision);
-    }
+    }, []);
 
     return (
         <>
