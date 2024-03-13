@@ -14,7 +14,7 @@ interface IProps extends IPromptModalProps {
 }
 
 const LockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => {
-    const displayPrompt = async () => {
+    const displayPrompt = React.useCallback(async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -30,10 +30,10 @@ const LockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => {
         } else {
             onCancelled();
         }
-    }
+    }, [onSuccess, onCancelled]);
 
     // TODO: Move to seperate API class.
-    const lockUser = async () => {
+    const lockUser = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().delete(`/users/${user.user.id}`);
 
@@ -53,7 +53,7 @@ const LockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => {
 
             onCancelled();
         }
-    }
+    }, [onCancelled]);
 
     React.useEffect(() => {
         displayPrompt();
