@@ -19,33 +19,20 @@ interface IProps {
 
 }
 
-interface IState {
-    user?: User;
-}
+const Create: React.FC<IProps> = ({ }) => {
+    const [user, setUser] = React.useState<User | undefined>();
 
-export default class Create extends React.Component<IProps, IState> {
-    constructor(props: Readonly<IProps>) {
-        super(props);
+    const initialValues = React.useMemo(() => ({
+        name: '',
+        email: '',
+        password: '',
+        confirm_password: '',
+        state: '',
+        country: '',
+        roles: []
+    }), []);
 
-        this.state = {
-        };
-
-        this.onFormSubmit = this.onFormSubmit.bind(this);
-    }
-
-    private get initialValues() {
-        return {
-            name: '',
-            email: '',
-            password: '',
-            confirm_password: '',
-            state: '',
-            country: '',
-            roles: []
-        }
-    }
-
-    private async onFormSubmit({ name, email, password, confirm_password, state, country }: IFormikValues, { }: FormikHelpers<IFormikValues>) {
+    const handleFormSubmit = React.useCallback(async ({ name, email, password, confirm_password, state, country }: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().post<IUser>('/users', {
                 name,
@@ -56,23 +43,23 @@ export default class Create extends React.Component<IProps, IState> {
                 country_code: country
             });
 
-            await this.onCreated(response);
+            await onCreated(response);
         } catch (e) {
-            await this.onError(e);
+            await onError(e);
         }
-    }
+    }, []);
 
-    private async onCreated(response: AxiosResponse<IUser>) {
+    const onCreated = React.useCallback(async (response: AxiosResponse<IUser>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'User Created',
             text: 'The user was successfully created.',
         });
 
-        this.setState({ user: new User(response.data) });
-    }
+        setUser(new User(response.data));
+    }, []);
 
-    private async onError(err: unknown) {
+    const onError = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -80,40 +67,33 @@ export default class Create extends React.Component<IProps, IState> {
             title: 'Oops...',
             text: `An error occurred: ${message}`,
         });
-    }
+    }, []);
 
-    public render() {
-        const { } = this.props;
-        const { user } = this.state;
-
-        if (user !== undefined) {
-            return (
-                <Navigate to={user.generatePath()} />
-            );
-        }
-
+    if (user !== undefined) {
         return (
-            <>
-                <Helmet>
-                    <title>Create User</title>
-                </Helmet>
-
-                <Heading title='Create User' />
-
-                <Row className='justify-content-center'>
-                    <Col md={8}>
-                        <Card>
-                            <CardBody>
-                                <UserForm fields='create' initialValues={this.initialValues} buttonContent='Create User' onSubmit={this.onFormSubmit} />
-
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-
-
-
-            </>
+            <Navigate to={user.generatePath()} />
         );
     }
+
+    return (
+        <>
+            <Helmet>
+                <title>Create User</title>
+            </Helmet>
+
+            <Heading title='Create User' />
+
+            <Row className='justify-content-center'>
+                <Col md={8}>
+                    <Card>
+                        <CardBody>
+                            <UserForm fields='create' initialValues={initialValues} buttonContent='Create User' onSubmit={handleFormSubmit} />
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </>
+    );
 }
+
+export default Create;
