@@ -23,27 +23,28 @@ interface IEditArticleWrapperProps extends IHasRouter<'article' | 'revision'> {
     article: Article;
 }
 
+async function handleApiError<TTryAgainReturn = void>(err: unknown, onTryAgain: () => Promise<TTryAgainReturn>) {
+    const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+    const result = await withReactContent(Swal).fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `An error ocurred: ${message}`,
+        confirmButtonText: 'Try Again',
+        showConfirmButton: true,
+        showCancelButton: true
+    });
+
+    if (result.isConfirmed) {
+        return onTryAgain();
+    } else {
+        throw err;
+    }
+}
+
 const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, router }) => {
     const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
-    async function handleApiError<TTryAgainReturn = void>(err: unknown, onTryAgain: () => Promise<TTryAgainReturn>) {
-        const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-        const result = await withReactContent(Swal).fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `An error ocurred: ${message}`,
-            confirmButtonText: 'Try Again',
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            return onTryAgain();
-        } else {
-            throw err;
-        }
-    }
 
     const displaySuccess = async (message: string, extra: SweetAlertOptions = {}) => {
         return withReactContent(Swal).fire({
