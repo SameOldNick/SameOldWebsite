@@ -12,6 +12,7 @@ import LogoutModal from '@admin/components/modals/LogoutModal';
 
 import accountSlice  from '@admin/store/slices/account';
 import { createAuthRequest } from '@admin/utils/api/factories';
+import awaitModalPrompt from '@admin/utils/modals';
 
 interface IProps {
 
@@ -26,10 +27,16 @@ type TProps = ConnectedProps<typeof connector> & IProps;
 
 const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage }) => {
     const [open, setOpen] = React.useState(false);
-    const [logoutModal, setLogoutModal] = React.useState(false);
 
-    const closeLogoutModal = React.useCallback(() => {
-        setLogoutModal(false);
+    const handleLogoutButtonClicked = React.useCallback(async () => {
+        try {
+            await awaitModalPrompt(LogoutModal);
+
+            await logout();
+        } catch (err) {
+
+        }
+
     }, []);
 
     const logout = React.useCallback(async () => {
@@ -70,15 +77,13 @@ const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage })
                             <FaKey />
                             Change Password
                         </DropdownItem>
-                        <DropdownItem href='#' onClick={() => setLogoutModal(true)}>
+                        <DropdownItem href='#' onClick={handleLogoutButtonClicked}>
                             <FaSignOutAlt />
                             Logout
                         </DropdownItem>
                     </IconContext.Provider>
                 </DropdownMenu>
             </Dropdown>
-
-            <LogoutModal show={logoutModal} onLogout={logout} onCancel={closeLogoutModal} />
         </>
     );
 }
