@@ -33,21 +33,21 @@ export const generateSlugFromTitle = (title: string) => {
 const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, handleChange, handleBlur, setFieldValue }, uploadImages }) => {
     const [slugTooltipOpen, setSlugTooltipOpen] = React.useState(false);
 
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTitleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         handleChange(e);
 
         if (values.slug_auto_generate)
             setFieldValue('slug', generateSlugFromTitle(e.target.value));
-    }
+    }, [handleChange, setFieldValue]);
 
-    const handleTitleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTitleBlur = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         handleBlur(e);
 
         if (values.slug_auto_generate)
             setFieldValue('slug', generateSlugFromTitle(e.target.value));
-    }
+    }, [handleBlur, setFieldValue]);
 
-    const handleUploadImages: TUploadImagesCallback = (files: File[]) => uploadImages(files);
+    const handleUploadImages: TUploadImagesCallback = React.useCallback((files: File[]) => uploadImages(files), [uploadImages]);
 
     return (
         <>
