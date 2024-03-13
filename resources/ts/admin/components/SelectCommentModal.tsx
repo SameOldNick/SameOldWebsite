@@ -60,13 +60,13 @@ const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allo
     const [show, setShow] = React.useState('all');
     const [search, setSearch] = React.useState('');
 
-    const loadComments = async (link?: string) => {
+    const loadComments = React.useCallback(async (link?: string) => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>(link ?? 'blog/comments', { show });
 
         return response.data;
-    }
+    }, [show]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = React.useCallback((e: React.FormEvent) => {
         e.preventDefault();
 
         if (allowAll) {
@@ -79,9 +79,9 @@ const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allo
 
             onSelected(selected);
         }
-    }
+    }, [onSelected]);
 
-    const passCommentsThru = (comments: IComment[]) => {
+    const passCommentsThru = React.useCallback((comments: IComment[]) => {
         return comments
             .map((comment) => new Comment(comment))
             .filter((comment) =>
@@ -89,11 +89,11 @@ const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allo
                 comment.comment.title?.includes(search) ||
                 comment.comment.comment.includes(search)
             );
-    }
+    }, [search]);
 
-    const handleCommentSelected = (selected: boolean, comment: Comment) => {
+    const handleCommentSelected = React.useCallback((selected: boolean, comment: Comment) => {
         setSelected(selected ? comment : undefined);
-    }
+    }, []);
 
     return (
         <>
