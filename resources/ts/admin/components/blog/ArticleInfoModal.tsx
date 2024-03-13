@@ -12,9 +12,9 @@ interface IArticleInfoModalProps {
 }
 
 const ArticleInfoModal: React.FC<IArticleInfoModalProps> = ({ article, onClosed }) => {
-    const handleClosed = () => {
+    const handleClosed = React.useCallback(() => {
         onClosed();
-    }
+    }, [onClosed]);
 
     return (
         <>
