@@ -21,40 +21,28 @@ interface IAlertProps extends TAlertExtraProps {
     alert: IAlert;
 }
 
-interface IState {
+const Alert: React.FC<IAlertProps> = ({ alert, ...props }) => {
+    const [hidden, setHidden] = React.useState(false);
+
+    if (alert.dismissable) {
+        const toggleHidden = () => setHidden(!hidden);
+
+        return <ReactstrapAlert color={alert.type} isOpen={!hidden} toggle={toggleHidden} {...props}>{alert.message}</ReactstrapAlert>;
+    } else {
+        return <ReactstrapAlert color={alert.type}>{alert.message}</ReactstrapAlert>;
+    }
 }
 
 /**
  * Displays Bootstrap alerts from either the redux store or properties.
- *
- * @class Alerts
- * @extends {React.Component<IAlertsProps, IState>}
  */
-export default class Alerts extends React.Component<IAlertsProps, IState> {
-    static Alert: React.FC<IAlertProps> = ({ alert, ...props }) => {
-        const [hidden, setHidden] = React.useState(false);
-
-        if (alert.dismissable) {
-            const toggleHidden = () => setHidden(!hidden);
-
-            return <ReactstrapAlert color={alert.type} isOpen={!hidden} toggle={toggleHidden} {...props}>{alert.message}</ReactstrapAlert>;
-        } else {
-            return <ReactstrapAlert color={alert.type}>{alert.message}</ReactstrapAlert>;
-        }
-    }
-
-    constructor(props: Readonly<IAlertsProps>) {
-        super(props);
-
-        this.state = {
-        };
-    }
-
-    public render() {
-        const { alerts, limit, ...alertProps } = this.props;
-
-        return alerts
+const Alerts: React.FC<IAlertsProps> = ({ alerts, limit, ...props }) => {
+    return React.useMemo(() =>
+        alerts
             .slice(0, limit)
-            .map((alert, key) => <Alerts.Alert key={key} alert={alert} {...alertProps} />);
-    }
+            .map((alert, key) => <Alert key={key} alert={alert} {...props} />),
+        [limit, alerts]
+    );
 }
+
+export default Alerts;
