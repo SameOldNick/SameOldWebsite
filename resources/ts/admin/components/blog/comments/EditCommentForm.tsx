@@ -53,7 +53,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
             [comment]
         );
 
-    const confirmSave = async () => {
+    const confirmSave = React.useCallback(async () => {
         const response = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -63,9 +63,9 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
         });
 
         return response.isConfirmed;
-    }
+    }, []);
 
-    const handleSave = async ({ title, comment: content }: IFormikValues) => {
+    const handleSave = React.useCallback(async ({ title, comment: content }: IFormikValues) => {
         try {
             if (!await confirmSave())
                 return;
@@ -94,9 +94,9 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 showCancelButton: true
             });
         }
-    }
+    }, [setComment]);
 
-    const handleSaveAndApprove = async ({ title, comment: content }: IFormikValues) => {
+    const handleSaveAndApprove = React.useCallback(async ({ title, comment: content }: IFormikValues) => {
         try {
             if (!await confirmSave())
                 return;
@@ -127,8 +127,9 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 showCancelButton: true
             });
         }
-    }
-    const handleSaveAndDeny = async ({ title, comment: content }: IFormikValues) => {
+    }, [setComment]);
+
+    const handleSaveAndDeny = React.useCallback(async ({ title, comment: content }: IFormikValues) => {
         try {
             if (!await confirmSave())
                 return;
@@ -159,9 +160,9 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 showCancelButton: true
             });
         }
+    }, [setComment]);
 
-    }
-    const handleApprove = async () => {
+    const handleApprove = React.useCallback(async () => {
         try {
             if (!comment.comment.id)
                 throw new Error('Comment ID is missing.');
@@ -194,8 +195,9 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 showCancelButton: true
             });
         }
-    }
-    const handleDeny = async () => {
+    }, [setComment]);
+
+    const handleDeny = React.useCallback(async () => {
         try {
             if (!comment.comment.id)
                 throw new Error('Comment ID is missing.');
@@ -228,7 +230,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 showCancelButton: true
             });
         }
-    }
+    }, [setComment]);
 
     return (
         <>
