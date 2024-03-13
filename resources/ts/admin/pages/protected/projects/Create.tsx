@@ -21,7 +21,7 @@ interface IProps {
 const Create: React.FC<IProps> = ({ }) => {
     const [project, setProject] = React.useState<IProject | undefined>();
 
-    const handleSubmit = async ({ name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = React.useCallback(async ({ name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().post<IProject>('projects', {
                 title: name,
@@ -34,9 +34,9 @@ const Create: React.FC<IProps> = ({ }) => {
         } catch (e) {
             await onError(e);
         }
-    }
+    }, []);
 
-    const onCreated = async (response: AxiosResponse<IProject>) => {
+    const onCreated = React.useCallback(async (response: AxiosResponse<IProject>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Project Created',
@@ -44,9 +44,9 @@ const Create: React.FC<IProps> = ({ }) => {
         });
 
         setProject(response.data);
-    }
+    }, []);
 
-    const onError = async (err: unknown) => {
+    const onError = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -54,7 +54,7 @@ const Create: React.FC<IProps> = ({ }) => {
             title: 'Oops...',
             text: `An error occurred: ${message}`,
         });
-    }
+    }, []);
 
     const initialValues = React.useMemo(() => ({
         name: '',
