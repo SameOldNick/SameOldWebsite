@@ -25,13 +25,13 @@ const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, e
     const waitToLoadRevisionsRef = React.createRef<IWaitToLoadHandle>();
     const [selected, setSelected] = React.useState<IRevision>();
 
-    const loadRevisions = async () => {
+    const loadRevisions = React.useCallback(async () => {
         const response = await createAuthRequest().get<IRevision[]>(`blog/articles/${articleId}/revisions`);
 
         return response.data;
-    }
+    }, []);
 
-    const handleLoadRevisionsError = async (err: unknown) => {
+    const handleLoadRevisionsError = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         const result = await withReactContent(Swal).fire({
@@ -48,16 +48,16 @@ const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, e
         } else {
             onCancelled();
         }
-    }
+    }, [onCancelled]);
 
-    const isSelected = (revision: IRevision) => {
+    const isSelected = React.useCallback((revision: IRevision) => {
         if (selected !== undefined)
             return selected.uuid === revision.uuid;
         else if (existing !== undefined)
             return existing.revision.uuid === revision.uuid;
         else
             return false;
-    }
+    }, [existing]);
 
     return (
         <>
