@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 
 import Avatar from '@admin/components/UserAvatar';
-import LogoutModal from '@root/admin/components/LogoutModal';
+import LogoutModal from '@admin/components/modals/LogoutModal';
 
 import accountSlice  from '@admin/store/slices/account';
 import { createAuthRequest } from '@admin/utils/api/factories';
