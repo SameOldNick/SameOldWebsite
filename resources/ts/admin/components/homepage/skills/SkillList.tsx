@@ -87,8 +87,6 @@ const Skill: React.FC<ISkillProps> = ({ skill, selected, onSelected, onEditClick
 }
 
 const SkillList: React.FC<IProps> = ({ }) => {
-    const [addSkillPrompt, setAddSkillPrompt] = React.useState(false);
-    const [editSkillPrompt, setEditSkillPrompt] = React.useState<ISkill | undefined>();
     const [skills, setSkills] = React.useState<ISkillItem[]>([]);
 
     const load = React.useCallback(async () => {
