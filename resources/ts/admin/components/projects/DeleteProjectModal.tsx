@@ -13,7 +13,7 @@ interface IProps extends IPromptModalProps {
 }
 
 const DeleteProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled }) => {
-    const displayPrompt = async () => {
+    const displayPrompt = React.useCallback(async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -29,9 +29,9 @@ const DeleteProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled 
         } else {
             onCancelled();
         }
-    }
+    }, [onSuccess, onCancelled]);
 
-    const deleteProject = async () => {
+    const deleteProject = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().delete(`/projects/${project.id}`);
 
@@ -51,7 +51,7 @@ const DeleteProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled 
 
             onCancelled();
         }
-    }
+    }, [onCancelled]);
 
     React.useEffect(() => {
         displayPrompt();
