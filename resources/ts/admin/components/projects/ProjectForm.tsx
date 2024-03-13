@@ -41,11 +41,11 @@ const ProjectForm: React.FC<IProps> = ({ initialTags = [], buttonContent, onSubm
             url: Yup.string().url('Project URL is invalid').required('Project URL is required')
         }), []);
 
-    const handleSubmit = async (values: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = React.useCallback(async (values: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         await onSubmit({ tags, ...values }, helpers);
 
         return Promise.resolve();
-    }
+    }, [onSubmit]);
 
     return (
         <>
