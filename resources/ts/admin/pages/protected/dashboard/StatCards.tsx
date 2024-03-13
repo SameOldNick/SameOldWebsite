@@ -24,7 +24,7 @@ const StatCards: React.FC<IStatCardsProps> = ({ visitors }) => {
     const [articleCount, setArticleCount] = React.useState<number>();
     const [commentCount, setCommentCount] = React.useState<number>();
 
-    const tryFetchArticles = async () => {
+    const tryFetchArticles = React.useCallback(async () => {
         try {
             const response = new PaginateResponse(await fetchArticles());
 
@@ -33,9 +33,9 @@ const StatCards: React.FC<IStatCardsProps> = ({ visitors }) => {
             if (import.meta.env.VITE_APP_DEBUG)
                 logger.error(e);
         }
-    }
+    }, []);
 
-    const tryFetchComments = async () => {
+    const tryFetchComments = React.useCallback(async () => {
         try {
             const response = new PaginateResponse(await loadAll());
 
@@ -44,9 +44,9 @@ const StatCards: React.FC<IStatCardsProps> = ({ visitors }) => {
             if (import.meta.env.VITE_APP_DEBUG)
                 logger.error(e);
         }
-    }
+    }, []);
 
-    const tryFetchMessages = async () => {
+    const tryFetchMessages = React.useCallback(async () => {
         try {
             const notifications = await all();
 
@@ -55,7 +55,7 @@ const StatCards: React.FC<IStatCardsProps> = ({ visitors }) => {
             if (import.meta.env.VITE_APP_DEBUG)
                 logger.error(e);
         }
-    }
+    }, []);
 
     React.useEffect(() => {
         if (visitors.status !== 'fulfilled')
