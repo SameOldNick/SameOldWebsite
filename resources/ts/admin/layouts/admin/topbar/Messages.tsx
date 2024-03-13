@@ -58,21 +58,19 @@ const Messages: React.FC<TProps> = ({ stored, fetchMessages }) => {
         fetchMessages();
     }, []);
 
-    const messages = React.useMemo(() => {
-        return stored.map((message) => {
-            const address = message.data.addresses.replyTo.length > 0 ? message.data.addresses.replyTo[0].address : null;
-            const imageUrl = address !== null ? buildGravatarUrl(address) : user;
+    const messages = React.useMemo(() => stored.map((message) => {
+        const address = message.data.addresses.replyTo.length > 0 ? message.data.addresses.replyTo[0].address : null;
+        const imageUrl = address !== null ? buildGravatarUrl(address) : user;
 
-            return {
-                link: '/admin/contact/messages',
-                author: address ?? 'Unknown',
-                image: imageUrl,
-                text: message.data.subject,
-                timeAgo: DateTime.fromISO(message.created_at).toRelative() ?? 'unknown',
-                read: message.read_at !== null
-            };
-        });
-    }, [stored]);
+        return {
+            link: '/admin/contact/messages',
+            author: address ?? 'Unknown',
+            image: imageUrl,
+            text: message.data.subject,
+            timeAgo: DateTime.fromISO(message.created_at).toRelative() ?? 'unknown',
+            read: message.read_at !== null
+        };
+    }), [stored]);
 
     const unreadCount = React.useMemo(() => messages.filter(({ read }) => !read).length, [messages]);
 
