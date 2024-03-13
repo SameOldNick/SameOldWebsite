@@ -95,7 +95,6 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
     }, [original.tags]);
 
     React.useEffect(() => {
-        console.log(mainImage, original.mainImage);
         if (original.mainImage !== mainImage)
             setMainImage(original.mainImage);
     }, [original.mainImage]);
