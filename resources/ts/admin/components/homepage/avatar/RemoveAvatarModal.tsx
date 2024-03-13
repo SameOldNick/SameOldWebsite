@@ -12,7 +12,7 @@ interface IProps extends IPromptModalProps {
 }
 
 const RemoveAvatarModal: React.FC<IProps> = ({ onSuccess, onCancelled }) => {
-    const displayPrompt = async () => {
+    const displayPrompt = React.useCallback(async () => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Remove Your Avatar?',
@@ -29,9 +29,9 @@ const RemoveAvatarModal: React.FC<IProps> = ({ onSuccess, onCancelled }) => {
         } else {
             onCancelled();
         }
-    }
+    }, [onCancelled]);
 
-    const deleteAvatar = async () => {
+    const deleteAvatar = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().delete<IMessageResponse>('user/avatar');
 
@@ -57,7 +57,7 @@ const RemoveAvatarModal: React.FC<IProps> = ({ onSuccess, onCancelled }) => {
             }
 
         }
-    }
+    }, [onSuccess, onCancelled]);
 
     React.useEffect(() => {
         displayPrompt();
