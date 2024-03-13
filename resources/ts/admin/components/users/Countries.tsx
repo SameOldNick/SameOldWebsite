@@ -11,7 +11,7 @@ type TStateCountries = Record<string, ICountry>;
 const Countries = React.forwardRef<Input, ICountriesProps>(({ ...props }, ref) => {
     const [countries, setCountries] = React.useState<TStateCountries>({});
 
-    const fetchCountries = async () => {
+    const fetchCountries = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().get<ICountry[]>('/countries');
 
@@ -25,7 +25,7 @@ const Countries = React.forwardRef<Input, ICountriesProps>(({ ...props }, ref) =
         } catch (err) {
             console.error(err);
         }
-    }
+    }, []);
 
     React.useEffect(() => {
         fetchCountries();
