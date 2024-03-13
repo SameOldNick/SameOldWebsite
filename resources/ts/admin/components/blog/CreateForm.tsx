@@ -55,7 +55,7 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
     const [images, setImages] = React.useState<IImage[]>([]);
     const [tags, setTags] = React.useState<Tag[]>([]);
 
-    const handleUploadMainImageClicked = async () => {
+    const handleUploadMainImageClicked = React.useCallback(async () => {
         try {
             const uploaded = await awaitModalPrompt(UploadImageModal);
 
@@ -63,14 +63,13 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
         } catch (e) {
             // Modal was cancelled.
         }
+    }, []);
 
-    }
-
-    const handleRemoveMainImageClicked = async () => {
+    const handleRemoveMainImageClicked = React.useCallback(async () => {
         setMainImage(undefined);
-    }
+    }, []);
 
-    const handleImageUpload: TUploadImagesCallback = async (files) => {
+    const handleImageUpload: TUploadImagesCallback = React.useCallback(async (files) => {
         const uploaded: TMarkdownImage[] = [];
 
         // Upload images
@@ -84,9 +83,9 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
         }
 
         return uploaded;
-    }
+    }, []);
 
-    const handleFormSubmit = async (values: ICreateArticleFormValues, { setSubmitting }: FormikHelpers<ICreateArticleFormValues>) => {
+    const handleFormSubmit = React.useCallback(async (values: ICreateArticleFormValues, { setSubmitting }: FormikHelpers<ICreateArticleFormValues>) => {
         try {
             setSubmitting(true);
 
@@ -107,9 +106,9 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
         } finally {
             setSubmitting(false);
         }
-    }
+    }, [onSaveAndPublishClicked]);
 
-    const handleSaveButtonClicked = async (e: React.MouseEvent<HTMLButtonElement>, { values, setSubmitting }: FormikProps<ICreateArticleFormValues>) => {
+    const handleSaveButtonClicked = React.useCallback(async (e: React.MouseEvent<HTMLButtonElement>, { values, setSubmitting }: FormikProps<ICreateArticleFormValues>) => {
         try {
             e.preventDefault();
 
@@ -129,7 +128,7 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
         } finally {
             setSubmitting(false);
         }
-    }
+    }, [onSaveClicked]);
 
     return (
         <>
