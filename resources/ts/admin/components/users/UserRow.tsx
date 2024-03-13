@@ -12,7 +12,6 @@ import UnlockUserModal from '@admin/components/users/UnlockUserModal';
 import UserModel from '@admin/utils/api/models/User';
 import awaitModalPrompt from '@admin/utils/modals';
 
-
 interface IUserProps {
     user: UserModel;
     onLocked: () => void;

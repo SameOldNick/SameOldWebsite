@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 
-import WaitToLoad, { IWaitToLoadHandle, IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import PaginatedTable from '@admin/components/PaginatedTable';
 
