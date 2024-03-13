@@ -28,7 +28,7 @@ const UserAvatar: React.FC<IAvatarProps> = ({ user, size, style, ...props }) => 
         return `${src}${src.includes('?') ? '&' : '?'}${query}`;
     }, [src, lastRefreshed, size]);
 
-    const fetchAvatar = async () => {
+    const fetchAvatar = React.useCallback(async () => {
         try {
             let response;
 
@@ -43,7 +43,7 @@ const UserAvatar: React.FC<IAvatarProps> = ({ user, size, style, ...props }) => 
         } catch (err) {
             console.error(err);
         }
-    }
+    }, [user]);
 
     return (
         <Avatar src={actualSrc} style={{ maxHeight: size, ...style }} {...props} />
