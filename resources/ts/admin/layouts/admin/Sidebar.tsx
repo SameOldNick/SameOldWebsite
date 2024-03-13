@@ -109,14 +109,14 @@ export default class Sidebar extends React.Component<TProps, IState> {
                 setIsOpen(true);
         }, [hasActive]);
 
-        const onResize = () => {
+        const onResize = React.useCallback(() => {
             const { width } = viewportSize();
 
             // Close any open menu accordions when window is resized below 768px
             if (width < 768 && isOpen) {
                 setIsOpen(false);
             }
-        }
+        }, [isOpen]);
 
         React.useEffect(() => {
             window.addEventListener('resize', onResize);
