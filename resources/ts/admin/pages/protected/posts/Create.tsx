@@ -23,26 +23,26 @@ interface IProps {
 const Create: React.FC<IProps> = ({ }) => {
     const [created, setCreated] = React.useState<Article | undefined>();
 
-    const saveArticle = async (title: string, slug: string, content: string, summary?: string, publishedAt?: DateTime) => {
+    const saveArticle = React.useCallback(async (title: string, slug: string, content: string, summary?: string, publishedAt?: DateTime) => {
         return createArticle(title, slug, content, summary || null, publishedAt || null);
-    }
+    }, []);
 
-    const setMainImage = async (article: Article, mainImage: IImage) => {
+    const setMainImage = React.useCallback(async (article: Article, mainImage: IImage) => {
         await attachImage(article.article.id, mainImage.uuid);
         await setMainImageApi(article.article.id, mainImage.uuid);
-    }
+    }, []);
 
-    const associateImages = async (article: Article, images: IImage[]) => {
+    const associateImages = React.useCallback(async (article: Article, images: IImage[]) => {
         for (const image of images) {
             await attachImage(article.article.id, image.uuid);
         }
-    }
+    }, []);
 
-    const associateTags = async (article: Article, tags: Tag[]) => {
+    const associateTags = React.useCallback(async (article: Article, tags: Tag[]) => {
         await attachTags(article.article.id, tags);
-    }
+    }, []);
 
-    const handleSave = async (params: TSaveArticleParams) => {
+    const handleSave = React.useCallback(async (params: TSaveArticleParams) => {
         try {
             const { article, mainImage, images, tags } = params;
 
@@ -86,9 +86,9 @@ const Create: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await handleSave(params);
         }
-    }
+    }, []);
 
-    const handleSaveAndPublish = async (params: TSaveAndPublishArticleParams) => {
+    const handleSaveAndPublish = React.useCallback(async (params: TSaveAndPublishArticleParams) => {
         try {
             const { article, mainImage, images, tags } = params;
 
@@ -130,7 +130,7 @@ const Create: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await handleSaveAndPublish(params);
         }
-    }
+    }, []);
 
     return (
         <>
