@@ -116,7 +116,7 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
 
     const hasDirty = React.useCallback((values: IArticleFormValues): boolean => Object.values(getDirty(values)).includes(true), []);
 
-    const handleActionButtonClick = async (action: TArticleActions) => {
+    const handleActionButtonClick = React.useCallback(async (action: TArticleActions) => {
         if (!formikRef.current) {
             console.error('No reference to formik.');
             return;
@@ -208,16 +208,16 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
                 break;
             }
         }
-    }
+    }, [onActionButtonClicked]);
 
-    const handleSaveAsRevisionClicked = () => handleActionButtonClick('save-as-revision');
-    const handleUpdateClicked = () => handleActionButtonClick('update');
-    const handlePublishClicked = () => handleActionButtonClick('publish');
-    const handleUnpublishClicked = () => handleActionButtonClick('unpublish');
-    const handleScheduleClicked = () => handleActionButtonClick('schedule');
-    const handleUnscheduleClicked = () => handleActionButtonClick('unschedule');
-    const handleDeleteClicked = () => handleActionButtonClick('delete');
-    const handleUploadMainImageClicked = async () => {
+    const handleSaveAsRevisionClicked = React.useCallback(() => handleActionButtonClick('save-as-revision'), []);
+    const handleUpdateClicked = React.useCallback(() => handleActionButtonClick('update'), []);
+    const handlePublishClicked = React.useCallback(() => handleActionButtonClick('publish'), []);
+    const handleUnpublishClicked = React.useCallback(() => handleActionButtonClick('unpublish'), []);
+    const handleScheduleClicked = React.useCallback(() => handleActionButtonClick('schedule'), []);
+    const handleUnscheduleClicked = React.useCallback(() => handleActionButtonClick('unschedule'), []);
+    const handleDeleteClicked = React.useCallback(() => handleActionButtonClick('delete'), []);
+    const handleUploadMainImageClicked = React.useCallback(async () => {
         try {
             const uploaded = await awaitModalPrompt(UploadImageModal);
 
@@ -226,18 +226,18 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
         } catch (e) {
             // Modal was cancelled.
         }
-    }
+    }, []);
 
-    const handleRemoveMainImageClicked = async () => {
+    const handleRemoveMainImageClicked = React.useCallback(async () => {
         // TODO: Confirm with user first
         setMainImage(undefined);
-    }
+    }, []);
 
-    const handleTagsChanged = (tags: Tag[]) => {
+    const handleTagsChanged = React.useCallback((tags: Tag[]) => {
         setTags(tags);
-    }
+    }, []);
 
-    const handleUploadImages: TUploadImagesCallback = async (files: File[]) => {
+    const handleUploadImages: TUploadImagesCallback = React.useCallback(async (files: File[]) => {
         const images: Awaited<ReturnType<TUploadImagesCallback>> = [];
 
         for (const file of files) {
@@ -254,7 +254,7 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
         }
 
         return images;
-    }
+    }, []);
 
     return (
         <>
