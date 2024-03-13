@@ -11,7 +11,7 @@ const shouldDisplayButton = () => window.scrollY > 100;
 const ScrollToTop: React.FC<IProps> = ({ scrollTo }) => {
     const [show, setShow] = React.useState(shouldDisplayButton());
 
-    const onScroll = () => {
+    const onScroll = React.useCallback(() => {
         const shouldDisplay = shouldDisplayButton();
 
         if (shouldDisplay && !show) {
@@ -19,7 +19,7 @@ const ScrollToTop: React.FC<IProps> = ({ scrollTo }) => {
         } else if (!shouldDisplay && show) {
             setShow(false);
         }
-    }
+    }, [show]);
 
     React.useEffect(() => {
         document.addEventListener('scroll', onScroll);
@@ -27,7 +27,7 @@ const ScrollToTop: React.FC<IProps> = ({ scrollTo }) => {
         return () => document.removeEventListener('scroll', onScroll);
     });
 
-    const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const onClick = React.useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
 
         const el = document.getElementById(scrollTo);
@@ -37,7 +37,7 @@ const ScrollToTop: React.FC<IProps> = ({ scrollTo }) => {
             animateScrollTo(el, opts);
         else
             animateScrollTo(0, opts);
-    }
+    }, [scrollTo]);
 
     return (
         <>
