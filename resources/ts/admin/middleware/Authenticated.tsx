@@ -31,15 +31,15 @@ const Authenticated: React.FC<TProps> = ({ account: { fetchUser, user }, setUser
     const [performHeartbeat, setPerformHeartbeat] = React.useState(true);
     const [lastChecked, setLastChecked] = React.useState<DateTime | undefined>();
 
-    const ping = async (params: IHeartbeatCallbackParams) => {
+    const ping = React.useCallback(async (params: IHeartbeatCallbackParams) => {
         try {
             await createAuthRequest().get<IUser>('user');
         } catch (e) {
             await onPingFailed(e);
         }
-    }
+    }, []);
 
-    const onPingFailed = async (e: unknown) => {
+    const onPingFailed = React.useCallback(async (e: unknown) => {
         // Disable heartbeat from displaying alert over and over
         setPerformHeartbeat(false);
 
@@ -60,7 +60,7 @@ const Authenticated: React.FC<TProps> = ({ account: { fetchUser, user }, setUser
         if (result.isConfirmed) {
             window.location.href = '/login';
         }
-    }
+    }, []);
 
     React.useEffect(() => {
         dispatchFetchUser();
