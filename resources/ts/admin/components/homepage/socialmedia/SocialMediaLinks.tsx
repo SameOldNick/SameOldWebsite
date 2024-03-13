@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, Col, Input, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { Button, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 import withReactContent from "sweetalert2-react-content";
-import { FaEdit, FaSync, FaTimesCircle, FaTrash } from "react-icons/fa";
+import { FaSync, FaTrash } from "react-icons/fa";
 
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import SocialMediaLink from "./SocialMediaLink";
 import SocialMediaLinkPrompt from "./SocialMediaLinkPrompt";
 
 import { createAuthRequest } from "@admin/utils/api/factories";
@@ -15,37 +16,10 @@ import awaitModalPrompt from "@admin/utils/modals";
 interface ISocialMediaLinksProps {
 }
 
-interface ISocialMediaLinkProps {
-    link: ISocialMediaLink;
-    selected: boolean;
-
-    onEditClicked: () => void;
-    onDeleteClicked: () => void;
-    onSelected: (selected: boolean) => void;
-}
-
 interface ISocialMediaLinkItem {
     link: ISocialMediaLink;
     selected: boolean;
 }
-
-const SocialMediaLink: React.FC<ISocialMediaLinkProps> = ({ link, selected, onSelected, onEditClicked, onDeleteClicked }) => (
-    <ListGroupItem className="d-flex justify-content-between">
-        <span>
-            <Input type="checkbox" className="align-middle" checked={selected} onChange={(e) => onSelected(e.target.checked)} />
-            <Button tag='a' color='link' href={link.link} target='_blank'>{link.link}</Button>
-        </span>
-
-        <span>
-            <Button color="link" onClick={() => onEditClicked()}>
-                <FaEdit />
-            </Button>
-            <Button color="link" className="text-danger" onClick={() => onDeleteClicked()}>
-                <FaTimesCircle />
-            </Button>
-        </span>
-    </ListGroupItem>
-);
 
 const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
     const [links, setLinks] = React.useState<ISocialMediaLinkItem[]>([]);
