@@ -23,13 +23,13 @@ interface IProps extends IHasRouter<'project'> {
 const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) => {
     const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
-    const getProject = async () => {
+    const getProject = React.useCallback(async () => {
         const response = await createAuthRequest().get<IProject>(`/projects/${project}`);
 
         return response.data;
-    }
+    }, [project]);
 
-    const handleError = async (err: unknown) => {
+    const handleError = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         const result = await withReactContent(Swal).fire({
@@ -46,7 +46,7 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         } else {
             navigate(-1);
         }
-    }
+    }, []);
 
     const getInitialValues = React.useCallback((project: IProject) => {
         return {
@@ -56,11 +56,11 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         };
     }, []);
 
-    const transformProjectTags = (tags: ITag[]): Tag[] => {
+    const transformProjectTags = React.useCallback((tags: ITag[]): Tag[] => {
         return tags.map(({ tag, slug }, index) => ({ label: tag, value: slug ?? index }));
-    }
+    }, []);
 
-    const onSubmit = async (project: IProject, { name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
+    const onSubmit = React.useCallback(async (project: IProject, { name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().put<IProject>(`projects/${project.id}`, {
                 title: name,
@@ -73,9 +73,9 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         } catch (e) {
             await onError(e);
         }
-    }
+    }, []);
 
-    const onUpdated = async ({ }: AxiosResponse<IProject>) => {
+    const onUpdated = React.useCallback(async ({ }: AxiosResponse<IProject>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Project Updated',
@@ -83,9 +83,9 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         });
 
         waitToLoadRef.current?.load();
-    }
+    }, []);
 
-    const onError = async (err: unknown) => {
+    const onError = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -93,7 +93,7 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
             title: 'Oops...',
             text: `An error occurred: ${message}`,
         });
-    }
+    }, []);
 
     return (
         <>
