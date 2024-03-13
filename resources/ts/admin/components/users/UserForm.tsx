@@ -55,11 +55,11 @@ const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props 
         }
     }, [fields]);
 
-    const handleSubmit = async (values: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = React.useCallback(async (values: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         await onSubmit({ ...values }, helpers);
 
         return Promise.resolve();
-    }
+    }, [onSubmit]);
 
     return (
         <>
