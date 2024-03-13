@@ -1,8 +1,19 @@
 import React from 'react';
 
-import { IIconType, ISvg } from './IconSelector';
-
 import bladeIcons from './icons/blade-icons.json';
+
+export interface ISvg {
+    tag: string;
+    props: Record<string, string | number>;
+    children?: ISvg[];
+}
+
+export interface IIconType {
+    family: string;
+    prefix: string;
+    name: string;
+    svg: ISvg;
+}
 
 const getAllIcons = () => Object.entries(bladeIcons).flatMap<IIconType>(
     ([family, { prefix, icons }]) =>

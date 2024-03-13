@@ -2,53 +2,13 @@ import React from "react";
 import { FaSearch } from 'react-icons/fa';
 import { Button, Col, Form, Input, InputGroup, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 
-import classNames from "classnames";
-
-import Icon from "./Icon";
-import { getAllIcons } from "./utils";
+import { IIconType, getAllIcons } from "./utils";
+import IconItem from "./IconItem";
 
 interface IIconSelectorProps {
     open: boolean;
     onSave: (icon: IIconType) => void;
     onCancel: () => void;
-}
-
-interface IIconItemProps {
-    icon: IIconType;
-    selected: boolean;
-    onSelect: () => void;
-}
-
-export interface ISvg {
-    tag: string;
-    props: Record<string, string | number>;
-    children?: ISvg[];
-}
-
-export interface IIconType {
-    family: string;
-    prefix: string;
-    name: string;
-    svg: ISvg;
-}
-
-const IconItem: React.FC<IIconItemProps> = ({ icon, selected, onSelect }) => {
-    const [highlight, setHighlight] = React.useState(false);
-
-    return (
-        <Col>
-            <button
-                type="button"
-                className={classNames('btn', { active: highlight || selected })}
-                onMouseOver={() => setHighlight(true)}
-                onMouseOut={() => setHighlight(false)}
-                onClick={() => onSelect()}
-            >
-                <Icon icon={icon} size={24} />
-            </button>
-
-        </Col>
-    );
 }
 
 const IconSelector: React.FC<IIconSelectorProps> = ({ open, onSave, onCancel }) => {
