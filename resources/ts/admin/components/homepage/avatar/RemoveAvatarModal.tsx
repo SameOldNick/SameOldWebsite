@@ -61,7 +61,7 @@ const RemoveAvatarModal: React.FC<IProps> = ({ onSuccess, onCancelled }) => {
 
     React.useEffect(() => {
         displayPrompt();
-    });
+    }, []);
 
     return (
         <></>
