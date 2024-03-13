@@ -36,19 +36,19 @@ interface ITechnologyItem {
 const Technology: React.FC<ITechnologyProps> = ({ technology, selected, onSelected, onEditClicked, onDeleteClicked }) => {
     const icon = React.useMemo(() => lookupIcon(technology.icon), [technology]);
 
-    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    const handleClick = React.useCallback((e: React.MouseEvent<HTMLElement>) => {
         onSelected(!selected)
-    }
+    }, [onSelected]);
 
-    const handleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleEditClick = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         onEditClicked();
-    }
+    }, [onEditClicked]);
 
-    const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleDeleteClick = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         onDeleteClicked();
-    }
+    }, [onDeleteClicked]);
 
     return (
         <Col
@@ -90,7 +90,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
     const [renderCount, setRenderCount] = React.useState(1);
     const [technologies, setTechnologies] = React.useState<ITechnologyItem[]>([]);
 
-    const load = async () => {
+    const load = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().get<ITechnology[]>('technologies');
 
@@ -110,9 +110,9 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await load();
         }
-    }
+    }, []);
 
-    const addTechnology = async (newTechnology: ITechnology) => {
+    const addTechnology = React.useCallback(async (newTechnology: ITechnology) => {
         try {
             const response = await createAuthRequest().post('technologies', newTechnology);
 
@@ -140,9 +140,9 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await addTechnology(newTechnology);
         }
-    }
+    }, []);
 
-    const editTechnology = async (technology: ITechnology) => {
+    const editTechnology = React.useCallback(async (technology: ITechnology) => {
         try {
             const response = await createAuthRequest().put(`technologies/${technology.id}`, technology);
 
@@ -170,9 +170,9 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await editTechnology(technology);
         }
-    }
+    }, []);
 
-    const promptDeleteTechnology = async (technology: ITechnology) => {
+    const promptDeleteTechnology = React.useCallback(async (technology: ITechnology) => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -195,9 +195,9 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
         }
 
         await load();
-    }
+    }, []);
 
-    const deleteTechnology = async (technology: ITechnology): Promise<Record<'success', string> | false> => {
+    const deleteTechnology = React.useCallback(async (technology: ITechnology): Promise<Record<'success', string> | false> => {
         try {
             const response = await createAuthRequest().delete<Record<'success', string>>(`technologies/${technology.id}`);
 
@@ -221,9 +221,9 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
             else
                 return false;
         }
-    }
+    }, []);
 
-    const deleteTechnologies = async () => {
+    const deleteTechnologies = React.useCallback(async () => {
         const toDelete = technologies.filter((value) => value.selected);
 
         if (toDelete.length === 0) {
@@ -256,22 +256,24 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
         });
 
         await load();
-    }
+    }, []);
 
-    const handleAddButtonClicked = async () => {
+    const handleAddButtonClicked = React.useCallback(async () => {
         const technology = await awaitModalPrompt(TechnologyPrompt);
 
         await addTechnology(technology);
-    }
+    }, []);
 
-    const handleEditButtonClicked = async (technology: ITechnology) => {
+    const handleEditButtonClicked = React.useCallback(async (technology: ITechnology) => {
         const updated = await awaitModalPrompt(TechnologyPrompt, { existing: technology });
 
         await editTechnology(updated);
-    }
+    }, []);
 
-    const onItemSelected = (technology: ITechnology, selected: boolean) =>
-        setTechnologies((technologies) => technologies.map((item) => item.technology === technology ? { technology, selected } : item));
+    const onItemSelected = React.useCallback(
+        (technology: ITechnology, selected: boolean) =>
+            setTechnologies((technologies) => technologies.map((item) => item.technology === technology ? { technology, selected } : item)),
+        []);
 
     React.useEffect(() => {
         load();
