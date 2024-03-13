@@ -12,20 +12,18 @@ import PaginatedTable from '@admin/components/PaginatedTable';
 import { createAuthRequest } from '@admin/utils/api/factories';
 
 import Article from '@admin/utils/api/models/Article';
+import { IPromptModalProps } from '@admin/utils/modals';
 
-interface ISelectArticleModalAllowAllProps {
+interface ISelectArticleModalAllowAllProps extends IPromptModalProps<Article | undefined> {
     allowAll: true;
-    onSelected: (article?: Article) => void;
 }
 
-interface ISelectArticleModalSpecificProps {
+interface ISelectArticleModalSpecificProps extends IPromptModalProps<Article> {
     allowAll?: false;
-    onSelected: (article: Article) => void;
 }
 
 interface ISelectArticleModalSharedProps {
     existing?: Article;
-    onCancelled: () => void;
 }
 
 type TSelectArticleModalProps = (ISelectArticleModalAllowAllProps | ISelectArticleModalSpecificProps) & ISelectArticleModalSharedProps;
@@ -52,7 +50,7 @@ const ArticleRow: React.FC<IArticleRowProps> = ({ article, selected, onSelected 
     );
 }
 
-const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allowAll, onSelected, onCancelled }) => {
+const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allowAll, onSuccess, onCancelled }) => {
     const waitToLoadArticlesRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
 
@@ -70,16 +68,16 @@ const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allo
         e.preventDefault();
 
         if (allowAll) {
-            onSelected(selected);
+            onSuccess(selected);
         } else {
             if (!selected) {
                 console.error('No article selected.');
                 return;
             }
 
-            onSelected(selected);
+            onSuccess(selected);
         }
-    }, [selected, onSelected]);
+    }, [selected, onSuccess]);
 
     const passArticlesThru = React.useCallback((articles: IArticle[]) => {
         return articles

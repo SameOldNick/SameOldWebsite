@@ -11,20 +11,18 @@ import PaginatedTable from '@admin/components/PaginatedTable';
 import { createAuthRequest } from '@admin/utils/api/factories';
 
 import User from '@admin/utils/api/models/User';
+import { IPromptModalProps } from '@admin/utils/modals';
 
-interface ISelectUserModalAllowAllProps {
+interface ISelectUserModalAllowAllProps extends IPromptModalProps<User | undefined> {
     allowAll: true;
-    onSelected: (user?: User) => void;
 }
 
-interface ISelectUserModalSpecificProps {
+interface ISelectUserModalSpecificProps extends IPromptModalProps<User> {
     allowAll?: false;
-    onSelected: (user: User) => void;
 }
 
 interface ISelectUserModalSharedProps {
     existing?: User;
-    onCancelled: () => void;
 }
 
 type TSelectUserModalProps = (ISelectUserModalAllowAllProps | ISelectUserModalSpecificProps) & ISelectUserModalSharedProps;
@@ -50,7 +48,7 @@ const UserRow: React.FC<IUserRowProps> = ({ user, selected, onSelected }) => {
     );
 }
 
-const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, onSelected, onCancelled }) => {
+const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, onSuccess, onCancelled }) => {
     const waitToLoadUsersRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IUser>>();
 
@@ -68,16 +66,16 @@ const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, 
         e.preventDefault();
 
         if (allowAll) {
-            onSelected(selected);
+            onSuccess(selected);
         } else {
             if (!selected) {
                 console.error('No user selected.');
                 return;
             }
 
-            onSelected(selected);
+            onSuccess(selected);
         }
-    }, [allowAll, onSelected]);
+    }, [allowAll, onSuccess]);
 
     const passUsersThru = React.useCallback((users: IUser[]) => {
         return users

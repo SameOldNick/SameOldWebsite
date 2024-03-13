@@ -21,6 +21,7 @@ import Article from '@admin/utils/api/models/Article';
 import User from '@admin/utils/api/models/User';
 import SelectArticleModal from '@admin/components/modals/SelectArticleModal';
 import SelectUserModal from '@admin/components/modals/SelectUserModal';
+import awaitModalPrompt from '@admin/utils/modals';
 
 interface IProps {
 
@@ -147,8 +148,6 @@ const CommentList: React.FC<IProps> = ({ }) => {
     const waitToLoadCommentsRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IComment>>();
 
-    const [selectArticleModal, showSelectArticleModal] = React.useState(false);
-    const [selectUserModal, showSelectUserModal] = React.useState(false);
     const [show, setShow] = React.useState<CommentStatuses>(CommentStatuses.All);
     const [article, setArticle] = React.useState<Article | undefined>();
     const [user, setUser] = React.useState<User | undefined>();
@@ -187,14 +186,24 @@ const CommentList: React.FC<IProps> = ({ }) => {
         waitToLoadCommentsRef.current?.load();
     }
 
-    const handleUserSelected = (user?: User) => {
-        setUser(user);
-        showSelectUserModal(false);
+    const handleChooseUserButtonClicked = async () => {
+        try {
+            const selected = await awaitModalPrompt(SelectUserModal, { allowAll: true, existing: user });
+
+            setUser(selected);
+        } catch (err) {
+            // User cancelled modal.
+        }
     }
 
-    const handleArticleSelected = (article?: Article) => {
-        setArticle(article);
-        showSelectArticleModal(false);
+    const handleChooseArticleButtonClicked = async () => {
+        try {
+            const selected = await awaitModalPrompt(SelectArticleModal, { allowAll: true, existing: article });
+
+            setArticle(selected);
+        } catch (err) {
+            // User cancelled modal.
+        }
     }
 
     const userDisplay = React.useMemo(() => user !== undefined ? `User ID: ${user.user.id}` : '(All Users)', [user]);
@@ -206,22 +215,6 @@ const CommentList: React.FC<IProps> = ({ }) => {
 
     return (
         <>
-            {selectUserModal && (
-                <SelectUserModal
-                    allowAll
-                    existing={user}
-                    onSelected={handleUserSelected}
-                    onCancelled={() => showSelectUserModal(false)}
-                />
-            )}
-            {selectArticleModal && (
-                <SelectArticleModal
-                    allowAll
-                    existing={article}
-                    onSelected={handleArticleSelected}
-                    onCancelled={() => showSelectArticleModal(false)}
-                />
-            )}
             <Row>
                 <Col xs={12} className='d-flex justify-content-between mb-3'>
                     <div />
@@ -231,14 +224,14 @@ const CommentList: React.FC<IProps> = ({ }) => {
                                 <label className="visually-hidden" htmlFor="user">User</label>
                                 <InputGroup>
                                     <Input readOnly type='text' name='user' id='user' value={userDisplay} />
-                                    <Button color='primary' onClick={() => showSelectUserModal(true)}>Choose...</Button>
+                                    <Button color='primary' onClick={handleChooseUserButtonClicked}>Choose...</Button>
                                 </InputGroup>
                             </Col>
                             <Col xs={12}>
                                 <label className="visually-hidden" htmlFor="article">Article</label>
                                 <InputGroup>
                                     <Input readOnly type='text' name='article' id='article' value={articleDisplay} />
-                                    <Button color='primary' onClick={() => showSelectArticleModal(true)}>Choose...</Button>
+                                    <Button color='primary' onClick={handleChooseArticleButtonClicked}>Choose...</Button>
                                 </InputGroup>
                             </Col>
                             <Col xs={12}>
