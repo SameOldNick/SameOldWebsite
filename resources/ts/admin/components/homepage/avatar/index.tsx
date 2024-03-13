@@ -17,7 +17,7 @@ interface IProps {
 const Avatar: React.FC<IProps> = ({ }) => {
     const [avatarKey, setAvatarKey] = React.useState(0);
 
-    const handleUploadClicked = async () => {
+    const handleUploadClicked = React.useCallback(async () => {
         try {
             await awaitModalPrompt(Upload);
 
@@ -31,10 +31,9 @@ const Avatar: React.FC<IProps> = ({ }) => {
             // User cancelled modal
             logger.error(err);
         }
+    }, []);
 
-    }
-
-    const handleRemoveClicked = async () => {
+    const handleRemoveClicked = React.useCallback(async () => {
         try {
             await awaitModalPrompt(Remove);
 
@@ -48,7 +47,7 @@ const Avatar: React.FC<IProps> = ({ }) => {
             // User cancelled modal
             logger.error(err);
         }
-    }
+    }, []);
 
     return (
         <>
