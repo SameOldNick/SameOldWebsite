@@ -27,7 +27,7 @@ interface IProps {
 const Dashboard: React.FC<IProps> = ({ }) => {
     const [visitors, setVisitors] = React.useState<TApiState<IChartVisitors, unknown>>({ status: 'none' });
 
-    const tryFetchVisitors = async () => {
+    const tryFetchVisitors = React.useCallback(async () => {
         try {
             const data = await fetchVisitorsOverTime();
 
@@ -35,9 +35,7 @@ const Dashboard: React.FC<IProps> = ({ }) => {
         } catch (err) {
             setVisitors({ status: 'rejected', error: err });
         }
-    }
-
-
+    }, []);
 
     React.useEffect(() => {
         tryFetchVisitors();
