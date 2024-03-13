@@ -36,7 +36,7 @@ interface ICommentProps {
 const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle, setUser }) => {
     const [actionDropdown, setActionDropdown] = React.useState(false);
 
-    const handleApproveClicked = async (e: React.MouseEvent) => {
+    const handleApproveClicked = React.useCallback(async (e: React.MouseEvent) => {
         e.preventDefault();
 
         try {
@@ -68,9 +68,9 @@ const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle
                 showCancelButton: true
             });
         }
-    }
+    }, [onUpdated]);
 
-    const handleDenyClicked = async (e: React.MouseEvent) => {
+    const handleDenyClicked = React.useCallback(async (e: React.MouseEvent) => {
         e.preventDefault();
 
         try {
@@ -88,7 +88,6 @@ const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle
             });
 
             onUpdated();
-
         } catch (err) {
             console.error(err);
 
@@ -102,7 +101,7 @@ const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle
                 showCancelButton: true
             });
         }
-    }
+    }, [onUpdated]);
 
     return (
         <>
