@@ -67,7 +67,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
 
     const handleSave = async ({ title, comment: content }: IFormikValues) => {
         try {
-            if (!confirmSave())
+            if (!await confirmSave())
                 return;
 
             const updated = await update(comment, title.trim() || null, content);
@@ -98,7 +98,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
 
     const handleSaveAndApprove = async ({ title, comment: content }: IFormikValues) => {
         try {
-            if (!confirmSave())
+            if (!await confirmSave())
                 return;
 
             const updated = await update(comment, title.trim() || null, content);
@@ -130,7 +130,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
     }
     const handleSaveAndDeny = async ({ title, comment: content }: IFormikValues) => {
         try {
-            if (!confirmSave())
+            if (!await confirmSave())
                 return;
 
             const updated = await update(comment, title.trim() || null, content);
@@ -166,7 +166,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
             if (!comment.comment.id)
                 throw new Error('Comment ID is missing.');
 
-            if (!confirmSave())
+            if (!await confirmSave())
                 return;
 
             await approve(comment);
@@ -200,7 +200,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
             if (!comment.comment.id)
                 throw new Error('Comment ID is missing.');
 
-            if (!confirmSave())
+            if (!await confirmSave())
                 return;
 
             await deny(comment);
