@@ -60,13 +60,13 @@ const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allo
     const [show, setShow] = React.useState('all');
     const [search, setSearch] = React.useState('');
 
-    const loadArticles = async (link?: string) => {
+    const loadArticles = React.useCallback(async (link?: string) => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IArticle>>(link ?? 'blog/articles', { show });
 
         return response.data;
-    }
+    }, [show]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = React.useCallback((e: React.FormEvent) => {
         e.preventDefault();
 
         if (allowAll) {
@@ -79,9 +79,9 @@ const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allo
 
             onSelected(selected);
         }
-    }
+    }, [selected, onSelected]);
 
-    const passArticlesThru = (articles: IArticle[]) => {
+    const passArticlesThru = React.useCallback((articles: IArticle[]) => {
         return articles
             .map((article) => new Article(article))
             .filter((article) =>
@@ -91,11 +91,11 @@ const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allo
                 article.currentRevision?.revision.summary.includes(search) ||
                 article.currentRevision?.revision.content.includes(search)
             );
-    }
+    }, [search]);
 
-    const handleArticleSelected = (selected: boolean, article: Article) => {
+    const handleArticleSelected = React.useCallback((selected: boolean, article: Article) => {
         setSelected(selected ? article : undefined);
-    }
+    }, []);
 
     return (
         <>
