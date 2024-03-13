@@ -34,7 +34,7 @@ interface IUserProps {
 }
 
 const User: React.FC<IUserProps> = ({ user, onLocked, onUnlocked }) => {
-    const handleLockClicked = async () => {
+    const handleLockClicked = React.useCallback(async () => {
         try {
             await awaitModalPrompt(LockUserModal, { user });
 
@@ -42,9 +42,9 @@ const User: React.FC<IUserProps> = ({ user, onLocked, onUnlocked }) => {
         } catch (err) {
             // Modal was cancelled.
         }
-    }
+    }, [user, onLocked]);
 
-    const handleUnlockClicked = async () => {
+    const handleUnlockClicked = React.useCallback(async () => {
         try {
             await awaitModalPrompt(UnlockUserModal, { user });
 
@@ -52,7 +52,7 @@ const User: React.FC<IUserProps> = ({ user, onLocked, onUnlocked }) => {
         } catch (err) {
             // Modal was cancelled.
         }
-    }
+    }, [user, onUnlocked]);
 
     return (
         <>
