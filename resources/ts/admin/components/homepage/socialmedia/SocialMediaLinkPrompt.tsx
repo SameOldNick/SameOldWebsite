@@ -21,11 +21,11 @@ interface ISocialMediaLinkPromptEditProps {
 type TProps = (ISocialMediaLinkPromptAddProps | ISocialMediaLinkPromptEditProps) & IPromptModalProps<string>;
 
 const SocialMediaLinkPrompt: React.FC<TProps> = ({ link, onSuccess, onCancelled }) => {
-    const handleSubmit = async ({ link }: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = React.useCallback(async ({ link }: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
         await onSuccess(link);
-    }
+    }, [onSuccess]);
 
-    const handleCancel = () => onCancelled();
+    const handleCancel = React.useCallback(() => onCancelled(), [onCancelled]);
 
     const schema = Yup.object().shape({
         link: Yup.string().required('Link is required').max(255),
