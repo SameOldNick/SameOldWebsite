@@ -37,13 +37,13 @@ const HomepageForm: React.FC<IProps> = (props) => {
             biography: Yup.string().required('Biography is required'),
         }), []);
 
-    const getHomepageMetaData = async () => {
+    const getHomepageMetaData = React.useCallback(async () => {
         const response = await createAuthRequest().get<IPageMetaData[]>('/pages/homepage');
 
         return response.data;
-    }
+    }, []);
 
-    const getInitialHomePageValues = (metaData: IPageMetaData[]) => {
+    const getInitialHomePageValues = React.useCallback((metaData: IPageMetaData[]) => {
         const initialValues = {
             name: '',
             headline: '',
@@ -58,9 +58,9 @@ const HomepageForm: React.FC<IProps> = (props) => {
         }
 
         return initialValues;
-    }
+    }, []);
 
-    const onHomepageFormSubmitted = async ({ name, headline, location, biography }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+    const onHomepageFormSubmitted = React.useCallback(async ({ name, headline, location, biography }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().post<IPageMetaData[]>('/pages/homepage', {
                 name,
@@ -73,9 +73,9 @@ const HomepageForm: React.FC<IProps> = (props) => {
         } catch (e) {
             await onError(e);
         }
-    }
+    }, []);
 
-    const onUpdated = async (response: AxiosResponse<IPageMetaData[]>) => {
+    const onUpdated = React.useCallback(async (response: AxiosResponse<IPageMetaData[]>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Updated',
@@ -83,9 +83,9 @@ const HomepageForm: React.FC<IProps> = (props) => {
         });
 
         waitToLoadRef.current?.load();
-    }
+    }, []);
 
-    const onError = async (err: unknown) => {
+    const onError = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         await withReactContent(Swal).fire({
@@ -93,9 +93,9 @@ const HomepageForm: React.FC<IProps> = (props) => {
             title: 'Oops...',
             text: `An error occurred: ${message}`,
         });
-    }
+    }, []);
 
-    const handleError = async (err: unknown) => {
+    const handleError = React.useCallback(async (err: unknown) => {
         const { router: { navigate } } = props;
 
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -114,7 +114,7 @@ const HomepageForm: React.FC<IProps> = (props) => {
         } else {
             navigate(-1);
         }
-    }
+    }, [props.router]);
 
     return (
         <>
