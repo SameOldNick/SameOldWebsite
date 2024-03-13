@@ -12,11 +12,11 @@ interface IProps {
 const SidebarToggle: React.FC<IProps> = ({ }) => {
     const [toggled, setToggled] = React.useState(false);
 
-    const onToggle = (e: React.MouseEvent) => {
+    const onToggle = React.useCallback((e: React.MouseEvent) => {
         e.preventDefault();
 
         setToggled((prevState) => !prevState);
-    }
+    }, []);
 
     return (
         <>
