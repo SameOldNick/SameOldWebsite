@@ -21,7 +21,7 @@ const UploadAvatarModal: React.FC<IPromptModalProps> = ({ onSuccess, onCancelled
     const [uploaded, setUploaded] = React.useState<IAvatarUploaded | undefined>(undefined);
     const [alerts, setAlerts] = React.useState<IAlert[]>([]);
 
-    const uploadAvatar = async () => {
+    const uploadAvatar = React.useCallback(async () => {
         if (uploaded === undefined)
             return;
 
@@ -39,15 +39,15 @@ const UploadAvatarModal: React.FC<IPromptModalProps> = ({ onSuccess, onCancelled
             setAlerts([...alerts, { type: 'danger', message }]);
 
         }
-    }
+    }, [onSuccess]);
 
-    const onFileSelected = async (file: File) => {
+    const onFileSelected = React.useCallback(async (file: File) => {
         const src = await createBase64UrlFromFile(file);
 
         setUploaded({ file, src });
-    }
+    }, []);
 
-    const onFileRemoved = () => setUploaded(undefined);
+    const onFileRemoved = React.useCallback(() => setUploaded(undefined), []);
 
     React.useEffect(() => {
         return () => {
