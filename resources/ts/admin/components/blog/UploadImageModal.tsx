@@ -22,15 +22,15 @@ const UploadImageModal: React.FC<IPromptModalProps<IImage>> = ({ onSuccess, onCa
     const [selected, setSelected] = React.useState<ISelectedImage | undefined>(undefined);
     const [alerts, setAlerts] = React.useState<IAlert[]>([]);
 
-    const handleFileSelected = async (file: File) => {
+    const handleFileSelected = React.useCallback(async (file: File) => {
         const src = await createBase64UrlFromFile(file);
 
         setSelected({ file, src });
-    }
+    }, []);
 
-    const handleFileRemoved = () => setSelected(undefined);
+    const handleFileRemoved = React.useCallback(() => setSelected(undefined), []);
 
-    const handleSelectClicked = async () => {
+    const handleSelectClicked = React.useCallback(async () => {
         if (!selected)
             return;
 
@@ -43,7 +43,7 @@ const UploadImageModal: React.FC<IPromptModalProps<IImage>> = ({ onSuccess, onCa
 
             setAlerts([...alerts, { type: 'danger', message }]);
         }
-    }
+    }, [onSuccess]);
 
     React.useEffect(() => {
         return () => {
