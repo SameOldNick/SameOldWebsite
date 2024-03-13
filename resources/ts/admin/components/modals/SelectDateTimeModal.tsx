@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Row, Col, FormGroup, Label, Input, Form } from 'reactstrap';
 
 import { DateTime } from 'luxon';
-import { IPromptModalProps } from '../utils/modals';
+import { IPromptModalProps } from '../../utils/modals';
 
 interface ISelectDateTimeModalProps extends IPromptModalProps<DateTime> {
     existing?: DateTime;

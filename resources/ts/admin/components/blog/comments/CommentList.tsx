@@ -19,8 +19,8 @@ import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 import Article from '@admin/utils/api/models/Article';
 import User from '@admin/utils/api/models/User';
-import SelectArticleModal from '@admin/components/SelectArticleModal';
-import SelectUserModal from '@admin/components/SelectUserModal';
+import SelectArticleModal from '@admin/components/modals/SelectArticleModal';
+import SelectUserModal from '@admin/components/modals/SelectUserModal';
 
 interface IProps {
 

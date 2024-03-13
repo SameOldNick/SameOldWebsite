@@ -9,7 +9,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 
-import SelectDateTimeModal from '@admin/components/SelectDateTimeModal';
+import SelectDateTimeModal from '@admin/components/modals/SelectDateTimeModal';
 import PaginatedTable from '@admin/components/PaginatedTable';
 import Loader from '@admin/components/Loader';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';

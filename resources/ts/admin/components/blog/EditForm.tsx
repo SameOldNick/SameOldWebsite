@@ -15,7 +15,7 @@ import UploadImageModal from './UploadImageModal';
 
 import UnsavedChangesWarning from '@admin/components/UnsavedChangesWarning';
 import Heading, { HeadingTitle } from '@admin/layouts/admin/Heading';
-import SelectDateTimeModal from '@admin/components/SelectDateTimeModal';
+import SelectDateTimeModal from '@admin/components/modals/SelectDateTimeModal';
 
 import Revision from '@admin/utils/api/models/Revision';
 import Article, { TArticleStatus } from '@admin/utils/api/models/Article';
