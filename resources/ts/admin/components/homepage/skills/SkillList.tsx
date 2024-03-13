@@ -91,7 +91,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
     const [editSkillPrompt, setEditSkillPrompt] = React.useState<ISkill | undefined>();
     const [skills, setSkills] = React.useState<ISkillItem[]>([]);
 
-    const load = async () => {
+    const load = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().get<ISkill[]>('skills');
 
@@ -111,9 +111,9 @@ const SkillList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await load();
         }
-    }
+    }, []);
 
-    const addSkill = async (newSkill: ISkill) => {
+    const addSkill = React.useCallback(async (newSkill: ISkill) => {
         try {
             const response = await createAuthRequest().post('skills', newSkill);
 
@@ -141,9 +141,9 @@ const SkillList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await addSkill(newSkill);
         }
-    }
+    }, []);
 
-    const editSkill = async (skill: ISkill) => {
+    const editSkill = React.useCallback(async (skill: ISkill) => {
         try {
             const response = await createAuthRequest().put(`skills/${skill.id}`, skill);
 
@@ -171,9 +171,9 @@ const SkillList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await editSkill(skill);
         }
-    }
+    }, []);
 
-    const promptDeleteSkill = async (skill: ISkill) => {
+    const promptDeleteSkill = React.useCallback(async (skill: ISkill) => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -196,9 +196,9 @@ const SkillList: React.FC<IProps> = ({ }) => {
         }
 
         await load();
-    }
+    }, []);
 
-    const deleteSkill = async (skill: ISkill): Promise<Record<'success', string> | false> => {
+    const deleteSkill = React.useCallback(async (skill: ISkill): Promise<Record<'success', string> | false> => {
         try {
             const response = await createAuthRequest().delete<Record<'success', string>>(`skills/${skill.id}`);
 
@@ -222,9 +222,9 @@ const SkillList: React.FC<IProps> = ({ }) => {
             else
                 return false;
         }
-    }
+    }, []);
 
-    const deleteSkills = async () => {
+    const deleteSkills = React.useCallback(async () => {
         const toDelete = skills.filter((value) => value.selected);
 
         if (toDelete.length === 0) {
@@ -257,23 +257,23 @@ const SkillList: React.FC<IProps> = ({ }) => {
         });
 
         await load();
-    }
+    }, []);
 
-    const onItemSelected = (skill: ISkill, selected: boolean) => {
+    const onItemSelected = React.useCallback((skill: ISkill, selected: boolean) => {
         setSkills((skills) => skills.map((item) => item.skill === skill ? { skill, selected } : item));
-    }
+    }, []);
 
-    const handleAddButtonClicked = async () => {
+    const handleAddButtonClicked = React.useCallback(async () => {
         const skill = await awaitModalPrompt(SkillPrompt);
 
         await addSkill(skill);
-    }
+    }, []);
 
-    const handleEditButtonClicked = async (skill: ISkill) => {
+    const handleEditButtonClicked = React.useCallback(async (skill: ISkill) => {
         const updated = await awaitModalPrompt(SkillPrompt, { existing: skill });
 
         await editSkill(updated);
-    }
+    }, []);
 
     React.useEffect(() => {
         load();
