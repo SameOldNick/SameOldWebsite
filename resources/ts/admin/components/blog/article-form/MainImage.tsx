@@ -16,7 +16,7 @@ interface IProps extends Omit<CardProps, 'children' | 'onChange'> {
 const MainImage: React.FC<IProps> = ({ current, onUploadClicked, onRemoveClicked, ...props }) => {
     const [disableButtons, setDisableButtons] = React.useState(false);
 
-    const handleUploadButtonClicked = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleUploadButtonClicked = React.useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
         try {
@@ -26,9 +26,9 @@ const MainImage: React.FC<IProps> = ({ current, onUploadClicked, onRemoveClicked
         } finally {
             setDisableButtons(false);
         }
-    }
+    }, [setDisableButtons, onUploadClicked]);
 
-    const handleRemoveButtonClicked = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleRemoveButtonClicked = React.useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
         try {
@@ -38,7 +38,7 @@ const MainImage: React.FC<IProps> = ({ current, onUploadClicked, onRemoveClicked
         } finally {
             setDisableButtons(false);
         }
-    }
+    }, [setDisableButtons, onRemoveClicked]);
 
     return (
         <>
