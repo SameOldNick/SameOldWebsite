@@ -12,7 +12,7 @@ interface IReactTagsWrapperProps extends Omit<TReactTagsProps, 'suggestions'> {
 const ReactTagsWithSuggestions: React.FC<IReactTagsWrapperProps> = ({ ...props }) => {
     const [suggestions, setSuggestions] = React.useState<TagSuggestion[]>([]);
 
-    const getTags = async () => {
+    const getTags = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().get<ITag[]>('tags');
 
@@ -20,7 +20,7 @@ const ReactTagsWithSuggestions: React.FC<IReactTagsWrapperProps> = ({ ...props }
         } catch (e) {
             console.error(`Unable to get tag suggestions: ${JSON.stringify(e)}`);
         }
-    }
+    }, []);
 
     React.useEffect(() => {
         getTags();
