@@ -141,11 +141,11 @@ const SecurityAlertRow: React.FC<ISecurityAlertRowProps> = ({ alert, onViewClick
 
     const badgeColor = React.useMemo(() => determineBadgeColorForSeverity(issue.severity), [alert]);
 
-    const handleViewClicked = (e: React.MouseEvent) => {
+    const handleViewClicked = React.useCallback((e: React.MouseEvent) => {
         e.preventDefault();
 
         onViewClicked();
-    }
+    }, [onViewClicked]);
 
     return (
         <>
@@ -170,7 +170,7 @@ const SecurityAlertRow: React.FC<ISecurityAlertRowProps> = ({ alert, onViewClick
 const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
     const [selectedAlert, setSelectedAlert] = React.useState<TSecurityAlertNotification>();
 
-    const fetchSecurityAlerts = async () => {
+    const fetchSecurityAlerts = React.useCallback(async () => {
         const alerts: TSecurityAlertNotification[] = [];
         const response = await createAuthRequest().get<INotification[]>('/user/notifications');
 
@@ -184,9 +184,9 @@ const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
         });
 
         return alerts;
-    }
+    }, []);
 
-    const handleModalClosed = () => setSelectedAlert(undefined);
+    const handleModalClosed = React.useCallback(() => setSelectedAlert(undefined), []);
 
     return (
         <>
