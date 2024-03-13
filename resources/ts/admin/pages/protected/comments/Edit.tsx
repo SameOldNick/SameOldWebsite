@@ -21,15 +21,15 @@ interface IProps extends IHasRouter<'comment'> {
 const Edit = withRouter(({ router }: IProps) => {
     const [comment, setComment] = React.useState<Comment>();
 
-    const load = async () => {
+    const load = React.useCallback(async () => {
         const { params: { comment } } = router;
 
         const response = await createAuthRequest().get<IComment>(`blog/comments/${comment}`);
 
         setComment(new Comment(response.data));
-    }
+    }, [comment, router.params]);
 
-    const handleLoadError = async (err: unknown) => {
+    const handleLoadError = React.useCallback(async (err: unknown) => {
         const { navigate } = router;
 
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -48,7 +48,7 @@ const Edit = withRouter(({ router }: IProps) => {
         } else {
             navigate(-1);
         }
-    }
+    }, []);
 
     React.useEffect(() => {
         try {
