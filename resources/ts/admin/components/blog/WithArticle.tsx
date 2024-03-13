@@ -19,11 +19,11 @@ interface IProps {
 const WithArticle: React.FC<IProps> = ({ articleId, children }) => {
     const waitToLoadArticleRef = React.createRef<IWaitToLoadHandle>;
 
-    const loadArticle = async () => {
+    const loadArticle = React.useCallback(async () => {
         const response = await createAuthRequest().get<IArticle>(`blog/articles/${articleId}`);
 
         return new Article(response.data);
-    }
+    }, [articleId]);
 
     return (
         <>
