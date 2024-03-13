@@ -48,13 +48,11 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         }
     }, []);
 
-    const getInitialValues = React.useCallback((project: IProject) => {
-        return {
-            name: project.project,
-            description: project.description,
-            url: project.url
-        };
-    }, []);
+    const getInitialValues = React.useCallback((project: IProject) => ({
+        name: project.project,
+        description: project.description,
+        url: project.url
+    }), []);
 
     const transformProjectTags = React.useCallback((tags: ITag[]): Tag[] => {
         return tags.map(({ tag, slug }, index) => ({ label: tag, value: slug ?? index }));
