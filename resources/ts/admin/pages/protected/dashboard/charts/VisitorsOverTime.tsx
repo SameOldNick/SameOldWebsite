@@ -10,38 +10,36 @@ interface IProps {
 }
 
 const VisitorsOverTime: React.FC<IProps> = ({ data }) => {
-    const lineChart = React.useMemo(() => {
-        return {
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top' as const,
-                    },
-                    title: {
-                        display: false
-                    },
+    const lineChart = React.useMemo(() => ({
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top' as const,
+                },
+                title: {
+                    display: false
                 },
             },
-            data: {
-                labels: Object.keys(data).map((date) => moment(date).format('YYYY-MM-DD')),
-                datasets: [
-                    {
-                        label: 'New Users',
-                        data: Object.values(data).map(({ newUsers }) => newUsers),
-                        borderColor: 'rgb(255, 99, 132)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                    },
-                    {
-                        label: 'Total Users',
-                        data: Object.values(data).map(({ totalUsers }) => totalUsers),
-                        borderColor: 'rgb(53, 162, 235)',
-                        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                    }
-                ],
-            }
-        };
-    }, [data]);
+        },
+        data: {
+            labels: Object.keys(data).map((date) => moment(date).format('YYYY-MM-DD')),
+            datasets: [
+                {
+                    label: 'New Users',
+                    data: Object.values(data).map(({ newUsers }) => newUsers),
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                },
+                {
+                    label: 'Total Users',
+                    data: Object.values(data).map(({ totalUsers }) => totalUsers),
+                    borderColor: 'rgb(53, 162, 235)',
+                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                }
+            ],
+        }
+    }), [data]);
 
     return (
         <ChartWrapper>
