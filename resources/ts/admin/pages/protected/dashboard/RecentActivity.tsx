@@ -131,7 +131,7 @@ const ActivityRow: React.FC<IActivityRowProps> = ({ activity, onMarkReadClicked,
 const RecentActivity: React.FC<IRecentActivityProps> = ({ }) => {
     const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
-    const fetchRecentActivity = async () => {
+    const fetchRecentActivity = React.useCallback(async () => {
         const activities: TActivityNotification[] = [];
         const response = await createAuthRequest().get<INotification[]>('/user/notifications');
 
@@ -145,19 +145,19 @@ const RecentActivity: React.FC<IRecentActivityProps> = ({ }) => {
         });
 
         return activities.sort((a, b) => moment(b.created_at).diff(moment(a.created_at), 'seconds')).slice(0, 5);
-    }
+    }, []);
 
-    const handleMarkReadClicked = async (activity: TActivityNotification) => {
+    const handleMarkReadClicked = React.useCallback(async (activity: TActivityNotification) => {
         await markRead(activity.id);
 
         await waitToLoadRef.current?.load();
-    }
+    }, []);
 
-    const handleMarkUnreadClicked = async (activity: TActivityNotification) => {
+    const handleMarkUnreadClicked = React.useCallback(async (activity: TActivityNotification) => {
         await markUnread(activity.id);
 
         await waitToLoadRef.current?.load();
-    }
+    }, []);
 
     return (
         <>
