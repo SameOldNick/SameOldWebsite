@@ -20,7 +20,7 @@ interface IProps {
 }
 
 const Loader: React.FC<IProps> = ({ display }) => {
-    const renderPage = ({ show }: IDisplayPage) => {
+    const renderPage = React.useCallback(({ show }: IDisplayPage) => {
         return (
             <div className={classNames('loader', { show })}>
                 <div className="loader-content">
@@ -29,9 +29,9 @@ const Loader: React.FC<IProps> = ({ display }) => {
                 </div>
             </div>
         );
-    }
+    }, []);
 
-    const renderOverElement = ({ wrapper }: IDisplayOverElement) => {
+    const renderOverElement = React.useCallback(({ wrapper }: IDisplayOverElement) => {
         const inner = (
             <div className='position-absolute top-50 start-50 translate-middle' style={{ zIndex: 9999 }}>
                 <BounceLoader />
@@ -51,7 +51,7 @@ const Loader: React.FC<IProps> = ({ display }) => {
                 </>
             );
         }
-    }
+    }, []);
 
     if (display.type === 'page')
         return renderPage(display);
