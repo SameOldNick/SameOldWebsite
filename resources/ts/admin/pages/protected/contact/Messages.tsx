@@ -1,168 +1,15 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { ConnectedProps, connect } from 'react-redux';
-import { Button, Card, CardBody, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table } from 'reactstrap';
-import { FaEnvelope, FaEnvelopeOpen, FaExternalLinkAlt, FaSync } from 'react-icons/fa';
-
-import S from 'string';
 
 import Heading from '@admin/layouts/admin/Heading';
 
-import { createAuthRequest } from '@admin/utils/api/factories';
-import { fetchMessages } from '@admin/store/slices/notifications';
+import MessageList from '@admin/components/messages/MessageList';
 
-const connector = connect(
-    ({ notifications: { messages } }: RootState) => ({ stored: messages }),
-    { fetchMessages }
-);
+interface IProps {
 
-type TProps = ConnectedProps<typeof connector>;
-
-interface IRowProps {
-    notification: TMessageNotification;
-    onViewClicked: () => void;
-    onMarkReadClicked: () => void;
-    onMarkUnreadClicked: () => void;
 }
 
-interface IModalProps {
-    notification: TMessageNotification;
-    onClose: () => void;
-}
-
-const MessageRow: React.FC<IRowProps> = ({ notification, onViewClicked, onMarkReadClicked, onMarkUnreadClicked }) => {
-    const address = notification.data.addresses.replyTo.length > 0 ? notification.data.addresses.replyTo[0].address : '(unknown)';
-    const message = S(notification.data.view.text).truncate(75).s;
-
-    const isRead = React.useMemo(() => notification.read_at !== null, [notification]);
-    const styles: React.CSSProperties = React.useMemo(() => !isRead ? { fontWeight: 'bold' } : {}, [isRead]);
-
-    return (
-        <tr>
-            <td style={styles}>{notification.id}</td>
-            <td style={styles}>{address}</td>
-            <td style={styles}>{message}</td>
-            <td>
-                <Button color='primary' className='me-1' onClick={onViewClicked}>
-                    <FaExternalLinkAlt />
-                </Button>
-                {
-                    !isRead ? (
-                        <Button color='primary' title='Mark as unread' onClick={onMarkReadClicked}>
-                            <FaEnvelopeOpen />
-                        </Button>
-                    ) : (
-                        <Button color='primary' title='Mark as read' onClick={onMarkUnreadClicked}>
-                            <FaEnvelope />
-                        </Button>
-                    )
-                }
-
-            </td>
-
-        </tr>
-    );
-}
-
-const MessageModal: React.FC<IModalProps> = ({ notification, onClose }) => {
-    const toggle = React.useCallback(() => onClose(), []);
-
-    return (
-        <Modal isOpen={true} toggle={toggle} scrollable size='xl'>
-            <ModalHeader>Message</ModalHeader>
-            <ModalBody>
-                {Object.entries(notification.data.addresses).map(([label, addresses], index) => {
-                    return addresses.length > 0 && (
-                        <FormGroup key={index} tag="fieldset">
-                            <legend>{S(label).humanize().s}</legend>
-
-                            {addresses.map(({ address, name }, index) => (
-                                <Row key={index}>
-                                    <Col xs={6}>
-                                        <FormGroup>
-                                            <Label for='subject'>E-mail:</Label>
-                                            <Input id='subject' type='text' value={address} readOnly />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <FormGroup>
-                                            <Label for='subject'>Name:</Label>
-                                            <Input id='subject' type='text' value={name || ''} readOnly />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                            ))}
-
-
-                        </FormGroup>
-                    );
-                })}
-
-                <Row>
-                    <FormGroup>
-                        <Label for='subject'>Subject:</Label>
-                        <Input id='subject' type='text' value={notification.data.subject} readOnly />
-                    </FormGroup>
-                </Row>
-
-                <Row>
-                    <FormGroup>
-                        <Label for='textMessage'>Text Message:</Label>
-                        <Input id='textMessage' type='textarea' value={notification.data.view.text} readOnly rows={6} />
-                    </FormGroup>
-                </Row>
-
-                <Row>
-                    <FormGroup>
-                        <Label for='htmlMessage'>HTML Message:</Label>
-                        <Input id='htmlMessage' type='textarea' value={notification.data.view.html} readOnly rows={6} />
-                    </FormGroup>
-                </Row>
-
-            </ModalBody>
-
-            <ModalFooter>
-                <Button color='primary' onClick={toggle}>Close</Button>
-            </ModalFooter>
-        </Modal >
-    );
-}
-
-const Messages: React.FC<TProps> = (props) => {
-    const [showNotification, setShowNotification] = React.useState<TMessageNotification | undefined>();
-
-    const fetchMessages = React.useCallback(async () => {
-        await props.fetchMessages();
-    }, [props.fetchMessages]);
-
-    const viewNotification = React.useCallback((notification: TMessageNotification) => {
-        setShowNotification(notification);
-    }, []);
-
-    const markUnread = React.useCallback(async (notification: TMessageNotification) => {
-        try {
-            await createAuthRequest().post<TMessageNotification>(`/user/notifications/${notification.id}/unread`, {});
-
-            await fetchMessages();
-        } catch (err) {
-            console.error(err);
-        }
-    }, []);
-
-    const markRead = React.useCallback(async (notification: TMessageNotification) => {
-        try {
-            await createAuthRequest().post<TMessageNotification>(`/user/notifications/${notification.id}/read`, {});
-
-            await fetchMessages();
-        } catch (err) {
-            console.error(err);
-        }
-    }, []);
-
-    React.useEffect(() => {
-        fetchMessages();
-    }, []);
-
+const Messages: React.FC<IProps> = ({ }) => {
     return (
         <>
             <Helmet>
@@ -171,53 +18,9 @@ const Messages: React.FC<TProps> = (props) => {
 
             <Heading title='Messages' />
 
-            {showNotification && <MessageModal notification={showNotification} onClose={() => setShowNotification(undefined)} />}
-
-            <Card>
-                <CardBody>
-                    <Row>
-                        <Col xs={12} className='d-flex justify-content-between mb-3'>
-                            <div></div>
-                            <div className="text-end">
-                                <Form className="row row-cols-lg-auto g-3" onSubmit={() => fetchMessages()}>
-                                    <Col xs={12}>
-                                        <Button type='submit' color='primary'>
-                                            <FaSync /> Update
-                                        </Button>
-                                    </Col>
-                                </Form>
-
-                            </div>
-                        </Col>
-                        <Col xs={12}>
-                            <Table>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>From</th>
-                                        <th>Message</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {props.stored.map((notification, index) => (
-                                        <MessageRow
-                                            key={index}
-                                            notification={notification}
-                                            onViewClicked={() => viewNotification(notification)}
-                                            onMarkReadClicked={() => markRead(notification)}
-                                            onMarkUnreadClicked={() => markUnread(notification)}
-                                        />
-                                    ))}
-                                </tbody>
-                            </Table>
-                        </Col>
-                    </Row>
-
-                </CardBody>
-            </Card>
+            <MessageList />
         </>
     );
 };
 
-export default connector(Messages);
+export default Messages;
