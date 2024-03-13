@@ -27,11 +27,11 @@ const SocialMediaLinkPrompt: React.FC<TProps> = ({ link, onSuccess, onCancelled 
 
     const handleCancel = React.useCallback(() => onCancelled(), [onCancelled]);
 
-    const schema = Yup.object().shape({
+    const schema = React.useMemo(() => Yup.object().shape({
         link: Yup.string().required('Link is required').max(255),
-    });
+    }), []);
 
-    const initialValues: IFormikValues = { link: link ? link.link : '' };
+    const initialValues: IFormikValues = React.useMemo(() => ({ link: link ? link.link : '' }), []);
 
     return (
         <Modal isOpen backdrop='static'>
