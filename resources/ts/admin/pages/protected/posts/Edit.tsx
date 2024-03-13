@@ -23,15 +23,15 @@ const Edit = withRouter(({ router }: IProps) => {
 
     const [renderCount, setRenderCount] = React.useState(0);
 
-    const loadArticle = async () => {
+    const loadArticle = React.useCallback(async () => {
         const { params: { article } } = router;
 
         const response = await createAuthRequest().get<IArticle>(`blog/articles/${article}`);
 
         return new Article(response.data);
-    }
+    }, [router.params]);
 
-    const handleLoadArticleError = async (err: unknown) => {
+    const handleLoadArticleError = React.useCallback(async (err: unknown) => {
         const { navigate } = router;
 
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -50,7 +50,7 @@ const Edit = withRouter(({ router }: IProps) => {
         } else {
             navigate(-1);
         }
-    }
+    }, []);
 
     React.useEffect(() => {
         setRenderCount(renderCount + 1);
