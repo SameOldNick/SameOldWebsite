@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Card, CardHeader, Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { FaDownload } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
 
