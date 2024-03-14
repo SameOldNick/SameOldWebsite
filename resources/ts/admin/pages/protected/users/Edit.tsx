@@ -15,29 +15,25 @@ import UserForm, { IFormikValues, TForwardedRef } from '@admin/components/users/
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import User from '@admin/utils/api/models/User';
+import WaitToLoad, { IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
 
 interface IProps extends IHasRouter<'user'> {
 
 }
 
 const Edit: React.FC<IProps> = ({ router }) => {
+    const [renderCount, setRenderCount] = React.useState(0);
     const formikRef = React.createRef<TForwardedRef>();
-
-    const [user, setUser] = React.useState<User>();
 
     const getUser = React.useCallback(async () => {
         const { params: { user } } = router;
 
-        try {
-            const response = await createAuthRequest().get<IUser>(`/users/${user}`);
+        const response = await createAuthRequest().get<IUser>(`/users/${user}`);
 
-            setUser(new User(response.data));
-        } catch (err) {
-            await handleErrorGettingUser(err);
-        }
+        return new User(response.data);
     }, [router.params]);
 
-    const handleErrorGettingUser = React.useCallback(async (err: unknown) => {
+    const handleErrorGettingUser = React.useCallback(async (err: unknown, { reload }: IWaitToLoadHelpers) => {
         const { navigate } = router;
 
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -52,21 +48,21 @@ const Edit: React.FC<IProps> = ({ router }) => {
         });
 
         if (result.isConfirmed) {
-            await getUser();
+            await reload();
         } else {
             navigate(-1);
         }
     }, []);
 
-    const initialValues = React.useMemo(() => ({
-        name: user?.user.name || '',
-        email: user?.user.email || '',
+    const getInitialValues = React.useCallback((user: User) => ({
+        name: user.user.name || '',
+        email: user.user.email || '',
         password: '',
         confirm_password: '',
-        state: user?.user.state?.code || '',
-        country: user?.user.country?.code || '',
-        roles: user?.roles || []
-    }), [user]);
+        state: user.user.state?.code || '',
+        country: user.user.country?.code || '',
+        roles: user.roles || []
+    }), []);
 
     React.useEffect(() => {
         getUser();
@@ -97,7 +93,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
             text: 'The user was successfully updated.',
         });
 
-        setUser(new User(response.data));
+        setRenderCount((prev) => prev + 1);
     }, []);
 
     const handleErrorUpdatingUser = React.useCallback(async (err: unknown) => {
@@ -123,16 +119,22 @@ const Edit: React.FC<IProps> = ({ router }) => {
                 <Col md={8}>
                     <Card>
                         <CardBody>
-                            {user !== undefined && (
-                                <UserForm
-                                    innerRef={formikRef}
-                                    fields='edit'
-                                    initialValues={initialValues}
-                                    buttonContent='Edit User'
-                                    onSubmit={(values, helpers) => handleSubmit(user, values, helpers)}
-                                />
-                            )}
-                            {user === undefined && <Loader display={{ type: 'over-element' }} />}
+                            <WaitToLoad key={renderCount} loading={<Loader display={{ type: 'over-element' }} />} callback={getUser}>
+                                {(user, err, helpers) => (
+                                    <>
+                                        {user && (
+                                            <UserForm
+                                                innerRef={formikRef}
+                                                fields='edit'
+                                                initialValues={getInitialValues(user)}
+                                                buttonContent='Edit User'
+                                                onSubmit={(values, helpers) => handleSubmit(user, values, helpers)}
+                                            />
+                                        )}
+                                        {err && handleErrorGettingUser(err, helpers)}
+                                    </>
+                                )}
+                            </WaitToLoad>
                         </CardBody>
                     </Card>
                 </Col>
