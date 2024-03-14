@@ -52,9 +52,7 @@ const UsersList: React.FC<IProps> = ({ show, onLoadError }) => {
                                         <tbody>
                                             {data.length === 0 && (
                                                 <tr>
-                                                    <tr>
-                                                        <td colSpan={6} className='text-center text-muted'>(No users found)</td>
-                                                    </tr>
+                                                    <td colSpan={6} className='text-center text-muted'>(No users found)</td>
                                                 </tr>
                                             )}
                                             {data.length > 0 && data.map((user, index) => (
