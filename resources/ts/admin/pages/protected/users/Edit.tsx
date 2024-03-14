@@ -11,11 +11,11 @@ import Heading from '@admin/layouts/admin/Heading';
 import Loader from '@admin/components/Loader';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import UserForm, { IFormikValues, TForwardedRef } from '@admin/components/users/UserForm';
+import WaitToLoad, { IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import User from '@admin/utils/api/models/User';
-import WaitToLoad, { IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
 
 interface IProps extends IHasRouter<'user'> {
 
