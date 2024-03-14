@@ -75,7 +75,8 @@ export default class ContactFormSettings extends React.Component<IProps, IState>
             honeypot_field: Yup.boolean(),
             honeypot_field_name: Yup.string().max(255).when('honeypot_field', {
                 is: true,
-                then: Yup.string().required()
+                then: (schema) => schema.required(),
+                otherwise: (schema) => schema.notRequired()
             }),
         });
     }
