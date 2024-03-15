@@ -3,20 +3,21 @@ import { FaSync } from 'react-icons/fa';
 import { Button, Col, Form, Input, InputGroup, Row, Table } from 'reactstrap';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
-import Comment from '@admin/utils/api/models/Comment';
 
 import PaginatedTable from '@admin/components/PaginatedTable';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
+import SingleComment from './SingleComment';
+import SelectArticleModal from '@admin/components/modals/SelectArticleModal';
+import SelectUserModal from '@admin/components/modals/SelectUserModal';
 
 import { CommentStatuses, loadAll } from '@admin/utils/api/endpoints/comments';
 
 import Article from '@admin/utils/api/models/Article';
 import User from '@admin/utils/api/models/User';
-import SelectArticleModal from '@admin/components/modals/SelectArticleModal';
-import SelectUserModal from '@admin/components/modals/SelectUserModal';
+import Comment from '@admin/utils/api/models/Comment';
+
 import awaitModalPrompt from '@admin/utils/modals';
-import SingleComment from './SingleComment';
 
 interface IProps {
 
