@@ -36,12 +36,6 @@ export interface IFormikValues {
 interface IProps extends IHasRouter {
 }
 
-interface IState {
-    senderMessageTooltipOpen: boolean;
-    recipientMessageTooltipOpen: boolean;
-    recipientSubjectTooltipOpen: boolean;
-}
-
 const ContactFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
     const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
