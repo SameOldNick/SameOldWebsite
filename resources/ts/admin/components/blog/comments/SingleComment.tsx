@@ -8,13 +8,12 @@ import { DateTime } from 'luxon';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-import Comment from '@admin/utils/api/models/Comment';
-
 import { approve, deny } from '@admin/utils/api/endpoints/comments';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 import Article from '@admin/utils/api/models/Article';
 import User from '@admin/utils/api/models/User';
+import Comment from '@admin/utils/api/models/Comment';
 
 interface ICommentProps {
     comment: Comment;
