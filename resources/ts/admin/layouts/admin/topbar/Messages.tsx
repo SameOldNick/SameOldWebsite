@@ -99,7 +99,7 @@ const Messages: React.FC<TProps> = ({ stored, fetchMessages }) => {
                         <Message key={index} message={message} />
                     ))}
 
-                    <DropdownItem className='text-center small text-gray-500 mt-2' href='#'>
+                    <DropdownItem className='text-center small text-gray-500 mt-2' href='/admin/contact/messages'>
                         Read More Messages
                     </DropdownItem>
                 </DropdownMenu>
