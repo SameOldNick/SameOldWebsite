@@ -31,9 +31,7 @@ const CommentList: React.FC<IProps> = ({ }) => {
     const [article, setArticle] = React.useState<Article | undefined>();
     const [user, setUser] = React.useState<User | undefined>();
 
-    const load = React.useCallback(async (link?: string) => {
-        return link === undefined ? loadInitial() : loadUpdate(link);
-    }, []);
+    const load = React.useCallback(async (link?: string) => link === undefined ? loadInitial() : loadUpdate(link), []);
 
     const loadInitial = React.useCallback(async () => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>('blog/comments', {
