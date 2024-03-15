@@ -23,12 +23,12 @@ const All: React.FC<IProps> = ({ router: { navigate } }) => {
     const [show, setShow] = React.useState('both');
     const [renderCount, setRenderCount] = React.useState(0);
 
-    const handleUpdateFormSubmitted = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         setShow(e.currentTarget.show.value);
         setRenderCount((prev) => prev + 1);
-    }
+    }, []);
 
     const handleLoadError = React.useCallback((err: unknown, { reload }: IWaitToLoadHelpers) => {
         console.error(err);
