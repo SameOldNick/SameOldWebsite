@@ -30,11 +30,11 @@ const CommentList: React.FC<IProps> = ({ }) => {
     const [article, setArticle] = React.useState<Article | undefined>();
     const [user, setUser] = React.useState<User | undefined>();
 
-    const load = async (link?: string) => {
+    const load = React.useCallback(async (link?: string) => {
         return link === undefined ? loadInitial() : loadUpdate(link);
-    }
+    }, []);
 
-    const loadInitial = async () => {
+    const loadInitial = React.useCallback(async () => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>('blog/comments', {
             show,
             article: article ? article.article.id : undefined,
@@ -46,9 +46,9 @@ const CommentList: React.FC<IProps> = ({ }) => {
             article: article ? article.article.id : undefined,
             user: user ? user.user.id : undefined
         });
-    }
+    }, [article, user]);
 
-    const loadUpdate = async (link: string) => {
+    const loadUpdate = React.useCallback(async (link: string) => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>(link, {
             show,
             article: article ? article.article.id : undefined,
@@ -56,15 +56,15 @@ const CommentList: React.FC<IProps> = ({ }) => {
         });
 
         return response.data;
-    }
+    }, [article, user]);
 
-    const handleUpdateFormSubmitted = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         waitToLoadCommentsRef.current?.load();
-    }
+    }, [waitToLoadCommentsRef.current]);
 
-    const handleChooseUserButtonClicked = async () => {
+    const handleChooseUserButtonClicked = React.useCallback(async () => {
         try {
             const selected = await awaitModalPrompt(SelectUserModal, { allowAll: true, existing: user });
 
@@ -72,9 +72,9 @@ const CommentList: React.FC<IProps> = ({ }) => {
         } catch (err) {
             // User cancelled modal.
         }
-    }
+    }, [user]);
 
-    const handleChooseArticleButtonClicked = async () => {
+    const handleChooseArticleButtonClicked = React.useCallback(async () => {
         try {
             const selected = await awaitModalPrompt(SelectArticleModal, { allowAll: true, existing: article });
 
@@ -82,7 +82,7 @@ const CommentList: React.FC<IProps> = ({ }) => {
         } catch (err) {
             // User cancelled modal.
         }
-    }
+    }, [article]);
 
     const userDisplay = React.useMemo(() => user !== undefined ? `User ID: ${user.user.id}` : '(All Users)', [user]);
     const articleDisplay = React.useMemo(() => article !== undefined ? `Article ID: ${article.article.id}` : '(All Articles)', [article]);
