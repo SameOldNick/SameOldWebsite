@@ -38,7 +38,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
     static Article: React.FC<IArticleProps> = ({ article, onUpdated }) => {
         const [actionDropdown, setActionDropdown] = React.useState(false);
 
-        const handlePublishClicked = async () => {
+        const handlePublishClicked = React.useCallback(async () => {
             const result = await withReactContent(Swal).fire({
                 icon: 'question',
                 title: 'Are You Sure?',
@@ -52,9 +52,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
 
                 onUpdated();
             }
-        }
+        }, [onUpdated]);
 
-        const publishArticle = async () => {
+        const publishArticle = React.useCallback(async () => {
             try {
                 await updateArticle(article.article.id, article.article.title, article.article.slug, DateTime.now());
             } catch (err) {
@@ -75,9 +75,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
                     await publishArticle();
                 }
             }
-        }
+        }, []);
 
-        const handleScheduleClicked = async () => {
+        const handleScheduleClicked = React.useCallback(async () => {
             try {
                 const dateTime = await awaitModalPrompt(SelectDateTimeModal);
 
@@ -85,9 +85,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
             } catch (err) {
                 // User cancelled modal.
             }
-        }
+        }, []);
 
-        const scheduleArticle = async (dateTime: DateTime) => {
+        const scheduleArticle = React.useCallback(async (dateTime: DateTime) => {
             try {
                 await updateArticle(article.article.id, article.article.title, article.article.slug, dateTime);
 
@@ -110,9 +110,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
                     await scheduleArticle(dateTime);
                 }
             }
-        }
+        }, [onUpdated]);
 
-        const handleUnpublishClicked = async () => {
+        const handleUnpublishClicked = React.useCallback(async () => {
             const result = await withReactContent(Swal).fire({
                 icon: 'question',
                 title: 'Are You Sure?',
@@ -125,9 +125,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
                 await unpublishArticle();
                 onUpdated();
             }
-        }
+        }, [onUpdated]);
 
-        const unpublishArticle = async () => {
+        const unpublishArticle = React.useCallback(async () => {
             try {
                 await updateArticle(article.article.id, article.article.title, article.article.slug, null);
             } catch (err) {
@@ -148,9 +148,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
                     await unpublishArticle();
                 }
             }
-        }
+        }, []);
 
-        const handleDeleteClicked = async () => {
+        const handleDeleteClicked = React.useCallback(async () => {
             const result = await withReactContent(Swal).fire({
                 icon: 'question',
                 title: 'Are You Sure?',
@@ -163,9 +163,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
                 await deleteArticle();
                 onUpdated();
             }
-        }
+        }, [onUpdated]);
 
-        const deleteArticle = async () => {
+        const deleteArticle = React.useCallback(async () => {
             try {
                 await deleteArticleApi(article.article.id);
 
@@ -188,9 +188,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
                     await unpublishArticle();
                 }
             }
-        }
+        }, [onUpdated]);
 
-        const handleRestoreClicked = async () => {
+        const handleRestoreClicked = React.useCallback(async () => {
             const result = await withReactContent(Swal).fire({
                 icon: 'question',
                 title: 'Are You Sure?',
@@ -203,9 +203,9 @@ export default class ArticleList extends React.Component<IProps, IState> {
                 await restoreArticle();
                 onUpdated();
             }
-        }
+        }, [onUpdated]);
 
-        const restoreArticle = async () => {
+        const restoreArticle = React.useCallback(async () => {
             try {
                 await restoreArticleApi(article.article.id);
 
@@ -228,7 +228,7 @@ export default class ArticleList extends React.Component<IProps, IState> {
                     await restoreArticle();
                 }
             }
-        }
+        }, [onUpdated]);
 
         return (
             <>
