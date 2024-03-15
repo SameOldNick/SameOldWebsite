@@ -12,15 +12,14 @@ import PaginatedTable from '@admin/components/PaginatedTable';
 import { createAuthRequest } from '@admin/utils/api/factories';
 
 import Comment from '@admin/utils/api/models/Comment';
+import { IPromptModalProps } from '@admin/utils/modals';
 
-interface ISelectCommentModalAllowAllProps {
+interface ISelectCommentModalAllowAllProps extends IPromptModalProps<Comment | undefined> {
     allowAll: true;
-    onSelected: (comment?: Comment) => void;
 }
 
-interface ISelectCommentModalSpecificProps {
+interface ISelectCommentModalSpecificProps extends IPromptModalProps<Comment> {
     allowAll?: false;
-    onSelected: (comment: Comment) => void;
 }
 
 interface ISelectCommentModalSharedProps {
@@ -52,7 +51,7 @@ const CommentRow: React.FC<ICommentRowProps> = ({ comment, selected, onSelected 
     );
 }
 
-const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allowAll, onSelected, onCancelled }) => {
+const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allowAll, onSuccess, onCancelled }) => {
     const waitToLoadCommentsRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IComment>>();
 
@@ -70,16 +69,16 @@ const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allo
         e.preventDefault();
 
         if (allowAll) {
-            onSelected(selected);
+            onSuccess(selected);
         } else {
             if (!selected) {
                 console.error('No comment selected.');
                 return;
             }
 
-            onSelected(selected);
+            onSuccess(selected);
         }
-    }, [onSelected]);
+    }, [onSuccess]);
 
     const passCommentsThru = React.useCallback((comments: IComment[]) => {
         return comments
