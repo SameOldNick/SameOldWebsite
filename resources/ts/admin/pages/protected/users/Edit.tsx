@@ -114,7 +114,6 @@ const Edit: React.FC<IProps> = ({ router }) => {
 
             <Heading title='Edit User' />
 
-
             <Row className='justify-content-center'>
                 <Col md={8}>
                     <Card>
