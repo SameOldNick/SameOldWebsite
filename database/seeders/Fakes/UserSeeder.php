@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         $commentUsers = User::factory(5)->create();
 
         foreach ($all as $article) {
-            $this->callWith(ImageSeeder::class, ['article' => $article, 'count' => fake()->numberBetween(0, 3), 'user' => $article->post->user]);
+            $this->callWith(ArticleImageSeeder::class, ['article' => $article, 'count' => fake()->numberBetween(0, 3), 'user' => $article->post->user]);
 
             $this->callWith(CommentSeeder::class, ['article' => $article, 'users' => $commentUsers]);
         }
