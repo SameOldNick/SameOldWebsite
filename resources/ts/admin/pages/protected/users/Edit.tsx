@@ -16,6 +16,7 @@ import WaitToLoad, { IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import User from '@admin/utils/api/models/User';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps extends IHasRouter<'user'> {
 
@@ -143,4 +144,4 @@ const Edit: React.FC<IProps> = ({ router }) => {
     );
 }
 
-export default withRouter(Edit);
+export default requiresRolesForPage(withRouter(Edit), ['manage_users']);

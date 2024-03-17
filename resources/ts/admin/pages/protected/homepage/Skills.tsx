@@ -4,6 +4,7 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 
 import Heading from '@admin/layouts/admin/Heading';
 import SkillList from '@admin/components/homepage/skills/SkillList';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps {
 
@@ -32,4 +33,4 @@ const Skills: React.FC<IProps> = ({ }) => {
     );
 }
 
-export default Skills;
+export default requiresRolesForPage(Skills, ['edit_profile']);

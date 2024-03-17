@@ -14,6 +14,7 @@ import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import UsersList from '@admin/components/users/UsersList';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps extends IHasRouter {
 
@@ -99,4 +100,4 @@ const All: React.FC<IProps> = ({ router: { navigate } }) => {
     );
 }
 
-export default withRouter(All);
+export default requiresRolesForPage(withRouter(All), ['manage_users']);

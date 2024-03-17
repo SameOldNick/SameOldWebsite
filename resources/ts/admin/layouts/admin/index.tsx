@@ -11,6 +11,7 @@ import Footer from './Footer';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import ScrollToTop from './ScrollToTop';
+import Authorized from '@admin/middleware/Authorized';
 
 interface IProps {
 }
@@ -33,35 +34,47 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
                     <Sidebar>
                         <Sidebar.Item href='/admin/dashboard' icon={<FaTachometerAlt />}>Dashboard</Sidebar.Item>
 
-                        <Sidebar.Dropdown text='Homepage' icon={<FaHome />}>
-                            <Sidebar.DropdownItem href='/admin/homepage/profile'>Edit Profile</Sidebar.DropdownItem>
-                            <Sidebar.DropdownItem href='/admin/homepage/skills'>Update Skills</Sidebar.DropdownItem>
-                            <Sidebar.DropdownItem href='/admin/homepage/technologies'>Manage Technologies</Sidebar.DropdownItem>
-                        </Sidebar.Dropdown>
+                        <Authorized hasAll={['edit_profile']}>
+                            <Sidebar.Dropdown text='Homepage' icon={<FaHome />}>
+                                <Sidebar.DropdownItem href='/admin/homepage/profile'>Edit Profile</Sidebar.DropdownItem>
+                                <Sidebar.DropdownItem href='/admin/homepage/skills'>Update Skills</Sidebar.DropdownItem>
+                                <Sidebar.DropdownItem href='/admin/homepage/technologies'>Manage Technologies</Sidebar.DropdownItem>
+                            </Sidebar.Dropdown>
+                        </Authorized>
 
-                        <Sidebar.Dropdown text='Blog' icon={<FaNewspaper />}>
-                            <Sidebar.DropdownItem href='/admin/posts'>View All Posts</Sidebar.DropdownItem>
-                            <Sidebar.DropdownItem href='/admin/posts/create'>Create New Post</Sidebar.DropdownItem>
-                        </Sidebar.Dropdown>
+                        <Authorized hasAll={['write_posts']}>
+                            <Sidebar.Dropdown text='Blog' icon={<FaNewspaper />}>
+                                <Sidebar.DropdownItem href='/admin/posts'>View All Posts</Sidebar.DropdownItem>
+                                <Sidebar.DropdownItem href='/admin/posts/create'>Create New Post</Sidebar.DropdownItem>
+                            </Sidebar.Dropdown>
+                        </Authorized>
 
-                        <Sidebar.Dropdown text='Comments' icon={<FaComments />}>
-                            <Sidebar.DropdownItem href='/admin/comments'>View All Comments</Sidebar.DropdownItem>
-                        </Sidebar.Dropdown>
+                        <Authorized hasAll={['manage_comments']}>
+                            <Sidebar.Dropdown text='Comments' icon={<FaComments />}>
+                                <Sidebar.DropdownItem href='/admin/comments'>View All Comments</Sidebar.DropdownItem>
+                            </Sidebar.Dropdown>
+                        </Authorized>
 
-                        <Sidebar.Dropdown text='Contact' icon={<FaEnvelope />}>
-                            <Sidebar.DropdownItem href='/admin/contact/messages'>View Messages</Sidebar.DropdownItem>
-                            <Sidebar.DropdownItem href='/admin/contact/settings'>Settings</Sidebar.DropdownItem>
-                        </Sidebar.Dropdown>
+                        <Authorized hasAll={['change_contact_settings']}>
+                            <Sidebar.Dropdown text='Contact' icon={<FaEnvelope />}>
+                                <Sidebar.DropdownItem href='/admin/contact/messages'>View Messages</Sidebar.DropdownItem>
+                                <Sidebar.DropdownItem href='/admin/contact/settings'>Settings</Sidebar.DropdownItem>
+                            </Sidebar.Dropdown>
+                        </Authorized>
 
-                        <Sidebar.Dropdown text='Projects' icon={<FaList />}>
-                            <Sidebar.DropdownItem href='/admin/projects'>View All Projects</Sidebar.DropdownItem>
-                            <Sidebar.DropdownItem href='/admin/projects/create'>Create New Project</Sidebar.DropdownItem>
-                        </Sidebar.Dropdown>
+                        <Authorized hasAll={['manage_projects']}>
+                            <Sidebar.Dropdown text='Projects' icon={<FaList />}>
+                                <Sidebar.DropdownItem href='/admin/projects'>View All Projects</Sidebar.DropdownItem>
+                                <Sidebar.DropdownItem href='/admin/projects/create'>Create New Project</Sidebar.DropdownItem>
+                            </Sidebar.Dropdown>
+                        </Authorized>
 
-                        <Sidebar.Dropdown text='Users' icon={<FaUsers />}>
-                            <Sidebar.DropdownItem href='/admin/users'>View All Users</Sidebar.DropdownItem>
-                            <Sidebar.DropdownItem href='/admin/users/create'>Create New User</Sidebar.DropdownItem>
-                        </Sidebar.Dropdown>
+                        <Authorized hasAll={['manage_users']}>
+                            <Sidebar.Dropdown text='Users' icon={<FaUsers />}>
+                                <Sidebar.DropdownItem href='/admin/users'>View All Users</Sidebar.DropdownItem>
+                                <Sidebar.DropdownItem href='/admin/users/create'>Create New User</Sidebar.DropdownItem>
+                            </Sidebar.Dropdown>
+                        </Authorized>
                     </Sidebar>
                     {/* End of Sidebar */}
 

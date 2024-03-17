@@ -13,6 +13,7 @@ import EditArticleWrapper from '@admin/components/blog/EditArticleWrapper';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import Article from '@admin/utils/api/models/Article';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps extends IHasRouter<'article' | 'revision'> {
 
@@ -82,4 +83,4 @@ const Edit = withRouter(({ router }: IProps) => {
     );
 });
 
-export default Edit;
+export default requiresRolesForPage(Edit, ['write_posts']);

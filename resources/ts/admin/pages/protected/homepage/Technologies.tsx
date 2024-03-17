@@ -4,6 +4,7 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 
 import Heading from '@admin/layouts/admin/Heading';
 import TechnologyList from '@admin/components/homepage/technologies/TechnologyList';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps {
 
@@ -31,4 +32,4 @@ const Technologies: React.FC<IProps> = ({ }) => {
     );
 }
 
-export default Technologies;
+export default requiresRolesForPage(Technologies, ['edit_profile']);

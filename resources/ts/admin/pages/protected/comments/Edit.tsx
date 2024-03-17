@@ -13,6 +13,7 @@ import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 import Comment from '@admin/utils/api/models/Comment';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps extends IHasRouter<'comment'> {
 
@@ -73,4 +74,4 @@ const Edit = withRouter(({ router }: IProps) => {
     );
 });
 
-export default Edit;
+export default requiresRolesForPage(Edit, ['manage_comments']);

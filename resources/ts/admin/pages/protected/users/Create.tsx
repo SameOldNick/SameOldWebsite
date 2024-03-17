@@ -14,6 +14,7 @@ import UserForm, { IFormikValues } from '@admin/components/users/UserForm';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import User from '@admin/utils/api/models/User';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps {
 
@@ -96,4 +97,4 @@ const Create: React.FC<IProps> = ({ }) => {
     );
 }
 
-export default Create;
+export default requiresRolesForPage(Create, ['manage_users']);

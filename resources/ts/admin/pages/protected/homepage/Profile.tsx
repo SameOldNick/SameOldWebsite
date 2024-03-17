@@ -7,6 +7,7 @@ import Avatar from '@admin/components/homepage/avatar';
 import HomepageForm from '@admin/components/homepage/HomepageForm';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import SocialMediaLinks from '@admin/components/homepage/socialmedia/SocialMediaLinks';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps extends IHasRouter {
 
@@ -57,4 +58,4 @@ const Profile: React.FC<IProps> = ({ router }) => {
     );
 }
 
-export default withRouter(Profile);
+export default requiresRolesForPage(withRouter(Profile), ['edit_profile']);

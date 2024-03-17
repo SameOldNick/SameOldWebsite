@@ -6,6 +6,7 @@ import Heading from '@admin/layouts/admin/Heading';
 
 import ContactFormSettings from '@admin/components/contact/ContactFormSettings';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps extends IHasRouter {
 
@@ -33,5 +34,5 @@ const Settings: React.FC<IProps> = ({ router }) => {
     );
 }
 
-export default withRouter(Settings);
+export default requiresRolesForPage(withRouter(Settings), ['change_contact_settings']);
 

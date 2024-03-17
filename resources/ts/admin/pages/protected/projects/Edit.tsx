@@ -15,6 +15,7 @@ import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps extends IHasRouter<'project'> {
 
@@ -123,4 +124,4 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
     );
 }
 
-export default withRouter(Edit);
+export default requiresRolesForPage(withRouter(Edit), ['manage_projects']);

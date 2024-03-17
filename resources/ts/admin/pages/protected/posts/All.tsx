@@ -4,6 +4,7 @@ import { Card, CardBody } from 'reactstrap';
 
 import Heading from '@admin/layouts/admin/Heading';
 import ArticleList from '@admin/components/blog/ArticleList';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps {
 
@@ -27,4 +28,4 @@ const All: React.FC<IProps> = ({ }) => {
     );
 }
 
-export default All;
+export default requiresRolesForPage(All, ['write_posts']);
