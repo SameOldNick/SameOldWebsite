@@ -84,6 +84,38 @@ export default class User {
     }
 
     /**
+     * Checks if user has all specified roles
+     *
+     * @param {string[]} roles
+     * @returns True if user has all specified roles.
+     * @memberof User
+     */
+    public hasAllRoles(...roles: string[]) {
+        for (const role of roles) {
+            if (!this.roles.includes(role))
+                return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if user has any specified roles.
+     *
+     * @param {...string[]} roles
+     * @returns True if user has any specified roles.
+     * @memberof User
+     */
+    public hasAnyRoles(...roles: string[]) {
+        for (const role of roles) {
+            if (this.roles.includes(role))
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Generates path to edit user page.
      *
      * @returns
