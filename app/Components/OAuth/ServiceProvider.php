@@ -39,6 +39,12 @@ class ServiceProvider extends BaseServiceProvider
     {
     }
 
+    /**
+     * Sets up OAuth drivers
+     *
+     * @param OAuth $oauth OAuth manager
+     * @return OAuth
+     */
     protected function setupDrivers(OAuth $oauth)
     {
         foreach ($this->getDrivers() as $driver => $concrete) {
@@ -50,6 +56,11 @@ class ServiceProvider extends BaseServiceProvider
         return $oauth;
     }
 
+    /**
+     * Gets OAuth drivers
+     *
+     * @return array
+     */
     protected function getDrivers()
     {
         return [
