@@ -1,5 +1,5 @@
 import Authorized from "@admin/middleware/Authorized";
-import Loader from "../Loader";
+import Loader from "@admin/components/Loader";
 import FourZeroThree from "@admin/pages/errors/FourZeroThree";
 
 interface IOptions {
