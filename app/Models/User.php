@@ -242,4 +242,26 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     {
         return Attribute::get(fn () => $this->getAvatarUrl())->shouldCache();
     }
+
+    /**
+     * Gets users with roles
+     *
+     * @param array $roles Role names or models
+     * @param boolean $hasAll Specifies if users must have all or one of the roles
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getUsersWithRoles($roles, bool $hasAll = true)
+    {
+        return self::whereHas('roles', function ($query) use ($roles, $hasAll) {
+            if ($hasAll) {
+                foreach ((array) $roles as $role) {
+                    $roleName = $role instanceof Role ? $role->role : $role;
+
+                    $query->where('role', $roleName);
+                }
+            } else {
+                $query->whereIn('role', array_map(fn ($item) => $item instanceof Role ? $item->role : $item, (array) $roles));
+            }
+        })->get();
+    }
 }
