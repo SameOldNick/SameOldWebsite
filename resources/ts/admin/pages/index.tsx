@@ -34,7 +34,6 @@ import Profile from './protected/homepage/Profile';
 import Skills from './protected/homepage/Skills';
 import Technologies from './protected/homepage/Technologies';
 
-
 const Pages: React.FC = () => {
     return (
         <Routes>
@@ -44,6 +43,13 @@ const Pages: React.FC = () => {
                 <Route element={<Authenticated errorElement={<FourZeroThree />} />}>
                     <Route element={<Layout />}>
                         <Route path='dashboard' element={<Dashboard />} />
+
+                        <Route path='homepage'>
+                            <Route path='profile' element={<Profile />} />
+                            <Route path='skills' element={<Skills />} />
+                            <Route path='technologies' element={<Technologies />} />
+                            <Route index element={<Navigate to='profile' />} />
+                        </Route>
 
                         <Route path='posts'>
                             <Route path='create' element={<CreatePost />} />
@@ -58,23 +64,16 @@ const Pages: React.FC = () => {
                             <Route index element={<AllComments />} />
                         </Route>
 
-                        <Route path='projects'>
-                            <Route path='create' element={<CreateProject />} />
-                            <Route path='edit/:project' element={<EditProject />} />
-                            <Route index element={<AllProjects />} />
-                        </Route>
-
                         <Route path='contact'>
                             <Route path='messages' element={<ContactMessages />} />
                             <Route path='settings' element={<ContactSettings />} />
                             <Route index element={<Navigate to='messages' />} />
                         </Route>
 
-                        <Route path='homepage'>
-                            <Route path='profile' element={<Profile />} />
-                            <Route path='skills' element={<Skills />} />
-                            <Route path='technologies' element={<Technologies />} />
-                            <Route index element={<Navigate to='profile' />} />
+                        <Route path='projects'>
+                            <Route path='create' element={<CreateProject />} />
+                            <Route path='edit/:project' element={<EditProject />} />
+                            <Route index element={<AllProjects />} />
                         </Route>
 
                         <Route path='users'>
