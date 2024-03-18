@@ -76,7 +76,7 @@ return [
                 CHANGE_CONTACT_SETTINGS_ROLE,
                 MANAGE_PROJECTS_ROLE,
                 MANAGE_USERS_ROLE,
-            ]
+            ],
         ],
-    ]
+    ],
 ];

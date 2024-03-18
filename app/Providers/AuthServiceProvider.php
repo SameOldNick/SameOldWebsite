@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 
 class AuthServiceProvider extends ServiceProvider
@@ -54,7 +54,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerRoles() {
+    protected function registerRoles()
+    {
         $roles = config('roles.roles', []);
 
         foreach ($roles as $role) {
@@ -69,7 +70,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerRoleGroups() {
+    protected function registerRoleGroups()
+    {
         $groups = config('roles.groups', []);
 
         foreach ($groups as $group) {
@@ -80,7 +82,8 @@ class AuthServiceProvider extends ServiceProvider
         }
     }
 
-    protected function generateGateAbility(string $prefix, string $name) {
+    protected function generateGateAbility(string $prefix, string $name)
+    {
         return Str::kebab(sprintf('%s %s', $prefix, Str::replace('_', '-', $name)));
     }
 }
