@@ -122,6 +122,21 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     }
 
     /**
+     * Checks if the user has any specified roles.
+     *
+     * @param array $roles Array of role names to check.
+     * @return bool True if the user has any specified roles, false otherwise.
+     */
+    public function hasAnyRoles(array $roles): bool
+    {
+        // Get the roles associated with the user and extract role names
+        $userRoles = $this->roles->map(fn($role) => $role->role);
+
+        // Return true if there are any matched roles
+        return !empty($userRoles->intersect($roles));
+    }
+
+    /**
      * Gets posts created by this user.
      *
      * @return mixed
