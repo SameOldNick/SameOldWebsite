@@ -26,6 +26,15 @@ class SendContactedMessages
     {
         $contacted = Contacted::create($event->name, $event->email, $event->message);
 
-        $this->notifyRoles('admin', new MessageNotification($contacted));
+        $this->notifyRoles($this->getRoles(), new MessageNotification($contacted));
+    }
+
+    /**
+     * Gets the roles to send message to.
+     *
+     * @return array
+     */
+    protected function getRoles(): array {
+        return ['receive_contact_messages'];
     }
 }
