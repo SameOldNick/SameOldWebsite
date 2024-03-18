@@ -14,24 +14,10 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
-            'admin',
-
-            'create_posts',
-            'read_posts',
-            'update_posts',
-            'delete_posts',
-            'publish_posts',
-
-            'create_comments',
-            'read_comments',
-            'update_comments',
-            'delete_comments',
-            'approve_comments',
-        ];
+        $roles = config('roles.roles', []);
 
         foreach ($roles as $role) {
-            DB::table('roles')->insert(compact('role'));
+            DB::table('roles')->insert(['role' => $role['id']]);
         }
     }
 }

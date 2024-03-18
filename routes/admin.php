@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Route;
 
-Route::namespace(Admin::class)->middleware(['web', 'auth.mfa', 'can:admin'])->group(function () {
+Route::namespace(Admin::class)->middleware(['web', 'auth.mfa', 'can:roles-admin'])->group(function () {
     /**
      * This controller method is specifically requires signing because it provides the JWTs.
      * Once the JWTs are provided, there's nothing stopping a user from using them.

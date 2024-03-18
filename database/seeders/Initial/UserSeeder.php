@@ -34,6 +34,6 @@ class UserSeeder extends Seeder
             'password' => '$2y$10$EdEgkPH8/.Sq0t6zrZPwnOAL8LCOgAFNw6uhb3Pgijt63fEnXDFqK', // secret
         ]);
 
-        $user->roles()->attach(Role::firstWhere('role', 'admin'));
+        $user->roles()->attach(Role::all());
     }
 }

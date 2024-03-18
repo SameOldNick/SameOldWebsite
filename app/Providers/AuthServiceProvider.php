@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rules\Password;
 
@@ -17,15 +17,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-    ];
-
-    /**
-     * The roles to map as gates
-     *
-     * @var array
-     */
-    protected $roles = [
-        'admin',
     ];
 
     /**
@@ -54,11 +45,42 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected function registerGates()
     {
-        foreach ($this->roles as $key => $value) {
-            $gate = Arr::isKeyIndex($this->roles, $key) ? $value : $key;
-            $role = $value;
+        $this->registerRoles();
+        $this->registerRoleGroups();
+    }
 
-            Gate::define($gate, fn (User $user) => $user->hasRoles([$role]));
+    /**
+     * Registers each role as gate
+     *
+     * @return void
+     */
+    protected function registerRoles() {
+        $roles = config('roles.roles', []);
+
+        foreach ($roles as $role) {
+            $id = $this->generateGateAbility('role', $role['id']);
+
+            Gate::define($id, fn (User $user) => $user->hasRoles([$id]));
         }
+    }
+
+    /**
+     * Register role groups as gates
+     *
+     * @return void
+     */
+    protected function registerRoleGroups() {
+        $groups = config('roles.groups', []);
+
+        foreach ($groups as $group) {
+            $id = $this->generateGateAbility('roles', $group['id']);
+            $roles = $group['roles'];
+
+            Gate::define($id, fn (User $user) => $user->hasRoles($roles));
+        }
+    }
+
+    protected function generateGateAbility(string $prefix, string $name) {
+        return Str::kebab(sprintf('%s %s', $prefix, Str::replace('_', '-', $name)));
     }
 }

@@ -22,7 +22,7 @@ Route::namespace(Api::class)->group(function () {
             ->middleware([Middleware\AuthenticateJWTWithAdapter::adapter(App\Components\LittleJWT\RefreshTokenGuardAdapter::class)]);
     });
 
-    Route::middleware(['auth:jwt', 'can:admin'])->group(function () {
+    Route::middleware(['auth:jwt', 'can:roles-admin'])->group(function () {
         Route::post('/logout', [Auth\LoginController::class, 'apiLogout'])->name('logout');
 
         Route::get('/countries', [Api\CountriesController::class, 'countries']);

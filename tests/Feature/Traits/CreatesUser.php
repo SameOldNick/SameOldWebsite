@@ -28,11 +28,18 @@ trait CreatesUser
      */
     public function setUpCreatesUser()
     {
-        $this->user = User::factory()->create();
+        $this->user = $this->createUser();;
 
-        $this->admin = tap(User::factory()->create(), function ($user) {
-            $user->roles()->attach(Role::firstWhere('role', 'admin'));
-        });
+        $this->admin = $this->createUser(Role::all());
+    }
+
+    public function createUser($roles = []) {
+        $factory = User::factory();
+
+        if (!empty($roles))
+            $factory = $factory->hasRoles($roles);
+
+        return $factory->create();
     }
 
     public function tearDownCreatesUser()
