@@ -75,10 +75,10 @@ class AuthServiceProvider extends ServiceProvider
         $groups = config('roles.groups', []);
 
         foreach ($groups as $group) {
-            $id = $this->generateGateAbility('roles', $group['id']);
             $roles = $group['roles'];
 
-            Gate::define($id, fn (User $user) => $user->hasAllRoles($roles));
+            Gate::define($this->generateGateAbility('all-roles', $group['id']), fn (User $user) => $user->hasAllRoles($roles));
+            Gate::define($this->generateGateAbility('any-roles', $group['id']), fn (User $user) => $user->hasAnyRoles($roles));
         }
     }
 
