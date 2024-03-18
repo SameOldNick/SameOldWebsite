@@ -60,7 +60,7 @@ class AuthServiceProvider extends ServiceProvider
         foreach ($roles as $role) {
             $id = $this->generateGateAbility('role', $role['id']);
 
-            Gate::define($id, fn (User $user) => $user->hasRoles([$id]));
+            Gate::define($id, fn (User $user) => $user->hasAllRoles([$id]));
         }
     }
 
@@ -76,7 +76,7 @@ class AuthServiceProvider extends ServiceProvider
             $id = $this->generateGateAbility('roles', $group['id']);
             $roles = $group['roles'];
 
-            Gate::define($id, fn (User $user) => $user->hasRoles($roles));
+            Gate::define($id, fn (User $user) => $user->hasAllRoles($roles));
         }
     }
 

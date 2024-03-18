@@ -109,7 +109,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
      * @param array $roles Array of role names
      * @return bool
      */
-    public function hasRoles(array $roles)
+    public function hasAllRoles(array $roles)
     {
         // Get the roles associated with the user and extract role names
         $userRoles = $this->roles->map(fn($role) => $role->role);

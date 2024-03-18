@@ -20,7 +20,7 @@ class ImagePolicy
      */
     public function view(User $user, Image $image): bool
     {
-        return $image->file->user->is($user) || $user->hasRoles(['admin']);
+        return $image->file->user->is($user) || $user->hasAllRoles(['admin']);
     }
 
     /**
@@ -36,7 +36,7 @@ class ImagePolicy
      */
     public function update(User $user, Image $image): bool
     {
-        return ($image->file->user && $image->file->user->is($user)) || $user->hasRoles(['admin']);
+        return ($image->file->user && $image->file->user->is($user)) || $user->hasAllRoles(['admin']);
     }
 
     /**
@@ -44,7 +44,7 @@ class ImagePolicy
      */
     public function delete(User $user, Image $image): bool
     {
-        return ($image->file->user && $image->file->user->is($user)) || $user->hasRoles(['admin']);
+        return ($image->file->user && $image->file->user->is($user)) || $user->hasAllRoles(['admin']);
     }
 
     /**

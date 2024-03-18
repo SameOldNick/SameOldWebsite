@@ -16,7 +16,7 @@ class ImageController extends Controller
     {
         $this->authorize(Image::class);
 
-        return $request->user()->hasRoles(['admin']) ? Image::all() : Image::owned($request->user())->get();
+        return $request->user()->hasAllRoles(['admin']) ? Image::all() : Image::owned($request->user())->get();
     }
 
     /**
