@@ -112,7 +112,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     public function hasAllRoles(array $roles)
     {
         // Get the roles associated with the user and extract role names
-        $userRoles = $this->roles->map(fn($role) => $role->role);
+        $userRoles = $this->roles->map(fn ($role) => $role->role);
 
         // Check if all specified roles are matched with user roles
         $matchedRoles = $userRoles->intersect($roles);
@@ -130,10 +130,10 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     public function hasAnyRoles(array $roles): bool
     {
         // Get the roles associated with the user and extract role names
-        $userRoles = $this->roles->map(fn($role) => $role->role);
+        $userRoles = $this->roles->map(fn ($role) => $role->role);
 
         // Return true if there are any matched roles
-        return !empty($userRoles->intersect($roles));
+        return ! empty($userRoles->intersect($roles));
     }
 
     /**

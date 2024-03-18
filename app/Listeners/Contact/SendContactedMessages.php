@@ -34,7 +34,8 @@ class SendContactedMessages
      *
      * @return array
      */
-    protected function getRoles(): array {
+    protected function getRoles(): array
+    {
         return ['receive_contact_messages'];
     }
 }
