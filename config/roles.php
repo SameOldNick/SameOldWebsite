@@ -2,6 +2,7 @@
 
 // Define constants for role IDs
 const EDIT_PROFILE_ROLE = 'edit_profile';
+const CHANGE_AVATAR_ROLE = 'change_avatar';
 const WRITE_POSTS_ROLE = 'write_posts';
 const MANAGE_COMMENTS_ROLE = 'manage_comments';
 const VIEW_CONTACT_MESSAGES_ROLE = 'view_contact_messages';
@@ -17,6 +18,11 @@ return [
             'id' => EDIT_PROFILE_ROLE,
             'name' => 'Edit Profile',
             'description' => 'Allows users to modify their profile information.',
+        ],
+        [
+            'id' => CHANGE_AVATAR_ROLE,
+            'name' => 'Change Avatar',
+            'description' => 'Allows user to modify their profile picture (avatar).',
         ],
         [
             'id' => WRITE_POSTS_ROLE,
@@ -62,6 +68,7 @@ return [
             'roles' => [
                 // Roles assigned to the admin group
                 EDIT_PROFILE_ROLE,
+                CHANGE_AVATAR_ROLE,
                 WRITE_POSTS_ROLE,
                 MANAGE_COMMENTS_ROLE,
                 VIEW_CONTACT_MESSAGES_ROLE,
