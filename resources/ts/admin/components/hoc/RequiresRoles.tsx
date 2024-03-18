@@ -5,6 +5,7 @@ import FourZeroThree from "@admin/pages/errors/FourZeroThree";
 interface IOptions {
     loading?: React.ReactNode;
     unauthorized?: React.ReactNode;
+    any?: boolean;
 }
 
 /**
@@ -17,12 +18,17 @@ interface IOptions {
  * @param {IOptions} [options={}]
  * @returns High ordered component
  */
-export function requiresRoles<TProps extends object>(Component: React.ComponentType<TProps>, roles: string[], options: IOptions = {}) {
-    const element: React.FC = (props: any) => (
-        <Authorized hasAll={roles} {...options}>
-            <Component {...props}  />
-        </Authorized>
-    );
+export function requiresRoles<TProps extends object>(Component: React.ComponentType<TProps>, roles: string[], { any = false, ...options }: IOptions = {}) {
+    const element: React.FC = (props: any) => {
+        const authProps = any ? { oneOf: roles } : { hasAll: roles };
+
+        return (
+            <Authorized {...authProps} {...options}>
+                <Component {...props}  />
+            </Authorized>
+        );
+    }
+
 
     element.displayName = `requiresRoles(${Component.displayName || Component.name}, ${roles})`;
 
@@ -43,6 +49,7 @@ export function requiresRoles<TProps extends object>(Component: React.ComponentT
 export function requiresRolesForPage<TProps extends object>(Component: React.ComponentType<TProps>, roles: string[], options: IOptions = {}) {
     return requiresRoles(Component, roles, {
         loading: <Loader display={{ type: 'page', show: true }} />,
+        // TODO: Change to 401 (Unauthorized)
         unauthorized: <FourZeroThree />,
         ...options
     });
