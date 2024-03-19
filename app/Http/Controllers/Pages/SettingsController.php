@@ -9,16 +9,6 @@ use App\Models\Page;
 
 abstract class SettingsController extends Controller
 {
-    private $page;
-
-    private $settings;
-
-    public function __construct()
-    {
-        $this->page = Page::firstWhere(['page' => $this->getPageKey()]);
-        $this->settings = app(PageSettings::class, ['key' => $this->getPageKey()]);
-    }
-
     /**
      * Gets the Page model.
      *
@@ -26,7 +16,7 @@ abstract class SettingsController extends Controller
      */
     protected function getPage()
     {
-        return $this->page;
+        return Page::firstWhere(['page' => $this->getPageKey()]);
     }
 
     /**
@@ -48,7 +38,7 @@ abstract class SettingsController extends Controller
      */
     protected function getSettings()
     {
-        return $this->settings;
+        return app(PageSettings::class, ['key' => $this->getPageKey()]);
     }
 
     /**
