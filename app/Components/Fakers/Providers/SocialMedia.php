@@ -3,7 +3,6 @@
 namespace App\Components\Fakers\Providers;
 
 use Faker\Provider\Base;
-use Faker\Generator;
 use Illuminate\Support\Arr;
 
 class SocialMedia extends Base
@@ -11,45 +10,48 @@ class SocialMedia extends Base
     protected static $socialMediaPlatforms = [
         'facebook' => [
             'name' => 'Facebook',
-            'url' => 'https://www.facebook.com/{username}'
+            'url' => 'https://www.facebook.com/{username}',
         ],
         'twitter' => [
             'name' => 'X',
-            'url' => 'https://twitter.com/{username}'
+            'url' => 'https://twitter.com/{username}',
         ],
         'x' => [
             'name' => 'X',
-            'url' => 'https://x.com/{username}'
+            'url' => 'https://x.com/{username}',
         ],
         'instagram' => [
             'name' => 'X',
-            'url' => 'https://www.instagram.com/{username}/'
+            'url' => 'https://www.instagram.com/{username}/',
         ],
         'linkedin' => [
             'name' => 'X',
-            'url' => 'https://www.linkedin.com/in/{username}/'
+            'url' => 'https://www.linkedin.com/in/{username}/',
         ],
         'github' => [
             'name' => 'X',
-            'url' => 'https://github.com/{username}'
+            'url' => 'https://github.com/{username}',
         ],
         'reddit' => [
             'name' => 'Reddit',
-            'url' => 'https://www.reddit.com/u/{username}/'
+            'url' => 'https://www.reddit.com/u/{username}/',
         ],
     ];
 
-    public function socialMediaPlatform() {
+    public function socialMediaPlatform()
+    {
         $platform = array_rand(self::$socialMediaPlatforms);
 
         return self::$socialMediaPlatforms[$platform]['name'];
     }
 
-    public function socialMediaLink(...$platforms) {
-        $platform = !empty($platforms) ? Arr::random($platforms) : array_rand(self::$socialMediaPlatforms);
+    public function socialMediaLink(...$platforms)
+    {
+        $platform = ! empty($platforms) ? Arr::random($platforms) : array_rand(self::$socialMediaPlatforms);
 
-        if (!isset(self::$socialMediaPlatforms[$platform]))
+        if (! isset(self::$socialMediaPlatforms[$platform])) {
             throw new \InvalidArgumentException("'$platform' is not a valid social media platform.");
+        }
 
         return str_replace('{username}', $this->generator->userName, self::$socialMediaPlatforms[$platform]['url']);
     }

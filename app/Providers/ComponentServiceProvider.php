@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Components\Analytics\ServiceProvider as AnalyticsServiceProvider;
 use App\Components\Compiler\ServiceProvider as CompilerServiceProvider;
 use App\Components\Encryption\ServiceProvider as EncryptionServiceProvider;
+use App\Components\Fakers\ServiceProvider as FakersServiceProvider;
 use App\Components\LittleJWT\ServiceProvider as LittleJWTServiceProvider;
 use App\Components\Macros\ServiceProvider as MacrosServiceProvider;
 use App\Components\Menus\ServiceProvider as MenusServiceProvider;
@@ -12,7 +13,6 @@ use App\Components\MFA\ServiceProvider as MFAServiceProvider;
 use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use App\Components\Security\ServiceProvider as SecurityServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
-use App\Components\Fakers\ServiceProvider as FakersServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider

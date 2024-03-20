@@ -2,9 +2,9 @@
 
 namespace App\Components\Fakers;
 
+use Faker\Generator;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Str;
-use Faker\Generator;
 
 final class ServiceProvider extends BaseServiceProvider
 {
@@ -24,7 +24,7 @@ final class ServiceProvider extends BaseServiceProvider
         $this->app->afterResolving(function ($object, $app) {
             $class = is_object($object) ? get_class($object) : $object;
 
-            if (Str::startsWith($class, \Faker\Generator::class)) {
+            if (Str::startsWith($class, Generator::class)) {
                 $object->addProvider($app->make(Providers\SocialMedia::class));
             }
         });
@@ -37,6 +37,5 @@ final class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-
     }
 }

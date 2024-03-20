@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('ROLES_DEFINED')) {
+if (! defined('ROLES_DEFINED')) {
     // Define constants for role IDs
     define('EDIT_PROFILE_ROLE', 'edit_profile');
     define('CHANGE_AVATAR_ROLE', 'change_avatar');
@@ -11,7 +11,6 @@ if (!defined('ROLES_DEFINED')) {
     define('CHANGE_CONTACT_SETTINGS_ROLE', 'change_contact_settings');
     define('MANAGE_PROJECTS_ROLE', 'manage_projects');
     define('MANAGE_USERS_ROLE', 'manage_users');
-
 
     define('ROLES_DEFINED', true);
 }
