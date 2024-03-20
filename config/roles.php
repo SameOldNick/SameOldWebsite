@@ -1,15 +1,20 @@
 <?php
 
-// Define constants for role IDs
-const EDIT_PROFILE_ROLE = 'edit_profile';
-const CHANGE_AVATAR_ROLE = 'change_avatar';
-const WRITE_POSTS_ROLE = 'write_posts';
-const MANAGE_COMMENTS_ROLE = 'manage_comments';
-const VIEW_CONTACT_MESSAGES_ROLE = 'view_contact_messages';
-const RECEIVE_CONTACT_MESSAGES_ROLE = 'receive_contact_messages';
-const CHANGE_CONTACT_SETTINGS_ROLE = 'change_contact_settings';
-const MANAGE_PROJECTS_ROLE = 'manage_projects';
-const MANAGE_USERS_ROLE = 'manage_users';
+if (!defined('ROLES_DEFINED')) {
+    // Define constants for role IDs
+    define('EDIT_PROFILE_ROLE', 'edit_profile');
+    define('CHANGE_AVATAR_ROLE', 'change_avatar');
+    define('WRITE_POSTS_ROLE', 'write_posts');
+    define('MANAGE_COMMENTS_ROLE', 'manage_comments');
+    define('VIEW_CONTACT_MESSAGES_ROLE', 'view_contact_messages');
+    define('RECEIVE_CONTACT_MESSAGES_ROLE', 'receive_contact_messages');
+    define('CHANGE_CONTACT_SETTINGS_ROLE', 'change_contact_settings');
+    define('MANAGE_PROJECTS_ROLE', 'manage_projects');
+    define('MANAGE_USERS_ROLE', 'manage_users');
+
+
+    define('ROLES_DEFINED', true);
+}
 
 return [
     'roles' => [
