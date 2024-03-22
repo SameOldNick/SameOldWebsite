@@ -2,12 +2,12 @@
 
 namespace App\Components\Fakers\Providers;
 
-use Faker\Provider\Base;
-use Faker\Generator;
-use Illuminate\Support\Arr;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use BladeUI\Icons\Factory as BladeIconsFactory;
+use Faker\Generator;
+use Faker\Provider\Base;
+use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -17,8 +17,7 @@ class BladeIcon extends Base
         Generator $generator,
         private readonly BladeIconsFactory $bladeIcons,
         private readonly FilesystemFactory $disks,
-    )
-    {
+    ) {
         parent::__construct($generator);
     }
 
@@ -28,7 +27,8 @@ class BladeIcon extends Base
      * @param string|null $setKey Set key (a random set is chosen if not specified)
      * @return string Icon name (with set prefix)
      */
-    public function iconName($setKey = null): string {
+    public function iconName($setKey = null): string
+    {
         $set = $this->getSet($setKey ?? array_rand($this->getSets()));
 
         $file = $this->getRandomIconFile($set);
@@ -42,7 +42,8 @@ class BladeIcon extends Base
      * @param string|null $setKey Set key (a random set is chosen if not specified)
      * @return \BladeUI\Icons\Svg
      */
-    public function icon($setKey = null): \BladeUI\Icons\Svg {
+    public function icon($setKey = null): \BladeUI\Icons\Svg
+    {
         $name = $this->iconName($setKey);
 
         return $this->bladeIcons->svg($name);
@@ -54,7 +55,8 @@ class BladeIcon extends Base
      * @param string|null $setKey Set key (a random set is chosen if not specified)
      * @return string
      */
-    public function iconSvg($setKey = null) {
+    public function iconSvg($setKey = null)
+    {
         return $this->icon($setKey)->contents();
     }
 
@@ -64,7 +66,8 @@ class BladeIcon extends Base
      * @param string|null $setKey Set key (a random set is chosen if not specified)
      * @return string
      */
-    public function iconHtml($setKey = null) {
+    public function iconHtml($setKey = null)
+    {
         return $this->icon($setKey)->toHtml();
     }
 
@@ -101,7 +104,7 @@ class BladeIcon extends Base
      */
     private function getIconName(array $set, SplFileInfo $file): string
     {
-        $name = $file->getBasename("." . $file->getExtension());
+        $name = $file->getBasename('.'.$file->getExtension());
 
         return sprintf('%s-%s', $set['prefix'] ?? 'default', $name);
     }
@@ -111,7 +114,8 @@ class BladeIcon extends Base
      *
      * @return array
      */
-    private function getSets(): array {
+    private function getSets(): array
+    {
         return $this->bladeIcons->all();
     }
 
@@ -121,11 +125,13 @@ class BladeIcon extends Base
      * @param string $key
      * @return array
      */
-    private function getSet(string $key): array {
+    private function getSet(string $key): array
+    {
         $all = $this->getSets();
 
-        if (!isset($all[$key]))
+        if (! isset($all[$key])) {
             throw new InvalidArgumentException(sprintf("'%s' is not a valid icon set.", $key));
+        }
 
         return $all[$key];
     }
@@ -136,7 +142,8 @@ class BladeIcon extends Base
      * @param array $set Icon set configuration
      * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
-    private function getFilesystem(array $set) {
+    private function getFilesystem(array $set)
+    {
         $default = config('blade-icons.sets');
 
         if (isset($set['disk']) || isset($default['disk'])) {

@@ -2,11 +2,11 @@
 
 namespace App\Components\Fakers;
 
+use BladeUI\Icons\Factory as BladeIconsFactory;
 use Faker\Generator;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Str;
-use BladeUI\Icons\Factory as BladeIconsFactory;
 
 final class ServiceProvider extends BaseServiceProvider
 {
