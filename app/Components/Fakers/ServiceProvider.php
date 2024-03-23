@@ -37,6 +37,7 @@ final class ServiceProvider extends BaseServiceProvider
             if (Str::startsWith($class, Generator::class)) {
                 $object->addProvider($app->make(Providers\SocialMedia::class));
                 $object->addProvider($app->make(Providers\BladeIcon::class));
+                $object->addProvider($app->make(Providers\Technology::class));
             }
         });
     }
