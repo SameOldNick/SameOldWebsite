@@ -77,7 +77,7 @@ class SkillsAccessTest extends TestCase
     {
         $response = $this->withRoles(['edit_profile'])->postJson('/api/skills', [
             'icon' => $this->faker->iconName(),
-            'skill' => $this->faker->unique()->jobTitle()
+            'skill' => $this->faker->unique()->jobTitle(),
         ]);
 
         $response->assertSuccessful();
@@ -92,7 +92,7 @@ class SkillsAccessTest extends TestCase
     {
         $response = $this->withRoles([])->postJson('/api/skills', [
             'icon' => $this->faker->iconName(),
-            'skill' => $this->faker->unique()->jobTitle()
+            'skill' => $this->faker->unique()->jobTitle(),
         ]);
 
         $response->assertForbidden();
@@ -109,7 +109,7 @@ class SkillsAccessTest extends TestCase
 
         $response = $this->withRoles(['edit_profile'])->putJson(sprintf('/api/skills/%d', $skill->getKey()), [
             'icon' => $this->faker->iconName(),
-            'skill' => $this->faker->unique()->jobTitle()
+            'skill' => $this->faker->unique()->jobTitle(),
         ]);
 
         $response->assertSuccessful();
@@ -125,7 +125,7 @@ class SkillsAccessTest extends TestCase
         $skill = Skill::factory()->create();
 
         $response = $this->withRoles([])->putJson(sprintf('/api/skills/%d', $skill->getKey()), [
-            'skill' => $this->faker->unique()->jobTitle()
+            'skill' => $this->faker->unique()->jobTitle(),
         ]);
 
         $response->assertForbidden();
