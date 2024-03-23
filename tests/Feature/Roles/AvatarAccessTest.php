@@ -4,12 +4,11 @@ namespace Tests\Feature\Http\Controllers\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\Feature\Traits\DisablesVite;
 use Tests\Feature\Traits\WithRoles;
 use Tests\TestCase;
-
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class AvatarAccessTest extends TestCase
 {
@@ -30,7 +29,7 @@ class AvatarAccessTest extends TestCase
         $file = UploadedFile::fake()->image('avatar.jpg');
 
         $response = $this->withRoles(['change_avatar'])->postJson('/api/user/avatar', [
-            'avatar' => $file
+            'avatar' => $file,
         ]);
 
         $response->assertSuccessful();
@@ -48,7 +47,7 @@ class AvatarAccessTest extends TestCase
         $file = UploadedFile::fake()->image('avatar.jpg');
 
         $response = $this->withRoles([])->postJson('/api/user/avatar', [
-            'avatar' => $file
+            'avatar' => $file,
         ]);
 
         $response->assertForbidden();
@@ -77,6 +76,4 @@ class AvatarAccessTest extends TestCase
 
         $response->assertForbidden();
     }
-
-
 }
