@@ -18,7 +18,7 @@ class SkillFactory extends Factory
     {
         return [
             'icon' => $this->faker->iconName(),
-            'skill' => $this->faker->unique()->jobTitle()
+            'skill' => $this->faker->unique()->jobTitle(),
         ];
     }
 }
