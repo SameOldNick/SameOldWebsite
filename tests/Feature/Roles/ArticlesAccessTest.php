@@ -82,8 +82,8 @@ class ArticlesAccessTest extends TestCase
             'title' => $title,
             'slug' => Str::slug($title),
             'revision' => [
-                'content' => $this->faker()->paragraphs(4, true)
-            ]
+                'content' => $this->faker()->paragraphs(4, true),
+            ],
         ]);
 
         $response->assertSuccessful();
