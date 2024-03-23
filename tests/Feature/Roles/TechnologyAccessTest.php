@@ -77,7 +77,7 @@ class TechnologyAccessTest extends TestCase
     {
         $response = $this->withRoles(['edit_profile'])->postJson('/api/technologies', [
             'icon' => $this->faker->iconName(),
-            'technology' => $this->faker()->unique()->technology()
+            'technology' => $this->faker()->unique()->technology(),
         ]);
 
         $response->assertSuccessful();
@@ -92,7 +92,7 @@ class TechnologyAccessTest extends TestCase
     {
         $response = $this->withRoles([])->postJson('/api/technologies', [
             'icon' => $this->faker->iconName(),
-            'technology' => $this->faker()->unique()->technology()
+            'technology' => $this->faker()->unique()->technology(),
         ]);
 
         $response->assertForbidden();
@@ -109,7 +109,7 @@ class TechnologyAccessTest extends TestCase
 
         $response = $this->withRoles(['edit_profile'])->putJson(sprintf('/api/technologies/%d', $technology->getKey()), [
             'icon' => $this->faker->iconName(),
-            'technology' => $this->faker()->unique()->technology()
+            'technology' => $this->faker()->unique()->technology(),
         ]);
 
         $response->assertSuccessful();
@@ -126,7 +126,7 @@ class TechnologyAccessTest extends TestCase
 
         $response = $this->withRoles([])->putJson(sprintf('/api/technologies/%d', $technology->getKey()), [
             'icon' => $this->faker->iconName(),
-            'technology' => $this->faker()->unique()->technology()
+            'technology' => $this->faker()->unique()->technology(),
         ]);
 
         $response->assertForbidden();
