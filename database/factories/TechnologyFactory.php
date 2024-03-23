@@ -18,7 +18,7 @@ class TechnologyFactory extends Factory
     {
         return [
             'icon' => $this->faker->iconName(),
-            'technology' => $this->faker->unique()->technology()
+            'technology' => $this->faker->unique()->technology(),
         ];
     }
 }

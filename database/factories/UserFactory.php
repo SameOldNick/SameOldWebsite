@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Country;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -36,7 +35,8 @@ class UserFactory extends Factory
      * @param array ...$roles Role models or name (as string)
      * @return static
      */
-    public function hasRoles(...$roles) {
+    public function hasRoles(...$roles)
+    {
         $roles = collect($roles)->flatten();
 
         return $this->afterCreating(function ($user) use ($roles) {
