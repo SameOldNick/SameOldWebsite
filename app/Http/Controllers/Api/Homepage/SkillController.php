@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class SkillController extends HomepageController
 {
+    public function __construct()
+    {
+        $this->middleware('can:role-edit-profile');
+    }
+
     /**
      * Display a listing of the resource.
      */
