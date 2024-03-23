@@ -10,6 +10,11 @@ use Illuminate\Validation\Rule;
 
 class SocialMediaLinkController extends HomepageController
 {
+    public function __construct()
+    {
+        $this->middleware('can:role-edit-profile');
+    }
+
     /**
      * Display a listing of the resource.
      */
