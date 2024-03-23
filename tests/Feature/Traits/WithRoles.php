@@ -14,7 +14,8 @@ trait WithRoles
      *
      * @return array
      */
-    protected function possibleRoles(): array {
+    protected function possibleRoles(): array
+    {
         return Arr::map(config('roles.roles'), fn ($role) => $role['id']);
     }
 
@@ -24,7 +25,8 @@ trait WithRoles
      * @param array $roles
      * @return static
      */
-    protected function withRoles(array $roles): static {
+    protected function withRoles(array $roles): static
+    {
         $user = $this->createUser($roles);
 
         return $this->actingAs($user);
