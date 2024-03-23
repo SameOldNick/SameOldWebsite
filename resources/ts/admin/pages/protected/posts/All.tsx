@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Card, CardBody } from 'reactstrap';
 
 import Heading from '@admin/layouts/admin/Heading';
-import ArticleList from '@admin/components/blog/ArticleList';
+import ArticleList from '@admin/components/blog/article-list/ArticleList';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps {
