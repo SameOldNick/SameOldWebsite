@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class ProjectsController extends HomepageController
 {
+    public function __construct()
+    {
+        $this->middleware('can:role-edit-profile');
+    }
+
     /**
      * Display a listing of the resource.
      */
