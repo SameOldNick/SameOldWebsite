@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Models\Project;
-use App\Models\SocialMediaLink;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -81,7 +80,7 @@ class ProjectsAccessTest extends TestCase
             'title' => Str::headline($this->faker->realText(25)),
             'description' => $this->faker->realText(),
             'url' => $this->faker->url(),
-            'tags' => $this->faker->words(5)
+            'tags' => $this->faker->words(5),
         ]);
 
         $response->assertSuccessful();
@@ -116,7 +115,7 @@ class ProjectsAccessTest extends TestCase
             'title' => Str::headline($this->faker->realText(25)),
             'description' => $this->faker->realText(),
             'url' => $this->faker->url(),
-            'tags' => $this->faker->words(5)
+            'tags' => $this->faker->words(5),
         ]);
 
         $response->assertSuccessful();
@@ -135,7 +134,7 @@ class ProjectsAccessTest extends TestCase
             'title' => Str::headline($this->faker->realText(25)),
             'description' => $this->faker->realText(),
             'url' => $this->faker->url(),
-            'tags' => $this->faker->words(5)
+            'tags' => $this->faker->words(5),
         ]);
 
         $response->assertForbidden();
