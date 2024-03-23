@@ -42,7 +42,7 @@ class ArticlesAccessTest extends TestCase
     }
 
     /**
-     * Tests user is authorized to get skill.
+     * Tests user is authorized to get article.
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class ArticlesAccessTest extends TestCase
     }
 
     /**
-     * Tests user is unauthorized to get skill.
+     * Tests user is unauthorized to get article.
      *
      * @return void
      */
