@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Country;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -26,6 +28,22 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
+    }
+
+    /**
+     * Attaches roles to created user(s).
+     *
+     * @param array ...$roles Role models or name (as string)
+     * @return static
+     */
+    public function hasRoles(...$roles) {
+        $roles = collect($roles)->flatten();
+
+        return $this->afterCreating(function ($user) use ($roles) {
+            $models = $roles->map(fn ($role) => ($role instanceof Role ? $role : Role::firstWhere(['role' => $role]))->getKey());
+
+            $user->roles()->attach($models->toArray());
+        });
     }
 
     /**
