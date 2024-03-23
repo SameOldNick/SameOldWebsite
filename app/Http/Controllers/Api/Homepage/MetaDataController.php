@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class MetaDataController extends HomepageController
 {
+    public function __construct()
+    {
+        $this->middleware('can:role-edit-profile');
+    }
+
     public function show(Request $request)
     {
         $keys = ['name', 'headline', 'location', 'biography'];
