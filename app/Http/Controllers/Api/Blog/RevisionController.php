@@ -25,7 +25,7 @@ class RevisionController extends Controller
     {
         $validated = $request->validate([
             'content' => 'required|string',
-            'summary' => 'nullable|string',
+            'summary' => 'sometimes|nullable|string',
             'parent' => [
                 'nullable',
                 'uuid',
@@ -35,7 +35,7 @@ class RevisionController extends Controller
 
         $revision = new Revision([
             'content' => $validated['content'],
-            'summary' => $validated['summary'],
+            'summary' => isset($validated['summary']) ? $validated['summary'] : null,
         ]);
 
         if (isset($request->parent)) {
