@@ -18,12 +18,10 @@ interface IOptions {
  * @param {IOptions} [options={}]
  * @returns High ordered component
  */
-export function requiresRoles<TProps extends object>(Component: React.ComponentType<TProps>, roles: string[], { any = false, ...options }: IOptions = {}) {
+export function requiresRoles<TProps extends object>(Component: React.ComponentType<TProps>, roles: string[], { any = false, loading, unauthorized }: IOptions = {}) {
     const element: React.FC = (props: any) => {
-        const authProps = any ? { oneOf: roles } : { hasAll: roles };
-
         return (
-            <Authorized {...authProps} {...options}>
+            <Authorized roles={roles} hasAll={any !== false} oneOf={any === false} loading={loading} unauthorized={unauthorized}>
                 <Component {...props}  />
             </Authorized>
         );

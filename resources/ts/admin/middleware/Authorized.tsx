@@ -13,31 +13,69 @@ const connector = connect(
 
 type TRole = string;
 
-interface IPropsHasAll {
-    hasAll: TRole[];
-}
-
-interface IPropsOneOf {
-    oneOf: TRole[];
-}
-
 type TAuthorizedChildren = React.ReactNode | ((authorized: boolean) => React.ReactNode);
 
-interface ISharedProps {
+/**
+ * Prop types for Authorized component
+ *
+ * @interface IProps
+ */
+interface IAuthorizedProps {
+    /**
+     * The roles to check for.
+     *
+     * @type {TRole[]}
+     * @memberof IAuthorizedProps
+     */
+    roles: TRole[];
+    /**
+     * Checks user has all roles.
+     * If not specified, default is true.
+     * If both hasAll and oneOf is the same value (true/false), hasAll is used.
+     *
+     * @type {boolean}
+     * @memberof IAuthorizedProps
+     */
+    hasAll?: boolean;
+    /**
+     * Checks user has one of roles.
+     * If not specified, default is false.
+     * If both hasAll and oneOf is the same value (true/false), hasAll is used.
+     *
+     * @type {boolean}
+     * @memberof IAuthorizedProps
+     */
+    oneOf?: boolean;
+    /**
+     * Element to display when checking for authorization.
+     * Default is <LoaderOverlay />
+     *
+     * @type {React.ReactNode}
+     * @memberof IAuthorizedProps
+     */
     loading?: React.ReactNode;
+    /**
+     * Element to display if unauthorized.
+     * Default is React fragment.
+     *
+     * @type {React.ReactNode}
+     * @memberof IAuthorizedProps
+     */
     unauthorized?: React.ReactNode;
+    /**
+     * Elements to display when authorized, or, callback that is called when authorized or unauthorized.
+     *
+     * @type {TAuthorizedChildren}
+     * @memberof IAuthorizedProps
+     */
     children: TAuthorizedChildren;
 }
 
-type TProps = ConnectedProps<typeof connector> & (IPropsHasAll | IPropsOneOf) & ISharedProps;
+type TAuthorizedProps = ConnectedProps<typeof connector> & IAuthorizedProps;
 
-const Authorized: React.FC<TProps> = ({ account: { user }, children, loading = <LoaderOverlay display={{ type: 'over-element' }} />, unauthorized = <></>, fetchUser, ...props }) => {
+const Authorized: React.FC<TAuthorizedProps> = ({ account: { user }, roles, hasAll = true, oneOf = false, children, loading = <LoaderOverlay display={{ type: 'over-element' }} />, unauthorized = <></>, fetchUser, ...props }) => {
     const [status, setStatus] = React.useState<'loading' | 'authorized' | 'unauthorized'>('loading');
-
-    const isOneOf = (props: object): props is IPropsOneOf => 'oneOf' in (props as TProps);
-    const roles = React.useMemo<TRole[]>(() => isOneOf(props) ? props.oneOf : props.hasAll, [props]);
-
-    const hasRoles = React.useCallback(async (user: User, roles: TRole[]) => isOneOf(props) ? user.hasAnyRoles(...roles) : user.hasAllRoles(...roles), [user, roles]);
+    const hasRoles = React.useCallback(async (user: User) => oneOf && !hasAll ? user.hasAnyRoles(...roles) : user.hasAllRoles(...roles), [user, roles]);
 
     const checkForRoles = async () => {
         setStatus('loading');
@@ -48,7 +86,7 @@ const Authorized: React.FC<TProps> = ({ account: { user }, children, loading = <
             return;
         }
 
-        const found = await hasRoles(new User(user), roles);
+        const found = await hasRoles(new User(user));
 
         setStatus(found ? 'authorized' : 'unauthorized');
     }
