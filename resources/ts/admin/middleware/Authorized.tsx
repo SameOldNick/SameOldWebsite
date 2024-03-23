@@ -18,7 +18,7 @@ type TAuthorizedChildren = React.ReactNode | ((authorized: boolean) => React.Rea
 /**
  * Prop types for Authorized component
  *
- * @interface IProps
+ * @interface IAuthorizedProps
  */
 interface IAuthorizedProps {
     /**
