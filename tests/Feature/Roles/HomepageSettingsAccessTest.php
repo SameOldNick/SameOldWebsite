@@ -15,6 +15,11 @@ class HomepageSettingsAccessTest extends TestCase
     use WithFaker;
     use DisablesVite;
 
+    /**
+     * Tests user is authorized to get homepage metadata.
+     *
+     * @return void
+     */
     public function testCanGetHomepageMetadata(): void
     {
         $response = $this->withRoles(['edit_profile'])->get('/api/pages/homepage');
@@ -22,6 +27,11 @@ class HomepageSettingsAccessTest extends TestCase
         $response->assertSuccessful();
     }
 
+    /**
+     * Tests user is unauthorized to get homepage metadata.
+     *
+     * @return void
+     */
     public function testCannotGetHomepageMetadata(): void
     {
         $response = $this->withRoles([])->get('/api/pages/homepage');
@@ -29,6 +39,11 @@ class HomepageSettingsAccessTest extends TestCase
         $response->assertForbidden();
     }
 
+    /**
+     * Tests user is authorized to update homepage metadata.
+     *
+     * @return void
+     */
     public function testCanPostHomepageMetadata(): void
     {
         $response = $this->withRoles(['edit_profile'])->post('/api/pages/homepage');
@@ -36,6 +51,11 @@ class HomepageSettingsAccessTest extends TestCase
         $response->assertRedirect();
     }
 
+    /**
+     * Tests user is unauthorized to update homepage metadata.
+     *
+     * @return void
+     */
     public function testCannotPostHomepageMetadata(): void
     {
         $response = $this->withRoles([])->post('/api/pages/homepage');
