@@ -59,7 +59,6 @@ class ArticleImageSeeder extends Seeder
             }
 
             $images->push($image);
-        }
 
         }
     }
