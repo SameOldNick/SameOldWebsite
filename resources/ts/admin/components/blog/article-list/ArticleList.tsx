@@ -17,135 +17,118 @@ interface IProps {
 
 }
 
-interface IState {
-    show: ArticleStatuses;
-}
+const ArticleList: React.FC<IProps> = ({ }) => {
+    const waitToLoadArticlesRef = React.createRef<IWaitToLoadHandle>();
+    const paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
 
-export default class ArticleList extends React.Component<IProps, IState> {
-    private readonly _waitToLoadArticlesRef = React.createRef<IWaitToLoadHandle>();
-    private readonly _paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
+    const [show, setShow] = React.useState<ArticleStatuses>(ArticleStatuses.all);
 
-    constructor(props: Readonly<IProps>) {
-        super(props);
+    const loadArticles = React.useCallback(async (link?: string) => {
+        return link === undefined ? loadInitialArticles() : updateArticles(link);
+    }, []);
 
-        this.state = {
-            show: ArticleStatuses.all
-        };
-
-        this.loadArticles = this.loadArticles.bind(this);
-        this.loadInitialArticles = this.loadInitialArticles.bind(this);
-        this.updateArticles = this.updateArticles.bind(this);
-        this.handleUpdateFormSubmitted = this.handleUpdateFormSubmitted.bind(this);
-    }
-
-    private async loadArticles(link?: string) {
-        return link === undefined ? this.loadInitialArticles() : this.updateArticles(link);
-    }
-
-    private async loadInitialArticles() {
-        const { show } = this.state;
-
+    const loadInitialArticles = React.useCallback(async () => {
         return fetchArticles(show);
-    }
+    }, [show]);
 
-    private async updateArticles(link: string) {
-        const { show } = this.state;
-
+    const updateArticles = React.useCallback(async (link: string) => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IArticle>>(link, { show });
 
         return response.data;
-    }
+    }, [show]);
 
-    private async handleUpdateFormSubmitted(e: React.FormEvent<HTMLFormElement>) {
+    const handleUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        this._paginatedTableRef.current?.reload();
-    }
+        paginatedTableRef.current?.reload();
+    }, [paginatedTableRef]);
 
-    public render() {
-        const { show } = this.state;
+    const handleUpdated = React.useCallback(() => {
+        waitToLoadArticlesRef.current?.load();
+    }, [waitToLoadArticlesRef]);
 
-        return (
-            <>
-                <Row>
-                    <Col xs={12} className='d-flex justify-content-between mb-3'>
-                        <div>
-                            <Button tag={NavLink} to='create' color='primary'>
-                                <FaPlus /> Create New
-                            </Button>
-                        </div>
-                        <div className="text-end">
-                            <Form className="row row-cols-lg-auto g-3" onSubmit={this.handleUpdateFormSubmitted}>
-                                <Col xs={12}>
-                                    <label className="visually-hidden" htmlFor="show">Show</label>
+    return (
+        <>
+            <Row>
+                <Col xs={12} className='d-flex justify-content-between mb-3'>
+                    <div>
+                        <Button tag={NavLink} to='create' color='primary'>
+                            <FaPlus /> Create New
+                        </Button>
+                    </div>
+                    <div className="text-end">
+                        <Form className="row row-cols-lg-auto g-3" onSubmit={handleUpdateFormSubmitted}>
+                            <Col xs={12}>
+                                <label className="visually-hidden" htmlFor="show">Show</label>
 
-                                    <Input type='select' name='show' id='show' value={show} onChange={(e) => this.setState({ show: e.target.value as ArticleStatuses })}>
-                                        <option value={ArticleStatuses.unpublished}>Unpublished Only</option>
-                                        <option value={ArticleStatuses.published}>Published Only</option>
-                                        <option value={ArticleStatuses.scheduled}>Scheduled Only</option>
-                                        <option value={ArticleStatuses.removed}>Deleted Only</option>
-                                        <option value={ArticleStatuses.all}>All</option>
-                                    </Input>
-                                </Col>
-                                <Col xs={12}>
-                                    <Button type='submit' color='primary'>
-                                        <FaSync /> Update
-                                    </Button>
-                                </Col>
-                            </Form>
+                                <Input type='select' name='show' id='show' value={show} onChange={(e) => setShow(e.target.value as ArticleStatuses)}>
+                                    <option value={ArticleStatuses.unpublished}>Unpublished Only</option>
+                                    <option value={ArticleStatuses.published}>Published Only</option>
+                                    <option value={ArticleStatuses.scheduled}>Scheduled Only</option>
+                                    <option value={ArticleStatuses.removed}>Deleted Only</option>
+                                    <option value={ArticleStatuses.all}>All</option>
+                                </Input>
+                            </Col>
+                            <Col xs={12}>
+                                <Button type='submit' color='primary'>
+                                    <FaSync /> Update
+                                </Button>
+                            </Col>
+                        </Form>
 
-                        </div>
-                    </Col>
-                    <Col xs={12}>
-                        <WaitToLoad
-                            ref={this._waitToLoadArticlesRef}
-                            callback={this.loadInitialArticles}
-                            loading={<Loader display={{ type: 'over-element' }} />}
-                        >
-                            {(response, err) => (
-                                <>
-                                    {err && console.error(err)}
-                                    {response && (
-                                        <PaginatedTable ref={this._paginatedTableRef} initialResponse={response} pullData={this.loadArticles}>
-                                            {(data) => (
-                                                <Table>
-                                                    <thead>
+                    </div>
+                </Col>
+                <Col xs={12}>
+                    <WaitToLoad
+                        ref={waitToLoadArticlesRef}
+                        callback={loadInitialArticles}
+                        loading={<Loader display={{ type: 'over-element' }} />}
+                    >
+                        {(response, err) => (
+                            <>
+                                {err && console.error(err)}
+                                {response && (
+                                    <PaginatedTable ref={paginatedTableRef} initialResponse={response} pullData={loadArticles}>
+                                        {(data) => (
+                                            <Table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Title</th>
+                                                        <th>Summary</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {data.length === 0 && (
                                                         <tr>
-                                                            <th>ID</th>
-                                                            <th>Title</th>
-                                                            <th>Summary</th>
-                                                            <th>Status</th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {data.length === 0 && (
                                                             <tr>
-                                                                <tr>
-                                                                    <td colSpan={5} className='text-center text-muted'>(No articles found)</td>
-                                                                </tr>
+                                                                <td colSpan={5} className='text-center text-muted'>(No articles found)</td>
                                                             </tr>
-                                                        )}
-                                                        {data.length > 0 && data.map((article, index) =>
-                                                            <ArticleRow
-                                                                key={index}
-                                                                article={new Article(article)}
-                                                                onUpdated={this.loadArticles}
-                                                            />
-                                                        )}
-                                                    </tbody>
-                                                </Table>
-                                            )}
+                                                        </tr>
+                                                    )}
+                                                    {data.length > 0 && data.map((article, index) =>
+                                                        <ArticleRow
+                                                            key={index}
+                                                            article={new Article(article)}
+                                                            onUpdated={handleUpdated}
+                                                        />
+                                                    )}
+                                                </tbody>
+                                            </Table>
+                                        )}
 
-                                        </PaginatedTable>
-                                    )}
-                                </>
-                            )}
-                        </WaitToLoad>
-                    </Col>
-                </Row>
+                                    </PaginatedTable>
+                                )}
+                            </>
+                        )}
+                    </WaitToLoad>
+                </Col>
+            </Row>
 
-            </>
-        );
-    }
+        </>
+    );
 }
+
+export default ArticleList;
