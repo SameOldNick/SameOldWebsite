@@ -31,15 +31,17 @@ final class ServiceProvider extends BaseServiceProvider
             );
         });
 
-        $this->app->afterResolving(function ($object, $app) {
-            $class = is_object($object) ? get_class($object) : $object;
+        if ($this->app->runningInConsole() || $this->app->runningUnitTests()) {
+            $this->app->afterResolving(function ($object, $app) {
+                $class = is_object($object) ? get_class($object) : $object;
 
-            if (Str::startsWith($class, Generator::class)) {
-                $object->addProvider($app->make(Providers\SocialMedia::class));
-                $object->addProvider($app->make(Providers\BladeIcon::class));
-                $object->addProvider($app->make(Providers\Technology::class));
-            }
-        });
+                if (Str::startsWith($class, Generator::class)) {
+                    $object->addProvider($app->make(Providers\SocialMedia::class));
+                    $object->addProvider($app->make(Providers\BladeIcon::class));
+                    $object->addProvider($app->make(Providers\Technology::class));
+                }
+            });
+        }
     }
 
     /**
