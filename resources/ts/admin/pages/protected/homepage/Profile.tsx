@@ -8,6 +8,7 @@ import HomepageForm from '@admin/components/homepage/HomepageForm';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import SocialMediaLinks from '@admin/components/homepage/socialmedia/SocialMediaLinks';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import Authorized from '@admin/middleware/Authorized';
 
 interface IProps extends IHasRouter {
 
@@ -23,39 +24,43 @@ const Profile: React.FC<IProps> = ({ router }) => {
 
             <Heading title='Profile' />
 
-            <Row className='justify-content-center'>
-                <Col md={4}>
-                    <Card className='mb-3'>
-                        <CardBody>
-                            <Avatar />
-                        </CardBody>
-                    </Card>
+            <Authorized roles={['change_avatar']}>
+                <Row className='justify-content-center'>
+                    <Col md={4}>
+                        <Card className='mb-3'>
+                            <CardBody>
+                                <Avatar />
+                            </CardBody>
+                        </Card>
 
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
+            </Authorized>
 
-            <Row className='justify-content-center mb-3'>
-                <Col md={8}>
-                    <Card>
-                        <CardBody>
-                            <HomepageForm router={router} />
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
+            <Authorized roles={['edit_profile']}>
+                <Row className='justify-content-center mb-3'>
+                    <Col md={8}>
+                        <Card>
+                            <CardBody>
+                                <HomepageForm router={router} />
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
 
-            <Row className='justify-content-center'>
-                <Col md={8}>
-                    <Card>
-                        <CardBody>
-                            <SocialMediaLinks />
+                <Row className='justify-content-center'>
+                    <Col md={8}>
+                        <Card>
+                            <CardBody>
+                                <SocialMediaLinks />
 
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </Authorized>
         </>
     );
 }
 
-export default requiresRolesForPage(withRouter(Profile), ['edit_profile']);
+export default requiresRolesForPage(withRouter(Profile), ['change_avatar', 'edit_profile'], { any: true });
