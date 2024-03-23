@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\FileUploadException;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 class AvatarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:role-change-avatar');
+    }
+
     /**
      * Uploads a new avatar for the user.
      *
