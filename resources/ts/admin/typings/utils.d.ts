@@ -5,6 +5,7 @@ declare global {
     } & T2;
     type PartialRecord<K extends string | number | symbol, T> = { [P in K]?: T; };
     type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
+    type ExtractProps<TComponentOrTProps> = TComponentOrTProps extends React.Component<infer TProps, any> ? TProps : TComponentOrTProps;
 }
 
 export default { };
