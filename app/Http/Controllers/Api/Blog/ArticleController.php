@@ -21,6 +21,11 @@ use Illuminate\Validation\Rule;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:role-write-posts');
+    }
+
     /**
      * Display a listing of the resource.
      */
