@@ -21,8 +21,6 @@ interface IState {
     show: ArticleStatuses;
 }
 
-
-
 export default class ArticleList extends React.Component<IProps, IState> {
     private readonly _waitToLoadArticlesRef = React.createRef<IWaitToLoadHandle>();
     private readonly _paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
