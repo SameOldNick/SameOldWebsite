@@ -7,13 +7,13 @@ import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 
 import SelectDateTimeModal from '@admin/components/modals/SelectDateTimeModal';
+import ArticleActionButtons from './ArticleActionButtons';
 
 import Article from '@admin/utils/api/models/Article';
 
 import { updateArticle, restoreArticle as restoreArticleApi, deleteArticle as deleteArticleApi } from '@admin/utils/api/endpoints/articles';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import awaitModalPrompt from '@admin/utils/modals';
-import ArticleActionButtons from './ArticleActionButtons';
 
 interface IArticleProps {
     article: Article;
