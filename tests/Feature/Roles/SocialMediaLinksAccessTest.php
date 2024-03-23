@@ -76,7 +76,7 @@ class SocialMediaLinksAccessTest extends TestCase
     public function testCanCreateSocialMedium(): void
     {
         $response = $this->withRoles(['edit_profile'])->postJson('/api/social-media', [
-            'link' => $this->faker()->socialMediaLink('github')
+            'link' => $this->faker()->socialMediaLink('github'),
         ]);
 
         $response->assertSuccessful();
@@ -90,7 +90,7 @@ class SocialMediaLinksAccessTest extends TestCase
     public function testCannotCreateSocialMedium(): void
     {
         $response = $this->withRoles([])->postJson('/api/social-media', [
-            'link' => $this->faker()->socialMediaLink('github')
+            'link' => $this->faker()->socialMediaLink('github'),
         ]);
 
         $response->assertForbidden();
@@ -106,7 +106,7 @@ class SocialMediaLinksAccessTest extends TestCase
         $socialMedium = SocialMediaLink::factory()->create();
 
         $response = $this->withRoles(['edit_profile'])->putJson(sprintf('/api/social-media/%d', $socialMedium->getKey()), [
-            'link' => $this->faker()->socialMediaLink('github')
+            'link' => $this->faker()->socialMediaLink('github'),
         ]);
 
         $response->assertSuccessful();
@@ -122,7 +122,7 @@ class SocialMediaLinksAccessTest extends TestCase
         $socialMedium = SocialMediaLink::factory()->create();
 
         $response = $this->withRoles([])->putJson(sprintf('/api/social-media/%d', $socialMedium->getKey()), [
-            'link' => $this->faker()->socialMediaLink('github')
+            'link' => $this->faker()->socialMediaLink('github'),
         ]);
 
         $response->assertForbidden();
