@@ -164,4 +164,32 @@ class ArticlesAccessTest extends TestCase
 
         $response->assertForbidden();
     }
+
+    /**
+     * Tests user is authorized to restore articles.
+     *
+     * @return void
+     */
+    public function testCanRestoreArticle(): void
+    {
+        $article = Article::factory()->deleted()->create();
+
+        $response = $this->withRoles(['write_posts'])->postJson(sprintf('/api/blog/articles/restore/%d', $article->getKey()));
+
+        $response->assertSuccessful();
+    }
+
+    /**
+     * Tests user is unauthorized to restore articles.
+     *
+     * @return void
+     */
+    public function testCannotRestoreArticle(): void
+    {
+        $article = Article::factory()->deleted()->create();
+
+        $response = $this->withRoles([])->postJson(sprintf('/api/blog/articles/restore/%d', $article->getKey()));
+
+        $response->assertForbidden();
+    }
 }
