@@ -58,7 +58,7 @@ const Create: React.FC<IProps> = ({ }) => {
             }
 
             if (tags.length > 0) {
-                associateTags(created, tags);
+                await associateTags(created, tags);
             }
 
             await withReactContent(Swal).fire({
@@ -104,7 +104,7 @@ const Create: React.FC<IProps> = ({ }) => {
             }
 
             if (tags.length > 0) {
-                associateTags(created, tags);
+                await associateTags(created, tags);
             }
 
             await withReactContent(Swal).fire({
