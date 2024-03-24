@@ -9,7 +9,7 @@ interface IProps extends IHasRouter<'article'> {
 
 }
 
-const CurrentRevision = withRouter(({ router }: IProps) => {
+const CurrentRevision: React.FC<IProps> = ({ router }) => {
     if (!router.params.article)
         return;
 
@@ -26,6 +26,6 @@ const CurrentRevision = withRouter(({ router }: IProps) => {
             </WithArticle>
         </>
     )
-});
+}
 
-export default requiresRolesForPage(CurrentRevision, ['write_posts']);
+export default requiresRolesForPage(withRouter(CurrentRevision), ['write_posts']);
