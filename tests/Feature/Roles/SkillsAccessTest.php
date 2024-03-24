@@ -154,7 +154,7 @@ class SkillsAccessTest extends TestCase
     {
         $skill = Skill::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/skills/%d', $skill->getKey()));
+        $response = $this->withRoles([])->deleteJson(sprintf('/api/skills/%d', $skill->getKey()));
 
         $response->assertForbidden();
     }

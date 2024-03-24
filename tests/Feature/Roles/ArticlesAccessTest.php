@@ -160,7 +160,7 @@ class ArticlesAccessTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/blog/articles/%d', $article->getKey()));
+        $response = $this->withRoles([])->deleteJson(sprintf('/api/blog/articles/%d', $article->getKey()));
 
         $response->assertForbidden();
     }

@@ -163,7 +163,7 @@ class ProjectsAccessTest extends TestCase
     {
         $project = Project::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/projects/%d', $project->getKey()));
+        $response = $this->withRoles([])->deleteJson(sprintf('/api/projects/%d', $project->getKey()));
 
         $response->assertForbidden();
     }

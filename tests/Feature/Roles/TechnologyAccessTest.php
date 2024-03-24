@@ -155,7 +155,7 @@ class TechnologyAccessTest extends TestCase
     {
         $technology = Technology::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/technologies/%d', $technology->getKey()));
+        $response = $this->withRoles([])->deleteJson(sprintf('/api/technologies/%d', $technology->getKey()));
 
         $response->assertForbidden();
     }

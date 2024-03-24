@@ -151,7 +151,7 @@ class SocialMediaLinksAccessTest extends TestCase
     {
         $socialMedium = SocialMediaLink::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/social-media/%d', $socialMedium->getKey()));
+        $response = $this->withRoles([])->deleteJson(sprintf('/api/social-media/%d', $socialMedium->getKey()));
 
         $response->assertForbidden();
     }
