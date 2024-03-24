@@ -89,22 +89,10 @@ class CommentController extends Controller
         $request->validate([
             'title' => 'nullable|string|max:255',
             'comment' => 'nullable|string',
-            /*'parent' => [
-                'nullable',
-                'numeric',
-                Rule::exists(Comment::class, 'id')->where(function (Builder $query) use ($comment) {
-                    return $query->where('id', '<>', $comment->getKey());
-                })
-            ]*/
         ]);
 
         $comment->title = $request->str('title');
         $comment->comment = $request->str('comment');
-
-        /*if ($request->filled('parent'))
-            $comment->parent()->associate($request->parent);
-        else
-            $comment->parent()->disassociate();*/
 
         $comment->save();
 
