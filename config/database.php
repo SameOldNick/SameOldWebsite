@@ -154,4 +154,13 @@ return [
 
     ],
 
+    /**
+     * Fixes 'Unknown column type "timestamp" requested' error when trying to modify timestamp columns.
+     * Source: https://stackoverflow.com/a/72982768/533242
+     */
+    'dbal' => [
+        'types' => [
+            'timestamp' => \Illuminate\Database\DBAL\TimestampType::class,
+        ],
+    ],
 ];
