@@ -81,7 +81,7 @@ class CommentsAccessTest extends TestCase
         $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
 
         $response = $this->withRoles(['manage_comments'])->putJson(sprintf('/api/blog/comments/%d', $comment->getKey()), [
-            'comment' => $this->faker()->realText()
+            'comment' => $this->faker()->realText(),
         ]);
 
         $response->assertSuccessful();
@@ -97,7 +97,7 @@ class CommentsAccessTest extends TestCase
         $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
 
         $response = $this->withRoles([])->putJson(sprintf('/api/blog/comments/%d', $comment->getKey()), [
-            'comment' => $this->faker()->realText()
+            'comment' => $this->faker()->realText(),
         ]);
 
         $response->assertForbidden();
