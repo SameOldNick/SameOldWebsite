@@ -15,6 +15,11 @@ use Illuminate\Validation\Rule;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:role-manage-comments');
+    }
+
     /**
      * Display a listing of the resource.
      */
