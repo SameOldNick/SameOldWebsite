@@ -474,4 +474,30 @@ class ContactTest extends TestCase
         Event::assertNotDispatched(ContactSubmissionConfirmed::class);
         Event::assertNotDispatched(ContactSubmissionApproved::class);
     }
+
+    /**
+     * Test logic for confirming already approved following contact form submission.
+     *
+     * @return void
+     */
+    public function testContactEmailConfirmationAlreadyApproved()
+    {
+        Event::fake();
+
+        $contactMessage = ContactMessage::make([
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'message' => $this->faker->paragraphs(3, true),
+            'approved_at' => $this->faker->dateTimeBetween(),
+        ]);
+
+        $contactMessage->save();
+
+        $this
+            ->getJson($contactMessage->generateUrl())
+            ->assertConflict();
+
+        Event::assertNotDispatched(ContactSubmissionConfirmed::class);
+        Event::assertNotDispatched(ContactSubmissionApproved::class);
+    }
 }
