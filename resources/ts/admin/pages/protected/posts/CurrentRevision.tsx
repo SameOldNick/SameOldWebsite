@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import WithArticle from '../../../components/blog/WithArticle';
+import WithArticle from '@admin/components/blog/WithArticle';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
