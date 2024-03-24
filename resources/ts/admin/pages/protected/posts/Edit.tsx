@@ -9,11 +9,11 @@ import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import EditArticleWrapper from '@admin/components/blog/EditArticleWrapper';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import Article from '@admin/utils/api/models/Article';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps extends IHasRouter<'article' | 'revision'> {
 

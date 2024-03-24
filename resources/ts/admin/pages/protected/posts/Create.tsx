@@ -10,12 +10,12 @@ import axios from 'axios';
 
 import Heading from '@admin/layouts/admin/Heading';
 import CreateForm, { TSaveArticleParams, TSaveAndPublishArticleParams } from '@admin/components/blog/CreateForm';
+import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { attachImage, attachTags, createArticle, setMainImage as setMainImageApi } from '@admin/utils/api/endpoints/articles';
 
 import Article from '@admin/utils/api/models/Article';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 interface IProps {
 
