@@ -8,7 +8,7 @@ use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Mail\ConfirmMessage;
 use App\Mail\Contacted;
 use App\Mail\ContactedConfirmation;
-use App\Models\PendingMessage;
+use App\Models\ContactMessage;
 use App\Models\User;
 use App\Notifications\MessageNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -433,16 +433,16 @@ class ContactTest extends TestCase
     {
         Event::fake();
 
-        $pendingMessage = PendingMessage::make([
+        $contactMessage = ContactMessage::make([
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'message' => $this->faker->paragraphs(3, true),
         ])->useDefaultExpiresAt();
 
-        $pendingMessage->save();
+        $contactMessage->save();
 
         $this
-            ->get($pendingMessage->generateUrl())
+            ->get($contactMessage->generateUrl())
             ->assertSuccessful();
 
         Event::assertDispatched(ContactSubmissionConfirmed::class);
@@ -458,17 +458,17 @@ class ContactTest extends TestCase
     {
         Event::fake();
 
-        $pendingMessage = PendingMessage::make([
+        $contactMessage = ContactMessage::make([
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'message' => $this->faker->paragraphs(3, true),
             'expires_at' => $this->faker->dateTimeBetween(),
         ]);
 
-        $pendingMessage->save();
+        $contactMessage->save();
 
         $this
-            ->get($pendingMessage->generateUrl())
+            ->get($contactMessage->generateUrl())
             ->assertForbidden();
 
         Event::assertNotDispatched(ContactSubmissionConfirmed::class);
