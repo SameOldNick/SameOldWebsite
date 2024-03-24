@@ -56,7 +56,7 @@ class ArticleTagsAccessTest extends TestCase
         $article = Article::factory()->has(Revision::factory())->create();
 
         $response = $this->withRoles(['write_posts'])->postJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
-            'tags' => $this->faker()->words(5)
+            'tags' => $this->faker()->words(5),
         ]);
 
         $response->assertSuccessful();
@@ -72,7 +72,7 @@ class ArticleTagsAccessTest extends TestCase
         $article = Article::factory()->has(Revision::factory())->create();
 
         $response = $this->withRoles([])->postJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
-            'tags' => $this->faker()->words(5)
+            'tags' => $this->faker()->words(5),
         ]);
 
         $response->assertForbidden();
@@ -91,7 +91,7 @@ class ArticleTagsAccessTest extends TestCase
         $article->tags()->attach($tag);
 
         $response = $this->withRoles(['write_posts'])->deleteJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
-            'tags' => [$tag->tag]
+            'tags' => [$tag->tag],
         ]);
 
         $response->assertSuccessful();
@@ -110,7 +110,7 @@ class ArticleTagsAccessTest extends TestCase
         $article->tags()->attach($tag);
 
         $response = $this->withRoles([])->deleteJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
-            'tags' => [$tag->tag]
+            'tags' => [$tag->tag],
         ]);
 
         $response->assertForbidden();
@@ -126,7 +126,7 @@ class ArticleTagsAccessTest extends TestCase
         $article = Article::factory()->has(Revision::factory())->create();
 
         $response = $this->withRoles(['write_posts'])->putJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
-            'tags' => $this->faker()->words()
+            'tags' => $this->faker()->words(),
         ]);
 
         $response->assertSuccessful();
@@ -142,7 +142,7 @@ class ArticleTagsAccessTest extends TestCase
         $article = Article::factory()->has(Revision::factory())->create();
 
         $response = $this->withRoles([])->putJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
-            'tags' => $this->faker()->words()
+            'tags' => $this->faker()->words(),
         ]);
 
         $response->assertForbidden();
