@@ -5,7 +5,7 @@ namespace App\Mail;
 use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
-use App\Models\PendingMessage;
+use App\Models\ContactMessage;
 use App\Traits\Support\BuildsFromContainer;
 use App\Traits\Support\HasPageSettings;
 use Illuminate\Bus\Queueable;
@@ -24,10 +24,7 @@ class ConfirmMessage extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        protected readonly string $name,
-        protected readonly string $email,
-        protected readonly string $message,
-        protected readonly PendingMessage $pendingMessage
+        protected readonly ContactMessage $contactMessage
     ) {
         $this->settings = $this->getPageSettings('contact');
     }
@@ -40,17 +37,17 @@ class ConfirmMessage extends Mailable
         $collection = $factory->build(function (Options $options) use ($subject) {
             $options
                 ->useDefaultBuilders()
-                ->set('name', $this->name)
-                ->set('email', $this->email)
+                ->set('name', $this->contactMessage->name)
+                ->set('email', $this->contactMessage->email)
                 ->set('subject', $subject)
-                ->set('message', $this->message);
+                ->set('message', $this->contactMessage->message);
         });
 
         $tagCompiler = new TagCompiler($collection);
 
         return
             $this
-                ->to($this->email)
+                ->to($this->contactMessage->email)
                 ->replyTo($replyTo)
                 ->subject($tagCompiler->compile($subject));
     }
@@ -63,7 +60,7 @@ class ConfirmMessage extends Mailable
         return new Content(
             markdown: 'mail.confirm-message',
             with: [
-                'url' => $this->pendingMessage->generateUrl(),
+                'url' => $this->contactMessage->generateUrl(),
             ]
         );
     }

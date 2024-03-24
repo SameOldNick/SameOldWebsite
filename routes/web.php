@@ -27,7 +27,7 @@ Route::namespace(Controllers\Main::class)->group(function () {
 
     Route::get('/contact', 'ContactController@show')->name('contact');
     Route::post('/contact', 'ContactController@process')->name('contact.process');
-    Route::get('/contact/confirm/{pendingMessage}', 'ContactController@confirm')->name('contact.confirm')->middleware(['signed']);
+    Route::get('/contact/confirm/{contactMessage}', 'ContactController@confirm')->name('contact.confirm')->middleware(['signed']);
 
     Route::view('/terms-conditions', 'main.terms-conditions')->name('terms-conditions');
     Route::view('/privacy-policy', 'main.privacy-policy')->name('privacy-policy');

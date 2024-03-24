@@ -7,7 +7,7 @@ use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Http\Controllers\Pages\ContactController as BaseContactController;
 use App\Http\Requests\ContactRequest;
-use App\Models\PendingMessage;
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -72,13 +72,16 @@ class ContactController extends BaseContactController
      * Confirms senders e-mail address
      *
      * @param Request $request
-     * @param PendingMessage $pendingMessage
+     * @param ContactMessage $contactMessage
      * @return mixed
      */
-    public function confirm(Request $request, PendingMessage $pendingMessage)
+    public function confirm(Request $request, ContactMessage $contactMessage)
     {
-        ContactSubmissionConfirmed::dispatch($pendingMessage);
-        ContactSubmissionApproved::dispatch($pendingMessage->name, $pendingMessage->email, $pendingMessage->message);
+        $contactMessage->approved_at = now();
+        $contactMessage->save();
+
+        ContactSubmissionConfirmed::dispatch($contactMessage);
+        ContactSubmissionApproved::dispatch($contactMessage->name, $contactMessage->email, $contactMessage->message);
 
         return view('main.contact', [
             'success' => __('Thank you for your message! You will receive a reply shortly.'),

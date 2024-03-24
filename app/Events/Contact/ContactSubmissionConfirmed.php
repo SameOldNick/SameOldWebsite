@@ -2,7 +2,7 @@
 
 namespace App\Events\Contact;
 
-use App\Models\PendingMessage;
+use App\Models\ContactMessage;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -17,7 +17,7 @@ class ContactSubmissionConfirmed
      * Create a new event instance.
      */
     public function __construct(
-        public readonly PendingMessage $message,
+        public readonly ContactMessage $message,
     ) {
         //
     }

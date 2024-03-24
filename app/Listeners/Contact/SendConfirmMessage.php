@@ -4,7 +4,7 @@ namespace App\Listeners\Contact;
 
 use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Mail\ConfirmMessage;
-use App\Models\PendingMessage;
+use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Mail;
 
 class SendConfirmMessage
@@ -22,14 +22,14 @@ class SendConfirmMessage
      */
     public function handle(ContactSubmissionRequiresApproval $event): void
     {
-        $pendingMessage = (new PendingMessage([
+        $contactMessage = (new ContactMessage([
             'name' => $event->name,
             'email' => $event->email,
             'message' => $event->message,
         ]))->useDefaultExpiresAt();
 
-        $pendingMessage->save();
+        $contactMessage->save();
 
-        Mail::send(ConfirmMessage::create($event->name, $event->email, $event->message, $pendingMessage));
+        Mail::send(ConfirmMessage::create($contactMessage));
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
 
-class PendingMessage extends Model
+class ContactMessage extends Model
 {
     use HasFactory;
     use HasUuids;
@@ -21,6 +21,7 @@ class PendingMessage extends Model
         'name',
         'email',
         'message',
+        'approved_at',
         'expires_at',
     ];
 
@@ -37,6 +38,7 @@ class PendingMessage extends Model
      * @var array
      */
     protected $casts = [
+        'approved_at' => 'datetime',
         'expires_at' => 'datetime',
     ];
 
@@ -49,7 +51,7 @@ class PendingMessage extends Model
 
     public function generateUrl()
     {
-        return URL::temporarySignedRoute('contact.confirm', $this->expires_at, ['pendingMessage' => $this]);
+        return URL::temporarySignedRoute('contact.confirm', $this->expires_at, ['contactMessage' => $this]);
     }
 
     public static function getDefaultExpiresAt()
