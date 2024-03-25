@@ -28,9 +28,10 @@ class ContactMessageFactory extends Factory
      *
      * @return static
      */
-    public function confirmed() {
+    public function confirmed()
+    {
         return $this->state([
-            'approved_at' => $this->faker->dateTimeBetween('now', '+1 month')
+            'approved_at' => $this->faker->dateTimeBetween('now', '+1 month'),
         ]);
     }
 
@@ -39,9 +40,10 @@ class ContactMessageFactory extends Factory
      *
      * @return static
      */
-    public function requiresConfirmation() {
+    public function requiresConfirmation()
+    {
         return $this->state([
-            'expires_at' => $this->faker->dateTimeBetween('-1 month', '+1 month')
+            'expires_at' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
         ]);
     }
 }
