@@ -2,10 +2,10 @@
 
 namespace App\Events\Contact;
 
+use App\Models\ContactMessage;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\ContactMessage;
 
 class ContactSubmissionRequiresApproval
 {

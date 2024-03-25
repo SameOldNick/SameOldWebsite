@@ -506,7 +506,8 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactProcessRequiresConfirmationModelCreated() {
+    public function testContactProcessRequiresConfirmationModelCreated()
+    {
         $this->pageSetting('contact', [
             'require_confirmation' => true,
         ]);
@@ -524,7 +525,7 @@ class ContactTest extends TestCase
 
         $this->assertDatabaseHas(ContactMessage::class, [
             ['email', '=', $data['email']],
-            ['approved_at', '=', null]
+            ['approved_at', '=', null],
         ]);
     }
 
@@ -533,7 +534,8 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactProcessModelCreated() {
+    public function testContactProcessModelCreated()
+    {
         $this->pageSetting('contact', [
             'require_confirmation' => false,
         ]);
@@ -551,7 +553,7 @@ class ContactTest extends TestCase
 
         $this->assertDatabaseHas(ContactMessage::class, [
             ['email', '=', $data['email']],
-            ['approved_at', '<>', null]
+            ['approved_at', '<>', null],
         ]);
     }
 
@@ -576,7 +578,7 @@ class ContactTest extends TestCase
 
         $this->assertDatabaseHas(ContactMessage::class, [
             ['email', '=', $contactMessage['email']],
-            ['approved_at', '<>', null]
+            ['approved_at', '<>', null],
         ]);
     }
 }

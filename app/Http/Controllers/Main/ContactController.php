@@ -57,10 +57,11 @@ class ContactController extends BaseContactController
                 'message' => $request->message,
             ]);
 
-            if ($requiresConfirmation)
+            if ($requiresConfirmation) {
                 $message->useDefaultExpiresAt();
-            else
+            } else {
                 $message->approved_at = now();
+            }
 
             $message->save();
         });

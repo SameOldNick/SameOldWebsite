@@ -4,7 +4,6 @@ namespace App\Listeners\Contact;
 
 use App\Events\Contact\ContactSubmissionRequiresApproval;
 use App\Mail\ConfirmMessage;
-use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Mail;
 
 class SendConfirmMessage
