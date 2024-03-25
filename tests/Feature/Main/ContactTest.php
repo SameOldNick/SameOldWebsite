@@ -500,4 +500,83 @@ class ContactTest extends TestCase
         Event::assertNotDispatched(ContactSubmissionConfirmed::class);
         Event::assertNotDispatched(ContactSubmissionApproved::class);
     }
+
+    /**
+     * Tests ContactMessage model is created and not marked as approved when confirmation is required.
+     *
+     * @return void
+     */
+    public function testContactProcessRequiresConfirmationModelCreated() {
+        $this->pageSetting('contact', [
+            'require_confirmation' => true,
+        ]);
+
+        $data = [
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'message' => $this->faker->paragraphs(3, true),
+        ];
+
+        $this
+            ->assertGuest()
+            ->post(route('contact.process'), $data)
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas(ContactMessage::class, [
+            ['email', '=', $data['email']],
+            ['approved_at', '=', null]
+        ]);
+    }
+
+    /**
+     * Tests ContactMessage model is created and marked as approved when confirmation isn't required.
+     *
+     * @return void
+     */
+    public function testContactProcessModelCreated() {
+        $this->pageSetting('contact', [
+            'require_confirmation' => false,
+        ]);
+
+        $data = [
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'message' => $this->faker->paragraphs(3, true),
+        ];
+
+        $this
+            ->assertGuest()
+            ->post(route('contact.process'), $data)
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas(ContactMessage::class, [
+            ['email', '=', $data['email']],
+            ['approved_at', '<>', null]
+        ]);
+    }
+
+    /**
+     * Tests the ContactMessage model is marked as approved after email is confirmed.
+     *
+     * @return void
+     */
+    public function testContactEmailConfirmationModelApproved()
+    {
+        $contactMessage = ContactMessage::make([
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'message' => $this->faker->paragraphs(3, true),
+        ])->useDefaultExpiresAt();
+
+        $contactMessage->save();
+
+        $this
+            ->get($contactMessage->generateUrl())
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas(ContactMessage::class, [
+            ['email', '=', $contactMessage['email']],
+            ['approved_at', '<>', null]
+        ]);
+    }
 }
