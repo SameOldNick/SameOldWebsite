@@ -22,14 +22,6 @@ class SendConfirmMessage
      */
     public function handle(ContactSubmissionRequiresApproval $event): void
     {
-        $contactMessage = (new ContactMessage([
-            'name' => $event->name,
-            'email' => $event->email,
-            'message' => $event->message,
-        ]))->useDefaultExpiresAt();
-
-        $contactMessage->save();
-
-        Mail::send(ConfirmMessage::create($contactMessage));
+        Mail::send(ConfirmMessage::create($event->message));
     }
 }

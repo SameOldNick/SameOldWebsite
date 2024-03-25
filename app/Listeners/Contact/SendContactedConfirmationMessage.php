@@ -21,6 +21,6 @@ class SendContactedConfirmationMessage
      */
     public function handle(ContactSubmissionApproved $event): void
     {
-        Mail::send(ContactedConfirmation::create($event->name, $event->email, $event->message));
+        Mail::send(ContactedConfirmation::create($event->message->name, $event->message->email, $event->message->message));
     }
 }

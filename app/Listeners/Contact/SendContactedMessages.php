@@ -24,7 +24,7 @@ class SendContactedMessages
      */
     public function handle(ContactSubmissionApproved $event): void
     {
-        $contacted = Contacted::create($event->name, $event->email, $event->message);
+        $contacted = Contacted::create($event->message->name, $event->message->email, $event->message->message);
 
         $this->notifyRoles($this->getRoles(), new MessageNotification($contacted));
     }
