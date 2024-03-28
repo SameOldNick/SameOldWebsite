@@ -21,7 +21,7 @@ class ContactMessage extends Model
         'name',
         'email',
         'message',
-        'approved_at',
+        'confirmed_at',
         'expires_at',
     ];
 
@@ -38,7 +38,7 @@ class ContactMessage extends Model
      * @var array
      */
     protected $casts = [
-        'approved_at' => 'datetime',
+        'confirmed_at' => 'datetime',
         'expires_at' => 'datetime',
     ];
 

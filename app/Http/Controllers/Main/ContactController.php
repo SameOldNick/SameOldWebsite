@@ -60,7 +60,7 @@ class ContactController extends BaseContactController
             if ($requiresConfirmation) {
                 $message->useDefaultExpiresAt();
             } else {
-                $message->approved_at = now();
+                $message->confirmed_at = now();
             }
 
             $message->save();
@@ -93,11 +93,11 @@ class ContactController extends BaseContactController
     public function confirm(Request $request, ContactMessage $contactMessage)
     {
         // Check if already approved
-        if (! is_null($contactMessage->approved_at)) {
+        if (! is_null($contactMessage->confirmed_at)) {
             abort(409, __('The confirmation link is no longer valid.'));
         }
 
-        $contactMessage->approved_at = now();
+        $contactMessage->confirmed_at = now();
         $contactMessage->save();
 
         ContactSubmissionConfirmed::dispatch($contactMessage);

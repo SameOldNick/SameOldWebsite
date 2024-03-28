@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::table('pending_messages', function (Blueprint $table) {
             $table->rename('contact_messages');
 
-            $table->timestamp('approved_at')->nullable()->after('updated_at');
+            $table->timestamp('confirmed_at')->nullable()->after('updated_at');
             $table->timestamp('expires_at')->nullable()->default(null)->change();
         });
     }

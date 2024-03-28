@@ -34,7 +34,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactSubmissionApprovedEventFired()
+    public function testContactSubmissionConfirmedEventFired()
     {
         Event::fake();
 
@@ -476,11 +476,11 @@ class ContactTest extends TestCase
     }
 
     /**
-     * Test logic for confirming already approved following contact form submission.
+     * Test logic for confirming already confirmed following contact form submission.
      *
      * @return void
      */
-    public function testContactEmailConfirmationAlreadyApproved()
+    public function testContactEmailConfirmationAlreadyConfirmed()
     {
         Event::fake();
 
@@ -488,7 +488,7 @@ class ContactTest extends TestCase
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'message' => $this->faker->paragraphs(3, true),
-            'approved_at' => $this->faker->dateTimeBetween(),
+            'confirmed_at' => $this->faker->dateTimeBetween(),
         ]);
 
         $contactMessage->save();
@@ -502,7 +502,7 @@ class ContactTest extends TestCase
     }
 
     /**
-     * Tests ContactMessage model is created and not marked as approved when confirmation is required.
+     * Tests ContactMessage model is created and not marked as confirmed when confirmation is required.
      *
      * @return void
      */
@@ -525,12 +525,12 @@ class ContactTest extends TestCase
 
         $this->assertDatabaseHas(ContactMessage::class, [
             ['email', '=', $data['email']],
-            ['approved_at', '=', null],
+            ['confirmed_at', '=', null],
         ]);
     }
 
     /**
-     * Tests ContactMessage model is created and marked as approved when confirmation isn't required.
+     * Tests ContactMessage model is created and marked as confirmed when confirmation isn't required.
      *
      * @return void
      */
@@ -553,16 +553,16 @@ class ContactTest extends TestCase
 
         $this->assertDatabaseHas(ContactMessage::class, [
             ['email', '=', $data['email']],
-            ['approved_at', '<>', null],
+            ['confirmed_at', '<>', null],
         ]);
     }
 
     /**
-     * Tests the ContactMessage model is marked as approved after email is confirmed.
+     * Tests the ContactMessage model is marked as confirmed.
      *
      * @return void
      */
-    public function testContactEmailConfirmationModelApproved()
+    public function testContactEmailConfirmationModelConfirmed()
     {
         $contactMessage = ContactMessage::make([
             'name' => $this->faker->name,
@@ -578,7 +578,7 @@ class ContactTest extends TestCase
 
         $this->assertDatabaseHas(ContactMessage::class, [
             ['email', '=', $contactMessage['email']],
-            ['approved_at', '<>', null],
+            ['confirmed_at', '<>', null],
         ]);
     }
 }

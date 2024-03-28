@@ -31,7 +31,7 @@ class ContactMessageFactory extends Factory
     public function confirmed()
     {
         return $this->state([
-            'approved_at' => $this->faker->dateTimeBetween('now', '+1 month'),
+            'confirmed_at' => $this->faker->dateTimeBetween('now', '+1 month'),
         ]);
     }
 
