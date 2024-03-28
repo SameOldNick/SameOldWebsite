@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Main;
 
-use App\Events\Contact\ContactSubmissionApproved;
 use App\Events\Contact\ContactSubmissionConfirmed;
-use App\Events\Contact\ContactSubmissionRequiresApproval;
+use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Http\Controllers\Pages\ContactController as BaseContactController;
 use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
@@ -67,14 +66,14 @@ class ContactController extends BaseContactController
         });
 
         if ($requiresConfirmation) {
-            ContactSubmissionRequiresApproval::dispatch($message);
+            ContactSubmissionRequiresConfirmation::dispatch($message);
 
             return view('main.contact', [
                 'success' => __('Please check your e-mail for further instructions.'),
                 'settings' => $this->getSettings()->toArray(),
             ]);
         } else {
-            ContactSubmissionApproved::dispatch($message);
+            ContactSubmissionConfirmed::dispatch($message);
 
             return view('main.contact', [
                 'success' => __('Thank you for your message! You will receive a reply shortly.'),
@@ -101,7 +100,6 @@ class ContactController extends BaseContactController
         $contactMessage->save();
 
         ContactSubmissionConfirmed::dispatch($contactMessage);
-        ContactSubmissionApproved::dispatch($contactMessage);
 
         return view('main.contact', [
             'success' => __('Thank you for your message! You will receive a reply shortly.'),

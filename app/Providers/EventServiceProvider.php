@@ -9,8 +9,8 @@ use App\Events\Articles\ArticleScheduled;
 use App\Events\Articles\ArticleUnpublished;
 use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentCreated;
-use App\Events\Contact\ContactSubmissionApproved;
-use App\Events\Contact\ContactSubmissionRequiresApproval;
+use App\Events\Contact\ContactSubmissionConfirmed;
+use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Events\PageUpdated;
 use App\Listeners\Contact\SendConfirmMessage;
 use App\Listeners\Contact\SendContactedConfirmationMessage;
@@ -42,10 +42,10 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
             LogUserRegistered::class,
         ],
-        ContactSubmissionRequiresApproval::class => [
+        ContactSubmissionRequiresConfirmation::class => [
             SendConfirmMessage::class,
         ],
-        ContactSubmissionApproved::class => [
+        ContactSubmissionConfirmed::class => [
             SendContactedMessages::class,
             SendContactedConfirmationMessage::class,
         ],

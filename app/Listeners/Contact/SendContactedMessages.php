@@ -2,7 +2,7 @@
 
 namespace App\Listeners\Contact;
 
-use App\Events\Contact\ContactSubmissionApproved;
+use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Mail\Contacted;
 use App\Notifications\MessageNotification;
 use App\Traits\Support\NotifiesRoles;
@@ -22,7 +22,7 @@ class SendContactedMessages
     /**
      * Handle the event.
      */
-    public function handle(ContactSubmissionApproved $event): void
+    public function handle(ContactSubmissionConfirmed $event): void
     {
         $contacted = Contacted::create($event->message->name, $event->message->email, $event->message->message);
 

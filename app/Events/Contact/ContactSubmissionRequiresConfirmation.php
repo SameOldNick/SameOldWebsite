@@ -7,7 +7,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ContactSubmissionRequiresApproval
+class ContactSubmissionRequiresConfirmation
 {
     use Dispatchable;
     use InteractsWithSockets;

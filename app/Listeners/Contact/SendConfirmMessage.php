@@ -2,7 +2,7 @@
 
 namespace App\Listeners\Contact;
 
-use App\Events\Contact\ContactSubmissionRequiresApproval;
+use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Mail\ConfirmMessage;
 use Illuminate\Support\Facades\Mail;
 
@@ -19,7 +19,7 @@ class SendConfirmMessage
     /**
      * Handle the event.
      */
-    public function handle(ContactSubmissionRequiresApproval $event): void
+    public function handle(ContactSubmissionRequiresConfirmation $event): void
     {
         Mail::send(ConfirmMessage::create($event->message));
     }
