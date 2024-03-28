@@ -2,9 +2,8 @@
 
 namespace Tests\Feature\Main;
 
-use App\Events\Contact\ContactSubmissionApproved;
 use App\Events\Contact\ContactSubmissionConfirmed;
-use App\Events\Contact\ContactSubmissionRequiresApproval;
+use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Mail\ConfirmMessage;
 use App\Mail\Contacted;
 use App\Mail\ContactedConfirmation;
@@ -53,7 +52,7 @@ class ContactTest extends TestCase
             ->post(route('contact.process'), $data)
             ->assertSuccessful();
 
-        Event::assertDispatched(ContactSubmissionApproved::class);
+        Event::assertDispatched(ContactSubmissionConfirmed::class);
     }
 
     /**
@@ -80,7 +79,7 @@ class ContactTest extends TestCase
             ->post(route('contact.process'), $data)
             ->assertSuccessful();
 
-        Event::assertDispatched(ContactSubmissionRequiresApproval::class);
+        Event::assertDispatched(ContactSubmissionRequiresConfirmation::class);
     }
 
     /**
@@ -446,7 +445,6 @@ class ContactTest extends TestCase
             ->assertSuccessful();
 
         Event::assertDispatched(ContactSubmissionConfirmed::class);
-        Event::assertDispatched(ContactSubmissionApproved::class);
     }
 
     /**
@@ -472,7 +470,6 @@ class ContactTest extends TestCase
             ->assertForbidden();
 
         Event::assertNotDispatched(ContactSubmissionConfirmed::class);
-        Event::assertNotDispatched(ContactSubmissionApproved::class);
     }
 
     /**
@@ -498,7 +495,6 @@ class ContactTest extends TestCase
             ->assertConflict();
 
         Event::assertNotDispatched(ContactSubmissionConfirmed::class);
-        Event::assertNotDispatched(ContactSubmissionApproved::class);
     }
 
     /**
