@@ -24,4 +24,4 @@ const Messages: React.FC<IProps> = ({ }) => {
     );
 };
 
-export default requiresRolesForPage(Messages, ['change_contact_settings']);
+export default requiresRolesForPage(Messages, ['view_contact_messages']);
