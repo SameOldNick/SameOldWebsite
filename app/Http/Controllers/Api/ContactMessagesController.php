@@ -46,8 +46,9 @@ class ContactMessagesController extends Controller
             $contactMessage->{$key} = $value;
         }
 
-        if ($contactMessage->isDirty(array_keys($validated)))
+        if ($contactMessage->isDirty(array_keys($validated))) {
             $contactMessage->save();
+        }
 
         return $contactMessage;
     }
