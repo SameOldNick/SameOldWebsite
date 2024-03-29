@@ -198,6 +198,17 @@ declare global {
     interface IChartBrowsers {
         [browser: string]: number;
     }
+
+    interface IContactMessage {
+        uuid: string;
+        name: string;
+        email: string;
+        message: string;
+        created_at: string;
+        updated_at: string | null;
+        confirmed_at: string | null;
+        expires_at: string | null;
+    }
 }
 
 export { };
