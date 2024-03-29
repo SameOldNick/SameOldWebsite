@@ -1,46 +1,45 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import { FaEnvelope, FaEnvelopeOpen, FaExternalLinkAlt } from 'react-icons/fa';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import { FaExternalLinkAlt, FaRegCheckCircle, FaRegTimesCircle, FaToolbox, FaTrash } from 'react-icons/fa';
 
 import S from 'string';
 
+import ContactMessage from '@admin/utils/api/models/ContactMessage';
+
 interface IRowProps {
-    notification: TMessageNotification;
+    message: ContactMessage;
     onViewClicked: () => void;
-    onMarkReadClicked: () => void;
-    onMarkUnreadClicked: () => void;
+    onMarkUnconfirmedClicked: () => void;
+    onMarkConfirmedClicked: () => void;
+    onRemoveClicked: () => void;
 }
 
-const MessageRow: React.FC<IRowProps> = ({ notification, onViewClicked, onMarkReadClicked, onMarkUnreadClicked }) => {
-    const address = notification.data.addresses.replyTo.length > 0 ? notification.data.addresses.replyTo[0].address : '(unknown)';
-    const message = S(notification.data.view.text).truncate(75).s;
-
-    const isRead = React.useMemo(() => notification.read_at !== null, [notification]);
-    const styles: React.CSSProperties = React.useMemo(() => !isRead ? { fontWeight: 'bold' } : {}, [isRead]);
+const MessageRow: React.FC<IRowProps> = ({ message, onViewClicked, onMarkUnconfirmedClicked, onMarkConfirmedClicked, onRemoveClicked }) => {
+    const [actionDropdown, setActionDropdown] = React.useState(false);
 
     return (
         <tr>
-            <td style={styles}>{notification.id}</td>
-            <td style={styles}>{address}</td>
-            <td style={styles}>{message}</td>
-            <td>
-                <Button color='primary' className='me-1' onClick={onViewClicked}>
-                    <FaExternalLinkAlt />
-                </Button>
-                {
-                    !isRead ? (
-                        <Button color='primary' title='Mark as unread' onClick={onMarkReadClicked}>
-                            <FaEnvelopeOpen />
-                        </Button>
-                    ) : (
-                        <Button color='primary' title='Mark as read' onClick={onMarkUnreadClicked}>
-                            <FaEnvelope />
-                        </Button>
-                    )
-                }
-
+            <td>{message.message.uuid}</td>
+            <td>{message.displayName}</td>
+            <td>{S(message.message.message).truncate(75).s}</td>
+            <td title={message.createdAt.toISOString()}>
+                {message.createdAt.fromNow()}
             </td>
-
+            <td>{S(message.status).humanize().s}</td>
+            <td>
+                <Dropdown group toggle={() => setActionDropdown((prev) => !prev)} isOpen={actionDropdown}>
+                    <DropdownToggle caret color='primary'>
+                        <FaToolbox />{' '}
+                        Actions
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem onClick={onViewClicked}><FaExternalLinkAlt />{' '}View</DropdownItem>
+                        {message.status !== 'unconfirmed' && <DropdownItem onClick={onMarkUnconfirmedClicked}><FaRegTimesCircle />{' '}Mark Unconfirmed</DropdownItem>}
+                        {message.status !== 'confirmed' && <DropdownItem onClick={onMarkConfirmedClicked}><FaRegCheckCircle />{' '}Mark Confirmed</DropdownItem>}
+                        <DropdownItem onClick={onRemoveClicked}><FaTrash />{' '}Remove</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </td>
         </tr>
     );
 }
