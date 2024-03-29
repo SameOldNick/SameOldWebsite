@@ -96,6 +96,7 @@ Route::namespace(Api::class)->group(function () {
             'social-media' => Api\Homepage\SocialMediaLinkController::class,
         ]);
 
+        Route::apiResource('contact-messages', Api\ContactMessagesController::class)->except(['store']);
         Route::post('/projects/restore/{project}', [Api\Homepage\ProjectsController::class, 'restore'])->withTrashed();
         Route::post('/users/restore/{user}', [Api\UsersController::class, 'restore'])->withTrashed();
     });
