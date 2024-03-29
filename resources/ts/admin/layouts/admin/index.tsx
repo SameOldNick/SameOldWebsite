@@ -55,10 +55,14 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
                             </Sidebar.Dropdown>
                         </Authorized>
 
-                        <Authorized roles={['change_contact_settings']}>
+                        <Authorized roles={['view_contact_messages', 'change_contact_settings']} oneOf>
                             <Sidebar.Dropdown text='Contact' icon={<FaEnvelope />}>
-                                <Sidebar.DropdownItem href='/admin/contact/messages'>View Messages</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/contact/settings'>Settings</Sidebar.DropdownItem>
+                                <Authorized roles={['view_contact_messages']}>
+                                    <Sidebar.DropdownItem href='/admin/contact/messages'>View Messages</Sidebar.DropdownItem>
+                                </Authorized>
+                                <Authorized roles={['change_contact_settings']}>
+                                    <Sidebar.DropdownItem href='/admin/contact/settings'>Settings</Sidebar.DropdownItem>
+                                </Authorized>
                             </Sidebar.Dropdown>
                         </Authorized>
 
