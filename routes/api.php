@@ -49,9 +49,6 @@ Route::namespace(Api::class)->group(function () {
             Route::get('/homepage', [Api\Homepage\MetaDataController::class, 'show']);
             Route::post('/homepage', [Api\Homepage\MetaDataController::class, 'update']);
 
-            Route::get('/homepage/social-media', [Api\Homepage\SocialMediaController::class, 'show']);
-            Route::post('/homepage/social-media', [Api\Homepage\SocialMediaController::class, 'update']);
-
             Route::get('/contact', [Api\Contact\MetaDataController::class, 'show']);
             Route::post('/contact', [Api\Contact\MetaDataController::class, 'update']);
         });
@@ -61,6 +58,7 @@ Route::namespace(Api::class)->group(function () {
         Route::prefix('/blog')->group(function () {
             Route::apiResource('articles', Api\Blog\ArticleController::class);
             Route::apiResource('articles.revisions', Api\Blog\RevisionController::class)->except(['update']);
+            //Route::apiResource('articles.images', Api\Blog\ArticleImageController::class)->except(['update']);
             Route::apiResource('comments', Api\Blog\CommentController::class)->except(['store']);
 
             Route::post('/comments/{comment}/approve', [Api\Blog\CommentController::class, 'approve'])->withTrashed();
@@ -97,6 +95,7 @@ Route::namespace(Api::class)->group(function () {
         ]);
 
         Route::apiResource('contact-messages', Api\ContactMessagesController::class)->except(['store']);
+
         Route::post('/projects/restore/{project}', [Api\Homepage\ProjectsController::class, 'restore'])->withTrashed();
         Route::post('/users/restore/{user}', [Api\UsersController::class, 'restore'])->withTrashed();
     });
