@@ -21,13 +21,14 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMessageNameUpdated() {
+    public function testMessageNameUpdated()
+    {
         $message = ContactMessage::factory()->requiresConfirmation()->create();
 
         $name = $this->faker()->name;
 
         $response = $this->withRoles(['view_contact_messages'])->putJson(sprintf('/api/contact-messages/%s', $message->getKey()), [
-            'name' => $name
+            'name' => $name,
         ]);
 
         $response->assertSuccessful();
@@ -46,13 +47,14 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMessageEmailUpdated() {
+    public function testMessageEmailUpdated()
+    {
         $message = ContactMessage::factory()->requiresConfirmation()->create();
 
         $email = $this->faker()->email;
 
         $response = $this->withRoles(['view_contact_messages'])->putJson(sprintf('/api/contact-messages/%s', $message->getKey()), [
-            'email' => $email
+            'email' => $email,
         ]);
 
         $response->assertSuccessful();
@@ -71,13 +73,14 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMessageUpdated() {
+    public function testMessageUpdated()
+    {
         $message = ContactMessage::factory()->requiresConfirmation()->create();
 
         $text = $this->faker()->realText();
 
         $response = $this->withRoles(['view_contact_messages'])->putJson(sprintf('/api/contact-messages/%s', $message->getKey()), [
-            'message' => $text
+            'message' => $text,
         ]);
 
         $response->assertSuccessful();
@@ -96,11 +99,12 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMarkMessageConfirmed() {
+    public function testMarkMessageConfirmed()
+    {
         $message = ContactMessage::factory()->requiresConfirmation()->create();
 
         $response = $this->withRoles(['view_contact_messages'])->putJson(sprintf('/api/contact-messages/%s', $message->getKey()), [
-            'confirmed_at' => now()
+            'confirmed_at' => now(),
         ]);
 
         $response->assertSuccessful();
@@ -113,11 +117,12 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMarkMessageUnconfirmed() {
+    public function testMarkMessageUnconfirmed()
+    {
         $message = ContactMessage::factory()->confirmed()->requiresConfirmation()->create();
 
         $response = $this->withRoles(['view_contact_messages'])->putJson(sprintf('/api/contact-messages/%s', $message->getKey()), [
-            'confirmed_at' => null
+            'confirmed_at' => null,
         ]);
 
         $response->assertSuccessful();
@@ -130,7 +135,8 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testRemoveContactMessage() {
+    public function testRemoveContactMessage()
+    {
         $message = ContactMessage::factory()->confirmed()->requiresConfirmation()->create();
 
         $response = $this->withRoles(['view_contact_messages'])->deleteJson(sprintf('/api/contact-messages/%s', $message->getKey()));
