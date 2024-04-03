@@ -28,14 +28,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         $this->registerGates();
-
-        Password::defaults(function () {
-            $rule = Password::min(8);
-
-            return $this->app->isProduction()
-                        ? $rule->mixedCase()->numbers()->symbols()->rules('uncommon_password')
-                        : $rule;
-        });
     }
 
     /**
