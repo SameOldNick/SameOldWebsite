@@ -38,7 +38,6 @@ class MacrosServiceProvider extends ServiceProvider
         $this->urlGeneratorMacros();
         $this->strMacros();
         $this->responseMacros();
-        $this->notificationMacros();
         $this->databaseMacros();
     }
 
@@ -109,21 +108,6 @@ class MacrosServiceProvider extends ServiceProvider
 
         Response::macro('withMessage', function ($message, array $extra = [], $status = 200, array $headers = []) {
             return response($extra + ['message' => $message], $status, $headers);
-        });
-    }
-
-    protected function notificationMacros()
-    {
-        // Allow verify email URL to work with API
-        VerifyEmail::createUrlUsing(function ($notifiable) {
-            return URL::temporarySignedRouteNoPath(
-                'verification.verify',
-                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
-                [
-                    $notifiable->getKeyName() => $notifiable->getKey(),
-                    'hash' => sha1($notifiable->getEmailForVerification()),
-                ]
-            );
         });
     }
 
