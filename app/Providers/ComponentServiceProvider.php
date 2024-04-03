@@ -13,6 +13,7 @@ use App\Components\MFA\ServiceProvider as MFAServiceProvider;
 use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use App\Components\Security\ServiceProvider as SecurityServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
+use App\Components\Passwords\ServiceProvider as PasswordsServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider
@@ -34,5 +35,6 @@ class ComponentServiceProvider extends AggregateServiceProvider
         EncryptionServiceProvider::class,
         MFAServiceProvider::class,
         FakersServiceProvider::class,
+        PasswordsServiceProvider::class,
     ];
 }
