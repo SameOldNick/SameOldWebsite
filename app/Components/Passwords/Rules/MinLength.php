@@ -5,12 +5,11 @@ namespace App\Components\Passwords\Rules;
 use App\Components\Passwords\Contracts\Rule;
 use App\Components\Passwords\Password;
 
-class MinLength implements Rule {
+class MinLength implements Rule
+{
     public function __construct(
         public readonly int $min
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -24,7 +23,8 @@ class MinLength implements Rule {
     /**
      * @inheritDoc
      */
-    public function configure(Password $password): Password {
+    public function configure(Password $password): Password
+    {
         return $password->setMin($this->min);
     }
 }

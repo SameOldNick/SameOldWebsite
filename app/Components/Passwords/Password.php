@@ -2,12 +2,13 @@
 
 namespace App\Components\Passwords;
 
-use InvalidArgumentException;
+use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rules\Password as LaravelPassword;
-use Closure;
+use InvalidArgumentException;
 
-final class Password extends LaravelPassword {
+final class Password extends LaravelPassword
+{
     public function __construct()
     {
         $this->min = 1;
@@ -19,7 +20,8 @@ final class Password extends LaravelPassword {
      * @param callable $rule
      * @return $this
      */
-    public function addRule(callable $rule) {
+    public function addRule(callable $rule)
+    {
         array_push($this->customRules, $rule);
 
         return $this;
@@ -28,7 +30,7 @@ final class Password extends LaravelPassword {
     /**
      * Specify additional validation rules that should be merged with the default rules during validation.
      *
-     * @param  \Closure|string|array  $rules
+     * @param  Closure|string|array  $rules
      * @return $this
      */
     public function rules($rules)
@@ -37,7 +39,7 @@ final class Password extends LaravelPassword {
 
         if (is_callable($wrapped)) {
             $this->addRule($wrapped);
-        } else if (Arr::accessible($wrapped)) {
+        } elseif (Arr::accessible($wrapped)) {
             foreach ((array) $wrapped as $value) {
                 $this->addRule($value);
             }
@@ -52,8 +54,9 @@ final class Password extends LaravelPassword {
      * Use the {@see Password::setMin()} method instead.
      * @throws InvalidArgumentException
      */
-    public static function min($size) {
-        throw new InvalidArgumentException("This function is not supported.");
+    public static function min($size)
+    {
+        throw new InvalidArgumentException('This function is not supported.');
     }
 
     /**
@@ -73,10 +76,11 @@ final class Password extends LaravelPassword {
     /**
      * Sets the maximum length of the password.
      *
-     * @param integer $size
+     * @param int $size
      * @return $this
      */
-    public function setMax(int $size) {
+    public function setMax(int $size)
+    {
         return $this->max($size);
     }
 }

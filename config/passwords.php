@@ -54,10 +54,10 @@ return [
                 'blacklists' => ['common-passwords'],
 
                 /**
-                * Deny substitutions for letters or characters.
-                * Example: "p@assw0rd" instead of "password"
-                */
-                'substitutions' => true
+                 * Deny substitutions for letters or characters.
+                 * Example: "p@assw0rd" instead of "password"
+                 */
+                'substitutions' => true,
             ],
         ],
 
@@ -110,10 +110,10 @@ return [
                 'blacklists' => [],
 
                 /**
-                * Deny substitutions for letters or characters.
-                * Example: "p@assw0rd" instead of "password"
-                */
-                'substitutions' => true
+                 * Deny substitutions for letters or characters.
+                 * Example: "p@assw0rd" instead of "password"
+                 */
+                'substitutions' => true,
             ],
         ],
     ],

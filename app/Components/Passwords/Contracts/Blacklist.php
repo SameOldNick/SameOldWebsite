@@ -4,7 +4,8 @@ namespace App\Components\Passwords\Contracts;
 
 use SensitiveParameter;
 
-interface Blacklist {
+interface Blacklist
+{
     /**
      * Checks if value is blacklisted.
      *

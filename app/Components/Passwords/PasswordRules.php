@@ -5,11 +5,12 @@ namespace App\Components\Passwords;
 use App\Components\Passwords\Contracts\Rule;
 use App\Components\Passwords\Rules\CustomRule;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
-final class PasswordRules {
+final class PasswordRules
+{
     use Macroable {
         Macroable::__call as callMacro;
     }
@@ -39,7 +40,8 @@ final class PasswordRules {
      * @param Rule $rule
      * @return static
      */
-    public function addRule(Rule $rule): static {
+    public function addRule(Rule $rule): static
+    {
         array_push($this->rules, $rule);
 
         return $this;
@@ -51,17 +53,18 @@ final class PasswordRules {
      * @param array $config
      * @return static
      */
-    public function fromConfig(array $config): static {
+    public function fromConfig(array $config): static
+    {
         foreach ($config as $key => $value) {
             if ($this->isMappedRule($key)) {
                 $this->addRule($this->getMappedRule($key, Arr::wrap($value)));
-            } else if (isset($value['class']) && is_subclass_of($value['class'], Rule::class)) {
+            } elseif (isset($value['class']) && is_subclass_of($value['class'], Rule::class)) {
                 $this->addRule(new CustomRule(function (Password $password) use ($value) {
                     $rule = App::make($value['class'], compact('value'));
 
                     return $rule->configure($password);
                 }));
-            } else if (isset($value['callback']) && is_callable($value['callback'])) {
+            } elseif (isset($value['callback']) && is_callable($value['callback'])) {
                 $this->addRule(new CustomRule($value['callback']));
             }
         }
@@ -74,7 +77,8 @@ final class PasswordRules {
      *
      * @return Rule[]
      */
-    public function getRules(): array {
+    public function getRules(): array
+    {
         return $this->rules;
     }
 
@@ -85,7 +89,8 @@ final class PasswordRules {
      * @param string $class
      * @return $this
      */
-    public function addRuleMapping(string $key, string $class): static {
+    public function addRuleMapping(string $key, string $class): static
+    {
         $this->ruleMappings[$key] = $class;
 
         return $this;
@@ -96,7 +101,8 @@ final class PasswordRules {
      *
      * @return array
      */
-    protected function getPredefinedRuleMappings(): array {
+    protected function getPredefinedRuleMappings(): array
+    {
         return [
             'min' => Rules\MinLength::class,
             'minimum' => Rules\MinLength::class,
@@ -118,9 +124,10 @@ final class PasswordRules {
      * Checks if key is mapped to Rule class.
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
-    protected function isMappedRule($key): bool {
+    protected function isMappedRule($key): bool
+    {
         return isset($this->ruleMappings[$key]);
     }
 
@@ -131,7 +138,8 @@ final class PasswordRules {
      * @param array $value
      * @return Rule
      */
-    protected function getMappedRule($key, array $value): Rule {
+    protected function getMappedRule($key, array $value): Rule
+    {
         $class = $this->ruleMappings[$key];
 
         return new $class(...$value);

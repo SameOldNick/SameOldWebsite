@@ -5,36 +5,36 @@ namespace App\Components\Passwords\Rules;
 use App\Components\Passwords\Contracts\Blacklist as BlacklistContract;
 use App\Components\Passwords\Rules\Blacklists\CommonPasswords;
 use Closure;
-use SensitiveParameter;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use SensitiveParameter;
 
-class Blacklist extends ValidationRule {
+class Blacklist extends ValidationRule
+{
     protected static $blacklistMapping = [
-        'common-passwords' => CommonPasswords::class
+        'common-passwords' => CommonPasswords::class,
     ];
 
     public function __construct(
         protected readonly array $blacklists,
         protected readonly bool $substitutions = false
-    )
+    ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isEnabled(): bool
     {
-
+        return ! empty($this->blacklists);
     }
 
     /**
      * @inheritDoc
      */
-    public function isEnabled(): bool {
-        return !empty($this->blacklists);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function validate(string $attribute, #[SensitiveParameter] mixed $value, Closure $fail) {
+    public function validate(string $attribute, #[SensitiveParameter] mixed $value, Closure $fail)
+    {
         foreach ($this->getVariants($value) as $variant) {
             if ($this->isBlacklisted($variant)) {
                 $fail(__('The password has been blacklisted.'));
@@ -48,7 +48,8 @@ class Blacklist extends ValidationRule {
      * @param string $value
      * @return array
      */
-    protected function getVariants(#[SensitiveParameter] string $value): array {
+    protected function getVariants(#[SensitiveParameter] string $value): array
+    {
         $variants = [$value, Str::lower($value)];
 
         if ($this->substitutions) {
@@ -62,12 +63,14 @@ class Blacklist extends ValidationRule {
      * Checks if blacklisted.
      *
      * @param string $value
-     * @return boolean
+     * @return bool
      */
-    protected function isBlacklisted(#[SensitiveParameter] string $value): bool {
+    protected function isBlacklisted(#[SensitiveParameter] string $value): bool
+    {
         foreach ($this->getBlacklists() as $blacklist) {
-            if ($blacklist->isBlacklisted($value))
+            if ($blacklist->isBlacklisted($value)) {
                 return true;
+            }
         }
 
         return false;
@@ -78,7 +81,8 @@ class Blacklist extends ValidationRule {
      *
      * @return BlacklistContract[]
      */
-    protected function getBlacklists(): array {
+    protected function getBlacklists(): array
+    {
         return array_map(function ($list) {
             if (is_object($list) && $list instanceof BlacklistContract) {
                 return $list;
@@ -95,10 +99,11 @@ class Blacklist extends ValidationRule {
      * @return BlacklistContract
      * @throws InvalidArgumentException Thrown if blacklist cannot be resolved.
      */
-    protected function getBlacklist(string $key): BlacklistContract {
+    protected function getBlacklist(string $key): BlacklistContract
+    {
         if ($this->isBlacklistMapped($key)) {
             return $this->mapBlacklist($key);
-        } else if (is_subclass_of($key, BlacklistContract::class)) {
+        } elseif (is_subclass_of($key, BlacklistContract::class)) {
             return $this->createBlacklist($key);
         } else {
             throw new InvalidArgumentException(__("The provided key ':key' could not be resolved to anything meaningful.", ['key' => $key]));
@@ -109,9 +114,10 @@ class Blacklist extends ValidationRule {
      * Checks if key maps to blacklist
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
-    protected function isBlacklistMapped(string $key): bool {
+    protected function isBlacklistMapped(string $key): bool
+    {
         return isset(static::$blacklistMapping[$key]);
     }
 
@@ -121,7 +127,8 @@ class Blacklist extends ValidationRule {
      * @param string $key
      * @return BlacklistContract
      */
-    protected function mapBlacklist(string $key): BlacklistContract {
+    protected function mapBlacklist(string $key): BlacklistContract
+    {
         return $this->createBlacklist(static::$blacklistMapping[$key]);
     }
 
@@ -131,7 +138,8 @@ class Blacklist extends ValidationRule {
      * @param string $class
      * @return BlacklistContract
      */
-    protected function createBlacklist(string $class): BlacklistContract {
+    protected function createBlacklist(string $class): BlacklistContract
+    {
         return App::make($class);
     }
 }

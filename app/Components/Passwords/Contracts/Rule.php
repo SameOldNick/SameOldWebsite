@@ -4,11 +4,12 @@ namespace App\Components\Passwords\Contracts;
 
 use App\Components\Passwords\Password;
 
-interface Rule {
+interface Rule
+{
     /**
      * Determines if rule is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled(): bool;
 

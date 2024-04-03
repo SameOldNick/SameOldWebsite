@@ -4,7 +4,8 @@ namespace App\Components\Passwords\Rules;
 
 use Closure;
 
-class CustomValidationRule extends ValidationRule {
+class CustomValidationRule extends ValidationRule
+{
     /**
      * Initializes CustomValidationRule instance
      *
@@ -12,9 +13,7 @@ class CustomValidationRule extends ValidationRule {
      */
     public function __construct(
         protected readonly Closure $callback
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -25,11 +24,11 @@ class CustomValidationRule extends ValidationRule {
         return true;
     }
 
-
     /**
      * @inheritDoc
      */
-    public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail) {
+    public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail)
+    {
         call_user_func($this->callback, [$attribute, $value, $fail]);
     }
 }

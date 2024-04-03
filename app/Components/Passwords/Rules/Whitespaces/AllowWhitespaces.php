@@ -2,10 +2,11 @@
 
 namespace App\Components\Passwords\Rules\Whitespaces;
 
-use Closure;
 use App\Components\Passwords\Rules\ValidationRule;
+use Closure;
 
-class AllowWhitespaces extends ValidationRule {
+class AllowWhitespaces extends ValidationRule
+{
     /**
      * Initializes AllowWhitespaces instance
      *
@@ -17,22 +18,22 @@ class AllowWhitespaces extends ValidationRule {
         protected readonly mixed $spaces = false,
         protected readonly mixed $tabs = false,
         protected readonly mixed $newlines = false,
-    )
-    {
-
+    ) {
     }
 
     /**
      * @inheritDoc
      */
-    public function isEnabled(): bool {
+    public function isEnabled(): bool
+    {
         return true;
     }
 
     /**
      * @inheritDoc
      */
-    public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail) {
+    public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail)
+    {
         if (preg_match_all('/[ ]/', $value) > $this->max($this->spaces)) {
             $fail(__('The password must have no more than :count spaces.', ['count' => $this->max($this->spaces)]));
         }
@@ -52,7 +53,8 @@ class AllowWhitespaces extends ValidationRule {
      * @param bool|int $value
      * @return int
      */
-    protected function max($value) {
+    protected function max($value)
+    {
         return $value === true ? PHP_INT_MAX : (int) $value;
     }
 }

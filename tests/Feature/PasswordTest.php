@@ -6,8 +6,8 @@ use App\Components\Passwords\PasswordFactory;
 use App\Components\Passwords\PasswordRules;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Tests\CreatesApplication;
 
@@ -55,7 +55,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_exceeds_min_length() {
+    public function test_password_exceeds_min_length()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->min(12);
         });
@@ -73,7 +74,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_under_min_length() {
+    public function test_password_under_min_length()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->min(12);
         });
@@ -91,7 +93,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_exceeds_max_length() {
+    public function test_password_exceeds_max_length()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->max(12);
         });
@@ -109,7 +112,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_under_max_length() {
+    public function test_password_under_max_length()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->max(12);
         });
@@ -127,7 +131,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_has_lowercase() {
+    public function test_password_has_lowercase()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->lowercase(1);
         });
@@ -145,7 +150,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_missing_lowercase() {
+    public function test_password_missing_lowercase()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->lowercase(1);
         });
@@ -163,7 +169,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_has_uppercase() {
+    public function test_password_has_uppercase()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->uppercase(1);
         });
@@ -181,7 +188,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_missing_uppercase() {
+    public function test_password_missing_uppercase()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->uppercase(1);
         });
@@ -199,7 +207,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_has_numbers() {
+    public function test_password_has_numbers()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->numbers(1);
         });
@@ -217,7 +226,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_missing_numbers() {
+    public function test_password_missing_numbers()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->numbers(1);
         });
@@ -235,7 +245,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_has_symbols() {
+    public function test_password_has_symbols()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->symbols(1);
         });
@@ -253,7 +264,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_missing_symbols() {
+    public function test_password_missing_symbols()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->symbols(1);
         });
@@ -271,7 +283,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_has_ascii() {
+    public function test_password_has_ascii()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->ascii(true);
         });
@@ -289,7 +302,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_non_ascii_allowed() {
+    public function test_password_non_ascii_allowed()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->ascii(false);
         });
@@ -307,7 +321,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_non_ascii_disallowed() {
+    public function test_password_non_ascii_disallowed()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->ascii(true);
         });
@@ -325,7 +340,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_deny_whitespaces() {
+    public function test_password_deny_whitespaces()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->whitespaces(true);
         });
@@ -351,7 +367,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_allow_spaces() {
+    public function test_password_allow_spaces()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->allowWhitespaces(spaces: true);
         });
@@ -381,7 +398,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_allow_tabs() {
+    public function test_password_allow_tabs()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->allowWhitespaces(tabs: true);
         });
@@ -411,7 +429,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_allow_newlines() {
+    public function test_password_allow_newlines()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->allowWhitespaces(newlines: true);
         });
@@ -441,7 +460,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_is_blacklisted_common() {
+    public function test_password_is_blacklisted_common()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->blacklists(['common-passwords']);
         });
@@ -459,7 +479,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_is_l33t_blacklisted_common() {
+    public function test_password_is_l33t_blacklisted_common()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->blacklists(['common-passwords'], substitutions: true);
         });
@@ -477,7 +498,8 @@ class PasswordTest extends TestCase
      *
      * @return void
      */
-    public function test_password_isnt_blacklisted_common() {
+    public function test_password_isnt_blacklisted_common()
+    {
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
             $rules->blacklists(['common-passwords']);
         });
@@ -572,7 +594,7 @@ class PasswordTest extends TestCase
     public function test_password_config_checks_blacklist(): void
     {
         $config = [
-            'blacklists' => ['blacklists' => ['common-passwords']]
+            'blacklists' => ['blacklists' => ['common-passwords']],
         ];
 
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) use ($config) {
@@ -595,8 +617,8 @@ class PasswordTest extends TestCase
         $config = [
             'blacklists' => [
                 'blacklists' => ['common-passwords'],
-                'substitutions' => true
-            ]
+                'substitutions' => true,
+            ],
         ];
 
         $password = PasswordFactory::createPassword(function (PasswordRules $rules) use ($config) {

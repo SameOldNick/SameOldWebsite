@@ -7,12 +7,11 @@ use App\Components\Passwords\Password;
 use Closure;
 use Illuminate\Support\Facades\App;
 
-class CustomRule implements Rule {
+class CustomRule implements Rule
+{
     public function __construct(
         protected readonly Closure $callback
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -26,7 +25,8 @@ class CustomRule implements Rule {
     /**
      * @inheritDoc
      */
-    public function configure(Password $password): Password {
+    public function configure(Password $password): Password
+    {
         return App::call($this->callback, compact('password'));
     }
 }

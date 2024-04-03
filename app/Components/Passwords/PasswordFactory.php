@@ -4,7 +4,8 @@ namespace App\Components\Passwords;
 
 use Closure;
 
-final class PasswordFactory {
+final class PasswordFactory
+{
     /**
      * Initializes PasswordFactory instance.
      *
@@ -12,8 +13,7 @@ final class PasswordFactory {
      */
     public function __construct(
         protected readonly PasswordRules $rules
-    )
-    {
+    ) {
     }
 
     /**
@@ -21,7 +21,8 @@ final class PasswordFactory {
      *
      * @return Password
      */
-    public function create(): Password {
+    public function create(): Password
+    {
         $password = new Password;
 
         foreach ($this->getRules() as $rule) {
@@ -36,8 +37,9 @@ final class PasswordFactory {
      *
      * @return callable
      */
-    public function createPasswordCallback(): callable {
-        return fn() => $this->create();
+    public function createPasswordCallback(): callable
+    {
+        return fn () => $this->create();
     }
 
     /**
@@ -45,7 +47,8 @@ final class PasswordFactory {
      *
      * @return Contracts\Rule[]
      */
-    protected function getRules() {
+    protected function getRules()
+    {
         return $this->rules->getRules();
     }
 
@@ -55,7 +58,8 @@ final class PasswordFactory {
      * @param Closure $callback Called with PasswordRules as parameter
      * @return static
      */
-    public static function createFactory(Closure $callback): static {
+    public static function createFactory(Closure $callback): static
+    {
         $passwordRules = new PasswordRules;
 
         $callback($passwordRules);
@@ -69,7 +73,8 @@ final class PasswordFactory {
      * @param Closure $callback Called with PasswordRules as parameter
      * @return Password
      */
-    public static function createPassword(Closure $callback): Password {
+    public static function createPassword(Closure $callback): Password
+    {
         return static::createFactory($callback)->create();
     }
 
@@ -79,7 +84,8 @@ final class PasswordFactory {
      * @param Closure $callback Called with PasswordRules as parameter
      * @return Closure
      */
-    public static function createPasswordLazy(Closure $callback): Closure {
-        return fn() => static::createPassword($callback);
+    public static function createPasswordLazy(Closure $callback): Closure
+    {
+        return fn () => static::createPassword($callback);
     }
 }

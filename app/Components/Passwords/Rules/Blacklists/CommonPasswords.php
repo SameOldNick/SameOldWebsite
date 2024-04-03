@@ -4,7 +4,8 @@ namespace App\Components\Passwords\Rules\Blacklists;
 
 use App\Components\Passwords\Contracts\Blacklist;
 
-final class CommonPasswords implements Blacklist {
+final class CommonPasswords implements Blacklist
+{
     /*
      * A list of common passwords that password will be checked against
      * Source: https://techcult.com/most-common-passwords/
@@ -230,7 +231,8 @@ final class CommonPasswords implements Blacklist {
     /**
      * @inheritDoc
      */
-    public function isBlacklisted(#[\SensitiveParameter] string $value): bool {
+    public function isBlacklisted(#[\SensitiveParameter] string $value): bool
+    {
         return preg_match("/{$this->regexPattern}/i", $value);
     }
 
@@ -240,7 +242,8 @@ final class CommonPasswords implements Blacklist {
      * @param array $commonPasswords
      * @return string
      */
-    protected function generateRegexPattern(array $commonPasswords): string {
+    protected function generateRegexPattern(array $commonPasswords): string
+    {
         // Escape special characters in each password
         $escapedPasswords = array_map('preg_quote', $commonPasswords);
 
@@ -248,7 +251,7 @@ final class CommonPasswords implements Blacklist {
         $regexPattern = implode('|', $escapedPasswords);
 
         // Enclose the pattern within word boundaries
-        $regexPattern = '(?:' . $regexPattern . ')';
+        $regexPattern = '(?:'.$regexPattern.')';
 
         return $regexPattern;
     }
@@ -258,7 +261,8 @@ final class CommonPasswords implements Blacklist {
      *
      * @return array
      */
-    public function getBlacklist(): array {
+    public function getBlacklist(): array
+    {
         return static::$commonPasswords;
     }
 }
