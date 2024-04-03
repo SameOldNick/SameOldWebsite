@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\StrongPassword;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class StoreUserRequest extends FormRequest
             'password' => [
                 'required',
                 'confirmed',
-                new StrongPassword,
+                Password::default(),
             ],
             'state_code' => [
                 'nullable',

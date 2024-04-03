@@ -29,7 +29,6 @@ class ValidationServiceProvider extends ServiceProvider
     protected function getRules()
     {
         return [
-            'strong_password' => Rules\StrongPassword::class,
             'uncommon_password' => Rules\UncommonPassword::class,
         ];
     }

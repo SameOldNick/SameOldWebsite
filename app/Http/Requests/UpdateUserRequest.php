@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\StrongPassword;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -33,7 +34,7 @@ class UpdateUserRequest extends FormRequest
             'password' => [
                 'nullable',
                 'confirmed',
-                new StrongPassword,
+                Password::default(),
             ],
             'state_code' => [
                 'nullable',
