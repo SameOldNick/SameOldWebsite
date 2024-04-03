@@ -2,17 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\SQLiteConnection;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\UrlGenerator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -39,7 +31,6 @@ class MacrosServiceProvider extends ServiceProvider
         $this->responseMacros();
         $this->databaseMacros();
     }
-
 
     protected function strMacros()
     {
