@@ -82,4 +82,70 @@ class StrMixin
             ]);
         };
     }
+
+    public function l33t()
+    {
+        return function ($text) {
+            // Define a simple mapping of l33t characters to their English equivalents
+            $mapping = [
+                'a' => ['4', '@'],
+                'A' => ['4'],
+                'B' => ['8'],
+                'c' => ['(', '[', '<'],
+                'C' => ['(', '[', '<'],
+                'e' => ['3'],
+                'E' => ['3'],
+                'g' => ['6', '9'],
+                'G' => ['6', '9'],
+                'i' => ['1', '!'],
+                'I' => ['1', '!'],
+                'l' => ['|'],
+                'o' => ['0'],
+                'O' => ['0'],
+                's' => ['$', '5'],
+                'S' => ['$', '5'],
+                't' => ['7', '+'],
+                'T' => ['7'],
+                'z' => ['2'],
+                'Z' => ['2'],
+            ];
+
+            // Replace English characters with their l33t equivalents
+            return strtr($text, Arr::map($mapping, fn ($chars) => Arr::random($chars)));
+        };
+    }
+
+    public function unl33t()
+    {
+        return function ($text) {
+            // Define a simple mapping of l33t characters to their English equivalents
+            $mapping = [
+                '4' => 'a',
+                '@' => 'a',
+                '8' => 'b',
+                '(' => 'c',
+                '[' => 'c',
+                '<' => 'c',
+                '3' => 'e',
+                '6' => 'g',
+                '9' => 'g',
+                '1' => 'i',
+                '!' => 'i',
+                '|' => 'l',
+                '0' => 'o',
+                '$' => 's',
+                '5' => 's',
+                '7' => 't',
+                '+' => 't',
+                '2' => 'z',
+                '5' => 's',
+                '7' => 't',
+                '+' => 't',
+                '2' => 'z',
+            ];
+
+            // Replace l33t characters with their English equivalents
+            return strtr($text, $mapping);
+        };
+    }
 }
