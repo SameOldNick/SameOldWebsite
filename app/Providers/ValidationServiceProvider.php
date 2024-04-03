@@ -28,9 +28,7 @@ class ValidationServiceProvider extends ServiceProvider
      */
     protected function getRules()
     {
-        return [
-            'uncommon_password' => Rules\UncommonPassword::class,
-        ];
+        return [];
     }
 
     protected function extendRule($name, Rule $rule)
