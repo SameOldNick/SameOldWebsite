@@ -2,10 +2,13 @@
 
 namespace App\Components\Macros;
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Str;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\SQLiteConnection;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -19,6 +22,9 @@ class ServiceProvider extends BaseServiceProvider
         Arr::mixin(new ArrMixin);
         Str::mixin(new StrMixin);
         Collection::mixin(new CollectionMixin);
+        Response::mixin(new ResponseMixin);
+
+        $this->databaseMacros();
 
         Arr::macro('export', function ($array, $ignoreIndexes = true, $shortSyntax = true, $indent = '    ') {
             return self::generateArrayCode($array, 1, $ignoreIndexes, $shortSyntax, $indent);
@@ -32,6 +38,30 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
+    }
+
+    /**
+     * Registers database macros
+     *
+     * @return void
+     */
+    protected function databaseMacros()
+    {
+        /**
+         * SQLite doesn't support dropping foreign keys.
+         * Source: https://github.com/laravel/framework/issues/23461
+         */
+        Blueprint::macro('dropForeignSafe', function ($args) {
+            /**
+             * @var Blueprint $this
+             */
+            if (app('db.connection') instanceof SQLiteConnection) {
+                // Do nothing
+                /** @see Blueprint::ensureCommandsAreValid */
+            } else {
+                $this->dropForeign($args);
+            }
+        });
     }
 
     /**

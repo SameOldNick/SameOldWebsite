@@ -198,8 +198,6 @@ return [
         App\Providers\ValidationServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
-        App\Providers\MacrosServiceProvider::class,
-
     ],
 
     /*

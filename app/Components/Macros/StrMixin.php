@@ -148,4 +148,10 @@ class StrMixin
             return strtr($text, $mapping);
         };
     }
+
+    public function secureEquals() {
+        return function ($known, $user) {
+            return hash_equals($known, $user);
+        };
+    }
 }
