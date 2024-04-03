@@ -2,13 +2,13 @@
 
 namespace App\Components\Macros;
 
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\SQLiteConnection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Str;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\SQLiteConnection;
 
 class ServiceProvider extends BaseServiceProvider
 {

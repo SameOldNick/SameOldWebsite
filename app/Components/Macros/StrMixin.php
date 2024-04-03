@@ -149,7 +149,8 @@ class StrMixin
         };
     }
 
-    public function secureEquals() {
+    public function secureEquals()
+    {
         return function ($known, $user) {
             return hash_equals($known, $user);
         };

@@ -2,8 +2,8 @@
 
 namespace App\Components\Macros;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class ResponseMixin
 {
