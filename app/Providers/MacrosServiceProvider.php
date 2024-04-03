@@ -35,59 +35,11 @@ class MacrosServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->urlGeneratorMacros();
         $this->strMacros();
         $this->responseMacros();
         $this->databaseMacros();
     }
 
-    protected function urlGeneratorMacros()
-    {
-        UrlGenerator::macro('hasValidSignatureNoPath', function (Request $request) {
-            /**
-             * @var UrlGenerator $this
-             */
-            $parameters = Arr::except($request->query(), 'signature') + $request->route()->parameters();
-
-            ksort($parameters);
-
-            $original = rtrim('?'.Arr::query($parameters), '?');
-
-            $expires = $request->query('expires');
-            $key = call_user_func($this->keyResolver);
-
-            return
-                Hash::driver('hash')->check($original, (string) $request->query('signature', ''), ['key' => $key]) &&
-                ! ($expires && Carbon::now()->getTimestamp() > $expires);
-        });
-
-        UrlGenerator::macro('signedRouteNoPath', function ($name, $parameters = [], $expiration = null, $absolute = true) {
-            /**
-             * @var UrlGenerator $this
-             */
-            $parameters = $this->formatParameters($parameters);
-
-            if ($expiration) {
-                $parameters = $parameters + ['expires' => $this->availableAt($expiration)];
-            }
-
-            ksort($parameters);
-
-            $key = call_user_func($this->keyResolver);
-
-            $signature = Hash::driver('hash')->make(rtrim('?'.Arr::query($parameters), '?'), ['key' => $key]);
-
-            return $this->route($name, $parameters + compact('signature'), $absolute);
-        });
-
-        UrlGenerator::macro('temporarySignedRouteNoPath', function ($name, $expiration, $parameters = [], $absolute = true) {
-            /**
-             * @var UrlGenerator $this
-             */
-
-            return $this->signedRouteNoPath($name, $parameters, $expiration, $absolute);
-        });
-    }
 
     protected function strMacros()
     {
