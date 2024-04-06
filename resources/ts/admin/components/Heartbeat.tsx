@@ -1,185 +1,110 @@
 import React from 'react';
-
 import { DateTime } from 'luxon';
 import { awaitAtMost } from '@admin/utils';
 
-const { setTimeout } = window;
+const { setTimeout, clearTimeout } = window;
 
 export interface IHeartbeatCallbackParams {
-    instance: Heartbeat;
     timestamp: DateTime;
     nextBeat: DateTime;
     count: number;
 }
 
 interface IProps {
-    /**
-     * The action to perform at each heart beat.
-     *
-     * @memberof IProps
-     */
     callback: (params: IHeartbeatCallbackParams) => Promise<void>;
-    /**
-     * If set, the callback will be cancelled if time is reached.
-     *
-     * @type {number}
-     * @memberof IProps
-     */
     maxExecutionTimeMs?: number;
-    /**
-     * The minimum number of miliseconds between each heart beat.
-     * The interval will be longer if the page isn't visible.
-     *
-     * @type {number}
-     * @memberof IProps
-     */
     interval: number;
-    /**
-     * If true, the heartbeat will be performed at the set interval. Default is true.
-     *
-     * @type {boolean}
-     * @memberof IProps
-     */
     active: boolean;
-    /**
-     * Performs heartbeat when initially mounted. Default is false.
-     *
-     * @type {boolean}
-     * @memberof IProps
-     */
-    beatOnMount: boolean;
-}
-
-interface IState {
-    nextBeat: number;
-    timeout: number | null;
-    hiddenSince: DateTime | null;
+    beatOnMount?: boolean;
 }
 
 /**
  * Renders a component that performs a heartbeat at specified intervals.
  *
- * @export
- * @class Heartbeat
- * @extends {React.Component<IProps, IState>}
+ * @param {IProps} {
+ *     callback,
+ *     maxExecutionTimeMs,
+ *     interval,
+ *     active,
+ *     beatOnMount = false
+ * }
  */
-export default class Heartbeat extends React.Component<IProps, IState> {
-    public static defaultProps = {
-        requireVisible: true,
-        active: true,
-        beatOnMount: false
-    };
+const Heartbeat: React.FC<IProps> = ({
+    callback,
+    maxExecutionTimeMs,
+    interval,
+    active,
+    beatOnMount = false
+}: IProps) => {
 
-    private callbackCount: number = 0;
+    const [nextBeat, setNextBeat] = React.useState(0);
+    const [hiddenSince, setHiddenSince] = React.useState<DateTime>();
 
-    constructor(props: Readonly<IProps>) {
-        super(props);
+    let callbackCount = 0;
+    let timeout: number | undefined;
 
-        this.state = {
-            nextBeat: 0,
-            timeout: null,
-            hiddenSince: null
+    React.useEffect(() => {
+        const beat = async (doCallback: boolean) => {
+            if (!active) return;
+
+            const currentDate = DateTime.now();
+            const nextBeat = currentDate.valueOf() + Math.abs(interval);
+            const nextBeatDate = DateTime.fromMillis(nextBeat - currentDate.valueOf());
+
+            if (doCallback) {
+                const params: IHeartbeatCallbackParams = {
+                    timestamp: currentDate,
+                    nextBeat: nextBeatDate,
+                    count: ++callbackCount
+                };
+
+                if (maxExecutionTimeMs === undefined) {
+                    await callback(params);
+                } else {
+                    await awaitAtMost(() => callback(params), maxExecutionTimeMs);
+                }
+            }
+
+            setNextBeat(nextBeat);
+
+            timeout = setTimeout(() => beat(true), nextBeatDate.valueOf());
         };
 
-        this.beat = this.beat.bind(this);
-        this.resume = this.resume.bind(this);
-        this.pause = this.pause.bind(this);
-    }
+        const resume = () => {
+            setHiddenSince(undefined);
+            timeout = setTimeout(() => beat(hiddenSince && DateTime.now().diff(hiddenSince, 'milliseconds').toMillis() >= Math.abs(interval) ? true : false), interval);
 
-    public componentDidMount() {
-        const { active, beatOnMount } = this.props;
+        };
 
-        if (active)
-            this.beat(beatOnMount);
-    }
+        const pause = () => {
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = undefined;
+            }
 
-    public componentDidUpdate(prevProps: Readonly<IProps>) {
-        const { active } = this.props;
+            setHiddenSince(DateTime.now());
+        };
 
-        if (active !== prevProps.active) {
-            if (active)
-                this.resume();
-            else
-                this.pause();
-        }
-    }
-
-    public componentWillUnmount() {
-        this.pause();
-    }
-
-    /**
-     * Performs a heart beat.
-     *
-     * @private
-     * @param {boolean} doCallback If true, the callback is executed.
-     * @memberof Heartbeat
-     */
-    private async beat(doCallback: boolean) {
-        const { active, interval, callback, maxExecutionTimeMs } = this.props;
-
-        if (!active)
-            return;
-
-        const currentDate = DateTime.now();
-        const nextBeat = currentDate.valueOf() + Math.abs(interval);
-        const nextBeatDate = DateTime.fromMillis(nextBeat - currentDate.valueOf());
-
-        if (doCallback) {
-            const params: IHeartbeatCallbackParams = {
-                instance: this,
-                timestamp: currentDate,
-                nextBeat: nextBeatDate,
-                count: ++this.callbackCount
-            };
-
-            if (maxExecutionTimeMs === undefined) {
-                await callback(params);
-            } else {
-                await awaitAtMost(() => callback(params), maxExecutionTimeMs);
+        const terminate = () => {
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = undefined;
             }
         }
 
-        this.setState({
-            nextBeat,
-            timeout: setTimeout(() => this.beat(true), nextBeatDate.valueOf())
-        });
-    }
+        if (active) {
+            resume();
+        } else {
+            pause();
+        }
 
-    /**
-     * Resumes heart beats.
-     *
-     * @private
-     * @memberof Heartbeat
-     */
-    private resume() {
-        const { interval } = this.props;
-        const { hiddenSince } = this.state;
+        return () => {
+            terminate();
+        };
+    }, [callback, maxExecutionTimeMs, interval, active, beatOnMount]);
 
-        this.setState(
-            { hiddenSince: null }, () =>
-                this.beat(hiddenSince && DateTime.now().diff(hiddenSince, 'milliseconds').toMillis() >= Math.abs(interval) ? true : false)
-        );
-    }
+    return <></>;
+};
 
-    /**
-     * Pauses heart beats.
-     *
-     * @private
-     * @memberof Heartbeat
-     */
-    private pause() {
-        this.setState(({ timeout }) => {
-            if (timeout)
-                clearTimeout(timeout);
+export default Heartbeat;
 
-            return { timeout: null, hiddenSince: DateTime.now() };
-        });
-    }
-
-    public render() {
-        return (
-            <></>
-        );
-    }
-}
