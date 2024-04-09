@@ -56,7 +56,6 @@ class GenerateKeyCommand extends Command
                 $this->line($contents);
             }
         } catch (Exception $ex) {
-            dd($ex);
             $this->error($ex->getMessage());
 
             return static::FAILURE;
