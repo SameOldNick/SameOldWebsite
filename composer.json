@@ -34,6 +34,7 @@
         "fakerphp/faker": "^1.9.1",
         "fossbarrow/laravel-phpcs": "dev-main",
         "friendsofphp/php-cs-fixer": "^3.9",
+        "larastan/larastan": "^2.9",
         "laravel/sail": "^1.27",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.8",
