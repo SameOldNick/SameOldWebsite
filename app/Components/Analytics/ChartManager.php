@@ -3,7 +3,6 @@
 namespace App\Components\Analytics;
 
 use App\Components\Analytics\Exceptions\ChartNotFoundException;
-use App\Components\Charts\Factories\Factory;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Arr;
 
@@ -40,7 +39,7 @@ class ChartManager
      * Adds factory for chart
      *
      * @param string $id
-     * @param Factory|string $factory Factory instance or name of Factory class
+     * @param callable|class-string $factory Callback or name of invokable class
      * @return $this
      */
     public function add(string $id, $factory)

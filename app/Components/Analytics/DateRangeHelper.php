@@ -18,7 +18,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Carbon Period instance
      *
-     * @var CarbonPeriodImmutable
+     * @var CarbonPeriod
      */
     protected $period;
 
@@ -74,7 +74,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Gets the date period.
      *
-     * @return DatePeriod
+     * @return CarbonPeriod
      */
     public function getPeriod()
     {

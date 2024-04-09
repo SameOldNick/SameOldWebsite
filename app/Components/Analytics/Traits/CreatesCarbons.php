@@ -92,12 +92,9 @@ trait CreatesCarbons
     }
 
     /**
-     * Creates a single CarbonPeriod instance
+     * Creates CarbonPeriod instance
      *
-     * @param CarbonInterface $start
-     * @param CarbonInterface $end
-     * @param string $unit
-     * @param int $entries
+     * @param integer $entries Number of entries in period.
      * @return CarbonPeriod
      */
     public function createPeriod(int $entries = 1)
