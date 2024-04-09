@@ -13,7 +13,7 @@ use League\CommonMark\Renderer as CoreRenderer;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
-class TypographyExtension extends ConfigurableExtensionInterface
+class TypographyExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {

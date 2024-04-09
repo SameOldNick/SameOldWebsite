@@ -10,7 +10,7 @@ use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
-class HorizontalRuleExtension extends ConfigurableExtensionInterface
+class HorizontalRuleExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {

@@ -8,7 +8,7 @@ use League\CommonMark\Extension\Table\TableExtension as CommonMarkTableExtension
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
-class TableExtension extends ConfigurableExtensionInterface
+class TableExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {

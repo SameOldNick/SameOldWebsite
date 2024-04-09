@@ -11,7 +11,7 @@ use League\CommonMark\Extension\TaskList\TaskListExtension;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
-class ListExtension extends ConfigurableExtensionInterface
+class ListExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {

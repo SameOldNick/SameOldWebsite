@@ -10,7 +10,7 @@ use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 use Spatie\CommonMarkShikiHighlighter\HighlightCodeExtension;
 
-class CodeExtension extends ConfigurableExtensionInterface
+class CodeExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {

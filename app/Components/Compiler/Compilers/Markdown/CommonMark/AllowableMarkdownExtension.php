@@ -14,7 +14,7 @@ use League\CommonMark\Renderer as CoreRenderer;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
-class AllowableMarkdownExtension extends ConfigurableExtensionInterface
+class AllowableMarkdownExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
