@@ -94,7 +94,7 @@ trait CreatesCarbons
     /**
      * Creates CarbonPeriod instance
      *
-     * @param integer $entries Number of entries in period.
+     * @param int $entries Number of entries in period.
      * @return CarbonPeriod
      */
     public function createPeriod(int $entries = 1)
