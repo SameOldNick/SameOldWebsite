@@ -18,6 +18,11 @@ class BlogSidebar extends Component
         //
     }
 
+    /**
+     * Gets the most recent articles.
+     *
+     * @return \App\Models\Collections\ArticleCollection
+     */
     public function mostRecent()
     {
         return
@@ -30,7 +35,7 @@ class BlogSidebar extends Component
     /**
      * Gets articles with most comments
      *
-     * @return void
+     * @return \App\Models\Collections\ArticleCollection
      */
     public function popular()
     {
@@ -44,7 +49,7 @@ class BlogSidebar extends Component
     /**
      * Gets months that had articles published
      *
-     * @return void
+     * @return \Illuminate\Support\Collection<int, Carbon>
      */
     public function monthsWithArticles()
     {
