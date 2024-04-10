@@ -65,7 +65,8 @@ class BlogSidebar extends Component
      *
      * @return \App\Models\Collections\ArticleCollection
      */
-    protected function getPublishedArticles() {
+    protected function getPublishedArticles()
+    {
         return Article::published()->get();
     }
 
