@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property string $key
+ * @property mixed $value
+ * @property \DateTimeInterface|null $created_at
+ * @property \DateTimeInterface|null $updated_at
+ */
 class PageMetaData extends Model
 {
     use HasFactory;
@@ -15,21 +22,21 @@ class PageMetaData extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = ['key', 'value'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = ['page_id'];
 
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'value' => Json::class,

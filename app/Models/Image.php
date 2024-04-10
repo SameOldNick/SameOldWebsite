@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
+/**
+ * @property string $uuid
+ * @property string $description
+ */
 class Image extends Model
 {
     use HasFactory;
@@ -33,7 +37,7 @@ class Image extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = [
         'description',
@@ -42,7 +46,7 @@ class Image extends Model
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $visible = [
         'uuid',

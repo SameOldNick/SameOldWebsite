@@ -11,6 +11,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\URL;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property \DateTimeInterface|null $published_at
+ * @property-read bool $is_published
+ * @property-read bool $is_scheduled
+ * @property-read string $url
+ * @property-read string $public_url
+ * @property-read string $private_url
+ * @property-read Revision|null $currentRevision
+ * @property-read Image|null $mainImage
+ */
 class Article extends Model
 {
     use HasFactory;
@@ -27,7 +40,7 @@ class Article extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'title',
@@ -47,7 +60,7 @@ class Article extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'published_at' => 'datetime',
@@ -56,7 +69,7 @@ class Article extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $appends = [
         'revision',

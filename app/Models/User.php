@@ -14,6 +14,17 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property int $id
+ * @property string $uuid
+ * @property string|null $country_code
+ * @property \DateTimeInterface|null $created_at
+ * @property \DateTimeInterface|null $updated_at
+ * @property \DateTimeInterface|null $deleted_at
+ * @property-read Country|null $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, OAuthProvider> $oauthProviders
+ */
 class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticatable
 {
     use HasApiTokens;
@@ -26,7 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -39,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -53,14 +64,14 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * The relationships that should always be loaded.
      *
-     * @var array
+     * @var list<string>
      */
     protected $with = ['roles', 'state', 'country', 'oauthProviders'];
 
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $appends = ['avatar_url'];
 
@@ -254,7 +265,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets the OAuth providers for this user.
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function oauthProviders()
     {

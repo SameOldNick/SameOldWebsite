@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property string $project
+ * @property string $description
+ * @property string $url
+ * @property \DateTimeInterface|null $created_at
+ * @property \DateTimeInterface|null $updated_at
+ * @property \DateTimeInterface|null $deleted_at
+ */
 class Project extends Model
 {
     use HasFactory;
@@ -14,7 +23,7 @@ class Project extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = [
         'project',
@@ -25,7 +34,7 @@ class Project extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array
+     * @var list<string>
      */
     protected $with = [
         'tags',

@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
+/**
+ * @property int $id
+ * @property string $tag
+ * @property-read string $slug
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Article> $articles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Project> $projects
+ */
 class Tag extends Model
 {
     use HasFactory;
@@ -22,21 +29,21 @@ class Tag extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = ['tag'];
 
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $appends = ['slug'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = ['pivot'];
 

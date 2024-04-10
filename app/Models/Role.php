@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * @property int $id
+ * @property string $role
+ * @property-read string $readable
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
+ */
 class Role extends Model
 {
     use HasFactory;
@@ -22,14 +28,14 @@ class Role extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = ['role'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = ['pivot'];
 

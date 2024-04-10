@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
+/**
+ * @property string $uuid
+ * @property string $content
+ * @property string $summary
+ * @property-read bool $summary_auto
+ * @property-read Article $article
+ * @property \DateTimeInterface|null $created_at
+ * @property \DateTimeInterface|null $updated_at
+ */
 class Revision extends Model
 {
     use HasFactory;
@@ -17,7 +26,7 @@ class Revision extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = [
         'content',
@@ -27,7 +36,7 @@ class Revision extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $appends = [
         'summary_auto',

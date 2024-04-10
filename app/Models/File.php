@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
+/**
+ * @property string $id
+ * @property \DateTimeInterface|null $created_at
+ * @property \DateTimeInterface|null $updated_at
+ * @property \DateTimeInterface|null $deleted_at
+ * @property-read \App\Traits\Models\Fileable|null $fileable
+ * @property-read array $pathInfo
+ * @property-read bool $fileExists
+ */
 class File extends Model
 {
     use HasFactory;
@@ -35,14 +44,14 @@ class File extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = ['path', 'name', 'is_public'];
 
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $visible = [
         'id',
@@ -64,7 +73,7 @@ class File extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $appends = [
         'url',

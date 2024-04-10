@@ -8,6 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Url\Url as SpatieUrl;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $comment
+ * @property \DateTimeInterface|null $approved_at
+ * @property-read Article $article
+ * @property-read Post $post
+ * @property-read Comment $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $children
+ * @property-read User|null $approvedBy
+ */
 class Comment extends Model
 {
     use HasFactory;
@@ -24,7 +35,7 @@ class Comment extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = [
         'title',
@@ -44,7 +55,7 @@ class Comment extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'approved_at' => 'datetime',
@@ -73,7 +84,7 @@ class Comment extends Model
     /**
      * Recursively gets all children of this comment.
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection<int, Comment>
      */
     public function allChildren()
     {

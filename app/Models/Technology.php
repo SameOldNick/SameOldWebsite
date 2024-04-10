@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $icon
+ * @property string $technology
+ */
 class Technology extends Model
 {
     use HasFactory;
@@ -19,7 +24,7 @@ class Technology extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = ['icon', 'technology'];
 }

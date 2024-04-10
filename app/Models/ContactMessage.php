@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
 
+/**
+ * @property string $uuid
+ * @property string $name
+ * @property string $email
+ * @property string $message
+ * @property \DateTimeInterface|null $created_at
+ * @property \DateTimeInterface|null $updated_at
+ * @property \DateTimeInterface|null $confirmed_at
+ * @property \DateTimeInterface|null $expires_at
+ */
 class ContactMessage extends Model
 {
     use HasFactory;
@@ -15,7 +25,7 @@ class ContactMessage extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -35,13 +45,18 @@ class ContactMessage extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'confirmed_at' => 'datetime',
         'expires_at' => 'datetime',
     ];
 
+    /**
+     * Uses default expires at date/time for message.
+     *
+     * @return $this
+     */
     public function useDefaultExpiresAt()
     {
         $this->expires_at = static::getDefaultExpiresAt();
@@ -49,11 +64,21 @@ class ContactMessage extends Model
         return $this;
     }
 
+    /**
+     * Generates URL to confirm message.
+     *
+     * @return string
+     */
     public function generateUrl()
     {
         return URL::temporarySignedRoute('contact.confirm', $this->expires_at, ['contactMessage' => $this]);
     }
 
+    /**
+     * Gets the default expires at date/time
+     *
+     * @return \DateTimeInterface
+     */
     public static function getDefaultExpiresAt()
     {
         return now()->addHours(2);

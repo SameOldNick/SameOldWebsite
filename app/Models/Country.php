@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $code
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, State> $states
+ */
 class Country extends Model
 {
     use HasFactory;

@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property \DateTimeInterface|null $created_at
+ * @property \DateTimeInterface|null $updated_at
+ * @property \DateTimeInterface|null $expires_at
+ * @property-read User $user
+ */
 class OAuthProvider extends Model
 {
     use HasFactory;
@@ -19,10 +26,9 @@ class OAuthProvider extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
-    protected $fillable = [
-    ];
+    protected $fillable = [];
 
     /**
      * The relations to eager load on every query.
@@ -35,12 +41,17 @@ class OAuthProvider extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'expires_at' => 'datetime',
     ];
 
+    /**
+     * Gets the user the OAuth provider belongs to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

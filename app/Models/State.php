@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $code
+ * @property string $state
+ * @property-read Country $country
+ */
 class State extends Model
 {
     use HasFactory;
@@ -19,14 +25,14 @@ class State extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = ['code', 'state'];
 
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $visible = ['code', 'state'];
 
