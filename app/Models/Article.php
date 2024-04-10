@@ -27,6 +27,9 @@ use Illuminate\Support\Facades\URL;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Tag> $tags
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $comments
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Image> $images
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder published()
+ * @method static \Illuminate\Database\Eloquent\Builder sortedByPublishDate()
  */
 class Article extends Model
 {
@@ -83,7 +86,7 @@ class Article extends Model
      * Create a new Eloquent Collection instance.
      *
      * @param  array  $models
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return ArticleCollection
      */
     public function newCollection(array $models = [])
     {
