@@ -36,7 +36,7 @@ class CommentPosted extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $displayName = $this->comment->post->user->getDisplayName();
-        $content = $this->comment->content;
+        $content = $this->comment->comment;
 
         return (new MailMessage)
             ->greeting('Hello!')
