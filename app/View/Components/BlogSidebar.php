@@ -40,10 +40,9 @@ class BlogSidebar extends Component
     public function popular()
     {
         return
-            Article::published()
-                ->get()
-                    ->popular()
-                    ->take(5);
+            $this->getPublishedArticles()
+                ->popular()
+                ->take(5);
     }
 
     /**
@@ -54,12 +53,20 @@ class BlogSidebar extends Component
     public function monthsWithArticles()
     {
         return
-            Article::published()
-                ->get()
+            $this->getPublishedArticles()
                     ->groupedByDateTime('Y-m')
                     ->sortKeysDesc()
                     ->keys()
                         ->map(fn ($value) => Carbon::parse($value));
+    }
+
+    /**
+     * Gets published articles.
+     *
+     * @return \App\Models\Collections\ArticleCollection
+     */
+    protected function getPublishedArticles() {
+        return Article::published()->get();
     }
 
     /**
