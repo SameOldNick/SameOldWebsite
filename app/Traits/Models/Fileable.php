@@ -4,6 +4,9 @@ namespace App\Traits\Models;
 
 use App\Models\File;
 
+/**
+ * @property-read File|null $file
+ */
 trait Fileable
 {
     /**
