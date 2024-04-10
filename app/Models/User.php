@@ -287,7 +287,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
      *
      * @param array $roles Role names or models
      * @param bool $hasAll Specifies if users must have all or one of the roles
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection<int, User>
      */
     public static function getUsersWithRoles($roles, bool $hasAll = true)
     {

@@ -13,7 +13,7 @@ trait NotifiesRoles
      *
      * @param array $roles The roles the users must have
      * @param mixed $notification
-     * @return array Users that were notified
+     * @return User[] Users that were notified
      */
     public function notifyRoles($roles, $notification)
     {
