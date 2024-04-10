@@ -4,7 +4,7 @@ namespace App\Components\Security\Clerks;
 
 use App\Components\Security\Issues\Issue;
 
-class StackClerk implements ClerkDriver
+final class StackClerk implements ClerkDriver
 {
     public function __construct(
         protected readonly array $stack
