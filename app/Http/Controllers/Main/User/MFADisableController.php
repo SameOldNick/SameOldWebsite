@@ -13,7 +13,7 @@ class MFADisableController extends Controller
      * Confirms the user entered the current password.
      *
      * @param Request $request
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function disableMFA(Request $request, AuthenticatorService $authenticatorService)
     {

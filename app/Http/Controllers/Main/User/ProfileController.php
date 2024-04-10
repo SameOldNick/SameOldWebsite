@@ -15,7 +15,7 @@ class ProfileController extends Controller
     /**
      * Displays users profile
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\View\View
      */
     public function view(Request $request)
     {
@@ -28,7 +28,7 @@ class ProfileController extends Controller
      * Updates the users profile information
      *
      * @param Request $request
-     * @return mixed
+     * @return \Illuminate\Contracts\View\View
      */
     public function update(Request $request)
     {

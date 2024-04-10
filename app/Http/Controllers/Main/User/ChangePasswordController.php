@@ -13,7 +13,7 @@ class ChangePasswordController extends Controller
     /**
      * Displays change password page
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\View\View
      */
     public function view(Request $request)
     {
@@ -23,7 +23,7 @@ class ChangePasswordController extends Controller
     /**
      * Changes users password
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {

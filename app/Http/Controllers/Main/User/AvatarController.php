@@ -14,7 +14,7 @@ class AvatarController extends Controller
     /**
      * Displays users profile
      *
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function view(Request $request, User $user)
     {

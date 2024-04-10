@@ -14,12 +14,15 @@ class BlogArticleController extends Controller
      * Display the specified article.
      *
      * @param Article  $article
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function single(Request $request, Article $article)
     {
         $extra = [];
 
+        /**
+         * @var Comment|null
+         */
         $parentComment = $request->has('parent_comment_id') ? Comment::find($request->parent_comment_id) : null;
 
         if (! is_null($parentComment) && $parentComment->article->is($article)) {
@@ -35,7 +38,7 @@ class BlogArticleController extends Controller
      * @param Request $request
      * @param Article $article
      * @param Revision $revision
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function singleRevision(Request $request, Article $article, Revision $revision)
     {

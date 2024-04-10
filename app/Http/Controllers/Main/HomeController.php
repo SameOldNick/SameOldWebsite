@@ -33,7 +33,7 @@ class HomeController extends BaseController
     /**
      * Gets Page Settings.
      *
-     * @return PageSettings
+     * @return \App\Components\Settings\PageSettings
      */
     protected function getSettings()
     {

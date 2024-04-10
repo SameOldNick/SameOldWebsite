@@ -15,7 +15,7 @@ class ContactController extends BaseContactController
      * Displays contact form
      *
      * @param Request $request
-     * @return mixed
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(Request $request)
     {
@@ -30,7 +30,7 @@ class ContactController extends BaseContactController
      * Processes contact form submission.
      *
      * @param ContactRequest $request
-     * @return mixed
+     * @return \Illuminate\Contracts\View\View
      */
     public function process(ContactRequest $request)
     {
@@ -110,7 +110,7 @@ class ContactController extends BaseContactController
     /**
      * Gets Page Settings.
      *
-     * @return PageSettings
+     * @return \App\Components\Settings\PageSettings
      */
     protected function getSettings()
     {

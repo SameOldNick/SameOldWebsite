@@ -11,7 +11,7 @@ class SecurityController extends Controller
     /**
      * Displays change password page
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\View\View
      */
     public function view(Request $request)
     {

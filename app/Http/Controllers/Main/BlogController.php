@@ -12,7 +12,7 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -28,7 +28,7 @@ class BlogController extends Controller
     /**
      * Display articles published in month and year
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function archive($year, $month)
     {
@@ -50,7 +50,7 @@ class BlogController extends Controller
      * Displays articles matching search query.
      *
      * @param BlogSearchRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function search(BlogSearchRequest $request)
     {
