@@ -6,7 +6,7 @@ use BladeUI\Icons\Factory as BladeIconsFactory;
 use Faker\Generator;
 use Faker\Provider\Base;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Symfony\Component\Finder\SplFileInfo;
@@ -149,7 +149,7 @@ class BladeIcon extends Base
         if (isset($set['disk']) || isset($default['disk'])) {
             return $this->disks->disk($set['disk'] ?? $default['disk']);
         } else {
-            return app(Filesystem::class);
+            return app(FilesystemManager::class)->disk();
         }
     }
 }
