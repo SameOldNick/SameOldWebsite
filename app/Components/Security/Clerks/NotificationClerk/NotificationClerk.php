@@ -76,7 +76,7 @@ class NotificationClerk implements ClerkDriver
             return [];
         }
 
-        return Role::firstWhere(['role' => $this->getRole()])->users;
+        return Role::firstWhere(['role' => $this->getRole()])->users->all();
     }
 
     /**
