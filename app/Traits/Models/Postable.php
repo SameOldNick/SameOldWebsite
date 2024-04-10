@@ -5,6 +5,9 @@ namespace App\Traits\Models;
 use App\Models\Post;
 use App\Models\User;
 
+/**
+ * @property-read Post $post
+ */
 trait Postable
 {
     /**
