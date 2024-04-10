@@ -113,7 +113,7 @@ class Article extends Model
     /**
      * Gets the tags that this article has.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function tags()
     {
@@ -133,7 +133,7 @@ class Article extends Model
     /**
      * Gets the images that belong to this article.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function images(): BelongsToMany
     {
