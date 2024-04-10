@@ -64,7 +64,7 @@ class Comment extends Model
     /**
      * Gets the parent comment (if any)
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent()
     {
@@ -74,7 +74,7 @@ class Comment extends Model
     /**
      * Gets children of this comment
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children()
     {
@@ -104,7 +104,7 @@ class Comment extends Model
     /**
      * Gets the Article this comments is for.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function article()
     {

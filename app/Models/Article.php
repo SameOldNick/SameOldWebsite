@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\URL;
  * @property-read string $private_url
  * @property-read Revision|null $currentRevision
  * @property-read Image|null $mainImage
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Revision> $revisions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Tag> $tags
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $comments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Image> $images
  */
 class Article extends Model
 {
@@ -89,7 +93,7 @@ class Article extends Model
     /**
      * Gets the current revision
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function currentRevision()
     {
@@ -99,7 +103,7 @@ class Article extends Model
     /**
      * Gets the revisions of this article
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function revisions()
     {
@@ -109,7 +113,7 @@ class Article extends Model
     /**
      * Gets the tags that this article has.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags()
     {
@@ -119,7 +123,7 @@ class Article extends Model
     /**
      * Gets comments for this article.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {
@@ -129,7 +133,7 @@ class Article extends Model
     /**
      * Gets the images that belong to this article.
      *
-     * @return BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function images(): BelongsToMany
     {
@@ -139,7 +143,7 @@ class Article extends Model
     /**
      * Gets the main image (if any)
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function mainImage()
     {
