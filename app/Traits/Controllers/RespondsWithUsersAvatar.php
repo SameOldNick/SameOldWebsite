@@ -12,7 +12,7 @@ trait RespondsWithUsersAvatar
      * Responds with user's avatar
      *
      * @param User $user
-     * @param integer|null $size
+     * @param int|null $size
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function respondWithAvatar(User $user, ?int $size)
@@ -30,7 +30,7 @@ trait RespondsWithUsersAvatar
      * Checks if user has avatar.
      *
      * @param User $user
-     * @return boolean
+     * @return bool
      */
     protected function hasUploadedAvatar(User $user)
     {
@@ -41,7 +41,7 @@ trait RespondsWithUsersAvatar
      * Responds with download of users avatar.
      *
      * @param User $user
-     * @param integer|null $size
+     * @param int|null $size
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function respondWithUploadedAvatar(User $user, ?int $size)
@@ -53,7 +53,7 @@ trait RespondsWithUsersAvatar
      * Responds with avatar from OAuth provider.
      *
      * @param User $user
-     * @param integer|null $size
+     * @param int|null $size
      * @return \Illuminate\Http\RedirectResponse|null
      */
     protected function respondWithOauthProviderAvatar(User $user, ?int $size)
@@ -77,7 +77,7 @@ trait RespondsWithUsersAvatar
      * Responds with user's default avatar.
      *
      * @param User $user
-     * @param integer|null $size
+     * @param int|null $size
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function respondWithDefaultAvatar(User $user, ?int $size)
