@@ -154,7 +154,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
         $userRoles = $this->roles->map(fn ($role) => $role->role);
 
         // Return true if there are any matched roles
-        return ! empty($userRoles->intersect($roles));
+        return $userRoles->intersect($roles)->isNotEmpty();
     }
 
     /**
