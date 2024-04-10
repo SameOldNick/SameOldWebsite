@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
  * @property-read array $pathInfo
  * @property-read bool $fileExists
  */
-class File extends Model
+final class File extends Model
 {
     use HasFactory;
     use HasUuids;

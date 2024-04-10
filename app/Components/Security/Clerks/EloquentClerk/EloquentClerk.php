@@ -6,7 +6,7 @@ use App\Components\Security\Clerks\ClerkDriver;
 use App\Components\Security\Clerks\EloquentClerk\Issue as IssueModel;
 use App\Components\Security\Issues\Issue;
 
-class EloquentClerk implements ClerkDriver
+final class EloquentClerk implements ClerkDriver
 {
     public function __construct(
         protected readonly array $config

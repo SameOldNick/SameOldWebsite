@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Str;
 
-class IssueNotification extends Notification
+final class IssueNotification extends Notification
 {
     use Queueable;
 

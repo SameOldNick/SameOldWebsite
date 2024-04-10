@@ -7,7 +7,7 @@ use Exception;
 /**
  * Exception for when MFA is not configured.
  */
-class MultiAuthNotConfiguredException extends Exception
+final class MultiAuthNotConfiguredException extends Exception
 {
     /**
      * Initializes exception

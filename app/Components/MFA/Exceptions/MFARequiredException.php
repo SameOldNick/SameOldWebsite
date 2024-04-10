@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 /**
  * Exception for when a user needs MFA.
  */
-class MFARequiredException extends Exception
+final class MFARequiredException extends Exception
 {
     protected $mfaPath;
 

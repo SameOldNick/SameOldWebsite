@@ -7,7 +7,7 @@ use App\Components\MFA\Exceptions\MultiAuthNotConfiguredException;
 use Closure;
 use OTPHP\TOTP;
 
-class OneTimeAuthenticatable implements MultiAuthenticatable
+final class OneTimeAuthenticatable implements MultiAuthenticatable
 {
     public function __construct(
         protected readonly Closure $resolver
