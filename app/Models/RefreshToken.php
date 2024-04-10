@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $jwt_id
- * @property \DateTimeInterface|null $created_at
- * @property \DateTimeInterface|null $updated_at
- * @property \DateTimeInterface $expires_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon $expires_at
  * @property-read User $user
  */
 class RefreshToken extends Model

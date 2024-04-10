@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\URL;
  * @property string $name
  * @property string $email
  * @property string $message
- * @property \DateTimeInterface|null $created_at
- * @property \DateTimeInterface|null $updated_at
- * @property \DateTimeInterface|null $confirmed_at
- * @property \DateTimeInterface|null $expires_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $confirmed_at
+ * @property \Illuminate\Support\Carbon|null $expires_at
  */
 class ContactMessage extends Model
 {

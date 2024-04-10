@@ -18,9 +18,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $id
  * @property string $uuid
  * @property string|null $country_code
- * @property \DateTimeInterface|null $created_at
- * @property \DateTimeInterface|null $updated_at
- * @property \DateTimeInterface|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Role> $roles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OAuthProvider> $oauthProviders

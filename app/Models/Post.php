@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @property int $id
  * @property-read User|null $user
- * @property \DateTimeInterface|null $created_at
- * @property \DateTimeInterface|null $updated_at
- * @property \DateTimeInterface|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  */
 class Post extends Model
 {

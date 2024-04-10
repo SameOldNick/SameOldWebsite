@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $link
  * @property-read string|null $platform
- * @property \DateTimeInterface|null $created_at
- * @property \DateTimeInterface|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  */
 class SocialMediaLink extends Model
 {

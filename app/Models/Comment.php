@@ -12,7 +12,7 @@ use Spatie\Url\Url as SpatieUrl;
  * @property int $id
  * @property string $title
  * @property string $comment
- * @property \DateTimeInterface|null $approved_at
+ * @property \Illuminate\Support\Carbon|null $approved_at
  * @property-read Article $article
  * @property-read Post $post
  * @property-read Comment $parent

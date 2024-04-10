@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\URL;
  * @property int $id
  * @property string $title
  * @property string $slug
- * @property \DateTimeInterface|null $published_at
+ * @property \Illuminate\Support\Carbon|null $published_at
  * @property-read bool $is_published
  * @property-read bool $is_scheduled
  * @property-read string $url

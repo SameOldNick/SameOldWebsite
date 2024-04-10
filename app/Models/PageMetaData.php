@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property string $key
  * @property mixed $value
- * @property \DateTimeInterface|null $created_at
- * @property \DateTimeInterface|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  */
 class PageMetaData extends Model
 {

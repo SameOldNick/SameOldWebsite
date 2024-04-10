@@ -14,9 +14,9 @@ use Illuminate\Support\Str;
 
 /**
  * @property string $id
- * @property \DateTimeInterface|null $created_at
- * @property \DateTimeInterface|null $updated_at
- * @property \DateTimeInterface|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Traits\Models\Fileable|null $fileable
  * @property-read array $pathInfo
  * @property-read bool $fileExists
