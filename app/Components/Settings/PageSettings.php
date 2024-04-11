@@ -13,7 +13,8 @@ class PageSettings extends Manager
     /**
      * Initializes Page Settings
      *
-     * @param Page $page
+     * @param Container $container Container instance
+     * @param string $key Page key
      */
     public function __construct(Container $container, string $key)
     {
@@ -32,6 +33,11 @@ class PageSettings extends Manager
         return 'eloquent';
     }
 
+    /**
+     * Creates eloquent driver
+     *
+     * @return Drivers\EloquentDriver
+     */
     protected function createEloquentDriver()
     {
         $page = Page::firstWhere(['page' => $this->pageKey]);
@@ -39,6 +45,11 @@ class PageSettings extends Manager
         return new Drivers\EloquentDriver($page->metaData);
     }
 
+    /**
+     * Creates cache driver
+     *
+     * @return Drivers\CacheDriver
+     */
     protected function createCacheDriver()
     {
         $eloquentDriverFactory = fn () => $this->createEloquentDriver();

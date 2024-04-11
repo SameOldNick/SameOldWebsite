@@ -10,9 +10,9 @@ class EloquentDriver
     use ForwardsCalls;
 
     /**
-     * Initializes Page Settings
+     * Initializes the eloquent driver.
      *
-     * @param Page $page
+     * @param Collection $collection Collection of settings for page.
      */
     public function __construct(
         protected Collection $collection
@@ -47,9 +47,9 @@ class EloquentDriver
     }
 
     /**
-     * Get the instance as an array.
+     * Gets the settings.
      *
-     * @return array<TKey, TValue>
+     * @return array
      */
     public function toArray()
     {

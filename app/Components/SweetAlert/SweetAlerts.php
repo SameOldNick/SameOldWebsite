@@ -6,6 +6,11 @@ class SweetAlerts
 {
     protected $sweetAlerts;
 
+    /**
+     * Maintains SweetAlerts
+     *
+     * @param array $existing
+     */
     public function __construct(array $existing)
     {
         $this->sweetAlerts = collect($existing);

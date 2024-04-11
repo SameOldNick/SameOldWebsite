@@ -19,7 +19,7 @@ class PersistService extends Manager
     /**
      * Creates session driver.
      *
-     * @return SessionDriver
+     * @return Drivers\SessionDriver
      */
     protected function createSessionDriver()
     {

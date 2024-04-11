@@ -10,7 +10,7 @@ class OAuthException extends Exception
     /**
      * Render the exception.
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render()
     {

@@ -27,7 +27,7 @@ class SocialiteManager extends BaseSocialiteManager
      * Build an OAuth 2 provider instance.
      *
      * @param  string  $provider
-     * @param  array  $config
+     * @param  array  $ignored
      * @return \Laravel\Socialite\Two\AbstractProvider
      */
     public function buildProvider($provider, $ignored)

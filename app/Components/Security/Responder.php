@@ -12,7 +12,7 @@ final class Responder extends Manager
     /**
      * Get the default driver name.
      *
-     * @return string
+     * @return string|null
      */
     public function getDefaultDriver()
     {

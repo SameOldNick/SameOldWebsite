@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $page
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, PageMetaData> $metaData
  */
 class Page extends Model
 {

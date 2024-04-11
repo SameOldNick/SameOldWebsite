@@ -17,7 +17,7 @@ class UserHasCredentialsException extends OAuthException
     /**
      * Render the exception.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render()
     {

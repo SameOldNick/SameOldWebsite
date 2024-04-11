@@ -11,7 +11,7 @@ trait HasMatcher
     /**
      * Gets the link matcher for this item
      *
-     * @return Matcher
+     * @return Matcher|null
      */
     public function getMatcher()
     {

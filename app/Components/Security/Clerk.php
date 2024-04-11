@@ -13,7 +13,7 @@ final class Clerk extends Manager
     /**
      * Get the default driver name.
      *
-     * @return string
+     * @return string|null
      */
     public function getDefaultDriver()
     {
@@ -43,7 +43,7 @@ final class Clerk extends Manager
     /**
      * Creates eloquent clerk.
      *
-     * @return void
+     * @return EloquentClerk
      */
     protected function createEloquentDriver()
     {

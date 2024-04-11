@@ -96,7 +96,7 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets input to display (or not)
      *
-     * @param bool $enabled Whether to enable or disable backdrop. (default: true)
+     * @param string|false $input If string, the input prompt. If false, doesn't display input.
      * @return $this
      */
     public function input($input)
@@ -170,9 +170,9 @@ class SweetAlertBuilder implements Arrayable
     }
 
     /**
-     * Get the instance as an array.
+     * Get all of the Sweetalert options.
      *
-     * @return array<TKey, TValue>
+     * @return array
      */
     public function toArray()
     {

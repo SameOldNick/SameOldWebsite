@@ -19,9 +19,11 @@ class CacheDriver
     protected $cache;
 
     /**
-     * Initializes Page Settings
+     * Initializes the cache driver
      *
-     * @param Page $page
+     * @param string $pageKey Page key
+     * @param callable $eloquentDriverFactory Callback for creating the eloquent driver.
+     * @param Repository $cache Cache repository
      */
     public function __construct(string $pageKey, callable $eloquentDriverFactory, Repository $cache)
     {
@@ -65,9 +67,9 @@ class CacheDriver
     }
 
     /**
-     * Get the instance as an array.
+     * Get the cached settings.
      *
-     * @return array<TKey, TValue>
+     * @return array
      */
     public function toArray()
     {
