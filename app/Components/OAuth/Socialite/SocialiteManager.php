@@ -2,7 +2,7 @@
 
 namespace App\Components\OAuth\Socialite;
 
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Laravel\Socialite\SocialiteManager as BaseSocialiteManager;
@@ -16,7 +16,7 @@ class SocialiteManager extends BaseSocialiteManager
     ];
 
     public function __construct(
-        Application $app
+        Container $app
     ) {
         parent::__construct($app);
 
