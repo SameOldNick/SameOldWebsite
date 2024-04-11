@@ -138,10 +138,6 @@ class StrMixin
                 '7' => 't',
                 '+' => 't',
                 '2' => 'z',
-                '5' => 's',
-                '7' => 't',
-                '+' => 't',
-                '2' => 'z',
             ];
 
             // Replace l33t characters with their English equivalents
