@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $uuid
+ * @property mixed $data
+ */
 class Issue extends Model
 {
     use HasFactory;
@@ -21,7 +25,7 @@ class Issue extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'data' => 'json',
