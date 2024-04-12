@@ -43,7 +43,7 @@ class EloquentDriver
     {
         $keys = ! is_array($args[0]) ? $args : $args[0];
 
-        return $this->collection->whereIn('key', $keys)->mapWithKeys(fn ($model) => [$model->key => $model->value]);
+        return $this->collection->whereIn('key', $keys)->mapWithKeys(fn ($model) => [$model->key => $model->value])->all();
     }
 
     /**
@@ -53,7 +53,7 @@ class EloquentDriver
      */
     public function toArray()
     {
-        return $this->collection->mapWithKeys(fn ($model) => [$model->key => $model->value]);
+        return $this->collection->mapWithKeys(fn ($model) => [$model->key => $model->value])->all();
     }
 
     public function __call($name, $arguments)
