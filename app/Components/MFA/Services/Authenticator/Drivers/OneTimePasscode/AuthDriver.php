@@ -31,7 +31,7 @@ class AuthDriver implements AuthServiceInterface
         try {
             $secret = $this->createOneTimeAuthenticatable($authenticatable)->resolveSecret();
 
-            return ! is_null($secret);
+            return ! empty($secret);
         } catch (MultiAuthNotConfiguredException $ex) {
             return false;
         }
