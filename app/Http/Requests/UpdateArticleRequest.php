@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Revision;
 use App\Rules\Slugified;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
