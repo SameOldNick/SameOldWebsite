@@ -10,6 +10,8 @@ This repository embodies Nick's journey of self-expression and growth, serving a
 ## 🤝 Contributions
 Contributions, feedback, and suggestions are all warmly welcome! Whether you're helping fix a bug, suggesting design improvements, or adding a new feature, your input is valued.
 
+For additional details on development procedures, please refer to the [CONTRIBUTIONS.md](CONTRIBUTIONS.md) file.
+
 ## 🔗 Connect with Same Old Nick
 
  * Follow Nick on Twitter: @SameOldNick
