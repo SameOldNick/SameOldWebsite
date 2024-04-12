@@ -2,11 +2,11 @@
 
 namespace App\Components\Security\Commands;
 
-use App\Components\Security\Watchdogs\WatchdogDriver;
 use App\Components\Security\Clerk;
 use App\Components\Security\Clerks\ClerkDriver;
 use App\Components\Security\Responder;
 use App\Components\Security\Responders\ResponderDriver;
+use App\Components\Security\Watchdogs\WatchdogDriver;
 use Illuminate\Console\Command;
 use Throwable;
 
@@ -54,7 +54,8 @@ class WatchdogCommand extends Command
      * @param WatchdogDriver $watchdog
      * @return array Found issues
      */
-    protected function sniff(WatchdogDriver $watchdog) {
+    protected function sniff(WatchdogDriver $watchdog)
+    {
         $issues = [];
 
         try {
@@ -86,7 +87,8 @@ class WatchdogCommand extends Command
      * @param array $issues
      * @return void
      */
-    protected function fileIssues(ClerkDriver $clerk, array $issues) {
+    protected function fileIssues(ClerkDriver $clerk, array $issues)
+    {
         foreach ($issues as $issue) {
             if ($clerk->isFresh($issue)) {
                 $clerk->file($issue);
@@ -101,7 +103,8 @@ class WatchdogCommand extends Command
      * @param array $issues
      * @return void
      */
-    protected function dispatchIssues(ResponderDriver $responder, array $issues) {
+    protected function dispatchIssues(ResponderDriver $responder, array $issues)
+    {
         foreach ($issues as $issue) {
             if ($responder->shouldHandle($issue)) {
                 $responder->handle($issue);
@@ -114,7 +117,8 @@ class WatchdogCommand extends Command
      *
      * @return WatchdogDriver
      */
-    protected function createWatchdog(): WatchdogDriver {
+    protected function createWatchdog(): WatchdogDriver
+    {
         return $this->getLaravel()->make('watchdog')->driver($this->argument('watchdog'));
     }
 
@@ -123,7 +127,8 @@ class WatchdogCommand extends Command
      *
      * @return ClerkDriver
      */
-    protected function createClerk(): ClerkDriver {
+    protected function createClerk(): ClerkDriver
+    {
         return $this->getLaravel()->make(Clerk::class)->driver($this->option('clerk'));
     }
 
@@ -132,7 +137,8 @@ class WatchdogCommand extends Command
      *
      * @return ResponderDriver
      */
-    protected function createResponder(): ResponderDriver {
+    protected function createResponder(): ResponderDriver
+    {
         return $this->getLaravel()->make(Responder::class)->driver($this->option('responder'));
     }
 }
