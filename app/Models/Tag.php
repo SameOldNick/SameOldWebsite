@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 /**
  * @property int $id
  * @property string $tag
- * @property-read string $slug
+ * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Article> $articles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Project> $projects
  */
@@ -86,6 +86,7 @@ class Tag extends Model
     {
         return Attribute::make(
             get: fn ($value, $attributes) => $value ?: Str::slug($attributes['tag']),
+            set: fn ($value) => $value
         )->shouldCache();
     }
 
