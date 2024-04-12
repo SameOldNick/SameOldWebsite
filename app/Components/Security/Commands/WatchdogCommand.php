@@ -2,10 +2,12 @@
 
 namespace App\Components\Security\Commands;
 
+use App\Components\Security\Watchdogs\WatchdogDriver;
 use App\Components\Security\Clerk;
+use App\Components\Security\Clerks\ClerkDriver;
 use App\Components\Security\Responder;
+use App\Components\Security\Responders\ResponderDriver;
 use Illuminate\Console\Command;
-use InvalidArgumentException;
 use Throwable;
 
 class WatchdogCommand extends Command
@@ -29,32 +31,30 @@ class WatchdogCommand extends Command
      */
     public function handle()
     {
-        try {
-            $watchdog = $this->getLaravel()->make('watchdog')->driver($this->argument('watchdog'));
-        } catch (InvalidArgumentException $ex) {
-            $this->error(sprintf('Unable to create "%s" watchdog driver: %s', $this->argument('watchdog'), $ex->getMessage()));
+        $this->info('Sniffing for issues...');
 
-            return static::FAILURE;
-        }
+        $issues = $this->sniff($this->createWatchdog());
+
+        $this->info('Finished sniffing.');
 
         if (! $this->option('sniff')) {
-            try {
-                $clerk = $this->getLaravel()->make(Clerk::class)->driver($this->option('clerk'));
-            } catch (InvalidArgumentException) {
-                $this->error(sprintf('Clerk driver "%s" does not exist.', $this->option('clerk') ?? '(null)'));
+            $this->info('Filing issues with clerk...');
 
-                return static::FAILURE;
-            }
+            $this->fileIssues($this->createClerk(), $issues);
 
-            try {
-                $responder = $this->getLaravel()->make(Responder::class)->driver($this->option('responder'));
-            } catch (InvalidArgumentException) {
-                $this->error(sprintf('Responder driver "%s" does not exist.', $this->option('responder') ?? '(null)'));
+            $this->info('Dispatching issues to responder...');
 
-                return static::FAILURE;
-            }
+            $this->dispatchIssues($this->createResponder(), $issues);
         }
+    }
 
+    /**
+     * Sniff for issues.
+     *
+     * @param WatchdogDriver $watchdog
+     * @return array Found issues
+     */
+    protected function sniff(WatchdogDriver $watchdog) {
         $issues = [];
 
         try {
@@ -76,24 +76,63 @@ class WatchdogCommand extends Command
             $watchdog->cleanup();
         }
 
-        $this->info('Finished sniffing.');
+        return $issues;
+    }
 
-        if (! $this->option('sniff')) {
-            $this->info('Filing issues with clerk...');
-
-            foreach ($issues as $issue) {
-                if ($clerk->isFresh($issue)) {
-                    $clerk->file($issue);
-                }
-            }
-
-            $this->info('Dispatching issues to responder...');
-
-            foreach ($issues as $issue) {
-                if ($responder->shouldHandle($issue)) {
-                    $responder->handle($issue);
-                }
+    /**
+     * File issues with clerk.
+     *
+     * @param ClerkDriver $clerk
+     * @param array $issues
+     * @return void
+     */
+    protected function fileIssues(ClerkDriver $clerk, array $issues) {
+        foreach ($issues as $issue) {
+            if ($clerk->isFresh($issue)) {
+                $clerk->file($issue);
             }
         }
+    }
+
+    /**
+     * Dispatch issues to responder.
+     *
+     * @param ResponderDriver $responder
+     * @param array $issues
+     * @return void
+     */
+    protected function dispatchIssues(ResponderDriver $responder, array $issues) {
+        foreach ($issues as $issue) {
+            if ($responder->shouldHandle($issue)) {
+                $responder->handle($issue);
+            }
+        }
+    }
+
+    /**
+     * Creates Watchdog instance.
+     *
+     * @return WatchdogDriver
+     */
+    protected function createWatchdog(): WatchdogDriver {
+        return $this->getLaravel()->make('watchdog')->driver($this->argument('watchdog'));
+    }
+
+    /**
+     * Creates ClerkDriver instance.
+     *
+     * @return ClerkDriver
+     */
+    protected function createClerk(): ClerkDriver {
+        return $this->getLaravel()->make(Clerk::class)->driver($this->option('clerk'));
+    }
+
+    /**
+     * Creates ResponderDriver instance.
+     *
+     * @return ResponderDriver
+     */
+    protected function createResponder(): ResponderDriver {
+        return $this->getLaravel()->make(Responder::class)->driver($this->option('responder'));
     }
 }
