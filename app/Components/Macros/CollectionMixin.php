@@ -15,7 +15,6 @@ class CollectionMixin
             /**
              * @var \Illuminate\Support\Collection $this
              */
-
             $pageNumber = Paginator::resolveCurrentPage('page');
 
             $totalPageNumber = $this->count();
