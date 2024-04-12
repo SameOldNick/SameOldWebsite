@@ -14,7 +14,7 @@ use Spatie\Url\Url as SpatieUrl;
  * @property string $comment
  * @property \Illuminate\Support\Carbon|null $approved_at
  * @property-read Article $article
- * @property-read Comment $parent
+ * @property-read Comment|null $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $children
  * @property-read User|null $approvedBy
  */
