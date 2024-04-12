@@ -7,7 +7,7 @@
 - Yarn v4.1.x
 - Composer v2.7.x
 
-## Rules
+## Recommendations
 
 ### 1. Commit Descriptive Messages
 
