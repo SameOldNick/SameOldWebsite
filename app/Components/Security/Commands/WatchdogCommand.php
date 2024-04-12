@@ -15,7 +15,7 @@ class WatchdogCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'security:check {--sniff : Find issues only} {--clerk : Clerk driver} {--responder : Responder driver} {watchdog}';
+    protected $signature = 'security:check {--sniff : Find issues only} {--clerk= : Clerk driver} {--responder= : Responder driver} {watchdog}';
 
     /**
      * The console command description.
