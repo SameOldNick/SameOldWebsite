@@ -33,7 +33,7 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
      *
      * @param  \Illuminate\Http\Request  $request
      * @param Closure  $next
-     * @param  string[]  ...$adapters
+     * @param  string  $name
      * @return mixed
      *
      * @throws \Illuminate\Auth\AuthenticationException
