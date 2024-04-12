@@ -12,7 +12,7 @@ class EloquentDriver
     /**
      * Initializes the eloquent driver.
      *
-     * @param Collection $collection Collection of settings for page.
+     * @param Collection<int, \App\Models\PageMetaData> $collection Collection of settings for page.
      */
     public function __construct(
         protected Collection $collection
@@ -49,7 +49,7 @@ class EloquentDriver
     /**
      * Gets the settings.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray()
     {
