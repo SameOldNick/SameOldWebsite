@@ -50,7 +50,7 @@ class Post extends Model
     /**
      * Gets the user who made this post.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
@@ -60,7 +60,7 @@ class Post extends Model
     /**
      * Gets the morphed child of this post
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function postable()
     {

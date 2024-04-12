@@ -34,7 +34,7 @@ trait Postable
     /**
      * Gets the Post this is morphed from.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
     public function post()
     {
