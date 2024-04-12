@@ -15,17 +15,17 @@ class ArticleCollection extends Collection
     /**
      * Gets articles with most comments
      *
-     * @return $this
+     * @return static
      */
     public function popular()
     {
-        return $this->sortBy(fn (Article $article) => $article->coments()->approved()->count());
+        return $this->sortBy(fn (Article $article) => $article->comments()->approved()->count());
     }
 
     /**
      * Gets articles grouped by date/time format
      *
-     * @return $this
+     * @return static
      */
     public function groupedByDateTime(string $format)
     {
@@ -36,7 +36,7 @@ class ArticleCollection extends Collection
      * Gets articles with any of tags
      *
      * @param array $tags
-     * @return $this
+     * @return static
      */
     public function withTags(array $tags)
     {
@@ -50,7 +50,7 @@ class ArticleCollection extends Collection
      *
      * @param array $keywords
      * @param bool $ignoreCase
-     * @return $this
+     * @return static
      */
     public function withKeywords(array $keywords, bool $ignoreCase = true)
     {

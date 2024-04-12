@@ -16,7 +16,7 @@ class Alerts extends Component
     /**
      * Messages to display
      *
-     * @var arrays
+     * @var array
      */
     public $messages;
 

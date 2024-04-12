@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read \App\Traits\Models\Fileable|null $fileable
+ * @property-read Model|null $fileable
  * @property-read array $pathInfo
  * @property-read bool $fileExists
  */
@@ -91,7 +91,7 @@ final class File extends Model
     /**
      * Gets the parent fileable model (ProductImage, Download, or Release)
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function fileable()
     {
