@@ -12,6 +12,10 @@ class CollectionMixin
     public function paginate()
     {
         return function (int $showPerPage) {
+            /**
+             * @var \Illuminate\Support\Collection $this
+             */
+
             $pageNumber = Paginator::resolveCurrentPage('page');
 
             $totalPageNumber = $this->count();
@@ -25,13 +29,6 @@ class CollectionMixin
 
     /**
      * Create a new length-aware paginator instance.
-     *
-     * @param  ArrayAccess  $items
-     * @param  int  $total
-     * @param  int  $perPage
-     * @param  int  $currentPage
-     * @param  array  $options
-     * @return LengthAwarePaginator
      */
     protected static function paginator()
     {
