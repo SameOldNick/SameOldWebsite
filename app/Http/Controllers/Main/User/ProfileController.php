@@ -39,7 +39,7 @@ class ProfileController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($user->id),
+                Rule::unique('users')->ignoreModel($user),
             ],
             'address1' => 'nullable|string|max:255',
             'address2' => 'nullable|string|max:255',
