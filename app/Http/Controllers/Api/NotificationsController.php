@@ -46,8 +46,8 @@ class NotificationsController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @param \Illuminate\Notifications\Notification $notification
-     * @return Response
+     * @param Notification $notification
+     * @return Notification
      */
     public function show(Request $request, Notification $notification)
     {
@@ -63,8 +63,8 @@ class NotificationsController extends Controller
      * Marks notification as read.
      *
      * @param Request $request
-     * @param \Illuminate\Notifications\Notification $notification
-     * @return Response
+     * @param Notification $notification
+     * @return Notification
      */
     public function markRead(Request $request, Notification $notification)
     {
@@ -79,8 +79,8 @@ class NotificationsController extends Controller
      * Marks notification as unread.
      *
      * @param Request $request
-     * @param \Illuminate\Notifications\Notification $notification
-     * @return Response
+     * @param Notification $notification
+     * @return Notification
      */
     public function markUnread(Request $request, Notification $notification)
     {
@@ -95,8 +95,8 @@ class NotificationsController extends Controller
      * Destroys notification.
      *
      * @param Request $request
-     * @param \Illuminate\Notifications\Notification $notification
-     * @return Response
+     * @param Notification $notification
+     * @return Notification
      */
     public function destroy(Request $request, Notification $notification)
     {
