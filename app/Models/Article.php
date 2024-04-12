@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\URL;
  * @property-read string $url
  * @property-read string $public_url
  * @property-read string $private_url
+ * @property-read Revision $revision
  * @property-read Revision|null $currentRevision
  * @property-read Image|null $mainImage
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Revision> $revisions

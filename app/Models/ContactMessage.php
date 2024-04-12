@@ -77,7 +77,7 @@ class ContactMessage extends Model
     /**
      * Gets the default expires at date/time
      *
-     * @return \DateTimeInterface
+     * @return \Illuminate\Support\Carbon
      */
     public static function getDefaultExpiresAt()
     {
