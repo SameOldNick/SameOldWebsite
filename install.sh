@@ -45,6 +45,13 @@ case "$target" in
         ;;
 esac
 
+# Ensure the "vendor" directory exists
+if [ ! -d "vendor" ]; then
+    echo "The 'vendor' directory does not exist."
+    echo "Please run 'composer install' before running this script."
+    exit 1
+fi
+
 # Confirm the .env file is configured unless -y or --yes option is provided
 if [ "$skip_prompt" != "true" ]; then
     read -p "Have you updated the .env configuration variables? (y/n): " env_confirmed
