@@ -1,0 +1,75 @@
+# Laravel, MariaDB, and Nginx
+
+version: '3'
+
+networks:
+    nginx:
+        driver: bridge
+volumes:
+    nginx-php-fpm:
+        driver: local
+    nginx-mariadb:
+        driver: local
+    nginx-redis:
+        driver: local
+services:
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "8001:8001"
+        volumes:
+            - ./:/var/www/app
+            - ./docker/nginx/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - nginx-php-fpm:/var/run
+        depends_on:
+            - php
+            - mariadb
+        networks:
+            - nginx
+
+    mariadb:
+        image: 'mariadb:10'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        volumes:
+            - 'nginx-mariadb:/var/lib/mysql'
+            - './docker/nginx/mariadb/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+        networks:
+            - nginx
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+            retries: 3
+            timeout: 5s
+    php:
+        build:
+            # context: ./docker/nginx/php/8.2
+            context: ./docker/nginx/php/8.3
+            dockerfile: Dockerfile
+        container_name: php
+        restart: unless-stopped
+        tty: true
+        working_dir: /var/www/app
+        volumes:
+            - ./:/var/www/app
+            # - ./docker/nginx/php/8.2/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
+            - ./docker/nginx/php/8.3/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
+            - nginx-php-fpm:/var/run
+        ports:
+            - "${PHP_HOST_PORT:-9000}:${PHP_DOCKER_CONTAINER_PORT:-9000}"
+        networks:
+            - nginx
+
