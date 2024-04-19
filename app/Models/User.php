@@ -107,7 +107,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * The roles that belong to the user.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
     {
@@ -160,7 +160,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets posts created by this user.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function posts()
     {
@@ -170,7 +170,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets files uploaded by this user.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function files()
     {
@@ -180,7 +180,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets comments approved by this user.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function approvedComments()
     {
@@ -190,7 +190,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets refresh tokens for this user.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function refreshTokens()
     {
@@ -200,7 +200,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets the country for this user
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function country()
     {
@@ -210,7 +210,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets the state for this user
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function state()
     {
