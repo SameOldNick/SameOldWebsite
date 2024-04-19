@@ -56,9 +56,9 @@ services:
             timeout: 5s
     php:
         build:
-            # context: ./docker/nginx/php/8.2
-            context: ./docker/nginx/php/8.3
-            dockerfile: Dockerfile
+          # context: ./docker/nginx/php/8.2
+          context: ./docker/nginx/php/8.3
+          dockerfile: Dockerfile
         container_name: php
         restart: unless-stopped
         tty: true

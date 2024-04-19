@@ -2,24 +2,35 @@ FROM php:8.3-fpm-alpine
 
 WORKDIR /var/www/app
 
-RUN apk update && apk add \
+RUN apk update && apk upgrade
+
+RUN apk add \
     curl \
     libzip-dev \
     libpng-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    supervisor
 
-RUN docker-php-ext-install pdo pdo_mysql mysqli opcache pcntl gd bcmath posix zip \
-    && apk --no-cache add nodejs npm
+RUN apk --no-cache add nodejs npm
 
-RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
-    && pecl install redis \
-    && docker-php-ext-enable redis.so
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-# COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+RUN install-php-extensions \
+    @composer \
+    pdo \
+    pdo_mysql \
+    mysqli \
+    opcache \
+    pcntl \
+    gd \
+    bcmath \
+    posix \
+    zip \
+    redis
 
-USER root
+COPY supervisord.conf /etc/supervisor.d/supervisord.conf
 
-RUN chmod 777 -R /var/www/app
+ADD --chmod=0755 start-container /usr/local/bin/start-container
+ENTRYPOINT ["start-container"]
