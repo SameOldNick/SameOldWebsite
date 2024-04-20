@@ -9,9 +9,9 @@ use InvalidArgumentException;
 
 final class Password extends LaravelPassword
 {
-    public function __construct()
+    public function __construct($min = 1)
     {
-        $this->min = 1;
+        $this->min = $min;
     }
 
     /**
