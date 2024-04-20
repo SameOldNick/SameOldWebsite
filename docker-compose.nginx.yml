@@ -25,8 +25,8 @@ services:
             - ./docker/nginx/nginx/default.conf:/etc/nginx/conf.d/default.conf
             - nginx-php-fpm:/var/run
         depends_on:
-            - php
-            - mariadb
+          - php
+          - mariadb
         networks:
             - nginx
 
