@@ -68,8 +68,6 @@ services:
             # - ./docker/nginx/php/8.2/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
             - ./docker/nginx/php/8.3/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
             - nginx-php-fpm:/var/run
-        ports:
-            - "${PHP_HOST_PORT:-9000}:${PHP_DOCKER_CONTAINER_PORT:-9000}"
         networks:
             - nginx
 
