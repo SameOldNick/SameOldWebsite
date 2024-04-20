@@ -90,7 +90,8 @@ final class Password extends LaravelPassword
      * @param Closure $callback Called with instance of PasswordRulesBuilder
      * @return static
      */
-    public static function createFromCallback(Closure $callback) {
+    public static function createFromCallback(Closure $callback)
+    {
         $builder = new PasswordRulesBuilder;
 
         $callback($builder);
@@ -104,7 +105,8 @@ final class Password extends LaravelPassword
      * @param PasswordRules $rules
      * @return static
      */
-    public static function createFromRules(PasswordRules $rules) {
+    public static function createFromRules(PasswordRules $rules)
+    {
         $password = new static;
 
         foreach ($rules->getRules() as $rule) {
