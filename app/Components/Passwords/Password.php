@@ -11,7 +11,7 @@ final class Password extends LaravelPassword
 {
     public function __construct($min = 1)
     {
-        $this->min = $min;
+        $this->min = (int) $min;
     }
 
     /**
