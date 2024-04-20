@@ -12,7 +12,7 @@ final class Password extends LaravelPassword
     /**
      * Initializes password instance
      *
-     * @param integer $min Minimum length (default: 1)
+     * @param int $min Minimum length (default: 1)
      */
     public function __construct($min = 1)
     {
