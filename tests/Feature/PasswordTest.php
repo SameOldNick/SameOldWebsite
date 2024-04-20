@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Components\Passwords\PasswordFactory;
-use App\Components\Passwords\PasswordRules;
+use App\Components\Passwords\Password;
+use App\Components\Passwords\PasswordRulesBuilder;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rules\Password as LaravelPassword;
 use Tests\CreatesApplication;
 
 class PasswordTest extends TestCase
@@ -16,11 +16,11 @@ class PasswordTest extends TestCase
     use CreatesApplication;
 
     /**
-     * Test password rule is created from factory.
+     * Test password rule is created from callback.
      */
-    public function test_password_factory_creates(): void
+    public function test_password_callback_creates(): void
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
             // ...
         });
 
@@ -28,7 +28,7 @@ class PasswordTest extends TestCase
     }
 
     /**
-     * Test password rule is created from factory.
+     * Test password rule is created from callback.
      */
     public function test_password_rule_from_config(): void
     {
@@ -43,8 +43,8 @@ class PasswordTest extends TestCase
             'spaces' => false,
         ];
 
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) use ($config) {
-            $rules->fromConfig($config);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
+            $builder->fromConfig($config);
         });
 
         $this->assertNotNull($password);
@@ -57,8 +57,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_exceeds_min_length()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->min(12);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->min(12);
         });
 
         $validator = Validator::make(
@@ -76,8 +76,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_under_min_length()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->min(12);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->min(12);
         });
 
         $validator = Validator::make(
@@ -95,8 +95,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_exceeds_max_length()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->max(12);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->max(12);
         });
 
         $validator = Validator::make(
@@ -114,8 +114,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_under_max_length()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->max(12);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->max(12);
         });
 
         $validator = Validator::make(
@@ -133,8 +133,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_has_lowercase()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->lowercase(1);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->lowercase(1);
         });
 
         $validator = Validator::make(
@@ -152,8 +152,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_missing_lowercase()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->lowercase(1);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->lowercase(1);
         });
 
         $validator = Validator::make(
@@ -171,8 +171,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_has_uppercase()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->uppercase(1);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->uppercase(1);
         });
 
         $validator = Validator::make(
@@ -190,8 +190,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_missing_uppercase()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->uppercase(1);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->uppercase(1);
         });
 
         $validator = Validator::make(
@@ -209,8 +209,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_has_numbers()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->numbers(1);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->numbers(1);
         });
 
         $validator = Validator::make(
@@ -228,8 +228,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_missing_numbers()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->numbers(1);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->numbers(1);
         });
 
         $validator = Validator::make(
@@ -247,8 +247,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_has_symbols()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->symbols(1);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->symbols(1);
         });
 
         $validator = Validator::make(
@@ -266,8 +266,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_missing_symbols()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->symbols(1);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->symbols(1);
         });
 
         $validator = Validator::make(
@@ -285,8 +285,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_has_ascii()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->ascii(true);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->ascii(true);
         });
 
         $validator = Validator::make(
@@ -304,8 +304,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_non_ascii_allowed()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->ascii(false);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->ascii(false);
         });
 
         $validator = Validator::make(
@@ -323,8 +323,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_non_ascii_disallowed()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->ascii(true);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->ascii(true);
         });
 
         $validator = Validator::make(
@@ -342,8 +342,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_deny_whitespaces()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->whitespaces(true);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->whitespaces(true);
         });
 
         $validator = Validator::make(
@@ -369,8 +369,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_allow_spaces()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->allowWhitespaces(spaces: true);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->allowWhitespaces(spaces: true);
         });
 
         $validator = Validator::make(
@@ -400,8 +400,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_allow_tabs()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->allowWhitespaces(tabs: true);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->allowWhitespaces(tabs: true);
         });
 
         $validator = Validator::make(
@@ -431,8 +431,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_allow_newlines()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->allowWhitespaces(newlines: true);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->allowWhitespaces(newlines: true);
         });
 
         $validator = Validator::make(
@@ -462,8 +462,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_is_blacklisted_common()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->blacklists(['common-passwords']);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->blacklists(['common-passwords']);
         });
 
         $validator = Validator::make(
@@ -481,8 +481,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_is_l33t_blacklisted_common()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->blacklists(['common-passwords'], substitutions: true);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->blacklists(['common-passwords'], substitutions: true);
         });
 
         $validator = Validator::make(
@@ -500,8 +500,8 @@ class PasswordTest extends TestCase
      */
     public function test_password_isnt_blacklisted_common()
     {
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) {
-            $rules->blacklists(['common-passwords']);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
+            $builder->blacklists(['common-passwords']);
         });
 
         $validator = Validator::make(
@@ -528,8 +528,8 @@ class PasswordTest extends TestCase
             'spaces' => false,
         ];
 
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) use ($config) {
-            $rules->fromConfig($config);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
+            $builder->fromConfig($config);
         });
 
         $validator = Validator::make(
@@ -556,8 +556,8 @@ class PasswordTest extends TestCase
             'whitespaces' => true,
         ];
 
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) use ($config) {
-            $rules->fromConfig($config);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
+            $builder->fromConfig($config);
         });
 
         $data = [
@@ -597,8 +597,8 @@ class PasswordTest extends TestCase
             'blacklists' => ['blacklists' => ['common-passwords']],
         ];
 
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) use ($config) {
-            $rules->fromConfig($config);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
+            $builder->fromConfig($config);
         });
 
         $validator = Validator::make(
@@ -621,8 +621,8 @@ class PasswordTest extends TestCase
             ],
         ];
 
-        $password = PasswordFactory::createPassword(function (PasswordRules $rules) use ($config) {
-            $rules->fromConfig($config);
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
+            $builder->fromConfig($config);
         });
 
         $validator = Validator::make(
@@ -636,7 +636,7 @@ class PasswordTest extends TestCase
     /**
      * Test password is validated against defaults.
      */
-    public function test_password_defaults(): void
+    public function test_password_defaults_validated(): void
     {
         $config = [
             'minimum' => 12,
@@ -649,13 +649,17 @@ class PasswordTest extends TestCase
             'whitespaces' => true,
         ];
 
-        Password::defaults(PasswordFactory::createPasswordLazy(function (PasswordRules $rules) use ($config) {
-            $rules->fromConfig($config);
+        Password::defaults(Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
+            $builder->fromConfig($config);
         }));
+
+        $password = Password::default();
+
+        $this->assertInstanceOf(Password::class, $password);
 
         $validator = Validator::make(
             ['password' => 'EkqZ6VEZksS21966!'],
-            ['password' => Password::default()]
+            ['password' => $password]
         );
 
         $this->assertTrue($validator->passes());

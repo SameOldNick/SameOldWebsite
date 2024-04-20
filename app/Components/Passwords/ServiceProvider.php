@@ -24,7 +24,7 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         LaravelPassword::defaults(
-            PasswordFactory::createPasswordLazy(function (PasswordRules $rules) {
+            Password::createFromCallback(function (PasswordRulesBuilder $builder) {
                 /**
                  * @var \Illuminate\Foundation\Application
                  */
@@ -36,7 +36,7 @@ class ServiceProvider extends BaseServiceProvider
                     $config = config('passwords.rules.development', []);
                 }
 
-                $rules->fromConfig($config);
+                $builder->fromConfig($config);
             })
         );
     }
