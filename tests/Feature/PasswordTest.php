@@ -8,7 +8,6 @@ use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Password as LaravelPassword;
 use Tests\CreatesApplication;
 
 class PasswordTest extends TestCase
