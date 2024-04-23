@@ -3,19 +3,11 @@
 namespace App\Components\Passwords\Generator;
 
 use App\Components\Passwords\Concerns\UsesEntropy;
-use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
 
 final class Generator
 {
     use UsesEntropy;
-
-    /**
-     * Faker instance for random data
-     *
-     * @var Faker
-     */
-    protected readonly Faker $faker;
 
     /**
      * Initializes generator
@@ -25,7 +17,6 @@ final class Generator
     public function __construct(
         protected readonly Options $options
     ) {
-        $this->faker = app(Faker::class);
     }
 
     /**
@@ -55,7 +46,7 @@ final class Generator
     {
         [$start, $end] = $this->options->getBounds();
 
-        return $this->faker->numberBetween($start, $end);
+        return $this->randomNumber($start, $end);
     }
 
     /**
@@ -158,7 +149,7 @@ final class Generator
 
             while (count($picked) < $count) {
                 // Securely generates random number for index
-                $key = random_int(0, count($items) - 1);
+                $key = $this->randomNumber(0, count($items) - 1);
 
                 array_push($picked, $items[$key]);
             }
@@ -192,5 +183,16 @@ final class Generator
     protected function arrayToString(array $items, ?int $count = null): string
     {
         return implode(! is_null($count) ? array_slice($items, 0, $count) : $items);
+    }
+
+    /**
+     * Securely generates random number
+     *
+     * @param integer $start Start number (inclusive)
+     * @param integer $end End number (inclusive)
+     * @return int
+     */
+    protected function randomNumber(int $start, int $end): int {
+        return random_int($start, $end);
     }
 }
