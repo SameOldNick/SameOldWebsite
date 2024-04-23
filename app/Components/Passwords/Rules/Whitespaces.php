@@ -2,13 +2,14 @@
 
 namespace App\Components\Passwords\Rules;
 
-use App\Components\Passwords\Rules\ValidationRule;
 use Closure;
 
 class Whitespaces extends ValidationRule
 {
     protected readonly mixed $spaces;
+
     protected readonly mixed $tabs;
+
     protected readonly mixed $newlines;
 
     /**
@@ -18,7 +19,8 @@ class Whitespaces extends ValidationRule
      * @param mixed $tabs
      * @param mixed $newlines
      */
-    public function __construct(...$args) {
+    public function __construct(...$args)
+    {
         if (empty($args) || (count($args) === 1 && isset($args[0]))) {
             $this->spaces = $args[0] ?? false;
             $this->tabs = $args[0] ?? false;
@@ -65,10 +67,11 @@ class Whitespaces extends ValidationRule
     /**
      * Checks if all whitespaces are disallowed.
      *
-     * @return boolean
+     * @return bool
      */
-    protected function disallowAll(): bool {
-        return !$this->spaces && !$this->tabs && !$this->newlines;
+    protected function disallowAll(): bool
+    {
+        return ! $this->spaces && ! $this->tabs && ! $this->newlines;
     }
 
     /**
