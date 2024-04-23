@@ -188,11 +188,12 @@ final class Generator
     /**
      * Securely generates random number
      *
-     * @param integer $start Start number (inclusive)
-     * @param integer $end End number (inclusive)
+     * @param int $start Start number (inclusive)
+     * @param int $end End number (inclusive)
      * @return int
      */
-    protected function randomNumber(int $start, int $end): int {
+    protected function randomNumber(int $start, int $end): int
+    {
         return random_int($start, $end);
     }
 }
