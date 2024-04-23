@@ -2,13 +2,15 @@
 
 namespace App\Components\Passwords\Concerns;
 
-trait UsesEntropy {
+trait UsesEntropy
+{
     /**
      * Gets uppercase entropy.
      *
      * @return list
      */
-    protected function getUppercaseEntropy() {
+    protected function getUppercaseEntropy()
+    {
         return range('A', 'Z');
     }
 
@@ -17,7 +19,8 @@ trait UsesEntropy {
      *
      * @return list
      */
-    protected function getLowercaseEntropy() {
+    protected function getLowercaseEntropy()
+    {
         return range('a', 'z');
     }
 
@@ -26,7 +29,8 @@ trait UsesEntropy {
      *
      * @return list
      */
-    protected function getNumberEntropy() {
+    protected function getNumberEntropy()
+    {
         return range('0', '9');
     }
 
@@ -35,10 +39,11 @@ trait UsesEntropy {
      *
      * @return list
      */
-    protected function getSymbolEntropy() {
+    protected function getSymbolEntropy()
+    {
         return [
             '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/',
-            ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'
+            ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~',
         ];
     }
 }

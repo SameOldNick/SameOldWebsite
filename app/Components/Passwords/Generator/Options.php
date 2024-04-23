@@ -7,7 +7,8 @@ use Illuminate\Contracts\Support\Arrayable;
 /**
  * Immutable class representing generator options
  */
-final class Options implements Arrayable {
+final class Options implements Arrayable
+{
     private static $createDefaultsCallback;
 
     public function __construct(
@@ -17,9 +18,7 @@ final class Options implements Arrayable {
         public readonly int $lowercase = 0,
         public readonly int $numbers = 0,
         public readonly int $symbols = 0,
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -27,10 +26,11 @@ final class Options implements Arrayable {
      *
      * @return list
      */
-    public function getBounds() {
+    public function getBounds()
+    {
         return [
             $this->min,
-            $this->max
+            $this->max,
         ];
     }
 
@@ -39,7 +39,8 @@ final class Options implements Arrayable {
      *
      * @return array<string, mixed>
      */
-    public function toArray() {
+    public function toArray()
+    {
         return [
             'min' => $this->min,
             'max' => $this->max,
@@ -55,7 +56,8 @@ final class Options implements Arrayable {
      *
      * @return static
      */
-    public static function default(): static {
+    public static function default(): static
+    {
         if (is_callable(static::$createDefaultsCallback)) {
             return call_user_func(static::$createDefaultsCallback);
         } else {
@@ -69,7 +71,8 @@ final class Options implements Arrayable {
      * @param callable|null $callback
      * @return void
      */
-    public static function defaults(callable $callback = null): void {
+    public static function defaults(callable $callback = null): void
+    {
         static::$createDefaultsCallback = $callback;
     }
 }

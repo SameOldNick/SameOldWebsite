@@ -6,18 +6,20 @@ use App\Components\Passwords\Contracts\Rule;
 use App\Components\Passwords\PasswordRules;
 use App\Components\Passwords\Rules;
 
-trait GeneratesFromPasswordRules {
+trait GeneratesFromPasswordRules
+{
     /**
      * Generates options from password rules.
      *
      * @param PasswordRules $passwordRules
      * @return $this
      */
-    public function generateFromRules(PasswordRules $passwordRules) {
+    public function generateFromRules(PasswordRules $passwordRules)
+    {
         foreach ($passwordRules->getRules() as $passwordRule) {
             if ($this->hasMappedOption($passwordRule)) {
                 $this->mapToOption($passwordRule);
-            } else if ($this->configuresGenerator($passwordRule)) {
+            } elseif ($this->configuresGenerator($passwordRule)) {
                 $this->configureGenerator($passwordRule);
             }
         }
@@ -30,7 +32,8 @@ trait GeneratesFromPasswordRules {
      *
      * @return array<class-string, callable>
      */
-    protected function getRuleMappings() {
+    protected function getRuleMappings()
+    {
         return [
             Rules\MinLength::class => fn (Rules\MinLength $rule) => $this->minimumLength($rule->min),
             Rules\MaxLength::class => fn (Rules\MaxLength $rule) => $this->maximumLength($rule->max),
@@ -47,7 +50,8 @@ trait GeneratesFromPasswordRules {
      * @param class-string|Rule $passwordRule
      * @return callable|null
      */
-    protected function getRuleMapping($passwordRule) {
+    protected function getRuleMapping($passwordRule)
+    {
         $class = is_object($passwordRule) ? get_class($passwordRule) : (string) $passwordRule;
 
         return isset($this->getRuleMappings()[$class]) ? $this->getRuleMappings()[$class] : null;
@@ -57,10 +61,11 @@ trait GeneratesFromPasswordRules {
      * Check if rule can be mapped.
      *
      * @param Rule $passwordRule
-     * @return boolean
+     * @return bool
      */
-    protected function hasMappedOption(Rule $passwordRule) {
-        return $passwordRule->isEnabled() && !is_null($this->getRuleMapping($passwordRule));
+    protected function hasMappedOption(Rule $passwordRule)
+    {
+        return $passwordRule->isEnabled() && ! is_null($this->getRuleMapping($passwordRule));
     }
 
     /**
@@ -69,7 +74,8 @@ trait GeneratesFromPasswordRules {
      * @param Rule $passwordRule
      * @return void
      */
-    protected function mapToOption(Rule $passwordRule) {
+    protected function mapToOption(Rule $passwordRule)
+    {
         call_user_func($this->getRuleMapping($passwordRule), $passwordRule);
     }
 
@@ -77,9 +83,10 @@ trait GeneratesFromPasswordRules {
      * Checks if rule cna configure generator options
      *
      * @param Rule $rule
-     * @return boolean
+     * @return bool
      */
-    protected function configuresGenerator(Rule $rule) {
+    protected function configuresGenerator(Rule $rule)
+    {
         return method_exists($rule, 'configureGenerator');
     }
 
@@ -89,7 +96,8 @@ trait GeneratesFromPasswordRules {
      * @param Rule $rule
      * @return void
      */
-    protected function configureGenerator(Rule $rule) {
+    protected function configureGenerator(Rule $rule)
+    {
         call_user_func([$rule, 'configureGenerator'], $this);
     }
 
@@ -99,7 +107,8 @@ trait GeneratesFromPasswordRules {
      * @param PasswordRules $passwordRules
      * @return static
      */
-    public static function createFrom(PasswordRules $passwordRules): static {
+    public static function createFrom(PasswordRules $passwordRules): static
+    {
         return (new static)->generateFromRules($passwordRules);
     }
 }

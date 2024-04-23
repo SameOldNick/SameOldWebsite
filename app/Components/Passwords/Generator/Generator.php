@@ -24,8 +24,7 @@ final class Generator
      */
     public function __construct(
         protected readonly Options $options
-    )
-    {
+    ) {
         $this->faker = app(Faker::class);
     }
 
@@ -80,10 +79,11 @@ final class Generator
      * Fills array with remaining characters
      *
      * @param array $items
-     * @param integer $length
+     * @param int $length
      * @return array
      */
-    protected function fill(array $items, int $length): array {
+    protected function fill(array $items, int $length): array
+    {
         $entropy = [
             ...$this->getUppercaseEntropy(),
             ...$this->getLowercaseEntropy(),
@@ -99,7 +99,7 @@ final class Generator
     /**
      * Generates upper case characters
      *
-     * @param integer $count
+     * @param int $count
      * @return array
      */
     protected function generateUppercase(int $count): array
@@ -110,7 +110,7 @@ final class Generator
     /**
      * Generates lowercase letters
      *
-     * @param integer $count
+     * @param int $count
      * @return array
      */
     protected function generateLowercase(int $count): array
@@ -121,7 +121,7 @@ final class Generator
     /**
      * Generates numbers
      *
-     * @param integer $count
+     * @param int $count
      * @return array
      */
     protected function generateNumbers(int $count): array
@@ -132,7 +132,7 @@ final class Generator
     /**
      * Generates symbols
      *
-     * @param integer $count
+     * @param int $count
      * @return array
      */
     protected function generateSymbols(int $count): array
@@ -144,8 +144,8 @@ final class Generator
      * Picks random items
      *
      * @param array $pool Where to pick from
-     * @param integer $count Number of items to pick
-     * @param boolean $allowDuplicates Whether to allow duplicates in picked (default: true)
+     * @param int $count Number of items to pick
+     * @param bool $allowDuplicates Whether to allow duplicates in picked (default: true)
      * @return array
      */
     protected function pickFrom(array $pool, int $count, bool $allowDuplicates = true): array
@@ -175,7 +175,8 @@ final class Generator
      * @param array $items
      * @return array
      */
-    protected function shuffle(array $items) {
+    protected function shuffle(array $items)
+    {
         shuffle($items);
 
         return $items;
@@ -185,10 +186,11 @@ final class Generator
      * Converts array to string
      *
      * @param array $items
-     * @param integer|null $count Length of output. If null, the output is the same length as items. (default: null)
+     * @param int|null $count Length of output. If null, the output is the same length as items. (default: null)
      * @return string
      */
-    protected function arrayToString(array $items, ?int $count = null): string {
-        return implode(!is_null($count) ? array_slice($items, 0, $count) : $items);
+    protected function arrayToString(array $items, ?int $count = null): string
+    {
+        return implode(! is_null($count) ? array_slice($items, 0, $count) : $items);
     }
 }
