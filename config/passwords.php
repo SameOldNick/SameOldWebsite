@@ -102,9 +102,12 @@ return [
             'ascii' => true,
 
             /**
-             * Deny white-space characters.
+             * Allow white-space characters.
+             * Accepted values:
+             *  - boolean: If true, any number of whitespaces are allowed. If false, no whitespaces are allowed.
+             *  - array: An array of how many spaces, tabs, and newlines are allowed.
              */
-            'whitespaces' => true,
+            'whitespaces' => false,
 
             'blacklists' => [
                 'blacklists' => [],

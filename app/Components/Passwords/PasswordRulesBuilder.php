@@ -114,8 +114,7 @@ final class PasswordRulesBuilder
             'special' => Rules\SpecialSymbols::class,
             'symbols' => Rules\SpecialSymbols::class,
             'ascii' => Rules\Ascii::class,
-            'whitespaces' => Rules\Whitespaces\DenyWhitespaces::class,
-            'allow-whitespaces' => Rules\Whitespaces\AllowWhitespaces::class,
+            'whitespaces' => Rules\Whitespaces::class,
             'blacklists' => Rules\Blacklist::class,
         ];
     }
