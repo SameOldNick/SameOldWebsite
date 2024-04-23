@@ -9,6 +9,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Validation\Rules\Password as LaravelPassword;
 use InvalidArgumentException;
 
+/**
+ * @uses GeneratesPassword
+ */
 final class Password extends LaravelPassword
 {
     use GeneratesPassword;

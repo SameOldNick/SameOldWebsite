@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Immutable class representing generator options
+ * @immutable
  */
 final class Options implements Arrayable
 {

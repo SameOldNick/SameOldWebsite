@@ -5,6 +5,10 @@ namespace App\Components\Passwords\Generator;
 use App\Components\Passwords\Concerns\UsesEntropy;
 use Illuminate\Support\Arr;
 
+/**
+ * Generates a password
+ * @uses UsesEntropy
+ */
 final class Generator
 {
     use UsesEntropy;
