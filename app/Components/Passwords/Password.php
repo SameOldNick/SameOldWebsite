@@ -2,6 +2,8 @@
 
 namespace App\Components\Passwords;
 
+use App\Components\Passwords\Concerns\GeneratesPassword;
+use App\Components\Passwords\Generator\OptionsBuilder;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rules\Password as LaravelPassword;
@@ -9,6 +11,8 @@ use InvalidArgumentException;
 
 final class Password extends LaravelPassword
 {
+    use GeneratesPassword;
+
     /**
      * Initializes password instance
      *
@@ -120,6 +124,6 @@ final class Password extends LaravelPassword
             }
         }
 
-        return $password;
+        return $password->generateUsing(OptionsBuilder::createFrom($rules)->getOptions());
     }
 }

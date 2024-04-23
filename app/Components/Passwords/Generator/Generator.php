@@ -1,0 +1,194 @@
+<?php
+
+namespace App\Components\Passwords\Generator;
+
+use App\Components\Passwords\Concerns\UsesEntropy;
+use Faker\Generator as Faker;
+use Illuminate\Support\Arr;
+
+final class Generator
+{
+    use UsesEntropy;
+
+    /**
+     * Faker instance for random data
+     *
+     * @var Faker
+     */
+    protected readonly Faker $faker;
+
+    /**
+     * Initializes generator
+     *
+     * @param Options $options
+     */
+    public function __construct(
+        protected readonly Options $options
+    )
+    {
+        $this->faker = app(Faker::class);
+    }
+
+    /**
+     * Generates password
+     *
+     * @return string
+     */
+    public function generate(): string
+    {
+        $length = $this->generateLength();
+
+        $required = $this->generateRequired();
+
+        if (count($required) >= $length) {
+            return $this->arrayToString($this->shuffle($required), $length);
+        }
+
+        return $this->arrayToString($this->shuffle($this->fill($required, $length)));
+    }
+
+    /**
+     * Generates random length for password
+     *
+     * @return int
+     */
+    protected function generateLength(): int
+    {
+        [$start, $end] = $this->options->getBounds();
+
+        return $this->faker->numberBetween($start, $end);
+    }
+
+    /**
+     * Generates required characters for password
+     *
+     * @return array Array of characters
+     */
+    protected function generateRequired(): array
+    {
+        $required = [
+            ...$this->generateUppercase($this->options->uppercase),
+            ...$this->generateLowercase($this->options->lowercase),
+            ...$this->generateNumbers($this->options->numbers),
+            ...$this->generateSymbols($this->options->symbols),
+        ];
+
+        return $required;
+    }
+
+    /**
+     * Fills array with remaining characters
+     *
+     * @param array $items
+     * @param integer $length
+     * @return array
+     */
+    protected function fill(array $items, int $length): array {
+        $entropy = [
+            ...$this->getUppercaseEntropy(),
+            ...$this->getLowercaseEntropy(),
+            ...$this->getNumberEntropy(),
+            ...$this->getSymbolEntropy(),
+        ];
+
+        array_push($items, ...$this->pickFrom($entropy, $length - count($items)));
+
+        return $items;
+    }
+
+    /**
+     * Generates upper case characters
+     *
+     * @param integer $count
+     * @return array
+     */
+    protected function generateUppercase(int $count): array
+    {
+        return $this->pickFrom($this->getUppercaseEntropy(), $count);
+    }
+
+    /**
+     * Generates lowercase letters
+     *
+     * @param integer $count
+     * @return array
+     */
+    protected function generateLowercase(int $count): array
+    {
+        return $this->pickFrom($this->getLowercaseEntropy(), $count);
+    }
+
+    /**
+     * Generates numbers
+     *
+     * @param integer $count
+     * @return array
+     */
+    protected function generateNumbers(int $count): array
+    {
+        return $this->pickFrom($this->getNumberEntropy(), $count);
+    }
+
+    /**
+     * Generates symbols
+     *
+     * @param integer $count
+     * @return array
+     */
+    protected function generateSymbols(int $count): array
+    {
+        return $this->pickFrom($this->getSymbolEntropy(), $count);
+    }
+
+    /**
+     * Picks random items
+     *
+     * @param array $pool Where to pick from
+     * @param integer $count Number of items to pick
+     * @param boolean $allowDuplicates Whether to allow duplicates in picked (default: true)
+     * @return array
+     */
+    protected function pickFrom(array $pool, int $count, bool $allowDuplicates = true): array
+    {
+        // Make sure items is a list (indices)
+        $items = array_values($pool);
+
+        if ($allowDuplicates) {
+            $picked = [];
+
+            while (count($picked) < $count) {
+                // Securely generates random number for index
+                $key = random_int(0, count($items) - 1);
+
+                array_push($picked, $items[$key]);
+            }
+
+            return $picked;
+        } else {
+            return Arr::random($items, $count);
+        }
+    }
+
+    /**
+     * Shuffle the items
+     *
+     * @param array $items
+     * @return array
+     */
+    protected function shuffle(array $items) {
+        shuffle($items);
+
+        return $items;
+    }
+
+    /**
+     * Converts array to string
+     *
+     * @param array $items
+     * @param integer|null $count Length of output. If null, the output is the same length as items. (default: null)
+     * @return string
+     */
+    protected function arrayToString(array $items, ?int $count = null): string {
+        return implode(!is_null($count) ? array_slice($items, 0, $count) : $items);
+    }
+}
