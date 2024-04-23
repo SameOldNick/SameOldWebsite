@@ -9,7 +9,7 @@ use Closure;
 abstract class ValidationRule implements Rule
 {
     public function __construct(
-        protected readonly mixed $value
+        public readonly mixed $value
     ) {
     }
 
