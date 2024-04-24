@@ -39,7 +39,7 @@ class PasswordTest extends TestCase
             'numbers' => 0,
             'special' => 0,
             'ascii' => true,
-            'spaces' => false,
+            'whitespaces' => false,
         ];
 
         $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
@@ -342,7 +342,7 @@ class PasswordTest extends TestCase
     public function test_password_deny_whitespaces()
     {
         $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
-            $builder->whitespaces(true);
+            $builder->whitespaces(false);
         });
 
         $validator = Validator::make(
@@ -369,7 +369,7 @@ class PasswordTest extends TestCase
     public function test_password_allow_spaces()
     {
         $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
-            $builder->allowWhitespaces(spaces: true);
+            $builder->whitespaces(spaces: true);
         });
 
         $validator = Validator::make(
@@ -400,7 +400,7 @@ class PasswordTest extends TestCase
     public function test_password_allow_tabs()
     {
         $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
-            $builder->allowWhitespaces(tabs: true);
+            $builder->whitespaces(tabs: true);
         });
 
         $validator = Validator::make(
@@ -431,7 +431,7 @@ class PasswordTest extends TestCase
     public function test_password_allow_newlines()
     {
         $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) {
-            $builder->allowWhitespaces(newlines: true);
+            $builder->whitespaces(newlines: true);
         });
 
         $validator = Validator::make(
@@ -524,7 +524,7 @@ class PasswordTest extends TestCase
             'numbers' => 1,
             'special' => 1,
             'ascii' => true,
-            'spaces' => false,
+            'whitespaces' => false,
         ];
 
         $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
@@ -552,7 +552,7 @@ class PasswordTest extends TestCase
             'numbers' => 1,
             'special' => 1,
             'ascii' => true,
-            'whitespaces' => true,
+            'whitespaces' => false,
         ];
 
         $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
