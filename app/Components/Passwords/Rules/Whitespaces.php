@@ -7,7 +7,9 @@ use Closure;
 class Whitespaces extends ValidationRule
 {
     public readonly mixed $spaces;
+
     public readonly mixed $tabs;
+
     public readonly mixed $newlines;
 
     /**

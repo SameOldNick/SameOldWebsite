@@ -86,7 +86,7 @@ final class Generator
             ...$this->getSymbolEntropy(),
         ];
 
-        if (!$this->options->ascii) {
+        if (! $this->options->ascii) {
             array_push($entropy, ...$this->getNonAsciiEntropy());
         }
 
@@ -97,7 +97,6 @@ final class Generator
                 newlines: $this->options->whitespaces['newlines'] ? 1 : 0,
             ));
         }
-
 
         array_push($items, ...$this->pickFrom($entropy, $length - count($items)));
 

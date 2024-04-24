@@ -126,7 +126,8 @@ final class OptionsBuilder
      * @param bool $value
      * @return $this
      */
-    public function onlyAscii($value) {
+    public function onlyAscii($value)
+    {
         $this->chars['ascii'] = (bool) $value;
 
         return $this;
@@ -138,14 +139,15 @@ final class OptionsBuilder
      * @param bool|array $value
      * @return $this
      */
-    public function whitespaces($value) {
+    public function whitespaces($value)
+    {
         if (is_bool($value)) {
             $this->whitespaces = [
                 'spaces' => $value ? PHP_INT_MAX : 0,
                 'tabs' => $value ? PHP_INT_MAX : 0,
                 'newlines' => $value ? PHP_INT_MAX : 0,
             ];
-        } else if (is_array($value)) {
+        } elseif (is_array($value)) {
             $this->whitespaces = [
                 'spaces' => (int) $value['spaces'] ?? 0,
                 'tabs' => (int) $value['tabs'] ?? 0,

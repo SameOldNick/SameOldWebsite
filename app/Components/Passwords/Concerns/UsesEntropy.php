@@ -52,7 +52,8 @@ trait UsesEntropy
      *
      * @return list<string>
      */
-    protected function getNonAsciiEntropy() {
+    protected function getNonAsciiEntropy()
+    {
         $chars = [];
 
         for ($cp = 128; $cp < 255; $cp++) {
@@ -65,12 +66,13 @@ trait UsesEntropy
     /**
      * Gets whitespace entropy.
      *
-     * @param integer $spaces
-     * @param integer $tabs
-     * @param integer $newlines
+     * @param int $spaces
+     * @param int $tabs
+     * @param int $newlines
      * @return list<string>
      */
-    protected function getWhitespaceEntropy(int $spaces = 1, int $tabs = 1, int $newlines = 1) {
-        return str_split(str_repeat(' ', $spaces) . str_repeat("\t", $tabs) . str_repeat("\n", $newlines));
+    protected function getWhitespaceEntropy(int $spaces = 1, int $tabs = 1, int $newlines = 1)
+    {
+        return str_split(str_repeat(' ', $spaces).str_repeat("\t", $tabs).str_repeat("\n", $newlines));
     }
 }
