@@ -693,5 +693,4 @@ class PasswordTest extends TestCase
 
         $this->assertTrue($validator->passes());
     }
-
 }
