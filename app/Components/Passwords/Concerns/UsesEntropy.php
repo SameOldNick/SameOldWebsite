@@ -7,7 +7,7 @@ trait UsesEntropy
     /**
      * Gets uppercase entropy.
      *
-     * @return list
+     * @return list<string>
      */
     protected function getUppercaseEntropy()
     {
@@ -17,7 +17,7 @@ trait UsesEntropy
     /**
      * Gets lowercase entropy.
      *
-     * @return list
+     * @return list<string>
      */
     protected function getLowercaseEntropy()
     {
@@ -27,7 +27,7 @@ trait UsesEntropy
     /**
      * Gets number entropy.
      *
-     * @return list
+     * @return list<string>
      */
     protected function getNumberEntropy()
     {
@@ -37,7 +37,7 @@ trait UsesEntropy
     /**
      * Gets symbol entropy.
      *
-     * @return list
+     * @return list<string>
      */
     protected function getSymbolEntropy()
     {
