@@ -663,4 +663,35 @@ class PasswordTest extends TestCase
 
         $this->assertTrue($validator->passes());
     }
+
+    /**
+     * Test password is generated based on rules.
+     */
+    public function test_password_generated_rules(): void
+    {
+        $config = [
+            'minimum' => 12,
+            'maximum' => 0,
+            'lowercase' => 1,
+            'uppercase' => 1,
+            'numbers' => 1,
+            'special' => 1,
+            'ascii' => true,
+            'whitespaces' => false,
+        ];
+
+        $password = Password::createFromCallback(function (PasswordRulesBuilder $builder) use ($config) {
+            $builder->fromConfig($config);
+        });
+
+        $generated = $password->generate();
+
+        $validator = Validator::make(
+            ['password' => $generated],
+            ['password' => $password]
+        );
+
+        $this->assertTrue($validator->passes());
+    }
+
 }
