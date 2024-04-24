@@ -71,7 +71,7 @@ trait GeneratesFromPasswordRules
      */
     protected function hasMappedOption(Rule $passwordRule)
     {
-        return $passwordRule->isEnabled() && ! is_null($this->getRuleMapping($passwordRule));
+        return ! is_null($this->getRuleMapping($passwordRule));
     }
 
     /**
