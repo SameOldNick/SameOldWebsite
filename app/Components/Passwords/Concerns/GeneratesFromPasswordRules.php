@@ -41,6 +41,12 @@ trait GeneratesFromPasswordRules
             Rules\Uppercase::class => fn (Rules\Uppercase $rule) => $this->requiresUpperCase($rule->value),
             Rules\Numbers::class => fn (Rules\Numbers $rule) => $this->requiresNumbers($rule->value),
             Rules\SpecialSymbols::class => fn (Rules\SpecialSymbols $rule) => $this->requiresSpecialSymbols($rule->value),
+            Rules\Ascii::class => fn (Rules\Ascii $rule) => $this->onlyAscii($rule->value),
+            Rules\Whitespaces::class => fn (Rules\Whitespaces $rule) => $this->whitespaces([
+                'spaces' => $rule->spaces,
+                'tabs' => $rule->tabs,
+                'newlines' => $rule->newlines,
+            ]),
         ];
     }
 

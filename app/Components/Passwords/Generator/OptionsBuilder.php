@@ -17,6 +17,8 @@ final class OptionsBuilder
 
     protected $chars;
 
+    protected $whitespaces;
+
     /**
      * Initializes OptionsBuilder
      */
@@ -30,6 +32,13 @@ final class OptionsBuilder
             'lowercase' => 0,
             'numbers' => 0,
             'symbols' => 0,
+            'ascii' => true,
+        ];
+
+        $this->whitespaces = [
+            'spaces' => 0,
+            'tabs' => 0,
+            'newlines' => 0,
         ];
     }
 
@@ -112,6 +121,42 @@ final class OptionsBuilder
     }
 
     /**
+     * Sets if only 7-bit ASCII characters are allowed.
+     *
+     * @param bool $value
+     * @return $this
+     */
+    public function onlyAscii($value) {
+        $this->chars['ascii'] = (bool) $value;
+
+        return $this;
+    }
+
+    /**
+     * Sets if whitespaces are allowed.
+     *
+     * @param bool|array $value
+     * @return $this
+     */
+    public function whitespaces($value) {
+        if (is_bool($value)) {
+            $this->whitespaces = [
+                'spaces' => $value ? PHP_INT_MAX : 0,
+                'tabs' => $value ? PHP_INT_MAX : 0,
+                'newlines' => $value ? PHP_INT_MAX : 0,
+            ];
+        } else if (is_array($value)) {
+            $this->whitespaces = [
+                'spaces' => (int) $value['spaces'] ?? 0,
+                'tabs' => (int) $value['tabs'] ?? 0,
+                'newlines' => (int) $value['newlines'] ?? 0,
+            ];
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets options for generator
      *
      * @return Options
@@ -153,6 +198,9 @@ final class OptionsBuilder
         if ($this->chars['symbols'] > 0) {
             $args['symbols'] = $this->chars['symbols'];
         }
+
+        $args['ascii'] = $this->chars['ascii'];
+        $args['whitespaces'] = $this->whitespaces;
 
         return $args;
     }

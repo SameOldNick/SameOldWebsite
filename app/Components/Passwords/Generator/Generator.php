@@ -86,6 +86,19 @@ final class Generator
             ...$this->getSymbolEntropy(),
         ];
 
+        if (!$this->options->ascii) {
+            array_push($entropy, ...$this->getNonAsciiEntropy());
+        }
+
+        if ($this->options->whitespaces['spaces'] || $this->options->whitespaces['tabs'] || $this->options->whitespaces['newlines']) {
+            array_push($entropy, ...$this->getWhitespaceEntropy(
+                spaces: $this->options->whitespaces['spaces'] ? 1 : 0,
+                tabs: $this->options->whitespaces['tabs'] ? 1 : 0,
+                newlines: $this->options->whitespaces['newlines'] ? 1 : 0,
+            ));
+        }
+
+
         array_push($items, ...$this->pickFrom($entropy, $length - count($items)));
 
         return $items;

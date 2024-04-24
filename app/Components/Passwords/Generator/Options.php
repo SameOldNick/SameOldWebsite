@@ -19,6 +19,12 @@ final class Options implements Arrayable
         public readonly int $lowercase = 0,
         public readonly int $numbers = 0,
         public readonly int $symbols = 0,
+        public readonly bool $ascii = true,
+        public readonly array $whitespaces = [
+            'spaces' => 0,
+            'tabs' => 0,
+            'newlines' => 0,
+        ],
     ) {
     }
 
@@ -49,6 +55,8 @@ final class Options implements Arrayable
             'lowercase' => $this->lowercase,
             'numbers' => $this->numbers,
             'symbols' => $this->symbols,
+            'ascii' => $this->ascii,
+            'whitespaces' => $this->whitespaces,
         ];
     }
 

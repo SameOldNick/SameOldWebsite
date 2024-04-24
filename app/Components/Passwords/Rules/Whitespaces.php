@@ -6,11 +6,9 @@ use Closure;
 
 class Whitespaces extends ValidationRule
 {
-    protected readonly mixed $spaces;
-
-    protected readonly mixed $tabs;
-
-    protected readonly mixed $newlines;
+    public readonly mixed $spaces;
+    public readonly mixed $tabs;
+    public readonly mixed $newlines;
 
     /**
      * Initializes AllowWhitespaces instance

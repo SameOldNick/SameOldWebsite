@@ -46,4 +46,31 @@ trait UsesEntropy
             ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~',
         ];
     }
+
+    /**
+     * Gets non-ASCII character entropy.
+     *
+     * @return list<string>
+     */
+    protected function getNonAsciiEntropy() {
+        $chars = [];
+
+        for ($cp = 128; $cp < 255; $cp++) {
+            array_push($chars, chr($cp));
+        }
+
+        return $chars;
+    }
+
+    /**
+     * Gets whitespace entropy.
+     *
+     * @param integer $spaces
+     * @param integer $tabs
+     * @param integer $newlines
+     * @return list<string>
+     */
+    protected function getWhitespaceEntropy(int $spaces = 1, int $tabs = 1, int $newlines = 1) {
+        return str_split(str_repeat(' ', $spaces) . str_repeat("\t", $tabs) . str_repeat("\n", $newlines));
+    }
 }
