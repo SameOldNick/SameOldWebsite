@@ -4,7 +4,6 @@ namespace App\Console\Commands\User;
 
 use App\Models\Role;
 use App\Models\User;
-
 use Illuminate\Console\Command;
 
 class ListRoles extends Command
@@ -36,8 +35,9 @@ class ListRoles extends Command
              */
             $user = User::firstWhere('email', $email);
 
-            if (!$user) {
+            if (! $user) {
                 $this->error('User not found.');
+
                 return 1;
             }
 
@@ -49,6 +49,5 @@ class ListRoles extends Command
         }
 
         $this->table(['ID', 'Name'], $roles->map(fn ($role) => [$role->getKey(), $role->role]));
-
     }
 }

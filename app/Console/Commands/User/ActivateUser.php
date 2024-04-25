@@ -3,7 +3,6 @@
 namespace App\Console\Commands\User;
 
 use App\Models\User;
-
 use Illuminate\Console\Command;
 
 class ActivateUser extends Command
@@ -35,13 +34,15 @@ class ActivateUser extends Command
          */
         $user = User::firstWhere('email', $email);
 
-        if (!$user) {
+        if (! $user) {
             $this->error('User not found.');
+
             return;
         }
 
-        if (!$user->trashed()) {
+        if (! $user->trashed()) {
             $this->error('User is already activated.');
+
             return 1;
         }
 
@@ -49,8 +50,8 @@ class ActivateUser extends Command
             $this->info('User activated successfully!');
         } else {
             $this->error('An error occurred activating user.');
+
             return 1;
         }
-
     }
 }

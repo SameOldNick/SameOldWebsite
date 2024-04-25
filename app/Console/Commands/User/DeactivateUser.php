@@ -3,7 +3,6 @@
 namespace App\Console\Commands\User;
 
 use App\Models\User;
-
 use Illuminate\Console\Command;
 
 class DeactivateUser extends Command
@@ -35,13 +34,15 @@ class DeactivateUser extends Command
          */
         $user = User::firstWhere('email', $email);
 
-        if (!$user) {
+        if (! $user) {
             $this->error('User not found.');
+
             return;
         }
 
         if ($user->trashed()) {
             $this->error('User is already deactivated.');
+
             return 1;
         }
 
@@ -49,8 +50,8 @@ class DeactivateUser extends Command
             $this->info('User deactivated successfully!');
         } else {
             $this->error('An error occurred deactivating user.');
+
             return 1;
         }
-
     }
 }

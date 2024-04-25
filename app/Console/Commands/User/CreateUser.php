@@ -4,7 +4,6 @@ namespace App\Console\Commands\User;
 
 use App\Components\Passwords\Password;
 use App\Models\User;
-
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Hashing\Hasher;
 
@@ -43,15 +42,16 @@ class CreateUser extends Command
 
         $possibleFormats = ['table', 'json', 'prettyJson'];
 
-        if (!in_array($format, $possibleFormats)) {
+        if (! in_array($format, $possibleFormats)) {
             $this->error("The format '{$format}' is invalid.");
-            $this->info("Possible values: " . implode(', ', $possibleFormats));
+            $this->info('Possible values: '.implode(', ', $possibleFormats));
 
             return 1;
         }
 
         if (User::where('email', $email)->withTrashed()->count() > 0) {
             $this->error('A user with that e-mail address already exists.');
+
             return 1;
         }
 
@@ -60,15 +60,16 @@ class CreateUser extends Command
         if ($prompt) {
             $password = $this->secret('Enter password:');
 
-            if (!$this->option('no-confirm')) {
+            if (! $this->option('no-confirm')) {
                 $confirm = $this->secret('Enter password again:');
 
                 if ($password !== $confirm) {
                     $this->error('Passwords do not match.');
+
                     return 1;
                 }
             }
-        } else if (is_null($password)) {
+        } elseif (is_null($password)) {
             $password = Password::default()->generate();
             $generatedPassword = true;
         }
@@ -95,7 +96,7 @@ class CreateUser extends Command
             }
 
             $this->newLine()->table(['Name', 'Value'], $rows);
-        } else if ($format === 'json' || $format === 'prettyJson') {
+        } elseif ($format === 'json' || $format === 'prettyJson') {
             $encoded = json_encode($user->toArray(), $format === 'prettyJson' ? JSON_PRETTY_PRINT : 0);
 
             $this->line($encoded);

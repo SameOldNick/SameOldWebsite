@@ -4,7 +4,6 @@ namespace App\Console\Commands\User;
 
 use App\Models\Role;
 use App\Models\User;
-
 use Illuminate\Console\Command;
 
 class AssignRole extends Command
@@ -36,8 +35,9 @@ class AssignRole extends Command
          */
         $user = User::firstWhere('email', $email);
 
-        if (!$user) {
+        if (! $user) {
             $this->error('User not found.');
+
             return 1;
         }
 
@@ -46,8 +46,9 @@ class AssignRole extends Command
         foreach ($roleNames as $roleName) {
             $role = Role::firstWhere('role', $roleName);
 
-            if (!$role) {
+            if (! $role) {
                 $this->error("Role '$roleName' not found.");
+
                 return;
             }
 

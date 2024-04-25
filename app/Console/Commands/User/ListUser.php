@@ -3,7 +3,6 @@
 namespace App\Console\Commands\User;
 
 use App\Models\User;
-
 use Illuminate\Console\Command;
 
 class ListUser extends Command
@@ -30,28 +29,29 @@ class ListUser extends Command
         $display = $this->option('display');
 
         $possibleColumns = [
-            "id" => "ID",
-            "uuid" => "UUID",
-            "name" => "Name",
-            "avatar" => "Avatar",
-            "state" => "State",
-            "country_code" => "Country",
-            "email" => "Email",
-            "email_verified_at" => "Email Verified At",
-            "password" => "Password",
-            "remember_token" => "Remember Token",
-            "created_at" => "Created At",
-            "updated_at" => "Updated At",
-            "deleted_at" => "Deleted At",
+            'id' => 'ID',
+            'uuid' => 'UUID',
+            'name' => 'Name',
+            'avatar' => 'Avatar',
+            'state' => 'State',
+            'country_code' => 'Country',
+            'email' => 'Email',
+            'email_verified_at' => 'Email Verified At',
+            'password' => 'Password',
+            'remember_token' => 'Remember Token',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'deleted_at' => 'Deleted At',
         ];
 
         $headers = [];
         $columns = [];
 
-        if (!empty($display)) {
+        if (! empty($display)) {
             foreach ($display as $key) {
-                if (!isset($possibleColumns[$key])) {
+                if (! isset($possibleColumns[$key])) {
                     $this->error("Column key '$key' does not exist.");
+
                     return 1;
                 }
 
