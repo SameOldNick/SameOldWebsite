@@ -27,6 +27,7 @@
         "spatie/url": "^2.2",
         "spomky-labs/otphp": "^11.2",
         "starkbank/ecdsa": "^2.1",
+        "symfony/process": "^6.4",
         "thecodingmachine/safe": "^2.5"
     },
     "require-dev": {
