@@ -5,10 +5,11 @@ namespace App\Traits\Console;
 use App\Console\Helpers\StackOutput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
-trait ExecutesCommandsExternally {
+trait ExecutesCommandsExternally
+{
     /**
      * Executes a command unsafely (no sanitization on the command is performed)
      *
@@ -17,7 +18,8 @@ trait ExecutesCommandsExternally {
      * @param array $additional Additional arguments to use when creating Process. (default: empty array)
      * @return string Returns command output
      */
-    protected function executeCommand($commandLine, bool $realTimeOutput = false, array $additional = []) {
+    protected function executeCommand($commandLine, bool $realTimeOutput = false, array $additional = [])
+    {
         // Create output stack
         $bufferedOutput = new BufferedOutput();
 
@@ -30,7 +32,7 @@ trait ExecutesCommandsExternally {
         );
 
         // Executes after the command finishes
-        if (!$process->isSuccessful()) {
+        if (! $process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
 
@@ -45,7 +47,8 @@ trait ExecutesCommandsExternally {
      * @param OutputInterface|null $stderr Error stream (output stream is used if null)
      * @return Process
      */
-    protected function runProcess(Process $process, OutputInterface $stdout, ?OutputInterface $stderr = null) {
+    protected function runProcess(Process $process, OutputInterface $stdout, ?OutputInterface $stderr = null)
+    {
         // Set $stderr to $stdout if $stderr is not specified.
         if (is_null($stderr)) {
             $stderr = $stdout;
@@ -70,7 +73,8 @@ trait ExecutesCommandsExternally {
      * @param string ...$args Arguments
      * @return string Escaped command line
      */
-    protected function buildCommandLine($command, ...$args) {
+    protected function buildCommandLine($command, ...$args)
+    {
         $command = escapeshellcmd($command);
 
         return count($args) > 0 ? sprintf('%s %s', $command, implode(' ', array_map(fn ($arg) => escapeshellarg($arg), $args))) : $command;

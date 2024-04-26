@@ -14,8 +14,7 @@ class StackOutput extends Output
      */
     public function __construct(
         protected readonly array $outputs
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -24,7 +23,8 @@ class StackOutput extends Output
      *
      * @return void
      */
-    protected function doWrite(string $message, bool $newline) {
+    protected function doWrite(string $message, bool $newline)
+    {
         foreach ($this->outputs as $output) {
             $output->write($message, $newline);
         }
