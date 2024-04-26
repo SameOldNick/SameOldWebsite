@@ -5,6 +5,7 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
+        container_name: sameoldwebsite
         image: sail-8.3/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
@@ -27,6 +28,7 @@ services:
             - redis
     mariadb:
         image: 'mariadb:10'
+        container_name: mariadb
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
@@ -51,6 +53,7 @@ services:
             timeout: 5s
     redis:
         image: 'redis:alpine'
+        container_name: redis
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
