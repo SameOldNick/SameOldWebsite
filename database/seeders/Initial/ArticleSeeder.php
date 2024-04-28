@@ -12,10 +12,8 @@ class ArticleSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run(User $user = null): void
     {
-        $user = User::find(1);
-
         $article = Article::createWithPost(function (Article $article) {
             $article->fill([
                 'title' => 'Welcome to Same Old Nick\'s Corner of the Internet! 🚀',
