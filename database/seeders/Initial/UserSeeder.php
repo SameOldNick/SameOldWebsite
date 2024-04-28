@@ -15,9 +15,10 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      *
+     * @param array $additional Any additional attributes for the user
      * @return void
      */
-    public function run()
+    public function run(array $additional = [])
     {
         // \App\Models\User::factory(10)->create();
 
@@ -26,13 +27,12 @@ class UserSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $user = User::factory()->create([
+        $user = User::factory([
             'uuid' => (string) Str::uuid(),
             'name' => 'Same Old Nick',
             'email' => 'admin@sameoldnick.com',
             'country_code' => 'CAN',
             'password' => '$2y$10$EdEgkPH8/.Sq0t6zrZPwnOAL8LCOgAFNw6uhb3Pgijt63fEnXDFqK', // secret
-        ]);
-
+        ])->create($additional);
     }
 }
