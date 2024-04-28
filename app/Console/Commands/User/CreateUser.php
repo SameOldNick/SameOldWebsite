@@ -5,6 +5,7 @@ namespace App\Console\Commands\User;
 use App\Components\Passwords\Password;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Hashing\Hasher;
 
 class CreateUser extends Command
@@ -18,6 +19,7 @@ class CreateUser extends Command
                             {--p|prompt : Prompts for password}
                             {--no-confirm : Skip password confirmation prompt}
                             {--format=table : Format to display user information}
+                            {--uuid= : Manually specifies the UUID for the user}
                             {name : Full name}
                             {email : E-mail address}
                             {password? : If empty, the password is generated}';
@@ -34,6 +36,7 @@ class CreateUser extends Command
      */
     public function handle(Hasher $hasher)
     {
+        $uuid = $this->option('uuid');
         $format = $this->option('format');
         $prompt = $this->option('prompt');
         $name = $this->argument('name');
@@ -75,6 +78,7 @@ class CreateUser extends Command
         }
 
         $user = User::create([
+            'uuid' => $uuid ?? (string) Str::uuid(),
             'name' => $name,
             'email' => $email,
             'password' => $hasher->make($password),
