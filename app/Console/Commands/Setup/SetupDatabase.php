@@ -33,27 +33,27 @@ class SetupDatabase extends Command
         $this->confirmDatabaseSetup($skipPrompt);
 
         // Run migrations
-        $this->info("Running database migrations...");
+        $this->info('Running database migrations...');
         $this->call('migrate:fresh', []);
 
         // Seed the database
-        $this->info("Seeding the database...");
+        $this->info('Seeding the database...');
         $this->call('db:seed', ['--class' => 'SetupSeeder']);
 
-        $this->info("Database setup complete.");
+        $this->info('Database setup complete.');
     }
 
     /**
      * Confirms database setup
      *
-     * @param boolean $skipPrompt
+     * @param bool $skipPrompt
      * @return void
      */
     private function confirmDatabaseSetup(bool $skipPrompt)
     {
-        if (!$skipPrompt) {
-            if (!$this->confirm("This will erase everything in the database. Are you sure you want to continue?")) {
-                $this->error("Cancelled database setup.");
+        if (! $skipPrompt) {
+            if (! $this->confirm('This will erase everything in the database. Are you sure you want to continue?')) {
+                $this->error('Cancelled database setup.');
                 exit(1);
             }
         }
