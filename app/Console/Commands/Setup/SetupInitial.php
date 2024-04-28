@@ -48,22 +48,25 @@ class SetupInitial extends Command
 
         if (empty($userName)) {
             $this->error('The --user-name option is empty.');
+
             return 1;
         }
 
         if (empty($userEmail)) {
             $this->error('The --user-email option is empty.');
+
             return 1;
         }
 
         $password = $this->gatherPassword($userPasswordSource);
 
         // Validate password
-        if ($userPasswordSource !== 'hash')
+        if ($userPasswordSource !== 'hash') {
             $this->validatePassword($password);
+        }
 
         // Run initial seeder
-        $this->info("Seeding initial data into database...");
+        $this->info('Seeding initial data into database...');
 
         $user = User::create([
             'uuid' => $userUuid ?? (string) Str::uuid(),
@@ -84,7 +87,7 @@ class SetupInitial extends Command
             ['Password', $userPasswordSource === 'generate' ? $password : str_repeat('*', 10)],
         ]);
 
-        $this->info("Initial seeding complete.");
+        $this->info('Initial seeding complete.');
     }
 
     /**
@@ -93,10 +96,11 @@ class SetupInitial extends Command
      * @param string $source Where to pull password
      * @return string
      */
-    protected function gatherPassword(string $source) {
+    protected function gatherPassword(string $source)
+    {
         $passed = $this->option('user-password-passed');
 
-        if (!in_array($source, ['generate', 'prompt', 'hash', 'plain-text'])) {
+        if (! in_array($source, ['generate', 'prompt', 'hash', 'plain-text'])) {
             $this->error('The --user-password-source option is invalid.');
 
             exit(1);
@@ -141,7 +145,8 @@ class SetupInitial extends Command
      * @param string $password
      * @return void
      */
-    protected function validatePassword(#[\SensitiveParameter] string $password) {
+    protected function validatePassword(#[\SensitiveParameter] string $password)
+    {
         $validator = Validator::make(['password' => $password], ['password' => RulesPassword::required()]);
 
         if ($validator->fails()) {

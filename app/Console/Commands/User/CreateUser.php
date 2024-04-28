@@ -5,8 +5,8 @@ namespace App\Console\Commands\User;
 use App\Components\Passwords\Password;
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Support\Str;
 
 class CreateUser extends Command
 {

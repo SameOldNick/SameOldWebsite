@@ -30,11 +30,12 @@ class SetupProject extends Command
     {
         // Extract options
         $skipPrompts = $this->option('yes');
-        $runInitialSeeder = !$this->option('no-initial');
+        $runInitialSeeder = ! $this->option('no-initial');
         $packageManager = $this->option('package-manager');
 
-        if (!in_array($packageManager, ['npm', 'yarn', 'pnpm'])) {
+        if (! in_array($packageManager, ['npm', 'yarn', 'pnpm'])) {
             $this->error('Invalid package manager.');
+
             return 1;
         }
 
@@ -44,9 +45,9 @@ class SetupProject extends Command
         $this->confirmEnvSetup($skipPrompts);
 
         // Setup database
-        $this->info("Setting up database...");
+        $this->info('Setting up database...');
         $this->call('setup:database', [
-            '--yes' => $skipPrompts
+            '--yes' => $skipPrompts,
         ]);
 
         // Seed database with initial data
@@ -55,17 +56,17 @@ class SetupProject extends Command
         }
 
         // Build front-end
-        $this->info("Building front-end...");
+        $this->info('Building front-end...');
         $this->call('setup:frontend', [
             // No need to specify --cmd-prefix as the commands will be run in the same context as this command.
             'package-manager' => $packageManager,
         ]);
 
         // Create symbolic link to storage directory
-        $this->info("Creating symbolic link to storage directory...");
+        $this->info('Creating symbolic link to storage directory...');
         $this->call('storage:link', ['--force' => true]);
 
-        $this->info("Setup complete.");
+        $this->info('Setup complete.');
     }
 
     /**
@@ -76,9 +77,9 @@ class SetupProject extends Command
      */
     private function confirmEnvSetup(bool $skipPrompt)
     {
-        if (!$skipPrompt) {
-            if (!$this->confirm("Have you updated the .env configuration variables?")) {
-                $this->error("Please update the .env configuration variables and run the command again.");
+        if (! $skipPrompt) {
+            if (! $this->confirm('Have you updated the .env configuration variables?')) {
+                $this->error('Please update the .env configuration variables and run the command again.');
                 exit(1);
             }
         }

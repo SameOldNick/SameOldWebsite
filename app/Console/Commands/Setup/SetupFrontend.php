@@ -43,36 +43,37 @@ class SetupFrontend extends Command
             case 'npm':
                 $npm = $this->prefixCommand('npm');
 
-                $this->info("Installing NodeJS packages with npm...");
-                $this->executeCommand($this->buildCommandLine("$npm install"), !$hideOutput, $additionalArgs);
-                $this->info("Building front-end assets for production...");
-                $this->executeCommand($this->buildCommandLine("$npm run build"), !$hideOutput, $additionalArgs);
+                $this->info('Installing NodeJS packages with npm...');
+                $this->executeCommand($this->buildCommandLine("$npm install"), ! $hideOutput, $additionalArgs);
+                $this->info('Building front-end assets for production...');
+                $this->executeCommand($this->buildCommandLine("$npm run build"), ! $hideOutput, $additionalArgs);
 
                 break;
             case 'yarn':
                 $yarn = $this->prefixCommand('yarn');
 
-                $this->info("Installing NodeJS packages with yarn...");
-                $this->executeCommand($this->buildCommandLine("$yarn install"), !$hideOutput, $additionalArgs);
-                $this->info("Building front-end assets for production...");
-                $this->executeCommand($this->buildCommandLine("$yarn run build"), !$hideOutput, $additionalArgs);
+                $this->info('Installing NodeJS packages with yarn...');
+                $this->executeCommand($this->buildCommandLine("$yarn install"), ! $hideOutput, $additionalArgs);
+                $this->info('Building front-end assets for production...');
+                $this->executeCommand($this->buildCommandLine("$yarn run build"), ! $hideOutput, $additionalArgs);
 
                 break;
             case 'pnpm':
                 $pnpm = $this->prefixCommand('pnpm');
 
-                $this->info("Installing NodeJS packages with pnpm...");
-                $this->executeCommand($this->buildCommandLine("$pnpm install"), !$hideOutput, $additionalArgs);
-                $this->info("Building front-end assets for production...");
-                $this->executeCommand($this->buildCommandLine("$pnpm run build"), !$hideOutput, $additionalArgs);
+                $this->info('Installing NodeJS packages with pnpm...');
+                $this->executeCommand($this->buildCommandLine("$pnpm install"), ! $hideOutput, $additionalArgs);
+                $this->info('Building front-end assets for production...');
+                $this->executeCommand($this->buildCommandLine("$pnpm run build"), ! $hideOutput, $additionalArgs);
 
                 break;
             default:
-                $this->error("Invalid choice. Exiting...");
+                $this->error('Invalid choice. Exiting...');
+
                 return 1;
         }
 
-        $this->info("Compiled front-end assets.");
+        $this->info('Compiled front-end assets.');
     }
 
     /**
@@ -81,7 +82,8 @@ class SetupFrontend extends Command
      * @param string $command
      * @return string
      */
-    protected function prefixCommand(string $command): string {
+    protected function prefixCommand(string $command): string
+    {
         // Check if the cmd-prefix option is set
         $cmdPrefix = $this->option('cmd-prefix');
 

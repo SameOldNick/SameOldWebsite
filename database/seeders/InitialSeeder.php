@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class InitialSeeder extends Seeder
@@ -14,7 +14,7 @@ class InitialSeeder extends Seeder
     public function run(User $user = null): void
     {
         // Laravel might try to dig up a non-existent model, so also check if it exists.
-        if (is_null($user) || !$user->exists) {
+        if (is_null($user) || ! $user->exists) {
             $user = $this->createUser();
         }
 
@@ -33,7 +33,8 @@ class InitialSeeder extends Seeder
      *
      * @return User
      */
-    protected function createUser() {
+    protected function createUser()
+    {
         $uuid = (string) Str::uuid();
 
         $this->callWith(Initial\UserSeeder::class, ['additional' => ['uuid' => $uuid]]);
