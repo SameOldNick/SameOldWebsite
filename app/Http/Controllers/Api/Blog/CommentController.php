@@ -47,15 +47,15 @@ class CommentController extends Controller
         $show = (string) $request->str('show', 'all');
 
         if ($show === 'awaiting') {
-            $query = $query->whereHas('post', function (Builder $query) use ($request) {
+            $query = $query->whereHas('post', function (Builder $query) {
                 $query->whereNull('posts.deleted_at');
             })->whereNull('approved_at');
         } elseif ($show === 'approved') {
-            $query = $query->whereHas('post', function (Builder $query) use ($request) {
+            $query = $query->whereHas('post', function (Builder $query) {
                 $query->whereNull('posts.deleted_at');
             })->whereNotNull('approved_at');
         } elseif ($show === 'denied') {
-            $query = $query->whereHas('post', function (Builder $query) use ($request) {
+            $query = $query->whereHas('post', function (Builder $query) {
                 $query->whereNotNull('posts.deleted_at');
             })->whereNull('approved_at');
         }
