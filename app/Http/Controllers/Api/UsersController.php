@@ -105,7 +105,7 @@ class UsersController extends Controller
             $user->country()->associate($country);
         }
 
-        if (!empty($request->roles)) {
+        if (! empty($request->roles)) {
             $roles = Role::whereIn('role', $request->roles)->get();
 
             $user->roles()->sync($roles);
