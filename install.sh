@@ -4,102 +4,63 @@
 set -o errexit
 set -o pipefail
 
-# Function to display help message
-display_help() {
-    cat << EOF
-Usage: $0 [-i] [-t TARGET] [-h]
-Options:
-  -i, --initial     Run the initial seeder
-  -t, --target      Specify the target for the install (host or sail)
-  -h, --help        Display help message
-EOF
-    exit 1
-}
-
-# Default values
-run_initial_seeder="false"
-target="host"  # Default target is host
-
-# Parse command-line options
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        -i|--initial) run_initial_seeder="true" ;;
-        -t|--target) target="$2"; shift ;;
-        -h|--help) display_help ;;
-        *) echo "Error: Unknown option: $1" >&2; display_help ;;
-    esac
-    shift
-done
-
-# Set the appropriate command prefix based on the target
-case "$target" in
-    sail)
-        export CMD_PREFIX="./vendor/bin/sail"
-        ;;
-    host)
-        export CMD_PREFIX=""
-        ;;
-    *)
-        echo "Invalid target. Exiting..."
-        exit 1
-        ;;
-esac
-
-# Ensure the "vendor" directory exists
+# Check if the vendor directory exists
 if [ ! -d "vendor" ]; then
-    echo "The 'vendor' directory does not exist."
-    echo "Please run 'composer install' before running this script."
-    exit 1
-fi
-
-# Confirm the .env file is configured unless -y or --yes option is provided
-if [ "$skip_prompt" != "true" ]; then
-    read -p "Have you updated the .env configuration variables? (y/n): " env_confirmed
-    if [[ $env_confirmed != "y" ]]; then
-        echo "Please update the .env configuration variables and run the script again."
+    # Check if composer command exists
+    if ! command -v composer &> /dev/null; then
+        echo "Composer is not installed. Please install Composer to continue."
         exit 1
     fi
+
+    # Run composer install
+    echo "Installing PHP packages using composer..."
+    composer install
 fi
 
-# Source the .env file to load environment variables
-if [ -f .env ]; then
-    source .env
-fi
+# Check if the user is setting up on Sail
+echo "Are you setting up on Larvel Sail? (y/N)"
+read -r laravel_sail
 
-if [ "$sail" == "true" ]; then
-    export CMD_PREFIX="./vendor/bin/sail"
-fi
-
-if [ -z "$DATABASE_ARGS" ]; then
-    database_args=""  # Default to "" if not set
+if [ "$laravel_sail" == "true" ]; then
+    env_file=".env.sail"
+    artisan_args="--env=sail"
 else
-    database_args="$DATABASE_ARGS"
+    env_file=".env"
+    artisan_args=""
 fi
 
-if [ "$skip_prompt" == "true" ]; then
-    database_args+=" -y"
+# Check if .env file doesn't exist
+if [ ! -f "$env_file" ]; then
+    # Copy .env.example to .env
+    cp .env.example $env_file
+
+    # Generate Laravel application key
+    php artisan $artisan_args key:generate
 fi
 
-if [ "$run_initial_seeder" == "true" ]; then
-    database_args+=" -i"
-fi
-
-if [ -z "$FRONTEND_ARGS" ]; then
-    frontend_args="yarn"  # Default to "yarn" if not set
+# Open .env file in text editor
+if [ -n "$EDITOR" ]; then
+    $EDITOR .env
+elif command -v nano &> /dev/null; then
+    nano .env
+elif command -v vim &> /dev/null; then
+    vim .env
+elif command -v vi &> /dev/null; then
+    vi .env
 else
-    frontend_args="$FRONTEND_ARGS"
+    echo "No text editor found. Please manually edit the .env file."
 fi
 
-echo "Setting up database..."
+# Inform the user to proceed with setup
+echo "Please proceed with the necessary setup steps for your environment."
 
-./install/database.sh $database_args
-
-echo "Building front-end..."
-
-./install/frontend.sh $frontend_args
-
-# Create symbolic link to storage directory
-echo "Creating symbolic link to storage directory..."
-$CMD_PREFIX php artisan storage:link --force
-
-echo "Setup complete."
+if [ "$laravel_sail" == "true" ]; then
+    echo "Run the following to run Same Old Website with Laravel Sail:"
+    echo
+    echo "./sail-up.sh --build -d"
+    echo "./sail artisan setup:project"
+else
+    echo "Run the following to setup Same Old Website on the host machine:"
+    echo
+    echo "php artisan setup:project"
+fi
