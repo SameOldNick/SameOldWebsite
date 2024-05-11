@@ -26,7 +26,7 @@ class AdminController extends Controller
         $refreshTokenExpiresAt = Carbon::now()->addDays(7);
 
         $buildable = new GuardBuildable($user, ['exp' => $refreshTokenExpiresAt]);
-        $refreshToken = $this->app->make('littlejwt.refresh')->createJWT([$buildable, 'build']);
+        $refreshToken = $this->app->make('littlejwt.refresh')->create($buildable);
 
         // Store JTI in database (so refresh tokens can be validated and revoked)
         $user->refreshTokens()->create([
