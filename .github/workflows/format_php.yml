@@ -9,19 +9,19 @@ on:
             - '**.php'
 
 jobs:
-    php-cs-fixer:
+    laravel-pint:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
               with:
                   ref: ${{ github.head_ref }}
 
             - name: Install
-              run: composer install
+              run: composer install --dev
 
-            - name: Run php-cs-fixer
-              run: ./vendor/bin/php-cs-fixer fix
+            - name: Run Laravel Pint
+              run: ./vendor/bin/pint -v
 
-            - uses: stefanzweifel/git-auto-commit-action@v4
+            - uses: stefanzweifel/git-auto-commit-action@v5
               with:
-                  commit_message: Applied php-cs-fixer changes
+                  commit_message: Applied Laravel Pint changes
