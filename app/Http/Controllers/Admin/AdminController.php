@@ -14,7 +14,7 @@ use LittleApps\LittleJWT\Utils\ResponseBuilder;
 class AdminController extends Controller
 {
     public function __construct(
-        private Application $app
+        private readonly Application $app
     ) {
     }
 
