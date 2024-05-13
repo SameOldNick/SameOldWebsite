@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\User;
 
+use App\Components\Passwords\Password;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\User;
@@ -22,6 +23,7 @@ class ModifyUser extends Command
                             {--name= : The new name}
                             {--new-email= : The new email}
                             {--password= : The new password}
+                            {--random-password : Sets password to randomly generated password}
                             {--prompt : Prompt for new password}
                             {--no-confirm-password : Skip password confirmation prompt}
                             {--state= : The new state}
@@ -82,6 +84,10 @@ class ModifyUser extends Command
             $user->password = $hasher->make($password);
         } elseif ($this->option('password')) {
             $user->password = $hasher->make($this->option('password'));
+        } else if ($this->option('random-password')) {
+            $generatedPassword = Password::default()->generate();
+
+            $user->password = $hasher->make($generatedPassword);
         }
 
         if (! empty($stateCode) || ! empty($countryCode)) {
@@ -105,10 +111,19 @@ class ModifyUser extends Command
         if (! $this->option('no-confirm-save')) {
             $this->info('The following changes will be made to the user: ');
 
-            $this->table(
-                ['Column', 'New Value'],
-                Arr::map($user->getDirty(), fn ($value, $column) => [$this->getColumnName($column), $this->getColumnValue($column, $value)])
-            );
+            $dirty = $user->getDirty();
+
+            if (isset($generatedPassword)) {
+                unset($dirty['password']);
+            }
+
+            $rows = Arr::map($dirty, fn ($value, $column) => [$this->getColumnName($column), $this->getColumnValue($column, $value)]);
+
+            if (isset($generatedPassword)) {
+                array_push($rows, ['Password', $generatedPassword]);
+            }
+
+            $this->table(['Column', 'New Value'], $rows);
 
             if (! $this->confirm('Would you like to save these changes?')) {
                 return 0;
