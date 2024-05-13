@@ -112,27 +112,25 @@ class ModifyUser extends Command
             $this->info('No changes were made to the user.');
             return 0;
         }
+        
+        $this->info('The following changes will be made to the user: ');
 
-        if (! $this->option('no-confirm-save')) {
-            $this->info('The following changes will be made to the user: ');
+        $dirty = $user->getDirty();
 
-            $dirty = $user->getDirty();
+        if (isset($generatedPassword)) {
+            unset($dirty['password']);
+        }
 
-            if (isset($generatedPassword)) {
-                unset($dirty['password']);
-            }
+        $rows = Arr::map($dirty, fn ($value, $column) => [$this->getColumnName($column), $this->getColumnValue($column, $value)]);
 
-            $rows = Arr::map($dirty, fn ($value, $column) => [$this->getColumnName($column), $this->getColumnValue($column, $value)]);
+        if (isset($generatedPassword)) {
+            array_push($rows, ['Password', $generatedPassword]);
+        }
 
-            if (isset($generatedPassword)) {
-                array_push($rows, ['Password', $generatedPassword]);
-            }
+        $this->table(['Column', 'New Value'], $rows);
 
-            $this->table(['Column', 'New Value'], $rows);
-
-            if (! $this->confirm('Would you like to save these changes?')) {
-                return 0;
-            }
+        if (! $this->option('no-confirm-save') && ! $this->confirm('Would you like to save these changes?')) {
+            return 0;
         }
 
         $user->save();
