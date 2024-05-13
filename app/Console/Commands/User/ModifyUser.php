@@ -108,6 +108,11 @@ class ModifyUser extends Command
             $user->country()->associate($country);
         }
 
+        if (!$user->isDirty() && !isset($generatedPassword)) {
+            $this->info('No changes were made to the user.');
+            return 0;
+        }
+
         if (! $this->option('no-confirm-save')) {
             $this->info('The following changes will be made to the user: ');
 
