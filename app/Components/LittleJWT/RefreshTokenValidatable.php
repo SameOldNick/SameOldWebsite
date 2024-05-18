@@ -3,7 +3,6 @@
 namespace App\Components\LittleJWT;
 
 use App\Models\RefreshToken;
-use LittleApps\LittleJWT\Contracts\Validatable;
 use LittleApps\LittleJWT\Validation\Validator;
 
 class RefreshTokenValidatable
