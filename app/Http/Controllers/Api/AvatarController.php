@@ -49,7 +49,7 @@ class AvatarController extends Controller
      * Deletes the authenticated users avatar.
      *
      * @param Request $request
-     * @return array
+     * @return mixed
      */
     public function deleteAvatar(Request $request)
     {
