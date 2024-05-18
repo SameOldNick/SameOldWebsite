@@ -13,7 +13,7 @@ class SocialMedia extends Base
             'url' => 'https://www.facebook.com/{username}',
         ],
         'twitter' => [
-            'name' => 'X',
+            'name' => 'Twitter',
             'url' => 'https://twitter.com/{username}',
         ],
         'x' => [
@@ -21,15 +21,15 @@ class SocialMedia extends Base
             'url' => 'https://x.com/{username}',
         ],
         'instagram' => [
-            'name' => 'X',
+            'name' => 'Instagram',
             'url' => 'https://www.instagram.com/{username}/',
         ],
         'linkedin' => [
-            'name' => 'X',
+            'name' => 'LinkedIn',
             'url' => 'https://www.linkedin.com/in/{username}/',
         ],
         'github' => [
-            'name' => 'X',
+            'name' => 'GitHub',
             'url' => 'https://github.com/{username}',
         ],
         'reddit' => [
