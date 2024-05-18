@@ -17,7 +17,7 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
-        if (! $request->user()->hasAllRoles($roles)) {
+        if (! $request->user()->roles->containsAll($roles)) {
             throw new AuthorizationException;
         }
 

@@ -52,7 +52,7 @@ class AuthServiceProvider extends ServiceProvider
         foreach ($roles as $role) {
             $roleId = $role['id'];
 
-            Gate::define($this->generateGateAbility('role', $roleId), fn (User $user) => $user->hasAllRoles([$roleId]));
+            Gate::define($this->generateGateAbility('role', $roleId), fn (User $user) => $user->roles->containsAll([$roleId]));
         }
     }
 
@@ -68,8 +68,8 @@ class AuthServiceProvider extends ServiceProvider
         foreach ($groups as $group) {
             $roles = $group['roles'];
 
-            Gate::define($this->generateGateAbility('all-roles', $group['id']), fn (User $user) => $user->hasAllRoles($roles));
-            Gate::define($this->generateGateAbility('any-roles', $group['id']), fn (User $user) => $user->hasAnyRoles($roles));
+            Gate::define($this->generateGateAbility('all-roles', $group['id']), fn (User $user) => $user->roles->containsAll($roles));
+            Gate::define($this->generateGateAbility('any-roles', $group['id']), fn (User $user) => $user->roles->containsAny($roles));
         }
     }
 
