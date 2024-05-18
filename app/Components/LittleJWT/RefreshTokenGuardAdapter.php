@@ -11,6 +11,12 @@ class RefreshTokenGuardAdapter extends AbstractAdapter
 {
     use BuildsJwt;
 
+    /**
+     * Initializes adapter instance
+     *
+     * @param Container $container
+     * @param array $config
+     */
     public function __construct(Container $container, array $config = [])
     {
         parent::__construct($container, $config);
