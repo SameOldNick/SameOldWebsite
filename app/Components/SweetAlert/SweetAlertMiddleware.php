@@ -55,7 +55,7 @@ class SweetAlertMiddleware
     /**
      * Checks if response is redirection
      *
-     * @param mixed $response
+     * @param Response $response
      * @return bool
      */
     protected function isRedirectResponse(Response $response)
