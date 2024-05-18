@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\ResponseTrait;
 use JsonSerializable;
+use Symfony\Component\HttpFoundation\Response;
 
 class SweetAlertMiddleware
 {
@@ -44,7 +45,7 @@ class SweetAlertMiddleware
         $response = $next($request);
 
         // If response is redirect or JSON, we need to save the alerts in the session for the next request lifecycle.
-        if ($response instanceof RedirectResponse || $this->isJsonResponse($response)) {
+        if ($request->hasSession() && ($this->isRedirectResponse($response) || $this->isJsonResponse($response))) {
             $request->session()->flash('sweetalerts', $this->app['sweetalerts']->all());
         }
 
@@ -57,9 +58,9 @@ class SweetAlertMiddleware
      * @param mixed $response
      * @return bool
      */
-    protected function isRedirectResponse($response)
+    protected function isRedirectResponse(Response $response)
     {
-        return $response instanceof RedirectResponse || ($response->status() >= 300 && $response->status() <= 300);
+        return $response->isRedirection();
     }
 
     /**
