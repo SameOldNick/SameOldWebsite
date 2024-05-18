@@ -5,7 +5,7 @@ namespace App\Components\LittleJWT;
 use Illuminate\Contracts\Container\Container;
 use LittleApps\LittleJWT\Guards\Adapters\AbstractAdapter;
 use LittleApps\LittleJWT\Guards\Adapters\Concerns\BuildsJwt;
-use LittleApps\LittleJWT\Validation\Validatables\StackValidatable;
+use LittleApps\LittleJWT\Validation\ExtendedValidator;
 
 class RefreshTokenGuardAdapter extends AbstractAdapter
 {
@@ -13,10 +13,17 @@ class RefreshTokenGuardAdapter extends AbstractAdapter
 
     public function __construct(Container $container)
     {
-        $this->container = $container;
-        $this->jwt = $container->make('littlejwt.refresh');
+        parent::__construct($container, []);
+    }
 
-        $this->config = [];
+    /**
+     * Gets the LittleJWT handler
+     *
+     * @return \LittleApps\LittleJWT\Core\Handler
+     */
+    protected function getHandler()
+    {
+        return $this->container->make('littlejwt.refresh')->handler();
     }
 
     /**
@@ -26,11 +33,10 @@ class RefreshTokenGuardAdapter extends AbstractAdapter
      */
     protected function getValidatorCallback()
     {
-        $validatable = new StackValidatable([
-            $this->container->make('littlejwt.validatables.guard'),
-            new RefreshTokenValidatable(),
-        ]);
-
-        return [$validatable, 'validate'];
+        return function (ExtendedValidator $validator) {
+            $validator
+                ->with($this->container->make('littlejwt.validatables.guard'))
+                ->with(new RefreshTokenValidatable());
+        };
     }
 }

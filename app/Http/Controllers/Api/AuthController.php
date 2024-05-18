@@ -26,7 +26,7 @@ class AuthController extends Controller
     {
         $buildable = new GuardBuildable($request->user());
 
-        $accessToken = $this->jwt->createJWT([$buildable, 'build']);
+        $accessToken = $this->jwt->create($buildable);
 
         return ResponseBuilder::buildFromJwt($accessToken);
     }
