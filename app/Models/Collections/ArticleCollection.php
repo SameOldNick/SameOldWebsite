@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
+/**
+ * @extends Collection<int, Article>
+ */
 class ArticleCollection extends Collection
 {
     use HasWeights;
@@ -24,8 +27,6 @@ class ArticleCollection extends Collection
 
     /**
      * Gets articles grouped by date/time format
-     *
-     * @return static
      */
     public function groupedByDateTime(string $format)
     {
