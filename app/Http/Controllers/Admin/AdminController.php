@@ -21,11 +21,19 @@ class AdminController extends Controller
     public function singleSignOn(Request $request, User $user)
     {
         // Based off https://stackoverflow.com/a/26834685/533242
+
+        /**
+         * @var \LittleApps\LittleJWT\JWT\JsonWebToken
+         */
         $accessToken = Auth::guard('jwt')->buildJwtForUser($user);
 
         $refreshTokenExpiresAt = Carbon::now()->addDays(7);
 
         $buildable = new GuardBuildable($user, ['exp' => $refreshTokenExpiresAt]);
+
+        /**
+         * @var \LittleApps\LittleJWT\JWT\JsonWebToken
+         */
         $refreshToken = $this->app->make('littlejwt.refresh')->create($buildable);
 
         // Store JTI in database (so refresh tokens can be validated and revoked)
