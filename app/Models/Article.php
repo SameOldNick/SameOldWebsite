@@ -48,7 +48,7 @@ class Article extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'title',
@@ -58,7 +58,7 @@ class Article extends Model
     /**
      * The relations to eager load on every query.
      *
-     * @var array
+     * @var list<string>
      */
     protected $with = [
         'mainImage',
@@ -77,7 +77,7 @@ class Article extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $appends = [
         'revision',

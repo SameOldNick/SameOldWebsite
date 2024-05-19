@@ -44,7 +44,7 @@ class Comment extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array
+     * @var list<string>
      */
     protected $with = [
         'post',

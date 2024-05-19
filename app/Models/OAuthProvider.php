@@ -33,10 +33,9 @@ class OAuthProvider extends Model
     /**
      * The relations to eager load on every query.
      *
-     * @var array
+     * @var list<string>
      */
-    protected $with = [
-    ];
+    protected $with = [];
 
     /**
      * The attributes that should be cast.
