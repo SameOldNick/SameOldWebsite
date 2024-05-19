@@ -40,8 +40,7 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
      */
     public function handle($request, Closure $next, $name)
     {
-        $adapter = $this->createAdapter($name);
-        $this->auth->guard('jwt')->setAdapter($adapter);
+        $this->getGuard()->setAdapter($this->createAdapter($name));
 
         return $this->baseMiddleware->handle($request, $next, 'jwt');
     }
@@ -55,5 +54,14 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
     protected function createAdapter($name)
     {
         return $this->app->make($name);
+    }
+
+    /**
+     * Gets JWT guard
+     *
+     * @return \LittleApps\LittleJWT\Guards\Guard
+     */
+    protected function getGuard() {
+        return $this->auth->guard('jwt');
     }
 }
