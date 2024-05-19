@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
  * @property string $summary
  * @property-read bool $summary_auto
  * @property-read Article $article
+ * @property-read string $compiled
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
