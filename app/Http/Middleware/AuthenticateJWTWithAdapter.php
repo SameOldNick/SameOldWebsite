@@ -23,7 +23,13 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
         //
     }
 
-    public static function adapter(string $name)
+    /**
+     * Generates middleware name
+     *
+     * @param string $name Adapter to use
+     * @return string
+     */
+    public static function adapter(string $name): string
     {
         return sprintf('%s:%s', static::class, $name);
     }
