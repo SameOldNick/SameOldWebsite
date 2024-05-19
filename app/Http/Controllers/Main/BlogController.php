@@ -58,6 +58,9 @@ class BlogController extends Controller
         $sortBy = $request->has('sort') && $request->str('sort')->lower()->exactly('date') ? 'date' : 'relevance';
         $order = $request->has('order') && $request->str('order')->lower()->exactly('asc') ? 'asc' : 'desc';
 
+        /**
+         * @var \App\Models\Collections\ArticleCollection
+         */
         $articles = Article::published()->get();
 
         if ($request->filled('q')) {
@@ -76,6 +79,9 @@ class BlogController extends Controller
             }
         }
 
+        /**
+         * @var \Illuminate\Pagination\AbstractPaginator
+         */
         $articles = $articles->paginate(5)->withQueryString();
 
         return view('main.blog.search-results', compact('request', 'articles', 'sortBy', 'order'));
