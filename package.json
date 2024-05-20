@@ -61,7 +61,7 @@
         "css.gg": "^2.1.1",
         "dotenv": "^16.0.1",
         "dropzone": "^6.0.0-beta.2",
-        "eslint": "^8.57.0",
+        "eslint": "^9.3.0",
         "eslint-plugin-github": "^4.10.1",
         "eslint-plugin-jest": "^28.5.0",
         "eslint-plugin-react": "latest",
