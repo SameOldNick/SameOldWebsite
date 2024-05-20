@@ -1,10 +1,27 @@
 <?php
 
-namespace App\Traits\Support;
+namespace App\Components\Macros\Collection;
 
-trait HasWeights
+use Illuminate\Support\Collection;
+
+/**
+ * Manages weights for collection items
+ * @immutable
+ */
+final class WeightManager
 {
-    protected $weights = [];
+    /**
+     * Initializes the WeightManager
+     *
+     * @param Collection $collection
+     * @param array $weights
+     */
+    public function __construct(
+        protected readonly Collection $collection,
+        protected readonly array $weights = []
+    ) {
+
+    }
 
     /**
      * Maps results to weight
@@ -16,7 +33,7 @@ trait HasWeights
     public function mapToWeight(callable $callback, bool $skipNoWeights = true)
     {
         $weights = $this->weights;
-        $items = $this->all();
+        $items = $this->collection->all();
 
         foreach ($items as $key => $item) {
             $weight = $callback($item, $key);
@@ -32,19 +49,15 @@ trait HasWeights
             }
         }
 
-        $collection =
-            (new static($items))->reject(fn ($item, $key) => ! isset($weights[$key]));
-
-        $collection->weights = $weights;
-
-        return $collection;
+        return new static(
+            collect($items)->reject(fn ($item, $key) => ! isset($weights[$key])),
+            $weights
+        );
     }
 
     /**
      * Gets items sorted by weights
      * @param string $order The order to sort (either 'asc' for ascending or 'desc' for descending). (default: 'asc')
-     *
-     * @return Collection
      */
     public function sortByWeights(string $order = 'asc')
     {
@@ -52,7 +65,7 @@ trait HasWeights
 
         $weights = $order !== 'desc' ? $weights->sort() : $weights->sortDesc();
 
-        return $weights->map(fn ($weight, $key) => $this->items[$key]);
+        return $weights->map(fn ($weight, $key) => $this->collection[$key]);
     }
 
     /**
@@ -62,6 +75,15 @@ trait HasWeights
      */
     public function weights()
     {
-        return $this->mapWithKeys(fn ($item, $key) => [$key => [$item, $this->weights[$key] ?? false]]);
+        return $this->collection->mapWithKeys(fn ($item, $key) => [$key => [$item, $this->weights[$key] ?? false]]);
+    }
+
+    /**
+     * Gets copy of collection
+     *
+     * @return Collection
+     */
+    public function getCollection() {
+        return collect($this->collection);
     }
 }

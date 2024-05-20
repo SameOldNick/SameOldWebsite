@@ -3,7 +3,6 @@
 namespace App\Models\Collections;
 
 use App\Models\Article;
-use App\Traits\Support\HasWeights;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -13,8 +12,6 @@ use Illuminate\Support\Str;
  */
 class ArticleCollection extends Collection
 {
-    use HasWeights;
-
     /**
      * Gets articles with most comments
      *
@@ -41,7 +38,7 @@ class ArticleCollection extends Collection
      */
     public function withTags(array $tags)
     {
-        return $this->mapToWeight(function (Article $article) use ($tags) {
+        return $this->weighted()->mapToWeight(function (Article $article) use ($tags) {
             return $article->tags->whereIn('slug', $tags)->count();
         });
     }
@@ -57,7 +54,7 @@ class ArticleCollection extends Collection
     {
         $keywords = $ignoreCase ? Arr::map($keywords, fn ($keyword) => Str::lower($keyword)) : $keywords;
 
-        return $this->mapToWeight(function (Article $article) use ($keywords, $ignoreCase) {
+        return $this->weighted()->mapToWeight(function (Article $article) use ($keywords, $ignoreCase) {
             $compiled = Str::of(Str::stripTags($article->revision->compiled));
 
             if ($ignoreCase) {

@@ -2,6 +2,7 @@
 
 namespace App\Components\Macros;
 
+use App\Components\Macros\Collection\WeightManager;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\SQLiteConnection;
 use Illuminate\Http\Response;
@@ -22,6 +23,12 @@ class ServiceProvider extends BaseServiceProvider
         Arr::mixin(new ArrMixin);
         Str::mixin(new StrMixin);
         Collection::mixin(new PaginationMixin);
+        Collection::macro('weighted', function () {
+            /**
+             * @var Collection $this
+             */
+            return new WeightManager($this);
+        });
         Response::mixin(new ResponseMixin);
 
         $this->databaseMacros();
