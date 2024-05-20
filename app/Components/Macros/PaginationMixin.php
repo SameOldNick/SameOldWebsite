@@ -7,7 +7,7 @@ use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
-class CollectionMixin
+class PaginationMixin
 {
     public function paginate()
     {

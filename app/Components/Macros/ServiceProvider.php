@@ -21,7 +21,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         Arr::mixin(new ArrMixin);
         Str::mixin(new StrMixin);
-        Collection::mixin(new CollectionMixin);
+        Collection::mixin(new PaginationMixin);
         Response::mixin(new ResponseMixin);
 
         $this->databaseMacros();
