@@ -59,7 +59,6 @@ class Comment extends Model
      */
     protected $casts = [
         'approved_at' => 'datetime',
-        'comment' => Markdown::class,
     ];
 
     /**
