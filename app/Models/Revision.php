@@ -51,18 +51,6 @@ class Revision extends Model
     protected $primaryKey = 'uuid';
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array
-     */
-    protected function casts()
-    {
-        return [
-            'content' => Markdown::class,
-        ];
-    }
-
-    /**
      * Gets the Article this belongs to.
      *
      * @return mixed
@@ -90,7 +78,7 @@ class Revision extends Model
     protected function summary(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Str::markdown(is_null($value) ? static::generateSummaryFrom($this->content) : $value),
+            get: fn ($value) => is_null($value) ? static::generateSummaryFrom($this->content) : $value,
             set: fn ($value) => is_string($value) ? Str::stripTags($value) : $value,
         );
     }
