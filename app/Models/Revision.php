@@ -90,7 +90,7 @@ class Revision extends Model
     protected function summary(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => is_null($value) ? static::generateSummaryFrom($this->content) : $value,
+            get: fn ($value) => Str::markdown(is_null($value) ? static::generateSummaryFrom($this->content) : $value),
             set: fn ($value) => is_string($value) ? Str::stripTags($value) : $value,
         );
     }
