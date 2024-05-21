@@ -3,6 +3,7 @@
 namespace App\Models\Collections;
 
 use App\Models\Article;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -55,22 +56,41 @@ class ArticleCollection extends Collection
         $keywords = $ignoreCase ? Arr::map($keywords, fn ($keyword) => Str::lower($keyword)) : $keywords;
 
         return $this->weighted()->mapToWeight(function (Article $article) use ($keywords, $ignoreCase) {
-            $compiled = Str::of(Str::stripTags($article->revision->content));
+            $articleContent = Str::of(Str::stripTags($article->revision->content));
 
             if ($ignoreCase) {
-                $compiled = $compiled->lower();
+                $articleContent = $articleContent->lower();
             }
 
-            $found = 0;
+            $keywordCount = $this->countKeywordsInText($articleContent, $article->title, $keywords, $ignoreCase);
 
-            foreach ($keywords as $keyword) {
-                $found += $compiled->substrCount($keyword) + Str::substrCount(Str::lower($article->title), $keyword);
+            $commentsCount = $article->comments->reduce(function ($carry, Comment $comment) use ($keywords, $ignoreCase) {
+                return $carry + $this->countKeywordsInText(Str::of(Str::stripTags($comment->comment)), $comment->title, $keywords, $ignoreCase);
+            }, 0);
 
-                foreach ($article->comments as $comment) {
-                }
-            }
-
-            return $found;
+            return $keywordCount + $commentsCount;
         });
+    }
+
+    /**
+     * Count the occurrences of keywords in the given text and title
+     *
+     * @param \Illuminate\Support\Stringable $content
+     * @param string $title
+     * @param array $keywords
+     * @param bool $ignoreCase
+     * @return int
+     */
+    protected function countKeywordsInText($content, $title, $keywords, $ignoreCase)
+    {
+        return collect($keywords)->reduce(function ($carry, $keyword) use ($content, $title, $ignoreCase) {
+            $keywordCount = $content->substrCount($keyword);
+            if ($ignoreCase) {
+                $keywordCount += Str::substrCount(Str::lower($title), $keyword);
+            } else {
+                $keywordCount += Str::substrCount($title, $keyword);
+            }
+            return $carry + $keywordCount;
+        }, 0);
     }
 }
