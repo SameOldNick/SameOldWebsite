@@ -55,7 +55,7 @@ class ArticleCollection extends Collection
         $keywords = $ignoreCase ? Arr::map($keywords, fn ($keyword) => Str::lower($keyword)) : $keywords;
 
         return $this->weighted()->mapToWeight(function (Article $article) use ($keywords, $ignoreCase) {
-            $compiled = Str::of(Str::stripTags($article->revision->compiled));
+            $compiled = Str::of(Str::stripTags($article->revision->content));
 
             if ($ignoreCase) {
                 $compiled = $compiled->lower();
