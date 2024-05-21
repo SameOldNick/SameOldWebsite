@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Markdown;
 use App\Traits\Models\Displayable;
 use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,6 +59,7 @@ class Comment extends Model
      */
     protected $casts = [
         'approved_at' => 'datetime',
+        'comment' => Markdown::class,
     ];
 
     /**
