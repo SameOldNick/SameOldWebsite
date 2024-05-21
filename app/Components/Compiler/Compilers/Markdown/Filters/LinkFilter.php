@@ -3,7 +3,7 @@
 namespace App\Components\Compiler\Compilers\Markdown\Filters;
 
 use Illuminate\Support\Arr;
-use PHPHtmlParser\Dom;
+use DOMDocument;
 
 class LinkFilter implements DomFilter
 {
@@ -14,15 +14,18 @@ class LinkFilter implements DomFilter
         $this->options = $options;
     }
 
-    public function filter(Dom $dom)
+    public function filter(DOMDocument $dom)
     {
-        foreach ($dom->find('a') as $node) {
+        foreach ($dom->getElementsByTagName('a') as $node) {
+            /**
+             * @var \DOMElement $node
+             */
             $href = $node->getAttribute('href');
 
             if ($this->isAbsoluteUrl($href)) {
                 if (! Arr::get($this->options, 'absolute_href', false)) {
                     // Remove absolute urls
-                    $node->delete();
+                    $node->remove();
 
                     continue;
                 }
@@ -30,7 +33,7 @@ class LinkFilter implements DomFilter
                 if (! Arr::get($this->options, 'relative_href', false)) {
                     // Remove relative urls
 
-                    $node->delete();
+                    $node->remove();
 
                     continue;
                 }

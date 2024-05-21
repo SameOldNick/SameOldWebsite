@@ -3,7 +3,7 @@
 namespace App\Components\Compiler\Compilers\Markdown\Filters;
 
 use Illuminate\Support\Arr;
-use PHPHtmlParser\Dom;
+use DOMDocument;
 
 class ImageFilter implements DomFilter
 {
@@ -14,22 +14,33 @@ class ImageFilter implements DomFilter
         $this->options = $options;
     }
 
-    public function filter(Dom $dom)
+    public function filter(DOMDocument $dom)
     {
-        foreach ($dom->find('img, picture') as $node) {
+        /**
+         * @var \DOMElement[]
+         */
+        $nodes = [...iterator_to_array($dom->getElementsByTagName('img')), ...iterator_to_array($dom->getElementsByTagName('picture'))];
+
+        foreach ($nodes as $node) {
             $srcs = [];
 
-            if ($node->tag->name() === 'img' && $node->parent->tag->name() !== 'picture') {
+            if ($node->nodeName === 'img' && ($node->parentNode && $node->parentNode->nodeName !== 'picture')) {
                 array_push($srcs, $node->getAttribute('src'));
             } else {
-                foreach ($node->find('source, img') as $child) {
-                    if ($child->hasAttribute('srcset')) {
-                        array_push($srcs, $node->getAttribute('srcset'));
+                foreach ($node->childNodes as $child) {
+                    /**
+                     * @var \DOMElement $child
+                     */
+                    if ($child->nodeName === 'source' || $child->nodeName === 'img') {
+                        if ($child->hasAttribute('srcset')) {
+                            array_push($srcs, $node->getAttribute('srcset'));
+                        }
+
+                        if ($child->hasAttribute('src')) {
+                            array_push($srcs, $node->getAttribute('src'));
+                        }
                     }
 
-                    if ($child->hasAttribute('src')) {
-                        array_push($srcs, $node->getAttribute('src'));
-                    }
                 }
             }
 
@@ -37,7 +48,7 @@ class ImageFilter implements DomFilter
                 if ($this->isAbsoluteUrl($src)) {
                     if (! Arr::get($this->options, 'absolute_src', false)) {
                         // Remove absolute src
-                        $node->delete();
+                        $node->remove();
 
                         continue;
                     }
@@ -45,7 +56,7 @@ class ImageFilter implements DomFilter
                     if (! Arr::get($this->options, 'relative_src', false)) {
                         // Remove relative src
 
-                        $node->delete();
+                        $node->remove();
 
                         continue;
                     }

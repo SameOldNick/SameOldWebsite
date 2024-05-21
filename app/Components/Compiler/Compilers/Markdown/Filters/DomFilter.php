@@ -2,9 +2,9 @@
 
 namespace App\Components\Compiler\Compilers\Markdown\Filters;
 
-use PHPHtmlParser\Dom;
+use DOMDocument;
 
 interface DomFilter
 {
-    public function filter(Dom $dom);
+    public function filter(DOMDocument $dom);
 }

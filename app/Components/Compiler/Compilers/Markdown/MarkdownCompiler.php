@@ -7,7 +7,7 @@ use App\Components\Compiler\Compilers\Markdown\Filters\DomFilter;
 use App\Components\Compiler\Compilers\Markdown\Filters\HtmlFilter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use PHPHtmlParser\Dom;
+use Masterminds\HTML5;
 
 class MarkdownCompiler implements Compiler
 {
@@ -18,16 +18,16 @@ class MarkdownCompiler implements Compiler
 
         $html = ! Arr::get($config, 'inline', false) ? Str::markdown($input, $commonmark) : Str::inlineMarkdown($input, $commonmark);
 
-        $dom = (new Dom)->loadStr($html);
+        $dom = (new HTML5())->loadHTML($html);
 
         foreach ($filters as $filter) {
             if ($filter instanceof HtmlFilter) {
-                $dom->loadStr($filter->filter((string) $dom));
+                $dom->loadHTML($filter->filter($dom->saveHTML()));
             } elseif ($filter instanceof DomFilter) {
                 $filter->filter($dom);
             }
         }
 
-        return (string) $dom;
+        return $dom->saveHTML();
     }
 }
