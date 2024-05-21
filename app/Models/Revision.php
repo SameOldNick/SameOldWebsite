@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Markdown;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,6 @@ use Illuminate\Support\Str;
  * @property string $summary
  * @property-read bool $summary_auto
  * @property-read Article $article
- * @property-read string $compiled
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
@@ -51,6 +51,18 @@ class Revision extends Model
     protected $primaryKey = 'uuid';
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array
+     */
+    protected function casts()
+    {
+        return [
+            'content' => Markdown::class,
+        ];
+    }
+
+    /**
      * Gets the Article this belongs to.
      *
      * @return mixed
@@ -68,16 +80,6 @@ class Revision extends Model
     public function parentRevision()
     {
         return $this->belongsTo(static::class);
-    }
-
-    /**
-     * Get the compiled contents as HTML
-     *
-     * @return Attribute
-     */
-    protected function compiled(): Attribute
-    {
-        return Attribute::get(fn ($value, $attributes) => Str::markdown($attributes['content']))->shouldCache();
     }
 
     /**
