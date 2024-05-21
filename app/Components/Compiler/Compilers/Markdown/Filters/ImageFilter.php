@@ -19,7 +19,10 @@ class ImageFilter implements DomFilter
         /**
          * @var \DOMElement[]
          */
-        $nodes = [...iterator_to_array($dom->getElementsByTagName('img')), ...iterator_to_array($dom->getElementsByTagName('picture'))];
+        $nodes = [
+            ...iterator_to_array($dom->getElementsByTagName('img'), false),
+            ...iterator_to_array($dom->getElementsByTagName('picture'), false)
+        ];
 
         foreach ($nodes as $node) {
             $srcs = [];
