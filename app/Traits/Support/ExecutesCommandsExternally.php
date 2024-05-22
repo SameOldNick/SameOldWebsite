@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Traits\Console;
+namespace App\Traits\Support;
 
-use App\Console\Helpers\StackOutput;
+use App\Components\Console\StackOutput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -14,16 +14,16 @@ trait ExecutesCommandsExternally
      * Executes a command unsafely (no sanitization on the command is performed)
      *
      * @param string $commandLine
-     * @param bool $realTimeOutput If true, process output is immediately sent to the terminal.
+     * @param \Symfony\Component\Console\Output\OutputInterface[] $outputs Any additional interfaces to send output to. (default: empty array)
      * @param array $additional Additional arguments to use when creating Process. (default: empty array)
      * @return string Returns command output
      */
-    protected function executeCommand($commandLine, bool $realTimeOutput = false, array $additional = [])
+    protected function executeCommand($commandLine, array $outputs = [], array $additional = [])
     {
         // Create output stack
         $bufferedOutput = new BufferedOutput();
 
-        $stackOutput = new StackOutput($realTimeOutput ? [$bufferedOutput, $this->getOutput()] : [$bufferedOutput]);
+        $stackOutput = new StackOutput([$bufferedOutput, ...$outputs]);
 
         // Create process from command line and run it
         $process = $this->runProcess(

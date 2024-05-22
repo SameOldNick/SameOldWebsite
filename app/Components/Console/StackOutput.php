@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Helpers;
+namespace App\Components\Console;
 
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Setup;
 
-use App\Traits\Console\ExecutesCommandsExternally;
+use App\Traits\Support\ExecutesCommandsExternally;
 use Illuminate\Console\Command;
 
 class SetupFrontend extends Command
@@ -38,33 +38,35 @@ class SetupFrontend extends Command
         // Disable process timeout
         $additionalArgs = ['timeout' => null];
 
+        $outputs = !$hideOutput ? [$this->getOutput()] : [];
+
         // Determine the correct command based on the package manager
         switch ($packageManager) {
             case 'npm':
                 $npm = $this->prefixCommand('npm');
 
                 $this->info('Installing NodeJS packages with npm...');
-                $this->executeCommand($this->buildCommandLine("$npm install"), ! $hideOutput, $additionalArgs);
+                $this->executeCommand($this->buildCommandLine("$npm install"), $outputs, $additionalArgs);
                 $this->info('Building front-end assets for production...');
-                $this->executeCommand($this->buildCommandLine("$npm run build"), ! $hideOutput, $additionalArgs);
+                $this->executeCommand($this->buildCommandLine("$npm run build"), $outputs, $additionalArgs);
 
                 break;
             case 'yarn':
                 $yarn = $this->prefixCommand('yarn');
 
                 $this->info('Installing NodeJS packages with yarn...');
-                $this->executeCommand($this->buildCommandLine("$yarn install"), ! $hideOutput, $additionalArgs);
+                $this->executeCommand($this->buildCommandLine("$yarn install"), $outputs, $additionalArgs);
                 $this->info('Building front-end assets for production...');
-                $this->executeCommand($this->buildCommandLine("$yarn run build"), ! $hideOutput, $additionalArgs);
+                $this->executeCommand($this->buildCommandLine("$yarn run build"), $outputs, $additionalArgs);
 
                 break;
             case 'pnpm':
                 $pnpm = $this->prefixCommand('pnpm');
 
                 $this->info('Installing NodeJS packages with pnpm...');
-                $this->executeCommand($this->buildCommandLine("$pnpm install"), ! $hideOutput, $additionalArgs);
+                $this->executeCommand($this->buildCommandLine("$pnpm install"), $outputs, $additionalArgs);
                 $this->info('Building front-end assets for production...');
-                $this->executeCommand($this->buildCommandLine("$pnpm run build"), ! $hideOutput, $additionalArgs);
+                $this->executeCommand($this->buildCommandLine("$pnpm run build"), $outputs, $additionalArgs);
 
                 break;
             default:
