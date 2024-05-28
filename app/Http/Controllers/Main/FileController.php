@@ -17,6 +17,6 @@ class FileController extends Controller
      */
     public function retrieve(Request $request, File $file)
     {
-        return Storage::response($file->path, $file->name);
+        return Storage::disk($file->disk)->response($file->path, $file->name);
     }
 }

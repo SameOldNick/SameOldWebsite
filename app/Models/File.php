@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 /**
  * @property string $id
  * @property string $name
+ * @property string $disk
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -47,7 +48,12 @@ final class File extends Model
      *
      * @var list<string>
      */
-    protected $fillable = ['path', 'name', 'is_public'];
+    protected $fillable = [
+        'path',
+        'name',
+        'is_public',
+        'disk'
+    ];
 
     /**
      * The attributes that should be visible in serialization.
@@ -247,14 +253,16 @@ final class File extends Model
      * @param string $path Path of file
      * @param string|null $name Filename. If null, filename is generated from path. (default: null)
      * @param bool $public If file is public (default: false)
+     * @param string $disk Name of the disk (default: null)
      * @return static
      */
-    public static function createFromFilePath(string $path, string $name = null, bool $public = false)
+    public static function createFromFilePath(string $path, string $name = null, bool $public = false, string $disk = null)
     {
         return new static([
             'path' => $path,
             'name' => $name,
             'is_public' => $public,
+            'disk' => $disk,
         ]);
     }
 }
