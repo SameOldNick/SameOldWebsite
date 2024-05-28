@@ -98,7 +98,7 @@ export default class HttpRequest {
     /**
      * Creates a new AxiosInstance and performs a GET request.
      *
-     * @param {string} url URL to get.
+     * @param {string} url URL to get. The base URL is automatically prepended.
      * @param {object} [params] Any parameters to include in GET request.
      * @memberof HttpRequest
      */
@@ -111,7 +111,7 @@ export default class HttpRequest {
     /**
      * Creates a new AxiosInstance and performs a POST request.
      *
-     * @param {string} url URL to send post to.
+     * @param {string} url URL to send post to. The base URL is automatically prepended.
      * @param {object} params Any parameters to include in POST request.
      * @memberof HttpRequest
      */
@@ -124,7 +124,7 @@ export default class HttpRequest {
     /**
      * Creates a new AxiosInstance and performs a PUT request.
      *
-     * @param {string} url URL to send put to.
+     * @param {string} url URL to send put to. The base URL is automatically prepended.
      * @param {object} params Any parameters to include in PUT request.
      * @memberof HttpRequest
      */
@@ -137,7 +137,7 @@ export default class HttpRequest {
     /**
      * Creates a new AxiosInstance and performs a DELETE request.
      *
-     * @param {string} url URL to send delete to.
+     * @param {string} url URL to send delete to. The base URL is automatically prepended.
      * @param {object} [params] Any parameters to include in DELETE request.
      * @memberof HttpRequest
      */
