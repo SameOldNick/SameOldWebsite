@@ -13,6 +13,7 @@
         "google/analytics-data": "^0.11.1",
         "guzzlehttp/guzzle": "^7.8",
         "laravel/framework": "^11.0",
+        "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.9",
         "laravel/tinker": "^2.7",
