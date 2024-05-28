@@ -12,7 +12,7 @@ trait Fileable
     /**
      * Gets the File for this Model.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
     public function file()
     {
