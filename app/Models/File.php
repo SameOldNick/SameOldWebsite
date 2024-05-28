@@ -15,7 +15,9 @@ use Illuminate\Support\Str;
 /**
  * @property string $id
  * @property string $name
+ * @property string $path
  * @property string $disk
+ * @property bool $is_public
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -108,7 +110,7 @@ final class File extends Model
     /**
      * Gets the user who uploaded this file.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
