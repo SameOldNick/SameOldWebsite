@@ -18,7 +18,7 @@
         "laravel/socialite": "^5.9",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
-        "little-apps/littlejwt": "^2.1.0@beta",
+        "little-apps/littlejwt": "^2.2.0@beta",
         "masterminds/html5": "^2.9",
         "owenvoke/blade-fontawesome": "^2.4",
         "pelmered/fake-car": "^2.0",
