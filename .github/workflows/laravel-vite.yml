@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x, 22.x]
+        php-version: ['8.2']
 
     steps:
     - uses: actions/checkout@v3
@@ -21,6 +22,11 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Setup PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
