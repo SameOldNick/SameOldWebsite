@@ -25,6 +25,8 @@ jobs:
 
     - run: corepack enable
 
+    - run: yarn set version stable
+
     - name: Install Yarn Packages
       run: yarn install --immutable
 
