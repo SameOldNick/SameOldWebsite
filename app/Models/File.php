@@ -148,13 +148,23 @@ final class File extends Model
     }
 
     /**
+     * Gets the storage disk the file is from.
+     *
+     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     */
+    public function getStorageDisk()
+    {
+        return Storage::disk($this->disk);
+    }
+
+    /**
      * Removes file from storage.
      *
      * @return bool
      */
     public function removeFile()
     {
-        return Storage::delete($this->path);
+        return $this->getStorageDisk()->delete($this->path);
     }
 
     /**
@@ -162,7 +172,7 @@ final class File extends Model
      */
     protected function fileExists(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes) => Storage::fileExists($attributes['path']));
+        return Attribute::get(fn ($value, $attributes) => $this->getStorageDisk()->exists($attributes['path']));
     }
 
     /**
@@ -192,9 +202,9 @@ final class File extends Model
         $defaults = [];
 
         return Attribute::get(fn ($value, $attributes) => $this->fileExists ? [
-            'size' => Storage::size($attributes['path']),
-            'last_modified' => Carbon::parse(Storage::lastModified($attributes['path'])),
-            'mime_type' => Storage::mimeType($attributes['path']),
+            'size' => $this->getStorageDisk()->size($attributes['path']),
+            'last_modified' => Carbon::parse($this->getStorageDisk()->lastModified($attributes['path'])),
+            'mime_type' => $this->getStorageDisk()->mimeType($attributes['path']),
         ] : $defaults);
     }
 
