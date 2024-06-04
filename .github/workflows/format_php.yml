@@ -1,35 +1,35 @@
 name: Format (PHP)
 
 on:
-    push:
-        branches:
-            - 'main'
-    pull_request:
-        paths:
-            - '**.php'
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    paths:
+      - '**.php'
 
 jobs:
-    laravel-pint:
-        runs-on: ubuntu-latest
-        strategy:
-          matrix:
-            php-versions: ['8.2']
-        steps:
-            - name: Setup PHP ${{ matrix.php-versions }}
-              uses: shivammathur/setup-php@v2
-              with:
-                php-version: ${{ matrix.php-versions }}
+  laravel-pint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['8.2']
+    steps:
+      - name: Setup PHP ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
 
-            - uses: actions/checkout@v4
-              with:
-                  ref: ${{ github.head_ref }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
-            - name: Install
-              run: composer install --dev
+      - name: Install
+        run: composer install --dev
 
-            - name: Run Laravel Pint
-              run: ./vendor/bin/pint
+      - name: Run Laravel Pint
+        run: ./vendor/bin/pint -v
 
-            - uses: stefanzweifel/git-auto-commit-action@v5
-              with:
-                  commit_message: Applied Laravel Pint changes
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Applied Laravel Pint changes
