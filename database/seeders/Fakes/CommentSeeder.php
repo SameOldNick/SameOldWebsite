@@ -28,13 +28,13 @@ class CommentSeeder extends Seeder
         $commentFactory->count(fake()->numberBetween($minEach, $maxEach))->approved()->create();
         $commentFactory->count(fake()->numberBetween($minEach, $maxEach))->create();
     }
+
     /**
      * Create nested factory recursively.
      *
-     * @param  Article $article
-     * @param  int  $minEach Minimum number of comments at each level.
-     * @param  int  $maxEach Maximum number of comments at each level.
-     * @param  int  $maxDepth Maximum level
+     * @param  int  $minEach  Minimum number of comments at each level.
+     * @param  int  $maxEach  Maximum number of comments at each level.
+     * @param  int  $maxDepth  Maximum level
      * @param  int  $depth
      * @return mixed
      */
