@@ -11,15 +11,13 @@ use Tests\TestCase;
 
 class SocialMediaLinksAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Test accessing social media links when authorized.
-     *
-     * @return void
      */
     public function testCanGetSocialMediums(): void
     {
@@ -30,8 +28,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test accessing social media links when unauthorized.
-     *
-     * @return void
      */
     public function testCannotGetSocialMediums(): void
     {
@@ -42,8 +38,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test accessing a specific social media link when authorized.
-     *
-     * @return void
      */
     public function testCanGetSocialMedium(): void
     {
@@ -56,8 +50,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test accessing a specific social media link when unauthorized.
-     *
-     * @return void
      */
     public function testCannotGetSocialMedium(): void
     {
@@ -70,8 +62,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test creating a new social media link when authorized.
-     *
-     * @return void
      */
     public function testCanCreateSocialMedium(): void
     {
@@ -84,8 +74,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test creating a new social media link when unauthorized.
-     *
-     * @return void
      */
     public function testCannotCreateSocialMedium(): void
     {
@@ -98,8 +86,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test updating an existing social media link when authorized.
-     *
-     * @return void
      */
     public function testCanUpdateSocialMedium(): void
     {
@@ -114,8 +100,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test updating an existing social media link when unauthorized.
-     *
-     * @return void
      */
     public function testCannotUpdateSocialMedium(): void
     {
@@ -130,8 +114,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test deleting a social media link when authorized.
-     *
-     * @return void
      */
     public function testCanDeleteSocialMedium(): void
     {
@@ -144,8 +126,6 @@ class SocialMediaLinksAccessTest extends TestCase
 
     /**
      * Test deleting a social media link when unauthorized.
-     *
-     * @return void
      */
     public function testCannotDeleteSocialMedium(): void
     {

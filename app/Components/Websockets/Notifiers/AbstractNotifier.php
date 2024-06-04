@@ -10,11 +10,11 @@ abstract class AbstractNotifier
     /**
      * Sends notification to notifiable
      *
-     * @param mixed $notifiable
-     * @param BroadcastNotification $notification
+     * @param  mixed  $notifiable
      * @return void
      */
-    public function notify($notifiable, BroadcastNotification $notification) {
+    public function notify($notifiable, BroadcastNotification $notification)
+    {
         Notification::send($notifiable, $notification);
     }
 }

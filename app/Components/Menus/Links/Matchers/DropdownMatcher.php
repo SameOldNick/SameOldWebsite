@@ -13,8 +13,6 @@ class DropdownMatcher implements Matcher
 
     /**
      * Initializes DropdownMatcher
-     *
-     * @param DropdownItem $dropdownItem
      */
     public function __construct(DropdownItem $dropdownItem)
     {
@@ -22,7 +20,7 @@ class DropdownMatcher implements Matcher
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function matches(Request $request)
     {

@@ -9,7 +9,6 @@ trait HasPageSettings
     /**
      * Gets page settings for page.
      *
-     * @param string $pageKey
      * @return PageSettings
      */
     protected function getPageSettings(string $pageKey)

@@ -25,7 +25,6 @@ class SweetAlertMiddleware
     /**
      * Create a new middleware instance.
      *
-     * @param Application  $app
      * @return void
      */
     public function __construct(Application $app)
@@ -36,7 +35,6 @@ class SweetAlertMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Request  $request
      * @param  Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|RedirectResponse
      */
@@ -55,7 +53,6 @@ class SweetAlertMiddleware
     /**
      * Checks if response is redirection
      *
-     * @param Response $response
      * @return bool
      */
     protected function isRedirectResponse(Response $response)
@@ -66,7 +63,7 @@ class SweetAlertMiddleware
     /**
      * Checks if response is JSON
      *
-     * @param mixed $response
+     * @param  mixed  $response
      * @return bool
      */
     protected function isJsonResponse($response)

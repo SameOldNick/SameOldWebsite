@@ -10,7 +10,7 @@ class StackOutput extends Output
     /**
      * Initializes StackOutput instance
      *
-     * @param OutputInterface[] $outputs
+     * @param  OutputInterface[]  $outputs
      */
     public function __construct(
         protected readonly array $outputs
@@ -20,8 +20,6 @@ class StackOutput extends Output
 
     /**
      * Writes a message to the output.
-     *
-     * @return void
      */
     protected function doWrite(string $message, bool $newline): void
     {

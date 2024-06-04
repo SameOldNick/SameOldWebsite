@@ -12,15 +12,13 @@ use Tests\TestCase;
 
 class ArticleRevisionsAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests user is authorized to get article revisions.
-     *
-     * @return void
      */
     public function testCanGetArticleRevisions(): void
     {
@@ -33,8 +31,6 @@ class ArticleRevisionsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get article revisions.
-     *
-     * @return void
      */
     public function testCannotGetArticleRevisions(): void
     {
@@ -47,8 +43,6 @@ class ArticleRevisionsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to get article revision.
-     *
-     * @return void
      */
     public function testCanGetArticleRevision(): void
     {
@@ -62,8 +56,6 @@ class ArticleRevisionsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get article revision.
-     *
-     * @return void
      */
     public function testCannotGetArticleRevision(): void
     {
@@ -77,8 +69,6 @@ class ArticleRevisionsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to create article revisions.
-     *
-     * @return void
      */
     public function testCanCreateArticleRevision(): void
     {
@@ -93,8 +83,6 @@ class ArticleRevisionsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to create article revisions.
-     *
-     * @return void
      */
     public function testCannotCreateArticleRevision(): void
     {
@@ -109,8 +97,6 @@ class ArticleRevisionsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to delete article revisions.
-     *
-     * @return void
      */
     public function testCanDeleteArticleRevision(): void
     {
@@ -124,8 +110,6 @@ class ArticleRevisionsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to delete article revisions.
-     *
-     * @return void
      */
     public function testCannotDeleteArticleRevision(): void
     {

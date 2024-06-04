@@ -22,11 +22,11 @@ use Tests\TestCase;
 
 class ContactTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithFaker;
+    use CreatesUser;
     use DisablesVite;
     use ManagesPageSettings;
-    use CreatesUser;
+    use RefreshDatabase;
+    use WithFaker;
 
     /**
      * Tests the correct event is fired for an approved contact submission.

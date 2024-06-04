@@ -14,7 +14,7 @@ class RouteNameResolver implements Resolver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function resolve()
     {

@@ -13,8 +13,8 @@ class PageSettings extends Manager
     /**
      * Initializes Page Settings
      *
-     * @param Container $container Container instance
-     * @param string $key Page key
+     * @param  Container  $container  Container instance
+     * @param  string  $key  Page key
      */
     public function __construct(Container $container, string $key)
     {

@@ -16,8 +16,8 @@ use Illuminate\Support\Str;
  */
 class Image extends Model
 {
-    use HasFactory;
     use Fileable;
+    use HasFactory;
     use HasUuids;
 
     /**
@@ -63,8 +63,6 @@ class Image extends Model
 
     /**
      * Gets the articles this image belongs to
-     *
-     * @return BelongsToMany
      */
     public function articles(): BelongsToMany
     {
@@ -84,8 +82,6 @@ class Image extends Model
 
     /**
      * Gets the alt-text for this image.
-     *
-     * @return Attribute
      */
     protected function alternativeText(): Attribute
     {

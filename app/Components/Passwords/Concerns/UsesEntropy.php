@@ -66,9 +66,6 @@ trait UsesEntropy
     /**
      * Gets whitespace entropy.
      *
-     * @param int $spaces
-     * @param int $tabs
-     * @param int $newlines
      * @return list<string>
      */
     protected function getWhitespaceEntropy(int $spaces = 1, int $tabs = 1, int $newlines = 1)

@@ -15,7 +15,7 @@ final class MFARequiredException extends Exception
     /**
      * Intializes exception
      *
-     * @param string $mfaPath Path to the MFA prompt.
+     * @param  string  $mfaPath  Path to the MFA prompt.
      */
     public function __construct(string $mfaPath)
     {
@@ -26,8 +26,6 @@ final class MFARequiredException extends Exception
 
     /**
      * Gets the path to the MFA prompt.
-     *
-     * @return string
      */
     public function getMfaPath(): string
     {
@@ -37,7 +35,6 @@ final class MFARequiredException extends Exception
     /**
      * Creates response for when exception is handled.
      *
-     * @param Request $request
      * @return mixed
      */
     public function render(Request $request)
@@ -49,11 +46,10 @@ final class MFARequiredException extends Exception
     /**
      * Throws the exception.
      *
-     * @param string $mfaPath Path to MFA prompt
-     * @return static
+     * @param  string  $mfaPath  Path to MFA prompt
      */
     public static function throw(string $mfaPath): static
     {
-        throw new static($mfaPath);
+        throw new self($mfaPath);
     }
 }

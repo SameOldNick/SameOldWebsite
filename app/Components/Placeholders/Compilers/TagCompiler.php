@@ -3,6 +3,7 @@
 namespace App\Components\Placeholders\Compilers;
 
 use App\Components\Placeholders\PlaceholderCollection;
+
 use function Safe\preg_match_all;
 
 class TagCompiler
@@ -11,8 +12,6 @@ class TagCompiler
 
     /**
      * Initializes Tag Compiler
-     *
-     * @param PlaceholderCollection $collection
      */
     public function __construct(PlaceholderCollection $collection)
     {
@@ -32,7 +31,6 @@ class TagCompiler
     /**
      * Compiles tags
      *
-     * @param string $content
      * @return string
      */
     public function compile(string $content)
@@ -61,7 +59,6 @@ class TagCompiler
     /**
      * Checks if tag is escaped.
      *
-     * @param string $tag
      * @return bool
      */
     protected function isEscaped(string $tag)
@@ -72,8 +69,6 @@ class TagCompiler
     /**
      * Escapes tag
      *
-     * @param string $tag
-     * @param string $content
      * @return string
      */
     protected function escape(string $tag, string $content)
@@ -86,7 +81,6 @@ class TagCompiler
     /**
      * Extracts placeholder from tag.
      *
-     * @param string $tag
      * @return string
      */
     protected function extractPlaceholder(string $tag)
@@ -97,8 +91,6 @@ class TagCompiler
     /**
      * Fills in tag
      *
-     * @param string $placeholder
-     * @param string $content
      * @return string
      */
     protected function fill(string $placeholder, string $content)

@@ -128,8 +128,6 @@ class ArticleController extends Controller
     /**
      * Updates current revision for article
      *
-     * @param Request $request
-     * @param Article $article
      * @return mixed
      */
     public function revision(Request $request, Article $article)
@@ -159,7 +157,6 @@ class ArticleController extends Controller
     /**
      * Restores the specified article.
      *
-     * @param Article $article
      * @return array
      */
     public function restore(Article $article)

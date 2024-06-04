@@ -14,7 +14,6 @@ class ContactController extends BaseContactController
     /**
      * Displays contact form
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
     public function show(Request $request)
@@ -29,7 +28,6 @@ class ContactController extends BaseContactController
     /**
      * Processes contact form submission.
      *
-     * @param ContactRequest $request
      * @return \Illuminate\Contracts\View\View
      */
     public function process(ContactRequest $request)
@@ -85,8 +83,6 @@ class ContactController extends BaseContactController
     /**
      * Confirms senders e-mail address
      *
-     * @param Request $request
-     * @param ContactMessage $contactMessage
      * @return mixed
      */
     public function confirm(Request $request, ContactMessage $contactMessage)

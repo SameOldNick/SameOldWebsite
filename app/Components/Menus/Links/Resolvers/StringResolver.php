@@ -14,7 +14,7 @@ class StringResolver implements Resolver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function resolve()
     {

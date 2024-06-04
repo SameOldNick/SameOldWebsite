@@ -30,7 +30,7 @@ final class IssueNotification extends Notification
      */
     public function databaseType()
     {
-        return static::DATABASE_TYPE_UUID;
+        return self::DATABASE_TYPE_UUID;
     }
 
     /**
@@ -69,11 +69,11 @@ final class IssueNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                ->subject(sprintf('[%s] Issue Detected', Str::upper($this->getSeverity())))
-                ->line('An issue has been detected!')
-                ->line($this->getMessage())
-                ->line('Ensure everything is working and up to date!')
-                ->action('Visit Web App', url('/'));
+            ->subject(sprintf('[%s] Issue Detected', Str::upper($this->getSeverity())))
+            ->line('An issue has been detected!')
+            ->line($this->getMessage())
+            ->line('Ensure everything is working and up to date!')
+            ->action('Visit Web App', url('/'));
     }
 
     /**
@@ -92,11 +92,10 @@ final class IssueNotification extends Notification
     /**
      * Creates notification from Issue instance.
      *
-     * @param Issue $issue
      * @return static
      */
     public static function createFromIssue(Issue $issue)
     {
-        return new static($issue->toArray());
+        return new self($issue->toArray());
     }
 }

@@ -83,7 +83,6 @@ class SearchQueryParser
     /**
      * Parses tags
      *
-     * @param Stringable $input
      * @return \Illuminate\Support\Collection
      */
     protected function parseTags(Stringable $input)
@@ -92,14 +91,13 @@ class SearchQueryParser
             $input
                 ->matchAll(static::REGEX_TAGS)
                     // Uses slug instead kebab to get rid of punctuation marks
-                    ->map(fn ($value) => Str::slug($value))
-                    ->unique();
+                ->map(fn ($value) => Str::slug($value))
+                ->unique();
     }
 
     /**
      * Parses keywords
      *
-     * @param Stringable $input
      * @return \Illuminate\Support\Collection
      */
     protected function parseKeywords(Stringable $input)

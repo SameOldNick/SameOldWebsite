@@ -24,8 +24,6 @@ final class ComposerAuditWatchdog implements WatchdogDriver
 
     /**
      * Initializes the watchdog.
-     *
-     * @return void
      */
     public function initialize(): void
     {
@@ -125,8 +123,6 @@ final class ComposerAuditWatchdog implements WatchdogDriver
 
     /**
      * Cleans up with watchdog.
-     *
-     * @return void
      */
     public function cleanup(): void
     {

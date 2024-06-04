@@ -9,25 +9,19 @@ interface PersistServiceDriver
 {
     /**
      * Checks if user is two-factor authenticated.
-     *
-     * @param Authenticatable $user
-     * @return bool
      */
     public function isVerified(Authenticatable $user): bool;
 
     /**
      * Marks user as two-factor authenticated.
      *
-     * @param Authenticatable $user
-     * @param DateTimeInterface|null $expiry
      * @return void
      */
-    public function markVerified(Authenticatable $user, DateTimeInterface $expiry = null);
+    public function markVerified(Authenticatable $user, ?DateTimeInterface $expiry = null);
 
     /**
      * Clears user as two-factor authenticated.
      *
-     * @param Authenticatable $user
      * @return void
      */
     public function clearVerified(Authenticatable $user);

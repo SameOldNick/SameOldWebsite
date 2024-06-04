@@ -17,7 +17,7 @@ class ActionMatcher implements Matcher
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function matches(Request $request)
     {
@@ -29,7 +29,7 @@ class ActionMatcher implements Matcher
     /**
      * Transforms action into proper string
      *
-     * @param mixed $action
+     * @param  mixed  $action
      * @return string
      */
     protected function parseAction($action)

@@ -13,9 +13,6 @@ class RefreshTokenGuardAdapter extends AbstractAdapter
 
     /**
      * Initializes adapter instance
-     *
-     * @param Container $container
-     * @param array $config
      */
     public function __construct(Container $container, array $config = [])
     {

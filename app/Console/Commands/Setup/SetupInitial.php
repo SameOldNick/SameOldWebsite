@@ -93,7 +93,7 @@ class SetupInitial extends Command
     /**
      * Gathers password
      *
-     * @param string $source Where to pull password
+     * @param  string  $source  Where to pull password
      * @return string
      */
     protected function gatherPassword(string $source)
@@ -142,7 +142,7 @@ class SetupInitial extends Command
     /**
      * Validates password
      *
-     * @param string $password
+     * @param  string  $password
      * @return void
      */
     protected function validatePassword(#[\SensitiveParameter] string $password)

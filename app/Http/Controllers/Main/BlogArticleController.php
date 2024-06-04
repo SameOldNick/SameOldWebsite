@@ -13,7 +13,6 @@ class BlogArticleController extends Controller
     /**
      * Display the specified article.
      *
-     * @param Article  $article
      * @return \Illuminate\Contracts\View\View
      */
     public function single(Request $request, Article $article)
@@ -35,9 +34,6 @@ class BlogArticleController extends Controller
     /**
      * Displays the specified revision for article
      *
-     * @param Request $request
-     * @param Article $article
-     * @param Revision $revision
      * @return \Illuminate\Contracts\View\View
      */
     public function singleRevision(Request $request, Article $article, Revision $revision)
@@ -48,10 +44,6 @@ class BlogArticleController extends Controller
     /**
      * Creates response that renders article revision
      *
-     * @param Request $request
-     * @param Article $article
-     * @param Revision $revision
-     * @param array $extra
      * @return \Illuminate\Contracts\View\View
      */
     protected function createArticleResponse(Request $request, Article $article, Revision $revision, array $extra = [])
@@ -65,7 +57,7 @@ class BlogArticleController extends Controller
                     $query->owned();
                 })
                 ->get()
-                    ->sortBy(fn ($comment) => $comment->post->created_at);
+                ->sortBy(fn ($comment) => $comment->post->created_at);
 
         $comment = old('comment', $request->cookie("{$article->slug}-comment"));
 

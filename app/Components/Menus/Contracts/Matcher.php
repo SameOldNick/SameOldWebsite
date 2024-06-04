@@ -9,7 +9,6 @@ interface Matcher
     /**
      * Checks if request matches
      *
-     * @param Request $request
      * @return bool
      */
     public function matches(Request $request);

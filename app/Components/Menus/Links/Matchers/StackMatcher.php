@@ -12,7 +12,7 @@ class StackMatcher implements Matcher
     /**
      * Constructs StackMatcher
      *
-     * @param array<int, Matcher> $stack
+     * @param  array<int, Matcher>  $stack
      */
     public function __construct(array $stack)
     {
@@ -20,7 +20,7 @@ class StackMatcher implements Matcher
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function matches(Request $request)
     {

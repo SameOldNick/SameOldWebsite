@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Immutable class representing generator options
+ *
  * @immutable
  */
 final class Options implements Arrayable
@@ -62,25 +63,20 @@ final class Options implements Arrayable
 
     /**
      * Gets the default options
-     *
-     * @return static
      */
     public static function default(): static
     {
-        if (is_callable(static::$createDefaultsCallback)) {
-            return call_user_func(static::$createDefaultsCallback);
+        if (is_callable(self::$createDefaultsCallback)) {
+            return call_user_func(self::$createDefaultsCallback);
         } else {
-            return new static;
+            return new self;
         }
     }
 
     /**
      * Sets the default options
-     *
-     * @param callable|null $callback
-     * @return void
      */
-    public static function defaults(callable $callback = null): void
+    public static function defaults(?callable $callback = null): void
     {
         static::$createDefaultsCallback = $callback;
     }

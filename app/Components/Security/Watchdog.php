@@ -63,8 +63,7 @@ final class Watchdog extends Manager
     /**
      * Gets config for watchdog.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  mixed  $default
      * @return mixed
      */
     private function getConfig(string $key, $default = [])
@@ -75,8 +74,7 @@ final class Watchdog extends Manager
     /**
      * Determines driver name for watchdog.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  mixed  $default
      * @return string
      */
     private function determineDriverNameFor(string $key, $default = null)

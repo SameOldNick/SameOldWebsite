@@ -13,9 +13,9 @@ use Tests\TestCase;
 
 class ImageControllerTest extends TestCase
 {
-    use RefreshDatabase;
     use CreatesUser;
     use InteractsWithJWT;
+    use RefreshDatabase;
     use WithFaker;
 
     public function test_get_all_images()

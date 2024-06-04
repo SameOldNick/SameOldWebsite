@@ -37,7 +37,7 @@ class BackupDriver extends AuthDriver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function verifyCode(MultiAuthenticatable $authenticatable, string $code): bool
     {
@@ -47,7 +47,7 @@ class BackupDriver extends AuthDriver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function registerRoutes(Router $router, array $options)
     {
@@ -59,8 +59,6 @@ class BackupDriver extends AuthDriver
 
     /**
      * Gets how many backup codes to create and allow.
-     *
-     * @return int
      */
     public function getBackupCodeCount(): int
     {

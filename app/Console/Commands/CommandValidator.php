@@ -10,7 +10,6 @@ trait CommandValidator
     /**
      * Validates rules against specified arguments and options.
      *
-     * @param array $rules
      * @param [mixed] ...$params Any extra parameters to make validator.
      * @return void
      */

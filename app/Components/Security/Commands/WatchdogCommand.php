@@ -51,7 +51,6 @@ class WatchdogCommand extends Command
     /**
      * Sniff for issues.
      *
-     * @param WatchdogDriver $watchdog
      * @return array Found issues
      */
     protected function sniff(WatchdogDriver $watchdog)
@@ -83,8 +82,6 @@ class WatchdogCommand extends Command
     /**
      * File issues with clerk.
      *
-     * @param ClerkDriver $clerk
-     * @param array $issues
      * @return void
      */
     protected function fileIssues(ClerkDriver $clerk, array $issues)
@@ -99,8 +96,6 @@ class WatchdogCommand extends Command
     /**
      * Dispatch issues to responder.
      *
-     * @param ResponderDriver $responder
-     * @param array $issues
      * @return void
      */
     protected function dispatchIssues(ResponderDriver $responder, array $issues)
@@ -114,8 +109,6 @@ class WatchdogCommand extends Command
 
     /**
      * Creates Watchdog instance.
-     *
-     * @return WatchdogDriver
      */
     protected function createWatchdog(): WatchdogDriver
     {
@@ -124,8 +117,6 @@ class WatchdogCommand extends Command
 
     /**
      * Creates ClerkDriver instance.
-     *
-     * @return ClerkDriver
      */
     protected function createClerk(): ClerkDriver
     {
@@ -134,8 +125,6 @@ class WatchdogCommand extends Command
 
     /**
      * Creates ResponderDriver instance.
-     *
-     * @return ResponderDriver
      */
     protected function createResponder(): ResponderDriver
     {

@@ -12,15 +12,13 @@ use Tests\TestCase;
 
 class ProjectsAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Test accessing projects when authorized.
-     *
-     * @return void
      */
     public function testCanGetProjects(): void
     {
@@ -31,8 +29,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test accessing projects when unauthorized.
-     *
-     * @return void
      */
     public function testCannotGetProjects(): void
     {
@@ -43,8 +39,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test accessing a specific project when authorized.
-     *
-     * @return void
      */
     public function testCanGetProject(): void
     {
@@ -57,8 +51,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test accessing a specific project when unauthorized.
-     *
-     * @return void
      */
     public function testCannotGetProject(): void
     {
@@ -71,8 +63,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test creating a new project when authorized.
-     *
-     * @return void
      */
     public function testCanCreateProject(): void
     {
@@ -88,8 +78,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test creating a new project when unauthorized.
-     *
-     * @return void
      */
     public function testCannotCreateProject(): void
     {
@@ -104,8 +92,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test updating an existing project when authorized.
-     *
-     * @return void
      */
     public function testCanUpdateProject(): void
     {
@@ -123,8 +109,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test updating an existing project when unauthorized.
-     *
-     * @return void
      */
     public function testCannotUpdateProject(): void
     {
@@ -142,8 +126,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test deleting a project when authorized.
-     *
-     * @return void
      */
     public function testCanDeleteProject(): void
     {
@@ -156,8 +138,6 @@ class ProjectsAccessTest extends TestCase
 
     /**
      * Test deleting a project when unauthorized.
-     *
-     * @return void
      */
     public function testCannotDeleteProject(): void
     {

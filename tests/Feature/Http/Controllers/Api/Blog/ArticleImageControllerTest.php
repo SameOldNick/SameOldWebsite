@@ -13,9 +13,9 @@ use Tests\TestCase;
 
 class ArticleImageControllerTest extends TestCase
 {
-    use RefreshDatabase;
     use CreatesUser;
     use InteractsWithJWT;
+    use RefreshDatabase;
     use WithFaker;
 
     /**

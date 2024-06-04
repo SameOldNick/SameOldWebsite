@@ -2,8 +2,8 @@
 
 namespace App\Components\Compiler\Compilers\Markdown\Filters;
 
-use Illuminate\Support\Arr;
 use DOMDocument;
+use Illuminate\Support\Arr;
 
 class LinkFilter implements DomFilter
 {

@@ -24,7 +24,7 @@ class AuthDriver implements AuthServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isConfigured(MultiAuthenticatable $authenticatable): bool
     {
@@ -38,7 +38,7 @@ class AuthDriver implements AuthServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function verifyCode(MultiAuthenticatable $authenticatable, string $code): bool
     {
@@ -48,7 +48,7 @@ class AuthDriver implements AuthServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function registerRoutes(Router $router, array $options)
     {
@@ -61,8 +61,6 @@ class AuthDriver implements AuthServiceInterface
     /**
      * Gets setup configuration.
      *
-     * @param MultiAuthenticatable $authenticatable
-     * @param string $secret
      * @return SetupConfiguration
      */
     public function setup(MultiAuthenticatable $authenticatable, string $secret)
@@ -75,9 +73,6 @@ class AuthDriver implements AuthServiceInterface
     /**
      * Installs MFA for authenticatable.
      *
-     * @param MultiAuthenticatable $authenticatable
-     * @param string $authSecret
-     * @param string $backupSecret
      * @return mixed
      */
     public function install(MultiAuthenticatable $authenticatable, string $authSecret, string $backupSecret)
@@ -91,7 +86,6 @@ class AuthDriver implements AuthServiceInterface
     /**
      * Uninstalls MFA from authenticatable.
      *
-     * @param Authenticatable $authenticatable
      * @return mixed
      */
     public function uninstall(Authenticatable $authenticatable)
@@ -102,7 +96,6 @@ class AuthDriver implements AuthServiceInterface
     /**
      * Gets the middleware for the routes.
      *
-     * @param array $options
      * @return array
      */
     protected function getMiddleware(array $options)
@@ -122,9 +115,6 @@ class AuthDriver implements AuthServiceInterface
 
     /**
      * Creates OTP instance.
-     *
-     * @param OneTimeAuthenticatable $authenticatable
-     * @return OTPInterface
      */
     protected function createOtp(OneTimeAuthenticatable $authenticatable): OTPInterface
     {
@@ -133,9 +123,6 @@ class AuthDriver implements AuthServiceInterface
 
     /**
      * Creates secret resolver for authenticatable.
-     *
-     * @param MultiAuthenticatable $authenticatable
-     * @return OneTimeAuthenticatable
      */
     protected function createOneTimeAuthenticatable(MultiAuthenticatable $authenticatable): OneTimeAuthenticatable
     {

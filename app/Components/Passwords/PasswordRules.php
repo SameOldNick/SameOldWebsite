@@ -8,8 +8,6 @@ final class PasswordRules
 {
     /**
      * Creates instance of PasswordRules
-     *
-     * @param array $rules
      */
     public function __construct(
         private readonly array $rules

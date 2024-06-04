@@ -10,36 +10,26 @@ abstract class Issue implements Arrayable
 {
     /**
      * Gets the issue severity.
-     *
-     * @return Severity
      */
     abstract public function getSeverity(): Severity;
 
     /**
      * Gets the unique identifier for the issue.
-     *
-     * @return string
      */
     abstract public function getIdentifier(): string;
 
     /**
      * Gets the date/time for the issue.
-     *
-     * @return Carbon
      */
     abstract public function getDateTime(): Carbon;
 
     /**
      * Gets the message for the issue.
-     *
-     * @return string
      */
     abstract public function getMessage(): string;
 
     /**
      * Gets the full unique identifier.
-     *
-     * @return string
      */
     public function getFullIdentifier(): string
     {
@@ -48,8 +38,6 @@ abstract class Issue implements Arrayable
 
     /**
      * Gets additional context for the issue.
-     *
-     * @return array
      */
     public function getContext(): array
     {

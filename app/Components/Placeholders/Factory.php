@@ -14,7 +14,6 @@ class Factory
     /**
      * Builds placeholder collection
      *
-     * @param callable $callback
      * @return PlaceholderCollection
      */
     public function build(callable $callback)
@@ -37,7 +36,6 @@ class Factory
     /**
      * Creates placeholder collection
      *
-     * @param array $placeholders
      * @return PlaceholderCollection
      */
     protected function createCollection(array $placeholders)

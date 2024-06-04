@@ -119,7 +119,6 @@ class UsersController extends Controller
     /**
      * Restores a user
      *
-     * @param User $user
      * @return array
      */
     public function restore(User $user)

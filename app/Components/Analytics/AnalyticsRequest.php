@@ -69,7 +69,6 @@ class AnalyticsRequest extends FormRequest
     /**
      * Gets the interval unit
      *
-     * @param int $count
      * @return string
      */
     public function unit(int $count = 5)

@@ -21,7 +21,6 @@ trait HasMatcher
     /**
      * Sets the link matcher to use for this item
      *
-     * @param Matcher $matcher
      * @return $this
      */
     public function setMatcher(Matcher $matcher)

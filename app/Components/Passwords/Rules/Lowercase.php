@@ -7,7 +7,7 @@ use Closure;
 class Lowercase extends ValidationRule
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail)
     {

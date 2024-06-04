@@ -11,8 +11,8 @@ trait HasProps
     /**
      * Sets property
      *
-     * @param string $name Property name
-     * @param mixed $arguments Arguments for property
+     * @param  string  $name  Property name
+     * @param  mixed  $arguments  Arguments for property
      * @return $this
      */
     public function setProp($name, $arguments)
@@ -35,7 +35,7 @@ trait HasProps
     /**
      * Checks if property with key exists
      *
-     * @param string $key
+     * @param  string  $key
      * @return bool
      */
     public function hasProp($key)
@@ -46,8 +46,8 @@ trait HasProps
     /**
      * Gets property
      *
-     * @param string $name Property name
-     * @param mixed $default What to return if property doesn't exist (default: null)
+     * @param  string  $name  Property name
+     * @param  mixed  $default  What to return if property doesn't exist (default: null)
      * @return mixed
      */
     public function getProp($name, $default = null)
@@ -58,10 +58,10 @@ trait HasProps
     /**
      * Gets properties as an ComponentAttributeBag
      *
-     * @param string $key Key of array to get as ComponentAttributeBag. If null, all props are included. (default: null)
+     * @param  string  $key  Key of array to get as ComponentAttributeBag. If null, all props are included. (default: null)
      * @return ComponentAttributeBag
      */
-    public function attributes(string $key = null)
+    public function attributes(?string $key = null)
     {
         return new ComponentAttributeBag($this->getProp($key, $this->getProps()->all()));
     }

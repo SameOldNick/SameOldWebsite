@@ -47,7 +47,6 @@ class ResetPasswordController extends Controller
     /**
      * Get the password reset credentials from the request.
      *
-     * @param Request  $request
      * @return array
      */
     protected function credentials(Request $request)

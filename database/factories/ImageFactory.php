@@ -45,7 +45,7 @@ class ImageFactory extends Factory
     /**
      * Creates from picsum.photos website
      *
-     * @param array $options
+     * @param  array  $options
      * @return $this
      */
     public function picsum(string $path, array $meta, bool $public)

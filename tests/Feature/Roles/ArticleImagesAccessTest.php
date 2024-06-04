@@ -13,15 +13,13 @@ use Tests\TestCase;
 
 class ArticleImagesAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests user is authorized to get article images.
-     *
-     * @return void
      */
     public function testCanGetArticleImages(): void
     {
@@ -34,8 +32,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get article images.
-     *
-     * @return void
      */
     public function testCannotGetArticleImages(): void
     {
@@ -48,8 +44,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to attach article image.
-     *
-     * @return void
      */
     public function testCanAttachArticleImage(): void
     {
@@ -63,8 +57,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to attach article image.
-     *
-     * @return void
      */
     public function testCannotAttachArticleImage(): void
     {
@@ -78,8 +70,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to detach article image.
-     *
-     * @return void
      */
     public function testCanDetachArticleImage(): void
     {
@@ -95,8 +85,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to detach article image.
-     *
-     * @return void
      */
     public function testCannotDetachArticleImage(): void
     {
@@ -112,8 +100,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to change article main image.
-     *
-     * @return void
      */
     public function testCanChangeArticleMainImage(): void
     {
@@ -129,8 +115,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to change article main image.
-     *
-     * @return void
      */
     public function testCannotChangeArticleMainImage(): void
     {
@@ -146,8 +130,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to remove article main image.
-     *
-     * @return void
      */
     public function testCanRemoveArticleMainImage(): void
     {
@@ -164,8 +146,6 @@ class ArticleImagesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to remove article main image.
-     *
-     * @return void
      */
     public function testCannotRemoveArticleMainImage(): void
     {

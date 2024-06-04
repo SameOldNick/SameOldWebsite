@@ -86,7 +86,6 @@ class Article extends Model
     /**
      * Create a new Eloquent Collection instance.
      *
-     * @param  array  $models
      * @return ArticleCollection
      */
     public function newCollection(array $models = [])
@@ -136,8 +135,6 @@ class Article extends Model
 
     /**
      * Gets the images that belong to this article.
-     *
-     * @return BelongsToMany
      */
     public function images(): BelongsToMany
     {
@@ -178,8 +175,6 @@ class Article extends Model
 
     /**
      * Gets the revision for this article.
-     *
-     * @return Attribute
      */
     protected function revision(): Attribute
     {
@@ -188,8 +183,6 @@ class Article extends Model
 
     /**
      * Checks if article is published.
-     *
-     * @return Attribute
      */
     protected function isPublished(): Attribute
     {
@@ -198,8 +191,6 @@ class Article extends Model
 
     /**
      * Checks if article is scheduled to be published.
-     *
-     * @return Attribute
      */
     protected function isScheduled(): Attribute
     {
@@ -208,8 +199,6 @@ class Article extends Model
 
     /**
      * Get the URL for the article.
-     *
-     * @return Attribute
      */
     protected function url(): Attribute
     {
@@ -218,8 +207,6 @@ class Article extends Model
 
     /**
      * Get the public URL for the article.
-     *
-     * @return Attribute
      */
     protected function publicUrl(): Attribute
     {
@@ -228,8 +215,6 @@ class Article extends Model
 
     /**
      * Get the private URL for the article.
-     *
-     * @return Attribute
      */
     protected function privateUrl(): Attribute
     {
@@ -239,8 +224,7 @@ class Article extends Model
     /**
      * Creates public link to this article
      *
-     * @param bool $absolute
-     * @param array $params Any extra parameters to include in URL
+     * @param  array  $params  Any extra parameters to include in URL
      * @return string
      */
     public function createPublicLink(bool $absolute = true, array $params = [])
@@ -251,9 +235,9 @@ class Article extends Model
     /**
      * Creates temporary signed URL to this article
      *
-     * @param int $minutes Minutes until URL expires (default: 30)
-     * @param bool $absolute If true, absolute URL is returned. (default: true)
-     * @param array $params Any extra parameters to include in URL
+     * @param  int  $minutes  Minutes until URL expires (default: 30)
+     * @param  bool  $absolute  If true, absolute URL is returned. (default: true)
+     * @param  array  $params  Any extra parameters to include in URL
      * @return string
      */
     public function createPrivateUrl(int $minutes = 30, bool $absolute = true, array $params = [])

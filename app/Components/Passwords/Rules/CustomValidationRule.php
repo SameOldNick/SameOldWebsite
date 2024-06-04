@@ -8,8 +8,6 @@ class CustomValidationRule extends ValidationRule
 {
     /**
      * Initializes CustomValidationRule instance
-     *
-     * @param Closure $callback
      */
     public function __construct(
         protected readonly Closure $callback
@@ -17,7 +15,7 @@ class CustomValidationRule extends ValidationRule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isEnabled(): bool
     {
@@ -25,7 +23,7 @@ class CustomValidationRule extends ValidationRule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail)
     {

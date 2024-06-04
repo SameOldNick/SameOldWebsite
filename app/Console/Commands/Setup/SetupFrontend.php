@@ -38,7 +38,7 @@ class SetupFrontend extends Command
         // Disable process timeout
         $additionalArgs = ['timeout' => null];
 
-        $outputs = !$hideOutput ? [$this->getOutput()] : [];
+        $outputs = ! $hideOutput ? [$this->getOutput()] : [];
 
         // Determine the correct command based on the package manager
         switch ($packageManager) {
@@ -80,9 +80,6 @@ class SetupFrontend extends Command
 
     /**
      * Prefixes command (if needed)
-     *
-     * @param string $command
-     * @return string
      */
     protected function prefixCommand(string $command): string
     {

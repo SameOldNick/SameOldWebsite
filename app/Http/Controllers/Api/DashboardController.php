@@ -16,7 +16,6 @@ class DashboardController extends Controller
     /**
      * Gets the visitors over time.
      *
-     * @param AnalyticsRequest $request
      * @return array
      */
     public function visitors(AnalyticsRequest $request)
@@ -32,7 +31,6 @@ class DashboardController extends Controller
     /**
      * Gets the popular links.
      *
-     * @param AnalyticsRequest $request
      * @return array
      */
     public function links(AnalyticsRequest $request)
@@ -47,7 +45,6 @@ class DashboardController extends Controller
     /**
      * Gets the web browsers.
      *
-     * @param AnalyticsRequest $request
      * @return array
      */
     public function browsers(AnalyticsRequest $request)

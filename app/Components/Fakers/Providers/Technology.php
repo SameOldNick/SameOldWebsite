@@ -303,8 +303,6 @@ class Technology extends Base
 
     /**
      * Gets a random technology.
-     *
-     * @return string
      */
     public function technology(): string
     {

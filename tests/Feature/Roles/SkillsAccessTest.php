@@ -11,15 +11,13 @@ use Tests\TestCase;
 
 class SkillsAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests user is authorized to get skills.
-     *
-     * @return void
      */
     public function testCanGetSkills(): void
     {
@@ -30,8 +28,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get skills.
-     *
-     * @return void
      */
     public function testCannotGetSkills(): void
     {
@@ -42,8 +38,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to get skill.
-     *
-     * @return void
      */
     public function testCanGetSkill(): void
     {
@@ -56,8 +50,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get skill.
-     *
-     * @return void
      */
     public function testCannotGetSkill(): void
     {
@@ -70,8 +62,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to create skills.
-     *
-     * @return void
      */
     public function testCanCreateSkill(): void
     {
@@ -85,8 +75,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to create skills.
-     *
-     * @return void
      */
     public function testCannotCreateSkill(): void
     {
@@ -100,8 +88,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to update skills.
-     *
-     * @return void
      */
     public function testCanUpdateSkill(): void
     {
@@ -117,8 +103,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to update skills.
-     *
-     * @return void
      */
     public function testCannotUpdateSkill(): void
     {
@@ -133,8 +117,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to delete skills.
-     *
-     * @return void
      */
     public function testCanDeleteSkill(): void
     {
@@ -147,8 +129,6 @@ class SkillsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to delete skills.
-     *
-     * @return void
      */
     public function testCannotDeleteSkill(): void
     {

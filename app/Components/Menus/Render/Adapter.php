@@ -24,8 +24,6 @@ class Adapter
 
     /**
      * Initializes adapter
-     *
-     * @param SingleLevelRenderer $renderer
      */
     public function __construct(SingleLevelRenderer $renderer)
     {
@@ -35,7 +33,6 @@ class Adapter
     /**
      * Renders menu
      *
-     * @param Menu $menu
      * @return string HTML
      */
     public function render(Menu $menu)
@@ -50,8 +47,6 @@ class Adapter
     /**
      * Renders items recursively
      *
-     * @param array $items
-     * @param int $depth
      * @return array Array of views
      */
     protected function renderItems(array $items, int $depth)
@@ -89,7 +84,6 @@ class Adapter
     /**
      * Renders array of views into single HTML string
      *
-     * @param array $views
      * @return string
      */
     protected function renderViews(array $views)
@@ -100,7 +94,7 @@ class Adapter
     /**
      * Renders a view
      *
-     * @param mixed $view
+     * @param  mixed  $view
      * @return string
      */
     protected function renderView($view)

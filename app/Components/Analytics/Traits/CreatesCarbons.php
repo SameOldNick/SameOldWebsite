@@ -14,9 +14,9 @@ trait CreatesCarbons
      * Determines appropriate interval unit.
      * This is useful in figuring out the best interval unit to pass to the range method to get the number of desired dates.
      *
-     * @param CarbonInterface $from Start date/time
-     * @param CarbonInterface $to End date/time
-     * @param int $count How many dates there should be between from and to.
+     * @param  CarbonInterface  $from  Start date/time
+     * @param  CarbonInterface  $to  End date/time
+     * @param  int  $count  How many dates there should be between from and to.
      * @return string Interval unit (year, month, week, etc.)
      */
     public function determineIntervalUnit(CarbonInterface $from, CarbonInterface $to, int $count)
@@ -53,10 +53,10 @@ trait CreatesCarbons
     /**
      * Generates range of dates starting from date and going to date
      *
-     * @param CarbonInterface $from Start date/time
-     * @param CarbonInterface $to End date/time
-     * @param string $unit How much dates should be incremented by (minutes, hours, days, etc.)
-     * @param int $max Max. number of periods. 0 is unlimited. (default: 0)
+     * @param  CarbonInterface  $from  Start date/time
+     * @param  CarbonInterface  $to  End date/time
+     * @param  string  $unit  How much dates should be incremented by (minutes, hours, days, etc.)
+     * @param  int  $max  Max. number of periods. 0 is unlimited. (default: 0)
      * @return array|false Array of dates or false if from, to, or unit is invalid.
      */
     public function createPeriods(CarbonInterface $from, CarbonInterface $to, string $unit, int $max = 0)
@@ -94,7 +94,7 @@ trait CreatesCarbons
     /**
      * Creates CarbonPeriod instance
      *
-     * @param int $entries Number of entries in period.
+     * @param  int  $entries  Number of entries in period.
      * @return CarbonPeriod
      */
     public function createPeriod(int $entries = 1)

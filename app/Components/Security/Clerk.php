@@ -65,8 +65,7 @@ final class Clerk extends Manager
     /**
      * Gets configuration for clerk.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  mixed  $default
      * @return mixed
      */
     private function getConfig(string $key, $default = [])
@@ -77,8 +76,7 @@ final class Clerk extends Manager
     /**
      * Determines driver name for clerk.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  mixed  $default
      * @return mixed
      */
     private function determineDriverNameFor(string $key, $default = null)

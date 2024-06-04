@@ -22,8 +22,7 @@ class Menus
     /**
      * Creates new menu
      *
-     * @param string $name
-     * @param callable $callback Called with Menu instance
+     * @param  callable  $callback  Called with Menu instance
      * @return Menu
      */
     public function create(string $name, callable $callback)
@@ -44,8 +43,7 @@ class Menus
     /**
      * Adds menu that is created lazily.
      *
-     * @param string $name
-     * @param callable $callback Called when menu is first accessed.
+     * @param  callable  $callback  Called when menu is first accessed.
      * @return $this
      */
     public function add(string $name, callable $callback)
@@ -58,8 +56,6 @@ class Menus
     /**
      * Adds callback for after menu is created.
      *
-     * @param string $name
-     * @param callable $callback
      * @return $this
      */
     public function afterCreated(string $name, callable $callback)
@@ -76,8 +72,9 @@ class Menus
     /**
      * Gets menu with name
      *
-     * @param string $name
+     * @param  string  $name
      * @return Menu
+     *
      * @throws OutOfBoundsException Thrown if menu doesn't exist.
      */
     public function get($name)

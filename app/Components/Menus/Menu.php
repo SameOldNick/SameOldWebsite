@@ -17,14 +17,14 @@ use Illuminate\Support\Traits\Conditionable;
 
 class Menu
 {
-    use HasProps;
     use Conditionable;
+    use HasProps;
 
     protected $parent;
 
     protected $items = [];
 
-    public function __construct(self $parent = null)
+    public function __construct(?self $parent = null)
     {
         $this->parent = $parent;
     }
@@ -32,12 +32,12 @@ class Menu
     /**
      * Adds a route menu item
      *
-     * @param string|array $name Can be name of route or array of parameters to pass to route() function
-     * @param string $text Text content for menu item
-     * @param callable|null $callback If callable, called with LinkItem after it's created
+     * @param  string|array  $name  Can be name of route or array of parameters to pass to route() function
+     * @param  string  $text  Text content for menu item
+     * @param  callable|null  $callback  If callable, called with LinkItem after it's created
      * @return $this
      */
-    public function route($name, $text, callable $callback = null)
+    public function route($name, $text, ?callable $callback = null)
     {
         $params = Arr::wrap($name);
 
@@ -50,12 +50,12 @@ class Menu
     /**
      * Adds a url menu item
      *
-     * @param string|array $url Can be url or array of parameters to pass to url() function
-     * @param string $text Text content for menu item
-     * @param callable|null $callback If callable, called with LinkItem after it's created
+     * @param  string|array  $url  Can be url or array of parameters to pass to url() function
+     * @param  string  $text  Text content for menu item
+     * @param  callable|null  $callback  If callable, called with LinkItem after it's created
      * @return $this
      */
-    public function url($url, $text, callable $callback = null)
+    public function url($url, $text, ?callable $callback = null)
     {
         $params = Arr::wrap($url);
 
@@ -68,12 +68,12 @@ class Menu
     /**
      * Adds a action menu item
      *
-     * @param string|array $name Can be action as string or array of parameters to pass to action() function
-     * @param string $text Text content for menu item
-     * @param callable|null $callback If callable, called with LinkItem after it's created
+     * @param  string|array  $name  Can be action as string or array of parameters to pass to action() function
+     * @param  string  $text  Text content for menu item
+     * @param  callable|null  $callback  If callable, called with LinkItem after it's created
      * @return $this
      */
-    public function action($name, $text, callable $callback = null)
+    public function action($name, $text, ?callable $callback = null)
     {
         // Sets params to 2D array if action callable array is specified
         $params = $this->isActionCallableArray($name) ? [$name] : Arr::wrap($name);
@@ -87,13 +87,13 @@ class Menu
     /**
      * Adds item to menu
      *
-     * @param Resolver $resolver Resolver to use for URL
-     * @param Matcher $matcher Matcher to check
-     * @param string $text Text content for menu item
-     * @param callable|null $callback If callable, called with LinkItem after it's created
+     * @param  Resolver  $resolver  Resolver to use for URL
+     * @param  Matcher  $matcher  Matcher to check
+     * @param  string  $text  Text content for menu item
+     * @param  callable|null  $callback  If callable, called with LinkItem after it's created
      * @return $this
      */
-    public function item(Resolver $resolver, Matcher $matcher, $text, callable $callback = null)
+    public function item(Resolver $resolver, Matcher $matcher, $text, ?callable $callback = null)
     {
         $item = new LinkItem($this, $resolver, $matcher, $text);
 
@@ -107,8 +107,7 @@ class Menu
     /**
      * Adds renderable item
      *
-     * @param mixed $renderable View, Htmlable, or string
-     * @param array $props
+     * @param  mixed  $renderable  View, Htmlable, or string
      * @return $this
      */
     public function renderable($renderable, array $props = [])
@@ -119,7 +118,6 @@ class Menu
     /**
      * Adds menu divider
      *
-     * @param array $props
      * @return $this
      */
     public function divider(array $props = [])
@@ -130,11 +128,11 @@ class Menu
     /**
      * Adds dropdown menu item
      *
-     * @param string $text Text for dropdown
-     * @param callable $callback Called with DropdownItem instance
+     * @param  string  $text  Text for dropdown
+     * @param  callable  $callback  Called with DropdownItem instance
      * @return $this
      */
-    public function dropdown($text, callable $callback = null)
+    public function dropdown($text, ?callable $callback = null)
     {
         $dropdown = new DropdownItem($this, $text);
 
@@ -148,7 +146,6 @@ class Menu
     /**
      * Adds item
      *
-     * @param Item $item
      * @return $this
      */
     protected function addItem(Item $item)
@@ -171,7 +168,7 @@ class Menu
     /**
      * Renders the menu with the specified renderer
      *
-     * @param string $renderer Name of renderer driver to use
+     * @param  string  $renderer  Name of renderer driver to use
      * @return string
      */
     public function render($renderer)
@@ -182,7 +179,7 @@ class Menu
     /**
      * Checks if parameters is an action callable array
      *
-     * @param mixed $params
+     * @param  mixed  $params
      * @return bool
      */
     protected function isActionCallableArray($params)
@@ -193,8 +190,8 @@ class Menu
     /**
      * Sets property with method name
      *
-     * @param string $name Name of property
-     * @param array $arguments First argument is used as value for property
+     * @param  string  $name  Name of property
+     * @param  array  $arguments  First argument is used as value for property
      * @return $this
      */
     public function __call($name, $arguments)

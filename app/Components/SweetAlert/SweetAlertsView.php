@@ -11,7 +11,7 @@ class SweetAlertsView extends Component
     /**
      * Create a new component instance.
      *
-     * @param SweetAlerts $sweetAlerts Instance of SweetAlerts injected
+     * @param  SweetAlerts  $sweetAlerts  Instance of SweetAlerts injected
      * @return void
      */
     public function __construct(SweetAlerts $sweetAlerts)

@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class PageMetaData extends Model
 {
-    use HasFactory;
     use Concerns\HidesPrimaryKey;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.

@@ -10,8 +10,8 @@ use App\Traits\Support\HasPageSettings;
 
 class Contacted extends MarkdownTemplate
 {
-    use HasPageSettings;
     use BuildsFromContainer;
+    use HasPageSettings;
 
     protected $content;
 

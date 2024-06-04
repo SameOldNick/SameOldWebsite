@@ -16,8 +16,8 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets the title
      *
-     * @param string $title Title
-     * @param bool $html If true, HTML will be rendered. (default: true)
+     * @param  string  $title  Title
+     * @param  bool  $html  If true, HTML will be rendered. (default: true)
      * @return $this
      */
     public function title(string $title, bool $html = true)
@@ -28,8 +28,8 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets the content
      *
-     * @param string $content Content
-     * @param bool $html If true, HTML will be rendered. (default: true)
+     * @param  string  $content  Content
+     * @param  bool  $html  If true, HTML will be rendered. (default: true)
      * @return $this
      */
     public function content(string $content, bool $html = true)
@@ -40,7 +40,6 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets the content as text.
      *
-     * @param string $text
      * @return $this
      */
     public function text(string $text)
@@ -51,7 +50,6 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets the content as HTML.
      *
-     * @param string $html
      * @return $this
      */
     public function html(string $html)
@@ -62,8 +60,8 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets the icon
      *
-     * @param string $icon A string, 'warning', 'error', 'success', 'info', or 'question'
-     * @param bool $html If true, icon HTML will be rendered. (default: false)
+     * @param  string  $icon  A string, 'warning', 'error', 'success', 'info', or 'question'
+     * @param  bool  $html  If true, icon HTML will be rendered. (default: false)
      * @return $this
      */
     public function icon(string $icon, bool $html = false)
@@ -74,7 +72,7 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets the footer
      *
-     * @param string $footer Footer content (HTML will be rendered)
+     * @param  string  $footer  Footer content (HTML will be rendered)
      * @return $this
      */
     public function footer(string $footer)
@@ -85,7 +83,7 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets if backdrop should be displayed
      *
-     * @param bool $enabled Whether to enable or disable backdrop. (default: true)
+     * @param  bool  $enabled  Whether to enable or disable backdrop. (default: true)
      * @return $this
      */
     public function backdrop(bool $enabled = true)
@@ -96,7 +94,7 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets input to display (or not)
      *
-     * @param string|false $input If string, the input prompt. If false, doesn't display input.
+     * @param  string|false  $input  If string, the input prompt. If false, doesn't display input.
      * @return $this
      */
     public function input($input)
@@ -113,8 +111,7 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Gets value for option
      *
-     * @param string $key
-     * @param mixed $default Default value if not found (default: null)
+     * @param  mixed  $default  Default value if not found (default: null)
      * @return mixed
      */
     public function getOption(string $key, $default = null)
@@ -125,8 +122,7 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Sets option for SweetAlert
      *
-     * @param string $key
-     * @param mixed $value
+     * @param  mixed  $value
      * @return $this
      */
     public function setOption(string $key, $value)
@@ -139,7 +135,6 @@ class SweetAlertBuilder implements Arrayable
     /**
      * Unsets option for SweetAlert
      *
-     * @param string $key
      * @return $this
      */
     public function unsetOption(string $key)

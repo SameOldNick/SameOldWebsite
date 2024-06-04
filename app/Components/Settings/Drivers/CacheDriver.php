@@ -21,9 +21,9 @@ class CacheDriver
     /**
      * Initializes the cache driver
      *
-     * @param string $pageKey Page key
-     * @param callable $eloquentDriverFactory Callback for creating the eloquent driver.
-     * @param Repository $cache Cache repository
+     * @param  string  $pageKey  Page key
+     * @param  callable  $eloquentDriverFactory  Callback for creating the eloquent driver.
+     * @param  Repository  $cache  Cache repository
      */
     public function __construct(string $pageKey, callable $eloquentDriverFactory, Repository $cache)
     {
@@ -35,8 +35,8 @@ class CacheDriver
     /**
      * Gets setting value
      *
-     * @param string $setting Key
-     * @param mixed $default
+     * @param  string  $setting  Key
+     * @param  mixed  $default
      * @return mixed
      */
     public function setting($setting, $default = null)
@@ -56,7 +56,7 @@ class CacheDriver
     /**
      * Gets settings as array
      *
-     * @param mixed ...$args Keys
+     * @param  mixed  ...$args  Keys
      * @return array
      */
     public function settings(...$args)

@@ -19,7 +19,7 @@ final class Password extends LaravelPassword
     /**
      * Initializes password instance
      *
-     * @param int $min Minimum length (default: 1)
+     * @param  int  $min  Minimum length (default: 1)
      */
     public function __construct($min = 1)
     {
@@ -29,7 +29,6 @@ final class Password extends LaravelPassword
     /**
      * Adds validation rule
      *
-     * @param callable $rule
      * @return $this
      */
     public function addRule(callable $rule)
@@ -64,6 +63,7 @@ final class Password extends LaravelPassword
      * DO NOT USE!!
      *
      * Use the {@see Password::setMin()} method instead.
+     *
      * @throws InvalidArgumentException
      */
     public static function min($size)
@@ -75,7 +75,6 @@ final class Password extends LaravelPassword
      * Set the minimum size of the password.
      * The existing min() function creates a new Password instance with the default values, so this changes the existing instance.
      *
-     * @param  int  $size
      * @return $this
      */
     public function setMin(int $size)
@@ -88,7 +87,6 @@ final class Password extends LaravelPassword
     /**
      * Sets the maximum length of the password.
      *
-     * @param int $size
      * @return $this
      */
     public function setMax(int $size)
@@ -99,7 +97,7 @@ final class Password extends LaravelPassword
     /**
      * Creates Password from callback
      *
-     * @param Closure $callback Called with instance of PasswordRulesBuilder
+     * @param  Closure  $callback  Called with instance of PasswordRulesBuilder
      * @return static
      */
     public static function createFromCallback(Closure $callback)
@@ -108,18 +106,17 @@ final class Password extends LaravelPassword
 
         $callback($builder);
 
-        return static::createFromRules($builder->getRules());
+        return self::createFromRules($builder->getRules());
     }
 
     /**
      * Creates Password instance from rules.
      *
-     * @param PasswordRules $rules
      * @return static
      */
     public static function createFromRules(PasswordRules $rules)
     {
-        $password = new static;
+        $password = new self;
 
         foreach ($rules->getRules() as $rule) {
             if ($rule->isEnabled()) {

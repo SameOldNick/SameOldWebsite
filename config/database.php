@@ -66,7 +66,7 @@ return [
              * Fixes issues with date/times being transferred from PHP to MySQL/MariaDB.
              * More information: https://stackoverflow.com/a/55084791/533242
              */
-            'timezone'  => env('DB_TIMEZONE', '+00:00'),
+            'timezone' => env('DB_TIMEZONE', '+00:00'),
         ],
 
         'pgsql' => [

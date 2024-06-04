@@ -5,8 +5,8 @@ namespace App\Components\Websockets\Notifiers;
 use App\Components\Websockets\Notifications\Process\ProcessBegin;
 use App\Components\Websockets\Notifications\Process\ProcessComplete;
 use App\Components\Websockets\Notifications\Process\ProcessOutput;
-use Ramsey\Uuid\UuidInterface;
 use DateTimeInterface;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * Broadcasts events related to a process.
@@ -16,20 +16,18 @@ class ProcessNotifier extends AbstractNotifier
     /**
      * Initializes ProcessNotifier instance
      *
-     * @param UuidInterface $uuid Process UUID
-     * @param object $notifiable Who to route notifications to
+     * @param  UuidInterface  $uuid  Process UUID
+     * @param  object  $notifiable  Who to route notifications to
      */
     public function __construct(
         public readonly UuidInterface $uuid,
         public readonly object $notifiable,
-    )
-    {
+    ) {
     }
 
     /**
      * Sends notification that process was started.
      *
-     * @param DateTimeInterface|null $dateTime
      * @return void
      */
     public function begin(?DateTimeInterface $dateTime = null)
@@ -40,8 +38,7 @@ class ProcessNotifier extends AbstractNotifier
     /**
      * Sends notification that process completed.
      *
-     * @param integer $errorCode Process error code
-     * @param DateTimeInterface|null $dateTime
+     * @param  int  $errorCode  Process error code
      * @return void
      */
     public function complete(int $errorCode, ?DateTimeInterface $dateTime = null)
@@ -52,9 +49,6 @@ class ProcessNotifier extends AbstractNotifier
     /**
      * Sends notification with output from process.
      *
-     * @param string $message
-     * @param boolean $newline
-     * @param DateTimeInterface|null $dateTime
      * @return void
      */
     public function output(string $message, bool $newline, ?DateTimeInterface $dateTime = null)

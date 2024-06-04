@@ -72,7 +72,6 @@ class Guard implements GuardContract
     /**
      * Validate a user's credentials.
      *
-     * @param  array  $credentials
      * @return bool
      */
     public function validate(array $credentials = [])
@@ -93,7 +92,6 @@ class Guard implements GuardContract
     /**
      * Set the current user.
      *
-     * @param  Authenticatable  $user
      * @return void
      */
     public function setUser(Authenticatable $user)
@@ -103,8 +101,6 @@ class Guard implements GuardContract
 
     /**
      * Gets the inner guard.
-     *
-     * @return GuardContract
      */
     public function getGuard(): GuardContract
     {

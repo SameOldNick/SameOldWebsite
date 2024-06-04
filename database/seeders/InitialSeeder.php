@@ -11,7 +11,7 @@ class InitialSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(User $user = null): void
+    public function run(?User $user = null): void
     {
         // Laravel might try to dig up a non-existent model, so also check if it exists.
         if (is_null($user) || ! $user->exists) {

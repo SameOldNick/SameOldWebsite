@@ -97,7 +97,6 @@ class ProjectsController extends HomepageController
     /**
      * Restores a project
      *
-     * @param Project $project
      * @return array
      */
     public function restore(Project $project)

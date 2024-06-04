@@ -74,11 +74,11 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * Generates array as PHP code
      *
-     * @param array $array
-     * @param int $depth Depth of array (used to generate indentation)
-     * @param bool $ignoreIndexes Whether to ignore indexes in code
-     * @param bool $shortSyntax If true, the short syntax '[]' is used. If false, the long syntax 'array()' is used.
-     * @param string $indent What to use for indentation (spaces or tabs)
+     * @param  array  $array
+     * @param  int  $depth  Depth of array (used to generate indentation)
+     * @param  bool  $ignoreIndexes  Whether to ignore indexes in code
+     * @param  bool  $shortSyntax  If true, the short syntax '[]' is used. If false, the long syntax 'array()' is used.
+     * @param  string  $indent  What to use for indentation (spaces or tabs)
      * @return string
      */
     public static function generateArrayCode($array, $depth, $ignoreIndexes, $shortSyntax, $indent)

@@ -15,9 +15,6 @@ final class EloquentClerk implements ClerkDriver
 
     /**
      * Checks if the issue is fresh/new.
-     *
-     * @param Issue $issue
-     * @return bool
      */
     public function isFresh(Issue $issue): bool
     {
@@ -28,9 +25,6 @@ final class EloquentClerk implements ClerkDriver
 
     /**
      * File the issue
-     *
-     * @param Issue $issue
-     * @return void
      */
     public function file(Issue $issue): void
     {

@@ -5,7 +5,7 @@ namespace App\Components\Security\Responders;
 use App\Components\Security\Issues\Issue;
 use Throwable;
 
-class StackResponder implements ResponderDriver
+final class StackResponder implements ResponderDriver
 {
     public function __construct(
         private readonly array $responders

@@ -17,7 +17,7 @@ class SessionDriver implements PersistServiceDriver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isVerified(Authenticatable $user): bool
     {
@@ -39,15 +39,15 @@ class SessionDriver implements PersistServiceDriver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function markVerified(Authenticatable $user, DateTimeInterface $expiry = null)
+    public function markVerified(Authenticatable $user, ?DateTimeInterface $expiry = null)
     {
         $this->sessionManager->put($this->getSessionKey($user), serialize($expiry ?? $this->getDefaultVerifiedExpiry()));
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function clearVerified(Authenticatable $user)
     {
@@ -55,7 +55,7 @@ class SessionDriver implements PersistServiceDriver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function purge()
     {
@@ -64,7 +64,6 @@ class SessionDriver implements PersistServiceDriver
     /**
      * Gets session key
      *
-     * @param Authenticatable $user
      * @return string
      */
     protected function getSessionKey(Authenticatable $user)

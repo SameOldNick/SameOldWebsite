@@ -19,8 +19,6 @@ trait CreatesGoogleAnalyticsClient
 
     /**
      * Checks if Google Analytics has been configured.
-     *
-     * @return bool
      */
     protected function isGoogleAnalyticsConfigured(): bool
     {
@@ -33,6 +31,7 @@ trait CreatesGoogleAnalyticsClient
      * Creates Google Analytics data client.
      *
      * @return BetaAnalyticsDataClient
+     *
      * @throws GoogleAnalyticsNotConfiguredException Thrown if not configured correctly.
      */
     protected function createDataClient()

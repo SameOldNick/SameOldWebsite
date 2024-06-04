@@ -20,8 +20,6 @@ trait Displayable
 
     /**
      * Gets the suffix for the element ID.
-     *
-     * @return string
      */
     protected function getElementIdSuffix(): string
     {

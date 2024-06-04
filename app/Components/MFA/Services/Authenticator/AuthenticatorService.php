@@ -55,7 +55,6 @@ class AuthenticatorService extends Manager
     /**
      * Gets configuration options for key.
      *
-     * @param string $key
      * @return array
      */
     protected function getConfig(string $key)

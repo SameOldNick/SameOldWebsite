@@ -17,9 +17,6 @@ class NotificationClerk implements ClerkDriver
 
     /**
      * Checks if the issue is fresh/new.
-     *
-     * @param Issue $issue
-     * @return bool
      */
     public function isFresh(Issue $issue): bool
     {
@@ -36,9 +33,6 @@ class NotificationClerk implements ClerkDriver
 
     /**
      * File the issue
-     *
-     * @param Issue $issue
-     * @return void
      */
     public function file(Issue $issue): void
     {
@@ -82,7 +76,6 @@ class NotificationClerk implements ClerkDriver
     /**
      * Checks if issue is fresh/new.
      *
-     * @param Issue $issue
      * @return bool
      */
     protected function isNotificationFresh(Issue $issue)
@@ -106,7 +99,6 @@ class NotificationClerk implements ClerkDriver
     /**
      * Creates notification from an issue.
      *
-     * @param Issue $issue
      * @return IssueNotification
      */
     protected function createNotificationFromIssue(Issue $issue)

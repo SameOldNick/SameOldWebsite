@@ -12,7 +12,7 @@ class EloquentDriver
     /**
      * Initializes the eloquent driver.
      *
-     * @param Collection<int, \App\Models\PageMetaData> $collection Collection of settings for page.
+     * @param  Collection<int, \App\Models\PageMetaData>  $collection  Collection of settings for page.
      */
     public function __construct(
         protected Collection $collection
@@ -22,8 +22,8 @@ class EloquentDriver
     /**
      * Gets setting value
      *
-     * @param string $setting Key
-     * @param mixed $default
+     * @param  string  $setting  Key
+     * @param  mixed  $default
      * @return mixed
      */
     public function setting($setting, $default = null)
@@ -36,7 +36,7 @@ class EloquentDriver
     /**
      * Gets settings as array
      *
-     * @param mixed ...$args Keys
+     * @param  mixed  ...$args  Keys
      * @return array
      */
     public function settings(...$args)

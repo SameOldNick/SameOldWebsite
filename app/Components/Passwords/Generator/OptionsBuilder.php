@@ -45,7 +45,7 @@ final class OptionsBuilder
     /**
      * Sets the minimum length
      *
-     * @param int $length Minimum length (0 means default limit)
+     * @param  int  $length  Minimum length (0 means default limit)
      * @return $this
      */
     public function minimumLength(int $length)
@@ -58,7 +58,7 @@ final class OptionsBuilder
     /**
      * Sets the maximum length
      *
-     * @param int $length Maximum length (0 means default limit)
+     * @param  int  $length  Maximum length (0 means default limit)
      * @return $this
      */
     public function maximumLength(int $length)
@@ -71,7 +71,7 @@ final class OptionsBuilder
     /**
      * Sets the number of required lowercase characters
      *
-     * @param int $count Required count (0 means no requirement)
+     * @param  int  $count  Required count (0 means no requirement)
      * @return $this
      */
     public function requiresLowerCase(int $count)
@@ -84,7 +84,7 @@ final class OptionsBuilder
     /**
      * Sets the number of required uppercase characters
      *
-     * @param int $count Required count (0 means no requirement)
+     * @param  int  $count  Required count (0 means no requirement)
      * @return $this
      */
     public function requiresUpperCase(int $count)
@@ -97,7 +97,7 @@ final class OptionsBuilder
     /**
      * Sets the number of required numbers
      *
-     * @param int $count Required count (0 means no requirement)
+     * @param  int  $count  Required count (0 means no requirement)
      * @return $this
      */
     public function requiresNumbers(int $count)
@@ -110,7 +110,7 @@ final class OptionsBuilder
     /**
      * Sets the number of required special symbols
      *
-     * @param int $count Required count (0 means no requirement)
+     * @param  int  $count  Required count (0 means no requirement)
      * @return $this
      */
     public function requiresSpecialSymbols(int $count)
@@ -123,7 +123,7 @@ final class OptionsBuilder
     /**
      * Sets if only 7-bit ASCII characters are allowed.
      *
-     * @param bool $value
+     * @param  bool  $value
      * @return $this
      */
     public function onlyAscii($value)
@@ -136,7 +136,7 @@ final class OptionsBuilder
     /**
      * Sets if whitespaces are allowed.
      *
-     * @param bool|array $value
+     * @param  bool|array  $value
      * @return $this
      */
     public function whitespaces($value)
@@ -160,8 +160,6 @@ final class OptionsBuilder
 
     /**
      * Gets options for generator
-     *
-     * @return Options
      */
     public function getOptions(): Options
     {

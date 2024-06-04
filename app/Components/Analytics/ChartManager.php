@@ -14,8 +14,6 @@ class ChartManager
 
     /**
      * Constructs Chart instance
-     *
-     * @param Application $app
      */
     public function __construct(Application $app)
     {
@@ -38,8 +36,7 @@ class ChartManager
     /**
      * Adds factory for chart
      *
-     * @param string $id
-     * @param callable|class-string $factory Callback or name of invokable class
+     * @param  callable|class-string  $factory  Callback or name of invokable class
      * @return $this
      */
     public function add(string $id, $factory)
@@ -52,7 +49,6 @@ class ChartManager
     /**
      * Creates factory to create chart.
      *
-     * @param string $id
      * @return callable
      */
     public function createFactory(string $id)
@@ -73,7 +69,6 @@ class ChartManager
     /**
      * Creates the chart.
      *
-     * @param string $id
      * @return Charts\Chart
      */
     public function create(string $id)

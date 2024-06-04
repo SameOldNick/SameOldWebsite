@@ -14,7 +14,7 @@ class UrlResolver implements Resolver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function resolve()
     {

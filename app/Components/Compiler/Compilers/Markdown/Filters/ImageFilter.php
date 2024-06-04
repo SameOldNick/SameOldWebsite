@@ -2,8 +2,8 @@
 
 namespace App\Components\Compiler\Compilers\Markdown\Filters;
 
-use Illuminate\Support\Arr;
 use DOMDocument;
+use Illuminate\Support\Arr;
 
 class ImageFilter implements DomFilter
 {
@@ -21,7 +21,7 @@ class ImageFilter implements DomFilter
          */
         $nodes = [
             ...iterator_to_array($dom->getElementsByTagName('img'), false),
-            ...iterator_to_array($dom->getElementsByTagName('picture'), false)
+            ...iterator_to_array($dom->getElementsByTagName('picture'), false),
         ];
 
         foreach ($nodes as $node) {

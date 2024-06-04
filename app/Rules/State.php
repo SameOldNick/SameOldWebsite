@@ -9,7 +9,7 @@ use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class State implements Rule, DataAwareRule
+class State implements DataAwareRule, Rule
 {
     use DataAware;
 
@@ -23,7 +23,7 @@ class State implements Rule, DataAwareRule
     /**
      * Create a new rule instance.
      *
-     * @param string    $countryKey Key that contains 3 letter country code (can be dot notation).
+     * @param  string  $countryKey  Key that contains 3 letter country code (can be dot notation).
      * @return void
      */
     public function __construct($countryKey)

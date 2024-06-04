@@ -14,7 +14,7 @@ class ActionResolver implements Resolver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function resolve()
     {

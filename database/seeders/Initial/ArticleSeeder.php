@@ -12,7 +12,7 @@ class ArticleSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(User $user = null): void
+    public function run(?User $user = null): void
     {
         $article = Article::createWithPost(function (Article $article) {
             $article->fill([

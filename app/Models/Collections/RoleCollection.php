@@ -15,14 +15,15 @@ class RoleCollection extends Collection
      *
      * @return Collection<int, string>
      */
-    public function names() {
+    public function names()
+    {
         return $this->map(fn (Role $role) => $role->role)->unique();
     }
 
     /**
      * Checks if has all specified roles
      *
-     * @param list $roles Array of role names
+     * @param  list  $roles  Array of role names
      * @return bool
      */
     public function containsAll(array $roles)
@@ -45,7 +46,7 @@ class RoleCollection extends Collection
     /**
      * Checks if has any specified roles.
      *
-     * @param list $roles Array of role names to check.
+     * @param  list  $roles  Array of role names to check.
      * @return bool True if has any specified roles, false otherwise.
      */
     public function containsAny(array $roles): bool

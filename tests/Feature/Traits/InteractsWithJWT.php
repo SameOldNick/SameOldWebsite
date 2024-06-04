@@ -10,7 +10,7 @@ trait InteractsWithJWT
     /**
      * Includes JWT in HTTP requests
      *
-     * @param string|JWT $token
+     * @param  string|JWT  $token
      * @return static
      */
     public function withJwt($token)
@@ -21,7 +21,6 @@ trait InteractsWithJWT
     /**
      * Set the currently logged in user for the application.
      *
-     * @param  Authenticatable  $user
      * @param  string|null  $driver
      * @return $this
      */

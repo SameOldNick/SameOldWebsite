@@ -12,15 +12,13 @@ use Tests\TestCase;
 
 class ArticlesAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests user is authorized to get articles.
-     *
-     * @return void
      */
     public function testCanGetArticles(): void
     {
@@ -31,8 +29,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get articles.
-     *
-     * @return void
      */
     public function testCannotGetArticles(): void
     {
@@ -43,8 +39,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to get article.
-     *
-     * @return void
      */
     public function testCanGetArticle(): void
     {
@@ -57,8 +51,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get article.
-     *
-     * @return void
      */
     public function testCannotGetArticle(): void
     {
@@ -71,8 +63,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to create articles.
-     *
-     * @return void
      */
     public function testCanCreateArticle(): void
     {
@@ -91,8 +81,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to create articles.
-     *
-     * @return void
      */
     public function testCannotCreateArticle(): void
     {
@@ -106,8 +94,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to update articles.
-     *
-     * @return void
      */
     public function testCanUpdateArticle(): void
     {
@@ -123,8 +109,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to update articles.
-     *
-     * @return void
      */
     public function testCannotUpdateArticle(): void
     {
@@ -139,8 +123,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to delete articles.
-     *
-     * @return void
      */
     public function testCanDeleteArticle(): void
     {
@@ -153,8 +135,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to delete articles.
-     *
-     * @return void
      */
     public function testCannotDeleteArticle(): void
     {
@@ -167,8 +147,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is authorized to restore articles.
-     *
-     * @return void
      */
     public function testCanRestoreArticle(): void
     {
@@ -181,8 +159,6 @@ class ArticlesAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to restore articles.
-     *
-     * @return void
      */
     public function testCannotRestoreArticle(): void
     {

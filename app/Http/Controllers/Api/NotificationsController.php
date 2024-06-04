@@ -12,7 +12,6 @@ class NotificationsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request  $request
      * @return \Illuminate\Support\Collection
      */
     public function index(Request $request)
@@ -23,7 +22,6 @@ class NotificationsController extends Controller
     /**
      * Gets the read notifications.
      *
-     * @param Request $request
      * @return \Illuminate\Support\Collection
      */
     public function read(Request $request)
@@ -34,7 +32,6 @@ class NotificationsController extends Controller
     /**
      * Gets the unread notifications.
      *
-     * @param Request $request
      * @return \Illuminate\Support\Collection
      */
     public function unread(Request $request)
@@ -45,8 +42,6 @@ class NotificationsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
-     * @param Notification $notification
      * @return Notification
      */
     public function show(Request $request, Notification $notification)
@@ -62,8 +57,6 @@ class NotificationsController extends Controller
     /**
      * Marks notification as read.
      *
-     * @param Request $request
-     * @param Notification $notification
      * @return Notification
      */
     public function markRead(Request $request, Notification $notification)
@@ -78,8 +71,6 @@ class NotificationsController extends Controller
     /**
      * Marks notification as unread.
      *
-     * @param Request $request
-     * @param Notification $notification
      * @return Notification
      */
     public function markUnread(Request $request, Notification $notification)
@@ -94,8 +85,6 @@ class NotificationsController extends Controller
     /**
      * Destroys notification.
      *
-     * @param Request $request
-     * @param Notification $notification
      * @return Notification
      */
     public function destroy(Request $request, Notification $notification)

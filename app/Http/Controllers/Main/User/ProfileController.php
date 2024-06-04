@@ -27,7 +27,6 @@ class ProfileController extends Controller
     /**
      * Updates the users profile information
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
     public function update(Request $request)

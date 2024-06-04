@@ -13,15 +13,13 @@ use Tests\TestCase;
 
 class ArticleTagsAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests user is authorized to get article tags.
-     *
-     * @return void
      */
     public function testCanGetArticleTags(): void
     {
@@ -34,8 +32,6 @@ class ArticleTagsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get article tags.
-     *
-     * @return void
      */
     public function testCannotGetArticleTags(): void
     {
@@ -48,8 +44,6 @@ class ArticleTagsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to attach article tag.
-     *
-     * @return void
      */
     public function testCanAttachArticleTag(): void
     {
@@ -64,8 +58,6 @@ class ArticleTagsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to attach article tag.
-     *
-     * @return void
      */
     public function testCannotAttachArticleTag(): void
     {
@@ -80,8 +72,6 @@ class ArticleTagsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to detach article tag.
-     *
-     * @return void
      */
     public function testCanDetachArticleTag(): void
     {
@@ -99,8 +89,6 @@ class ArticleTagsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to detach article tag.
-     *
-     * @return void
      */
     public function testCannotDetachArticleTag(): void
     {
@@ -118,8 +106,6 @@ class ArticleTagsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to sync article tags.
-     *
-     * @return void
      */
     public function testCanSyncArticleTags(): void
     {
@@ -134,8 +120,6 @@ class ArticleTagsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to sync article tags.
-     *
-     * @return void
      */
     public function testCannotSyncArticleTags(): void
     {

@@ -11,10 +11,10 @@ use Tests\TestCase;
 
 class ContactMessagesControllerTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests contact message name is updated.

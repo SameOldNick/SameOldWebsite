@@ -12,7 +12,7 @@ class PatternMatcher implements Matcher
     /**
      * Initializes PatternMatcher
      *
-     * @param string $pattern Pattern to pass to Request::is method
+     * @param  string  $pattern  Pattern to pass to Request::is method
      */
     public function __construct($pattern)
     {
@@ -20,7 +20,7 @@ class PatternMatcher implements Matcher
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function matches(Request $request)
     {

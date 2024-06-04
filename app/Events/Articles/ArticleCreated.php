@@ -11,9 +11,9 @@ use Illuminate\Queue\SerializesModels;
 class ArticleCreated
 {
     use Dispatchable;
+    use HasUser;
     use InteractsWithSockets;
     use SerializesModels;
-    use HasUser;
 
     /**
      * Create a new event instance.

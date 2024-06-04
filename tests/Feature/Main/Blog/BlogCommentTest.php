@@ -62,7 +62,7 @@ class BlogCommentTest extends TestCase
         $text = $this->faker()->paragraphs(3, true);
 
         $response = $this->actingAs($user)
-                        ->post(route('blog.comment', ['article' => $article]), ['comment' => $text]);
+            ->post(route('blog.comment', ['article' => $article]), ['comment' => $text]);
 
         // Expectation: A new comment is created, and CommentCreated event is dispatched.
         $response->assertRedirectToRoute('blog.single', ['article' => $article]);
@@ -92,7 +92,7 @@ class BlogCommentTest extends TestCase
         $text = $this->faker()->paragraphs(3, true);
 
         $response = $this->actingAs($user)
-                        ->post(route('blog.comment', ['article' => $article]), ['comment' => $text]);
+            ->post(route('blog.comment', ['article' => $article]), ['comment' => $text]);
 
         // Expectation: A new comment is created, and CommentCreated and CommentApproved events are dispatched.
         $response->assertRedirectToRoute('blog.single', ['article' => $article]);
@@ -154,7 +154,7 @@ class BlogCommentTest extends TestCase
         $text = $this->faker()->paragraphs(3, true);
 
         $response = $this->actingAs($user)
-                        ->post(route('blog.comment.reply-to', ['article' => $article, 'parent' => $parent]), ['comment' => $text]);
+            ->post(route('blog.comment.reply-to', ['article' => $article, 'parent' => $parent]), ['comment' => $text]);
 
         // Expectation: A new reply is created, and CommentCreated event is dispatched
         $response->assertRedirectToRoute('blog.single', ['article' => $article]);
@@ -189,11 +189,11 @@ class BlogCommentTest extends TestCase
         $text = $this->faker()->paragraphs(3, true);
 
         $response = $this
-                        ->actingAs($user)
-                        ->post(
-                            route('blog.comment.reply-to', ['article' => $article, 'parent' => $parent]),
-                            ['comment' => $text]
-                        );
+            ->actingAs($user)
+            ->post(
+                route('blog.comment.reply-to', ['article' => $article, 'parent' => $parent]),
+                ['comment' => $text]
+            );
 
         // Expectation: A new reply is created, CommentCreated and CommentApproved events are dispatched
         $response->assertRedirectToRoute('blog.single', ['article' => $article]);
@@ -226,7 +226,7 @@ class BlogCommentTest extends TestCase
         $text = $this->faker()->paragraphs(3, true);
 
         $response = $this->actingAs($user)
-                        ->post(route('blog.comment', ['article' => $article]), ['comment' => $text]);
+            ->post(route('blog.comment', ['article' => $article]), ['comment' => $text]);
 
         // Expectation: Article author is notified of comment.
         Notification::assertSentTo(
@@ -265,11 +265,11 @@ class BlogCommentTest extends TestCase
         $text = $this->faker()->paragraphs(3, true);
 
         $response = $this
-                        ->actingAs($user3)
-                        ->post(
-                            route('blog.comment.reply-to', ['article' => $article, 'parent' => $second]),
-                            ['comment' => $text]
-                        );
+            ->actingAs($user3)
+            ->post(
+                route('blog.comment.reply-to', ['article' => $article, 'parent' => $second]),
+                ['comment' => $text]
+            );
 
         // Expectation: All users in thread (except commenter poster) are notified of comment.
         Notification::assertSentToTimes($user1, CommentPosted::class, 1);

@@ -12,15 +12,13 @@ use Tests\TestCase;
 
 class UsersAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Test accessing users when authorized.
-     *
-     * @return void
      */
     public function testCanGetUsers(): void
     {
@@ -33,8 +31,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test accessing users when unauthorized.
-     *
-     * @return void
      */
     public function testCannotGetUsers(): void
     {
@@ -47,8 +43,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test accessing a specific user when authorized.
-     *
-     * @return void
      */
     public function testCanGetUser(): void
     {
@@ -61,8 +55,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test accessing a specific user when unauthorized.
-     *
-     * @return void
      */
     public function testCannotGetUser(): void
     {
@@ -75,8 +67,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test creating a new user when authorized.
-     *
-     * @return void
      */
     public function testCanCreateUser(): void
     {
@@ -96,8 +86,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test creating a new user when unauthorized.
-     *
-     * @return void
      */
     public function testCannotCreateUser(): void
     {
@@ -117,8 +105,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test updating an existing user when authorized.
-     *
-     * @return void
      */
     public function testCanUpdateUser(): void
     {
@@ -136,8 +122,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test updating an existing user when unauthorized.
-     *
-     * @return void
      */
     public function testCannotUpdateUser(): void
     {
@@ -155,8 +139,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test deleting a user when authorized.
-     *
-     * @return void
      */
     public function testCanDeleteUser(): void
     {
@@ -170,8 +152,6 @@ class UsersAccessTest extends TestCase
 
     /**
      * Test deleting a user when unauthorized.
-     *
-     * @return void
      */
     public function testCannotDeleteUser(): void
     {

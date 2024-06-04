@@ -15,8 +15,6 @@ class SetupConfiguration implements Arrayable
 
     /**
      * Gets the account name.
-     *
-     * @return string
      */
     public function getAccountName(): string
     {
@@ -25,8 +23,6 @@ class SetupConfiguration implements Arrayable
 
     /**
      * Gets the OTP URL.
-     *
-     * @return string
      */
     public function getUrl(): string
     {
@@ -35,8 +31,6 @@ class SetupConfiguration implements Arrayable
 
     /**
      * Gets the secret.
-     *
-     * @return string
      */
     public function getSecret(): string
     {
@@ -45,8 +39,6 @@ class SetupConfiguration implements Arrayable
 
     /**
      * Gets all the configuration settings.
-     *
-     * @return array
      */
     public function getConfiguration(): array
     {

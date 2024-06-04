@@ -16,8 +16,6 @@ class Options
 
     /**
      * Initializes placeholder options
-     *
-     * @param Container $container
      */
     public function __construct(
         protected Container $container
@@ -30,7 +28,6 @@ class Options
     /**
      * Uses builder callback
      *
-     * @param callable $builder
      * @return $this
      */
     public function useBuilder(callable $builder)
@@ -43,7 +40,7 @@ class Options
     /**
      * Uses default builders
      *
-     * @param bool $enabled If true, uses default builders. (default: true)
+     * @param  bool  $enabled  If true, uses default builders. (default: true)
      * @return $this
      */
     public function useDefaultBuilders(bool $enabled = true)
@@ -56,7 +53,6 @@ class Options
     /**
      * Checks if custom placeholder exists
      *
-     * @param string $placeholder
      * @return bool
      */
     public function has(string $placeholder)
@@ -67,8 +63,7 @@ class Options
     /**
      * Sets custom placeholder
      *
-     * @param string $placeholder
-     * @param string|callable $value
+     * @param  string|callable  $value
      * @return $this
      */
     public function set(string $placeholder, $value)
@@ -83,7 +78,6 @@ class Options
     /**
      * Removes placeholder
      *
-     * @param string $placeholder
      * @return $this
      */
     public function remove(string $placeholder)
@@ -124,7 +118,7 @@ class Options
     /**
      * Checks if placeholder is set.
      *
-     * @param string $name
+     * @param  string  $name
      * @return bool
      */
     public function __isset($name)
@@ -135,8 +129,8 @@ class Options
     /**
      * Sets placeholder
      *
-     * @param string $name Placeholder (this is transformed to kebab-case)
-     * @param string|callable $value
+     * @param  string  $name  Placeholder (this is transformed to kebab-case)
+     * @param  string|callable  $value
      */
     public function __set($name, $value)
     {
@@ -148,8 +142,7 @@ class Options
     /**
      * Sets placeholder
      *
-     * @param string $method Placeholder (this is transformed to kebab-case)
-     * @param array $params
+     * @param  string  $method  Placeholder (this is transformed to kebab-case)
      * @return $this
      */
     public function __call(string $method, array $params)

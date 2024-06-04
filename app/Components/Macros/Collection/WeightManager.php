@@ -6,15 +6,13 @@ use Illuminate\Support\Collection;
 
 /**
  * Manages weights for collection items
+ *
  * @immutable
  */
 final class WeightManager
 {
     /**
      * Initializes the WeightManager
-     *
-     * @param Collection $collection
-     * @param array $weights
      */
     public function __construct(
         protected readonly Collection $collection,
@@ -26,8 +24,8 @@ final class WeightManager
     /**
      * Maps results to weight
      *
-     * @param callable $callback Callback that recieves item and key then returns weight for item.
-     * @param bool $skipNoWeights If true, items with a weight of zero or negative are skipped. (default: true)
+     * @param  callable  $callback  Callback that recieves item and key then returns weight for item.
+     * @param  bool  $skipNoWeights  If true, items with a weight of zero or negative are skipped. (default: true)
      * @return static
      */
     public function mapToWeight(callable $callback, bool $skipNoWeights = true)
@@ -49,7 +47,7 @@ final class WeightManager
             }
         }
 
-        return new static(
+        return new self(
             collect($items)->reject(fn ($item, $key) => ! isset($weights[$key])),
             $weights
         );
@@ -57,7 +55,8 @@ final class WeightManager
 
     /**
      * Gets items sorted by weights
-     * @param string $order The order to sort (either 'asc' for ascending or 'desc' for descending). (default: 'asc')
+     *
+     * @param  string  $order  The order to sort (either 'asc' for ascending or 'desc' for descending). (default: 'asc')
      */
     public function sortByWeights(string $order = 'asc')
     {
@@ -83,7 +82,8 @@ final class WeightManager
      *
      * @return Collection
      */
-    public function getCollection() {
+    public function getCollection()
+    {
         return collect($this->collection);
     }
 }

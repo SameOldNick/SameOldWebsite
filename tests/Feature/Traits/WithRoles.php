@@ -11,8 +11,6 @@ trait WithRoles
 
     /**
      * Gets all possible roles.
-     *
-     * @return array
      */
     protected function possibleRoles(): array
     {
@@ -21,9 +19,6 @@ trait WithRoles
 
     /**
      * Attaches user with roles for making HTTP requests.
-     *
-     * @param array $roles
-     * @return static
      */
     protected function withRoles(array $roles): static
     {

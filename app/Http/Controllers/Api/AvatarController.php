@@ -18,7 +18,6 @@ class AvatarController extends Controller
     /**
      * Uploads a new avatar for the user.
      *
-     * @param Request $request
      * @return Response
      */
     public function uploadAvatar(Request $request)
@@ -48,7 +47,6 @@ class AvatarController extends Controller
     /**
      * Deletes the authenticated users avatar.
      *
-     * @param Request $request
      * @return mixed
      */
     public function deleteAvatar(Request $request)

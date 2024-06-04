@@ -16,9 +16,9 @@ class MenuComponent extends Component
     /**
      * Create a new component instance.
      *
-     * @param Container $app Application container
-     * @param string $name Name of menu to render
-     * @param string $renderer Renderer to use. If null, default renderer (specified in manager) is used. (default: null)
+     * @param  Container  $app  Application container
+     * @param  string  $name  Name of menu to render
+     * @param  string  $renderer  Renderer to use. If null, default renderer (specified in manager) is used. (default: null)
      */
     public function __construct(Container $app, $name, $renderer = null)
     {

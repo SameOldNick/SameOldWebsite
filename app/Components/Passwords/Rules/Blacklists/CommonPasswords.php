@@ -229,7 +229,7 @@ final class CommonPasswords implements Blacklist
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isBlacklisted(#[\SensitiveParameter] string $value): bool
     {
@@ -238,9 +238,6 @@ final class CommonPasswords implements Blacklist
 
     /**
      * Generates regex pattern to run password through.
-     *
-     * @param array $commonPasswords
-     * @return string
      */
     protected function generateRegexPattern(array $commonPasswords): string
     {
@@ -258,11 +255,9 @@ final class CommonPasswords implements Blacklist
 
     /**
      * Gets black list.
-     *
-     * @return array
      */
     public function getBlacklist(): array
     {
-        return static::$commonPasswords;
+        return self::$commonPasswords;
     }
 }

@@ -26,7 +26,7 @@ trait BuildsFromContainer
     /**
      * Creates the instance.
      *
-     * @param mixed ...$args Parameters to pass to constructor
+     * @param  mixed  ...$args  Parameters to pass to constructor
      * @return static
      */
     public static function create(...$args)

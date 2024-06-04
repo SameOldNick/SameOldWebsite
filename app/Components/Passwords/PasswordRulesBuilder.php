@@ -36,9 +36,6 @@ final class PasswordRulesBuilder
 
     /**
      * Adds rule
-     *
-     * @param Rule $rule
-     * @return static
      */
     public function addRule(Rule $rule): static
     {
@@ -49,9 +46,6 @@ final class PasswordRulesBuilder
 
     /**
      * Populates rules from configuration array.
-     *
-     * @param array $config
-     * @return static
      */
     public function fromConfig(array $config): static
     {
@@ -74,8 +68,6 @@ final class PasswordRulesBuilder
 
     /**
      * Gets the password rules.
-     *
-     * @return PasswordRules
      */
     public function getRules(): PasswordRules
     {
@@ -85,8 +77,6 @@ final class PasswordRulesBuilder
     /**
      * Adds rule mapping
      *
-     * @param string $key
-     * @param string $class
      * @return $this
      */
     public function addRuleMapping(string $key, string $class): static
@@ -98,8 +88,6 @@ final class PasswordRulesBuilder
 
     /**
      * Gets predefined rule mappings.
-     *
-     * @return array
      */
     protected function getPredefinedRuleMappings(): array
     {
@@ -122,8 +110,7 @@ final class PasswordRulesBuilder
     /**
      * Checks if key is mapped to Rule class.
      *
-     * @param string $key
-     * @return bool
+     * @param  string  $key
      */
     protected function isMappedRule($key): bool
     {
@@ -133,9 +120,7 @@ final class PasswordRulesBuilder
     /**
      * Gets mapped rule
      *
-     * @param string $key
-     * @param array $value
-     * @return Rule
+     * @param  string  $key
      */
     protected function getMappedRule($key, array $value): Rule
     {
@@ -147,8 +132,8 @@ final class PasswordRulesBuilder
     /**
      * Adds rule based on method name and parameters.
      *
-     * @param string $method
-     * @param array $parameters
+     * @param  string  $method
+     * @param  array  $parameters
      * @return $this
      */
     public function __call($method, $parameters)

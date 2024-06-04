@@ -16,8 +16,6 @@ class BlogCommentController extends Controller
     /**
      * Shows the comment (if user has access)
      *
-     * @param Article $article
-     * @param Comment $comment
      * @return \Illuminate\Http\RedirectResponse
      */
     public function show(Article $article, Comment $comment)
@@ -30,8 +28,6 @@ class BlogCommentController extends Controller
     /**
      * Previews a comment for a blog article
      *
-     * @param Article $article
-     * @param Comment $comment
      * @return \Illuminate\Http\RedirectResponse
      */
     public function preview(Article $article, Comment $comment)
@@ -42,8 +38,6 @@ class BlogCommentController extends Controller
     /**
      * Processes submitted comment
      *
-     * @param PostCommentRequest $request
-     * @param Article $article
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function comment(SweetAlerts $swal, PostCommentRequest $request, Article $article)
@@ -77,9 +71,6 @@ class BlogCommentController extends Controller
     /**
      * Processes submitted reply comment
      *
-     * @param PostCommentRequest $request
-     * @param Article $article
-     * @param Comment $parent
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function replyTo(SweetAlerts $swal, PostCommentRequest $request, Article $article, Comment $parent)

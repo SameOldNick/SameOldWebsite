@@ -9,8 +9,7 @@ interface Blacklist
     /**
      * Checks if value is blacklisted.
      *
-     * @param string $value
-     * @return bool
+     * @param  string  $value
      */
     public function isBlacklisted(#[SensitiveParameter] string $value): bool;
 }

@@ -12,7 +12,7 @@ class AllowableMarkdownConverter extends MarkdownConverter
     /**
      * Create a new Markdown converter pre-configured for GFM
      *
-     * @param array<string, mixed> $config
+     * @param  array<string, mixed>  $config
      */
     public function __construct(array $config = [])
     {

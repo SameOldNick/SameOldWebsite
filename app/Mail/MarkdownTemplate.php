@@ -8,8 +8,8 @@ use Illuminate\Mail\Mailables\Content;
 
 class MarkdownTemplate extends Mailable
 {
-    use Queueable;
     use Concerns\SerializesMail;
+    use Queueable;
 
     /**
      * Create a new message instance.

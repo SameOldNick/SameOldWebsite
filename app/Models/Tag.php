@@ -79,8 +79,6 @@ class Tag extends Model
 
     /**
      * Interact with the slug.
-     *
-     * @return Attribute
      */
     protected function slug(): Attribute
     {
@@ -93,7 +91,6 @@ class Tag extends Model
     /**
      * Creates link to tag.
      *
-     * @param bool $absolute
      * @return string
      */
     public function createLink(bool $absolute = true)

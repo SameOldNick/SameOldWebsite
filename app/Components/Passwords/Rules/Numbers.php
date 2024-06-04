@@ -7,7 +7,7 @@ use Closure;
 class Numbers extends ValidationRule
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail)
     {

@@ -11,7 +11,7 @@ class OAuthRouteMethods
             $this->group([
                 'namespace' => class_exists($this->prependGroupNamespace('Auth\OAuthController')) ? null : 'App\Http\Controllers',
                 'prefix' => 'oauth',
-            ], function () use ($options) {
+            ], function () {
                 /** @var \Illuminate\Routing\Router $this */
                 /** @var OAuth $oauth */
                 $oauth = $this->container->make(OAuth::class);

@@ -50,10 +50,10 @@ class MenuServiceProvider extends ServiceProvider
         Menus::add('blog.sidebar.archives', function (Menu $menu) {
             $yearMonths = Article::published()
                 ->get()
-                    ->groupedByDateTime('Y-m')
-                    ->sortKeysDesc()
-                    ->keys()
-                        ->map(fn ($value) => Carbon::parse($value));
+                ->groupedByDateTime('Y-m')
+                ->sortKeysDesc()
+                ->keys()
+                ->map(fn ($value) => Carbon::parse($value));
 
             foreach ($yearMonths as $yearMonth) {
                 $menu->route(['blog.archive', ['year' => $yearMonth->year, 'month' => $yearMonth->month]], $yearMonth->format('F Y'));
@@ -72,7 +72,7 @@ class MenuServiceProvider extends ServiceProvider
     /**
      * Applies icon to link item
      *
-     * @param string $icon Icon class
+     * @param  string  $icon  Icon class
      * @return callable Function that sets icon prop when called.
      */
     private function applyIcon($icon)

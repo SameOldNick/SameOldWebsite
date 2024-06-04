@@ -18,7 +18,7 @@ class RouteNameMatcher implements Matcher
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function matches(Request $request)
     {

@@ -31,8 +31,6 @@ class SendContactedMessages
 
     /**
      * Gets the roles to send message to.
-     *
-     * @return array
      */
     protected function getRoles(): array
     {

@@ -24,7 +24,7 @@ class UserHasCredentialsException extends OAuthException
         return
             redirect()
                 ->route('login')
-                    ->with('info', __('A user with that e-mail address already exists. Please sign-in with a password to continue.'))
-                    ->withInput(['email' => $this->user->email]);
+                ->with('info', __('A user with that e-mail address already exists. Please sign-in with a password to continue.'))
+                ->withInput(['email' => $this->user->email]);
     }
 }

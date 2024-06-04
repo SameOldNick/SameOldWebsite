@@ -23,7 +23,6 @@ class MFASetupController extends Controller
     /**
      * Confirms the user entered the current password.
      *
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function confirmPassword(Request $request)
@@ -41,7 +40,6 @@ class MFASetupController extends Controller
     /**
      * Displays the steps to install the MFA secret and a form to confirm the code.
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
     public function showInstallationInstructions(Request $request)
@@ -54,7 +52,6 @@ class MFASetupController extends Controller
     /**
      * Confirms the user entered the correct MFA code.
      *
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function confirmMFA(Request $request)
@@ -70,7 +67,6 @@ class MFASetupController extends Controller
     /**
      * Displays the backup codes to the user.
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
     public function showBackupCodes(Request $request)
@@ -92,7 +88,6 @@ class MFASetupController extends Controller
     /**
      * Acknowledges the backup codes were stored.
      *
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function acknowledgeBackupCodes(Request $request)
@@ -109,7 +104,6 @@ class MFASetupController extends Controller
     /**
      * Displays page confirming MFA is installed.
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
     public function completeSetup(Request $request)

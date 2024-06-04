@@ -13,7 +13,7 @@ class MaxLength implements Rule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isEnabled(): bool
     {
@@ -21,7 +21,7 @@ class MaxLength implements Rule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function configure(Password $password): Password
     {

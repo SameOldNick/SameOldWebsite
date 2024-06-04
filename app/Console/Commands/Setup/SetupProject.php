@@ -72,7 +72,6 @@ class SetupProject extends Command
     /**
      * Prompts user has updated .env file.
      *
-     * @param bool $skipPrompt
      * @return void
      */
     private function confirmEnvSetup(bool $skipPrompt)

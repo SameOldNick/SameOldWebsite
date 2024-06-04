@@ -49,7 +49,6 @@ class BlogController extends Controller
     /**
      * Displays articles matching search query.
      *
-     * @param BlogSearchRequest $request
      * @return \Illuminate\Contracts\View\View
      */
     public function search(BlogSearchRequest $request)

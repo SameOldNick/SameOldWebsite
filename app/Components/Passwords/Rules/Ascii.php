@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 class Ascii extends ValidationRule
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail)
     {

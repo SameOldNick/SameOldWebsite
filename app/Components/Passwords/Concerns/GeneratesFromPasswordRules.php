@@ -11,7 +11,6 @@ trait GeneratesFromPasswordRules
     /**
      * Generates options from password rules.
      *
-     * @param PasswordRules $passwordRules
      * @return $this
      */
     public function generateFromRules(PasswordRules $passwordRules)
@@ -53,7 +52,7 @@ trait GeneratesFromPasswordRules
     /**
      * Gets rule mapping
      *
-     * @param class-string|Rule $passwordRule
+     * @param  class-string|Rule  $passwordRule
      * @return callable|null
      */
     protected function getRuleMapping($passwordRule)
@@ -66,7 +65,6 @@ trait GeneratesFromPasswordRules
     /**
      * Check if rule can be mapped.
      *
-     * @param Rule $passwordRule
      * @return bool
      */
     protected function hasMappedOption(Rule $passwordRule)
@@ -77,7 +75,6 @@ trait GeneratesFromPasswordRules
     /**
      * Maps rule to generator option
      *
-     * @param Rule $passwordRule
      * @return void
      */
     protected function mapToOption(Rule $passwordRule)
@@ -88,7 +85,6 @@ trait GeneratesFromPasswordRules
     /**
      * Checks if rule cna configure generator options
      *
-     * @param Rule $rule
      * @return bool
      */
     protected function configuresGenerator(Rule $rule)
@@ -99,7 +95,6 @@ trait GeneratesFromPasswordRules
     /**
      * Configures generator options using rule
      *
-     * @param Rule $rule
      * @return void
      */
     protected function configureGenerator(Rule $rule)
@@ -109,9 +104,6 @@ trait GeneratesFromPasswordRules
 
     /**
      * Creates builder from password rules
-     *
-     * @param PasswordRules $passwordRules
-     * @return static
      */
     public static function createFrom(PasswordRules $passwordRules): static
     {

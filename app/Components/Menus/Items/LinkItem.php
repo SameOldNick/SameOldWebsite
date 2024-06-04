@@ -49,7 +49,7 @@ class LinkItem extends Item
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isActive(Request $request)
     {

@@ -4,6 +4,7 @@ namespace App\Components\Encryption\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
+
 use function Safe\file_put_contents;
 
 class GenerateKeyCommand extends Command

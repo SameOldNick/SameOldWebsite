@@ -13,9 +13,9 @@ trait ExecutesCommandsExternally
     /**
      * Executes a command unsafely (no sanitization on the command is performed)
      *
-     * @param string $commandLine
-     * @param \Symfony\Component\Console\Output\OutputInterface[] $outputs Any additional interfaces to send output to. (default: empty array)
-     * @param array $additional Additional arguments to use when creating Process. (default: empty array)
+     * @param  string  $commandLine
+     * @param  \Symfony\Component\Console\Output\OutputInterface[]  $outputs  Any additional interfaces to send output to. (default: empty array)
+     * @param  array  $additional  Additional arguments to use when creating Process. (default: empty array)
      * @return string Returns command output
      */
     protected function executeCommand($commandLine, array $outputs = [], array $additional = [])
@@ -42,9 +42,8 @@ trait ExecutesCommandsExternally
     /**
      * Runs process
      *
-     * @param Process $process
-     * @param OutputInterface $stdout Stream for output
-     * @param OutputInterface|null $stderr Error stream (output stream is used if null)
+     * @param  OutputInterface  $stdout  Stream for output
+     * @param  OutputInterface|null  $stderr  Error stream (output stream is used if null)
      * @return Process
      */
     protected function runProcess(Process $process, OutputInterface $stdout, ?OutputInterface $stderr = null)
@@ -56,7 +55,7 @@ trait ExecutesCommandsExternally
 
         // Run process and send output to appropriate interfaces
         $process->run(function ($type, $buffer) use ($stderr, $stdout): void {
-            if (Process::ERR === $type) {
+            if ($type === Process::ERR) {
                 $stderr->write($buffer);
             } else {
                 $stdout->write($buffer);
@@ -69,8 +68,8 @@ trait ExecutesCommandsExternally
     /**
      * Safely builds the command line
      *
-     * @param string $command Command
-     * @param string ...$args Arguments
+     * @param  string  $command  Command
+     * @param  string  ...$args  Arguments
      * @return string Escaped command line
      */
     protected function buildCommandLine($command, ...$args)

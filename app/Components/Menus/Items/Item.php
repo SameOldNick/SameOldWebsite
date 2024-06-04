@@ -11,8 +11,6 @@ abstract class Item
 
     /**
      * Initializes item
-     *
-     * @param Menu $parent
      */
     public function __construct(Menu $parent)
     {
@@ -32,7 +30,6 @@ abstract class Item
     /**
      * Checks if menu item is active
      *
-     * @param Request $request
      * @return bool
      */
     public function isActive(Request $request)

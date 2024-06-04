@@ -19,7 +19,6 @@ class CommentPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)
@@ -30,8 +29,6 @@ class CommentPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  User|null  $user
-     * @param Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(?User $user, Comment $comment)
@@ -62,7 +59,6 @@ class CommentPolicy
     /**
      * Determine whether the user can comment on article.
      *
-     * @param User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(?User $user)
@@ -73,9 +69,7 @@ class CommentPolicy
     /**
      * Determine whether the user can reply to comment.
      *
-     * @param User  $user
      * @param  \App\Models\Article  $article
-     * @param Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function replyTo(?User $user, Comment $comment)
@@ -86,8 +80,6 @@ class CommentPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param User  $user
-     * @param Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(User $user, Comment $comment)
@@ -98,8 +90,6 @@ class CommentPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param User  $user
-     * @param Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, Comment $comment)
@@ -110,8 +100,6 @@ class CommentPolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param User  $user
-     * @param Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function restore(User $user, Comment $comment)
@@ -122,8 +110,6 @@ class CommentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param User  $user
-     * @param Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function forceDelete(User $user, Comment $comment)

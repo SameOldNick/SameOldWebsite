@@ -11,8 +11,8 @@ trait NotifiesRoles
     /**
      * Sends notification to users with roles.
      *
-     * @param array $roles The roles the users must have
-     * @param mixed $notification
+     * @param  array  $roles  The roles the users must have
+     * @param  mixed  $notification
      * @return User[] Users that were notified
      */
     public function notifyRoles($roles, $notification)

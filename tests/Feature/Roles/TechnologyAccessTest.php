@@ -11,15 +11,13 @@ use Tests\TestCase;
 
 class TechnologyAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Test accessing technologies when authorized.
-     *
-     * @return void
      */
     public function testCanGetTechnologies(): void
     {
@@ -30,8 +28,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test accessing technologies when unauthorized.
-     *
-     * @return void
      */
     public function testCannotGetTechnologies(): void
     {
@@ -42,8 +38,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test accessing a specific technology when authorized.
-     *
-     * @return void
      */
     public function testCanGetTechnology(): void
     {
@@ -56,8 +50,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test accessing a specific technology when unauthorized.
-     *
-     * @return void
      */
     public function testCannotGetTechnology(): void
     {
@@ -70,8 +62,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test creating a new technology when authorized.
-     *
-     * @return void
      */
     public function testCanCreateTechnology(): void
     {
@@ -85,8 +75,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test creating a new technology when unauthorized.
-     *
-     * @return void
      */
     public function testCannotCreateTechnology(): void
     {
@@ -100,8 +88,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test updating an existing technology when authorized.
-     *
-     * @return void
      */
     public function testCanUpdateTechnology(): void
     {
@@ -117,8 +103,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test updating an existing technology when unauthorized.
-     *
-     * @return void
      */
     public function testCannotUpdateTechnology(): void
     {
@@ -134,8 +118,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test deleting a technology when authorized.
-     *
-     * @return void
      */
     public function testCanDeleteTechnology(): void
     {
@@ -148,8 +130,6 @@ class TechnologyAccessTest extends TestCase
 
     /**
      * Test deleting a technology when unauthorized.
-     *
-     * @return void
      */
     public function testCannotDeleteTechnology(): void
     {

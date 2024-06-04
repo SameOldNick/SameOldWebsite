@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @param array $additional Any additional attributes for the user
+     * @param  array  $additional  Any additional attributes for the user
      * @return void
      */
     public function run(array $additional = [])

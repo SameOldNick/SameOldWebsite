@@ -22,7 +22,7 @@ abstract class LogActivity
     /**
      * Logs as recent activity
      *
-     * @param RecentActivity $recentActivity
+     * @param  RecentActivity  $recentActivity
      * @return $this
      */
     protected function log(Activity $recentActivity)

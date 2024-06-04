@@ -8,16 +8,11 @@ interface Rule
 {
     /**
      * Determines if rule is enabled.
-     *
-     * @return bool
      */
     public function isEnabled(): bool;
 
     /**
      * Attaches rule to Password instance
-     *
-     * @param Password $password
-     * @return Password
      */
     public function configure(Password $password): Password;
 }

@@ -12,15 +12,13 @@ use Tests\TestCase;
 
 class AvatarAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests user is authorized to upload avatar.
-     *
-     * @return void
      */
     public function testCanUploadAvatar(): void
     {
@@ -37,8 +35,6 @@ class AvatarAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to upload avatar.
-     *
-     * @return void
      */
     public function testCannotUploadAvatar(): void
     {
@@ -55,8 +51,6 @@ class AvatarAccessTest extends TestCase
 
     /**
      * Tests user is authorized to delete avatar.
-     *
-     * @return void
      */
     public function testCanDeleteAvatar(): void
     {
@@ -67,8 +61,6 @@ class AvatarAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to delete avatar.
-     *
-     * @return void
      */
     public function testCannotDeleteAvatar(): void
     {

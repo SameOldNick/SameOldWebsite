@@ -12,7 +12,6 @@ class FileController extends Controller
     /**
      * Responds with file contents
      *
-     * @param File $file
      * @return mixed
      */
     public function retrieve(Request $request, File $file)

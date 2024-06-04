@@ -34,7 +34,6 @@ class ArticleCollection extends Collection
     /**
      * Gets articles with any of tags
      *
-     * @param array $tags
      * @return static
      */
     public function withTags(array $tags)
@@ -47,8 +46,6 @@ class ArticleCollection extends Collection
     /**
      * Gets articles that contains any of the keywords
      *
-     * @param array $keywords
-     * @param bool $ignoreCase
      * @return static
      */
     public function withKeywords(array $keywords, bool $ignoreCase = true)
@@ -75,10 +72,10 @@ class ArticleCollection extends Collection
     /**
      * Count the occurrences of keywords in the given text and title
      *
-     * @param \Illuminate\Support\Stringable $content
-     * @param string $title
-     * @param array $keywords
-     * @param bool $ignoreCase
+     * @param  \Illuminate\Support\Stringable  $content
+     * @param  string  $title
+     * @param  array  $keywords
+     * @param  bool  $ignoreCase
      * @return int
      */
     protected function countKeywordsInText($content, $title, $keywords, $ignoreCase)
@@ -90,6 +87,7 @@ class ArticleCollection extends Collection
             } else {
                 $keywordCount += Str::substrCount($title, $keyword);
             }
+
             return $carry + $keywordCount;
         }, 0);
     }

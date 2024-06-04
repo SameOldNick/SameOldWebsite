@@ -22,7 +22,6 @@ class MultiFactorAuthenticate
     /**
      * Handle an incoming request.
      *
-     * @param Request  $request
      * @param  Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
@@ -42,7 +41,6 @@ class MultiFactorAuthenticate
     /**
      * Gets the authenticatable subject.
      *
-     * @param Request $request
      * @return ?MultiAuthenticatable
      */
     protected function getAuthenticatable(Request $request): ?MultiAuthenticatable
@@ -52,9 +50,6 @@ class MultiFactorAuthenticate
 
     /**
      * Checks if user is authenticated (not multi-factor authenticated)
-     *
-     * @param Request $request
-     * @return bool
      */
     protected function isAuthenticated(Request $request): bool
     {
@@ -64,7 +59,6 @@ class MultiFactorAuthenticate
     /**
      * Creates response for unauthenticated user.
      *
-     * @param Request $request
      * @return mixed
      */
     protected function unauthenticated(Request $request)
@@ -77,7 +71,6 @@ class MultiFactorAuthenticate
     /**
      * Where to redirect user for authentication.
      *
-     * @param Request $request
      * @return string
      */
     protected function redirectToAuthenticate(Request $request)
@@ -87,9 +80,6 @@ class MultiFactorAuthenticate
 
     /**
      * Checks if user is multi-factor authenticated.
-     *
-     * @param Request $request
-     * @return bool
      */
     protected function isMultiFactorAuthenticated(Request $request): bool
     {
@@ -105,7 +95,6 @@ class MultiFactorAuthenticate
     /**
      * Creates response for user not multi-factor authenticated.
      *
-     * @param Request $request
      * @return mixed
      */
     protected function notMultiFactorAuthenticated(Request $request)
@@ -116,7 +105,6 @@ class MultiFactorAuthenticate
     /**
      * Where to user for multi-factor authentication.
      *
-     * @param Request $request
      * @return string
      */
     protected function redirectToMFA(Request $request)

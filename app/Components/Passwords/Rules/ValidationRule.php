@@ -14,7 +14,7 @@ abstract class ValidationRule implements Rule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isEnabled(): bool
     {
@@ -24,19 +24,15 @@ abstract class ValidationRule implements Rule
     /**
      * Validates the value using the Laravel validator.
      *
-     * @abstract
-     * @param string $attribute Name of attribute
-     * @param mixed $value Value to validate
-     * @param Closure $fail Callback for when validation fails
+     * @param  string  $attribute  Name of attribute
+     * @param  mixed  $value  Value to validate
+     * @param  Closure  $fail  Callback for when validation fails
      * @return void
      */
     abstract public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail);
 
     /**
      * Adds validation rule to Password instance.
-     *
-     * @param Password $password
-     * @return Password
      */
     public function configure(Password $password): Password
     {

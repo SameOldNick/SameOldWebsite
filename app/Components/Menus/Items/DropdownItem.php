@@ -10,8 +10,8 @@ use Illuminate\Support\Traits\ForwardsCalls;
 
 class DropdownItem extends Item
 {
-    use HasMatcher;
     use ForwardsCalls;
+    use HasMatcher;
 
     protected $text;
 
@@ -41,7 +41,7 @@ class DropdownItem extends Item
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isActive(Request $request)
     {
@@ -53,8 +53,8 @@ class DropdownItem extends Item
     /**
      * Forwards method calls to Menu object
      *
-     * @param string $name
-     * @param array $arguments
+     * @param  string  $name
+     * @param  array  $arguments
      * @return $this This DropdownItem instance
      */
     public function __call($name, $arguments)

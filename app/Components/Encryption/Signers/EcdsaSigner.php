@@ -8,6 +8,7 @@ use EllipticCurve\PrivateKey;
 use EllipticCurve\Signature;
 use Exception;
 use Illuminate\Support\Arr;
+
 use function Safe\file_get_contents;
 
 class EcdsaSigner implements Signer

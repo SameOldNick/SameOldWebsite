@@ -23,7 +23,7 @@ class Blacklist extends ValidationRule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isEnabled(): bool
     {
@@ -31,7 +31,7 @@ class Blacklist extends ValidationRule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validate(string $attribute, #[SensitiveParameter] mixed $value, Closure $fail)
     {
@@ -45,8 +45,7 @@ class Blacklist extends ValidationRule
     /**
      * Gets password variants to check for in blacklists.
      *
-     * @param string $value
-     * @return array
+     * @param  string  $value
      */
     protected function getVariants(#[SensitiveParameter] string $value): array
     {
@@ -62,8 +61,7 @@ class Blacklist extends ValidationRule
     /**
      * Checks if blacklisted.
      *
-     * @param string $value
-     * @return bool
+     * @param  string  $value
      */
     protected function isBlacklisted(#[SensitiveParameter] string $value): bool
     {
@@ -95,8 +93,6 @@ class Blacklist extends ValidationRule
     /**
      * Gets blacklist from key
      *
-     * @param string $key
-     * @return BlacklistContract
      * @throws InvalidArgumentException Thrown if blacklist cannot be resolved.
      */
     protected function getBlacklist(string $key): BlacklistContract
@@ -112,9 +108,6 @@ class Blacklist extends ValidationRule
 
     /**
      * Checks if key maps to blacklist
-     *
-     * @param string $key
-     * @return bool
      */
     protected function isBlacklistMapped(string $key): bool
     {
@@ -123,9 +116,6 @@ class Blacklist extends ValidationRule
 
     /**
      * Maps key to Blacklist instance.
-     *
-     * @param string $key
-     * @return BlacklistContract
      */
     protected function mapBlacklist(string $key): BlacklistContract
     {
@@ -134,9 +124,6 @@ class Blacklist extends ValidationRule
 
     /**
      * Creates a Blacklist instance.
-     *
-     * @param string $class
-     * @return BlacklistContract
      */
     protected function createBlacklist(string $class): BlacklistContract
     {

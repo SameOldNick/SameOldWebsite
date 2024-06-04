@@ -9,10 +9,6 @@ trait InitializesOneTimePasscode
 {
     /**
      * Initializes an OTPInterface and associates authenticatable (if specified)
-     *
-     * @param OTPInterface $otp
-     * @param MultiAuthenticatable|null $authenticatable
-     * @return OTPInterface
      */
     protected function initialize(OTPInterface $otp, ?MultiAuthenticatable $authenticatable): OTPInterface
     {
@@ -28,8 +24,6 @@ trait InitializesOneTimePasscode
 
     /**
      * Gets the issuer for the OTP
-     *
-     * @return string
      */
     protected function getIssuer(): string
     {
@@ -38,9 +32,6 @@ trait InitializesOneTimePasscode
 
     /**
      * Gets the label for the OTP
-     *
-     * @param MultiAuthenticatable $authenticatable
-     * @return string
      */
     protected function getLabel(MultiAuthenticatable $authenticatable): string
     {

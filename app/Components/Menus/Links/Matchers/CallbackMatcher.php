@@ -11,8 +11,6 @@ class CallbackMatcher implements Matcher
 
     /**
      * Constructs CallbackMatcher
-     *
-     * @param callable $callback
      */
     public function __construct(callable $callback)
     {
@@ -20,7 +18,7 @@ class CallbackMatcher implements Matcher
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function matches(Request $request)
     {

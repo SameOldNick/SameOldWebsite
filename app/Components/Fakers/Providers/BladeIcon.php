@@ -24,7 +24,7 @@ class BladeIcon extends Base
     /**
      * Generates a random Blade Icon name
      *
-     * @param string|null $setKey Set key (a random set is chosen if not specified)
+     * @param  string|null  $setKey  Set key (a random set is chosen if not specified)
      * @return string Icon name (with set prefix)
      */
     public function iconName($setKey = null): string
@@ -39,8 +39,7 @@ class BladeIcon extends Base
     /**
      * Generates a random Blade Icon
      *
-     * @param string|null $setKey Set key (a random set is chosen if not specified)
-     * @return \BladeUI\Icons\Svg
+     * @param  string|null  $setKey  Set key (a random set is chosen if not specified)
      */
     public function icon($setKey = null): \BladeUI\Icons\Svg
     {
@@ -52,7 +51,7 @@ class BladeIcon extends Base
     /**
      * Gets SVG markup for a random Blade Icon.
      *
-     * @param string|null $setKey Set key (a random set is chosen if not specified)
+     * @param  string|null  $setKey  Set key (a random set is chosen if not specified)
      * @return string
      */
     public function iconSvg($setKey = null)
@@ -63,7 +62,7 @@ class BladeIcon extends Base
     /**
      * Gets HTML for a random Blade Icon.
      *
-     * @param string|null $setKey Set key (a random set is chosen if not specified)
+     * @param  string|null  $setKey  Set key (a random set is chosen if not specified)
      * @return string
      */
     public function iconHtml($setKey = null)
@@ -74,8 +73,7 @@ class BladeIcon extends Base
     /**
      * Picks a path for an icon set.
      *
-     * @param array $set Icon set configuration
-     * @return string
+     * @param  array  $set  Icon set configuration
      */
     private function getRandomPath(array $set): string
     {
@@ -85,8 +83,7 @@ class BladeIcon extends Base
     /**
      * Gets a random icon file in set.
      *
-     * @param array $set Icon set configuration
-     * @return SplFileInfo
+     * @param  array  $set  Icon set configuration
      */
     private function getRandomIconFile(array $set): SplFileInfo
     {
@@ -98,8 +95,8 @@ class BladeIcon extends Base
     /**
      * Gets the icon name (with prefix)
      *
-     * @param array $set Icon set configuration
-     * @param SplFileInfo $file Icon file
+     * @param  array  $set  Icon set configuration
+     * @param  SplFileInfo  $file  Icon file
      * @return string Icon name
      */
     private function getIconName(array $set, SplFileInfo $file): string
@@ -111,8 +108,6 @@ class BladeIcon extends Base
 
     /**
      * Gets available Blade Icon sets.
-     *
-     * @return array
      */
     private function getSets(): array
     {
@@ -121,9 +116,6 @@ class BladeIcon extends Base
 
     /**
      * Gets configuration for icon set.
-     *
-     * @param string $key
-     * @return array
      */
     private function getSet(string $key): array
     {
@@ -139,7 +131,7 @@ class BladeIcon extends Base
     /**
      * Gets filesystem to access icon files.
      *
-     * @param array $set Icon set configuration
+     * @param  array  $set  Icon set configuration
      * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
     private function getFilesystem(array $set)

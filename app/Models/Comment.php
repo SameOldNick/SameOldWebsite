@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Casts\Markdown;
 use App\Traits\Models\Displayable;
 use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,9 +20,9 @@ use Spatie\Url\Url as SpatieUrl;
  */
 class Comment extends Model
 {
+    use Displayable;
     use HasFactory;
     use Postable;
-    use Displayable;
 
     /**
      * Indicates if the model should be timestamped.
@@ -134,7 +133,6 @@ class Comment extends Model
     /**
      * Creates public link to this comment.
      *
-     * @param bool $absolute
      * @return string
      */
     public function createPublicLink(bool $absolute = true)
@@ -150,8 +148,8 @@ class Comment extends Model
     /**
      * Creates temporary signed URL to this comment.
      *
-     * @param int $minutes Minutes until URL expires (default: 30)
-     * @param bool $absolute If true, absolute URL is returned. (default: true)
+     * @param  int  $minutes  Minutes until URL expires (default: 30)
+     * @param  bool  $absolute  If true, absolute URL is returned. (default: true)
      * @return string
      */
     public function createPrivateUrl(int $minutes = 30, bool $absolute = true)

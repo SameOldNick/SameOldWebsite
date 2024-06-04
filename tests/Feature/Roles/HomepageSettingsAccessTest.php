@@ -10,15 +10,13 @@ use Tests\TestCase;
 
 class HomepageSettingsAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests user is authorized to get homepage metadata.
-     *
-     * @return void
      */
     public function testCanGetHomepageMetadata(): void
     {
@@ -29,8 +27,6 @@ class HomepageSettingsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get homepage metadata.
-     *
-     * @return void
      */
     public function testCannotGetHomepageMetadata(): void
     {
@@ -41,8 +37,6 @@ class HomepageSettingsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to update homepage metadata.
-     *
-     * @return void
      */
     public function testCanPostHomepageMetadata(): void
     {
@@ -53,8 +47,6 @@ class HomepageSettingsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to update homepage metadata.
-     *
-     * @return void
      */
     public function testCannotPostHomepageMetadata(): void
     {

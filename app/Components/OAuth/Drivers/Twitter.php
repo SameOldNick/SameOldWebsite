@@ -22,7 +22,6 @@ class Twitter extends Driver
      * Prepares callback response.
      * Example: Create and login user.
      *
-     * @param SocialiteUser $socialiteUser
      * @return $this
      */
     protected function prepareCallbackResponse(SocialiteUser $socialiteUser)

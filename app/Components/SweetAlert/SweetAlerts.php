@@ -8,8 +8,6 @@ class SweetAlerts
 
     /**
      * Maintains SweetAlerts
-     *
-     * @param array $existing
      */
     public function __construct(array $existing)
     {
@@ -19,7 +17,7 @@ class SweetAlerts
     /**
      * Fires sweetalert (when view is rendered)
      *
-     * @param callable $callback Callback that recieves instance of SweetAlertBuilder
+     * @param  callable  $callback  Callback that recieves instance of SweetAlertBuilder
      * @return void
      */
     public function fire(callable $callback)
@@ -30,7 +28,7 @@ class SweetAlerts
     /**
      * Fires a warning sweetalert
      *
-     * @param callable $callback Callback that recieves instance of SweetAlertBuilder
+     * @param  callable  $callback  Callback that recieves instance of SweetAlertBuilder
      * @return void
      */
     public function warning(callable $callback)
@@ -41,7 +39,7 @@ class SweetAlerts
     /**
      * Fires a error sweetalert
      *
-     * @param callable $callback Callback that recieves instance of SweetAlertBuilder
+     * @param  callable  $callback  Callback that recieves instance of SweetAlertBuilder
      * @return void
      */
     public function error(callable $callback)
@@ -52,7 +50,7 @@ class SweetAlerts
     /**
      * Fires a success sweetalert
      *
-     * @param callable $callback Callback that recieves instance of SweetAlertBuilder
+     * @param  callable  $callback  Callback that recieves instance of SweetAlertBuilder
      * @return void
      */
     public function success(callable $callback)
@@ -63,7 +61,7 @@ class SweetAlerts
     /**
      * Fires a info sweetalert
      *
-     * @param callable $callback Callback that recieves instance of SweetAlertBuilder
+     * @param  callable  $callback  Callback that recieves instance of SweetAlertBuilder
      * @return void
      */
     public function info(callable $callback)
@@ -74,7 +72,7 @@ class SweetAlerts
     /**
      * Fires a question sweetalert
      *
-     * @param callable $callback Callback that recieves instance of SweetAlertBuilder
+     * @param  callable  $callback  Callback that recieves instance of SweetAlertBuilder
      * @return void
      */
     public function question(callable $callback)
@@ -105,8 +103,6 @@ class SweetAlerts
     /**
      * Builds SweetAlert and pushes it to collection
      *
-     * @param SweetAlertBuilder $builder
-     * @param callable $callback
      * @return void
      */
     protected function buildAndPushSweetAlert(SweetAlertBuilder $builder, callable $callback)

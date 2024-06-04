@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 
 /**
  * Generates a password
+ *
  * @uses UsesEntropy
  */
 final class Generator
@@ -15,8 +16,6 @@ final class Generator
 
     /**
      * Initializes generator
-     *
-     * @param Options $options
      */
     public function __construct(
         protected readonly Options $options
@@ -25,8 +24,6 @@ final class Generator
 
     /**
      * Generates password
-     *
-     * @return string
      */
     public function generate(): string
     {
@@ -43,8 +40,6 @@ final class Generator
 
     /**
      * Generates random length for password
-     *
-     * @return int
      */
     protected function generateLength(): int
     {
@@ -72,10 +67,6 @@ final class Generator
 
     /**
      * Fills array with remaining characters
-     *
-     * @param array $items
-     * @param int $length
-     * @return array
      */
     protected function fill(array $items, int $length): array
     {
@@ -105,9 +96,6 @@ final class Generator
 
     /**
      * Generates upper case characters
-     *
-     * @param int $count
-     * @return array
      */
     protected function generateUppercase(int $count): array
     {
@@ -116,9 +104,6 @@ final class Generator
 
     /**
      * Generates lowercase letters
-     *
-     * @param int $count
-     * @return array
      */
     protected function generateLowercase(int $count): array
     {
@@ -127,9 +112,6 @@ final class Generator
 
     /**
      * Generates numbers
-     *
-     * @param int $count
-     * @return array
      */
     protected function generateNumbers(int $count): array
     {
@@ -138,9 +120,6 @@ final class Generator
 
     /**
      * Generates symbols
-     *
-     * @param int $count
-     * @return array
      */
     protected function generateSymbols(int $count): array
     {
@@ -150,10 +129,9 @@ final class Generator
     /**
      * Picks random items
      *
-     * @param array $pool Where to pick from
-     * @param int $count Number of items to pick
-     * @param bool $allowDuplicates Whether to allow duplicates in picked (default: true)
-     * @return array
+     * @param  array  $pool  Where to pick from
+     * @param  int  $count  Number of items to pick
+     * @param  bool  $allowDuplicates  Whether to allow duplicates in picked (default: true)
      */
     protected function pickFrom(array $pool, int $count, bool $allowDuplicates = true): array
     {
@@ -179,7 +157,6 @@ final class Generator
     /**
      * Shuffle the items
      *
-     * @param array $items
      * @return array
      */
     protected function shuffle(array $items)
@@ -192,9 +169,7 @@ final class Generator
     /**
      * Converts array to string
      *
-     * @param array $items
-     * @param int|null $count Length of output. If null, the output is the same length as items. (default: null)
-     * @return string
+     * @param  int|null  $count  Length of output. If null, the output is the same length as items. (default: null)
      */
     protected function arrayToString(array $items, ?int $count = null): string
     {
@@ -204,9 +179,8 @@ final class Generator
     /**
      * Securely generates random number
      *
-     * @param int $start Start number (inclusive)
-     * @param int $end End number (inclusive)
-     * @return int
+     * @param  int  $start  Start number (inclusive)
+     * @param  int  $end  End number (inclusive)
      */
     protected function randomNumber(int $start, int $end): int
     {

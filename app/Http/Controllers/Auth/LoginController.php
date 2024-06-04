@@ -53,7 +53,6 @@ class LoginController extends Controller
     /**
      * Logs user out by invalidating session and blacklisting JWT
      *
-     * @param Request $request
      * @return mixed
      */
     public function apiLogout(Request $request)
@@ -67,7 +66,6 @@ class LoginController extends Controller
     /**
      * The user has logged out of the application.
      *
-     * @param Request  $request
      * @return mixed
      */
     protected function loggedOut(Request $request)
@@ -95,7 +93,6 @@ class LoginController extends Controller
     /**
      * The user has been authenticated.
      *
-     * @param Request  $request
      * @param  mixed  $user
      * @return mixed
      */

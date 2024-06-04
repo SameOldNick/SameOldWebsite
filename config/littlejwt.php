@@ -53,6 +53,7 @@ return [
 
         /**
          * The algorithm used to verify and sign JSON Web Tokens (JWTs).
+         *
          * @see https://web-token.spomky-labs.com/the-components/signed-tokens-jws/signature-algorithms List of supported algorithms
          */
         'algorithm' => Jose\Component\Signature\Algorithm\HS256::class,
@@ -257,6 +258,7 @@ return [
 
     /**
      * Configuration options to use with OpenSSL.
+     *
      * @see https://www.php.net/manual/en/function.openssl-csr-new.php The config parameter contains possible config options.
      */
     'openssl' => [

@@ -19,7 +19,6 @@ class AuthController extends Controller
     /**
      * Refreshes access token
      *
-     * @param Request $request
      * @return array
      */
     public function refresh(Request $request)

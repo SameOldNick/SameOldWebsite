@@ -10,7 +10,7 @@ use Iterator;
 use IteratorAggregate;
 use RuntimeException;
 
-class PlaceholderCollection implements ArrayAccess, Countable, IteratorAggregate, Arrayable
+class PlaceholderCollection implements Arrayable, ArrayAccess, Countable, IteratorAggregate
 {
     protected $container;
 
@@ -18,9 +18,6 @@ class PlaceholderCollection implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Inititalizes placeholder collection
-     *
-     * @param Container $container
-     * @param array $placeholders
      */
     public function __construct(Container $container, array $placeholders)
     {
@@ -31,7 +28,6 @@ class PlaceholderCollection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Checks if placeholder exists.
      *
-     * @param string $placeholder
      * @return bool
      */
     public function has(string $placeholder)
@@ -52,8 +48,8 @@ class PlaceholderCollection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Gets value for placeholder
      *
-     * @param string $placeholder Placeholder
-     * @param mixed $default Default value if placeholder doesn't exist
+     * @param  string  $placeholder  Placeholder
+     * @param  mixed  $default  Default value if placeholder doesn't exist
      * @return string
      */
     public function value(string $placeholder, $default = null)
@@ -67,8 +63,6 @@ class PlaceholderCollection implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Gets number of placeholders
-     *
-     * @return int
      */
     public function count(): int
     {

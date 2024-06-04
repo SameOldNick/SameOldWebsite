@@ -23,7 +23,6 @@ class BackupController extends Controller
     /**
      * Shows backup code prompt.
      *
-     * @param Request $request
      * @return mixed
      */
     public function showBackupCodePrompt(Request $request)
@@ -34,8 +33,6 @@ class BackupController extends Controller
     /**
      * Verifies backup code.
      *
-     * @param Request $request
-     * @param AuthenticatorService $authService
      * @return mixed
      */
     public function verifyBackupCode(Request $request, AuthenticatorService $authService)
@@ -55,7 +52,6 @@ class BackupController extends Controller
     /**
      * Handles verified backup code
      *
-     * @param Request $request
      * @return void
      */
     protected function verifiedBackupCode(Request $request)
@@ -72,7 +68,6 @@ class BackupController extends Controller
     /**
      * Creates response for when backup code is verified.
      *
-     * @param Request $request
      * @return mixed
      */
     protected function verifiedBackupCodeResponse(Request $request)
@@ -82,9 +77,6 @@ class BackupController extends Controller
 
     /**
      * Gets the authenticatable subject.
-     *
-     * @param Request $request
-     * @return MultiAuthenticatable
      */
     protected function getAuthenticatable(Request $request): MultiAuthenticatable
     {
@@ -93,9 +85,6 @@ class BackupController extends Controller
 
     /**
      * Gets the intended URL to redirect to.
-     *
-     * @param Request $request
-     * @return string
      */
     protected function getIntendedUrl(Request $request): string
     {

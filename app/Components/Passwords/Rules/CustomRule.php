@@ -15,7 +15,7 @@ class CustomRule implements Rule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isEnabled(): bool
     {
@@ -23,7 +23,7 @@ class CustomRule implements Rule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function configure(Password $password): Password
     {

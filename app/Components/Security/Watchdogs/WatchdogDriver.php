@@ -6,8 +6,6 @@ interface WatchdogDriver
 {
     /**
      * Initializes the watchdog.
-     *
-     * @return void
      */
     public function initialize(): void;
 

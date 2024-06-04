@@ -32,7 +32,7 @@ class UserFactory extends Factory
     /**
      * Attaches roles to created user(s).
      *
-     * @param array ...$roles Role models or name (as string)
+     * @param  array  ...$roles  Role models or name (as string)
      * @return static
      */
     public function hasRoles(...$roles)

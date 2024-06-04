@@ -11,15 +11,11 @@ abstract class BroadcastNotification extends Notification
 
     /**
      * The event name to be broadcasted.
-     *
-     * @var string
      */
     protected string $broadcastAs;
 
     /**
      * The type of event being broadcasted.
-     *
-     * @var string
      */
     protected string $broadcastType;
 
@@ -36,10 +32,9 @@ abstract class BroadcastNotification extends Notification
     /**
      * Gets the event name.
      * This is the 'event' field sent to the websocket.
-     *
-     * @return string
      */
-    public function broadcastAs(): string {
+    public function broadcastAs(): string
+    {
         return $this->broadcastAs ?: get_class($this);
     }
 
@@ -60,7 +55,8 @@ abstract class BroadcastNotification extends Notification
      *
      * @return \Illuminate\Broadcasting\Channel|\Illuminate\Broadcasting\Channel[]
      */
-    public function broadcastOn() {
+    public function broadcastOn()
+    {
         return [];
     }
 

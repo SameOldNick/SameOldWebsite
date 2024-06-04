@@ -12,15 +12,13 @@ use Tests\TestCase;
 
 class CommentsAccessTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithRoles;
-    use WithFaker;
     use DisablesVite;
+    use RefreshDatabase;
+    use WithFaker;
+    use WithRoles;
 
     /**
      * Tests user is authorized to get comments.
-     *
-     * @return void
      */
     public function testCanGetComments(): void
     {
@@ -33,8 +31,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get comments.
-     *
-     * @return void
      */
     public function testCannotGetComments(): void
     {
@@ -45,8 +41,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to get comment.
-     *
-     * @return void
      */
     public function testCanGetComment(): void
     {
@@ -59,8 +53,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to get comment.
-     *
-     * @return void
      */
     public function testCannotGetComment(): void
     {
@@ -73,8 +65,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to update comments.
-     *
-     * @return void
      */
     public function testCanUpdateComment(): void
     {
@@ -89,8 +79,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to update comments.
-     *
-     * @return void
      */
     public function testCannotUpdateComment(): void
     {
@@ -105,8 +93,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to delete comments.
-     *
-     * @return void
      */
     public function testCanDeleteComment(): void
     {
@@ -119,8 +105,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to delete comments.
-     *
-     * @return void
      */
     public function testCannotDeleteComment(): void
     {
@@ -133,8 +117,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is authorized to approve comments.
-     *
-     * @return void
      */
     public function testCanApproveComment(): void
     {
@@ -147,8 +129,6 @@ class CommentsAccessTest extends TestCase
 
     /**
      * Tests user is unauthorized to approve comments.
-     *
-     * @return void
      */
     public function testCannotApproveComment(): void
     {

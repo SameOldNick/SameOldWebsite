@@ -11,12 +11,12 @@ trait ModifiesModel
     /**
      * Pulls up a Tinker session with Model variable for user to use.
      *
-     * @param string $class Full qualified class name of model
-     * @param mixed $id ID of model to bring up
-     * @param string|null $variableName Variable name to use. If null, camel case version of Model class name is used. (default: null)
+     * @param  string  $class  Full qualified class name of model
+     * @param  mixed  $id  ID of model to bring up
+     * @param  string|null  $variableName  Variable name to use. If null, camel case version of Model class name is used. (default: null)
      * @return int Return code
      */
-    protected function modifyModel(string $class, $id, string $variableName = null)
+    protected function modifyModel(string $class, $id, ?string $variableName = null)
     {
         $model = call_user_func([$class, 'find'], $id);
 

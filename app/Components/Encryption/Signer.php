@@ -32,7 +32,6 @@ class Signer extends BaseManager
     /**
      * Gets configuration for driver.
      *
-     * @param string $name
      * @return array
      */
     protected function getConfigFor(string $name)

@@ -26,8 +26,7 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
     /**
      * Generates middleware name
      *
-     * @param string $name Adapter to use
-     * @return string
+     * @param  string  $name  Adapter to use
      */
     public static function adapter(string $name): string
     {
@@ -38,7 +37,6 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param Closure  $next
      * @param  string  $name
      * @return mixed
      *
@@ -54,7 +52,7 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
     /**
      * Creates Guard adapter.
      *
-     * @param string $name
+     * @param  string  $name
      * @return \LittleApps\LittleJWT\Contracts\GuardAdapter
      */
     protected function createAdapter($name)
@@ -67,7 +65,8 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
      *
      * @return \LittleApps\LittleJWT\Guards\Guard
      */
-    protected function getGuard() {
+    protected function getGuard()
+    {
         return $this->auth->guard('jwt');
     }
 }

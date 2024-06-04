@@ -13,7 +13,7 @@ use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
-class DateRangeHelper implements ArrayAccess, Arrayable, Countable
+class DateRangeHelper implements Arrayable, ArrayAccess, Countable
 {
     /**
      * Carbon Period instance
@@ -39,8 +39,8 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Constructs DateRangeHelper
      *
-     * @param DatePeriod|CarbonPeriod $period
-     * @param mixed $initialValue The initial value for each date/time entry.
+     * @param  DatePeriod|CarbonPeriod  $period
+     * @param  mixed  $initialValue  The initial value for each date/time entry.
      */
     public function __construct($period, $initialValue = 0)
     {
@@ -51,7 +51,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Sets the date/time format.
      *
-     * @param string $dateTimeFormat
      * @return $this
      */
     public function setDateTimeFormat(string $dateTimeFormat)
@@ -104,7 +103,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Gets date/time at index.
      *
-     * @param int $index
      * @return Carbon
      */
     public function getDate(int $index)
@@ -144,9 +142,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
 
     /**
      * Checks if index exists.
-     *
-     * @param int $index
-     * @return bool
      */
     public function has(int $index): bool
     {
@@ -156,7 +151,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Gets the value at index.
      *
-     * @param int $index
      * @return mixed
      */
     public function getValue(int $index)
@@ -167,8 +161,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Sets the value at index
      *
-     * @param int $index
-     * @param mixed $value Static value or callable that receives existing value as argument.
+     * @param  mixed  $value  Static value or callable that receives existing value as argument.
      * @return $this
      */
     public function setValue(int $index, $value)
@@ -183,7 +176,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Checks if date/time is within range of this instance.
      *
-     * @param DateTimeInterface $dateTime
      * @return bool
      */
     public function isWithinRange(DateTimeInterface $dateTime)
@@ -194,8 +186,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Finds the key for the closest date/time.
      *
-     * @param DateTimeInterface $dateTime
-     * @param bool $closestBefore If true, the closest date/time must be before passed date/time.
+     * @param  bool  $closestBefore  If true, the closest date/time must be before passed date/time.
      * @return int
      */
     public function findClosestKey(DateTimeInterface $dateTime, bool $closestBefore = false)
@@ -208,6 +199,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
             fn ($value) => $value >= 0
         );
 
+        //asort($differences);
         $sorted = Arr::sort($differences);
 
         return key($differences);
@@ -216,7 +208,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Formats the date/time as a string.
      *
-     * @param DateTimeInterface $dateTime
      * @return string
      */
     protected function formatDateTime(DateTimeInterface $dateTime)
@@ -227,8 +218,7 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
     /**
      * Generates range of dates from a date period and sets the initial value for each.
      *
-     * @param CarbonPeriod $period
-     * @param mixed $initialValue
+     * @param  mixed  $initialValue
      * @return array
      */
     protected function generateRangeFromPeriod(CarbonPeriod $period, $initialValue)
@@ -246,7 +236,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
      * Determine if the given attribute exists.
      *
      * @param  mixed  $offset
-     * @return bool
      */
     public function offsetExists($offset): bool
     {
@@ -257,7 +246,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
      * Get the value for a given offset.
      *
      * @param  mixed  $offset
-     * @return mixed
      */
     public function offsetGet($offset): mixed
     {
@@ -269,7 +257,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
      *
      * @param  mixed  $offset
      * @param  mixed  $value
-     * @return void
      */
     public function offsetSet($offset, $value): void
     {
@@ -280,7 +267,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
      * Unset the value for a given offset.
      *
      * @param  mixed  $offset
-     * @return void
      */
     public function offsetUnset($offset): void
     {
@@ -289,8 +275,6 @@ class DateRangeHelper implements ArrayAccess, Arrayable, Countable
 
     /**
      * Gets the number of items in the range.
-     *
-     * @return int
      */
     public function count(): int
     {

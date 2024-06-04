@@ -28,8 +28,8 @@ class BlogSidebar extends Component
         return
             Article::published()
                 ->sortedByPublishDate()
-                    ->limit(5)
-                    ->get();
+                ->limit(5)
+                ->get();
     }
 
     /**
@@ -54,10 +54,10 @@ class BlogSidebar extends Component
     {
         return
             $this->getPublishedArticles()
-                    ->groupedByDateTime('Y-m')
-                    ->sortKeysDesc()
-                    ->keys()
-                        ->map(fn ($value) => Carbon::parse($value));
+                ->groupedByDateTime('Y-m')
+                ->sortKeysDesc()
+                ->keys()
+                ->map(fn ($value) => Carbon::parse($value));
     }
 
     /**

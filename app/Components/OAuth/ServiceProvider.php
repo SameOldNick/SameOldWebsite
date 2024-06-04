@@ -42,7 +42,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * Sets up OAuth drivers
      *
-     * @param OAuth $oauth OAuth manager
+     * @param  OAuth  $oauth  OAuth manager
      * @return OAuth
      */
     protected function setupDrivers(OAuth $oauth)

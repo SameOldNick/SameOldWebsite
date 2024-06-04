@@ -46,7 +46,6 @@ class SetupDatabase extends Command
     /**
      * Confirms database setup
      *
-     * @param bool $skipPrompt
      * @return void
      */
     private function confirmDatabaseSetup(bool $skipPrompt)

@@ -35,8 +35,6 @@ abstract class Driver
 
     /**
      * Gets the configuration for the driver.
-     *
-     * @return array
      */
     public function getConfig(): array
     {
@@ -87,7 +85,6 @@ abstract class Driver
     /**
      * Registers routes for this OAuth driver.
      *
-     * @param Router $router
      * @return $this
      */
     public function registerRoutes(Router $router)
@@ -120,7 +117,6 @@ abstract class Driver
      * Prepares callback response.
      * Example: Create and login user.
      *
-     * @param SocialiteUser $socialiteUser
      * @return $this
      */
     protected function prepareCallbackResponse(SocialiteUser $socialiteUser)
@@ -133,7 +129,6 @@ abstract class Driver
     /**
      * Logs user in
      *
-     * @param User $user
      * @return $this
      */
     protected function login(User $user)
@@ -165,9 +160,6 @@ abstract class Driver
 
     /**
      * Creates or updates user based on Socialite User response.
-     *
-     * @param SocialiteUser $oauthUser
-     * @return User
      */
     protected function createOrUpdateUser(SocialiteUser $oauthUser): User
     {
@@ -220,8 +212,6 @@ abstract class Driver
 
     /**
      * Gets the suffix to use for router paths and names.
-     *
-     * @return string
      */
     protected function routerSuffix(): string
     {
@@ -230,8 +220,6 @@ abstract class Driver
 
     /**
      * Gets name of Socialite provider.
-     *
-     * @return string
      */
     abstract protected function providerName(): string;
 }

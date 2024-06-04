@@ -17,8 +17,8 @@ use Illuminate\Support\Str;
  */
 class Role extends Model
 {
-    use HasFactory;
     use Concerns\HidesPrimaryKey;
+    use HasFactory;
 
     /**
      * Indicates if the model should be timestamped.
@@ -43,8 +43,6 @@ class Role extends Model
 
     /**
      * Gets the role name in readable form.
-     *
-     * @return Attribute
      */
     protected function readable(): Attribute
     {

@@ -14,9 +14,9 @@ use Illuminate\Mail\Mailables\Content;
 
 class ConfirmMessage extends Mailable
 {
-    use Queueable;
-    use HasPageSettings;
     use BuildsFromContainer;
+    use HasPageSettings;
+    use Queueable;
 
     protected $settings;
 

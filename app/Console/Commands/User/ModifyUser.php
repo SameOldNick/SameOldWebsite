@@ -84,7 +84,7 @@ class ModifyUser extends Command
             $user->password = $hasher->make($password);
         } elseif ($this->option('password')) {
             $user->password = $hasher->make($this->option('password'));
-        } else if ($this->option('random-password')) {
+        } elseif ($this->option('random-password')) {
             $generatedPassword = Password::default()->generate();
 
             $user->password = $hasher->make($generatedPassword);
@@ -108,11 +108,12 @@ class ModifyUser extends Command
             $user->country()->associate($country);
         }
 
-        if (!$user->isDirty() && !isset($generatedPassword)) {
+        if (! $user->isDirty() && ! isset($generatedPassword)) {
             $this->info('No changes were made to the user.');
+
             return 0;
         }
-        
+
         $this->info('The following changes will be made to the user: ');
 
         $dirty = $user->getDirty();
@@ -140,9 +141,6 @@ class ModifyUser extends Command
 
     /**
      * Gets displayable column name
-     *
-     * @param string $column
-     * @return string
      */
     protected function getColumnName(string $column): string
     {
@@ -157,9 +155,7 @@ class ModifyUser extends Command
     /**
      * Gets displayable column value
      *
-     * @param string $column
-     * @param string $original
-     * @return string
+     * @param  string  $original
      */
     protected function getColumnValue(string $column, $original): string
     {

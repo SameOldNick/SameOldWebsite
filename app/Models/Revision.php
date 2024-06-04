@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Casts\Markdown;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -72,8 +71,6 @@ class Revision extends Model
 
     /**
      * Get and set the summary
-     *
-     * @return Attribute
      */
     protected function summary(): Attribute
     {
@@ -95,8 +92,6 @@ class Revision extends Model
 
     /**
      * Checks if summary is auto generated
-     *
-     * @return Attribute
      */
     public function summaryAuto(): Attribute
     {
@@ -106,7 +101,6 @@ class Revision extends Model
     /**
      * Generates summary from description
      *
-     * @param string $description
      * @return string
      */
     public static function generateSummaryFrom(string $description)

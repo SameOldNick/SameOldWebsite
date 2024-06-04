@@ -22,7 +22,6 @@ class AuthController extends Controller
     /**
      * Displays prompt for MFA code.
      *
-     * @param Request $request
      * @return mixed
      */
     public function showMFAPrompt(Request $request)
@@ -33,7 +32,6 @@ class AuthController extends Controller
     /**
      * Verifies MFA code.
      *
-     * @param Request $request
      * @return mixed
      */
     public function verifyMFACode(Request $request)
@@ -53,7 +51,6 @@ class AuthController extends Controller
     /**
      * Handles verified MFA code.
      *
-     * @param Request $request
      * @return void
      */
     protected function verifiedMFACodeAuth(Request $request)
@@ -70,7 +67,6 @@ class AuthController extends Controller
     /**
      * Creates response for when MFA code is verified.
      *
-     * @param Request $request
      * @return mixed
      */
     protected function verifiedMFACodeResponse(Request $request)
@@ -80,9 +76,6 @@ class AuthController extends Controller
 
     /**
      * Gets the authenticatable subject.
-     *
-     * @param Request $request
-     * @return MultiAuthenticatable
      */
     protected function getAuthenticatable(Request $request): MultiAuthenticatable
     {
@@ -91,9 +84,6 @@ class AuthController extends Controller
 
     /**
      * Gets the intended URL to redirect to.
-     *
-     * @param Request $request
-     * @return string
      */
     protected function getIntendedUrl(Request $request): string
     {

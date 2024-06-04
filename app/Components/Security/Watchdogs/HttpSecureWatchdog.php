@@ -19,8 +19,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
 
     /**
      * Initializes the watchdog.
-     *
-     * @return void
      */
     public function initialize(): void
     {
@@ -70,8 +68,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
 
     /**
      * Gets valid curl error codes
-     *
-     * @return array
      */
     protected function getCurlErrorCodes(): array
     {
@@ -87,7 +83,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
     /**
      * Gets curl error code from exception.
      *
-     * @param Throwable $ex
      * @return int|null
      */
     protected function getCurlErrorCode(Throwable $ex)
@@ -100,7 +95,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
     /**
      * Gets error message from curl error code.
      *
-     * @param int $errorCode
      * @return string|null
      */
     protected function getCurlErrorMessage(int $errorCode): string
@@ -111,7 +105,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
     /**
      * Checks if exception is SSL connection exception.
      *
-     * @param Throwable $ex
      * @return bool
      */
     protected function isSecureConnectionError(Throwable $ex)
@@ -132,7 +125,6 @@ final class HttpSecureWatchdog implements WatchdogDriver
     /**
      * Transforms exception to issue.
      *
-     * @param Throwable $ex
      * @return SecureConnectionAdvisory
      */
     protected function transformExceptionToIssue(Throwable $ex)

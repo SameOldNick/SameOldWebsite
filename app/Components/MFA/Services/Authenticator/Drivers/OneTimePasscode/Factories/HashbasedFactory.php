@@ -13,7 +13,7 @@ class HashbasedFactory implements Factory
     use InitializesOneTimePasscode;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function create(string $secret): OTPInterface
     {
@@ -21,7 +21,7 @@ class HashbasedFactory implements Factory
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function createForAuthenticatable(string $secret, MultiAuthenticatable $authenticatable): OTPInterface
     {

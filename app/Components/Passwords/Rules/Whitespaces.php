@@ -15,9 +15,9 @@ class Whitespaces extends ValidationRule
     /**
      * Initializes AllowWhitespaces instance
      *
-     * @param mixed $spaces
-     * @param mixed $tabs
-     * @param mixed $newlines
+     * @param  mixed  $spaces
+     * @param  mixed  $tabs
+     * @param  mixed  $newlines
      */
     public function __construct(...$args)
     {
@@ -33,7 +33,7 @@ class Whitespaces extends ValidationRule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isEnabled(): bool
     {
@@ -41,7 +41,7 @@ class Whitespaces extends ValidationRule
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validate(string $attribute, #[\SensitiveParameter] mixed $value, Closure $fail)
     {
@@ -66,8 +66,6 @@ class Whitespaces extends ValidationRule
 
     /**
      * Checks if all whitespaces are disallowed.
-     *
-     * @return bool
      */
     protected function disallowAll(): bool
     {
@@ -77,7 +75,7 @@ class Whitespaces extends ValidationRule
     /**
      * Gets maximum value from boolean or int.
      *
-     * @param bool|int $value
+     * @param  bool|int  $value
      * @return int
      */
     protected function max($value)

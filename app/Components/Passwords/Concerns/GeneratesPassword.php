@@ -12,7 +12,6 @@ trait GeneratesPassword
     /**
      * Sets options to generate options by default.
      *
-     * @param GenerateOptions|null $options
      * @return $this
      */
     public function generateUsing(?GenerateOptions $options)
@@ -25,8 +24,7 @@ trait GeneratesPassword
     /**
      * Generates password
      *
-     * @param GenerateOptions|null $options Options to use. If null, the default options are used.
-     * @return string
+     * @param  GenerateOptions|null  $options  Options to use. If null, the default options are used.
      */
     public function generate(?GenerateOptions $options = null): string
     {
@@ -38,7 +36,6 @@ trait GeneratesPassword
     /**
      * Gets generator to generate password.
      *
-     * @param GenerateOptions|null $options
      * @return Generator
      */
     public function getGenerator(?GenerateOptions $options = null)

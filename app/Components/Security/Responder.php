@@ -60,8 +60,7 @@ final class Responder extends Manager
     /**
      * Gets configuration for responder.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  mixed  $default
      * @return mixed
      */
     private function getConfig(string $key, $default = [])
@@ -72,8 +71,7 @@ final class Responder extends Manager
     /**
      * Determines driver name for responder.
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  mixed  $default
      * @return mixed
      */
     private function determineDriverNameFor(string $key, $default = null)

@@ -50,7 +50,6 @@ class Manager extends SupportManager
     /**
      * Create render adapter for driver
      *
-     * @param SingleLevelRenderer $driver
      * @return Adapter
      */
     protected function createAdapter(SingleLevelRenderer $driver)

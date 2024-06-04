@@ -76,7 +76,6 @@ class TagController extends Controller
     /**
      * Tranforms tag strings to Tag model keys.
      *
-     * @param array $tags
      * @return list<int>
      */
     protected function transformTags(array $tags)

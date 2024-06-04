@@ -11,11 +11,11 @@ trait CreatesPostable
     /**
      * Include post with user.
      *
-     * @param User|null $userFactory
-     * @param Post|null $postFactory
+     * @param  User|null  $userFactory
+     * @param  Post|null  $postFactory
      * @return static
      */
-    public function hasPostWithUser($userFactory = null, Factory $postFactory = null)
+    public function hasPostWithUser($userFactory = null, ?Factory $postFactory = null)
     {
         $postFactory = $postFactory ?? Post::factory();
         $userFactory = $userFactory ?? User::factory();

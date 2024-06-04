@@ -11,8 +11,7 @@ interface SingleLevelRenderer
     /**
      * Renders the container for the entire menu
      *
-     * @param Menu $menu
-     * @param string $inner HTML with inner elements
+     * @param  string  $inner  HTML with inner elements
      * @return string
      */
     public function renderOuter(Menu $menu, string $inner);
@@ -20,8 +19,8 @@ interface SingleLevelRenderer
     /**
      * Renders a single item
      *
-     * @param LinkItem $item Item to render
-     * @param int $depth Depth of item (1 means first/main level)
+     * @param  LinkItem  $item  Item to render
+     * @param  int  $depth  Depth of item (1 means first/main level)
      * @return string
      */
     public function renderItem(LinkItem $item, int $depth);
@@ -29,8 +28,8 @@ interface SingleLevelRenderer
     /**
      * Renders a divider
      *
-     * @param MenuDivider $divider Divider to render
-     * @param int $depth Depth of divider (1 means first/main level)
+     * @param  MenuDivider  $divider  Divider to render
+     * @param  int  $depth  Depth of divider (1 means first/main level)
      * @return string
      */
     public function renderDivider(MenuDivider $divider, int $depth);
