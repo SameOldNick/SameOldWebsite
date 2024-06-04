@@ -27,7 +27,7 @@ jobs:
         # cache: yarn
 
     - name: Install Yarn Packages
-      run: yarn install --immutable
+      run: yarn install
 
     - name: TypeScript Compiler
       run: tsc
