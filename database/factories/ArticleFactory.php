@@ -71,7 +71,6 @@ class ArticleFactory extends Factory
     /**
      * Includes revision(s) with article.
      *
-     * @param int $count
      * @return $this
      */
     public function withRevision(int $count = 1)
@@ -82,7 +81,6 @@ class ArticleFactory extends Factory
     /**
      * Sets current revision for article.
      *
-     * @param Revision $revision
      * @return $this
      */
     public function currentRevision(Revision $revision)
@@ -95,10 +93,10 @@ class ArticleFactory extends Factory
     /**
      * Indicate that the model should be published.
      *
-     * @param DateTime $dateTime When the article is published. If null, a date between 3 years ago and now is used.
+     * @param  DateTime  $dateTime  When the article is published. If null, a date between 3 years ago and now is used.
      * @return $this
      */
-    public function published(DateTime $dateTime = null)
+    public function published(?DateTime $dateTime = null)
     {
         return $this->state([
             'published_at' => $dateTime ?? $this->faker->dateTimeBetween('-3 years', 'now'),

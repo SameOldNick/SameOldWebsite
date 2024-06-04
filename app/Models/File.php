@@ -54,7 +54,7 @@ final class File extends Model
         'path',
         'name',
         'is_public',
-        'disk'
+        'disk',
     ];
 
     /**
@@ -120,7 +120,6 @@ final class File extends Model
     /**
      * Sets model to include URL in serialization.
      *
-     * @param bool $enabled
      * @return $this
      */
     public function withUrl(bool $enabled = true)
@@ -160,8 +159,6 @@ final class File extends Model
 
     /**
      * Gets whether the file exists or not
-     *
-     * @return Attribute
      */
     protected function fileExists(): Attribute
     {
@@ -170,8 +167,6 @@ final class File extends Model
 
     /**
      * Get and set the filename
-     *
-     * @return Attribute
      */
     protected function name(): Attribute
     {
@@ -183,8 +178,6 @@ final class File extends Model
 
     /**
      * Get the URL for the file
-     *
-     * @return Attribute
      */
     protected function url(): Attribute
     {
@@ -193,8 +186,6 @@ final class File extends Model
 
     /**
      * Get the meta-data for the file
-     *
-     * @return Attribute
      */
     protected function meta(): Attribute
     {
@@ -209,8 +200,6 @@ final class File extends Model
 
     /**
      * Gets the pathinfo for the file.
-     *
-     * @return Attribute
      */
     protected function pathInfo(): Attribute
     {
@@ -221,8 +210,8 @@ final class File extends Model
      * Creates public URL to access this file.
      * Note: The 'is_public' attribute needs to be true in order for this URL to work.
      *
-     * @param bool $absolute If true, absolute URL is returned. (default: true)
-     * @param bool $withExt If true, includes file extension in URL. (default: true)
+     * @param  bool  $absolute  If true, absolute URL is returned. (default: true)
+     * @param  bool  $withExt  If true, includes file extension in URL. (default: true)
      * @return string
      */
     public function createPublicUrl(bool $absolute = true, bool $withExt = true)
@@ -239,8 +228,8 @@ final class File extends Model
     /**
      * Creates temporary signed URL to this file
      *
-     * @param int $minutes Minutes until URL expires (default: 30)
-     * @param bool $absolute If true, absolute URL is returned. (default: true)
+     * @param  int  $minutes  Minutes until URL expires (default: 30)
+     * @param  bool  $absolute  If true, absolute URL is returned. (default: true)
      * @return string
      */
     public function createPrivateUrl(int $minutes = 30, bool $absolute = true)
@@ -252,15 +241,15 @@ final class File extends Model
     /**
      * Creates File model from file path
      *
-     * @param string $path Path of file
-     * @param string|null $name Filename. If null, filename is generated from path. (default: null)
-     * @param bool $public If file is public (default: false)
-     * @param string $disk Name of the disk (default: null)
+     * @param  string  $path  Path of file
+     * @param  string|null  $name  Filename. If null, filename is generated from path. (default: null)
+     * @param  bool  $public  If file is public (default: false)
+     * @param  string  $disk  Name of the disk (default: null)
      * @return static
      */
-    public static function createFromFilePath(string $path, string $name = null, bool $public = false, string $disk = null)
+    public static function createFromFilePath(string $path, ?string $name = null, bool $public = false, ?string $disk = null)
     {
-        return new static([
+        return new self([
             'path' => $path,
             'name' => $name,
             'is_public' => $public,

@@ -25,14 +25,14 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read \App\Models\Collections\RoleCollection<int, Role> $roles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OAuthProvider> $oauthProviders
  */
-class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticatable
+class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
+    use HasOneTimePasscodeSecrets;
+    use HasUuids;
     use Notifiable;
     use SoftDeletes;
-    use HasUuids;
-    use HasOneTimePasscodeSecrets;
 
     /**
      * The attributes that are mass assignable.
@@ -117,7 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Checks if User has all specified roles
      *
-     * @param array $roles Array of role names
+     * @param  array  $roles  Array of role names
      * @return bool
      */
     public function hasAllRoles(array $roles)
@@ -140,7 +140,7 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Checks if the user has any specified roles.
      *
-     * @param array $roles Array of role names to check.
+     * @param  array  $roles  Array of role names to check.
      * @return bool True if the user has any specified roles, false otherwise.
      */
     public function hasAnyRoles(array $roles): bool
@@ -254,7 +254,6 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets the avatar URL for the user
      *
-     * @param array $options
      * @return string
      */
     public function getAvatarUrl(array $options = [])
@@ -274,8 +273,6 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
 
     /**
      * Interact with the slug.
-     *
-     * @return Attribute
      */
     protected function avatarUrl(): Attribute
     {
@@ -285,8 +282,8 @@ class User extends Authenticatable implements MustVerifyEmail, MultiAuthenticata
     /**
      * Gets users with roles
      *
-     * @param array $roles Role names or models
-     * @param bool $hasAll Specifies if users must have all or one of the roles
+     * @param  array  $roles  Role names or models
+     * @param  bool  $hasAll  Specifies if users must have all or one of the roles
      * @return \Illuminate\Database\Eloquent\Collection<int, User>
      */
     public static function getUsersWithRoles($roles, bool $hasAll = true)

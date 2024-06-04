@@ -18,7 +18,7 @@ class ArticleImageSeeder extends Seeder
      *
      * @return void
      */
-    public function run(Article $article = null, int $count = 1, array $options = [], ?User $user = null)
+    public function run(?Article $article = null, int $count = 1, array $options = [], ?User $user = null)
     {
         $options = array_merge([
             'ext' => '.jpg',
