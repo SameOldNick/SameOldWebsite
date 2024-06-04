@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { IIconType } from './IconSelector';
-
-import { createIconFromSvgJson } from './utils';
+import { createIconFromSvgJson, IIconType } from './utils';
 
 interface IIconProps {
     icon: IIconType;

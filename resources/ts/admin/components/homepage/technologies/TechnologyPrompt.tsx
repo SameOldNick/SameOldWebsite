@@ -5,8 +5,8 @@ import { Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Mo
 import classNames from 'classnames';
 import * as Yup from 'yup';
 
-import IconSelector, { IIconType } from '@admin/components/icon-selector/IconSelector';
-import { lookupIcon } from '@admin/components/icon-selector/utils';
+import IconSelector from '@admin/components/icon-selector/IconSelector';
+import { lookupIcon, IIconType } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
 import { IPromptModalProps } from '@admin/utils/modals';
 
