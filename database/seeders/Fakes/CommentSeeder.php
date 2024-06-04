@@ -5,7 +5,6 @@ namespace Database\Seeders\Fakes;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
@@ -19,27 +18,6 @@ class CommentSeeder extends Seeder
      */
     public function run(Article $article, Collection $users, $minEach = 1, $maxEach = 3, $maxDepth = 3)
     {
-
-            $baseFactory
-                ->has(
-                        ->has(
-                            $baseFactory
-                                ->count(fake()->numberBetween(1, 5))
-                                ->has(
-                                    $baseFactory->count(fake()->numberBetween(1, 5)),
-                                    'children'
-                                ),
-                            'children'
-                        ),
-                    'children'
-                );
-
-        $factory =
-            $baseFactory
-                ->has($nestedFactory->count(fake()->numberBetween(1, 5)), 'children')
-        //->has($baseFactory->count(fake()->numberBetween(1, 5)), 'children')
-        //->has($baseFactory->count(fake()->numberBetween(1, 5))->approved(), 'children');
-
         $userFactory = $userFactory ?? User::factory();
 
         $commentFactory =
