@@ -7,6 +7,24 @@ use Illuminate\Database\Schema\Blueprint;
 
 class BlueprintMixin
 {
+    public function dropColumnSafe() {
+        /**
+         * SQLite doesn't support dropping columns.
+         * Source: https://stackoverflow.com/a/21019278/533242
+         */
+        return function (...$args) {
+            /**
+             * @var Blueprint $this
+             */
+            if (app('db.connection') instanceof SQLiteConnection) {
+                // Do nothing
+                /** @see Blueprint::ensureCommandsAreValid */
+            } else {
+                $this->dropColumn(...$args);
+            }
+        };
+    }
+
     public function dropForeignSafe() {
         /**
          * SQLite doesn't support dropping foreign keys.
