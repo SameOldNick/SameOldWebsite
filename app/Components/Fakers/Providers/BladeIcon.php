@@ -6,7 +6,7 @@ use BladeUI\Icons\Factory as BladeIconsFactory;
 use Faker\Generator;
 use Faker\Provider\Base;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
-use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Symfony\Component\Finder\SplFileInfo;
@@ -45,7 +45,7 @@ class BladeIcon extends Base
     {
         $name = $this->iconName($setKey);
 
-        return $this->bladeIcons->svg($name);
+        return $this->getFactory()->svg($name);
     }
 
     /**
@@ -77,7 +77,7 @@ class BladeIcon extends Base
      */
     private function getRandomPath(array $set): string
     {
-        return Arr::random($set['paths']);
+        return realpath(Arr::random($set['paths']));
     }
 
     /**
@@ -87,7 +87,8 @@ class BladeIcon extends Base
      */
     private function getRandomIconFile(array $set): SplFileInfo
     {
-        $files = $this->getFilesystem($set)->files($this->getRandomPath($set));
+        $path = rtrim($this->getRandomPath($set));
+        $files = $this->getFilesystem($set)->files($path);
 
         return Arr::random($files);
     }
@@ -107,11 +108,20 @@ class BladeIcon extends Base
     }
 
     /**
+     * Gets the Blade Icons Factory
+     *
+     * @return BladeIconsFactory
+     */
+    private function getFactory(): BladeIconsFactory {
+        return $this->bladeIcons;
+    }
+
+    /**
      * Gets available Blade Icon sets.
      */
     private function getSets(): array
     {
-        return $this->bladeIcons->all();
+        return $this->getFactory()->all();
     }
 
     /**
@@ -141,7 +151,9 @@ class BladeIcon extends Base
         if (isset($set['disk']) || isset($default['disk'])) {
             return $this->disks->disk($set['disk'] ?? $default['disk']);
         } else {
-            return app(FilesystemManager::class)->disk();
+            // Creating new Filesystem gives access to project root.
+            // Don't use FilesystemFactory as that will open it in the storage/ folder.
+            return new Filesystem();
         }
     }
 }
