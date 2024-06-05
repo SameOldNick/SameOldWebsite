@@ -109,10 +109,9 @@ class BladeIcon extends Base
 
     /**
      * Gets the Blade Icons Factory
-     *
-     * @return BladeIconsFactory
      */
-    private function getFactory(): BladeIconsFactory {
+    private function getFactory(): BladeIconsFactory
+    {
         return $this->bladeIcons;
     }
 
