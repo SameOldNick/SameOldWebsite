@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x, 22.x]
-        php-version: ['8.2']
+        php-version: ['8.2', '8.3']
 
     steps:
     - uses: actions/checkout@v3
