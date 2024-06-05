@@ -15,9 +15,9 @@ return new class extends Migration
     {
         if (Schema::getConnection() instanceof SQLiteConnection) {
             /**
-            * Rebuilds images table since SQLite doesn't support removing columns
-            * Adding rows will cause integrity failures.
-            */
+             * Rebuilds images table since SQLite doesn't support removing columns
+             * Adding rows will cause integrity failures.
+             */
             Schema::create('new_images', function (Blueprint $table) {
                 $table->uuid()->primary();
                 $table->string('description')->nullable();
