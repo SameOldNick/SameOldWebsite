@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('images', function (Blueprint $table) {
             $table->dropForeignSafe('article_images_article_id_foreign');
 
-            $table->dropColumn('article_id');
+            $table->dropColumnSafe('article_id');
         });
     }
 
