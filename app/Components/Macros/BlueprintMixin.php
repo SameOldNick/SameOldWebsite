@@ -2,12 +2,13 @@
 
 namespace App\Components\Macros;
 
-use Illuminate\Database\SQLiteConnection;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\SQLiteConnection;
 
 class BlueprintMixin
 {
-    public function dropColumnSafe() {
+    public function dropColumnSafe()
+    {
         /**
          * SQLite doesn't support dropping columns.
          * Source: https://stackoverflow.com/a/21019278/533242
@@ -25,7 +26,8 @@ class BlueprintMixin
         };
     }
 
-    public function dropForeignSafe() {
+    public function dropForeignSafe()
+    {
         /**
          * SQLite doesn't support dropping foreign keys.
          * Source: https://github.com/laravel/framework/issues/23461
