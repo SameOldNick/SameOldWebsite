@@ -15,9 +15,9 @@ use Throwable;
 
 abstract class NotifiableJob
 {
-    protected User $user;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected object $notifiable;
     protected UuidInterface $uuid;
 
     protected JobStatusNotifier $notifier;
@@ -26,12 +26,12 @@ abstract class NotifiableJob
      * Create a new job instance.
      */
     public function __construct(
-        User $user,
+        object $notifiable,
         ?UuidInterface $uuid = null
     ) {
-        $this->user = $user;
+        $this->notifiable = $notifiable;
         $this->uuid = $uuid ?? $this->generateUuid();
-        $this->notifier = new JobStatusNotifier($this->uuid, $this->user);
+        $this->notifier = new JobStatusNotifier($this->uuid, $this->notifiable);
     }
 
     /**
