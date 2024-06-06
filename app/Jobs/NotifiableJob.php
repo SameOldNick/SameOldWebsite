@@ -17,9 +17,29 @@ abstract class NotifiableJob
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * In order for the job to be serialized for later processing, the properties cannot be set as readonly.
+     */
+
+    /**
+     * Who to notify
+     *
+     * @var object
+     */
     protected object $notifiable;
+
+    /**
+     * Unique identifier for job.
+     *
+     * @var UuidInterface
+     */
     protected UuidInterface $uuid;
 
+    /**
+     * Job status notifier
+     *
+     * @var JobStatusNotifier
+     */
     protected JobStatusNotifier $notifier;
 
     /**
@@ -60,11 +80,17 @@ abstract class NotifiableJob
         $this->notifier->failed($exception);
     }
 
+    /**
+     * Generates a random UUID.
+     */
     public function generateUuid(): UuidInterface
     {
         return Uuid::getFactory()->uuid4();
     }
 
+    /**
+     * Gets the UUID for this job.
+     */
     public function getUuid(): UuidInterface
     {
         return $this->uuid;
