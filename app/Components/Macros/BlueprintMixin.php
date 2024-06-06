@@ -21,6 +21,7 @@ class BlueprintMixin
             if (Schema::getConnection() instanceof SQLiteConnection) {
                 // Do nothing
                 /** @see Blueprint::ensureCommandsAreValid */
+                Schema::rebuildTableSqlite($this->getTable(), without: [...$args]);
             } else {
                 $this->dropColumn(...$args);
             }
