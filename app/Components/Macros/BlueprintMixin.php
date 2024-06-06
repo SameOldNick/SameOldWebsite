@@ -4,6 +4,7 @@ namespace App\Components\Macros;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\SQLiteConnection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 
 class BlueprintMixin
@@ -21,7 +22,7 @@ class BlueprintMixin
             if (Schema::getConnection() instanceof SQLiteConnection) {
                 // Do nothing
                 /** @see Blueprint::ensureCommandsAreValid */
-                Schema::rebuildTableSqlite($this->getTable(), without: [...$args]);
+                Schema::rebuildTableSqlite($this->getTable(), without: Arr::flatten([...$args]));
             } else {
                 $this->dropColumn(...$args);
             }
