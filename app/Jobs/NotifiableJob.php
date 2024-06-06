@@ -3,8 +3,12 @@
 namespace App\Jobs;
 
 use App\Components\Websockets\Notifiers\JobStatusNotifier;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Throwable;
@@ -12,6 +16,7 @@ use Throwable;
 abstract class NotifiableJob
 {
     protected User $user;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected UuidInterface $uuid;
 
