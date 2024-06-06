@@ -16,8 +16,10 @@ class RoleUserSeeder extends Seeder
      *
      * @return void
      */
-    public function run(User $user)
+    public function run(User $user, $roles = null)
     {
-        $user->roles()->attach(Role::all());
+        $roles = $roles ?? Role::all();
+
+        $user->roles()->attach($roles);
     }
 }
