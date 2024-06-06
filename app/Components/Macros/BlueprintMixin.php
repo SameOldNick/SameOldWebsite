@@ -4,6 +4,7 @@ namespace App\Components\Macros;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\SQLiteConnection;
+use Illuminate\Support\Facades\Schema;
 
 class BlueprintMixin
 {
@@ -17,7 +18,7 @@ class BlueprintMixin
             /**
              * @var Blueprint $this
              */
-            if (app('db.connection') instanceof SQLiteConnection) {
+            if (Schema::getConnection() instanceof SQLiteConnection) {
                 // Do nothing
                 /** @see Blueprint::ensureCommandsAreValid */
             } else {
@@ -36,7 +37,7 @@ class BlueprintMixin
             /**
              * @var Blueprint $this
              */
-            if (app('db.connection') instanceof SQLiteConnection) {
+            if (Schema::getConnection() instanceof SQLiteConnection) {
                 // Do nothing
                 /** @see Blueprint::ensureCommandsAreValid */
             } else {
