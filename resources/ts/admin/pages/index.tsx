@@ -34,6 +34,8 @@ import Profile from './protected/homepage/Profile';
 import Skills from './protected/homepage/Skills';
 import Technologies from './protected/homepage/Technologies';
 
+import AllBackups from '@admin/pages/protected/backups/All';
+
 const Pages: React.FC = () => {
     return (
         <Routes>
@@ -80,6 +82,10 @@ const Pages: React.FC = () => {
                             <Route path='create' element={<CreateUser />} />
                             <Route path='edit/:user' element={<EditUser />} />
                             <Route index element={<AllUsers />} />
+                        </Route>
+
+                        <Route path='backups'>
+                            <Route index element={<AllBackups />} />
                         </Route>
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 import { Outlet } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { FaComments, FaEnvelope, FaHome, FaList, FaNewspaper, FaTachometerAlt, FaUsers } from 'react-icons/fa';
+import { FaCloudUploadAlt, FaComments, FaEnvelope, FaHome, FaList, FaNewspaper, FaTachometerAlt, FaUsers } from 'react-icons/fa';
 import { Container } from 'reactstrap';
 
 import { DateTime } from 'luxon';
@@ -70,6 +70,12 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
                             <Sidebar.Dropdown text='Projects' icon={<FaList />}>
                                 <Sidebar.DropdownItem href='/admin/projects'>View All Projects</Sidebar.DropdownItem>
                                 <Sidebar.DropdownItem href='/admin/projects/create'>Create New Project</Sidebar.DropdownItem>
+                            </Sidebar.Dropdown>
+                        </Authorized>
+
+                        <Authorized roles={['manage_backups']}>
+                            <Sidebar.Dropdown text='Backups' icon={<FaCloudUploadAlt />}>
+                                <Sidebar.DropdownItem href='/admin/backups'>View Backups</Sidebar.DropdownItem>
                             </Sidebar.Dropdown>
                         </Authorized>
 
