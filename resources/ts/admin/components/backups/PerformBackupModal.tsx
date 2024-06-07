@@ -25,6 +25,11 @@ export interface IPerformBackupResponse {
     uuid: string;
 }
 
+export interface IJobData {
+    dateTime: string;
+    id: string;
+    type: string;
+}
 
 export interface IProcessBeginData {
     dateTime: string;
@@ -43,11 +48,54 @@ export interface IProcessOutputData {
     newline: boolean;
 }
 
+interface IJobStatusProps {
+    started?: DateTime;
+    finished?: DateTime;
+}
+
+const JobStatus: React.FC<IJobStatusProps> = ({ started, finished }) => {
+    const [renderCount, setRenderCount] = React.useState(1);
+
+    React.useEffect(() => {
+        const timer = setInterval(() => setRenderCount((value) => value + 1), 750);
+
+        return () => {
+            clearInterval(timer);
+        }
+    }, []);
+
+    const displayText = React.useMemo(() => {
+        if (finished)
+            return 'Job finished.';
+        else if (started)
+            return 'Job started.';
+        else
+            return 'Waiting for job to start...';
+    }, [started, finished]);
+
+    return (
+        <Alert color="info" className="d-flex justify-content-between">
+            <div className='d-flex align-items-center'>
+                <span className="me-1">
+                    {!started && !finished && <ClipLoader size={25} />}
+                </span>
+                {displayText}
+            </div>
+            <div key={renderCount}>
+                {started && !finished && started.toRelative()}
+                {finished && finished?.toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS)}
+            </div>
+        </Alert>
+    );
+}
+
 const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose }) => {
     const xtermRef = React.useRef<XTerm>(null);
 
     const [response, setResponse] = React.useState<IPerformBackupResponse>();
-    const [jobStatus, setJobStatus] = React.useState<TJobStatuses>('pending');
+
+    const [jobStarted, setJobStarted] = React.useState<DateTime>();
+    const [jobFinished, setJobFinished] = React.useState<DateTime>();
     const [processStarted, setProcessStarted] = React.useState<DateTime>();
     const [processCompleted, setProcessCompleted] = React.useState<DateTime>();
     const [canClose, setCanClose] = React.useState(false);
@@ -57,8 +105,8 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
     }, [type]);
 
     React.useEffect(() => {
-        setCanClose(jobStatus === 'finished');
-    }, [jobStatus]);
+        setCanClose(jobFinished !== undefined);
+    }, [jobFinished]);
 
     const performBackup = React.useCallback(async () => {
         try {
@@ -92,11 +140,11 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
 
     }, [canClose]);
 
-    const handleJobStatusEvent = React.useCallback((data: any, event: string) => {
+    const handleJobStatusEvent = React.useCallback((data: IJobData, event: string) => {
         if (event === '.JobStarted')
-            setJobStatus('started');
+            setJobStarted(DateTime.fromISO(data.dateTime));
         else if (event === '.JobCompleted')
-            setJobStatus('finished');
+            setJobFinished(DateTime.fromISO(data.dateTime));
     }, []);
 
     const handleProcessStartEvent = React.useCallback((data: IProcessBeginData, event: string) => {
@@ -126,22 +174,6 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
         });
     }, []);
 
-    const jobStatusDisplayText = React.useMemo(() => {
-        switch (jobStatus) {
-            case 'pending': {
-                return 'Waiting for job to start...';
-            }
-
-            case 'started': {
-                return 'Job started.';
-            }
-
-            case 'finished': {
-                return 'Job finished.'
-            }
-        }
-    }, [jobStatus]);
-
     return (
         <>
             <Modal isOpen={true} backdrop='static' size='xl'>
@@ -149,12 +181,7 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
                     Perform Backup
                 </ModalHeader>
                 <ModalBody>
-
-
-                    <Alert color="info" className="d-flex justify-content-center">
-                        {jobStatus !== 'finished' && <ClipLoader size={25} className="me-1" />}
-                        {jobStatusDisplayText}
-                    </Alert>
+                    <JobStatus started={jobStarted} finished={jobFinished} />
 
                     {processStarted && <XTerm ref={xtermRef} />}
 
