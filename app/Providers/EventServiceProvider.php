@@ -12,6 +12,9 @@ use App\Events\Comments\CommentCreated;
 use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Events\PageUpdated;
+use App\Listeners\Backup\FailedBackup;
+use App\Listeners\Backup\SuccessfulBackup;
+use App\Listeners\Backup\SuccessfulCleanup;
 use App\Listeners\Contact\SendConfirmMessage;
 use App\Listeners\Contact\SendContactedConfirmationMessage;
 use App\Listeners\Contact\SendContactedMessages;
@@ -29,6 +32,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Spatie\Backup\Events\BackupHasFailed;
+use Spatie\Backup\Events\BackupWasSuccessful;
+use Spatie\Backup\Events\CleanupWasSuccessful;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -73,6 +79,15 @@ class EventServiceProvider extends ServiceProvider
         ],
         PageUpdated::class => [
             RefreshUpdatedPages::class,
+        ],
+        BackupWasSuccessful::class => [
+            SuccessfulBackup::class,
+        ],
+        BackupHasFailed::class => [
+            FailedBackup::class,
+        ],
+        CleanupWasSuccessful::class => [
+            SuccessfulCleanup::class,
         ],
     ];
 
