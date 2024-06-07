@@ -48,6 +48,8 @@ abstract class NotifiableJob
         }
 
         $this->getNotifier()->completed();
+
+        $this->getNotifier()->closeChannel();
     }
 
     /**
@@ -59,6 +61,7 @@ abstract class NotifiableJob
     {
         $this->getNotifier()->failed($exception);
 
+        $this->getNotifier()->closeChannel();
     }
 
     /**
