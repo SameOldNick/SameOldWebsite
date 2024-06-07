@@ -18,22 +18,10 @@ abstract class NotifiableJob
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * In order for the job to be serialized for later processing, the properties cannot be set as readonly.
+     * In order for the job to be serialized for later processing by the queue:
+     *  - The properties cannot be set as readonly.
+     *  - The properties must have a visibility of at least protected (not private).
      */
-
-    /**
-     * Who to notify
-     *
-     * @var object
-     */
-    protected object $notifiable;
-
-    /**
-     * Unique identifier for job.
-     *
-     * @var UuidInterface
-     */
-    protected UuidInterface $uuid;
 
     /**
      * Job status notifier
@@ -45,13 +33,8 @@ abstract class NotifiableJob
     /**
      * Create a new job instance.
      */
-    public function __construct(
-        object $notifiable,
-        ?UuidInterface $uuid = null
-    ) {
-        $this->notifiable = $notifiable;
-        $this->uuid = $uuid ?? $this->generateUuid();
-        $this->notifier = new JobStatusNotifier($this->uuid, $this->notifiable);
+    public function __construct(JobStatusNotifier $notifier) {
+        $this->notifier = $notifier;
     }
 
     /**
@@ -61,13 +44,13 @@ abstract class NotifiableJob
      */
     public function handle(Application $app)
     {
-        $this->notifier->start();
+        $this->getNotifier()->start();
 
         if (method_exists($this, 'handler')) {
             $app->call([$this, 'handler']);
         }
 
-        $this->notifier->completed();
+        $this->getNotifier()->completed();
     }
 
     /**
@@ -77,22 +60,20 @@ abstract class NotifiableJob
      */
     public function failed(Throwable $exception)
     {
-        $this->notifier->failed($exception);
+        $this->getNotifier()->failed($exception);
+
+        $this->getNotifier()->freeChannel();
     }
 
-    /**
-     * Generates a random UUID.
-     */
-    public function generateUuid(): UuidInterface
-    {
-        return Uuid::getFactory()->uuid4();
+    public function getUuid(): UuidInterface {
+        return $this->getNotifier()->getUuid();
     }
 
-    /**
-     * Gets the UUID for this job.
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
+    public function getNotifiable(): object {
+        return $this->getNotifier()->getNotifiable();
+    }
+
+    public function getNotifier(): JobStatusNotifier {
+        return $this->notifier;
     }
 }
