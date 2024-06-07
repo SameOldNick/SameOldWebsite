@@ -5,12 +5,9 @@ namespace App\Jobs;
 use App\Components\Websockets\Notifiers\JobStatusNotifier;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 use Throwable;
 
 abstract class NotifiableJob
@@ -62,17 +59,13 @@ abstract class NotifiableJob
     {
         $this->getNotifier()->failed($exception);
 
-        $this->getNotifier()->freeChannel();
     }
 
-    public function getUuid(): UuidInterface {
-        return $this->getNotifier()->getUuid();
-    }
-
-    public function getNotifiable(): object {
-        return $this->getNotifier()->getNotifiable();
-    }
-
+    /**
+     * Gets the job status notifier
+     *
+     * @return JobStatusNotifier
+     */
     public function getNotifier(): JobStatusNotifier {
         return $this->notifier;
     }
