@@ -11,6 +11,7 @@ if (! defined('ROLES_DEFINED')) {
     define('CHANGE_CONTACT_SETTINGS_ROLE', 'change_contact_settings');
     define('MANAGE_PROJECTS_ROLE', 'manage_projects');
     define('MANAGE_USERS_ROLE', 'manage_users');
+    define('MANAGE_BACKUPS_ROLE', 'manage_backups');
 
     define('ROLES_DEFINED', true);
 }
@@ -63,6 +64,11 @@ return [
             'name' => 'Manage Users',
             'description' => 'Allows users to manage other users, such as creating or deleting user accounts.',
         ],
+        [
+            'id' => MANAGE_BACKUPS_ROLE,
+            'name' => 'Manage Backups',
+            'description' => 'Allows users to manage backups, such as performing and downloading backups.',
+        ],
     ],
 
     // Groups definition
@@ -80,6 +86,7 @@ return [
                 CHANGE_CONTACT_SETTINGS_ROLE,
                 MANAGE_PROJECTS_ROLE,
                 MANAGE_USERS_ROLE,
+                MANAGE_BACKUPS_ROLE,
             ],
         ],
     ],
