@@ -198,6 +198,16 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
     }
 
     /**
+     * Gets the private channels for this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function privateChannels()
+    {
+        return $this->morphMany(PrivateChannel::class, 'notifiable');
+    }
+
+    /**
      * Gets the country for this user
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
