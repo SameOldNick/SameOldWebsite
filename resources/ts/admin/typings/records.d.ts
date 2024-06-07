@@ -57,6 +57,8 @@ declare global {
         name: string;
         url: string | null;
         meta: IFileMeta;
+        created_at: string;
+        updated_at: string | null;
     }
 
     interface IProductImage {
@@ -208,6 +210,17 @@ declare global {
         updated_at: string | null;
         confirmed_at: string | null;
         expires_at: string | null;
+    }
+
+    type TBackupStatuses = 'successful' | 'failed' | 'not-exists' | 'deleted';
+
+    interface IBackup {
+        uuid: string;
+        status: TBackupStatuses;
+        error_message?: string;
+        created_at: string;
+        updated_at: string | null;
+        file: IFile | null;
     }
 }
 
