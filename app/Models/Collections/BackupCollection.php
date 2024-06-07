@@ -13,7 +13,6 @@ class BackupCollection extends Collection
     /**
      * Gets backups with status
      *
-     * @param string $status
      * @return Collection<int, Backup>
      */
     public function status(string $status)
