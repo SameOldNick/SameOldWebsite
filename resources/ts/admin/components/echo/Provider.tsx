@@ -1,10 +1,10 @@
 import React from 'react';
-import Echo from 'laravel-echo';
 
 import { EchoContext } from '@admin/utils/echo/context';
+import EchoWrapper from '@admin/utils/echo/wrappers/EchoWrapper';
 
 interface IProviderEchoProps extends React.PropsWithChildren {
-    echo: Echo;
+    echo: EchoWrapper;
 }
 
 const Provider: React.FC<IProviderEchoProps> = ({ echo, children }) => {

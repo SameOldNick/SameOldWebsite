@@ -1,14 +1,15 @@
 import React from 'react';
 
-import Echo from 'laravel-echo';
 import { PusherChannel } from 'laravel-echo/dist/channel';
+import EchoWrapper from './wrappers/EchoWrapper';
+import ChannelWrapper from './wrappers/ChannelWrapper';
 
 export interface IEchoContextValue {
-    echo: Echo;
+    echo: EchoWrapper;
 }
 
 export interface IPusherChannelValue {
-    channel: PusherChannel;
+    channel: ChannelWrapper<PusherChannel>;
 }
 
 const EchoContext = React.createContext<IEchoContextValue | undefined>(undefined);

@@ -1,13 +1,21 @@
 import React from 'react';
 
-import { EchoContext } from '@admin/utils/echo/context';
+import { PusherPrivateChannel } from 'laravel-echo/dist/channel';
+
 import Channel from './Channel';
+
+import { EchoContext } from '@admin/utils/echo/context';
+import ChannelWrapper from '@admin/utils/echo/wrappers/ChannelWrapper';
 
 interface IPrivateChannelProps extends React.PropsWithChildren {
     channel: string;
 }
 
-const PrivateChannel: React.FC<IPrivateChannelProps> = ({ channel, children }) => {
+export interface IPrivateChannelHandle {
+    channel: ChannelWrapper<PusherPrivateChannel>;
+}
+
+const PrivateChannel: React.ForwardRefRenderFunction<IPrivateChannelHandle, IPrivateChannelProps> = ({ channel, children }, ref) => {
     const context = React.useContext(EchoContext);
 
     if (context === undefined) {
@@ -18,6 +26,10 @@ const PrivateChannel: React.FC<IPrivateChannelProps> = ({ channel, children }) =
 
     const echoChannel = React.useMemo(() => context.echo.private(channel), [channel]);
 
+    React.useImperativeHandle(ref, () => ({
+        channel: echoChannel
+    }));
+
     return (
         <Channel channel={echoChannel}>
             {children}
@@ -25,4 +37,4 @@ const PrivateChannel: React.FC<IPrivateChannelProps> = ({ channel, children }) =
     );
 }
 
-export default PrivateChannel;
+export default React.forwardRef(PrivateChannel);

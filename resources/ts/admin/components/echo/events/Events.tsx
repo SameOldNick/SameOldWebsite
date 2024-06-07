@@ -24,10 +24,10 @@ function Events<TEventData extends object = any>({ matcher, callback, children }
     }, [matcher, callback]);
 
     React.useEffect(() => {
-        channel.listenToAll(onEvent);
+        channel.channel.listenToAll(onEvent);
 
         return () => {
-            channel.stopListeningToAll(onEvent);
+            channel.channel.stopListeningToAll(onEvent);
         };
     }, [channel]);
 

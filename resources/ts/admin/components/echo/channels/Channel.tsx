@@ -1,16 +1,19 @@
 import React from 'react';
-import { Channel as EchoChannel } from 'laravel-echo';
 
-import { EchoContext, PusherChannelContext } from '@admin/utils/echo/context';
 import { PusherChannel } from 'laravel-echo/dist/channel';
 
+import ChannelWrapper from '@admin/utils/echo/wrappers/ChannelWrapper';
+import { EchoContext, PusherChannelContext } from '@admin/utils/echo/context';
+
 interface IChannelProps extends React.PropsWithChildren {
-    channel: string | EchoChannel;
+    channel: string | ChannelWrapper<PusherChannel>;
 }
 
-const isPusherChannel = (channel: EchoChannel): channel is PusherChannel => 'pusher' in channel;
+export interface IChannelHandle {
+    channel: ChannelWrapper<PusherChannel>;
+}
 
-const Channel: React.FC<IChannelProps> = ({ channel, children }) => {
+const Channel: React.ForwardRefRenderFunction<IChannelHandle, IChannelProps> = ({ channel, children }, ref) => {
     const context = React.useContext(EchoContext);
 
     if (context === undefined) {
@@ -19,17 +22,11 @@ const Channel: React.FC<IChannelProps> = ({ channel, children }) => {
         return null;
     }
 
-    const pusherChannel = React.useMemo<PusherChannel | undefined>(() => {
-        const echoChannel = typeof channel === 'string' ? context.echo.channel(channel) : channel;
+    const pusherChannel = React.useMemo(() => typeof channel === 'string' ? context.echo.channel(channel) : channel, [channel]);
 
-        return isPusherChannel(echoChannel) ? echoChannel : undefined;
-    }, [channel]);
-
-    if (pusherChannel === undefined) {
-        logger.error('Channel is not a PusherChannel.');
-
-        return null;
-    }
+    React.useImperativeHandle(ref, () => ({
+        channel: pusherChannel
+    }));
 
     return (
         <PusherChannelContext.Provider value={{ channel: pusherChannel }}>
@@ -38,4 +35,4 @@ const Channel: React.FC<IChannelProps> = ({ channel, children }) => {
     );
 }
 
-export default Channel;
+export default React.forwardRef(Channel);

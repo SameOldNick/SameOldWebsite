@@ -7,14 +7,18 @@ import { IconContext } from "react-icons";
 import store from '@admin/store/index';
 import Pages from '@admin/pages';
 import EchoProvider from '@admin/components/echo/Provider';
-import createEcho, { attachEchoToWindow } from '@admin/utils/echo/echo';
+import createEcho, { attachEchoToWindow, wrapEcho, attachEchoWrapperToWindow } from '@admin/utils/echo/echo';
 
 interface IProps {
 
 }
 
 const App: React.FC<IProps> = ({ }) => {
-    const echo = React.useMemo(() => attachEchoToWindow(createEcho()), []);
+    const echo = React.useMemo(() => {
+        const echo = attachEchoToWindow(createEcho());
+
+        return attachEchoWrapperToWindow(wrapEcho(echo));
+    }, []);
 
     return (
         <>

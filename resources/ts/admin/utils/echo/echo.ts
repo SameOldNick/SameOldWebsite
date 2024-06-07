@@ -3,6 +3,7 @@ import Pusher, { ChannelAuthorizerGenerator } from 'pusher-js';
 import { ChannelAuthorizationData } from 'pusher-js/types/src/core/auth/options';
 
 import { createAuthRequest } from '../api/factories';
+import EchoWrapper from './wrappers/EchoWrapper';
 
 if (!window.Pusher) {
     // This needs to be set in order for Echo to work.
@@ -44,8 +45,32 @@ export function getEchoOptions() {
  * @param {Echo} echo
  * @returns {Echo}
  */
-export function attachEchoToWindow(echo: Echo) {
+export function attachEchoToWindow(echo: Echo): Echo {
     window.Echo = echo;
+
+    return echo;
+}
+
+/**
+ * Wraps Echo with EchoWrapper
+ *
+ * @export
+ * @param {Echo} echo
+ * @returns {EchoWrapper}
+ */
+export function wrapEcho(echo: Echo): EchoWrapper {
+    return new EchoWrapper(echo);
+}
+
+/**
+ * Attaches EchoWrapper to window
+ *
+ * @export
+ * @param {EchoWrapper} echo
+ * @returns {EchoWrapper}
+ */
+export function attachEchoWrapperToWindow(echo: EchoWrapper): EchoWrapper {
+    window.EchoWrapper = echo;
 
     return echo;
 }
@@ -56,7 +81,7 @@ export function attachEchoToWindow(echo: Echo) {
  * @export
  * @returns {Echo}
  */
-export default function createEcho() {
+export default function createEcho(): Echo {
     const options = getEchoOptions();
 
     return new Echo(options);

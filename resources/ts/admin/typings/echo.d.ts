@@ -1,9 +1,12 @@
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 
+import EchoWrapper from '@admin/utils/echo/wrappers/EchoWrapper';
+
 declare global {
     interface Window {
         Echo: Echo;
+        EchoWrapper: EchoWrapper;
         Pusher: typeof Pusher;
     }
 
