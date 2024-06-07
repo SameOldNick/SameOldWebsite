@@ -94,6 +94,13 @@ Route::namespace(Api::class)->group(function () {
             'social-media' => Api\Homepage\SocialMediaLinkController::class,
         ]);
 
+        Route::prefix('/backups')->group(function () {
+            Route::get('/', [Api\BackupController::class, 'index']);
+            Route::get('/{backup}', [Api\BackupController::class, 'show']);
+            Route::get('/{backup}/download', [Api\BackupController::class, 'generateDownloadLink']);
+            Route::post('/perform', [Api\BackupController::class, 'performBackup']);
+        });
+
         Route::apiResource('contact-messages', Api\ContactMessagesController::class)->except(['store']);
 
         Route::post('/projects/restore/{project}', [Api\Homepage\ProjectsController::class, 'restore'])->withTrashed();
