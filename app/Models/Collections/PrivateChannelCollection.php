@@ -43,8 +43,8 @@ class PrivateChannelCollection extends Collection
     /**
      * Gets private channels with UUID and name
      *
-     * @param string $uuid Expected channel UUID
-     * @param string $channel Expected name of channel. Channels with no name are included.
+     * @param  string  $uuid  Expected channel UUID
+     * @param  string  $channel  Expected name of channel. Channels with no name are included.
      * @return Collection<int, PrivateChannel>
      */
     public function lookup(string $uuid, string $channel)

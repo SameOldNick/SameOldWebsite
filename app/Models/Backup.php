@@ -73,8 +73,6 @@ class Backup extends Model
 
     /**
      * Checks if deleted.
-     *
-     * @return boolean
      */
     public function isDeleted(): bool
     {
@@ -83,8 +81,6 @@ class Backup extends Model
 
     /**
      * Checks if failed.
-     *
-     * @return boolean
      */
     public function isFailed(): bool
     {
@@ -93,8 +89,6 @@ class Backup extends Model
 
     /**
      * Checks if doesn't exist.
-     *
-     * @return boolean
      */
     public function isNotExists(): bool
     {

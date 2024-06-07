@@ -6,8 +6,8 @@ use App\Components\Websockets\Notifications\Jobs\JobCompleted;
 use App\Components\Websockets\Notifications\Jobs\JobFailed;
 use App\Components\Websockets\Notifications\Jobs\JobStarted;
 use App\Models\PrivateChannel;
-use Illuminate\Support\Str;
 use DateTimeInterface;
+use Illuminate\Support\Str;
 use Ramsey\Uuid\UuidInterface;
 use Throwable;
 
@@ -15,22 +15,16 @@ class JobStatusNotifier extends AbstractNotifier
 {
     /**
      * Job UUID
-     *
-     * @var UuidInterface
      */
     private UuidInterface $uuid;
 
     /**
      * Who to notify
-     *
-     * @var object
      */
     private object $notifiable;
 
     /**
      * Channel to broadcast notifications to
-     *
-     * @var PrivateChannel|null
      */
     protected ?PrivateChannel $channel;
 
@@ -109,48 +103,43 @@ class JobStatusNotifier extends AbstractNotifier
 
     /**
      * Gets the UUID
-     *
-     * @return UuidInterface
      */
-    public function getUuid(): UuidInterface {
+    public function getUuid(): UuidInterface
+    {
         return $this->uuid;
     }
 
     /**
      * Gets who to notify
-     *
-     * @return object
      */
-    public function getNotifiable(): object {
+    public function getNotifiable(): object
+    {
         return $this->notifiable;
     }
 
     /**
      * Gets private channel
-     *
-     * @return PrivateChannel|null
      */
-    public function getChannel(): ?PrivateChannel {
+    public function getChannel(): ?PrivateChannel
+    {
         return $this->channel;
     }
 
     /**
      * Creates JobStatusNotifier instance
      *
-     * @param object $notifiable
-     * @param ?UuidInterface $uuid
-     * @return JobStatusNotifier
+     * @param  ?UuidInterface  $uuid
      */
-    public static function create(object $notifiable, ?UuidInterface $uuid = null): JobStatusNotifier {
+    public static function create(object $notifiable, ?UuidInterface $uuid = null): JobStatusNotifier
+    {
         return new JobStatusNotifier($uuid ?? static::generateUuid(), $notifiable);
     }
 
     /**
      * Generates UUID
-     *
-     * @return UuidInterface
      */
-    public static function generateUuid(): UuidInterface {
+    public static function generateUuid(): UuidInterface
+    {
         return Str::uuid();
     }
 }

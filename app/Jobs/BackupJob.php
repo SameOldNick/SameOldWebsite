@@ -4,13 +4,11 @@ namespace App\Jobs;
 
 use App\Components\Websockets\Artisan;
 use App\Components\Websockets\Notifiers\JobStatusNotifier;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Ramsey\Uuid\UuidInterface;
 
 class BackupJob extends NotifiableJob implements ShouldQueue
 {

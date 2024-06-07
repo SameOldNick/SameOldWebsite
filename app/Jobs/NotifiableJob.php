@@ -22,15 +22,14 @@ abstract class NotifiableJob
 
     /**
      * Job status notifier
-     *
-     * @var JobStatusNotifier
      */
     protected JobStatusNotifier $notifier;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(JobStatusNotifier $notifier) {
+    public function __construct(JobStatusNotifier $notifier)
+    {
         $this->notifier = $notifier;
     }
 
@@ -66,10 +65,9 @@ abstract class NotifiableJob
 
     /**
      * Gets the job status notifier
-     *
-     * @return JobStatusNotifier
      */
-    public function getNotifier(): JobStatusNotifier {
+    public function getNotifier(): JobStatusNotifier
+    {
         return $this->notifier;
     }
 }
