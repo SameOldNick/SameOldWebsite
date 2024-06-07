@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Components\Analytics\ServiceProvider as AnalyticsServiceProvider;
+use App\Components\Backup\ServiceProvider as BackupServiceProvider;
 use App\Components\Compiler\ServiceProvider as CompilerServiceProvider;
 use App\Components\Encryption\ServiceProvider as EncryptionServiceProvider;
 use App\Components\Fakers\ServiceProvider as FakersServiceProvider;
@@ -36,5 +37,6 @@ class ComponentServiceProvider extends AggregateServiceProvider
         MFAServiceProvider::class,
         FakersServiceProvider::class,
         PasswordsServiceProvider::class,
+        BackupServiceProvider::class,
     ];
 }
