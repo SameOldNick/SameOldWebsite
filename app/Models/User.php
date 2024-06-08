@@ -22,8 +22,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read Country|null $country
- * @property-read \App\Models\Collections\RoleCollection<int, Role> $roles
+ * @property-read \App\Models\Collections\RoleCollection $roles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OAuthProvider> $oauthProviders
+ * @property-read \App\Models\Collections\PrivateChannelCollection $privateChannels
  */
 class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEmail
 {
