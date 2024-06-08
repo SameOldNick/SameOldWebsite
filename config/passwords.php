@@ -1,6 +1,11 @@
 <?php
 
 return [
+    /**
+     * Configuration to use for default password rules.
+     */
+    'default' => env('PASSWORD_DEFAULT', 'production'),
+
     /*
      * Validation rules for password
      */

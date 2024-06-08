@@ -30,13 +30,9 @@ class ServiceProvider extends BaseServiceProvider
                  */
                 $app = $this->app;
 
-                if ($app->isProduction()) {
-                    $config = $app->config->get('passwords.rules.production', []);
-                } else {
-                    $config = $app->config->get('passwords.rules.development', []);
-                }
+                $default = $app->config->get('passwords.default', 'production');
 
-                $builder->fromConfig($config);
+                $builder->fromConfig($app->config->get("passwords.rules.{$default}", []));
             })
         );
     }
