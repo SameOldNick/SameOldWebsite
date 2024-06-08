@@ -23,7 +23,7 @@ class PrivateChannelCollection extends Collection
     /**
      * Gets active channels
      *
-     * @return Collection<int, PrivateChannel>
+     * @return PrivateChannelCollection
      */
     public function active()
     {
@@ -33,7 +33,7 @@ class PrivateChannelCollection extends Collection
     /**
      * Gets expired channels
      *
-     * @return Collection<int, PrivateChannel>
+     * @return PrivateChannelCollection
      */
     public function expired()
     {
@@ -45,7 +45,7 @@ class PrivateChannelCollection extends Collection
      *
      * @param  string  $uuid  Expected channel UUID
      * @param  string  $channel  Expected name of channel. Channels with no name are included.
-     * @return Collection<int, PrivateChannel>
+     * @return PrivateChannelCollection
      */
     public function lookup(string $uuid, string $channel)
     {
