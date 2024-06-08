@@ -287,7 +287,8 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return string
      */
-    public function broadcastChannelRoute() {
+    public function broadcastChannelRoute()
+    {
         return 'App.Models.User.{id}';
     }
 
