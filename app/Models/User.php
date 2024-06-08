@@ -283,6 +283,15 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
     }
 
     /**
+     * Get the broadcast channel route definition that is associated with the given entity.
+     *
+     * @return string
+     */
+    public function broadcastChannelRoute() {
+        return 'App.Models.User.{id}';
+    }
+
+    /**
      * Interact with the slug.
      */
     protected function avatarUrl(): Attribute
