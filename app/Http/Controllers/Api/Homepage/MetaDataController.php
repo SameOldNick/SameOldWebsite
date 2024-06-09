@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class MetaDataController extends HomepageController
 {
@@ -15,7 +15,6 @@ class MetaDataController extends HomepageController
     /**
      * Displays homepage metadata.
      *
-     * @param Request $request
      * @return Collection
      */
     public function show(Request $request)
@@ -28,7 +27,6 @@ class MetaDataController extends HomepageController
     /**
      * Updates homepage metadata
      *
-     * @param Request $request
      * @return Collection
      */
     public function update(Request $request)

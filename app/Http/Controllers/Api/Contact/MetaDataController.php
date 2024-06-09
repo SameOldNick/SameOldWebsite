@@ -69,7 +69,7 @@ class MetaDataController extends Controller
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function getPageKey()
     {

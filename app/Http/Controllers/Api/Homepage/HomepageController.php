@@ -10,7 +10,7 @@ abstract class HomepageController extends Controller
     use HasPage;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function getPageKey()
     {
