@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Pages\HomepageController;
 use App\Models\SocialMediaLink;
 use App\Rules\SocialMediaLink as SocialMediaLinkRule;
 use Illuminate\Http\Request;

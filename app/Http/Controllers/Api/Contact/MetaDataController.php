@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api\Contact;
 
-use App\Http\Controllers\Pages\ContactController;
+use App\Http\Controllers\Controller;
+use App\Traits\Controllers\HasPage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class MetaDataController extends ContactController
+class MetaDataController extends Controller
 {
+    use HasPage;
+
     public function show()
     {
         $keys = [
@@ -57,5 +60,10 @@ class MetaDataController extends ContactController
         }
 
         return $this->pageUpdated()->getPage()->metaData;
+    }
+
+    protected function getPageKey()
+    {
+        return 'contact';
     }
 }

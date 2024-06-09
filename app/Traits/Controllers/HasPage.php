@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Pages;
+namespace App\Traits\Controllers;
 
 use App\Components\Settings\PageSettings;
 use App\Events\PageUpdated;
-use App\Http\Controllers\Controller;
 use App\Models\Page;
 
-abstract class SettingsController extends Controller
+trait HasPage
 {
     /**
      * Gets the Page model.

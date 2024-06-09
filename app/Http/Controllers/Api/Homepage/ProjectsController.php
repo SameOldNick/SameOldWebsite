@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Pages\HomepageController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;

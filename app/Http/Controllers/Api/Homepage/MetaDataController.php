@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Pages\HomepageController;
 use Illuminate\Http\Request;
 
 class MetaDataController extends HomepageController

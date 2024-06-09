@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Homepage;
 
-use App\Http\Controllers\Pages\HomepageController;
 use App\Models\Technology;
 use App\Rules\ValidBladeIcon;
 use Illuminate\Http\Request;
