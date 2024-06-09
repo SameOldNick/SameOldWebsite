@@ -15,7 +15,7 @@ class SkillController extends HomepageController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display skills
      */
     public function index()
     {
@@ -23,7 +23,7 @@ class SkillController extends HomepageController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new skill
      */
     public function store(Request $request)
     {
@@ -44,7 +44,7 @@ class SkillController extends HomepageController
     }
 
     /**
-     * Display the specified resource.
+     * Display a skill
      */
     public function show(Skill $skill)
     {
@@ -52,7 +52,7 @@ class SkillController extends HomepageController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a skill
      */
     public function update(Request $request, Skill $skill)
     {
@@ -76,7 +76,7 @@ class SkillController extends HomepageController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a skill
      */
     public function destroy(Skill $skill)
     {

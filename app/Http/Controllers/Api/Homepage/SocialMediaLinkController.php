@@ -15,7 +15,7 @@ class SocialMediaLinkController extends HomepageController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display social media links
      */
     public function index()
     {
@@ -23,7 +23,7 @@ class SocialMediaLinkController extends HomepageController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new social media link
      */
     public function store(Request $request)
     {
@@ -39,7 +39,7 @@ class SocialMediaLinkController extends HomepageController
     }
 
     /**
-     * Display the specified resource.
+     * Display a social media link
      */
     public function show(SocialMediaLink $socialMedium)
     {
@@ -47,7 +47,7 @@ class SocialMediaLinkController extends HomepageController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a social media link
      */
     public function update(Request $request, SocialMediaLink $socialMedium)
     {
@@ -67,7 +67,7 @@ class SocialMediaLinkController extends HomepageController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a social media link
      */
     public function destroy(SocialMediaLink $socialMedium)
     {

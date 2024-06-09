@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Homepage;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 
 class MetaDataController extends HomepageController
 {
@@ -11,6 +12,12 @@ class MetaDataController extends HomepageController
         $this->middleware('can:role-edit-profile');
     }
 
+    /**
+     * Displays homepage metadata.
+     *
+     * @param Request $request
+     * @return Collection
+     */
     public function show(Request $request)
     {
         $keys = ['name', 'headline', 'location', 'biography'];
@@ -18,6 +25,12 @@ class MetaDataController extends HomepageController
         return $this->getPage()->metaData()->whereIn('key', $keys)->get();
     }
 
+    /**
+     * Updates homepage metadata
+     *
+     * @param Request $request
+     * @return Collection
+     */
     public function update(Request $request)
     {
         $validated = $request->validate([

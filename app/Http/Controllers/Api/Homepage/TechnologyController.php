@@ -14,7 +14,7 @@ class TechnologyController extends HomepageController
     }
 
     /**
-     * Display a listing of the resource.
+     * Displays technologies
      */
     public function index()
     {
@@ -22,7 +22,7 @@ class TechnologyController extends HomepageController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new technology
      */
     public function store(Request $request)
     {
@@ -43,7 +43,7 @@ class TechnologyController extends HomepageController
     }
 
     /**
-     * Display the specified resource.
+     * Display a technology
      */
     public function show(Technology $technology)
     {
@@ -51,7 +51,7 @@ class TechnologyController extends HomepageController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a technology
      */
     public function update(Request $request, Technology $technology)
     {
@@ -75,7 +75,7 @@ class TechnologyController extends HomepageController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a technology
      */
     public function destroy(Technology $technology)
     {

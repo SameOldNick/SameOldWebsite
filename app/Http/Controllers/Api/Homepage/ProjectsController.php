@@ -17,7 +17,7 @@ class ProjectsController extends HomepageController
     }
 
     /**
-     * Display a listing of the resource.
+     * Displays projects
      */
     public function index(Request $request)
     {
@@ -43,7 +43,7 @@ class ProjectsController extends HomepageController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new project
      */
     public function store(StoreProjectRequest $request)
     {
@@ -67,7 +67,7 @@ class ProjectsController extends HomepageController
     }
 
     /**
-     * Display the specified resource.
+     * Display a project
      */
     public function show(Project $project)
     {
@@ -75,7 +75,7 @@ class ProjectsController extends HomepageController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a project
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
@@ -111,7 +111,7 @@ class ProjectsController extends HomepageController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a project
      */
     public function destroy(Project $project)
     {

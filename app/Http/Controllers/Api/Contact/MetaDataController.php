@@ -11,6 +11,9 @@ class MetaDataController extends Controller
 {
     use HasPage;
 
+    /**
+     * Displays contact form settings.
+     */
     public function show()
     {
         $keys = [
@@ -31,6 +34,9 @@ class MetaDataController extends Controller
         return $this->getPage()->metaData()->whereIn('key', $keys)->get();
     }
 
+    /**
+     * Updates contact form settings
+     */
     public function update(Request $request)
     {
         $validated = $request->validate([
@@ -62,6 +68,9 @@ class MetaDataController extends Controller
         return $this->pageUpdated()->getPage()->metaData;
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function getPageKey()
     {
         return 'contact';
