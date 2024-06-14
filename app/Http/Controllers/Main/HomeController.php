@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Main;
 
-use App\Http\Controllers\Pages\HomepageController as BaseController;
+use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Traits\Controllers\HasPage;
 use App\Traits\Controllers\RespondsWithUsersAvatar;
 use Illuminate\Http\Request;
 
-class HomeController extends BaseController
+class HomeController extends Controller
 {
     use RespondsWithUsersAvatar;
+    use HasPage;
 
     /**
      * Show the homepage.
@@ -19,7 +21,7 @@ class HomeController extends BaseController
     public function index()
     {
         return view('main.home', [
-            'settings' => $this->getSettings(),
+            'settings' => $this->getSettingsCached(),
         ]);
     }
 
@@ -31,12 +33,19 @@ class HomeController extends BaseController
     }
 
     /**
-     * Gets Page Settings.
+     * @inheritDoc
+     */
+    protected function getPageKey() {
+        return 'homepage';
+    }
+
+    /**
+     * Gets cached copy of Page Settings.
      *
      * @return \App\Components\Settings\PageSettings
      */
-    protected function getSettings()
+    protected function getSettingsCached()
     {
-        return parent::getSettings()->driver('cache');
+        return $this->getSettings()->driver('cache');
     }
 }

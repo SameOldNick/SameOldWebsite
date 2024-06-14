@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Main;
 
 use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Events\Contact\ContactSubmissionRequiresConfirmation;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Pages\ContactController as BaseContactController;
 use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
+use App\Traits\Controllers\HasPage;
 use Illuminate\Http\Request;
 
-class ContactController extends BaseContactController
+class ContactController extends Controller
 {
+    use HasPage;
+
     /**
      * Displays contact form
      *
@@ -19,7 +23,7 @@ class ContactController extends BaseContactController
     public function show(Request $request)
     {
         $data = [
-            'settings' => $this->getSettings()->toArray(),
+            'settings' => $this->getSettingsCached()->toArray(),
         ];
 
         return view('main.contact', $data);
@@ -34,9 +38,9 @@ class ContactController extends BaseContactController
     {
         $requiresConfirmation = false;
 
-        if ($this->getSettings()->setting('require_confirmation')) {
+        if ($this->getSettingsCached()->setting('require_confirmation')) {
             $user = $request->email === optional($request->user())->email ? $request->user() : null;
-            $requiredBy = $this->getSettings()->setting('confirmation_required_by');
+            $requiredBy = $this->getSettingsCached()->setting('confirmation_required_by');
 
             if ($requiredBy == 'all_users') {
                 $requiresConfirmation = true;
@@ -68,14 +72,14 @@ class ContactController extends BaseContactController
 
             return view('main.contact', [
                 'success' => __('Please check your e-mail for further instructions.'),
-                'settings' => $this->getSettings()->toArray(),
+                'settings' => $this->getSettingsCached()->toArray(),
             ]);
         } else {
             ContactSubmissionConfirmed::dispatch($message);
 
             return view('main.contact', [
                 'success' => __('Thank you for your message! You will receive a reply shortly.'),
-                'settings' => $this->getSettings()->toArray(),
+                'settings' => $this->getSettingsCached()->toArray(),
             ]);
         }
     }
@@ -99,17 +103,24 @@ class ContactController extends BaseContactController
 
         return view('main.contact', [
             'success' => __('Thank you for your message! You will receive a reply shortly.'),
-            'settings' => $this->getSettings()->toArray(),
+            'settings' => $this->getSettingsCached()->toArray(),
         ]);
     }
 
     /**
-     * Gets Page Settings.
+     * @inheritDoc
+     */
+    protected function getPageKey() {
+        return 'contact';
+    }
+
+    /**
+     * Gets cached copy of Page Settings.
      *
      * @return \App\Components\Settings\PageSettings
      */
-    protected function getSettings()
+    protected function getSettingsCached()
     {
-        return parent::getSettings()->driver('cache');
+        return $this->getSettings()->driver('cache');
     }
 }
