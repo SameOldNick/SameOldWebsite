@@ -25,6 +25,11 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * Gets avatar of main user.
+     *
+     * @param Request $request
+     */
     public function avatar(Request $request)
     {
         $user = User::find(config('pages.homepage.user', 1));
