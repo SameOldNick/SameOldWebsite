@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Represents a comment post request.
+ *
  * @property-read ?string $title
  * @property-read string $comment
  */

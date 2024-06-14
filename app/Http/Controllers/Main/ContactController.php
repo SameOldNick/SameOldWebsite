@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Main;
 use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Pages\ContactController as BaseContactController;
 use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
 use App\Traits\Controllers\HasPage;
@@ -108,9 +107,10 @@ class ContactController extends Controller
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    protected function getPageKey() {
+    protected function getPageKey()
+    {
         return 'contact';
     }
 

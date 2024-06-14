@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    use RespondsWithUsersAvatar;
     use HasPage;
+    use RespondsWithUsersAvatar;
 
     /**
      * Show the homepage.
@@ -27,8 +27,6 @@ class HomeController extends Controller
 
     /**
      * Gets avatar of main user.
-     *
-     * @param Request $request
      */
     public function avatar(Request $request)
     {
@@ -38,9 +36,10 @@ class HomeController extends Controller
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    protected function getPageKey() {
+    protected function getPageKey()
+    {
         return 'homepage';
     }
 
