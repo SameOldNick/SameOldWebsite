@@ -2,6 +2,7 @@
 
 namespace App\Components\Macros;
 
+use App\Components\Macros\Helpers\ArrayCodeGenerator;
 use Illuminate\Support\Arr;
 
 class ArrMixin
@@ -48,6 +49,22 @@ class ArrMixin
             $filtered = array_filter($found, fn ($value) => filled($value));
 
             return count($filtered) === count($keys);
+        };
+    }
+
+    /**
+     * Exports array as PHP code.
+     *
+     * @return callable
+     */
+    public function export() {
+        return function ($array, $ignoreIndexes = true, $shortSyntax = true, $indent = '    ') {
+            /**
+             * Macros don't play nice when it comes to recursion.
+             * We'll send it off to another class to allow recursion.
+             */
+
+            return ArrayCodeGenerator::generate($array, 1, $ignoreIndexes, $shortSyntax, $indent);
         };
     }
 }
