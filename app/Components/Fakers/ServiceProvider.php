@@ -39,7 +39,7 @@ final class ServiceProvider extends BaseServiceProvider
                     $object->addProvider($app->make(Providers\SocialMedia::class));
                     $object->addProvider($app->make(Providers\BladeIcon::class));
                     $object->addProvider($app->make(Providers\Technology::class));
-                    $object->addProvider($app->make(Providers\Security::class));
+                    $object->addProvider($app->make(Providers\Text::class));
                     $object->addProvider(new \DavidBadura\FakerMarkdownGenerator\FakerProvider($object));
                 }
             });
