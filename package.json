@@ -98,7 +98,7 @@
         "shiki": "^1.6.0",
         "store2": "^2.14.3",
         "string": "^3.3.3",
-        "sweetalert2": "^11.10.1",
+        "sweetalert2": "^11.11.1",
         "sweetalert2-react-content": "^5.0.0",
         "tinymce": "^7.1.0",
         "ts-deepmerge": "^7.0.0",
