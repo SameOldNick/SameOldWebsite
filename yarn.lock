@@ -4523,10 +4523,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"github-markdown-css@npm:^5.2.0":
-  version: 5.5.1
-  resolution: "github-markdown-css@npm:5.5.1"
-  checksum: 10/9d09980da0dd055c1d291da6a95754c41c05d35f5d12898460acd321324229baeb3efd54d4e583978126c253171941c6ed567df144cb01f2fdaef5e879699d94
+"github-markdown-css@npm:^5.6.0":
+  version: 5.6.0
+  resolution: "github-markdown-css@npm:5.6.0"
+  checksum: 10/7e9a57ee9d67219680b617dccfd9b52d9d2dd8580027839110cfb9ca29e815ca96953d85f454fcdd2c536bd8482290c960fb26091014f43f9f3ec7855848354a
   languageName: node
   linkType: hard
 
@@ -9204,7 +9204,7 @@ __metadata:
     eslint-plugin-jest: "npm:^28.6.0"
     eslint-plugin-react: "npm:latest"
     formik: "npm:^2.4.3"
-    github-markdown-css: "npm:^5.2.0"
+    github-markdown-css: "npm:^5.6.0"
     history: "npm:^5.3.0"
     jest: "npm:^29.7.0"
     jquery: "npm:^3.6.0"
