@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Listeners\Comments;
 
 use App\Events\Comments\CommentApproved;
 use App\Notifications\CommentPosted;
