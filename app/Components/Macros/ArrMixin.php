@@ -57,7 +57,8 @@ class ArrMixin
      *
      * @return callable
      */
-    public function export() {
+    public function export()
+    {
         return function ($array, $ignoreIndexes = true, $shortSyntax = true, $indent = '    ') {
             /**
              * Macros don't play nice when it comes to recursion.

@@ -5,7 +5,8 @@ namespace App\Components\Macros\Helpers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class ArrayCodeGenerator {
+class ArrayCodeGenerator
+{
     /**
      * Generates array as PHP code
      *

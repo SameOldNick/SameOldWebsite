@@ -11,7 +11,6 @@ class Text extends Base
     /**
      * Generates a strong password.
      *
-     * @param Options|null $options
      * @return string
      */
     public function strongPassword(?Options $options = null)

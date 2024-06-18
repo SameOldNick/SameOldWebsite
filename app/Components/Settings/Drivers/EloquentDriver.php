@@ -11,10 +11,12 @@ class EloquentDriver implements Driver
     /**
      * Initializes the eloquent driver.
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function setting(string $page, $setting, $default = null)
     {
@@ -24,7 +26,7 @@ class EloquentDriver implements Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function settings(string $page, ...$keys)
     {
@@ -46,10 +48,10 @@ class EloquentDriver implements Driver
     /**
      * Gets metadata collection for page.
      *
-     * @param string $page
      * @return \Illuminate\Database\Eloquent\Collection<int, PageMetaData>
      */
-    public function getCollection(string $page) {
+    public function getCollection(string $page)
+    {
         return Page::firstWhere(['page' => $page])->metaData;
     }
 }

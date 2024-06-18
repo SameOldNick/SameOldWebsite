@@ -14,8 +14,6 @@ class CacheDriver implements Driver
 
     /**
      * Cache repository
-     *
-     * @var Repository
      */
     protected readonly Repository $cache;
 
@@ -37,7 +35,7 @@ class CacheDriver implements Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function setting(string $page, $setting, $default = null)
     {
@@ -45,7 +43,7 @@ class CacheDriver implements Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function settings(string $page, ...$keys)
     {
@@ -55,7 +53,7 @@ class CacheDriver implements Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function all(string $page)
     {
@@ -71,8 +69,8 @@ class CacheDriver implements Driver
     /**
      * Forwards calls to underlying driver.
      *
-     * @param string $name
-     * @param array $arguments
+     * @param  string  $name
+     * @param  array  $arguments
      * @return mixed
      */
     public function __call($name, $arguments)

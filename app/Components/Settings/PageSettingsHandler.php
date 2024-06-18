@@ -8,18 +8,15 @@ use Illuminate\Contracts\Support\Arrayable;
 /**
  * Handles settings for a specific page
  */
-class PageSettingsHandler implements Arrayable {
+class PageSettingsHandler implements Arrayable
+{
     /**
      * Intializes handler
-     *
-     * @param string $page
-     * @param Driver $driver
      */
     public function __construct(
         public readonly string $page,
         protected readonly Driver $driver
-    )
-    {
+    ) {
 
     }
 
@@ -30,7 +27,8 @@ class PageSettingsHandler implements Arrayable {
      * @param  mixed  $default
      * @return mixed
      */
-    public function setting($setting, $default = null) {
+    public function setting($setting, $default = null)
+    {
         return $this->getDriver()->setting($this->page, $setting, $default);
     }
 
@@ -40,7 +38,8 @@ class PageSettingsHandler implements Arrayable {
      * @param  mixed  ...$args  Keys
      * @return array
      */
-    public function settings(...$args) {
+    public function settings(...$args)
+    {
         return $this->getDriver()->settings($this->page, ...$args);
     }
 
@@ -49,12 +48,13 @@ class PageSettingsHandler implements Arrayable {
      *
      * @return array
      */
-    public function all() {
+    public function all()
+    {
         return $this->getDriver()->all($this->page);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function toArray()
     {
@@ -63,10 +63,9 @@ class PageSettingsHandler implements Arrayable {
 
     /**
      * Gets the underlying driver.
-     *
-     * @return Driver
      */
-    public function getDriver(): Driver {
+    public function getDriver(): Driver
+    {
         return $this->driver;
     }
 }

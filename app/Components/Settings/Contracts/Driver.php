@@ -2,11 +2,12 @@
 
 namespace App\Components\Settings\Contracts;
 
-interface Driver {
+interface Driver
+{
     /**
      * Gets setting value
      *
-     * @param string $page Page key
+     * @param  string  $page  Page key
      * @param  string  $setting  Key
      * @param  mixed  $default
      * @return mixed
@@ -16,7 +17,7 @@ interface Driver {
     /**
      * Gets settings as array
      *
-     * @param string $page Page key
+     * @param  string  $page  Page key
      * @param  array  ...$keys  Keys to get values for
      * @return array
      */
@@ -25,7 +26,7 @@ interface Driver {
     /**
      * Get all settings.
      *
-     * @param string $page Page key
+     * @param  string  $page  Page key
      * @return array
      */
     public function all(string $page);

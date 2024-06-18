@@ -4,7 +4,6 @@ namespace App\Components\Settings\Drivers;
 
 use App\Components\Settings\Contracts\Driver;
 use App\Components\Settings\Facades\PageSettings;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\ForwardsCalls;
 
@@ -21,8 +20,6 @@ class FakedDriver implements Driver
 
     /**
      * Initializes the driver.
-     *
-     * @param  array $settings
      */
     public function __construct(
         protected readonly array $settings
@@ -30,7 +27,7 @@ class FakedDriver implements Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function setting(string $page, $setting, $default = null)
     {
@@ -40,7 +37,7 @@ class FakedDriver implements Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function settings(string $page, ...$keys)
     {
@@ -56,7 +53,7 @@ class FakedDriver implements Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function all(string $page)
     {
@@ -66,8 +63,8 @@ class FakedDriver implements Driver
     /**
      * Forwards call to underlying driver.
      *
-     * @param string $name
-     * @param array $arguments
+     * @param  string  $name
+     * @param  array  $arguments
      * @return mixed
      */
     public function __call($name, $arguments)
@@ -77,45 +74,41 @@ class FakedDriver implements Driver
 
     /**
      * Creates array key for accessing faked settings.
-     *
-     * @param string $page
-     * @param string $key
-     * @return string
      */
-    protected function createArrayKey(string $page, string $key): string {
+    protected function createArrayKey(string $page, string $key): string
+    {
         return "{$page}.{$key}";
     }
 
     /**
      * Checks if setting is faked.
      *
-     * @param string $page
-     * @param string $key
-     * @return boolean
+     * @return bool
      */
-    protected function hasFakedSetting(string $page, string $key) {
+    protected function hasFakedSetting(string $page, string $key)
+    {
         return Arr::has($this->settings, $this->createArrayKey($page, $key));
     }
 
     /**
      * Gets faked setting.
      *
-     * @param string $page
-     * @param string $key
-     * @param mixed $default
+     * @param  string  $key
+     * @param  mixed  $default
      * @return mixed
      */
-    protected function getFakedSetting(string $page, $key, $default = null) {
+    protected function getFakedSetting(string $page, $key, $default = null)
+    {
         return Arr::get($this->settings, $this->createArrayKey($page, $key), $default);
     }
 
     /**
      * Gets faked settings
      *
-     * @param string $page
      * @return array
      */
-    protected function getFakedSettings(string $page) {
+    protected function getFakedSettings(string $page)
+    {
         return Arr::get($this->settings, $page, []);
     }
 

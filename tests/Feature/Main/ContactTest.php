@@ -39,7 +39,7 @@ class ContactTest extends TestCase
         PageSettings::fake([
             'contact' => [
                 'require_confirmation' => false,
-            ]
+            ],
         ]);
 
         $data = [

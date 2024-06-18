@@ -3,20 +3,15 @@
 namespace App\Components\Settings\Testing;
 
 use App\Components\Settings\Drivers\FakedDriver;
-use App\Components\Settings\PageSettingsFactory as BasePageSettingsFactory;
 use App\Components\Settings\PageSettingsManager as BasePageSettingsManager;
-use App\Models\Page;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Support\Manager;
-use Illuminate\Support\Testing\Fakes\Fake;
 
 class PageSettingsManager extends BasePageSettingsManager
 {
     public function __construct(
         Container $container,
         protected readonly array $faked
-    )
-    {
+    ) {
         parent::__construct($container);
     }
 
