@@ -5,13 +5,12 @@ namespace App\Mail;
 use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
+use App\Components\Settings\Facades\PageSettings;
 use App\Traits\Support\BuildsFromContainer;
-use App\Traits\Support\HasPageSettings;
 
 class ContactedConfirmation extends MarkdownTemplate
 {
     use BuildsFromContainer;
-    use HasPageSettings;
 
     protected $content;
 
@@ -22,7 +21,7 @@ class ContactedConfirmation extends MarkdownTemplate
         protected readonly string $email,
         protected readonly string $message,
     ) {
-        $this->settings = $this->getPageSettings('contact');
+        $this->settings = PageSettings::page('contact');
     }
 
     public function doBuild(PlaceholdersFactory $factory)

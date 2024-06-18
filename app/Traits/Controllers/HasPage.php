@@ -2,7 +2,7 @@
 
 namespace App\Traits\Controllers;
 
-use App\Components\Settings\PageSettings;
+use App\Components\Settings\Facades\PageSettings;
 use App\Events\PageUpdated;
 use App\Models\Page;
 
@@ -32,12 +32,10 @@ trait HasPage
 
     /**
      * Gets Page Settings.
-     *
-     * @return PageSettings
      */
     protected function getSettings()
     {
-        return app(PageSettings::class, ['key' => $this->getPageKey()]);
+        return PageSettings::page($this->getPageKey());
     }
 
     /**

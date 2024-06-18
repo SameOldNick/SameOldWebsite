@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Components\Settings\PageSettings;
+use App\Components\Settings\Facades\PageSettings;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
@@ -22,15 +22,13 @@ class ContactRequest extends FormRequest
      */
     public function rules(): array
     {
-        $settings = $this->container->make(PageSettings::class, ['key' => 'contact'])->driver('cache');
-
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'required|string',
         ];
 
-        if ($settings->setting('require_recaptcha')) {
+        if (PageSettings::page('contact')->setting('require_recaptcha')) {
             $rules[recaptchaFieldName()] = recaptchaRuleName();
         }
 

@@ -3,15 +3,12 @@
 namespace App\View\Components\Homepage;
 
 use App\Models\SocialMediaLink;
-use App\Traits\Support\HasPageSettings;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class SocialMedia extends Component
 {
-    use HasPageSettings;
-
     /**
      * Create a new component instance.
      */

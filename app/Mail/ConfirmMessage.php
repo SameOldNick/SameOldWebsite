@@ -5,9 +5,9 @@ namespace App\Mail;
 use App\Components\Placeholders\Compilers\TagCompiler;
 use App\Components\Placeholders\Factory as PlaceholdersFactory;
 use App\Components\Placeholders\Options;
+use App\Components\Settings\Facades\PageSettings;
 use App\Models\ContactMessage;
 use App\Traits\Support\BuildsFromContainer;
-use App\Traits\Support\HasPageSettings;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -15,7 +15,6 @@ use Illuminate\Mail\Mailables\Content;
 class ConfirmMessage extends Mailable
 {
     use BuildsFromContainer;
-    use HasPageSettings;
     use Queueable;
 
     protected $settings;
@@ -26,7 +25,7 @@ class ConfirmMessage extends Mailable
     public function __construct(
         protected readonly ContactMessage $contactMessage
     ) {
-        $this->settings = $this->getPageSettings('contact');
+        $this->settings = PageSettings::page('contact');
     }
 
     public function doBuild(PlaceholdersFactory $factory)

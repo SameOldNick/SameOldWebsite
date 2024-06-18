@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Main;
 
+use App\Components\Settings\Facades\PageSettings;
 use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Mail\ConfirmMessage;
@@ -17,14 +18,12 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\DisablesVite;
-use Tests\Feature\Traits\ManagesPageSettings;
 use Tests\TestCase;
 
 class ContactTest extends TestCase
 {
     use CreatesUser;
     use DisablesVite;
-    use ManagesPageSettings;
     use RefreshDatabase;
     use WithFaker;
 
@@ -37,8 +36,10 @@ class ContactTest extends TestCase
     {
         Event::fake();
 
-        $this->pageSetting('contact', [
-            'require_confirmation' => false,
+        PageSettings::fake([
+            'contact' => [
+                'require_confirmation' => false,
+            ]
         ]);
 
         $data = [
@@ -64,7 +65,7 @@ class ContactTest extends TestCase
     {
         Event::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
         ]);
 
@@ -91,7 +92,7 @@ class ContactTest extends TestCase
     {
         Mail::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'all_users',
         ]);
@@ -123,7 +124,7 @@ class ContactTest extends TestCase
     {
         Mail::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'all_users',
         ]);
@@ -155,7 +156,7 @@ class ContactTest extends TestCase
     {
         Mail::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'unregistered_users',
         ]);
@@ -188,7 +189,7 @@ class ContactTest extends TestCase
         Mail::fake();
         Notification::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'unregistered_users',
             'recipient_email' => $this->faker->email,
@@ -222,7 +223,7 @@ class ContactTest extends TestCase
     {
         Mail::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'unregistered_unverified_users',
         ]);
@@ -254,7 +255,7 @@ class ContactTest extends TestCase
     {
         Mail::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'unregistered_unverified_users',
         ]);
@@ -289,7 +290,7 @@ class ContactTest extends TestCase
         Mail::fake();
         Notification::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'unregistered_unverified_users',
             'recipient_email' => $this->faker->email,
@@ -324,7 +325,7 @@ class ContactTest extends TestCase
         Mail::fake();
         Notification::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => false,
             'recipient_email' => $this->faker->email,
         ]);
@@ -358,7 +359,7 @@ class ContactTest extends TestCase
         Mail::fake();
         Notification::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => false,
             'recipient_email' => $this->faker->email,
         ]);
@@ -392,7 +393,7 @@ class ContactTest extends TestCase
         Mail::fake();
         Notification::fake();
 
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
             'confirmation_required_by' => 'all_users',
             'recipient_email' => $this->faker->email,
@@ -504,7 +505,7 @@ class ContactTest extends TestCase
      */
     public function testContactProcessRequiresConfirmationModelCreated()
     {
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => true,
         ]);
 
@@ -532,7 +533,7 @@ class ContactTest extends TestCase
      */
     public function testContactProcessModelCreated()
     {
-        $this->pageSetting('contact', [
+        PageSettings::fake('contact', [
             'require_confirmation' => false,
         ]);
 

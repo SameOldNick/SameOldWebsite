@@ -21,7 +21,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('main.home', [
-            'settings' => $this->getSettingsCached(),
+            'settings' => $this->getSettings(),
         ]);
     }
 
@@ -41,15 +41,5 @@ class HomeController extends Controller
     protected function getPageKey()
     {
         return 'homepage';
-    }
-
-    /**
-     * Gets cached copy of Page Settings.
-     *
-     * @return \App\Components\Settings\PageSettings
-     */
-    protected function getSettingsCached()
-    {
-        return $this->getSettings()->driver('cache');
     }
 }

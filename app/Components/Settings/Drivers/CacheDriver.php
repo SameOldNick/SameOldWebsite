@@ -2,89 +2,82 @@
 
 namespace App\Components\Settings\Drivers;
 
+use App\Components\Settings\Contracts\Driver;
+use App\Components\Settings\Facades\PageSettings;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\ForwardsCalls;
 
-class CacheDriver
+class CacheDriver implements Driver
 {
     use ForwardsCalls;
 
-    protected $pageKey;
+    /**
+     * Cache repository
+     *
+     * @var Repository
+     */
+    protected readonly Repository $cache;
 
-    protected $eloquentDriver;
-
-    protected $eloquentDriverFactory;
-
-    protected $cache;
+    /**
+     * Decorated driver
+     *
+     * @var ?Driver
+     */
+    protected ?Driver $decoratedDriver = null;
 
     /**
      * Initializes the cache driver
      *
-     * @param  string  $pageKey  Page key
-     * @param  callable  $eloquentDriverFactory  Callback for creating the eloquent driver.
      * @param  Repository  $cache  Cache repository
      */
-    public function __construct(string $pageKey, callable $eloquentDriverFactory, Repository $cache)
+    public function __construct(Repository $cache)
     {
-        $this->pageKey = $pageKey;
-        $this->eloquentDriverFactory = $eloquentDriverFactory;
         $this->cache = $cache;
     }
 
     /**
-     * Gets setting value
-     *
-     * @param  string  $setting  Key
-     * @param  mixed  $default
-     * @return mixed
+     * @inheritDoc
      */
-    public function setting($setting, $default = null)
+    public function setting(string $page, $setting, $default = null)
     {
-        return Arr::get($this->toArray(), $setting, $default);
-
-        /*return $this->cache->get($this->createCacheKey($setting), function () use ($setting, $default) {
-            $value = $this->resolveEloquentDriver()->setting($setting, $default);
-
-            if ($value !== $default)
-                $this->cache->set($this->createCacheKey($setting), $value);
-
-            return $value;
-        });*/
+        return Arr::get($this->all($page), $setting, $default);
     }
 
     /**
-     * Gets settings as array
-     *
-     * @param  mixed  ...$args  Keys
-     * @return array
+     * @inheritDoc
      */
-    public function settings(...$args)
+    public function settings(string $page, ...$keys)
     {
-        $keys = ! is_array($args[0]) ? $args : $args[0];
+        $keys = ! is_array($keys[0]) ? $keys : $keys[0];
 
-        return Arr::only($this->toArray(), $keys);
+        return Arr::only($this->all($page), $keys);
     }
 
     /**
-     * Get the cached settings.
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function toArray()
+    public function all(string $page)
     {
-        return $this->cache->get($this->createCacheKey(), function () {
-            $all = $this->resolveEloquentDriver()->toArray();
+        return $this->cache->get($this->createCacheKey($page), function () use ($page) {
+            $all = $this->resolveDriver()->all($page);
 
-            $this->cache->set($this->createCacheKey(), $all);
+            $this->cache->set($this->createCacheKey($page), $all);
 
             return $all;
         });
     }
 
+    /**
+     * Forwards calls to underlying driver.
+     *
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
     public function __call($name, $arguments)
     {
-        return $this->forwardDecoratedCallTo($this->resolveEloquentDriver(), $name, $arguments);
+        return $this->forwardDecoratedCallTo($this->resolveDriver(), $name, $arguments);
     }
 
     /**
@@ -92,22 +85,22 @@ class CacheDriver
      *
      * @return string
      */
-    protected function createCacheKey()
+    protected function createCacheKey(string $page)
     {
-        return "pages.{$this->pageKey}";
+        return "pages.{$page}";
     }
 
     /**
-     * Resolves eloquent driver
+     * Resolves driver
      *
-     * @return EloquentDriver
+     * @return Driver
      */
-    protected function resolveEloquentDriver()
+    protected function resolveDriver()
     {
-        if (is_null($this->eloquentDriver)) {
-            $this->eloquentDriver = \call_user_func($this->eloquentDriverFactory);
+        if (is_null($this->decoratedDriver)) {
+            $this->decoratedDriver = PageSettings::driver('eloquent');
         }
 
-        return $this->eloquentDriver;
+        return $this->decoratedDriver;
     }
 }

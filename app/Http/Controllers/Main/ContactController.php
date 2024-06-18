@@ -22,7 +22,7 @@ class ContactController extends Controller
     public function show(Request $request)
     {
         $data = [
-            'settings' => $this->getSettingsCached()->toArray(),
+            'settings' => $this->getSettings()->toArray(),
         ];
 
         return view('main.contact', $data);
@@ -37,9 +37,9 @@ class ContactController extends Controller
     {
         $requiresConfirmation = false;
 
-        if ($this->getSettingsCached()->setting('require_confirmation')) {
+        if ($this->getSettings()->setting('require_confirmation')) {
             $user = $request->email === optional($request->user())->email ? $request->user() : null;
-            $requiredBy = $this->getSettingsCached()->setting('confirmation_required_by');
+            $requiredBy = $this->getSettings()->setting('confirmation_required_by');
 
             if ($requiredBy == 'all_users') {
                 $requiresConfirmation = true;
@@ -71,14 +71,14 @@ class ContactController extends Controller
 
             return view('main.contact', [
                 'success' => __('Please check your e-mail for further instructions.'),
-                'settings' => $this->getSettingsCached()->toArray(),
+                'settings' => $this->getSettings()->toArray(),
             ]);
         } else {
             ContactSubmissionConfirmed::dispatch($message);
 
             return view('main.contact', [
                 'success' => __('Thank you for your message! You will receive a reply shortly.'),
-                'settings' => $this->getSettingsCached()->toArray(),
+                'settings' => $this->getSettings()->toArray(),
             ]);
         }
     }
@@ -102,7 +102,7 @@ class ContactController extends Controller
 
         return view('main.contact', [
             'success' => __('Thank you for your message! You will receive a reply shortly.'),
-            'settings' => $this->getSettingsCached()->toArray(),
+            'settings' => $this->getSettings()->toArray(),
         ]);
     }
 
@@ -112,15 +112,5 @@ class ContactController extends Controller
     protected function getPageKey()
     {
         return 'contact';
-    }
-
-    /**
-     * Gets cached copy of Page Settings.
-     *
-     * @return \App\Components\Settings\PageSettings
-     */
-    protected function getSettingsCached()
-    {
-        return $this->getSettings()->driver('cache');
     }
 }
