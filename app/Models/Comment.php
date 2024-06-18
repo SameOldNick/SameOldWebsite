@@ -12,11 +12,11 @@ use Spatie\Url\Url as SpatieUrl;
  * @property int $id
  * @property string $title
  * @property string $comment
- * @property \Illuminate\Support\Carbon|null $approved_at
+ * @property ?\Illuminate\Support\Carbon $approved_at
  * @property-read Article $article
- * @property-read Comment|null $parent
+ * @property-read ?Comment $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $children
- * @property-read User|null $approvedBy
+ * @property-read ?User $approvedBy
  */
 class Comment extends Model
 {

@@ -18,10 +18,10 @@ use Illuminate\Support\Str;
  * @property string $path
  * @property string $disk
  * @property bool $is_public
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read Model|null $fileable
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
+ * @property-read ?Model $fileable
  * @property-read array $pathInfo
  * @property-read bool $fileExists
  */

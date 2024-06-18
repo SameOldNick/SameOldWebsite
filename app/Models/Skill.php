@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $icon
  * @property string $skill
- * @property \DateTimeInterface|null $created_at
- * @property \DateTimeInterface|null $updated_at
+ * @property ?\DateTimeInterface $created_at
+ * @property ?\DateTimeInterface $updated_at
  */
 class Skill extends Model
 {

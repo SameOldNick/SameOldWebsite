@@ -13,9 +13,9 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * @property string $uuid
  * @property string $channel
- * @property DateTimeInterface|null $created_at
- * @property DateTimeInterface|null $updated_at
- * @property DateTimeInterface|null $expires_at
+ * @property ?DateTimeInterface $created_at
+ * @property ?DateTimeInterface $updated_at
+ * @property ?DateTimeInterface $expires_at
  */
 class PrivateChannel extends Model
 {

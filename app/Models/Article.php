@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\URL;
  * @property int $id
  * @property string $title
  * @property string $slug
- * @property \Illuminate\Support\Carbon|null $published_at
+ * @property ?\Illuminate\Support\Carbon $published_at
  * @property-read bool $is_published
  * @property-read bool $is_scheduled
  * @property-read string $url
  * @property-read string $public_url
  * @property-read string $private_url
  * @property-read Revision $revision
- * @property-read Revision|null $currentRevision
- * @property-read Image|null $mainImage
+ * @property-read ?Revision $currentRevision
+ * @property-read ?Image $mainImage
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Revision> $revisions
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Tag> $tags
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $comments
