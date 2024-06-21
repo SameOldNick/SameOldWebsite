@@ -16,8 +16,7 @@ class AuthController extends Controller
     public function __construct(
         protected readonly AuthenticatorService $authenticatorService,
         protected readonly PersistService $persistService
-    ) {
-    }
+    ) {}
 
     /**
      * Displays prompt for MFA code.

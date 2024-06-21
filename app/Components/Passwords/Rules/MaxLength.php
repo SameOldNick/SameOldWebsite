@@ -9,8 +9,7 @@ class MaxLength implements Rule
 {
     public function __construct(
         public readonly int $max
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Components\Analytics\ServiceProvider as AnalyticsServiceProvider;
 use App\Components\Backup\ServiceProvider as BackupServiceProvider;
 use App\Components\Compiler\ServiceProvider as CompilerServiceProvider;
+use App\Components\Dusk\ServiceProvider as DuskServiceProvider;
 use App\Components\Encryption\ServiceProvider as EncryptionServiceProvider;
 use App\Components\Fakers\ServiceProvider as FakersServiceProvider;
 use App\Components\LittleJWT\ServiceProvider as LittleJWTServiceProvider;
@@ -16,7 +17,6 @@ use App\Components\Passwords\ServiceProvider as PasswordsServiceProvider;
 use App\Components\Security\ServiceProvider as SecurityServiceProvider;
 use App\Components\Settings\ServiceProvider as SettingsServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
-use App\Components\Dusk\ServiceProvider as DuskServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider

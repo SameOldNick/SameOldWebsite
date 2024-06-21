@@ -11,8 +11,7 @@ class CustomRule implements Rule
 {
     public function __construct(
         protected readonly Closure $callback
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}

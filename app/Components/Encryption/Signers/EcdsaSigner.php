@@ -15,8 +15,7 @@ class EcdsaSigner implements Signer
 {
     public function __construct(
         private readonly array $config
-    ) {
-    }
+    ) {}
 
     public function sign(string $message): string
     {

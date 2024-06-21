@@ -17,9 +17,7 @@ final class WeightManager
     public function __construct(
         protected readonly Collection $collection,
         protected readonly array $weights = []
-    ) {
-
-    }
+    ) {}
 
     /**
      * Maps results to weight

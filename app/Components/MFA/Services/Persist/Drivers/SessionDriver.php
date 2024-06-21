@@ -13,8 +13,7 @@ class SessionDriver implements PersistServiceDriver
     public function __construct(
         protected readonly SessionManager $sessionManager,
         protected readonly array $config
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}
@@ -57,9 +56,7 @@ class SessionDriver implements PersistServiceDriver
     /**
      * {@inheritDoc}
      */
-    public function purge()
-    {
-    }
+    public function purge() {}
 
     /**
      * Gets session key

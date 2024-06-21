@@ -13,8 +13,7 @@ class CommentPolicy
 
     public function __construct(
         protected readonly Request $request
-    ) {
-    }
+    ) {}
 
     /**
      * Determine whether the user can view any models.

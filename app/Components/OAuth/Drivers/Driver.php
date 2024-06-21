@@ -20,8 +20,7 @@ abstract class Driver
 {
     public function __construct(
         protected Container $container
-    ) {
-    }
+    ) {}
 
     /**
      * Checks if driver is configured.

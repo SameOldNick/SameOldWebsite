@@ -44,7 +44,5 @@ trait CreatesUser
         return $factory->create();
     }
 
-    public function tearDownCreatesUser()
-    {
-    }
+    public function tearDownCreatesUser() {}
 }

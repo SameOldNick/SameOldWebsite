@@ -14,15 +14,12 @@ final class HttpSecureWatchdog implements WatchdogDriver
 {
     public function __construct(
         protected readonly array $config
-    ) {
-    }
+    ) {}
 
     /**
      * Initializes the watchdog.
      */
-    public function initialize(): void
-    {
-    }
+    public function initialize(): void {}
 
     /**
      * Sniff for issues.
@@ -52,9 +49,7 @@ final class HttpSecureWatchdog implements WatchdogDriver
      *
      * @return void
      */
-    public function cleanup()
-    {
-    }
+    public function cleanup() {}
 
     /**
      * Gets the secure URL to check.

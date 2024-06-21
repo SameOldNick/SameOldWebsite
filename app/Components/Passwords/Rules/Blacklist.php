@@ -19,8 +19,7 @@ class Blacklist extends ValidationRule
     public function __construct(
         protected readonly array $blacklists,
         protected readonly bool $substitutions = false
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}

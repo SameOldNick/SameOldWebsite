@@ -22,8 +22,7 @@ class ProcessNotifier extends AbstractNotifier
     public function __construct(
         public readonly UuidInterface $uuid,
         public readonly object $notifiable,
-    ) {
-    }
+    ) {}
 
     /**
      * Sends notification that process was started.

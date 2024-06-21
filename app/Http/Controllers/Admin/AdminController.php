@@ -15,8 +15,7 @@ class AdminController extends Controller
 {
     public function __construct(
         private readonly Application $app
-    ) {
-    }
+    ) {}
 
     public function singleSignOn(Request $request, User $user)
     {

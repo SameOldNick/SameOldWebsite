@@ -10,8 +10,7 @@ class SetupConfiguration implements Arrayable
 {
     public function __construct(
         protected readonly OTPInterface $otp
-    ) {
-    }
+    ) {}
 
     /**
      * Gets the account name.

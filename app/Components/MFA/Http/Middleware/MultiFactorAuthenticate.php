@@ -16,8 +16,7 @@ class MultiFactorAuthenticate
     public function __construct(
         protected readonly AuthenticatorService $authenticator,
         protected readonly PersistService $persist
-    ) {
-    }
+    ) {}
 
     /**
      * Handle an incoming request.

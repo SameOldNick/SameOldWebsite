@@ -19,8 +19,7 @@ final class Generator
      */
     public function __construct(
         protected readonly Options $options
-    ) {
-    }
+    ) {}
 
     /**
      * Generates password

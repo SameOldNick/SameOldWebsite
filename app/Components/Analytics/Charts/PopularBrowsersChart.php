@@ -18,8 +18,7 @@ class PopularBrowsersChart extends Chart
 
     public function __construct(
         protected readonly DateRangeHelper $dateRangeHelper
-    ) {
-    }
+    ) {}
 
     public function generate()
     {

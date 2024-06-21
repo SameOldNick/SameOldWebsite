@@ -16,9 +16,7 @@ class PageSettingsHandler implements Arrayable
     public function __construct(
         public readonly string $page,
         protected readonly Driver $driver
-    ) {
-
-    }
+    ) {}
 
     /**
      * Gets setting value

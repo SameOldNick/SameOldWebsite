@@ -21,9 +21,7 @@ class Artisan
      */
     public function __construct(
         public readonly ProcessNotifier $notifier
-    ) {
-
-    }
+    ) {}
 
     /**
      * Calls Artisan command and routes output to notifier.

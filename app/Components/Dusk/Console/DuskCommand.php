@@ -2,7 +2,6 @@
 
 namespace App\Components\Dusk\Console;
 
-use Illuminate\Foundation\Console\ServeCommand;
 use Illuminate\Support\Str;
 use Laravel\Dusk\Console\DuskCommand as BaseDuskCommand;
 use RuntimeException;
@@ -10,7 +9,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 use Throwable;
 
-class DuskCommand extends BaseDuskCommand {
+class DuskCommand extends BaseDuskCommand
+{
     /**
      * Serve process
      *
@@ -19,7 +19,7 @@ class DuskCommand extends BaseDuskCommand {
     protected $serveProcess;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function __construct()
     {
@@ -27,7 +27,7 @@ class DuskCommand extends BaseDuskCommand {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -40,7 +40,7 @@ class DuskCommand extends BaseDuskCommand {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function setupDuskEnvironment()
     {
@@ -59,7 +59,7 @@ class DuskCommand extends BaseDuskCommand {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function teardownDuskEnviroment()
     {
@@ -75,9 +75,11 @@ class DuskCommand extends BaseDuskCommand {
      * Serve the web app
      *
      * @return void
+     *
      * @throws RuntimeException Thrown if web server can't be started.
      */
-    protected function serve() {
+    protected function serve()
+    {
         $this->info('Starting web server...');
 
         $this->serveProcess = $this->buildServeProcess();
@@ -87,7 +89,7 @@ class DuskCommand extends BaseDuskCommand {
         });
 
         // Make sure process is running
-        if (!$this->serveProcess->waitUntil(fn () => $this->serveProcess->isRunning())) {
+        if (! $this->serveProcess->waitUntil(fn () => $this->serveProcess->isRunning())) {
             $this->error('An error occurred starting the web server:');
             $this->error($this->serveProcess->getOutput());
 
@@ -96,37 +98,35 @@ class DuskCommand extends BaseDuskCommand {
     }
 
     /**
-	 * Build the process to run the web server
-	 *
-	 * @return \Symfony\Component\Process\Process
-	 */
-	protected function buildServeProcess()
-	{
-		$host = $this->option('serve-host');
-		$port = (int) $this->option('serve-port');
+     * Build the process to run the web server
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function buildServeProcess()
+    {
+        $host = $this->option('serve-host');
+        $port = (int) $this->option('serve-port');
 
         $command = sprintf('%s artisan serve --host=%s --port=%d', PHP_BINARY, $host, $port);
 
         return Process::fromShellCommandline($command, base_path(), $this->getServeEnvVariables());
-	}
+    }
 
     /**
      * Gets environment variables to include with web server
-     *
-     * @return array
      */
-    protected function getServeEnvVariables(): array {
+    protected function getServeEnvVariables(): array
+    {
         return [
-            'APP_URL' => $this->getServeUrl()
+            'APP_URL' => $this->getServeUrl(),
         ];
     }
 
     /**
      * Gets the URL to the web server
-     *
-     * @return string
      */
-    protected function getServeUrl(): string {
+    protected function getServeUrl(): string
+    {
         if ($this->option('serve-url')) {
             return $this->option('serve-url');
         } else {
@@ -138,7 +138,7 @@ class DuskCommand extends BaseDuskCommand {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function phpunitArguments($options)
     {
@@ -151,7 +151,7 @@ class DuskCommand extends BaseDuskCommand {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function env()
     {

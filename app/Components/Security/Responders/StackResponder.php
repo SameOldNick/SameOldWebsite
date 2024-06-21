@@ -9,8 +9,7 @@ final class StackResponder implements ResponderDriver
 {
     public function __construct(
         private readonly array $responders
-    ) {
-    }
+    ) {}
 
     public function shouldHandle(Issue $issue): bool
     {

@@ -19,8 +19,7 @@ class MessageNotification extends Notification
      */
     public function __construct(
         public readonly Mailable $mailable
-    ) {
-    }
+    ) {}
 
     /**
      * Gets the type to store in the 'type' column in the database table.

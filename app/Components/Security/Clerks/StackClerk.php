@@ -8,8 +8,7 @@ final class StackClerk implements ClerkDriver
 {
     public function __construct(
         protected readonly array $stack
-    ) {
-    }
+    ) {}
 
     /**
      * Checks if the issue is fresh/new.

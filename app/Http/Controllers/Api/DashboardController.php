@@ -10,8 +10,7 @@ class DashboardController extends Controller
 {
     public function __construct(
         protected readonly ChartManager $chartManager
-    ) {
-    }
+    ) {}
 
     /**
      * Gets the visitors over time.

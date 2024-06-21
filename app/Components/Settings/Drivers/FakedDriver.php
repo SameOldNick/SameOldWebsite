@@ -23,8 +23,7 @@ class FakedDriver implements Driver
      */
     public function __construct(
         public readonly array $settings
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}

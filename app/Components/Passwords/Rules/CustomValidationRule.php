@@ -11,8 +11,7 @@ class CustomValidationRule extends ValidationRule
      */
     public function __construct(
         protected readonly Closure $callback
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}

@@ -14,8 +14,7 @@ class Guard implements GuardContract
         protected readonly GuardContract $guard,
         protected readonly AuthenticatorService $authenticator,
         protected readonly PersistService $persist
-    ) {
-    }
+    ) {}
 
     /**
      * Determine if the current user is authenticated.

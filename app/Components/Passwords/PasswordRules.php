@@ -11,8 +11,7 @@ final class PasswordRules
      */
     public function __construct(
         private readonly array $rules
-    ) {
-    }
+    ) {}
 
     /**
      * Gets the password rules.

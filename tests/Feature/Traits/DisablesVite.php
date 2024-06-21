@@ -9,7 +9,5 @@ trait DisablesVite
         $this->withoutVite();
     }
 
-    public function tearDownDisablesVite()
-    {
-    }
+    public function tearDownDisablesVite() {}
 }

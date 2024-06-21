@@ -10,8 +10,7 @@ final class EloquentClerk implements ClerkDriver
 {
     public function __construct(
         protected readonly array $config
-    ) {
-    }
+    ) {}
 
     /**
      * Checks if the issue is fresh/new.

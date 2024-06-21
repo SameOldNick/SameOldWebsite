@@ -6,9 +6,7 @@ use Illuminate\Contracts\Http\Kernel;
 
 class GeneralBuilder
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __invoke()
     {

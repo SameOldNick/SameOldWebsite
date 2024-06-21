@@ -17,8 +17,7 @@ class BackupController extends Controller
     public function __construct(
         protected readonly AuthenticatorService $authenticatorService,
         protected readonly PersistService $persistService
-    ) {
-    }
+    ) {}
 
     /**
      * Shows backup code prompt.

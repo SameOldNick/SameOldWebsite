@@ -11,8 +11,7 @@ final class OneTimeAuthenticatable implements MultiAuthenticatable
 {
     public function __construct(
         protected readonly Closure $resolver
-    ) {
-    }
+    ) {}
 
     /**
      * Resolves secret

@@ -12,8 +12,7 @@ class NotificationClerk implements ClerkDriver
 {
     public function __construct(
         private readonly array $config
-    ) {
-    }
+    ) {}
 
     /**
      * Checks if the issue is fresh/new.

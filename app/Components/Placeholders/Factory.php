@@ -8,8 +8,7 @@ class Factory
 {
     public function __construct(
         protected Container $container
-    ) {
-    }
+    ) {}
 
     /**
      * Builds placeholder collection

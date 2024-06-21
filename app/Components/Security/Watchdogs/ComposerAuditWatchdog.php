@@ -19,8 +19,7 @@ final class ComposerAuditWatchdog implements WatchdogDriver
 
     public function __construct(
         protected readonly array $config
-    ) {
-    }
+    ) {}
 
     /**
      * Initializes the watchdog.

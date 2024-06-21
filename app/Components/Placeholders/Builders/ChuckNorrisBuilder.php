@@ -6,9 +6,7 @@ use Illuminate\Support\Arr;
 
 class ChuckNorrisBuilder
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function __invoke()
     {

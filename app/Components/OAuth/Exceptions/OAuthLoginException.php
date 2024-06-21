@@ -6,9 +6,7 @@ use Exception;
 
 class OAuthLoginException extends OAuthException
 {
-    public function __construct(public ?Exception $original = null)
-    {
-    }
+    public function __construct(public ?Exception $original = null) {}
 
     /**
      * Render the exception.

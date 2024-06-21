@@ -11,9 +11,7 @@ class EloquentDriver implements Driver
     /**
      * Initializes the eloquent driver.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * {@inheritDoc}

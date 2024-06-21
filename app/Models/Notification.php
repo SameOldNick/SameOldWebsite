@@ -4,6 +4,4 @@ namespace App\Models;
 
 use Illuminate\Notifications\DatabaseNotification;
 
-class Notification extends DatabaseNotification
-{
-}
+class Notification extends DatabaseNotification {}

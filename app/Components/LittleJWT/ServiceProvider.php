@@ -32,7 +32,5 @@ class ServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-    }
+    public function boot() {}
 }

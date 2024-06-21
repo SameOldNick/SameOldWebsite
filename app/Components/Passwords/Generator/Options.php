@@ -26,8 +26,7 @@ final class Options implements Arrayable
             'tabs' => 0,
             'newlines' => 0,
         ],
-    ) {
-    }
+    ) {}
 
     /**
      * Gets the bounds of the password

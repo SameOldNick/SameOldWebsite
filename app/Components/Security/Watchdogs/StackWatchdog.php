@@ -6,8 +6,7 @@ final class StackWatchdog implements WatchdogDriver
 {
     public function __construct(
         protected readonly array $drivers
-    ) {
-    }
+    ) {}
 
     /**
      * Initializes the watchdog.

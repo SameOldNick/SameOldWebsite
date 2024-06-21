@@ -21,8 +21,7 @@ class PlaceholdersTest extends TestCase
     {
         $factory = app(Factory::class);
 
-        $collection = $factory->build(function (Options $options) {
-        });
+        $collection = $factory->build(function (Options $options) {});
 
         $this->assertInstanceOf(PlaceholderCollection::class, $collection);
         $this->assertEmpty($collection);

@@ -20,8 +20,7 @@ class AuthDriver implements AuthServiceInterface
 {
     public function __construct(
         protected readonly Factory $factory
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}

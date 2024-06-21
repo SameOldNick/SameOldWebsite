@@ -12,8 +12,7 @@ class CurrentAuthCode implements ValidationRule
     public function __construct(
         protected ?MultiAuthenticatable $authenticatable = null,
         protected ?AuthServiceInterface $service = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Run the validation rule.

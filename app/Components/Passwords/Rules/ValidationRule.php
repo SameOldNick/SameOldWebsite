@@ -10,8 +10,7 @@ abstract class ValidationRule implements Rule
 {
     public function __construct(
         public readonly mixed $value
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}

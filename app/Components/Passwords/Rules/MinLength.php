@@ -9,8 +9,7 @@ class MinLength implements Rule
 {
     public function __construct(
         public readonly int $min
-    ) {
-    }
+    ) {}
 
     /**
      * {@inheritDoc}
