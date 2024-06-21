@@ -10,7 +10,7 @@ class PageSettingsManager extends BasePageSettingsManager
 {
     public function __construct(
         Container $container,
-        protected readonly array $faked
+        public readonly array $faked
     ) {
         parent::__construct($container);
     }

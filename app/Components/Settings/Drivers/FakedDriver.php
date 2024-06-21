@@ -22,7 +22,7 @@ class FakedDriver implements Driver
      * Initializes the driver.
      */
     public function __construct(
-        protected readonly array $settings
+        public readonly array $settings
     ) {
     }
 
