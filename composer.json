@@ -22,7 +22,6 @@
         "little-apps/littlejwt": "^2.2.0@beta",
         "masterminds/html5": "^2.9",
         "owenvoke/blade-fontawesome": "^2.4",
-        "pelmered/fake-car": "^2.0",
         "simplesoftwareio/simple-qrcode": "~4",
         "spatie/commonmark-shiki-highlighter": "^2.1",
         "spatie/laravel-backup": "^8.6",
