@@ -99,6 +99,18 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        /**
+         * A seperate database configuration for dusk needs to be specified.
+         * Simply leaving the DB_DATABASE environment variable unset doesn't work.
+         * Source: https://stackoverflow.com/a/50376781/533242
+         */
+        'dusk' => [
+            'driver' => 'sqlite',
+            'database' => database_path('database.sqlite'),
+            'prefix' => '',
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+        ],
+
     ],
 
     /*
