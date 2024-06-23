@@ -13,16 +13,15 @@ trait Immutable
     /**
      * Is the model immutable
      *
-     * @var boolean
+     * @var bool
      */
     private $immutable = false;
 
     /**
      * Checks if model is immutable.
-     *
-     * @return boolean
      */
-    public function isImmutable(): bool {
+    public function isImmutable(): bool
+    {
         return $this->immutable;
     }
 
@@ -30,13 +29,13 @@ trait Immutable
      * Sets model as immutable.
      * Note: Once a model is immutable, it cannot be changed back to mutable.
      *
-     * @param boolean $enabled
-     * @return static
      * @throws RuntimeException Thrown if trying to change model from immutable to mutable.
      */
-    public function setImmutable(bool $enabled = true): static {
-        if ($this->isImmutable() && !$enabled)
-            throw new RuntimeException("An immutable model cannot be changed to mutable.");
+    public function setImmutable(bool $enabled = true): static
+    {
+        if ($this->isImmutable() && ! $enabled) {
+            throw new RuntimeException('An immutable model cannot be changed to mutable.');
+        }
 
         $this->immutable = $enabled;
 
@@ -50,14 +49,16 @@ trait Immutable
      */
     public static function bootImmutable()
     {
-        static::updating(function(Model $model) {
-            if ($model->isImmutable())
-                throw new RuntimeException("This model is immutable and cannot be updated.");
+        static::updating(function (Model $model) {
+            if ($model->isImmutable()) {
+                throw new RuntimeException('This model is immutable and cannot be updated.');
+            }
         });
 
-        static::deleting(function(Model $model) {
-            if ($model->isImmutable())
-                throw new RuntimeException("This model is immutable and cannot be deleted.");
+        static::deleting(function (Model $model) {
+            if ($model->isImmutable()) {
+                throw new RuntimeException('This model is immutable and cannot be deleted.');
+            }
         });
     }
 }

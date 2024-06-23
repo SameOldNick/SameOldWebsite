@@ -24,9 +24,8 @@ class Comment extends Model
 {
     use Displayable;
     use HasFactory;
-    use Postable;
     use Immutable;
-
+    use Postable;
 
     /**
      * Indicates if the model should be timestamped.
