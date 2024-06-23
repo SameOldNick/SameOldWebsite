@@ -18,8 +18,8 @@ class ReCaptchaRule implements ValidationRule
         $response = ReCaptcha::validate($value);
 
         // The original doesn't check array response correctly.
-        if (!$this->isResponseSuccessful($response)) {
-            $message = !config('recaptcha.empty_message') ? trans(config('recaptcha.error_message_key')) : null;
+        if (! $this->isResponseSuccessful($response)) {
+            $message = ! config('recaptcha.empty_message') ? trans(config('recaptcha.error_message_key')) : null;
 
             $fail($message);
         }
@@ -28,10 +28,10 @@ class ReCaptchaRule implements ValidationRule
     /**
      * Checks if response is successful.
      *
-     * @param array|bool $response
-     * @return boolean
+     * @param  array|bool  $response
      */
-    protected function isResponseSuccessful($response): bool {
+    protected function isResponseSuccessful($response): bool
+    {
         return (bool) isset($response['success']) ? $response['success'] : $response;
     }
 }
