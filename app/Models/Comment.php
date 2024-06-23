@@ -6,7 +6,6 @@ use App\Traits\Models\Displayable;
 use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Url\Url as SpatieUrl;
 
@@ -104,8 +103,6 @@ class Comment extends Model
 
     /**
      * Gets the Article this comments is for.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function article(): BelongsTo
     {
