@@ -47,12 +47,19 @@ trait Postable
      * Scope a query to only include users own posts.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param mixed $user User model, key, or null. If null, uses current user.
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOwned($query, ?User $user = null)
+    public function scopeOwned($query, $user = null)
     {
-        $user = $user ?? request()->user();
+        $key = match (true) {
+            $user instanceof User => $user->getKey(),
+            is_null($user) && !is_null(request()->user()) => request()->user()->getKey(),
+            default => $user
+        };
 
-        return ! is_null($user) ? $query->whereRelation('post', 'user_id', '=', $user->getKey()) : $query;
+        return ! is_null($key) ? $query->whereHas('post', function ($query) use ($key) {
+            $query->where('user_id', $key);
+        }) : $query;
     }
 }
