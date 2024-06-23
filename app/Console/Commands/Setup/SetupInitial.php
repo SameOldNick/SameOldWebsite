@@ -48,7 +48,7 @@ class SetupInitial extends Command
         $userEmail = $this->option('user-email');
         $userPasswordSource = $this->option('user-password');
 
-        if (!$skipUser) {
+        if (! $skipUser) {
             if (empty($userName)) {
                 $this->error('The --user-name option is empty.');
 
