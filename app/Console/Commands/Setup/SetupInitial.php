@@ -26,7 +26,8 @@ class SetupInitial extends Command
                             {--user-name=Same Old User : The name of the user}
                             {--user-email=admin@sameoldnick.com : The users e-mail address}
                             {--user-password=generate : Where to get password from (generate|prompt|hash|plaintext)}
-                            {--user-password-passed= : Specifies the users password (hashed or plaintext)}';
+                            {--user-password-passed= : Specifies the users password (hashed or plaintext)}
+                            {--skip-user : Skip creating the user}';
 
     /**
      * The console command description.
@@ -41,51 +42,60 @@ class SetupInitial extends Command
     public function handle(Hasher $hasher)
     {
         // Extract options
+        $skipUser = $this->option('skip-user');
         $userUuid = $this->option('user-uuid');
         $userName = $this->option('user-name');
         $userEmail = $this->option('user-email');
         $userPasswordSource = $this->option('user-password');
 
-        if (empty($userName)) {
-            $this->error('The --user-name option is empty.');
+        if (!$skipUser) {
+            if (empty($userName)) {
+                $this->error('The --user-name option is empty.');
 
-            return 1;
-        }
+                return 1;
+            }
 
-        if (empty($userEmail)) {
-            $this->error('The --user-email option is empty.');
+            if (empty($userEmail)) {
+                $this->error('The --user-email option is empty.');
 
-            return 1;
-        }
+                return 1;
+            }
 
-        $password = $this->gatherPassword($userPasswordSource);
+            $password = $this->gatherPassword($userPasswordSource);
 
-        // Validate password
-        if ($userPasswordSource !== 'hash') {
-            $this->validatePassword($password);
+            // Validate password
+            if ($userPasswordSource !== 'hash') {
+                $this->validatePassword($password);
+            }
+
+            // Create initial user
+            $this->info('Creating initial user...');
+
+            $user = User::create([
+                'uuid' => $userUuid ?? (string) Str::uuid(),
+                'name' => $userName,
+                'email' => $userEmail,
+                'password' => $userPasswordSource !== 'hash' ? $hasher->make($password) : $password,
+            ]);
+
+            // Display user details
+            $this->line('User details:');
+            $this->table(['Name', 'Value'], [
+                ['UUID', $user->uuid],
+                ['Name', $user->name],
+                ['Email', $user->email],
+                ['Password', $userPasswordSource === 'generate' ? $password : str_repeat('*', 10)],
+            ]);
+        } else {
+            $this->info('Skipped creating initial user.');
         }
 
         // Run initial seeder
         $this->info('Seeding initial data into database...');
 
-        $user = User::create([
-            'uuid' => $userUuid ?? (string) Str::uuid(),
-            'name' => $userName,
-            'email' => $userEmail,
-            'password' => $userPasswordSource !== 'hash' ? $hasher->make($password) : $password,
-        ]);
-
         $initialSeeder = $this->createSeeder(InitialSeeder::class);
 
-        $initialSeeder(['user' => $user]);
-
-        $this->line('User details:');
-        $this->table(['Name', 'Value'], [
-            ['UUID', $user->uuid],
-            ['Name', $user->name],
-            ['Email', $user->email],
-            ['Password', $userPasswordSource === 'generate' ? $password : str_repeat('*', 10)],
-        ]);
+        $initialSeeder(['user' => $user ?? null]);
 
         $this->info('Initial seeding complete.');
     }
