@@ -6,6 +6,8 @@ use App\Traits\Models\Displayable;
 use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Url\Url as SpatieUrl;
 
 /**
@@ -105,7 +107,7 @@ class Comment extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function article()
+    public function article(): BelongsTo
     {
         return $this->belongsTo(Article::class);
     }
@@ -122,10 +124,8 @@ class Comment extends Model
 
     /**
      * Gets the User who approved this comment (if any)
-     *
-     * @return mixed
      */
-    public function approvedBy()
+    public function approvedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'approved_by');
     }
