@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.2",
         "axlon/laravel-postal-code-validation": "^3.3",
-        "biscolab/laravel-recaptcha": "^6.0",
+        "biscolab/laravel-recaptcha": "^6.1",
         "blade-ui-kit/blade-icons": "^1.5",
         "composer/composer": "^2.6",
         "geoip2/geoip2": "~3.0",
