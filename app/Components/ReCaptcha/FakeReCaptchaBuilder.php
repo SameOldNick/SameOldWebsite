@@ -5,34 +5,28 @@ namespace App\Components\ReCaptcha;
 use Biscolab\ReCaptcha\ReCaptchaBuilder;
 use Illuminate\Support\Str;
 
-class FakeReCaptchaBuilder extends ReCaptchaBuilder {
+class FakeReCaptchaBuilder extends ReCaptchaBuilder
+{
     /**
      * Whether actual builder should be used.
-     *
-     * @var boolean
      */
     protected bool $actual = false;
 
     /**
      * Allowed fake responses
-     *
-     * @var array
      */
     protected array $allowed = [];
 
     /**
      * Previous responses
-     *
-     * @var array
      */
     protected array $responses = [];
 
     /**
      * Enables actual ReCapthca checker
-     *
-     * @return static
      */
-    public function useActual(): static {
+    public function useActual(): static
+    {
         $this->actual = true;
 
         return $this;
@@ -40,10 +34,9 @@ class FakeReCaptchaBuilder extends ReCaptchaBuilder {
 
     /**
      * Enables fake ReCpatcha checker
-     *
-     * @return static
      */
-    public function useFake(): static {
+    public function useFake(): static
+    {
         $this->actual = false;
 
         return $this;
@@ -51,28 +44,25 @@ class FakeReCaptchaBuilder extends ReCaptchaBuilder {
 
     /**
      * Gets if actual ReCaptcha checker should be used.
-     *
-     * @return boolean
      */
-    public function actual(): bool {
+    public function actual(): bool
+    {
         return $this->actual;
     }
 
     /**
      * Gets if fake ReCaptcha checker should be used.
-     *
-     * @return boolean
      */
-    public function faked(): bool {
-        return !$this->actual();
+    public function faked(): bool
+    {
+        return ! $this->actual();
     }
 
     /**
      * Generates and stores valid fake ReCaptcha response.
-     *
-     * @return string
      */
-    public function validResponse(): string {
+    public function validResponse(): string
+    {
         $response = (string) Str::uuid();
 
         array_push($this->allowed, $response);
@@ -82,20 +72,17 @@ class FakeReCaptchaBuilder extends ReCaptchaBuilder {
 
     /**
      * Checks if response is allowed.
-     *
-     * @param string $response
-     * @return boolean
      */
-    public function isAllowed(string $response): bool {
+    public function isAllowed(string $response): bool
+    {
         return in_array($response, $this->allowed);
     }
 
     /**
      * Call out to reCAPTCHA and process the response
      *
-     * @param string $response
-     *
-     * @return boolean|array
+     * @param  string  $response
+     * @return bool|array
      */
     public function validate($response)
     {
@@ -112,49 +99,48 @@ class FakeReCaptchaBuilder extends ReCaptchaBuilder {
 
     /**
      * Gets previous ReCaptcha validation responses.
-     *
-     * @return array
      */
-    public function getResponses(): array {
+    public function getResponses(): array
+    {
         return $this->responses;
     }
 
     /**
      * Gets faked successful ReCaptcha response
      *
-     * @param boolean $asArray If true, an array is returned.
-     * @return array|boolean
+     * @param  bool  $asArray  If true, an array is returned.
+     * @return array|bool
      */
-    protected function getFakedResponseSuccess(bool $asArray) {
+    protected function getFakedResponseSuccess(bool $asArray)
+    {
         return $asArray ? [
-            'faked'      => true,
-            'score'      => 0.9,
-            'success'    => true
+            'faked' => true,
+            'score' => 0.9,
+            'success' => true,
         ] : true;
     }
 
     /**
      * Gets faked failed ReCaptcha response
      *
-     * @param boolean $asArray If true, an array is returned.
-     * @return array|boolean
+     * @param  bool  $asArray  If true, an array is returned.
+     * @return array|bool
      */
-    protected function getFakedResponseFail(bool $asArray) {
+    protected function getFakedResponseFail(bool $asArray)
+    {
         return $asArray ? [
-            'faked'      => true,
-            'error'      => 'The ReCaptcha validation failed.',
-            'score'      => 0.1,
-            'success'    => false
+            'faked' => true,
+            'error' => 'The ReCaptcha validation failed.',
+            'score' => 0.1,
+            'success' => false,
         ] : false;
     }
 
     /**
      * Creates fake ReCaptchaBuilder from existing ReCaptchaBuilder
-     *
-     * @param ReCaptchaBuilder $reCaptchaBuilder
-     * @return self
      */
-    public static function createFromBase(ReCaptchaBuilder $reCaptchaBuilder): self {
+    public static function createFromBase(ReCaptchaBuilder $reCaptchaBuilder): self
+    {
         return new self($reCaptchaBuilder->getApiSiteKey(), $reCaptchaBuilder->getApiSecretKey(), $reCaptchaBuilder->getVersion());
     }
 }

@@ -28,16 +28,13 @@ trait FakesReCaptcha
      *
      * @return void
      */
-    public function tearDownFakesReCaptcha()
-    {
-    }
+    public function tearDownFakesReCaptcha() {}
 
     /**
      * Asserts a recaptcha response exists
-     *
-     * @return static
      */
-    public function assertHasReCaptchaResponse(): static {
+    public function assertHasReCaptchaResponse(): static
+    {
         $this->assertNotEmpty($this->getReCaptchaResponses(), 'There are no ReCaptcha responses.');
 
         return $this;
@@ -45,10 +42,9 @@ trait FakesReCaptcha
 
     /**
      * Asserts a recaptcha response is missing
-     *
-     * @return static
      */
-    public function assertMissingReCaptchaResponse(): static {
+    public function assertMissingReCaptchaResponse(): static
+    {
         $this->assertEmpty($this->getReCaptchaResponses(), 'There are ReCaptcha responses.');
 
         return $this;
@@ -56,10 +52,9 @@ trait FakesReCaptcha
 
     /**
      * Asserts the last recaptcha response was successful
-     *
-     * @return static
      */
-    public function assertLastReCaptchaResponseSuccessful(): static {
+    public function assertLastReCaptchaResponseSuccessful(): static
+    {
         $this->assertReCaptchaResponseSuccessful($this->getLastReCaptchaResponse(), 'The last ReCaptcha response was not successful.');
 
         return $this;
@@ -67,10 +62,9 @@ trait FakesReCaptcha
 
     /**
      * Asserts all recaptcha responses were successful
-     *
-     * @return static
      */
-    public function assertReCaptchaResponsesSuccessful(): static {
+    public function assertReCaptchaResponsesSuccessful(): static
+    {
         foreach ($this->getReCaptchaResponses() as $response) {
             $this->assertReCaptchaResponseSuccessful($response);
         }
@@ -80,10 +74,9 @@ trait FakesReCaptcha
 
     /**
      * Asserts last recaptcha responses failed
-     *
-     * @return static
      */
-    public function assertLastReCaptchaResponseFailed(): static {
+    public function assertLastReCaptchaResponseFailed(): static
+    {
         $this->assertReCaptchaResponseFailed($this->getLastReCaptchaResponse(), 'The last ReCaptcha response was not successful.');
 
         return $this;
@@ -91,10 +84,9 @@ trait FakesReCaptcha
 
     /**
      * Asserts all recapatcha responses failed
-     *
-     * @return static
      */
-    public function assertReCaptchaResponsesFailed(): static {
+    public function assertReCaptchaResponsesFailed(): static
+    {
         foreach ($this->getReCaptchaResponses() as $response) {
             $this->assertReCaptchaResponseFailed($response);
         }
@@ -105,11 +97,11 @@ trait FakesReCaptcha
     /**
      * Asserts recaptcha response was successful
      *
-     * @param array|bool $response ReCaptcha response
-     * @param string $message Message to display if assertion fails. (default: empty string)
-     * @return static
+     * @param  array|bool  $response  ReCaptcha response
+     * @param  string  $message  Message to display if assertion fails. (default: empty string)
      */
-    public function assertReCaptchaResponseSuccessful($response, string $message = ''): static {
+    public function assertReCaptchaResponseSuccessful($response, string $message = ''): static
+    {
         $this->assertTrue($this->isReCaptchaResponseSuccessful($response), $message ?: 'The ReCaptcha response was not successful.');
 
         return $this;
@@ -118,11 +110,11 @@ trait FakesReCaptcha
     /**
      * Asserts recaptcha response failed
      *
-     * @param array|bool $response ReCaptcha response
-     * @param string $message Message to display if assertion fails. (default: empty string)
-     * @return static
+     * @param  array|bool  $response  ReCaptcha response
+     * @param  string  $message  Message to display if assertion fails. (default: empty string)
      */
-    public function assertReCaptchaResponseFailed($response, string $message = ''): static {
+    public function assertReCaptchaResponseFailed($response, string $message = ''): static
+    {
         $this->assertFalse($this->isReCaptchaResponseSuccessful($response), $message ?: 'The ReCaptcha response was successful.');
 
         return $this;
@@ -131,19 +123,18 @@ trait FakesReCaptcha
     /**
      * Checks if recaptcha response is successful.
      *
-     * @param array|bool $response
-     * @return boolean
+     * @param  array|bool  $response
      */
-    protected function isReCaptchaResponseSuccessful($response): bool {
+    protected function isReCaptchaResponseSuccessful($response): bool
+    {
         return (bool) isset($response['success']) ? $response['success'] : $response;
     }
 
     /**
      * Gets previous recaptcha responses
-     *
-     * @return array
      */
-    protected function getReCaptchaResponses(): array {
+    protected function getReCaptchaResponses(): array
+    {
         return $this->app['recaptcha']->getResponses();
     }
 
@@ -152,7 +143,8 @@ trait FakesReCaptcha
      *
      * @return array|bool
      */
-    protected function getLastReCaptchaResponse() {
+    protected function getLastReCaptchaResponse()
+    {
         return array_pop($this->getReCaptchaResponses());
     }
 }
