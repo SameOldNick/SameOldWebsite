@@ -4,14 +4,14 @@ namespace App\Console\Commands\Setup;
 
 use Illuminate\Console\Command;
 
-class SetupProject extends Command
+class Setup extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'setup:project
+    protected $signature = 'setup
                             {--y|yes : Skip confirmation prompts}
                             {--no-initial : Skip running the initial seeder}
                             {--package-manager=yarn : The package manager to use (npm|yarn|pnpm)}';
