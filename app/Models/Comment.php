@@ -19,6 +19,8 @@ use Spatie\Url\Url as SpatieUrl;
  * @property-read ?Comment $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $children
  * @property-read ?User $approvedBy
+ *
+ * @method static \Database\Factories\CommentFactory factory($count = null, $state = [])
  */
 class Comment extends Model
 {

@@ -17,6 +17,8 @@ use Illuminate\Support\Str;
  * @property-read Article $article
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
+ *
+ * @method static \Database\Factories\RevisionFactory factory($count = null, $state = [])
  */
 class Revision extends Model
 {

@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $skill
  * @property ?\DateTimeInterface $created_at
  * @property ?\DateTimeInterface $updated_at
+ *
+ * @method static \Database\Factories\SkillFactory factory($count = null, $state = [])
  */
 class Skill extends Model
 {

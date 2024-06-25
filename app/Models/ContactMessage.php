@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\URL;
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $confirmed_at
  * @property ?\Illuminate\Support\Carbon $expires_at
+ *
+ * @method static \Database\Factories\ContactMessageFactory factory($count = null, $state = [])
  */
 class ContactMessage extends Model
 {

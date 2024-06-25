@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $deleted_at
+ *
+ * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  */
 class Post extends Model
 {

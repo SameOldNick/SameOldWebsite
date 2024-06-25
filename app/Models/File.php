@@ -24,6 +24,8 @@ use Illuminate\Support\Str;
  * @property-read ?Model $fileable
  * @property-read array $pathInfo
  * @property-read bool $fileExists
+ *
+ * @method static \Database\Factories\FileFactory factory($count = null, $state = [])
  */
 final class File extends Model
 {

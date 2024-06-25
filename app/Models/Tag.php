@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
  * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Article> $articles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Project> $projects
+ *
+ * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  */
 class Tag extends Model
 {

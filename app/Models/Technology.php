@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $icon
  * @property string $technology
+ *
+ * @method static \Database\Factories\TechnologyFactory factory($count = null, $state = [])
  */
 class Technology extends Model
 {

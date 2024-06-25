@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 /**
  * @property string $uuid
  * @property string $description
+ *
+ * @method static \Database\Factories\ImageFactory factory($count = null, $state = [])
  */
 class Image extends Model
 {

@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\URL;
  *
  * @method static \Illuminate\Database\Eloquent\Builder published()
  * @method static \Illuminate\Database\Eloquent\Builder sortedByPublishDate()
+ * @method static \Database\Factories\ArticleFactory factory($count = null, $state = [])
  */
 class Article extends Model
 {
