@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Backup\BackupDestination\Backup as SpatieBackup;
 use Spatie\Backup\BackupDestination\BackupDestination;
 
+/**
+ * @property-read string $status One of STATUS_* constants
+ */
 class Backup extends Model
 {
     use Fileable;
