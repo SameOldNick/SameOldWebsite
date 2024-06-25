@@ -6,14 +6,14 @@ use App\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * @mixin Collection<int, Role>
+ * @extends Collection<int, Role>
  */
 class RoleCollection extends Collection
 {
     /**
      * Gets the role names
      *
-     * @return Collection<int, string>
+     * @return \Illuminate\Support\Collection<int, string>
      */
     public function names()
     {

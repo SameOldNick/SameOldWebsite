@@ -6,14 +6,14 @@ use App\Models\PrivateChannel;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * @mixin Collection<int, PrivateChannel>
+ * @extends Collection<int, PrivateChannel>
  */
 class PrivateChannelCollection extends Collection
 {
     /**
      * Gets the channel names
      *
-     * @return Collection<int, string>
+     * @return \Illuminate\Support\Collection<int, string>
      */
     public function channels()
     {
@@ -23,7 +23,7 @@ class PrivateChannelCollection extends Collection
     /**
      * Gets active channels
      *
-     * @return PrivateChannelCollection
+     * @return static
      */
     public function active()
     {
@@ -33,7 +33,7 @@ class PrivateChannelCollection extends Collection
     /**
      * Gets expired channels
      *
-     * @return PrivateChannelCollection
+     * @return static
      */
     public function expired()
     {
@@ -45,7 +45,7 @@ class PrivateChannelCollection extends Collection
      *
      * @param  string  $uuid  Expected channel UUID
      * @param  string  $channel  Expected name of channel. Channels with no name are included.
-     * @return PrivateChannelCollection
+     * @return static
      */
     public function lookup(string $uuid, string $channel)
     {

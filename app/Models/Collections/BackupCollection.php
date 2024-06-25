@@ -6,14 +6,14 @@ use App\Models\Backup;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * @mixin Collection<int, Backup>
+ * @extends Collection<int, Backup>
  */
 class BackupCollection extends Collection
 {
     /**
      * Gets backups with status
      *
-     * @return Collection<int, Backup>
+     * @return static
      */
     public function status(string $status)
     {
