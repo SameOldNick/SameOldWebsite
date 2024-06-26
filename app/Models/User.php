@@ -203,7 +203,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
     /**
      * Gets the private channels for this user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function privateChannels()
     {
