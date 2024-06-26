@@ -98,11 +98,11 @@ class ArticleFactory extends Factory
      */
     public function published($dateTime = null)
     {
-        return $this->state(function() use ($dateTime) {
+        return $this->state(function () use ($dateTime) {
             $dateTime = $dateTime ?? $this->faker->dateTimeBetween('-3 years', 'now');
 
             return [
-                'published_at' => is_callable($dateTime) ? $dateTime() : $dateTime
+                'published_at' => is_callable($dateTime) ? $dateTime() : $dateTime,
             ];
         });
     }
