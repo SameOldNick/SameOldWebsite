@@ -62,10 +62,10 @@ class Role extends Model
     /**
      * Create a new Eloquent Collection instance.
      *
-     * @param  array<int, \Illuminate\Database\Eloquent\Model>  $models
-     * @return \Illuminate\Database\Eloquent\Collection<int, \Illuminate\Database\Eloquent\Model>
+     * @param  static[]  $models
+     * @return RoleCollection
      */
-    public function newCollection(array $models = []): Collection
+    public function newCollection(array $models = [])
     {
         return new RoleCollection($models);
     }
