@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 class FakeReCaptchaBuilder extends ReCaptchaBuilder
 {
     /**
-     * Whether actual builder should be used.
+     * Whether faked builder should be used.
      */
-    protected bool $actual = false;
+    protected bool $faked = false;
 
     /**
      * Allowed fake responses
@@ -23,21 +23,11 @@ class FakeReCaptchaBuilder extends ReCaptchaBuilder
     protected array $responses = [];
 
     /**
-     * Enables actual ReCapthca checker
-     */
-    public function useActual(): static
-    {
-        $this->actual = true;
-
-        return $this;
-    }
-
-    /**
      * Enables fake ReCpatcha checker
      */
-    public function useFake(): static
+    public function fake(bool $enabled = true): static
     {
-        $this->actual = false;
+        $this->faked = $enabled;
 
         return $this;
     }
@@ -47,7 +37,7 @@ class FakeReCaptchaBuilder extends ReCaptchaBuilder
      */
     public function actual(): bool
     {
-        return $this->actual;
+        return !$this->faked();
     }
 
     /**
@@ -55,7 +45,7 @@ class FakeReCaptchaBuilder extends ReCaptchaBuilder
      */
     public function faked(): bool
     {
-        return ! $this->actual();
+        return $this->faked;
     }
 
     /**
