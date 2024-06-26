@@ -107,6 +107,15 @@ class ArticleFactory extends Factory
         });
     }
 
+    /**
+     * Indicate that the model should be scheduled.
+     *
+     * @param  (callable(): DateTime)|DateTime|null  $dateTime  When the article is published. If null, a date between now and 3 years is used.
+     * @return $this
+     */
+    public function scheduled($dateTime = null)
+    {
+        return $this->published($dateTime ?? fn () => $this->faker->dateTimeBetween('now', '+3 years'));
     }
 
     /**
