@@ -103,15 +103,15 @@ class Backup extends Model
      */
     protected function status(): Attribute
     {
-        return Attribute::get(function ($value, $attributes) {
-            return match (true) {
+        return new Attribute(
+            get: fn () => match (true) {
                 $this->isDeleted() => static::STATUS_DELETED,
                 $this->isFailed() => static::STATUS_FAILED,
                 $this->isNotExists() => static::STATUS_NOT_EXISTS,
                 default => static::STATUS_SUCCESSFUL
-            };
-        });
-    }
+            }
+        );
+}
 
     /**
      * Creates File from backup.
