@@ -93,14 +93,20 @@ class ArticleFactory extends Factory
     /**
      * Indicate that the model should be published.
      *
-     * @param  DateTime  $dateTime  When the article is published. If null, a date between 3 years ago and now is used.
+     * @param  (callable(): DateTime)|DateTime|null  $dateTime  When the article is published. If null, a date between 3 years ago and now is used.
      * @return $this
      */
-    public function published(?DateTime $dateTime = null)
+    public function published($dateTime = null)
     {
-        return $this->state([
-            'published_at' => $dateTime ?? $this->faker->dateTimeBetween('-3 years', 'now'),
-        ]);
+        return $this->state(function() use ($dateTime) {
+            $dateTime = $dateTime ?? $this->faker->dateTimeBetween('-3 years', 'now');
+
+            return [
+                'published_at' => is_callable($dateTime) ? $dateTime() : $dateTime
+            ];
+        });
+    }
+
     }
 
     /**
