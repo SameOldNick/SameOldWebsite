@@ -96,10 +96,9 @@ class PrivateChannel extends Model
     /**
      * Opens private channel
      *
-     * @param UuidInterface $uuid Channel UUID
-     * @param object $notifiable Who can access channel
-     * @param DateTimeInterface|null $expiresAt When channel expires
-     * @return self
+     * @param  UuidInterface  $uuid  Channel UUID
+     * @param  object  $notifiable  Who can access channel
+     * @param  DateTimeInterface|null  $expiresAt  When channel expires
      */
     public static function open(UuidInterface $uuid, object $notifiable, ?DateTimeInterface $expiresAt = null): self
     {
