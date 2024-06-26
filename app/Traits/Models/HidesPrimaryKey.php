@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Concerns;
+namespace App\Traits\Models;
 
 /**
  * Hides the primary key from serialization.
