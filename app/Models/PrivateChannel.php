@@ -93,9 +93,9 @@ class PrivateChannel extends Model
         return new PrivateChannelCollection($models);
     }
 
-    public static function open(UuidInterface $uuid, object $notifiable, ?DateTimeInterface $expiresAt = null): static
+    public static function open(UuidInterface $uuid, object $notifiable, ?DateTimeInterface $expiresAt = null): self
     {
-        $channel = new PrivateChannel([
+        $channel = new self([
             'uuid' => (string) $uuid,
             'expires_at' => $expiresAt ?? now()->addHours(3),
         ]);
