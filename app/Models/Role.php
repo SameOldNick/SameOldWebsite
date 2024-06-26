@@ -18,8 +18,8 @@ use Illuminate\Support\Str;
  */
 class Role extends Model
 {
-    use HidesPrimaryKey;
     use HasFactory;
+    use HidesPrimaryKey;
 
     /**
      * Indicates if the model should be timestamped.
