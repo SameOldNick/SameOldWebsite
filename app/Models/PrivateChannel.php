@@ -85,10 +85,10 @@ class PrivateChannel extends Model
     /**
      * Create a new Eloquent Collection instance.
      *
-     * @param  array<int, \Illuminate\Database\Eloquent\Model>  $models
-     * @return \Illuminate\Database\Eloquent\Collection<int, \Illuminate\Database\Eloquent\Model>
+     * @param  array<int, static>  $models
+     * @return PrivateChannelCollection
      */
-    public function newCollection(array $models = []): Collection
+    public function newCollection(array $models = [])
     {
         return new PrivateChannelCollection($models);
     }
