@@ -111,7 +111,7 @@ class Backup extends Model
                 default => static::STATUS_SUCCESSFUL
             }
         );
-}
+    }
 
     /**
      * Creates File from backup.
