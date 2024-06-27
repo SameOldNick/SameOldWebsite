@@ -28,7 +28,7 @@ class AnalyticsRequestTest extends TestCase
         // Assert there's # of expected entries.
         $this->assertEquals($expectedEntries, count($period));
 
-        $range = iterator_to_array($period);
+        $range = $period->toArray();
 
         $first = current($range);
         $last = end($range);
@@ -38,7 +38,7 @@ class AnalyticsRequestTest extends TestCase
             $a = $range[$i - 1];
             $b = $range[$i];
 
-            $difference = $b->diffInMonths($a);
+            $difference = (int) $a->diffInMonths($b);
 
             $this->assertEquals($expectedGroupSize, $difference);
         }
@@ -70,7 +70,7 @@ class AnalyticsRequestTest extends TestCase
         // Assert there's # of expected entries.
         $this->assertEquals($expectedGroups, count($period));
 
-        $range = iterator_to_array($period);
+        $range = $period->toArray();
 
         $first = current($range);
         $last = end($range);
@@ -80,7 +80,7 @@ class AnalyticsRequestTest extends TestCase
             $a = $range[$i - 1];
             $b = $range[$i];
 
-            $difference = $b->diffInDays($a);
+            $difference = (int) $a->diffInDays($b);
 
             $this->assertEquals($expectedGroupSize, $difference);
         }
