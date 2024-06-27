@@ -9,17 +9,15 @@ use App\Events\Articles\ArticleRestored;
 use App\Events\Articles\ArticleRevisionUpdated;
 use App\Events\Articles\ArticleScheduled;
 use App\Models\Article;
-use App\Models\Image;
 use App\Models\Revision;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\InteractsWithJWT;
 use Tests\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class ArticleControllerTest extends TestCase
 {
@@ -275,7 +273,7 @@ class ArticleControllerTest extends TestCase
         $response
             ->assertConflict()
             ->assertJson([
-                'error' => __('Article ":title" is already restored.', ['title' => $article->title])
+                'error' => __('Article ":title" is already restored.', ['title' => $article->title]),
             ]);
 
         $this->assertNotNull($article->refresh());

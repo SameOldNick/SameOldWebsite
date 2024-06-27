@@ -37,7 +37,7 @@ class FakeReCaptchaBuilder extends ReCaptchaBuilder
      */
     public function actual(): bool
     {
-        return !$this->faked();
+        return ! $this->faked();
     }
 
     /**
