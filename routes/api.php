@@ -63,8 +63,8 @@ Route::namespace(Api::class)->group(function () {
 
             Route::post('/comments/{comment}/approve', [Api\Blog\CommentController::class, 'approve'])->withTrashed();
 
-            Route::post('/articles/restore/{article}', [Api\Blog\ArticleController::class, 'restore'])->withTrashed();
-            Route::post('/articles/{article}/revision', [Api\Blog\ArticleController::class, 'revision']);
+            Route::post('/articles/restore/{article}', [Api\Blog\ArticleController::class, 'restore'])->withTrashed()->name('articles.restore');
+            Route::post('/articles/{article}/revision', [Api\Blog\ArticleController::class, 'revision'])->name('articles.revisions.revision');
 
             Route::get('/articles/{article}/images', [Api\Blog\ArticleImageController::class, 'index']);
             Route::post('/articles/{article}/images/{image}', [Api\Blog\ArticleImageController::class, 'attach']);
