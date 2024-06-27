@@ -159,6 +159,12 @@ class ArticleController extends Controller
      */
     public function restore(Article $article)
     {
+        // Check if the article is not deleted
+        if (!$article->trashed()) {
+            return response([
+                'error' => __('Article ":title" is already restored.', ['title' => $article->title]),
+            ], 409);
+        }
         $article->restore();
 
         ArticleRestored::dispatch($article);
