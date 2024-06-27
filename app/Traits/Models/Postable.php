@@ -11,6 +11,13 @@ use App\Models\User;
 trait Postable
 {
     /**
+     * Indicates if delete should be cascaded to post.
+     *
+     * @var boolean
+     */
+    protected bool $cascadeToPost = true;
+
+    /**
      * Creates Postable with Post model
      *
      * @param  User|null  $user  User to associate with Post. If null, current user is used. (default: null)
@@ -28,6 +35,33 @@ trait Postable
 
             $postable->post->save();
         });
+    }
+
+    /**
+     * Boots the trait
+     *
+     * @return void
+     */
+    public static function bootPostable()
+    {
+        static::registerModelEvent('restoring', function (self $model) {
+            if ($model->getCascadeToPost())
+                $model->post->restore();
+        });
+
+        static::registerModelEvent('deleting', function (self $model) {
+            if ($model->getCascadeToPost())
+                $model->post->delete();
+        });
+    }
+
+    /**
+     * Gets whether changes should be cascaded to post.
+     *
+     * @return boolean
+     */
+    public function getCascadeToPost(): bool {
+        return $this->cascadeToPost;
     }
 
     /**
