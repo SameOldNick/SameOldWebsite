@@ -23,6 +23,7 @@ class ArticleController extends Controller
 {
     public function __construct()
     {
+        // Apply middleware to check if the user has the 'role-write-posts' permission
         $this->middleware('can:role-write-posts');
     }
 
@@ -65,6 +66,7 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
+        // Create a new article with the provided data
         $article = Article::createWithPost(function (Article $article) use ($request) {
             $article->fill([
                 'title' => $request->title,
@@ -74,16 +76,19 @@ class ArticleController extends Controller
             $article->published_at = $request->date('published_at');
         });
 
+        // Create a new revision for the article
         $revision = $article->revisions()->create([
             'content' => $request->string('revision.content'),
             'summary' => $request->string('revision.summary'),
         ]);
 
+        // Associate the new revision with the article
         $article->currentRevision()->associate($revision);
 
-        // Don't use push because it will cause post is a circular dependency.
+        // Save the article without using push to avoid circular dependency
         $article->save();
 
+        // Dispatch events related to article creation and publication status
         ArticleCreated::dispatch($article);
         ArticlePublished::dispatchIf($article->is_published, $article);
         ArticleScheduled::dispatchIf($article->is_scheduled, $article);
@@ -96,6 +101,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
+        // Append the 'private_url' attribute to the article and return it
         return $article->append('private_url');
     }
 
@@ -104,16 +110,20 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
+        // Update the article's title and slug if they are provided in the request
         foreach (['title', 'slug'] as $key) {
             if ($request->filled($key)) {
                 $article->setAttribute($key, $request->string($key));
             }
         }
 
+        // Update the article's published date
         $article->published_at = $request->date('published_at');
 
+        // Save the updated article
         $article->save();
 
+        // Dispatch events based on changes to the article's publication status
         if ($article->wasChanged('published_at')) {
             ArticlePublished::dispatchIf($article->is_published, $article);
             ArticleScheduled::dispatchIf($article->is_scheduled, $article);
@@ -130,6 +140,7 @@ class ArticleController extends Controller
      */
     public function revision(Request $request, Article $article)
     {
+        // Validate the 'revision' parameter in the request
         $request->validate([
             'revision' => [
                 'nullable',
@@ -138,6 +149,7 @@ class ArticleController extends Controller
             ],
         ]);
 
+        // Associate or dissociate the revision with the article based on the request
         if (! is_null($request->revision)) {
             $revision = Revision::find($request->revision);
             $article->currentRevision()->associate($revision);
@@ -145,8 +157,10 @@ class ArticleController extends Controller
             $article->currentRevision()->dissociate();
         }
 
+        // Save the updated article
         $article->save();
 
+        // Dispatch an event indicating the article's revision was updated
         ArticleRevisionUpdated::dispatch($article);
 
         return $article;
@@ -154,8 +168,6 @@ class ArticleController extends Controller
 
     /**
      * Restores the specified article.
-     *
-     * @return array
      */
     public function restore(Article $article)
     {
@@ -165,8 +177,11 @@ class ArticleController extends Controller
                 'error' => __('Article ":title" is already restored.', ['title' => $article->title]),
             ], 409);
         }
+
+        // Restore the deleted article
         $article->restore();
 
+        // Dispatch an event indicating the article was restored
         ArticleRestored::dispatch($article);
 
         return [
@@ -179,8 +194,10 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        // Delete the article
         $article->delete();
 
+        // Dispatch an event indicating the article was deleted
         ArticleDeleted::dispatch($article);
 
         return [
