@@ -31,34 +31,32 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
+        // Validate the 'show' parameter in the request
         $request->validate([
             'show' => 'sometimes|in:unpublished,published,scheduled,removed,all',
         ]);
 
+        // Define an array of conditions based on the 'show' parameter
+        $conditions = [
+            'unpublished' => fn(Builder $query) => $query->whereNull('published_at'),
+            'published' => fn(Builder $query) => $query->whereNotNull('published_at')->where('published_at', '<=', now()),
+            'scheduled' => fn(Builder $query) => $query->whereNotNull('published_at')->where('published_at', '>', now()),
+            'removed' => fn(Builder $query) => $query->onlyTrashed(),
+            'all' => fn(Builder $query) => $query->withTrashed(),
+        ];
+
+        // Initialize the query for articles
         $query = Article::query();
 
+        // Get the 'show' parameter from the request, default to 'all'
         $show = (string) $request->str('show', 'all');
 
-        if ($show === 'unpublished') {
-            $query = $query->whereNull('published_at');
-        } elseif ($show === 'published') {
-            $query = $query->where(function (Builder $query) {
-                $query
-                    ->whereNotNull('published_at')
-                    ->where('published_at', '<=', now());
-            });
-        } elseif ($show === 'scheduled') {
-            $query = $query->where(function (Builder $query) {
-                $query
-                    ->whereNotNull('published_at')
-                    ->where('published_at', '>', now());
-            });
-        } elseif ($show === 'removed') {
-            $query = $query->onlyTrashed();
-        } elseif ($show === 'all') {
-            $query = $query->withTrashed();
+        // Apply the appropriate condition to the query
+        if (isset($conditions[$show])) {
+            $conditions[$show]($query);
         }
 
+        // Return the paginated collection of articles
         return new ArticleResourceCollection($query->paginate());
     }
 
