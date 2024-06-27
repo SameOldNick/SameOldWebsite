@@ -126,7 +126,7 @@ class ArticleFactory extends Factory
     public function deleted()
     {
         return $this->afterCreating(function (Article $article) {
-            $article->post->delete();
+            $article->delete();
         });
     }
 }
