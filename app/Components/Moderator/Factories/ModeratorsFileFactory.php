@@ -35,11 +35,21 @@ class ModeratorsFileFactory implements ModeratorsFactory
         }
     }
 
+    /**
+     * Gets options for file factory
+     *
+     * @return array
+     */
     protected function getOptions(): array
     {
         return (array) $this->container->config->get('moderators.builders.file.options', []);
     }
 
+    /**
+     * Pulls options from file
+     *
+     * @return array|null
+     */
     protected function getOptionsFromFile(): ?array
     {
         $options = $this->getOptions();

@@ -37,6 +37,11 @@ class UpdateCommand extends Command
         }
     }
 
+    /**
+     * Update disposable email domains
+     *
+     * @return void
+     */
     protected function updateDisposableEmails()
     {
         $url = 'https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains.txt';
@@ -83,11 +88,21 @@ class UpdateCommand extends Command
         }
     }
 
+    /**
+     * Gets storage driver
+     *
+     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     */
     protected function getStorage()
     {
         return Storage::disk('local');
     }
 
+    /**
+     * Gets path to store disposable email domains
+     *
+     * @return string
+     */
     protected function getDisposableEmailsPath(): string
     {
         return 'data/disposable-emails.json';

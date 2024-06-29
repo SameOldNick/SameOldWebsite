@@ -42,11 +42,22 @@ class ModeratorsConfigFactory implements ModeratorsFactory
         return $moderators;
     }
 
+    /**
+     * Gets the default config options.
+     *
+     * @return array
+     */
     protected function getDefaultOptions(): array
     {
         return (array) $this->container->config->get('moderators.builders.config.options', []);
     }
 
+    /**
+     * Builds factory from options
+     *
+     * @param array $options
+     * @return self
+     */
     public static function buildFromOptions(array $options): self
     {
         return app(self::class, ['options' => $options]);

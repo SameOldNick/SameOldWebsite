@@ -37,16 +37,31 @@ class ModeratorsDatabaseFactory implements ModeratorsFactory
 
     }
 
+    /**
+     * Gets database options
+     *
+     * @return array
+     */
     protected function getOptions(): array
     {
         return (array) $this->container->config->get('moderators.builders.database.options', []);
     }
 
+    /**
+     * Gets existing config options
+     *
+     * @return array
+     */
     protected function getExistingOptions(): array
     {
         return (array) $this->container->config->get('moderators.builders.config.options', []);
     }
 
+    /**
+     * Gets enabled moderators
+     *
+     * @return list<string>
+     */
     protected function getEnabledModerators(): array
     {
         $enabled = PageSettings::page('blog')->setting('moderators');
@@ -54,6 +69,11 @@ class ModeratorsDatabaseFactory implements ModeratorsFactory
         return ! is_null($enabled) ? $enabled : $this->getOptions()['fallback'];
     }
 
+    /**
+     * Gets keys for moderators
+     *
+     * @return array<string, class-string>
+     */
     protected function getMappedClasses(): array
     {
         return [

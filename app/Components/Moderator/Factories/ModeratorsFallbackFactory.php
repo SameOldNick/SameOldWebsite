@@ -34,6 +34,12 @@ class ModeratorsFallbackFactory implements ModeratorsFactory
         return $this->getFallbackModerators();
     }
 
+    /**
+     * Gets configuration for builder
+     *
+     * @param string $builder
+     * @return array
+     */
     protected function getConfigFor(string $builder): array
     {
         return (array) $this->container->config->get("moderators.builders.{$builder}", []);
@@ -49,6 +55,12 @@ class ModeratorsFallbackFactory implements ModeratorsFactory
         return [];
     }
 
+    /**
+     * Build moderators from factory
+     *
+     * @param string $name
+     * @return Moderator[]
+     */
     protected function buildFrom(string $name): array
     {
         $config = $this->getConfigFor($name);
