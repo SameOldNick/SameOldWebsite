@@ -5,8 +5,10 @@ namespace App\Models;
 use App\Traits\Models\Displayable;
 use App\Traits\Models\Immutable;
 use App\Traits\Models\Postable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Url\Url as SpatieUrl;
 
@@ -20,6 +22,9 @@ use Spatie\Url\Url as SpatieUrl;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $children
  * @property-read ?User $approvedBy
  * @property-read ?Commenter $commenter
+ * @property-read string $status One of STATUS_* constants
+ * @property-read ?string $email Email address of user who posted comment
+ * @property-read string $display_name Display name of user who posted comment
  *
  * @method static \Database\Factories\CommentFactory factory($count = null, $state = [])
  */
@@ -29,6 +34,11 @@ class Comment extends Model
     use HasFactory;
     use Immutable;
     use Postable;
+
+    const STATUS_APPROVED = 'approved';
+    const STATUS_FLAGGED = 'flagged';
+    const STATUS_AWAITING_VERIFICATION = 'awaiting-verification';
+    const STATUS_AWAITING_APPROVAL = 'awaiting-approval';
 
     /**
      * Indicates if the model should be timestamped.
@@ -122,6 +132,24 @@ class Comment extends Model
     {
         return $this->belongsTo(Commenter::class);
     }
+
+    /**
+     * Gets flags for comment.
+     */
+    public function flags(): HasMany
+    {
+        return $this->hasMany(CommentFlag::class);
+    }
+
+    /**
+     * Checks if comment is flagged.
+     *
+     * @return boolean
+     */
+    public function isFlagged() {
+        return $this->flags()->active()->count() > 0;
+    }
+
     /**
      * Checks if comment is approved
      *
@@ -153,6 +181,19 @@ class Comment extends Model
     protected function email(): Attribute {
         return Attribute::get(fn () => $this->commenter?->email ?? $this->post->user?->email);
     }
+
+    /**
+     * Gets the status of the comment.
+     */
+    protected function status(): Attribute {
+        return Attribute::get(fn () => match (true) {
+            $this->isFlagged() => static::STATUS_FLAGGED,
+            $this->commenter && !$this->commenter->isVerified() => static::STATUS_AWAITING_VERIFICATION,
+            !$this->isApproved() => static::STATUS_AWAITING_APPROVAL,
+            default => static::STATUS_APPROVED
+        });
+    }
+
     /**
      * Creates public link to this comment.
      *

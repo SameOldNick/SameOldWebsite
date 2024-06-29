@@ -17,6 +17,7 @@ use App\Components\Passwords\ServiceProvider as PasswordsServiceProvider;
 use App\Components\Security\ServiceProvider as SecurityServiceProvider;
 use App\Components\Settings\ServiceProvider as SettingsServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
+use App\Components\Moderator\ServiceProvider as ModeratorServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider
@@ -40,6 +41,7 @@ class ComponentServiceProvider extends AggregateServiceProvider
         FakersServiceProvider::class,
         PasswordsServiceProvider::class,
         BackupServiceProvider::class,
+        ModeratorServiceProvider::class,
         SettingsServiceProvider::class,
         DuskServiceProvider::class,
     ];

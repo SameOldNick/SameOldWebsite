@@ -13,6 +13,7 @@
         "google/analytics-data": "^0.17.1",
         "guzzlehttp/guzzle": "^7.8",
         "ifsnop/mysqldump-php": "^2.12",
+        "landrok/language-detector": "^1.4",
         "laravel/framework": "^11.0",
         "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",

@@ -17,4 +17,17 @@ class Text extends Base
     {
         return Password::default()->generate($options);
     }
+
+    /**
+     * Generates a profane word.
+     *
+     * @param integer $count
+     * @param string $lang
+     * @return string
+     */
+    public function profanity(int $count = 1, $lang = 'en') {
+        $words = config("profanity.{$lang}", []);
+
+        return $count === 1 ? $this->randomElement($words) : $this->randomElements($words, $count);
+    }
 }
