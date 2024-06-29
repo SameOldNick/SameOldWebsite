@@ -3,6 +3,7 @@
 namespace App\Listeners\Comments;
 
 use App\Events\Comments\CommentApproved;
+use App\Models\Comment;
 use App\Notifications\CommentPosted;
 use Illuminate\Support\Facades\Notification;
 
@@ -21,22 +22,33 @@ class NotifyCommentRepliedTo
      */
     public function handle(CommentApproved $event): void
     {
-        $users = [];
+        $notifiables = $this->getNotifiables($event->comment);
 
-        $author = $event->comment->post->user;
-        $parent = $event->comment->parent;
+        Notification::send($notifiables, new CommentPosted($event->comment));
+    }
 
-        while (! is_null($parent)) {
-            $user = $parent->post->user;
-            $key = $user->getKey();
+    /**
+     * Get notifiables from comment
+     *
+     * @param Comment $comment
+     * @return \Illuminate\Support\Collection<int, mixed>
+     */
+    protected function getNotifiables(Comment $comment) {
+        $notifiables = collect();
 
-            if (! isset($users[$key]) && ! $author->is($user)) {
-                $users[$key] = $user;
+        $parent = $comment->parent;
+
+        while (!is_null($parent)) {
+            $notifiable = $parent->commenter ?? $parent->post->user;
+
+            if (!is_null($notifiable)) {
+                $notifiables->push($notifiable);
             }
 
             $parent = $parent->parent;
         }
 
-        Notification::send($users, new CommentPosted($event->comment));
+        // Return unique notifiables using Laravel's unique method
+        return $notifiables->unique();
     }
 }

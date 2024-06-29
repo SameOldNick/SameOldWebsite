@@ -19,6 +19,7 @@ use Spatie\Url\Url as SpatieUrl;
  * @property-read ?Comment $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $children
  * @property-read ?User $approvedBy
+ * @property-read ?Commenter $commenter
  *
  * @method static \Database\Factories\CommentFactory factory($count = null, $state = [])
  */
@@ -54,6 +55,7 @@ class Comment extends Model
     protected $with = [
         'post',
         'article',
+        'commenter',
     ];
 
     /**
@@ -114,6 +116,13 @@ class Comment extends Model
     }
 
     /**
+     * Get the associated commenter.
+     */
+    public function commenter(): BelongsTo
+    {
+        return $this->belongsTo(Commenter::class);
+    }
+    /**
      * Checks if comment is approved
      *
      * @return bool
@@ -131,6 +140,19 @@ class Comment extends Model
         return $this->belongsTo(User::class, 'approved_by');
     }
 
+    /**
+     * Gets the displayable name of the commenter
+     */
+    protected function displayName(): Attribute {
+        return Attribute::get(fn () => $this->commenter?->display_name ?? $this->post->user?->getDisplayName());
+    }
+
+    /**
+     * Gets the email of the user who posted the comment.
+     */
+    protected function email(): Attribute {
+        return Attribute::get(fn () => $this->commenter?->email ?? $this->post->user?->email);
+    }
     /**
      * Creates public link to this comment.
      *
@@ -183,5 +205,18 @@ class Comment extends Model
     public function scopeParents($query)
     {
         return $query->whereNull('parent_id');
+    }
+
+    /**
+     * Scope a query to only comment with email.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithEmail($query, string $email)
+    {
+        return $query->whereHas('commenter', function ($query) use ($email) {
+            $query->where('email', $email);
+        });
     }
 }

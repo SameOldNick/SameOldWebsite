@@ -35,13 +35,11 @@ class CommentPosted extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $displayName = $this->comment->post->user->getDisplayName();
-        $content = $this->comment->comment;
-
         return (new MailMessage)
             ->greeting('Hello!')
             ->line(sprintf('A new comment has been posted on the blog article, "%s".', $this->comment->article->title))
-            ->line(sprintf('%s said: "%s"', $displayName, $content))
+            ->line(sprintf('%s said:', $this->comment->display_name))
+            ->line($this->comment->comment)
             ->action('View Comment', route('blog.comment.show', ['article' => $this->comment->article, 'comment' => $this->comment]))
             ->line('Thank you for being an active member!');
     }
