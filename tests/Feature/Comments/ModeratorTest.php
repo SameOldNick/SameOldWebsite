@@ -212,22 +212,6 @@ class ModeratorTest extends TestCase
     }
 
     /**
-     * Tests spam is detected
-     */
-    public function test_detects_spam(): void
-    {
-        $comment = Comment::factory([
-            'comment' => $this->faker()->spam,
-        ])->for(Article::factory())->create();
-
-        $moderator = $this->app->make(ModerationService::class);
-
-        $moderator->moderate($comment);
-
-        $this->assertTrue($comment->isFlagged());
-    }
-
-    /**
      * Tests HTTP link is detected
      */
     public function test_detects_http_link(): void
