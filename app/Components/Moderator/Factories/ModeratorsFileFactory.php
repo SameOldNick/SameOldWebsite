@@ -37,8 +37,6 @@ class ModeratorsFileFactory implements ModeratorsFactory
 
     /**
      * Gets options for file factory
-     *
-     * @return array
      */
     protected function getOptions(): array
     {
@@ -47,8 +45,6 @@ class ModeratorsFileFactory implements ModeratorsFactory
 
     /**
      * Pulls options from file
-     *
-     * @return array|null
      */
     protected function getOptionsFromFile(): ?array
     {

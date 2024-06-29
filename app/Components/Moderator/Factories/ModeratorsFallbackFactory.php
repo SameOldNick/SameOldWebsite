@@ -36,9 +36,6 @@ class ModeratorsFallbackFactory implements ModeratorsFactory
 
     /**
      * Gets configuration for builder
-     *
-     * @param string $builder
-     * @return array
      */
     protected function getConfigFor(string $builder): array
     {
@@ -58,7 +55,6 @@ class ModeratorsFallbackFactory implements ModeratorsFactory
     /**
      * Build moderators from factory
      *
-     * @param string $name
      * @return Moderator[]
      */
     protected function buildFrom(string $name): array

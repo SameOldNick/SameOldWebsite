@@ -44,8 +44,6 @@ class ModeratorsConfigFactory implements ModeratorsFactory
 
     /**
      * Gets the default config options.
-     *
-     * @return array
      */
     protected function getDefaultOptions(): array
     {
@@ -54,9 +52,6 @@ class ModeratorsConfigFactory implements ModeratorsFactory
 
     /**
      * Builds factory from options
-     *
-     * @param array $options
-     * @return self
      */
     public static function buildFromOptions(array $options): self
     {

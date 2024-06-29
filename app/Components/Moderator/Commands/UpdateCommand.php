@@ -100,8 +100,6 @@ class UpdateCommand extends Command
 
     /**
      * Gets path to store disposable email domains
-     *
-     * @return string
      */
     protected function getDisposableEmailsPath(): string
     {

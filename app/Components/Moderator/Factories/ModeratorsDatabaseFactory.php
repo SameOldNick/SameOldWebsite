@@ -39,8 +39,6 @@ class ModeratorsDatabaseFactory implements ModeratorsFactory
 
     /**
      * Gets database options
-     *
-     * @return array
      */
     protected function getOptions(): array
     {
@@ -49,8 +47,6 @@ class ModeratorsDatabaseFactory implements ModeratorsFactory
 
     /**
      * Gets existing config options
-     *
-     * @return array
      */
     protected function getExistingOptions(): array
     {
