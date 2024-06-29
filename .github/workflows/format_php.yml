@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['8.2', '8.3']
+        # Using multiple PHP versions will cause an error from trying to push multiple commits at the same time.
+        php-versions: ['8.3']
     steps:
       - name: Setup PHP ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v2
