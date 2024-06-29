@@ -2,17 +2,9 @@
 
 namespace App\Http\Controllers\Api\Blog;
 
-use App\Events\Comments\CommentApproved;
-use App\Events\Comments\CommentRemoved;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CommentCollection;
-use App\Models\Article;
-use App\Models\Comment;
-use App\Models\User;
 use App\Traits\Controllers\HasPage;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
@@ -70,7 +62,8 @@ class SettingsController extends Controller
      *
      * @return string
      */
-    protected function getPageKey() {
+    protected function getPageKey()
+    {
         return 'blog';
     }
 }
