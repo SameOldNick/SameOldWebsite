@@ -8,14 +8,12 @@ use App\Components\Moderator\Factories\ModeratorsDatabaseFactory;
 use App\Components\Moderator\Factories\ModeratorsFileFactory;
 use App\Components\Moderator\ModerationService;
 use App\Components\Moderator\Moderators;
-use App\Components\Settings\Facades\PageSettings;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Page;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -27,7 +25,8 @@ class ModeratorTest extends TestCase
     /**
      * Tests moderation service is built from database
      */
-    public function test_building_from_database(): void {
+    public function test_building_from_database(): void
+    {
         Page::firstWhere('page', 'blog')->metaData()->updateOrCreate(
             ['key' => 'moderators'],
             ['value' => ['profanity']]
@@ -42,13 +41,13 @@ class ModeratorTest extends TestCase
 
                     'options' => [
                         /**
-                        * Filters to enable if unable to determine from database.
-                        */
+                         * Filters to enable if unable to determine from database.
+                         */
                         'fallback' => [
                             'profanity',
                             'email',
                             'language',
-                            'link'
+                            'link',
                         ],
                     ],
                 ],
@@ -63,20 +62,20 @@ class ModeratorTest extends TestCase
                                 'enabled' => true,
 
                                 'languages' => [
-                                    'en'
+                                    'en',
                                 ],
 
                                 /**
-                                * What to replace profanity with
-                                */
+                                 * What to replace profanity with
+                                 */
                                 'mask' => '[redacted]',
 
                                 'lists' => [
                                     [
                                         'source' => 'config',
-                                        'key' => 'profanity.en'
-                                    ]
-                                ]
+                                        'key' => 'profanity.en',
+                                    ],
+                                ],
                             ],
 
                             [
@@ -87,17 +86,18 @@ class ModeratorTest extends TestCase
                                 'reason' => 'Comments are restricted to the English language.',
 
                                 /**
-                                * Allowed languages.
-                                * @see LanguageDetector\LanguageDetector
-                                */
+                                 * Allowed languages.
+                                 *
+                                 * @see LanguageDetector\LanguageDetector
+                                 */
                                 'allowed' => [
-                                    'en'
-                                ]
+                                    'en',
+                                ],
                             ],
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ]]);
 
         /**
@@ -117,7 +117,8 @@ class ModeratorTest extends TestCase
     /**
      * Tests moderation service is built from config
      */
-    public function test_building_from_config(): void {
+    public function test_building_from_config(): void
+    {
         config(['moderators' => [
             'builder' => 'config',
 
@@ -128,8 +129,8 @@ class ModeratorTest extends TestCase
                     'options' => [
                         'moderators' => [],
                     ],
-                ]
-            ]
+                ],
+            ],
         ]]);
 
         /**
@@ -144,7 +145,8 @@ class ModeratorTest extends TestCase
     /**
      * Tests moderation service is built from file
      */
-    public function test_building_from_file(): void {
+    public function test_building_from_file(): void
+    {
         Storage::fake();
 
         $disk = 'local';
@@ -162,10 +164,10 @@ class ModeratorTest extends TestCase
 
                     'options' => [
                         'disk' => $disk,
-                        'path' => $path
-                    ]
-                ]
-            ]
+                        'path' => $path,
+                    ],
+                ],
+            ],
         ]]);
 
         /**
@@ -183,7 +185,7 @@ class ModeratorTest extends TestCase
     public function test_detects_profanity(): void
     {
         $comment = Comment::factory([
-            'comment' => $this->faker()->profanity
+            'comment' => $this->faker()->profanity,
         ])->for(Article::factory())->create();
 
         $moderator = $this->app->make(ModerationService::class);
@@ -199,7 +201,7 @@ class ModeratorTest extends TestCase
     public function test_comment_incorrect_language(): void
     {
         $comment = Comment::factory([
-            'comment' => $this->faker('ar_SA')->realText
+            'comment' => $this->faker('ar_SA')->realText,
         ])->for(Article::factory())->create();
 
         $moderator = $this->app->make(ModerationService::class);
@@ -215,7 +217,7 @@ class ModeratorTest extends TestCase
     public function test_detects_spam(): void
     {
         $comment = Comment::factory([
-            'comment' => $this->faker()->spam
+            'comment' => $this->faker()->spam,
         ])->for(Article::factory())->create();
 
         $moderator = $this->app->make(ModerationService::class);
@@ -231,7 +233,7 @@ class ModeratorTest extends TestCase
     public function test_detects_http_link(): void
     {
         $comment = Comment::factory([
-            'comment' => $this->faker()->profanity
+            'comment' => $this->faker()->profanity,
         ])->for(Article::factory())->create();
 
         $moderator = $this->app->make(ModerationService::class);

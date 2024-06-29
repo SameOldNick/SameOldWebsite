@@ -2,7 +2,8 @@
 
 namespace App\Components\Moderator\Contracts;
 
-interface ModeratorsFactory {
+interface ModeratorsFactory
+{
     /**
      * Builds list of moderators
      *

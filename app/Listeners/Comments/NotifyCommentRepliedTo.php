@@ -30,18 +30,18 @@ class NotifyCommentRepliedTo
     /**
      * Get notifiables from comment
      *
-     * @param Comment $comment
      * @return \Illuminate\Support\Collection<int, mixed>
      */
-    protected function getNotifiables(Comment $comment) {
+    protected function getNotifiables(Comment $comment)
+    {
         $notifiables = collect();
 
         $parent = $comment->parent;
 
-        while (!is_null($parent)) {
+        while (! is_null($parent)) {
             $notifiable = $parent->commenter ?? $parent->post->user;
 
-            if (!is_null($notifiable)) {
+            if (! is_null($notifiable)) {
                 $notifiables->push($notifiable);
             }
 

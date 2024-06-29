@@ -2,9 +2,9 @@
 
 namespace App\Components\Moderator\Commands;
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Command;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 use function Safe\json_encode;
@@ -32,12 +32,13 @@ class UpdateCommand extends Command
      */
     public function handle()
     {
-        if (!$this->option('no-disposable')) {
+        if (! $this->option('no-disposable')) {
             $this->updateDisposableEmails();
         }
     }
 
-    protected function updateDisposableEmails() {
+    protected function updateDisposableEmails()
+    {
         $url = 'https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains.txt';
 
         try {
@@ -55,7 +56,7 @@ class UpdateCommand extends Command
                 },
                 'on_stats' => function () use ($bar) {
                     $bar->finish();
-                }
+                },
             ])->get($url)->throw();
 
             $lines = explode("\n", $response->body());
@@ -65,11 +66,11 @@ class UpdateCommand extends Command
                 exit(1);
             }
 
-            if (!$this->option('yes') && $this->getStorage()->exists($this->getDisposableEmailsPath()) && !$this->confirm('Are you sure you want to overwrite the disposable emails file?')) {
+            if (! $this->option('yes') && $this->getStorage()->exists($this->getDisposableEmailsPath()) && ! $this->confirm('Are you sure you want to overwrite the disposable emails file?')) {
                 return;
             }
 
-            if (!$this->getStorage()->put('data/disposable-emails.json', json_encode($lines, JSON_PRETTY_PRINT))) {
+            if (! $this->getStorage()->put('data/disposable-emails.json', json_encode($lines, JSON_PRETTY_PRINT))) {
                 $this->error('An error occurred writing file.');
                 exit(1);
             }
@@ -82,11 +83,13 @@ class UpdateCommand extends Command
         }
     }
 
-    protected function getStorage() {
+    protected function getStorage()
+    {
         return Storage::disk('local');
     }
 
-    protected function getDisposableEmailsPath(): string {
+    protected function getDisposableEmailsPath(): string
+    {
         return 'data/disposable-emails.json';
     }
 }

@@ -47,7 +47,7 @@ return [
         'عرص',
         'خول',
         'قحبة',
-        'لبوة'
+        'لبوة',
     ],
     'ca' => [
         'asesinat',
@@ -62,7 +62,7 @@ return [
         'pervertit',
         'pit',
         'pixat',
-        'sexe'
+        'sexe',
     ],
     'cs' => [
         'bordel',
@@ -105,7 +105,7 @@ return [
         'zkurvit',
         'zkurvysyn',
         'zmrd',
-        'žrát'
+        'žrát',
     ],
     'da' => [
         'anus',
@@ -127,7 +127,7 @@ return [
         'røvhul',
         'røvskæg',
         'røvspræke',
-        'shit'
+        'shit',
     ],
     'de' => [
         'analritter',
@@ -194,7 +194,7 @@ return [
         'vollpfosten',
         'wichse',
         'wichsen',
-        'wichser'
+        'wichser',
     ],
     'en' => [
         '2g1c',
@@ -573,7 +573,7 @@ return [
         'yellow showers',
         'yiffy',
         'zoophilia',
-        '🖕'
+        '🖕',
     ],
     'eo' => [
         'bugren',
@@ -612,7 +612,7 @@ return [
         'kojono',
         'piĉen',
         'piĉo',
-        'zamenfek'
+        'zamenfek',
     ],
     'es' => [
         'Asesinato',
@@ -687,7 +687,7 @@ return [
         'Trio',
         'Verga',
         'vete a la mierda',
-        'Vulva'
+        'Vulva',
     ],
     'fa' => [
         'آب کیر',
@@ -734,7 +734,7 @@ return [
         'لخت',
         'لش',
         'منی',
-        'هرزه'
+        'هرزه',
     ],
     'fi' => [
         'alfred nussi',
@@ -866,7 +866,7 @@ return [
         'vitusti',
         'vituttaa',
         'vitutus',
-        'äpärä'
+        'äpärä',
     ],
     'fr' => [
         'baiser',
@@ -959,7 +959,7 @@ return [
         'turlute',
         'veuve',
         'zigounette',
-        'zizi'
+        'zizi',
     ],
     'hi' => [
         'aand',
@@ -1057,7 +1057,7 @@ return [
         'teri maa ka boba chusu',
         'teri maa ki chut',
         'tharak',
-        'tharki'
+        'tharki',
     ],
     'hu' => [
         'balfasz',
@@ -1155,7 +1155,7 @@ return [
         'szarik',
         'szarok',
         'szarokat',
-        'szart'
+        'szart',
     ],
     'it' => [
         'allupato',
@@ -1337,7 +1337,7 @@ return [
         'venire',
         'zinne',
         'zio cantante',
-        'zoccola'
+        'zoccola',
     ],
     'ja' => [
         '3p',
@@ -1524,7 +1524,7 @@ return [
         '卍',
         '宦官',
         '肛門',
-        '膣'
+        '膣',
     ],
     'ko' => [
         '강간',
@@ -1598,7 +1598,7 @@ return [
         '화냥년',
         '후레아들',
         '후장',
-        '희쭈그리'
+        '희쭈그리',
     ],
     'nl' => [
         'aardappels afgieteng',
@@ -1791,7 +1791,7 @@ return [
         'zeiken',
         'zeiker',
         'zuigen',
-        'zuiplap'
+        'zuiplap',
     ],
     'no' => [
         'drittsekk',
@@ -1806,7 +1806,7 @@ return [
         'sotrør',
         'ståpikk',
         'ståpikkene',
-        'ståpikker'
+        'ståpikker',
     ],
     'pl' => [
         'burdel',
@@ -1861,7 +1861,7 @@ return [
         'suka',
         'syf',
         'wkurwiać',
-        'zajebisty'
+        'zajebisty',
     ],
     'pt' => [
         'aborto',
@@ -1937,7 +1937,7 @@ return [
         'veado',
         'vibrador',
         'xana',
-        'xochota'
+        'xochota',
     ],
     'ru' => [
         'bychara',
@@ -2091,7 +2091,7 @@ return [
         'хуиня',
         'хуй',
         'хуйнуть',
-        'хуй пинать'
+        'хуй пинать',
     ],
     'sv' => [
         'arsle',
@@ -2136,7 +2136,7 @@ return [
         'subba',
         'sås',
         'sätta på',
-        'tusan'
+        'tusan',
     ],
     'th' => [
         'กระดอ',
@@ -2169,12 +2169,12 @@ return [
         'หี',
         'เหี้ย',
         'อมนกเขา',
-        'ไอ้ควาย'
+        'ไอ้ควาย',
     ],
     'tlh' => [
         'ghuy\'cha\'',
         'QI\'yaH',
-        'Qu\'vatlh'
+        'Qu\'vatlh',
     ],
     'tr' => [
         'am',
@@ -2318,7 +2318,7 @@ return [
         'yarakları',
         'yarakların',
         'yarakta',
-        'yaraktan'
+        'yaraktan',
     ],
     'zh' => [
         '13点',
@@ -2613,6 +2613,6 @@ return [
         '鸡芭',
         '鸡鸡',
         '龟儿子',
-        '龟头'
-    ]
+        '龟头',
+    ],
 ];

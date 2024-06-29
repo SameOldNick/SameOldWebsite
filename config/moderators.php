@@ -18,7 +18,7 @@ return [
                     'profanity',
                     'email',
                     'language',
-                    'link'
+                    'link',
                 ],
             ],
         ],
@@ -48,7 +48,7 @@ return [
                         'enabled' => true,
 
                         'languages' => [
-                            'en'
+                            'en',
                         ],
 
                         /**
@@ -59,9 +59,9 @@ return [
                         'lists' => [
                             [
                                 'source' => 'config',
-                                'key' => 'profanity.en'
-                            ]
-                        ]
+                                'key' => 'profanity.en',
+                            ],
+                        ],
                     ],
 
                     [
@@ -73,12 +73,13 @@ return [
                         'reason' => 'Comments are restricted to the English language.',
 
                         /**
-                        * Allowed languages.
-                        * @see LanguageDetector\LanguageDetector
-                        */
+                         * Allowed languages.
+                         *
+                         * @see LanguageDetector\LanguageDetector
+                         */
                         'allowed' => [
-                            'en'
-                        ]
+                            'en',
+                        ],
                     ],
 
                     [
@@ -94,8 +95,8 @@ return [
                                     'gmail.com',
                                     'outlook.com',
                                     'hotmail.com',
-                                ]
-                            ]
+                                ],
+                            ],
                         ],
 
                         'deny' => [
@@ -104,8 +105,8 @@ return [
                                 'disk' => 'local',
                                 'path' => 'data/disposable-emails.json',
                                 'format' => 'json',
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
 
                     [
@@ -125,8 +126,8 @@ return [
 
             'options' => [
                 'disk' => 'local',
-                'path' => 'data/moderators.json'
-            ]
-        ]
+                'path' => 'data/moderators.json',
+            ],
+        ],
     ],
 ];

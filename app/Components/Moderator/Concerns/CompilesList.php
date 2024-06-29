@@ -4,14 +4,13 @@ namespace App\Components\Moderator\Concerns;
 
 use Illuminate\Support\Facades\Storage;
 
-trait CompilesList {
+trait CompilesList
+{
     /**
      * Compiles list from configuration
-     *
-     * @param array $config
-     * @return array
      */
-    protected function compileList(array $config): array {
+    protected function compileList(array $config): array
+    {
         $compiled = [];
 
         foreach ($config as $entry) {
@@ -31,20 +30,20 @@ trait CompilesList {
     /**
      * Gets list built-in to config
      *
-     * @param string $key
      * @return array
      */
-    protected function getListFromConfig(string $key) {
+    protected function getListFromConfig(string $key)
+    {
         return config($key, []);
     }
 
     /**
      * Gets list from file
      *
-     * @param array $entry
      * @return array
      */
-    protected function getListFromFile(array $entry) {
+    protected function getListFromFile(array $entry)
+    {
         $contents = Storage::disk($entry['disk'])->get($entry['path']);
 
         return match ($entry['format']) {
@@ -52,5 +51,4 @@ trait CompilesList {
             default => explode("\n", $contents)
         };
     }
-
 }

@@ -3,9 +3,8 @@
 namespace App\Components\Moderator;
 
 use App\Components\Moderator\Commands\UpdateCommand;
-use App\Components\Moderator\Contracts\Moderator;
-use Illuminate\Contracts\Container\Container;
 use Illuminate\Console\Application as Artisan;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider

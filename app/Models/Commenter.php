@@ -7,7 +7,6 @@ use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
@@ -72,17 +71,17 @@ class Commenter extends Model
 
     /**
      * Gets if email has been verified.
-     *
-     * @return boolean
      */
-    public function isVerified(): bool {
-        return !is_null($this->email_verified_at);
+    public function isVerified(): bool
+    {
+        return ! is_null($this->email_verified_at);
     }
 
     /**
      * Gets the displayable name of the commenter
      */
-    protected function displayName(): Attribute {
+    protected function displayName(): Attribute
+    {
         // TODO: Make this a trait.
         return Attribute::get(fn () => $this->name ?? Str::before($this->email, '@'));
     }

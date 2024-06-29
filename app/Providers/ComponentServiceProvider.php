@@ -12,12 +12,12 @@ use App\Components\LittleJWT\ServiceProvider as LittleJWTServiceProvider;
 use App\Components\Macros\ServiceProvider as MacrosServiceProvider;
 use App\Components\Menus\ServiceProvider as MenusServiceProvider;
 use App\Components\MFA\ServiceProvider as MFAServiceProvider;
+use App\Components\Moderator\ServiceProvider as ModeratorServiceProvider;
 use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use App\Components\Passwords\ServiceProvider as PasswordsServiceProvider;
 use App\Components\Security\ServiceProvider as SecurityServiceProvider;
 use App\Components\Settings\ServiceProvider as SettingsServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
-use App\Components\Moderator\ServiceProvider as ModeratorServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider

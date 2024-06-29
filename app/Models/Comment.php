@@ -8,8 +8,8 @@ use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Url\Url as SpatieUrl;
 
 /**
@@ -36,8 +36,11 @@ class Comment extends Model
     use Postable;
 
     const STATUS_APPROVED = 'approved';
+
     const STATUS_FLAGGED = 'flagged';
+
     const STATUS_AWAITING_VERIFICATION = 'awaiting-verification';
+
     const STATUS_AWAITING_APPROVAL = 'awaiting-approval';
 
     /**
@@ -144,9 +147,10 @@ class Comment extends Model
     /**
      * Checks if comment is flagged.
      *
-     * @return boolean
+     * @return bool
      */
-    public function isFlagged() {
+    public function isFlagged()
+    {
         return $this->flags()->active()->count() > 0;
     }
 
@@ -171,25 +175,28 @@ class Comment extends Model
     /**
      * Gets the displayable name of the commenter
      */
-    protected function displayName(): Attribute {
+    protected function displayName(): Attribute
+    {
         return Attribute::get(fn () => $this->commenter?->display_name ?? $this->post->user?->getDisplayName());
     }
 
     /**
      * Gets the email of the user who posted the comment.
      */
-    protected function email(): Attribute {
+    protected function email(): Attribute
+    {
         return Attribute::get(fn () => $this->commenter?->email ?? $this->post->user?->email);
     }
 
     /**
      * Gets the status of the comment.
      */
-    protected function status(): Attribute {
+    protected function status(): Attribute
+    {
         return Attribute::get(fn () => match (true) {
             $this->isFlagged() => static::STATUS_FLAGGED,
-            $this->commenter && !$this->commenter->isVerified() => static::STATUS_AWAITING_VERIFICATION,
-            !$this->isApproved() => static::STATUS_AWAITING_APPROVAL,
+            $this->commenter && ! $this->commenter->isVerified() => static::STATUS_AWAITING_VERIFICATION,
+            ! $this->isApproved() => static::STATUS_AWAITING_APPROVAL,
             default => static::STATUS_APPROVED
         });
     }
