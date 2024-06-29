@@ -22,7 +22,7 @@ class CommentFactory extends Factory
     {
         return [
             'title' => $this->faker->boolean() ? $this->faker->words(3, true) : null,
-            'comment' => $this->faker->paragraphs(2, true),
+            'comment' => $this->faker->realText(),
         ];
     }
 
