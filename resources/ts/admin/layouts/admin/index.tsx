@@ -52,6 +52,7 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
                         <Authorized roles={['manage_comments']}>
                             <Sidebar.Dropdown text='Comments' icon={<FaComments />}>
                                 <Sidebar.DropdownItem href='/admin/comments'>View All Comments</Sidebar.DropdownItem>
+                                <Sidebar.DropdownItem href='/admin/comments/settings'>Comment Settings</Sidebar.DropdownItem>
                             </Sidebar.Dropdown>
                         </Authorized>
 

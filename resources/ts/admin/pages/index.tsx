@@ -18,6 +18,7 @@ import CurrentRevision from '@admin/pages/protected/posts/CurrentRevision';
 
 import AllComments from '@admin/pages/protected/comments/All';
 import EditComments from '@admin/pages/protected/comments/Edit';
+import CommentSettings from '@admin/pages/protected/comments/Settings';
 
 import AllProjects from '@admin/pages/protected/projects/All';
 import CreateProject from '@admin/pages/protected/projects/Create';
@@ -63,6 +64,7 @@ const Pages: React.FC = () => {
 
                         <Route path='comments'>
                             <Route path='edit/:comment' element={<EditComments />} />
+                            <Route path='settings' element={<CommentSettings />} />
                             <Route index element={<AllComments />} />
                         </Route>
 

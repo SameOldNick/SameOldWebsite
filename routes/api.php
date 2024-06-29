@@ -77,6 +77,9 @@ Route::namespace(Api::class)->group(function () {
             Route::post('/articles/{article}/tags', [Api\Blog\TagController::class, 'attach']);
             Route::put('/articles/{article}/tags', [Api\Blog\TagController::class, 'sync']);
             Route::delete('/articles/{article}/tags', [Api\Blog\TagController::class, 'detach']);
+
+            Route::get('/settings', [Api\Blog\SettingsController::class, 'show']);
+            Route::post('/settings', [Api\Blog\SettingsController::class, 'update']);
         });
 
         Route::prefix('/dashboard')->group(function () {
