@@ -152,6 +152,8 @@ class BlogCommentReplyTest extends TestCase
     {
         // Simulate CAPTCHA validation logic here
         // For testing, assume CAPTCHA is valid
+        ReCaptcha::fake();
+
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -274,6 +276,8 @@ class BlogCommentReplyTest extends TestCase
     {
         // Simulate CAPTCHA validation logic here
         // For testing, assume CAPTCHA is valid
+        ReCaptcha::fake();
+
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -307,6 +311,8 @@ class BlogCommentReplyTest extends TestCase
     {
         // Simulate CAPTCHA validation logic here
         // For testing, assume CAPTCHA is valid
+        ReCaptcha::fake();
+
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
