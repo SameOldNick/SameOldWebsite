@@ -130,7 +130,8 @@ class CommentPolicy
      *
      * @return string
      */
-    protected function getPageKey() {
+    protected function getPageKey()
+    {
         return 'blog';
     }
 }

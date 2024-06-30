@@ -3,31 +3,23 @@
 namespace Tests\Feature\Main\Blog;
 
 use App\Components\Settings\Facades\PageSettings;
-use App\Events\Comments\CommentApproved;
-use App\Events\Comments\CommentCreated;
 use App\Models\Article;
 use App\Models\Comment;
-use App\Models\User;
-use App\Notifications\CommentPosted;
 use Biscolab\ReCaptcha\Facades\ReCaptcha;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Mail\Mailable;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\FakesReCaptcha;
+use Tests\TestCase;
 
 class BlogCommentReplyTest extends TestCase
 {
+    use CreatesUser;
+    use FakesReCaptcha;
     use RefreshDatabase;
     use WithFaker;
-    use FakesReCaptcha;
-    use CreatesUser;
 
     /**
      * @test
@@ -36,7 +28,7 @@ class BlogCommentReplyTest extends TestCase
     public function registered_user_can_post_comment_reply()
     {
         PageSettings::fake('blog', [
-            'user_authentication' => 'registered'
+            'user_authentication' => 'registered',
         ]);
 
         $article = Article::factory()->published()->create();
@@ -45,7 +37,7 @@ class BlogCommentReplyTest extends TestCase
         ])->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment.reply', ['article' => $article, 'parent' => $parent]), [
-            'comment' => $this->faker->realText()
+            'comment' => $this->faker->realText(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -65,7 +57,7 @@ class BlogCommentReplyTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'auto'
+            'comment_moderation' => 'auto',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -97,7 +89,7 @@ class BlogCommentReplyTest extends TestCase
         // Assuming a setting to disable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'manual'
+            'comment_moderation' => 'manual',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -129,7 +121,7 @@ class BlogCommentReplyTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'disabled'
+            'comment_moderation' => 'disabled',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -163,7 +155,7 @@ class BlogCommentReplyTest extends TestCase
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'guest'
+            'use_captcha' => 'guest',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
@@ -189,11 +181,12 @@ class BlogCommentReplyTest extends TestCase
      * @test
      */
     #[Test]
-    public function post_comment_reply_missing_comment_field() {
+    public function post_comment_reply_missing_comment_field()
+    {
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'guest'
+            'use_captcha' => 'guest',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
@@ -219,11 +212,12 @@ class BlogCommentReplyTest extends TestCase
      * @test
      */
     #[Test]
-    public function post_comment_reply_invalid_recaptcha() {
+    public function post_comment_reply_invalid_recaptcha()
+    {
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'guest'
+            'use_captcha' => 'guest',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
@@ -254,7 +248,7 @@ class BlogCommentReplyTest extends TestCase
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'guest'
+            'use_captcha' => 'guest',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
@@ -283,7 +277,7 @@ class BlogCommentReplyTest extends TestCase
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'all'
+            'use_captcha' => 'all',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
@@ -316,7 +310,7 @@ class BlogCommentReplyTest extends TestCase
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'all'
+            'use_captcha' => 'all',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
@@ -345,7 +339,7 @@ class BlogCommentReplyTest extends TestCase
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'all'
+            'use_captcha' => 'all',
         ]);
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
@@ -379,7 +373,7 @@ class BlogCommentReplyTest extends TestCase
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'all'
+            'use_captcha' => 'all',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
@@ -411,7 +405,7 @@ class BlogCommentReplyTest extends TestCase
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'disabled'
+            'use_captcha' => 'disabled',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
@@ -444,7 +438,7 @@ class BlogCommentReplyTest extends TestCase
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
-            'use_captcha' => 'disabled'
+            'use_captcha' => 'disabled',
         ]);
 
         $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();

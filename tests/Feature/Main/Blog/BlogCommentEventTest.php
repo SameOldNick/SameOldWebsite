@@ -11,17 +11,17 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\FakesReCaptcha;
+use Tests\TestCase;
 
 class BlogCommentEventTest extends TestCase
 {
+    use CreatesUser;
+    use FakesReCaptcha;
     use RefreshDatabase;
     use WithFaker;
-    use FakesReCaptcha;
-    use CreatesUser;
 
     /**
      * Tests approved event is fired when guest posts a comment
@@ -33,7 +33,7 @@ class BlogCommentEventTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'auto'
+            'comment_moderation' => 'auto',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -65,7 +65,7 @@ class BlogCommentEventTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'manual'
+            'comment_moderation' => 'manual',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -97,7 +97,7 @@ class BlogCommentEventTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'disabled'
+            'comment_moderation' => 'disabled',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -129,7 +129,7 @@ class BlogCommentEventTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'auto'
+            'comment_moderation' => 'auto',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -157,7 +157,7 @@ class BlogCommentEventTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'manual'
+            'comment_moderation' => 'manual',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -185,7 +185,7 @@ class BlogCommentEventTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'disabled'
+            'comment_moderation' => 'disabled',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -213,7 +213,7 @@ class BlogCommentEventTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'auto'
+            'comment_moderation' => 'auto',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();
@@ -245,7 +245,7 @@ class BlogCommentEventTest extends TestCase
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
-            'comment_moderation' => 'auto'
+            'comment_moderation' => 'auto',
         ]);
 
         $article = Article::factory()->hasPostWithUser()->published()->create();

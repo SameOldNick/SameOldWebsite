@@ -47,7 +47,7 @@ class CommentRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique(User::class)
+                Rule::unique(User::class),
             ];
         }
 
@@ -56,7 +56,7 @@ class CommentRequest extends FormRequest
         if (($useCaptcha === 'guest' && $this->isGuest()) || $useCaptcha === 'all') {
             $rules[recaptchaFieldName()] = [
                 'required',
-                new ReCaptchaRule
+                new ReCaptchaRule,
             ];
         }
 
@@ -77,10 +77,9 @@ class CommentRequest extends FormRequest
 
     /**
      * Checks if being posted as guest
-     *
-     * @return boolean
      */
-    public function isGuest(): bool {
+    public function isGuest(): bool
+    {
         return is_null($this->user());
     }
 }

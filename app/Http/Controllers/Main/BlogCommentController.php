@@ -9,7 +9,6 @@ use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
-use App\Mail\CommentVerification;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Commenter;
@@ -22,10 +21,7 @@ class BlogCommentController extends Controller
 
     public function __construct(
         protected readonly ModerationService $moderationService
-    )
-    {
-
-    }
+    ) {}
 
     /**
      * Shows the comment (if user has access)
@@ -137,9 +133,6 @@ class BlogCommentController extends Controller
 
     /**
      * Sends verification email
-     *
-     * @param Comment $comment
-     * @return void
      */
     protected function sendVerificationEmail(Comment $comment): void
     {
@@ -151,12 +144,10 @@ class BlogCommentController extends Controller
     /**
      * Process comment creation
      *
-     * @param CommentRequest $request
-     * @param Article $article
-     * @param Comment|null $parent
      * @return Comment
      */
-    protected function processComment(CommentRequest $request, Article $article, ?Comment $parent = null) {
+    protected function processComment(CommentRequest $request, Article $article, ?Comment $parent = null)
+    {
         $userAuthentication = $this->getSettings()->setting('user_authentication');
         $commentModeration = $this->getSettings()->setting('comment_moderation');
 
@@ -165,8 +156,9 @@ class BlogCommentController extends Controller
 
             $comment->article()->associate($article);
 
-            if (!is_null($parent))
+            if (! is_null($parent)) {
                 $comment->parent()->associate($parent);
+            }
 
             // Attach commenter if user is guest.
             if ($request->isGuest()) {
@@ -176,9 +168,9 @@ class BlogCommentController extends Controller
                 ]);
 
                 /**
-                * Set email has verified if 'guest_unverified' is set.
-                * This is so later if the setting is changed to 'guest_verified' the comments won't be hidden.
-                */
+                 * Set email has verified if 'guest_unverified' is set.
+                 * This is so later if the setting is changed to 'guest_verified' the comments won't be hidden.
+                 */
                 $commenter->email_verified_at = $userAuthentication === 'guest_unverified' ? now() : null;
 
                 $commenter->save();
@@ -190,7 +182,7 @@ class BlogCommentController extends Controller
         // Run comment through moderator
         $flagged = $commentModeration !== 'disabled' ? $this->moderationService->moderate($comment) : false;
 
-        $comment->approved_at = ($commentModeration === 'auto' && !$flagged) || $commentModeration === 'disabled' ? now() : null;
+        $comment->approved_at = ($commentModeration === 'auto' && ! $flagged) || $commentModeration === 'disabled' ? now() : null;
 
         // Update will only occur if comment is dirty (has changes).
         $comment->save();
@@ -203,7 +195,8 @@ class BlogCommentController extends Controller
      *
      * @return string
      */
-    protected function getPageKey() {
+    protected function getPageKey()
+    {
         return 'blog';
     }
 }

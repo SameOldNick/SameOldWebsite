@@ -9,15 +9,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\Traits\FakesReCaptcha;
+use Tests\TestCase;
 
 class BlogCommentVerifyTest extends TestCase
 {
+    use FakesReCaptcha;
     use RefreshDatabase;
     use WithFaker;
-    use FakesReCaptcha;
 
     /**
      * Tests a guest can post comment with email verification
@@ -27,7 +27,7 @@ class BlogCommentVerifyTest extends TestCase
     {
         Mail::fake();
         PageSettings::fake('blog', [
-            'user_authentication' => 'guest_verified'
+            'user_authentication' => 'guest_verified',
         ]);
 
         $article = Article::factory()->published()->create();
@@ -60,7 +60,7 @@ class BlogCommentVerifyTest extends TestCase
     {
         Mail::fake();
         PageSettings::fake('blog', [
-            'user_authentication' => 'guest_verified'
+            'user_authentication' => 'guest_verified',
         ]);
 
         $article = Article::factory()->published()->create();
@@ -97,7 +97,7 @@ class BlogCommentVerifyTest extends TestCase
     {
         Mail::fake();
         PageSettings::fake('blog', [
-            'user_authentication' => 'guest_unverified'
+            'user_authentication' => 'guest_unverified',
         ]);
 
         $article = Article::factory()->published()->create();
