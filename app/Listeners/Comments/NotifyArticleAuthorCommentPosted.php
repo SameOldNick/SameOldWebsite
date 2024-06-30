@@ -29,6 +29,7 @@ class NotifyArticleAuthorCommentPosted
          */
         if (is_null($author)) {
             Log::error('Unable to determine article author to send notification', ['article' => $event->comment->article]);
+
             return;
         }
 
