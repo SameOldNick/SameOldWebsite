@@ -28,6 +28,7 @@ class BlogCommentVerifyTest extends TestCase
         Mail::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
+            'comment_moderation' => 'disabled',
         ]);
 
         $article = Article::factory()->published()->create();
