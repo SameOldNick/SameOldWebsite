@@ -62,8 +62,6 @@ class Tag extends Model
 
     /**
      * Gets the article that have this tag.
-     *
-     * @return BelongsToMany
      */
     public function articles(): BelongsToMany
     {
@@ -72,8 +70,6 @@ class Tag extends Model
 
     /**
      * Gets the projects that belong to this tag.
-     *
-     * @return BelongsToMany
      */
     public function projects(): BelongsToMany
     {

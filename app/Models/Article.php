@@ -98,8 +98,6 @@ class Article extends Model
 
     /**
      * Gets the current revision
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function currentRevision(): BelongsTo
     {
@@ -108,8 +106,6 @@ class Article extends Model
 
     /**
      * Gets the revisions of this article
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function revisions(): HasMany
     {
@@ -118,8 +114,6 @@ class Article extends Model
 
     /**
      * Gets the tags that this article has.
-     *
-     * @return BelongsToMany
      */
     public function tags(): BelongsToMany
     {
@@ -128,8 +122,6 @@ class Article extends Model
 
     /**
      * Gets comments for this article.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments(): HasMany
     {
@@ -146,8 +138,6 @@ class Article extends Model
 
     /**
      * Gets the main image (if any)
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function mainImage(): BelongsTo
     {

@@ -45,8 +45,6 @@ class Project extends Model
 
     /**
      * Gets the tags that belong to this project.
-     *
-     * @return BelongsToMany
      */
     public function tags(): BelongsToMany
     {

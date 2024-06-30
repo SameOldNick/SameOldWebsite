@@ -39,8 +39,6 @@ class CommentFlag extends Model
 
     /**
      * Gets the original comment.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function comment(): BelongsTo
     {
@@ -49,8 +47,6 @@ class CommentFlag extends Model
 
     /**
      * Gets who approved the flag.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function approvedBy(): BelongsTo
     {

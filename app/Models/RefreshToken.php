@@ -36,8 +36,6 @@ class RefreshToken extends Model
 
     /**
      * Gets the user who made this refresh token is for.
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {

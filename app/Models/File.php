@@ -103,8 +103,6 @@ final class File extends Model
 
     /**
      * Gets the parent fileable model (ProductImage, Download, or Release)
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function fileable(): MorphTo
     {
@@ -113,8 +111,6 @@ final class File extends Model
 
     /**
      * Gets the user who uploaded this file.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {

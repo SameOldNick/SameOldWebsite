@@ -82,8 +82,6 @@ class Comment extends Model
 
     /**
      * Gets the parent comment (if any)
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent(): BelongsTo
     {
@@ -92,8 +90,6 @@ class Comment extends Model
 
     /**
      * Gets children of this comment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children(): HasMany
     {

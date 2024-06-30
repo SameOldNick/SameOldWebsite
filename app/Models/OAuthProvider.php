@@ -49,8 +49,6 @@ class OAuthProvider extends Model
 
     /**
      * Gets the user the OAuth provider belongs to
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {

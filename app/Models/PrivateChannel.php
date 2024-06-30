@@ -55,8 +55,6 @@ class PrivateChannel extends Model
 
     /**
      * Get who the private channel belongs to.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function notifiable(): MorphTo
     {

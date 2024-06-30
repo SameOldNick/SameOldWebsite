@@ -53,8 +53,6 @@ class Post extends Model
 
     /**
      * Gets the user who made this post.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -63,8 +61,6 @@ class Post extends Model
 
     /**
      * Gets the morphed child of this post
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function postable(): MorphTo
     {

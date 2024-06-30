@@ -103,8 +103,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Get the entity's notifications.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function notifications(): MorphMany
     {
@@ -113,8 +111,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * The roles that belong to the user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles(): BelongsToMany
     {
@@ -125,7 +121,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      * Checks if User has all specified roles
      *
      * @param  array  $roles  Array of role names
-     * @return bool
      */
     public function hasAllRoles(array $roles): bool
     {
@@ -166,8 +161,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Gets posts created by this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function posts(): HasMany
     {
@@ -176,8 +169,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Gets files uploaded by this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function files(): HasMany
     {
@@ -186,8 +177,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Gets comments approved by this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function approvedComments(): HasMany
     {
@@ -196,8 +185,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Gets refresh tokens for this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function refreshTokens(): HasMany
     {
@@ -206,8 +193,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Gets the private channels for this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function privateChannels(): MorphMany
     {
@@ -216,8 +201,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Gets the country for this user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function country(): BelongsTo
     {
@@ -226,8 +209,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Gets the state for this user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function state(): BelongsTo
     {
@@ -281,8 +262,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 
     /**
      * Gets the OAuth providers for this user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function oauthProviders(): HasMany
     {

@@ -64,8 +64,6 @@ class Revision extends Model
 
     /**
      * Gets the parent revision of this revision
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parentRevision(): BelongsTo
     {
