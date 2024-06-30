@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -28,7 +29,7 @@ class Page extends Model
      *
      * @return mixed
      */
-    public function metaData()
+    public function metaData(): HasMany
     {
         return $this->hasMany(PageMetaData::class);
     }

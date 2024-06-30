@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -104,7 +106,7 @@ final class File extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function fileable()
+    public function fileable(): MorphTo
     {
         return $this->morphTo();
     }
@@ -114,7 +116,7 @@ final class File extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -124,7 +126,7 @@ final class File extends Model
      *
      * @return $this
      */
-    public function withUrl(bool $enabled = true)
+    public function withUrl(bool $enabled = true): static
     {
         $this->withUrl = $enabled;
 
@@ -259,7 +261,7 @@ final class File extends Model
      * @param  string  $disk  Name of the disk (default: null)
      * @return static
      */
-    public static function createFromFilePath(string $path, ?string $name = null, bool $public = false, ?string $disk = null)
+    public static function createFromFilePath(string $path, ?string $name = null, bool $public = false, ?string $disk = null): self
     {
         return new self([
             'path' => $path,

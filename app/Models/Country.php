@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $code
@@ -65,7 +66,7 @@ class Country extends Model
      *
      * @return mixed
      */
-    public function users()
+    public function users(): HasMany
     {
         return $this->hasMany(User::class);
     }
@@ -75,7 +76,7 @@ class Country extends Model
      *
      * @return mixed
      */
-    public function states()
+    public function states(): HasMany
     {
         return $this->hasMany(State::class);
     }

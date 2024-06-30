@@ -8,6 +8,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -102,7 +106,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function notifications()
+    public function notifications(): MorphMany
     {
         return $this->morphMany(Notification::class, 'notifiable')->latest();
     }
@@ -112,7 +116,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
@@ -123,7 +127,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      * @param  array  $roles  Array of role names
      * @return bool
      */
-    public function hasAllRoles(array $roles)
+    public function hasAllRoles(array $roles): bool
     {
         // If user has no roles, skip checking and return true/false depending on if user is expected to have roles.
         if (count($this->roles) === 0) {
@@ -165,7 +169,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function posts()
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
@@ -175,7 +179,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function files()
+    public function files(): HasMany
     {
         return $this->hasMany(File::class);
     }
@@ -185,7 +189,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function approvedComments()
+    public function approvedComments(): HasMany
     {
         return $this->hasMany(Comment::class, 'approved_by');
     }
@@ -195,7 +199,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function refreshTokens()
+    public function refreshTokens(): HasMany
     {
         return $this->hasMany(RefreshToken::class);
     }
@@ -205,7 +209,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function privateChannels()
+    public function privateChannels(): MorphMany
     {
         return $this->morphMany(PrivateChannel::class, 'notifiable');
     }
@@ -215,7 +219,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function country()
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
     }
@@ -225,7 +229,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function state()
+    public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);
     }
@@ -261,6 +265,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      */
     public function getDisplayName()
     {
+        // TODO: Make this an attribute.
         return $this->name ?? Str::before($this->email, '@');
     }
 
@@ -279,7 +284,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function oauthProviders()
+    public function oauthProviders(): HasMany
     {
         return $this->hasMany(OAuthProvider::class);
     }

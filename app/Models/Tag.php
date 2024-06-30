@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -62,9 +63,9 @@ class Tag extends Model
     /**
      * Gets the article that have this tag.
      *
-     * @return mixed
+     * @return BelongsToMany
      */
-    public function articles()
+    public function articles(): BelongsToMany
     {
         return $this->belongsToMany(Article::class);
     }
@@ -72,9 +73,9 @@ class Tag extends Model
     /**
      * Gets the projects that belong to this tag.
      *
-     * @return mixed
+     * @return BelongsToMany
      */
-    public function projects()
+    public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class);
     }

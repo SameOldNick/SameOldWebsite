@@ -59,7 +59,7 @@ class ContactMessage extends Model
      *
      * @return $this
      */
-    public function useDefaultExpiresAt()
+    public function useDefaultExpiresAt(): static
     {
         $this->expires_at = static::getDefaultExpiresAt();
 

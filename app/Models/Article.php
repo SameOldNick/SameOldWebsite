@@ -7,7 +7,9 @@ use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\URL;
 
@@ -99,7 +101,7 @@ class Article extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function currentRevision()
+    public function currentRevision(): BelongsTo
     {
         return $this->belongsTo(Revision::class, 'current_revision');
     }
@@ -109,7 +111,7 @@ class Article extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function revisions()
+    public function revisions(): HasMany
     {
         return $this->hasMany(Revision::class);
     }
@@ -119,7 +121,7 @@ class Article extends Model
      *
      * @return BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
@@ -129,7 +131,7 @@ class Article extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
@@ -147,7 +149,7 @@ class Article extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function mainImage()
+    public function mainImage(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'main_image', 'uuid');
     }

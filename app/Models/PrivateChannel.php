@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -57,7 +58,7 @@ class PrivateChannel extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function notifiable()
+    public function notifiable(): MorphTo
     {
         return $this->morphTo();
     }
@@ -75,7 +76,7 @@ class PrivateChannel extends Model
      *
      * @return $this
      */
-    public function close()
+    public function close(): static
     {
         $this->delete();
 
