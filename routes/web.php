@@ -46,15 +46,15 @@ Route::namespace(Controllers\Main::class)->group(function () {
 
     Route::get('/blog/{article:slug}/comment/{comment}', 'BlogCommentController@show')->name('blog.comment.show')->can('view', 'comment');
     Route::get('/blog/{article:slug}/comment/{comment}/preview', 'BlogCommentController@show')->name('blog.comment.preview')->middleware(LaravelMiddleware\ValidateSignature::class)->withTrashed();
+    Route::get('/blog/{article:slug}/comment/{comment}/verify', 'BlogCommentController@verify')->name('blog.comment.verify')->middleware(LaravelMiddleware\ValidateSignature::class);
+    Route::post('/blog/{article:slug}/comment', 'BlogCommentController@comment')->name('blog.comment');
+    Route::post('/blog/{article:slug}/comments/{parent}', 'BlogCommentController@reply')->name('blog.comment.reply');
 
     Route::middleware(Middleware\FileAccess::class)->group(function () {
         Route::get('/files/{file}', 'FileController@retrieve')->name('file');
     });
 
     Route::middleware(['auth', 'auth.mfa'])->group(function () {
-        Route::post('/blog/{article:slug}/comment', 'BlogCommentController@comment')->name('blog.comment');
-        Route::post('/blog/{article:slug}/comments/{parent}', 'BlogCommentController@replyTo')->name('blog.comment.reply-to');
-
         Route::name('user.')->namespace('User')->group(function () {
             Route::get('/user', 'ProfileController@view')->name('profile');
             Route::post('/user', 'ProfileController@update');

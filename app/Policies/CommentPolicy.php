@@ -4,12 +4,14 @@ namespace App\Policies;
 
 use App\Models\Comment;
 use App\Models\User;
+use App\Traits\Controllers\HasPage;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Http\Request;
 
 class CommentPolicy
 {
     use HandlesAuthorization;
+    use HasPage;
 
     public function __construct(
         protected readonly Request $request
@@ -62,7 +64,14 @@ class CommentPolicy
      */
     public function create(?User $user)
     {
-        return ! is_null($user);
+        $userAuthentication = $this->getSettings()->setting('user_authentication', 'registered');
+
+        return match ($userAuthentication) {
+            'registered' => ! is_null($user),
+            'guest_verified' => true,
+            'guest_unverified' => true,
+            default => false
+        };
     }
 
     /**
@@ -71,7 +80,7 @@ class CommentPolicy
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function replyTo(?User $user, Comment $comment)
+    public function reply(?User $user, Comment $comment)
     {
         return $this->create($user);
     }
@@ -114,5 +123,14 @@ class CommentPolicy
     public function forceDelete(User $user, Comment $comment)
     {
         //
+    }
+
+    /**
+     * Gets the key for the page.
+     *
+     * @return string
+     */
+    protected function getPageKey() {
+        return 'blog';
     }
 }

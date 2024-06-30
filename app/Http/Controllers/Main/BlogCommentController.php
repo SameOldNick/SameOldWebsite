@@ -2,17 +2,31 @@
 
 namespace App\Http\Controllers\Main;
 
+use App\Components\Moderator\ModerationService;
 use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Components\SweetAlert\SweetAlerts;
 use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
+use App\Mail\CommentVerification;
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\Commenter;
+use App\Traits\Controllers\HasPage;
+use Illuminate\Support\Facades\URL;
 
 class BlogCommentController extends Controller
 {
+    use HasPage;
+
+    public function __construct(
+        protected readonly ModerationService $moderationService
+    )
+    {
+
+    }
+
     /**
      * Shows the comment (if user has access)
      *
@@ -42,27 +56,26 @@ class BlogCommentController extends Controller
      */
     public function comment(SweetAlerts $swal, CommentRequest $request, Article $article)
     {
-        $this->authorize('create', [Comment::class, $article]);
+        $userAuthentication = $this->getSettings()->setting('user_authentication');
 
-        $comment =
-            Comment::createWithPost(function (Comment $comment) use ($request, $article) {
-                $comment->fill(['title' => $request->title, 'comment' => $request->comment]);
+        // Process comment
+        $comment = $this->processComment($request, $article);
 
-                $comment->article()->associate($article);
+        // Send notification email (if required)
+        if ($request->isGuest() && $userAuthentication === 'guest_verified') {
+            $this->sendVerificationEmail($comment);
+        }
 
-                if (! config('blog.comments.require_approval', true)) {
-                    $comment->approved_at = now();
-                }
-            });
-
-        // TODO: Notify article author of comment.
+        // Dispatch events
         CommentCreated::dispatch($comment);
         CommentApproved::dispatchIf($comment->isApproved(), $comment);
 
+        // Alert user
         $swal->success(function (SweetAlertBuilder $builder) use ($comment) {
             $builder
                 ->title('Success')
-                ->text($comment->isApproved() ? trans('blog.comments.submitted') : trans('blog.comments.awaiting_approval'));
+                // All the user needs to know is the comment is approved or pending.
+                ->text($comment->status === Comment::STATUS_APPROVED ? trans('blog.comments.approved') : trans('blog.comments.pending'));
         });
 
         return redirect()->route('blog.single', compact('article'));
@@ -73,22 +86,20 @@ class BlogCommentController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function replyTo(SweetAlerts $swal, CommentRequest $request, Article $article, Comment $parent)
+    public function reply(SweetAlerts $swal, CommentRequest $request, Article $article, Comment $parent)
     {
         abort_if(! $parent->article->is($article), 404);
-        $this->authorize('reply-to', $parent);
+        $this->authorize('reply', $parent);
 
-        $comment =
-            Comment::createWithPost(function (Comment $comment) use ($request, $article, $parent) {
-                $comment->fill(['title' => $request->title, 'comment' => $request->comment]);
+        $userAuthentication = $this->getSettings()->setting('user_authentication');
 
-                $comment->parent()->associate($parent);
-                $comment->article()->associate($article);
+        // Process comment
+        $comment = $this->processComment($request, $article, $parent);
 
-                if (! config('blog.comments.require_approval', true)) {
-                    $comment->approved_at = now();
-                }
-            });
+        // Send notification email (if required)
+        if ($request->isGuest() && $userAuthentication === 'guest_verified') {
+            $this->sendVerificationEmail($comment);
+        }
 
         // TODO: Notify original comment author of reply.
 
@@ -102,5 +113,97 @@ class BlogCommentController extends Controller
         });
 
         return redirect()->route('blog.single', compact('article'));
+    }
+
+    /**
+     * Verifies the comment
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function verify(SweetAlerts $swal, Article $article, Comment $comment)
+    {
+        $this->authorize('view', [$article, $comment]);
+
+        $comment->commenter->markEmailAsVerified();
+
+        $swal->success(function (SweetAlertBuilder $builder) {
+            $builder
+                ->title('Success')
+                ->text(trans('blog.comments.verified'));
+        });
+
+        return redirect()->route('blog.single', compact('article'));
+    }
+
+    /**
+     * Sends verification email
+     *
+     * @param Comment $comment
+     * @return void
+     */
+    protected function sendVerificationEmail(Comment $comment): void
+    {
+        $verificationLink = URL::signedRoute('blog.comment.verify', ['article' => $comment->article, 'comment' => $comment]);
+
+        $comment->commenter->sendEmailVerificationNotification($verificationLink);
+    }
+
+    /**
+     * Process comment creation
+     *
+     * @param CommentRequest $request
+     * @param Article $article
+     * @param Comment|null $parent
+     * @return Comment
+     */
+    protected function processComment(CommentRequest $request, Article $article, ?Comment $parent = null) {
+        $userAuthentication = $this->getSettings()->setting('user_authentication');
+        $commentModeration = $this->getSettings()->setting('comment_moderation');
+
+        $comment = Comment::createWithPost(function (Comment $comment) use ($request, $article, $userAuthentication, $parent) {
+            $comment->fill(['title' => $request->title, 'comment' => $request->comment]);
+
+            $comment->article()->associate($article);
+
+            if (!is_null($parent))
+                $comment->parent()->associate($parent);
+
+            // Attach commenter if user is guest.
+            if ($request->isGuest()) {
+                $commenter = new Commenter([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ]);
+
+                /**
+                * Set email has verified if 'guest_unverified' is set.
+                * This is so later if the setting is changed to 'guest_verified' the comments won't be hidden.
+                */
+                $commenter->email_verified_at = $userAuthentication === 'guest_unverified' ? now() : null;
+
+                $commenter->save();
+
+                $comment->commenter()->associate($commenter);
+            }
+        });
+
+        // Run comment through moderator
+        $flagged = $commentModeration !== 'disabled' ? $this->moderationService->moderate($comment) : false;
+
+        $comment->approved_at = ($commentModeration === 'auto' && !$flagged) || $commentModeration === 'disabled' ? now() : null;
+
+        // Update will only occur if comment is dirty (has changes).
+        $comment->save();
+
+        return $comment;
+    }
+
+    /**
+     * Gets the key for the page.
+     *
+     * @return string
+     */
+    protected function getPageKey() {
+        return 'blog';
     }
 }

@@ -157,6 +157,8 @@ return [
     'postal_code' => 'The postal/ZIP code is invalid. Example of valid postal/ZIP code: :examples',
     'postal_code_with' => 'The postal/ZIP code is invalid. Example of valid postal/ZIP code: :examples',
 
+    'recaptcha' => 'CAPTCHA verification failed. Please complete the CAPTCHA before continuing.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

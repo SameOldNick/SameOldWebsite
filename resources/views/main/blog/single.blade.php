@@ -61,7 +61,7 @@
 						<div class="card-body">
 							<!-- Comment form-->
                             <div class="row">
-                                @if (auth()->guest() || !isset($parentComment))
+                                @if (!isset($parentComment))
                                     <div class="col-12 mb-3">
                                         <x-main.blog.comment-form :article="$article" :comment="$comment" />
                                     </div>

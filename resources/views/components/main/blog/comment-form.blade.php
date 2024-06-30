@@ -18,6 +18,7 @@
     @class(['form-control', 'collapsable-input', 'collapsed' => !$showForm])
     value="{{ __('Have a comment?') }}"
     readonly
+    id="uncollapseLeaveComment"
     data-bs-toggle="collapse"
     data-bs-target="#collapseLeaveComment"
 >
@@ -25,11 +26,23 @@
 <div @class(['collapse', 'show' => $showForm]) id="collapseLeaveComment">
     <h2>{{ __('Leave a Comment') }}</h2>
 
-    <form action="{{ route('blog.comment', compact('article')) }}" method="post" class="row">
+    <form action="{{ route('blog.comment', compact('article')) }}" method="post" id="commentForm" class="row">
         @csrf
 
         <div class="col-12">
-            <p>{{ __('Commenting as:') }} <strong>{{ Auth::user()->getDisplayName() }}</strong></p>
+            @auth
+                <p>{{ __('Commenting as:') }} <strong>{{ Auth::user()->getDisplayName() }}</strong></p>
+            @else
+                <label for="name" class="form-label">
+                    {{ __('Name') }}
+                </label>
+                <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name') }}">
+
+                <label for="email" class="form-label">
+                    {{ __('E-mail Address') }} *
+                </label>
+                <input class="form-control @error('email') is-invalid @enderror" type="email" id="email" name="email" value="{{ old('email') }}" required>
+            @endauth
         </div>
 
         <div class="col-12 mb-3">
