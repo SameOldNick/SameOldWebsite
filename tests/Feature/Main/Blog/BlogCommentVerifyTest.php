@@ -31,7 +31,7 @@ class BlogCommentVerifyTest extends TestCase
             'comment_moderation' => 'disabled',
         ]);
 
-        $article = Article::factory()->published()->create();
+        $article = Article::factory()->hasPostWithUser()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -64,7 +64,7 @@ class BlogCommentVerifyTest extends TestCase
             'user_authentication' => 'guest_verified',
         ]);
 
-        $article = Article::factory()->published()->create();
+        $article = Article::factory()->hasPostWithUser()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -101,7 +101,7 @@ class BlogCommentVerifyTest extends TestCase
             'user_authentication' => 'guest_unverified',
         ]);
 
-        $article = Article::factory()->published()->create();
+        $article = Article::factory()->hasPostWithUser()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
