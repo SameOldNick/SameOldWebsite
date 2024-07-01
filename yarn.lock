@@ -3877,9 +3877,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-github@npm:^4.10.1":
-  version: 4.10.2
-  resolution: "eslint-plugin-github@npm:4.10.2"
+"eslint-plugin-github@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "eslint-plugin-github@npm:5.0.1"
   dependencies:
     "@github/browserslist-config": "npm:^1.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^7.0.1"
@@ -3902,7 +3902,7 @@ __metadata:
     eslint: ^8.0.1
   bin:
     eslint-ignore-errors: bin/eslint-ignore-errors.js
-  checksum: 10/ec6413c41ba638d3b893e5dcfb6eb2e4a071de85b921e0bbba55b23283a53ca3ac44c4c28e4e7bb2a22f64ed2a4a5bebf5dc383368040b19e6ed3b06e2f24ad7
+  checksum: 10/f75745668a3ae87071ac76b8ed0e7f1182cee7d1d822ab47e27431f8e0517ef53acdfd23397e0e7b65cc6e5f3613f372ed788e66a1b0e2c98843e576611c3944
   languageName: node
   linkType: hard
 
@@ -9246,7 +9246,7 @@ __metadata:
     dropzone: "npm:^6.0.0-beta.2"
     element-visibility-watcher: "npm:^1.0.5"
     eslint: "npm:^8.57.0"
-    eslint-plugin-github: "npm:^4.10.1"
+    eslint-plugin-github: "npm:^5.0.1"
     eslint-plugin-jest: "npm:^28.6.0"
     eslint-plugin-react: "npm:latest"
     formik: "npm:^2.4.3"
