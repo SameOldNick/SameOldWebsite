@@ -9295,7 +9295,7 @@ __metadata:
     vite-plugin-external: "npm:^4.3.0"
     vite-plugin-global-const: "npm:^0.0.5"
     vite-plugin-static-copy: "npm:^1.0.6"
-    web-vitals: "npm:^4.0.1"
+    web-vitals: "npm:^4.2.1"
     xterm-for-react: "npm:^1.0.4"
     yup: "npm:^1.3.2"
   languageName: unknown
@@ -10517,10 +10517,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "web-vitals@npm:4.0.1"
-  checksum: 10/610c09a898f5dd13a5bba2013dd824f1f2b8d3f4c9a18de09111b8427873881518085f18e38c8e72aa8b0edc9d05f42b134d78274bb9a0d18902ba343118dae5
+"web-vitals@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "web-vitals@npm:4.2.1"
+  checksum: 10/a555c9814d991a60c703c69d423a5586e91d22cf58cc5b6ecd572b24a7d028a3dbfa478970066f13e00e5ad0c2caae405fe12fc3c7eb6ffec8ad0e2df2f3990f
   languageName: node
   linkType: hard
 
