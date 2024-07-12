@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 /**
  * @property ?string $name
  * @property string $email
+ * @property-read string $avatar_url
  * @property ?\DateTimeInterface $email_verified_at
  * @property-read Comment $comment
  *
@@ -84,5 +85,9 @@ class Commenter extends Model
     {
         // TODO: Make this a trait.
         return Attribute::get(fn () => $this->name ?? Str::before($this->email, '@'));
+    }
+
+    protected function avatarUrl(): Attribute {
+        return Attribute::get(fn () => sprintf('https://gravatar.com/avatar/%s', Str::of($this->email)->trim()->lower()->hash('sha256')))->shouldCache();
     }
 }
