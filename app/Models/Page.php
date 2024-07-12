@@ -26,8 +26,6 @@ class Page extends Model
 
     /**
      * Gets meta data for this page.
-     *
-     * @return HasMany
      */
     public function metaData(): HasMany
     {
