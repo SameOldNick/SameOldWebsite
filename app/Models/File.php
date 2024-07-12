@@ -172,7 +172,7 @@ final class File extends Model
      */
     protected function fileExists(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes) => $this->getStorageDisk()->exists($attributes['path']));
+        return Attribute::get(fn ($value, $attributes = []) => $this->getStorageDisk()->exists($attributes['path']));
     }
 
     /**
@@ -191,7 +191,7 @@ final class File extends Model
      */
     protected function url(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes) => $attributes['is_public'] || $this->withUrl ? $this->createPublicUrl() : null);
+        return Attribute::get(fn ($value, $attributes = []) => $attributes['is_public'] || $this->withUrl ? $this->createPublicUrl() : null);
     }
 
     /**
@@ -201,7 +201,7 @@ final class File extends Model
     {
         $defaults = [];
 
-        return Attribute::get(fn ($value, $attributes) => $this->fileExists ? [
+        return Attribute::get(fn ($value, $attributes = []) => $this->file_exists ? [
             'size' => $this->getStorageDisk()->size($attributes['path']),
             'last_modified' => Carbon::parse($this->getStorageDisk()->lastModified($attributes['path'])),
             'mime_type' => $this->getStorageDisk()->mimeType($attributes['path']),
@@ -213,7 +213,7 @@ final class File extends Model
      */
     protected function pathInfo(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes) => pathinfo(Storage::path($attributes['path'])));
+        return Attribute::get(fn ($value, $attributes = []) => pathinfo(Storage::path($attributes['path'])));
     }
 
     /**

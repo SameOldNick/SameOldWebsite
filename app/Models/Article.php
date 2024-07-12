@@ -195,7 +195,7 @@ class Article extends Model
      */
     protected function url(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes) => $this->is_published ? $this->public_url : $this->private_url);
+        return Attribute::get(fn () => $this->is_published ? $this->public_url : $this->private_url);
     }
 
     /**
@@ -203,7 +203,7 @@ class Article extends Model
      */
     protected function publicUrl(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes) => $this->createPublicLink());
+        return Attribute::get(fn () => $this->createPublicLink());
     }
 
     /**
@@ -211,7 +211,7 @@ class Article extends Model
      */
     protected function privateUrl(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes) => $this->createPrivateUrl());
+        return Attribute::get(fn () => $this->createPrivateUrl());
     }
 
     /**
