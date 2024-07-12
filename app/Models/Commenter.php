@@ -87,7 +87,8 @@ class Commenter extends Model
         return Attribute::get(fn () => $this->name ?? Str::before($this->email, '@'));
     }
 
-    protected function avatarUrl(): Attribute {
+    protected function avatarUrl(): Attribute
+    {
         return Attribute::get(fn () => sprintf('https://gravatar.com/avatar/%s', Str::of($this->email)->trim()->lower()->hash('sha256')))->shouldCache();
     }
 }
