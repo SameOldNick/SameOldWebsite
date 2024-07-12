@@ -64,7 +64,7 @@ class Country extends Model
     /**
      * Gets the users with this country.
      *
-     * @return mixed
+     * @return HasMany
      */
     public function users(): HasMany
     {
@@ -74,7 +74,7 @@ class Country extends Model
     /**
      * Gets the states for this country.
      *
-     * @return mixed
+     * @return HasMany
      */
     public function states(): HasMany
     {

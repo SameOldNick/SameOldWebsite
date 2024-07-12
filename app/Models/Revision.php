@@ -55,7 +55,7 @@ class Revision extends Model
     /**
      * Gets the Article this belongs to.
      *
-     * @return mixed
+     * @return BelongsTo
      */
     public function article(): BelongsTo
     {

@@ -40,7 +40,7 @@ class State extends Model
     /**
      * Gets the country for this state
      *
-     * @return mixed
+     * @return BelongsTo
      */
     public function country(): BelongsTo
     {

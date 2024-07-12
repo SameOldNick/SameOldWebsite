@@ -22,6 +22,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $id
  * @property string $uuid
  * @property string|null $country_code
+ * @property-read string $avatar_url
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
