@@ -9,6 +9,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 trait CreatesPostable
 {
     /**
+     * Include post without user.
+     *
+     * @param  ?Factory  $postFactory
+     * @return static
+     */
+    public function hasPost(?Factory $postFactory = null)
+    {
+        $postFactory = $postFactory ?? Post::factory();
+
+        return $this->has($postFactory);
+    }
+
+    /**
      * Include post with user.
      *
      * @param  User|null  $userFactory
