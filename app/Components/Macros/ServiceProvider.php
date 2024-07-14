@@ -5,6 +5,7 @@ namespace App\Components\Macros;
 use App\Components\Macros\Collection\WeightManager;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder as Schema;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -34,6 +35,7 @@ class ServiceProvider extends BaseServiceProvider
         Response::mixin(new ResponseMixin);
         Blueprint::mixin(new BlueprintMixin);
         Schema::mixin(new SchemaMixin);
+        EloquentBuilder::mixin(new EloquentBuilderMixin);
     }
 
     /**
