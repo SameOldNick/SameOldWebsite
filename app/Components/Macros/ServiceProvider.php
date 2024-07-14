@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -22,6 +23,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         Arr::mixin(new ArrMixin);
         Str::mixin(new StrMixin);
+        Stringable::mixin(new StringableMixin);
         Collection::mixin(new PaginationMixin);
         Collection::macro('weighted', function () {
             /**
