@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\URL;
  * @property-read ?Image $mainImage
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Revision> $revisions
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Tag> $tags
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $comments
+ * @property-read \App\Models\Collections\CommentCollection $comments
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Image> $images
  *
  * @method static \Illuminate\Database\Eloquent\Builder published()
