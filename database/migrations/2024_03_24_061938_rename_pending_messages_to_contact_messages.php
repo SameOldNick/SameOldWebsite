@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pending_messages', function (Blueprint $table) {
-            $table->rename('contact_messages');
-
             $table->timestamp('confirmed_at')->nullable()->after('updated_at');
             $table->timestamp('expires_at')->nullable()->default(null)->change();
+
+            $table->rename('contact_messages');
         });
     }
 
