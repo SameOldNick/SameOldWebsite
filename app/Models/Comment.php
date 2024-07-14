@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CommentStatus as CommentStatusEnum;
 use App\Traits\Models\Displayable;
 use App\Traits\Models\Immutable;
 use App\Traits\Models\Postable;
@@ -23,6 +24,7 @@ use Spatie\Url\Url as SpatieUrl;
  * @property-read ?User $approvedBy
  * @property-read ?Commenter $commenter
  * @property-read string $status One of STATUS_* constants
+ * @property-read ?CommentStatus $lastStatus
  * @property-read ?string $email Email address of user who posted comment
  * @property-read string $display_name Display name of user who posted comment
  *
@@ -141,6 +143,14 @@ class Comment extends Model
     }
 
     /**
+     * Gets previous statuses for comment.
+     */
+    public function statuses(): HasMany
+    {
+        return $this->hasMany(CommentStatus::class);
+    }
+
+    /**
      * Checks if comment is flagged.
      *
      * @return bool
@@ -195,6 +205,14 @@ class Comment extends Model
             ! $this->isApproved() => static::STATUS_AWAITING_APPROVAL,
             default => static::STATUS_APPROVED
         });
+    /**
+     * Gets the latest status of the comment.
+     *
+     * @return HasOne
+     */
+    public function lastStatus(): HasOne {
+        return $this->hasOne(CommentStatus::class)->latest();
+    }
     }
 
     /**
