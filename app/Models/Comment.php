@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\CommentStatus as CommentStatusEnum;
+use App\Models\Collections\CommentCollection;
 use App\Traits\Models\Displayable;
 use App\Traits\Models\Immutable;
 use App\Traits\Models\Postable;
@@ -20,8 +21,8 @@ use Spatie\Url\Url as SpatieUrl;
  * @property ?\Illuminate\Support\Carbon $approved_at
  * @property-read Article $article
  * @property-read ?Comment $parent
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $children
  * @property-read ?User $approvedBy
+ * @property-read CommentCollection $children
  * @property-read ?Commenter $commenter
  * @property-read string $status One of STATUS_* constants
  * @property-read ?CommentStatus $lastStatus
@@ -81,6 +82,16 @@ class Comment extends Model
     protected $casts = [
         'approved_at' => 'datetime',
     ];
+
+    /**
+     * Create a new Eloquent Collection instance.
+     *
+     * @return CommentCollection
+     */
+    public function newCollection(array $models = [])
+    {
+        return new CommentCollection($models);
+    }
 
     /**
      * Gets the parent comment (if any)
