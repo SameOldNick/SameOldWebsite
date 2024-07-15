@@ -7,9 +7,8 @@ use App\Events\Comments\CommentCreated;
 use App\Events\Comments\CommentStatusChanged;
 use App\Models\Comment;
 use App\Notifications\CommentPosted;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Events\Dispatcher;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class NotifyCommentRepliedTo
 {
@@ -24,10 +23,7 @@ class NotifyCommentRepliedTo
     /**
      * Handle the event.
      */
-    public function handle(CommentCreated $event): void
-    {
-
-    }
+    public function handle(CommentCreated $event): void {}
 
     /**
      * Handle the event.
@@ -39,7 +35,8 @@ class NotifyCommentRepliedTo
         }
     }
 
-    public function handleCommentStatusChanged(CommentStatusChanged $event): void {
+    public function handleCommentStatusChanged(CommentStatusChanged $event): void
+    {
         if ($this->commentIsVisible($event->comment)) {
             $this->sendNotification($event->comment);
         }
@@ -58,14 +55,16 @@ class NotifyCommentRepliedTo
         ];
     }
 
-    protected function commentIsVisible(Comment $comment) {
+    protected function commentIsVisible(Comment $comment)
+    {
         /**
          * We don't use the policy because the additional logic (based on the user) could be true.
          */
         return in_array($comment->status, [CommentStatus::Approved->value, CommentStatus::Locked->value]);
     }
 
-    protected function sendNotification(Comment $comment) {
+    protected function sendNotification(Comment $comment)
+    {
         Notification::send($this->getNotifiables($comment), new CommentPosted($comment));
     }
 

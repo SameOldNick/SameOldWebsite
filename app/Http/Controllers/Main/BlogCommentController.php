@@ -8,7 +8,6 @@ use App\Components\SweetAlert\SweetAlerts;
 use App\Enums\CommentStatus;
 use App\Events\Comments\CommentCreated;
 use App\Events\Comments\CommentStatusChanged;
-use App\Events\Comments\CommentVerified;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Models\Article;

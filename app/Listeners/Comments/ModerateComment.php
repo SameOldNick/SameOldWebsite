@@ -8,8 +8,6 @@ use App\Enums\CommentStatus;
 use App\Events\Comments\CommentCreated;
 use App\Events\Comments\CommentStatusChanged;
 use App\Models\Comment;
-use App\Notifications\CommentPosted;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Events\Dispatcher;
 
 class ModerateComment
@@ -19,8 +17,7 @@ class ModerateComment
      */
     public function __construct(
         protected readonly ModerationService $moderationService
-    )
-    {
+    ) {
         //
     }
 
@@ -30,7 +27,6 @@ class ModerateComment
     public function handle(CommentCreated $event): void
     {
         $comment = $event->comment;
-
 
     }
 
@@ -45,7 +41,8 @@ class ModerateComment
         }
     }
 
-    public function handleCommentStatusChanged(CommentStatusChanged $event): void {
+    public function handleCommentStatusChanged(CommentStatusChanged $event): void
+    {
         if ($event->comment->commenter && $event->comment->commenter->isVerified()) {
             $this->moderate($event->comment);
         }
@@ -64,7 +61,8 @@ class ModerateComment
         ];
     }
 
-    protected function moderate(Comment $comment) {
+    protected function moderate(Comment $comment)
+    {
         // Run comment through moderator
         $commentModeration = PageSettings::page('blog')->setting('comment_moderation');
 

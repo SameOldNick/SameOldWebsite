@@ -7,7 +7,6 @@ use App\Events\Articles\ArticleDeleted;
 use App\Events\Articles\ArticlePublished;
 use App\Events\Articles\ArticleScheduled;
 use App\Events\Articles\ArticleUnpublished;
-use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentCreated;
 use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Events\Contact\ContactSubmissionRequiresConfirmation;
