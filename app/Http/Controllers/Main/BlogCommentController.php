@@ -142,7 +142,6 @@ class BlogCommentController extends Controller
     protected function processComment(CommentRequest $request, Article $article, ?Comment $parent = null)
     {
         $userAuthentication = $this->getSettings()->setting('user_authentication');
-        $commentModeration = $this->getSettings()->setting('comment_moderation');
 
         $comment = Comment::createWithPost(function (Comment $comment) use ($request, $article, $userAuthentication, $parent) {
             $comment->fill(['title' => $request->title, 'comment' => $request->comment]);
@@ -171,13 +170,6 @@ class BlogCommentController extends Controller
                 $comment->commenter()->associate($commenter);
             }
         });
-
-        // Run comment through moderator
-        $flagged = $commentModeration !== 'disabled' ? $this->moderationService->moderate($comment) : false;
-
-        if (($commentModeration === 'auto' && ! $flagged) || $commentModeration === 'disabled') {
-            $comment->statuses()->create(['status' => CommentStatus::Approved]);
-        }
 
         // Update will only occur if comment is dirty (has changes).
         $comment->save();

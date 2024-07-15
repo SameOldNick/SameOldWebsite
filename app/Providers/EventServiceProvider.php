@@ -15,6 +15,7 @@ use App\Events\PageUpdated;
 use App\Listeners\Backup\FailedBackup;
 use App\Listeners\Backup\SuccessfulBackup;
 use App\Listeners\Backup\SuccessfulCleanup;
+use App\Listeners\Comments\ModerateComment;
 use App\Listeners\Comments\NotifyArticleAuthorCommentPosted;
 use App\Listeners\Comments\NotifyCommentRepliedTo;
 use App\Listeners\Contact\SendConfirmMessage;
@@ -93,6 +94,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $subscribe = [
+        ModerateComment::class,
         NotifyArticleAuthorCommentPosted::class,
         NotifyCommentRepliedTo::class,
     ];
