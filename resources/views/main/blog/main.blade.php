@@ -9,7 +9,7 @@
                 @else
 
                     @foreach ($articles as $article)
-                        <x-main.blog.article-preview :article="$article" />
+                        <x-blog.article :article="$article" preview />
                     @endforeach
 
                 @endif

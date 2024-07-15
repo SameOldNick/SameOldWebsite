@@ -1,8 +1,4 @@
-@props(['comment', 'article', 'expand' => false])
-
-@php
-    $showForm = $expand || $errors->count() > 0 || $comment;
-@endphp
+@props(['article'])
 
 @cannot('create', \App\Models\Comment::class)
 <div class="alert alert-info d-flex align-items-center" role="alert">
@@ -15,7 +11,7 @@
 </div>
 @else
 <input
-    @class(['form-control', 'collapsable-input', 'collapsed' => !$showForm])
+    @class(['form-control', 'collapsable-input', 'collapsed' => empty($errors->all())])
     value="{{ __('Have a comment?') }}"
     readonly
     id="uncollapseLeaveComment"
@@ -23,7 +19,7 @@
     data-bs-target="#collapseLeaveComment"
 >
 
-<div @class(['collapse', 'show' => $showForm]) id="collapseLeaveComment">
+<div @class(['collapse', 'show' => !empty($errors->all())]) id="collapseLeaveComment">
     <h2>{{ __('Leave a Comment') }}</h2>
 
     <form action="{{ route('blog.comment', compact('article')) }}" method="post" id="commentForm" class="row">
@@ -38,10 +34,18 @@
                 </label>
                 <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name') }}">
 
+                @error('name')
+                <div id="nameFeedback" class="invalid-feedback">{{ $message }}</div>
+                @enderror
+
                 <label for="email" class="form-label">
                     {{ __('E-mail Address') }} *
                 </label>
                 <input class="form-control @error('email') is-invalid @enderror" type="email" id="email" name="email" value="{{ old('email') }}" required>
+
+                @error('email')
+                <div id="emailFeedback" class="invalid-feedback">{{ $message }}</div>
+                @enderror
             @endauth
         </div>
 
@@ -49,7 +53,7 @@
             <label for="comment" class="form-label">
                 {{ __('Comment') }} *
             </label>
-            <textarea class="form-control @error('comment') is-invalid @enderror" id="comment" name="comment" rows="5" required>{{ old('comment') }}</textarea>
+            <textarea class="form-control @error('comment') is-invalid @enderror" id="comment" name="comment" rows="5" required>{{ $content }}</textarea>
 
             @error('comment')
             <div id="commentFeedback" class="invalid-feedback">{{ $message }}</div>

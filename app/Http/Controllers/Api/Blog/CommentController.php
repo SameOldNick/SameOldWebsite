@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Api\Blog;
 
+use App\Enums\CommentStatus as CommentStatusEnum;
 use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentRemoved;
+use App\Events\Comments\CommentStatusChanged;
+use App\Events\Comments\CommentUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CommentCollection;
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\CommentStatus;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +33,7 @@ class CommentController extends Controller
         $request->validate([
             'show' => [
                 'sometimes',
-                Rule::in(['awaiting', 'approved', 'denied', 'all']),
+                Rule::enum(CommentStatusEnum::class),
             ],
             'article' => [
                 'sometimes',
@@ -40,37 +45,53 @@ class CommentController extends Controller
                 'numeric',
                 Rule::exists(User::class, 'id'),
             ],
+            'commenter' => [
+                'sometimes',
+                'array'
+            ],
+            'commenter.name' => [
+                'sometimes',
+                'string'
+            ],
+            'commenter.email' => [
+                'sometimes',
+                'string'
+            ]
         ]);
 
-        $query = Comment::with(['approvedBy', 'post', 'post.user']);
-
-        $show = (string) $request->str('show', 'all');
-
-        if ($show === 'awaiting') {
-            $query = $query->whereHas('post', function (Builder $query) {
-                $query->whereNull('posts.deleted_at');
-            })->whereNull('approved_at');
-        } elseif ($show === 'approved') {
-            $query = $query->whereHas('post', function (Builder $query) {
-                $query->whereNull('posts.deleted_at');
-            })->whereNotNull('approved_at');
-        } elseif ($show === 'denied') {
-            $query = $query->whereHas('post', function (Builder $query) {
-                $query->whereNotNull('posts.deleted_at');
-            })->whereNull('approved_at');
-        }
+        $query = Comment::with(['article' => fn (BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.user']);
 
         if ($request->has('article')) {
-            $query = $query->where('article_id', $request->integer('article'));
+            $query->where('article_id', $request->integer('article'));
         }
 
         if ($request->has('user')) {
-            $query = $query->whereHas('post', function (Builder $query) use ($request) {
+            $query->whereHas('post', function (Builder $query) use ($request) {
                 $query->where('posts.user_id', $request->integer('user'));
             });
         }
 
-        return new CommentCollection($query->paginate());
+        if ($request->has('commenter')) {
+            $query->whereHas('commenter', function (Builder $query) use ($request) {
+                $commenter = $request->collect('commenter');
+
+                if ($name = $commenter->get('name'))
+                    $query->search('commenters.name', $name);
+
+                if ($email = $commenter->get('email'))
+                    $query->search('commenters.email', $email);
+            });
+        }
+
+        return new CommentCollection($query->afterQuery(function ($found) use ($request) {
+            $show = CommentStatusEnum::tryFrom((string) $request->str('show'));
+
+            /**
+             * @see BackupController for information on why values() needs to be used.
+             */
+
+            return ! is_null($show) ? $found->status($show)->values() : null;
+        })->paginate());
     }
 
     /**
@@ -78,7 +99,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        return $comment->load(['approvedBy', 'post.user']);
+        return $comment->load(['post.user']);
     }
 
     /**
@@ -89,32 +110,34 @@ class CommentController extends Controller
         $request->validate([
             'title' => 'nullable|string|max:255',
             'comment' => 'nullable|string',
+            'status' => ['sometimes', Rule::enum(CommentStatusEnum::class)],
         ]);
 
-        $comment->title = $request->str('title');
-        $comment->comment = $request->str('comment');
+        $newComment = $request->str('comment');
+        $newStatus = $request->enum('status', CommentStatusEnum::class);
 
-        $comment->save();
+        if ($request->has('title'))
+            $comment->title = $request->str('title');
 
-        return $comment;
-    }
+        if ($request->has('comment') && $comment->comment !== $newComment) {
+            $comment->comment = $newComment;
+        }
 
-    public function approve(Request $request, Comment $comment)
-    {
-        $request->validate([
-            'approved_at' => 'nullable|date',
-        ]);
+        if ($newStatus) {
+            $status = new CommentStatus([
+                'status' => $newStatus
+            ]);
 
-        $comment->approved_at = $request->date('approved_at') ?? now();
-        $comment->approvedBy()->associate($request->user());
+            $status->user()->associate($request->user());
+            $status->comment()->associate($comment);
 
-        if ($comment->post->trashed()) {
-            $comment->post->restore();
+            $status->save();
         }
 
         $comment->save();
 
-        CommentApproved::dispatch($comment);
+        CommentUpdated::dispatchIf($comment->wasChanged(), $comment);
+        CommentStatusChanged::dispatchIf(!is_null($newStatus), $comment);
 
         return $comment;
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Components\Moderator\ModerationService;
 use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Components\SweetAlert\SweetAlerts;
-use App\Events\Comments\CommentApproved;
+use App\Enums\CommentStatus;
 use App\Events\Comments\CommentCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
@@ -52,29 +52,7 @@ class BlogCommentController extends Controller
      */
     public function comment(SweetAlerts $swal, CommentRequest $request, Article $article)
     {
-        $userAuthentication = $this->getSettings()->setting('user_authentication');
-
-        // Process comment
-        $comment = $this->processComment($request, $article);
-
-        // Send notification email (if required)
-        if ($request->isGuest() && $userAuthentication === 'guest_verified') {
-            $this->sendVerificationEmail($comment);
-        }
-
-        // Dispatch events
-        CommentCreated::dispatch($comment);
-        CommentApproved::dispatchIf($comment->isApproved(), $comment);
-
-        // Alert user
-        $swal->success(function (SweetAlertBuilder $builder) use ($comment) {
-            $builder
-                ->title('Success')
-                // All the user needs to know is the comment is approved or pending.
-                ->text($comment->status === Comment::STATUS_APPROVED ? trans('blog.comments.approved') : trans('blog.comments.pending'));
-        });
-
-        return redirect()->route('blog.single', compact('article'));
+        return $this->handleCommentRequest($swal, $request, $article);
     }
 
     /**
@@ -87,28 +65,7 @@ class BlogCommentController extends Controller
         abort_if(! $parent->article->is($article), 404);
         $this->authorize('reply', $parent);
 
-        $userAuthentication = $this->getSettings()->setting('user_authentication');
-
-        // Process comment
-        $comment = $this->processComment($request, $article, $parent);
-
-        // Send notification email (if required)
-        if ($request->isGuest() && $userAuthentication === 'guest_verified') {
-            $this->sendVerificationEmail($comment);
-        }
-
-        // TODO: Notify original comment author of reply.
-
-        CommentCreated::dispatch($comment);
-        CommentApproved::dispatchIf($comment->isApproved(), $comment);
-
-        $swal->success(function (SweetAlertBuilder $builder) use ($comment) {
-            $builder
-                ->title('Success')
-                ->text($comment->isApproved() ? trans('blog.comments.submitted') : trans('blog.comments.awaiting_approval'));
-        });
-
-        return redirect()->route('blog.single', compact('article'));
+        return $this->handleCommentRequest($swal, $request, $article, $parent);
     }
 
     /**
@@ -139,6 +96,40 @@ class BlogCommentController extends Controller
         $verificationLink = URL::signedRoute('blog.comment.verify', ['article' => $comment->article, 'comment' => $comment]);
 
         $comment->commenter->sendEmailVerificationNotification($verificationLink);
+    }
+
+    /**
+     * Handles a post comment request
+     *
+     * @param SweetAlerts $swal
+     * @param CommentRequest $request
+     * @param Article $article
+     * @param Comment|null $parent
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function handleCommentRequest(SweetAlerts $swal, CommentRequest $request, Article $article, ?Comment $parent = null) {
+        $userAuthentication = $this->getSettings()->setting('user_authentication');
+
+        // Process comment
+        $comment = $this->processComment($request, $article, $parent);
+
+        // Send notification email (if required)
+        if ($request->isGuest() && $userAuthentication === 'guest_verified') {
+            $this->sendVerificationEmail($comment);
+        }
+
+        // Dispatch events
+        CommentCreated::dispatch($comment);
+
+        // Alert user
+        $swal->success(function (SweetAlertBuilder $builder) use ($comment) {
+            $builder
+                ->title('Success')
+                // All the user needs to know is the comment is approved or pending.
+                ->text($comment->status === CommentStatus::Approved->value ? trans('blog.comments.approved') : trans('blog.comments.pending'));
+        });
+
+        return redirect()->route('blog.single', compact('article'));
     }
 
     /**
@@ -182,7 +173,8 @@ class BlogCommentController extends Controller
         // Run comment through moderator
         $flagged = $commentModeration !== 'disabled' ? $this->moderationService->moderate($comment) : false;
 
-        $comment->approved_at = ($commentModeration === 'auto' && ! $flagged) || $commentModeration === 'disabled' ? now() : null;
+        if (($commentModeration === 'auto' && ! $flagged) || $commentModeration === 'disabled')
+            $comment->statuses()->create(['status' => CommentStatus::Approved]);
 
         // Update will only occur if comment is dirty (has changes).
         $comment->save();

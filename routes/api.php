@@ -61,8 +61,6 @@ Route::namespace(Api::class)->group(function () {
             //Route::apiResource('articles.images', Api\Blog\ArticleImageController::class)->except(['update']);
             Route::apiResource('comments', Api\Blog\CommentController::class)->except(['store']);
 
-            Route::post('/comments/{comment}/approve', [Api\Blog\CommentController::class, 'approve'])->withTrashed();
-
             Route::post('/articles/restore/{article}', [Api\Blog\ArticleController::class, 'restore'])->withTrashed()->name('articles.restore');
             Route::post('/articles/{article}/revision', [Api\Blog\ArticleController::class, 'revision'])->name('articles.revisions.revision');
 

@@ -3,29 +3,32 @@
 namespace App\Models;
 
 use App\Enums\CommentStatus as CommentStatusEnum;
+use App\Enums\CommentUserType;
 use App\Models\Collections\CommentCollection;
 use App\Traits\Models\Displayable;
 use App\Traits\Models\Immutable;
 use App\Traits\Models\Postable;
+use BackedEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Url\Url as SpatieUrl;
 
 /**
  * @property int $id
  * @property string $title
  * @property string $comment
- * @property ?\Illuminate\Support\Carbon $approved_at
  * @property-read Article $article
  * @property-read ?Comment $parent
- * @property-read ?User $approvedBy
  * @property-read CommentCollection $children
  * @property-read ?Commenter $commenter
- * @property-read string $status One of STATUS_* constants
  * @property-read ?CommentStatus $lastStatus
+ * @property-read ?User $marked_by
+ * @property-read string $status {@see CommentStatusEnum}
+ * @property-read string $user_type {@see CommentUserType}
  * @property-read ?string $email Email address of user who posted comment
  * @property-read string $display_name Display name of user who posted comment
  *
@@ -37,14 +40,6 @@ class Comment extends Model
     use HasFactory;
     use Immutable;
     use Postable;
-
-    const STATUS_APPROVED = 'approved';
-
-    const STATUS_FLAGGED = 'flagged';
-
-    const STATUS_AWAITING_VERIFICATION = 'awaiting-verification';
-
-    const STATUS_AWAITING_APPROVAL = 'awaiting-approval';
 
     /**
      * Indicates if the model should be timestamped.
@@ -72,6 +67,20 @@ class Comment extends Model
         'post',
         'article',
         'commenter',
+        'statuses',
+        'children'
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'status',
+        'user_type',
+        'marked_by',
+        'commenter_info'
     ];
 
     /**
@@ -80,7 +89,6 @@ class Comment extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'approved_at' => 'datetime',
     ];
 
     /**
@@ -102,6 +110,23 @@ class Comment extends Model
     }
 
     /**
+     * Gets all parents of comment.
+     */
+    public function allParents() {
+        $parents = [];
+
+        $parent = $this->parent;
+
+        while (!is_null($parent)) {
+            array_push($parents, $parent);
+
+            $parent = $parent->parent;
+        }
+
+        return $this->newCollection($parents);
+    }
+
+    /**
      * Gets children of this comment
      */
     public function children(): HasMany
@@ -110,23 +135,33 @@ class Comment extends Model
     }
 
     /**
-     * Recursively gets all children of this comment.
-     *
-     * @return \Illuminate\Support\Collection<int, Comment>
+     * Gets all children of this comment.
      */
-    public function allChildren()
-    {
-        $children = collect();
+    public function allChildren() {
+        $all = [];
 
         foreach ($this->children as $child) {
-            $children->push($child);
-
-            if ($child->children->count() > 0) {
-                $children->push($child->allChildren());
-            }
+            array_push($all, ...static::collectChildren($child));
         }
 
-        return $children->flatten();
+        return $this->newCollection($all);
+    }
+
+    /**
+     * Recursively collects all children of comment (including passed comment).
+     *
+     * @param self $comment
+     * @return array
+     */
+    public static function collectChildren(self $comment)
+    {
+        $all = [$comment];
+
+        foreach ($comment->children as $child) {
+            array_push($all, ...static::collectChildren($child));
+        }
+
+        return $all;
     }
 
     /**
@@ -172,50 +207,35 @@ class Comment extends Model
     }
 
     /**
-     * Checks if comment is approved
+     * Gets the commenter info
+     */
+    protected function commenterInfo(): Attribute
+    {
+        return Attribute::get(fn () => [
+            'display_name' => $this->commenter?->display_name ?? $this->post->user?->getDisplayName(),
+            'email' => $this->commenter?->email ?? $this->post->user?->email,
+        ]);
+    }
+
+    /**
+     * Determines current status of comment.
      *
-     * @return bool
+     * @return BackedEnum
      */
-    public function isApproved()
-    {
-        return ! is_null($this->approved_at) && $this->approved_at->isBefore(now());
+    public function determineStatus(): BackedEnum {
+        if ($this->lastStatus?->status)
+            return $this->lastStatus->status;
+
+        return match (true) {
+            $this->isFlagged() => CommentStatusEnum::Flagged,
+            $this->commenter && $this->commenter->isVerified() => CommentStatusEnum::AwaitingApproval,
+            $this->commenter && ! $this->commenter->isVerified() => CommentStatusEnum::AwaitingVerification,
+            $this->post->user && ! $this->post->user->hasVerifiedEmail() => CommentStatusEnum::AwaitingVerification,
+            $this->post->user && $this->post->user->hasVerifiedEmail() => CommentStatusEnum::AwaitingApproval,
+            default => CommentStatusEnum::AwaitingApproval
+        };
     }
 
-    /**
-     * Gets the User who approved this comment (if any)
-     */
-    public function approvedBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'approved_by');
-    }
-
-    /**
-     * Gets the displayable name of the commenter
-     */
-    protected function displayName(): Attribute
-    {
-        return Attribute::get(fn () => $this->commenter?->display_name ?? $this->post->user?->getDisplayName());
-    }
-
-    /**
-     * Gets the email of the user who posted the comment.
-     */
-    protected function email(): Attribute
-    {
-        return Attribute::get(fn () => $this->commenter?->email ?? $this->post->user?->email);
-    }
-
-    /**
-     * Gets the status of the comment.
-     */
-    protected function status(): Attribute
-    {
-        return Attribute::get(fn () => match (true) {
-            $this->isFlagged() => static::STATUS_FLAGGED,
-            $this->commenter && ! $this->commenter->isVerified() => static::STATUS_AWAITING_VERIFICATION,
-            ! $this->isApproved() => static::STATUS_AWAITING_APPROVAL,
-            default => static::STATUS_APPROVED
-        });
     /**
      * Gets the latest status of the comment.
      *
@@ -224,6 +244,38 @@ class Comment extends Model
     public function lastStatus(): HasOne {
         return $this->hasOne(CommentStatus::class)->latest();
     }
+
+    /**
+     * Gets the type of user who posted the comment (one of CommentUserType case values)
+     */
+    protected function userType(): Attribute
+    {
+        return Attribute::get(fn () => $this->post->user ? CommentUserType::Registered->value : CommentUserType::Guest->value);
+    }
+
+    /**
+     * Gets the status of the comment.
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::get(fn () => $this->determineStatus()->value);
+    }
+
+    /**
+     * Gets who set the status.
+     */
+    protected function markedBy(): Attribute
+    {
+        return Attribute::get(fn () => $this->lastStatus?->user);
+    }
+
+    /**
+     * Gets the avatar URL using either the registered user or guest
+     *
+     * @return Attribute
+     */
+    protected function avatarUrl(): Attribute {
+        return Attribute::get(fn () => $this->post?->user ? $this->post->user->avatar_url : $this->commenter->avatar_url)->shouldCache();
     }
 
     /**
@@ -259,14 +311,14 @@ class Comment extends Model
     }
 
     /**
-     * Scope a query to only include approved comments.
+     * Scope a query to only include comments with status.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeApproved($query)
+    public function scopeStatus($query, $status)
     {
-        return $query->whereNotNull('approved_by')->where('approved_at', '<=', now());
+        return $query->afterQuery(fn ($comments) => $comments->status($status));
     }
 
     /**

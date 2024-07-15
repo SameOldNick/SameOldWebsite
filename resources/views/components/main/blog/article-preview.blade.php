@@ -11,7 +11,7 @@
                 </li>
                 <li class="list-inline-item">
                     <i class="fa-solid fa-comments me-1"></i>
-                    {{ trans_choice('{0} No comments|{1} :count comment|[2,*] :count comments', $article->comments()->approved()->count()) }}
+                    {{ trans_choice('{0} No comments|{1} :count comment|[2,*] :count comments', $totalComments) }}
                 </li>
                 <li class="list-inline-item">
                     <i class="fa-solid fa-user-pen me-1"></i>

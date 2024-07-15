@@ -17,18 +17,7 @@ class BlogArticleController extends Controller
      */
     public function single(Request $request, Article $article)
     {
-        $extra = [];
-
-        /**
-         * @var Comment|null
-         */
-        $parentComment = $request->has('parent_comment_id') ? Comment::find($request->parent_comment_id) : null;
-
-        if (! is_null($parentComment) && $parentComment->article->is($article)) {
-            $extra['parentComment'] = $parentComment;
-        }
-
-        return $this->createArticleResponse($request, $article, $article->revision, $extra);
+        return view('main.blog.single', compact('article'));
     }
 
     /**
@@ -38,29 +27,6 @@ class BlogArticleController extends Controller
      */
     public function singleRevision(Request $request, Article $article, Revision $revision)
     {
-        return $this->createArticleResponse($request, $article, $revision);
-    }
-
-    /**
-     * Creates response that renders article revision
-     *
-     * @return \Illuminate\Contracts\View\View
-     */
-    protected function createArticleResponse(Request $request, Article $article, Revision $revision, array $extra = [])
-    {
-        $comments =
-            $article
-                ->comments()
-                ->parents()
-                ->approved()
-                ->orWhere(function ($query) {
-                    $query->owned();
-                })
-                ->get()
-                ->sortBy(fn ($comment) => $comment->post->created_at);
-
-        $comment = old('comment', $request->cookie("{$article->slug}-comment"));
-
-        return view('main.blog.single', array_merge(compact('article', 'revision', 'comments', 'comment'), $extra));
+        return view('main.blog.single', compact('article', 'revision'));
     }
 }

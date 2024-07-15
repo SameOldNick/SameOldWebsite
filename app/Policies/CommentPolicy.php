@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\CommentStatus;
 use App\Models\Comment;
 use App\Models\User;
 use App\Traits\Controllers\HasPage;
@@ -24,7 +25,7 @@ class CommentPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('role-manage-comments');
     }
 
     /**
@@ -34,7 +35,7 @@ class CommentPolicy
      */
     public function view(?User $user, Comment $comment)
     {
-        if ($comment->isApproved()) {
+        if (in_array($comment->status, [CommentStatus::Approved->value, CommentStatus::Locked->value])) {
             return true;
         }
 
@@ -54,7 +55,16 @@ class CommentPolicy
             }
         }
 
-        return ! is_null($user) && $comment->post->user->is($user);
+        if (!is_null($user)) {
+            // Give access if user is who posted comment
+            if ($comment->post?->user?->is($user))
+                return true;
+            // Provide access if user has manage_comments role
+            else if ($user->can('role-manage-comments'))
+                return true;
+        }
+
+        return false;
     }
 
     /**
@@ -64,25 +74,25 @@ class CommentPolicy
      */
     public function create(?User $user)
     {
-        $userAuthentication = $this->getSettings()->setting('user_authentication', 'registered');
+        if (!is_null($user) && $user->can('role-manage-comments'))
+            return true;
 
-        return match ($userAuthentication) {
-            'registered' => ! is_null($user),
-            'guest_verified' => true,
-            'guest_unverified' => true,
-            default => false
-        };
+        return $this->canComment($user);
     }
 
     /**
      * Determine whether the user can reply to comment.
      *
-     * @param  \App\Models\Article  $article
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function reply(?User $user, Comment $comment)
     {
-        return $this->create($user);
+        if (!is_null($user) && $user->can('role-manage-comments'))
+            return true;
+
+        $locked = $comment->status === CommentStatus::Locked->value || $comment->allParents()->contains(fn (Comment $comment) => $comment->status === CommentStatus::Locked->value);
+
+        return $this->canComment($user) && !$locked;
     }
 
     /**
@@ -123,6 +133,22 @@ class CommentPolicy
     public function forceDelete(User $user, Comment $comment)
     {
         //
+    }
+
+    /**
+     * Checks if registered or guest user can comment
+     *
+     * @param User|null $user
+     * @return boolean
+     */
+    protected function canComment(?User $user) {
+        $userAuthentication = $this->getSettings()->setting('user_authentication', 'registered');
+
+        return match ($userAuthentication) {
+            'registered' => ! is_null($user),
+            'guest_verified', 'guest_unverified' => true,
+            default => false
+        };
     }
 
     /**
