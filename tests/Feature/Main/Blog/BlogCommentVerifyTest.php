@@ -3,6 +3,7 @@
 namespace Tests\Feature\Main\Blog;
 
 use App\Components\Settings\Facades\PageSettings;
+use App\Enums\CommentStatus;
 use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -45,7 +46,7 @@ class BlogCommentVerifyTest extends TestCase
 
         $comment = Comment::withEmail($email)->first();
         $this->assertNotNull($comment);
-        $this->assertEquals(Comment::STATUS_AWAITING_VERIFICATION, $comment->status);
+        $this->assertEquals(CommentStatus::AwaitingVerification->value, $comment->status);
         $this->assertFalse($comment->commenter->isVerified());
 
         Mail::assertSent(function (Mailable $mail) use ($email) {

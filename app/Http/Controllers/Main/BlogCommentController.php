@@ -7,6 +7,7 @@ use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Components\SweetAlert\SweetAlerts;
 use App\Enums\CommentStatus;
 use App\Events\Comments\CommentCreated;
+use App\Events\Comments\CommentVerified;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Models\Article;
@@ -84,6 +85,8 @@ class BlogCommentController extends Controller
                 ->title('Success')
                 ->text(trans('blog.comments.verified'));
         });
+
+        CommentVerified::dispatch($comment);
 
         return redirect()->route('blog.single', compact('article'));
     }
