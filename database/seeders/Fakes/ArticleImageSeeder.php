@@ -18,7 +18,7 @@ class ArticleImageSeeder extends Seeder
      *
      * @return void
      */
-    public function run(?Article $article = null, int $count = 1, array $options = [], ?User $user = null)
+    public function run(?Article $article = null, int $count = 1, array $options = [], ?User $user = null, bool $mainImage = false)
     {
         $options = array_merge([
             'ext' => '.jpg',
@@ -59,6 +59,8 @@ class ArticleImageSeeder extends Seeder
             }
 
             $images->push($image);
+
+        }
 
         if ($mainImage && ! is_null($article) && $images->isNotEmpty()) {
             $article->mainImage()->associate($images->random());
