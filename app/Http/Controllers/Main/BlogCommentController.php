@@ -7,6 +7,7 @@ use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Components\SweetAlert\SweetAlerts;
 use App\Enums\CommentStatus;
 use App\Events\Comments\CommentCreated;
+use App\Events\Comments\CommentStatusChanged;
 use App\Events\Comments\CommentVerified;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
@@ -78,6 +79,7 @@ class BlogCommentController extends Controller
     {
         $this->authorize('view', [$article, $comment]);
 
+        $oldStatus = CommentStatus::from($comment->status);
         $comment->commenter->markEmailAsVerified();
 
         $swal->success(function (SweetAlertBuilder $builder) {
@@ -87,6 +89,7 @@ class BlogCommentController extends Controller
         });
 
         CommentVerified::dispatch($comment);
+        CommentStatusChanged::dispatch($comment, $oldStatus);
 
         return redirect()->route('blog.single', compact('article'));
     }

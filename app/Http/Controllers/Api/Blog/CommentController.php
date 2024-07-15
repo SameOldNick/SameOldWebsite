@@ -115,7 +115,6 @@ class CommentController extends Controller
         ]);
 
         $newComment = $request->str('comment');
-        $newStatus = $request->enum('status', CommentStatusEnum::class);
 
         if ($request->has('title')) {
             $comment->title = $request->str('title');
@@ -124,6 +123,9 @@ class CommentController extends Controller
         if ($request->has('comment') && $comment->comment !== $newComment) {
             $comment->comment = $newComment;
         }
+
+        $newStatus = $request->enum('status', CommentStatusEnum::class);
+        $oldStatus = CommentStatusEnum::from($comment->status);
 
         if ($newStatus) {
             $status = new CommentStatus([
@@ -139,7 +141,7 @@ class CommentController extends Controller
         $comment->save();
 
         CommentUpdated::dispatchIf($comment->wasChanged(), $comment);
-        CommentStatusChanged::dispatchIf(! is_null($newStatus), $comment);
+        CommentStatusChanged::dispatchIf(! is_null($newStatus), $comment, $oldStatus);
 
         return $comment;
     }
