@@ -13,7 +13,7 @@ class FakeSeeder extends Seeder
     {
         $this->call([
             Fakes\TagSeeder::class,
-            Fakes\UserSeeder::class,
+            Fakes\ArticleSeeder::class,
             Fakes\ProjectSeeder::class,
             Fakes\PageMetaDataSeeder::class,
             Fakes\ContactMessageSeeder::class,

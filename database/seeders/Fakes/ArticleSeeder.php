@@ -3,8 +3,10 @@
 namespace Database\Seeders\Fakes;
 
 use App\Models\Article;
+use App\Models\Commenter;
 use App\Models\Revision;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ArticleSeeder extends Seeder
@@ -14,42 +16,30 @@ class ArticleSeeder extends Seeder
      *
      * @return void
      */
-    public function run($user = null)
+    public function run(int $count = 5, $seedComments = true)
     {
-        $revisionFactory = Revision::factory(fake()->numberBetween(1, 3));
+        $articleUsers = User::factory($count)->create();
 
-        $factory =
-            Article::factory()
-                ->hasPostWithUser($user)
-                ->has($revisionFactory)
-                ->afterCreating(function (Article $article) {
-                    $article->tags()->attach(Tag::all()->random(fake()->numberBetween(1, 3)));
+        $articleFactory = Article::factory($count)->faked(fn () => $articleUsers->random(), Revision::factory(fake()->numberBetween(1, 3)));
 
-                    $this->callWith(ArticleImageSeeder::class, ['article' => $article, 'count' => fake()->numberBetween(0, 3), 'options' => [], 'user' => $article->post->user]);
+        $articles = [
+            ...$articleFactory->published()->create(),
+            ...$articleFactory->deleted()->create(),
+            ...$articleFactory->create(),
+        ];
 
-                    $revisions = $article->revisions;
+        if ($seedComments) {
+            foreach ($articles as $article) {
+                $this->callWith(ArticleImageSeeder::class, [
+                    'article' => $article,
+                    'count' => fake()->numberBetween(0, 3),
+                    'user' => $article->post->user,
+                    'mainImage' => fake()->boolean
+                ]);
 
-                    $article->currentRevision()->associate($revisions->random());
+                $this->callWith(CommentSeeder::class, ['article' => $article]);
+            }
+        }
 
-                    // Assigns parent revision to each revision (except first)
-                    if ($revisions->count() > 1) {
-                        for ($i = 1; $i < $revisions->count(); $i++) {
-                            $parent = $revisions->get($i - 1);
-                            $current = $revisions->get($i);
-
-                            $current->parentRevision()->associate($parent);
-
-                            $current->save();
-                        }
-                    }
-
-                    $article->save();
-                });
-
-        $factory->count(5)->published()->create();
-
-        $factory->count(5)->deleted()->create();
-
-        $factory->count(5)->create();
     }
 }

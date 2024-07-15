@@ -59,6 +59,10 @@ class ArticleImageSeeder extends Seeder
             }
 
             $images->push($image);
+
+        if ($mainImage && ! is_null($article) && $images->isNotEmpty()) {
+            $article->mainImage()->associate($images->random());
+            $article->save();
         }
     }
 }
