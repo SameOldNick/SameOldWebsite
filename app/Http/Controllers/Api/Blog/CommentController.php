@@ -140,6 +140,9 @@ class CommentController extends Controller
 
         $comment->save();
 
+        // Refresh comment so the status change is reflected.
+        $comment->refresh();
+
         CommentUpdated::dispatchIf($comment->wasChanged(), $comment);
         CommentStatusChanged::dispatchIf(! is_null($newStatus), $comment, $oldStatus);
 
