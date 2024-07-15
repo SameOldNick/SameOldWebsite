@@ -29,7 +29,7 @@ jobs:
         run: composer install --dev
 
       - name: Run Laravel Pint
-        run: ./vendor/bin/pint -v
+        run: ./vendor/bin/pint --no-interaction
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
