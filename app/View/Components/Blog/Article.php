@@ -2,14 +2,11 @@
 
 namespace App\View\Components\Blog;
 
-use App\Enums\CommentStatus;
 use App\Models\Article as ArticleModel;
-use App\Models\Comment as CommentModel;
 use App\Models\Revision;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\View\Component;
 
 class Article extends Component
@@ -24,8 +21,7 @@ class Article extends Component
         public readonly ArticleModel $article,
         ?Revision $revision = null,
         public readonly bool $preview = false,
-    )
-    {
+    ) {
         $this->revision = $revision && $revision->exists ? $revision : null;
     }
 
@@ -34,7 +30,8 @@ class Article extends Component
      *
      * @return int
      */
-    public function totalComments() {
+    public function totalComments()
+    {
         return $this->article->comments->viewable()->count();
     }
 
@@ -43,7 +40,8 @@ class Article extends Component
      *
      * @return Revision
      */
-    public function revision() {
+    public function revision()
+    {
         return $this->revision ?? $this->article->revision;
     }
 

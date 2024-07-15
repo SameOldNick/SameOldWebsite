@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Blog;
 
 use App\Enums\CommentStatus as CommentStatusEnum;
-use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentRemoved;
 use App\Events\Comments\CommentStatusChanged;
 use App\Events\Comments\CommentUpdated;
@@ -47,16 +46,16 @@ class CommentController extends Controller
             ],
             'commenter' => [
                 'sometimes',
-                'array'
+                'array',
             ],
             'commenter.name' => [
                 'sometimes',
-                'string'
+                'string',
             ],
             'commenter.email' => [
                 'sometimes',
-                'string'
-            ]
+                'string',
+            ],
         ]);
 
         $query = Comment::with(['article' => fn (BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.user']);
@@ -75,11 +74,13 @@ class CommentController extends Controller
             $query->whereHas('commenter', function (Builder $query) use ($request) {
                 $commenter = $request->collect('commenter');
 
-                if ($name = $commenter->get('name'))
+                if ($name = $commenter->get('name')) {
                     $query->search('commenters.name', $name);
+                }
 
-                if ($email = $commenter->get('email'))
+                if ($email = $commenter->get('email')) {
                     $query->search('commenters.email', $email);
+                }
             });
         }
 
@@ -116,8 +117,9 @@ class CommentController extends Controller
         $newComment = $request->str('comment');
         $newStatus = $request->enum('status', CommentStatusEnum::class);
 
-        if ($request->has('title'))
+        if ($request->has('title')) {
             $comment->title = $request->str('title');
+        }
 
         if ($request->has('comment') && $comment->comment !== $newComment) {
             $comment->comment = $newComment;
@@ -125,7 +127,7 @@ class CommentController extends Controller
 
         if ($newStatus) {
             $status = new CommentStatus([
-                'status' => $newStatus
+                'status' => $newStatus,
             ]);
 
             $status->user()->associate($request->user());
@@ -137,7 +139,7 @@ class CommentController extends Controller
         $comment->save();
 
         CommentUpdated::dispatchIf($comment->wasChanged(), $comment);
-        CommentStatusChanged::dispatchIf(!is_null($newStatus), $comment);
+        CommentStatusChanged::dispatchIf(! is_null($newStatus), $comment);
 
         return $comment;
     }

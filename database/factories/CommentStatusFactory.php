@@ -28,7 +28,8 @@ class CommentStatusFactory extends Factory
      *
      * @return static
      */
-    public function awaitingApproval() {
+    public function awaitingApproval()
+    {
         return $this->status(CommentStatusEnum::AwaitingApproval);
     }
 
@@ -37,7 +38,8 @@ class CommentStatusFactory extends Factory
      *
      * @return static
      */
-    public function awaitingVerification() {
+    public function awaitingVerification()
+    {
         return $this->status(CommentStatusEnum::AwaitingVerification);
     }
 
@@ -46,7 +48,8 @@ class CommentStatusFactory extends Factory
      *
      * @return static
      */
-    public function flagged() {
+    public function flagged()
+    {
         return $this->status(CommentStatusEnum::Flagged);
     }
 
@@ -55,7 +58,8 @@ class CommentStatusFactory extends Factory
      *
      * @return static
      */
-    public function denied() {
+    public function denied()
+    {
         return $this->status(CommentStatusEnum::Denied);
     }
 
@@ -64,29 +68,31 @@ class CommentStatusFactory extends Factory
      *
      * @return static
      */
-    public function approved() {
+    public function approved()
+    {
         return $this->status(CommentStatusEnum::Approved);
     }
 
     /**
      * Sets status
      *
-     * @param CommentStatusEnum $status
      * @return static
      */
-    public function status(CommentStatusEnum $status) {
+    public function status(CommentStatusEnum $status)
+    {
         return $this->state([
-            'status' => $status
+            'status' => $status,
         ]);
     }
 
     /**
      * Sets fake status
      *
-     * @param ?CommentStatusEnum[] $cases
+     * @param  ?CommentStatusEnum[]  $cases
      * @return static
      */
-    public function fakedStatus($cases = null) {
+    public function fakedStatus($cases = null)
+    {
         $cases = $cases ?? CommentStatusEnum::cases();
 
         return $this->state(fn () => ['status' => Arr::random($cases)]);

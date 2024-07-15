@@ -68,7 +68,7 @@ class Comment extends Model
         'article',
         'commenter',
         'statuses',
-        'children'
+        'children',
     ];
 
     /**
@@ -80,7 +80,7 @@ class Comment extends Model
         'status',
         'user_type',
         'marked_by',
-        'commenter_info'
+        'commenter_info',
     ];
 
     /**
@@ -112,12 +112,13 @@ class Comment extends Model
     /**
      * Gets all parents of comment.
      */
-    public function allParents() {
+    public function allParents()
+    {
         $parents = [];
 
         $parent = $this->parent;
 
-        while (!is_null($parent)) {
+        while (! is_null($parent)) {
             array_push($parents, $parent);
 
             $parent = $parent->parent;
@@ -137,7 +138,8 @@ class Comment extends Model
     /**
      * Gets all children of this comment.
      */
-    public function allChildren() {
+    public function allChildren()
+    {
         $all = [];
 
         foreach ($this->children as $child) {
@@ -150,7 +152,6 @@ class Comment extends Model
     /**
      * Recursively collects all children of comment (including passed comment).
      *
-     * @param self $comment
      * @return array
      */
     public static function collectChildren(self $comment)
@@ -219,12 +220,12 @@ class Comment extends Model
 
     /**
      * Determines current status of comment.
-     *
-     * @return BackedEnum
      */
-    public function determineStatus(): BackedEnum {
-        if ($this->lastStatus?->status)
+    public function determineStatus(): BackedEnum
+    {
+        if ($this->lastStatus?->status) {
             return $this->lastStatus->status;
+        }
 
         return match (true) {
             $this->isFlagged() => CommentStatusEnum::Flagged,
@@ -238,10 +239,9 @@ class Comment extends Model
 
     /**
      * Gets the latest status of the comment.
-     *
-     * @return HasOne
      */
-    public function lastStatus(): HasOne {
+    public function lastStatus(): HasOne
+    {
         return $this->hasOne(CommentStatus::class)->latest();
     }
 
@@ -271,10 +271,9 @@ class Comment extends Model
 
     /**
      * Gets the avatar URL using either the registered user or guest
-     *
-     * @return Attribute
      */
-    protected function avatarUrl(): Attribute {
+    protected function avatarUrl(): Attribute
+    {
         return Attribute::get(fn () => $this->post?->user ? $this->post->user->avatar_url : $this->commenter->avatar_url)->shouldCache();
     }
 

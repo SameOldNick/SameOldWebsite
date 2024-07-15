@@ -3,9 +3,7 @@
 namespace Database\Seeders\Fakes;
 
 use App\Models\Article;
-use App\Models\Commenter;
 use App\Models\Revision;
-use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -34,7 +32,7 @@ class ArticleSeeder extends Seeder
                     'article' => $article,
                     'count' => fake()->numberBetween(0, 3),
                     'user' => $article->post->user,
-                    'mainImage' => fake()->boolean
+                    'mainImage' => fake()->boolean,
                 ]);
 
                 $this->callWith(CommentSeeder::class, ['article' => $article]);

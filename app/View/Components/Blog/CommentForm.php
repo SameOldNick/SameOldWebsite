@@ -13,8 +13,6 @@ class CommentForm extends Component
 {
     /**
      * Comment being replied to
-     *
-     * @var CommentModel|null
      */
     public readonly ?CommentModel $parent;
 
@@ -25,10 +23,9 @@ class CommentForm extends Component
         public readonly Request $request,
         public readonly Article $article,
         ?CommentModel $parent = null,
-    )
-    {
+    ) {
         // Laravel will try to fill in Comment model, so set it to null if it doesn't exist
-        $this->parent = !is_null($parent) && $parent->exists ? $parent : null;
+        $this->parent = ! is_null($parent) && $parent->exists ? $parent : null;
     }
 
     /**
@@ -36,7 +33,8 @@ class CommentForm extends Component
      *
      * @return ?string
      */
-    public function content() {
+    public function content()
+    {
         // TODO: Set cookie
         return old('comment', $this->request->cookie("{$this->article->slug}-comment"));
     }
@@ -46,6 +44,6 @@ class CommentForm extends Component
      */
     public function render(): View|Closure|string
     {
-        return !is_null($this->parent) ? view('components.main.blog.comment-form-reply') : view('components.main.blog.comment-form');
+        return ! is_null($this->parent) ? view('components.main.blog.comment-form-reply') : view('components.main.blog.comment-form');
     }
 }

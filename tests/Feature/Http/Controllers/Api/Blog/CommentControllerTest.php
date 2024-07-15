@@ -2,13 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Blog;
 
-use App\Enums\CommentStatus;
-use App\Events\Articles\ArticleCreated;
-use App\Events\Articles\ArticleDeleted;
-use App\Events\Articles\ArticlePublished;
-use App\Events\Articles\ArticleRestored;
-use App\Events\Articles\ArticleRevisionUpdated;
-use App\Events\Articles\ArticleScheduled;
 use App\Events\Comments\CommentRemoved;
 use App\Events\Comments\CommentStatusChanged;
 use App\Events\Comments\CommentUpdated;
@@ -16,15 +9,11 @@ use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Commenter;
 use App\Models\Post;
-use App\Models\Revision;
 use App\Models\User;
 use Database\Seeders\Fakes\CommentSeeder;
-use Database\Seeders\Fakes\RegisteredCommentSeeder;
-use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\InteractsWithJWT;
@@ -36,8 +25,8 @@ class CommentControllerTest extends TestCase
     use CreatesUser;
     use InteractsWithJWT;
     use RefreshDatabase;
-    use WithFaker;
     use SeedsWith;
+    use WithFaker;
 
     /**
      * Tests getting all comments
@@ -85,7 +74,7 @@ class CommentControllerTest extends TestCase
         Comment::factory()->registered($this->user)->for($article)->create();
 
         $params = [
-            'user' => $this->user
+            'user' => $this->user,
         ];
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', $params));
@@ -94,8 +83,8 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data' => [['id', 'comment']], 'meta', 'links'])
             ->assertJson(['data' => [
                 [
-                    'post' => ['user_id' => $this->user->getKey()]]
-                ]
+                    'post' => ['user_id' => $this->user->getKey()]],
+            ],
             ]);
 
         $this->assertNotEmpty($response->json('data'));
@@ -114,7 +103,7 @@ class CommentControllerTest extends TestCase
 
         $params = [
             'article' => $article1,
-            'user' => $this->user
+            'user' => $this->user,
         ];
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', $params));
@@ -124,8 +113,8 @@ class CommentControllerTest extends TestCase
             ->assertJson(['data' => [
                 [
                     'article' => ['id' => $article1->getKey()],
-                    'post' => ['user_id' => $this->user->getKey()]]
-                ]
+                    'post' => ['user_id' => $this->user->getKey()]],
+            ],
             ]);
 
         $this->assertNotEmpty($response->json('data'));
@@ -149,8 +138,8 @@ class CommentControllerTest extends TestCase
         $params = [
             'article' => $article,
             'commenter' => [
-                'name' => $info['name']
-            ]
+                'name' => $info['name'],
+            ],
         ];
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', $params));
@@ -161,10 +150,9 @@ class CommentControllerTest extends TestCase
             ->assertJsonCount(1, 'data')
             ->assertJson([
                 'data' => [
-                    ['commenter' => $info]
-                ]
+                    ['commenter' => $info],
+                ],
             ]);
-
 
         //$this->assertNotEmpty($response->json('data'));
     }
@@ -187,8 +175,8 @@ class CommentControllerTest extends TestCase
         $params = [
             'article' => $article,
             'commenter' => [
-                'name' => 'blo'
-            ]
+                'name' => 'blo',
+            ],
         ];
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', $params));
@@ -199,10 +187,9 @@ class CommentControllerTest extends TestCase
             ->assertJsonCount(1, 'data')
             ->assertJson([
                 'data' => [
-                    ['commenter' => $info]
-                ]
+                    ['commenter' => $info],
+                ],
             ]);
-
 
         //$this->assertNotEmpty($response->json('data'));
     }
@@ -225,8 +212,8 @@ class CommentControllerTest extends TestCase
         $params = [
             'article' => $article,
             'commenter' => [
-                'email' => $info['email']
-            ]
+                'email' => $info['email'],
+            ],
         ];
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', $params));
@@ -237,8 +224,8 @@ class CommentControllerTest extends TestCase
             ->assertJsonCount(1, 'data')
             ->assertJson([
                 'data' => [
-                    ['commenter' => $info]
-                ]
+                    ['commenter' => $info],
+                ],
             ]);
     }
 
@@ -260,8 +247,8 @@ class CommentControllerTest extends TestCase
         $params = [
             'article' => $article,
             'commenter' => [
-                'email' => 'blow'
-            ]
+                'email' => 'blow',
+            ],
         ];
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', $params));
@@ -272,8 +259,8 @@ class CommentControllerTest extends TestCase
             ->assertJsonCount(5, 'data')
             ->assertJson([
                 'data' => [
-                    ['commenter' => $info]
-                ]
+                    ['commenter' => $info],
+                ],
             ]);
     }
 
@@ -295,8 +282,8 @@ class CommentControllerTest extends TestCase
         $params = [
             'article' => $article,
             'commenter' => [
-                'email' => 'john'
-            ]
+                'email' => 'john',
+            ],
         ];
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', $params));
@@ -305,8 +292,6 @@ class CommentControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonCount(0, 'data');
     }
-
-
 
     /**
      * Tests getting comments awaiting verification
@@ -401,7 +386,7 @@ class CommentControllerTest extends TestCase
             ->assertJson($comment->toArray())
             ->assertJson([
                 'user_type' => 'registered',
-                'post' => ['user_id' => $this->user->getKey()]
+                'post' => ['user_id' => $this->user->getKey()],
             ]);
 
     }
@@ -423,7 +408,7 @@ class CommentControllerTest extends TestCase
             ->assertJson($comment->toArray())
             ->assertJson([
                 'user_type' => 'guest',
-                'post' => ['user_id' => null]
+                'post' => ['user_id' => null],
             ]);
 
         $this->assertIsString($response->json('commenter.name'));
@@ -447,7 +432,7 @@ class CommentControllerTest extends TestCase
             ->assertJson($comment->toArray())
             ->assertJson([
                 'user_type' => 'guest',
-                'post' => ['user_id' => null]
+                'post' => ['user_id' => null],
             ]);
 
         $this->assertIsString($response->json('commenter.name'));
@@ -467,7 +452,7 @@ class CommentControllerTest extends TestCase
         $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
 
         $data = [
-            'title' => $this->faker->text
+            'title' => $this->faker->text,
         ];
 
         $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
@@ -492,7 +477,7 @@ class CommentControllerTest extends TestCase
         $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
 
         $data = [
-            'comment' => $this->faker->text
+            'comment' => $this->faker->text,
         ];
 
         $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
@@ -517,7 +502,7 @@ class CommentControllerTest extends TestCase
         $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
 
         $data = [
-            'status' => 'awaiting_verification'
+            'status' => 'awaiting_verification',
         ];
 
         $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
@@ -545,7 +530,7 @@ class CommentControllerTest extends TestCase
         $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
 
         $data = [
-            'status' => 'awaiting_approval'
+            'status' => 'awaiting_approval',
         ];
 
         $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
@@ -573,7 +558,7 @@ class CommentControllerTest extends TestCase
         $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
 
         $data = [
-            'status' => 'denied'
+            'status' => 'denied',
         ];
 
         $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
@@ -601,7 +586,7 @@ class CommentControllerTest extends TestCase
         $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
 
         $data = [
-            'status' => 'approved'
+            'status' => 'approved',
         ];
 
         $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
@@ -629,7 +614,7 @@ class CommentControllerTest extends TestCase
         $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
 
         $data = [
-            'status' => 'unknown'
+            'status' => 'unknown',
         ];
 
         $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
@@ -651,7 +636,7 @@ class CommentControllerTest extends TestCase
         $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
 
         $data = [
-            'status' => 'invalid'
+            'status' => 'invalid',
         ];
 
         $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
@@ -719,7 +704,7 @@ class CommentControllerTest extends TestCase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function afterRefreshingDatabase()
     {

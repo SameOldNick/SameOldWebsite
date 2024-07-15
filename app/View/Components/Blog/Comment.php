@@ -13,8 +13,6 @@ class Comment extends Component
 {
     /**
      * Comment being replied to
-     *
-     * @var CommentModel|null
      */
     public readonly ?CommentModel $parent;
 
@@ -27,9 +25,8 @@ class Comment extends Component
         public readonly CommentModel $comment,
         ?CommentModel $parent,
         public readonly int $level = 1,
-    )
-    {
-        $this->parent = !is_null($parent) && $parent->exists ? $parent : null;
+    ) {
+        $this->parent = ! is_null($parent) && $parent->exists ? $parent : null;
     }
 
     /**
@@ -37,10 +34,11 @@ class Comment extends Component
      *
      * @return \App\Models\Collections\CommentCollection
      */
-    public function children() {
+    public function children()
+    {
         if ($this->level < 2) {
             return $this->comment->children->sortBy(fn (CommentModel $comment) => $comment->post->created_at);
-        } else if ($this->level === 2) {
+        } elseif ($this->level === 2) {
             return $this->comment->allChildren()->sortBy(fn (CommentModel $comment) => $comment->post->created_at);
         } else {
             return $this->comment->newCollection([]);

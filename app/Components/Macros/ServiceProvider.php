@@ -3,9 +3,9 @@
 namespace App\Components\Macros;
 
 use App\Components\Macros\Collection\WeightManager;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder as Schema;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;

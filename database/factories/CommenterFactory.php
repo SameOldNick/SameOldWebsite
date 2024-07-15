@@ -25,10 +25,11 @@ class CommenterFactory extends Factory
     /**
      * Sets commenter as verified
      *
-     * @param \DateTimeInterface|callable|null $dateTime DateTime or callable that returns DateTime. If null, current date/time is used.
+     * @param  \DateTimeInterface|callable|null  $dateTime  DateTime or callable that returns DateTime. If null, current date/time is used.
      * @return static
      */
-    public function verified($dateTime = null) {
+    public function verified($dateTime = null)
+    {
         return $this->state(fn () => ['email_verified_at' => value($dateTime) ?: now()]);
     }
 
@@ -37,7 +38,8 @@ class CommenterFactory extends Factory
      *
      * @return static
      */
-    public function unverified() {
+    public function unverified()
+    {
         return $this->state(['email_verified_at' => null]);
     }
 }

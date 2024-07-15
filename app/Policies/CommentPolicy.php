@@ -55,13 +55,15 @@ class CommentPolicy
             }
         }
 
-        if (!is_null($user)) {
+        if (! is_null($user)) {
             // Give access if user is who posted comment
-            if ($comment->post?->user?->is($user))
+            if ($comment->post?->user?->is($user)) {
                 return true;
+            }
             // Provide access if user has manage_comments role
-            else if ($user->can('role-manage-comments'))
+            elseif ($user->can('role-manage-comments')) {
                 return true;
+            }
         }
 
         return false;
@@ -74,8 +76,9 @@ class CommentPolicy
      */
     public function create(?User $user)
     {
-        if (!is_null($user) && $user->can('role-manage-comments'))
+        if (! is_null($user) && $user->can('role-manage-comments')) {
             return true;
+        }
 
         return $this->canComment($user);
     }
@@ -87,12 +90,13 @@ class CommentPolicy
      */
     public function reply(?User $user, Comment $comment)
     {
-        if (!is_null($user) && $user->can('role-manage-comments'))
+        if (! is_null($user) && $user->can('role-manage-comments')) {
             return true;
+        }
 
         $locked = $comment->status === CommentStatus::Locked->value || $comment->allParents()->contains(fn (Comment $comment) => $comment->status === CommentStatus::Locked->value);
 
-        return $this->canComment($user) && !$locked;
+        return $this->canComment($user) && ! $locked;
     }
 
     /**
@@ -138,10 +142,10 @@ class CommentPolicy
     /**
      * Checks if registered or guest user can comment
      *
-     * @param User|null $user
-     * @return boolean
+     * @return bool
      */
-    protected function canComment(?User $user) {
+    protected function canComment(?User $user)
+    {
         $userAuthentication = $this->getSettings()->setting('user_authentication', 'registered');
 
         return match ($userAuthentication) {

@@ -17,8 +17,7 @@ class Comments extends Component
     public function __construct(
         public readonly Request $request,
         public readonly Article $article
-    )
-    {
+    ) {
         //
     }
 
@@ -27,7 +26,8 @@ class Comments extends Component
      *
      * @return \App\Models\Collections\CommentCollection
      */
-    public function comments() {
+    public function comments()
+    {
         // Don't check if they can be viewed here. That is done by the policy.
         return
             $this->article->comments()
@@ -41,7 +41,8 @@ class Comments extends Component
      *
      * @return ?CommentModel
      */
-    public function parent() {
+    public function parent()
+    {
         $parentComment = $this->request->has('parent_comment_id') ? CommentModel::find($this->request->parent_comment_id) : null;
 
         return ! is_null($parentComment) && $parentComment->article->is($this->article) ? $parentComment : null;

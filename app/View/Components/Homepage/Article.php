@@ -14,8 +14,7 @@ class Article extends Component
      */
     public function __construct(
         public readonly ArticleModel $article,
-    )
-    {
+    ) {
         //
     }
 
@@ -24,7 +23,8 @@ class Article extends Component
      *
      * @return int
      */
-    public function totalComments() {
+    public function totalComments()
+    {
         return $this->article->comments->viewable()->count();
     }
 

@@ -101,13 +101,10 @@ class BlogCommentController extends Controller
     /**
      * Handles a post comment request
      *
-     * @param SweetAlerts $swal
-     * @param CommentRequest $request
-     * @param Article $article
-     * @param Comment|null $parent
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function handleCommentRequest(SweetAlerts $swal, CommentRequest $request, Article $article, ?Comment $parent = null) {
+    protected function handleCommentRequest(SweetAlerts $swal, CommentRequest $request, Article $article, ?Comment $parent = null)
+    {
         $userAuthentication = $this->getSettings()->setting('user_authentication');
 
         // Process comment
@@ -173,8 +170,9 @@ class BlogCommentController extends Controller
         // Run comment through moderator
         $flagged = $commentModeration !== 'disabled' ? $this->moderationService->moderate($comment) : false;
 
-        if (($commentModeration === 'auto' && ! $flagged) || $commentModeration === 'disabled')
+        if (($commentModeration === 'auto' && ! $flagged) || $commentModeration === 'disabled') {
             $comment->statuses()->create(['status' => CommentStatus::Approved]);
+        }
 
         // Update will only occur if comment is dirty (has changes).
         $comment->save();

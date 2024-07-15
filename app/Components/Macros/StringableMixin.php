@@ -2,9 +2,6 @@
 
 namespace App\Components\Macros;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
 class StringableMixin
@@ -15,7 +12,6 @@ class StringableMixin
             /**
              * @var Stringable $this
              */
-
             $hash = hash($algo, $this->toString(), options: $options);
 
             return new Stringable($hash);
