@@ -73,10 +73,6 @@ class EventServiceProvider extends ServiceProvider
         CommentCreated::class => [
             LogCommentCreated::class,
         ],
-        CommentApproved::class => [
-            NotifyArticleAuthorCommentPosted::class,
-            NotifyCommentRepliedTo::class,
-        ],
         PageUpdated::class => [
             RefreshUpdatedPages::class,
         ],
@@ -89,6 +85,16 @@ class EventServiceProvider extends ServiceProvider
         CleanupWasSuccessful::class => [
             SuccessfulCleanup::class,
         ],
+    ];
+
+    /**
+     * The subscribers to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        NotifyArticleAuthorCommentPosted::class,
+        NotifyCommentRepliedTo::class,
     ];
 
     /**

@@ -2,15 +2,19 @@
 
 namespace App\Listeners\Comments;
 
-use App\Events\Comments\CommentApproved;
+use App\Enums\CommentStatus;
+use App\Events\Comments\CommentCreated;
+use App\Events\Comments\CommentStatusChanged;
 use App\Models\Comment;
 use App\Notifications\CommentPosted;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\Log;
 
 class NotifyCommentRepliedTo
 {
     /**
-     * Create the event listener.
+     * Create the event subscriber.
      */
     public function __construct()
     {
@@ -20,11 +24,49 @@ class NotifyCommentRepliedTo
     /**
      * Handle the event.
      */
-    public function handle(CommentApproved $event): void
+    public function handle(CommentCreated $event): void
     {
-        $notifiables = $this->getNotifiables($event->comment);
 
-        Notification::send($notifiables, new CommentPosted($event->comment));
+    }
+
+    /**
+     * Handle the event.
+     */
+    public function handleCommentCreated(CommentCreated $event): void
+    {
+        if ($this->commentIsVisible($event->comment)) {
+            $this->sendNotification($event->comment);
+        }
+    }
+
+    public function handleCommentStatusChanged(CommentStatusChanged $event): void {
+        if ($this->commentIsVisible($event->comment)) {
+            $this->sendNotification($event->comment);
+        }
+    }
+
+    /**
+     * Register the listeners for the subscriber.
+     *
+     * @return array<string, string>
+     */
+    public function subscribe(Dispatcher $events): array
+    {
+        return [
+            CommentCreated::class => 'handleCommentCreated',
+            CommentStatusChanged::class => 'handleCommentStatusChanged',
+        ];
+    }
+
+    protected function commentIsVisible(Comment $comment) {
+        /**
+         * We don't use the policy because the additional logic (based on the user) could be true.
+         */
+        return in_array($comment->status, [CommentStatus::Approved->value, CommentStatus::Locked->value]);
+    }
+
+    protected function sendNotification(Comment $comment) {
+        Notification::send($this->getNotifiables($comment), new CommentPosted($comment));
     }
 
     /**
