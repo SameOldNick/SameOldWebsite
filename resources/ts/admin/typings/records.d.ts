@@ -182,9 +182,11 @@ declare global {
         article: IArticle;
         title: string | null;
         comment: string;
-        approved_at: string | null;
-        approved_by: IUser | null;
+        commenter_info: Record<'display_name' | 'email', string>;
+        status: TCommentStatuses;
     }
+
+    type TCommentStatuses = 'approved' | 'denied' | 'flagged' | 'awaiting_verification' | 'awaiting_approval' | 'locked';
 
     interface IChartVisitors {
         [dateISO8601: string]: {

@@ -1,13 +1,12 @@
-import { DateTime } from "luxon";
-
-import { createAuthRequest } from "../factories";
-import Comment from "../models/Comment";
+import { createAuthRequest } from "@admin/utils/api/factories";
+import Comment from "@admin/utils/api/models/Comment";
 
 export enum CommentStatuses {
-    Awaiting = 'awaiting',
     Approved = 'approved',
     Denied = 'denied',
-    All = 'all'
+    Flagged = 'flagged',
+    AwaitingVerification = 'awaiting_verification',
+    AwaitingApproval = 'awaiting_approval',
 }
 
 interface ICommentFilters {
@@ -49,38 +48,15 @@ export const loadOne = async (id: number) => {
  * @param comment Comment instance
  * @param title New title
  * @param content New content
+ * @param status New status
  * @returns Updated Comment instance
  */
-export const update = async (comment: Comment, title: string | null, content: string) => {
+export const update = async (comment: Comment, params: { title?: string; content?: string; status?: TCommentStatuses; }) => {
     const response = await createAuthRequest().put<IComment>(`blog/comments/${comment.comment.id}`, {
-        title,
-        comment: content
+        title: params.title ?? undefined,
+        comment: params.content ?? undefined,
+        status: params.status ?? undefined,
     });
 
     return new Comment(response.data);
-}
-
-/**
- * Approves a comment
- * @param comment Comment instance
- * @param dateTime When comment is updated (current date/time is used if null)
- * @returns Updated Comment instance
- */
-export const approve = async (comment: Comment, dateTime?: DateTime) => {
-    const response = await createAuthRequest().post<IComment>(`blog/comments/${comment.comment.id}/approve`, {
-        approved_at: dateTime !== undefined ? dateTime.toISO() : undefined
-    });
-
-    return new Comment(response.data);
-}
-
-/**
- * Denies a comment
- * @param comment Comment instance
- * @returns Success message
- */
-export const deny = async (comment: Comment) => {
-    const response = await createAuthRequest().delete<Record<'success', string>>(`blog/comments/${comment.comment.id}`);
-
-    return response.data;
 }

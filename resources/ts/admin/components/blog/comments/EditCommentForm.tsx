@@ -1,7 +1,7 @@
 import React from 'react';
 import withReactContent from 'sweetalert2-react-content';
-import { FaCheckCircle, FaExternalLinkAlt, FaSave, FaTimesCircle } from 'react-icons/fa';
-import { Badge, Button, Card, CardBody, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, InputGroup, Label, Row } from 'reactstrap';
+import { FaExternalLinkAlt, FaSave } from 'react-icons/fa';
+import { Badge, Button, Card, CardBody, Col, FormGroup, Input, InputGroup, Label, Row } from 'reactstrap';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 
 import Heading, { HeadingTitle } from '@admin/layouts/admin/Heading';
@@ -12,10 +12,10 @@ import S from 'string';
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 
-import { approve, deny, loadOne, update } from '@admin/utils/api/endpoints/comments';
+import { update } from '@admin/utils/api/endpoints/comments';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
-import Comment, { TCommentStatuses } from '@admin/utils/api/models/Comment';
+import Comment from '@admin/utils/api/models/Comment';
 
 interface IEditCommentFormProps {
     comment: Comment;
@@ -31,33 +31,25 @@ interface IFormikValues {
 const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment }) => {
     const formikRef = React.createRef<FormikProps<IFormikValues>>();
 
-    const [buttonDropdownOpen, setButtonDropdownOpen] = React.useState(false);
+    const statuses = React.useMemo<TCommentStatuses[]>(() => ['approved', 'denied', 'flagged', 'awaiting_verification', 'awaiting_approval', 'locked'], []);
 
-    const schema =
-        React.useMemo(
-            () => Yup.object().shape({
-                title: Yup.string().max(255),
-                comment: Yup.string().required('Comment is required'),
-                status: Yup.string().oneOf(['approved', 'denied', 'deleted'])
-            }),
-            []
-        );
+    const schema = React.useMemo(() => Yup.object().shape({
+        title: Yup.string().max(255),
+        comment: Yup.string().required('Comment is required'),
+        status: Yup.string().oneOf(statuses)
+    }), []);
 
-    const initialValues =
-        React.useMemo(
-            () => ({
-                title: comment.comment.title || '',
-                comment: comment.comment.comment,
-                status: comment.status
-            }),
-            [comment]
-        );
+    const initialValues = React.useMemo(() => ({
+        title: comment.comment.title || '',
+        comment: comment.comment.comment,
+        status: comment.status
+    }), [comment]);
 
     const confirmSave = React.useCallback(async () => {
         const response = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
-            text: `Speak now or forever hold your peace.`,
+            text: `Please confirm the changes to the comment.`,
             showConfirmButton: true,
             showCancelButton: true
         });
@@ -65,12 +57,12 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
         return response.isConfirmed;
     }, []);
 
-    const handleSave = React.useCallback(async ({ title, comment: content }: IFormikValues) => {
+    const handleSave = React.useCallback(async ({ title, comment: content, status }: IFormikValues) => {
         try {
             if (!await confirmSave())
                 return;
 
-            const updated = await update(comment, title.trim() || null, content);
+            const updated = await update(comment, { title: title.trim() || undefined, content, status });
 
             await withReactContent(Swal).fire({
                 icon: 'success',
@@ -81,6 +73,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
             });
 
             setComment(updated);
+            formikRef.current?.resetForm();
         } catch (err) {
             console.error(err);
 
@@ -94,143 +87,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 showCancelButton: true
             });
         }
-    }, [setComment]);
-
-    const handleSaveAndApprove = React.useCallback(async ({ title, comment: content }: IFormikValues) => {
-        try {
-            if (!await confirmSave())
-                return;
-
-            const updated = await update(comment, title.trim() || null, content);
-
-            await approve(comment);
-
-            await withReactContent(Swal).fire({
-                icon: 'success',
-                title: 'Success!',
-                text: `The comment has been saved and approved.`,
-                showConfirmButton: true,
-                showCancelButton: false
-            });
-
-            setComment(updated);
-        } catch (err) {
-            console.error(err);
-
-            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-            await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `An error occurred saving and approving comment: ${message}\nPlease try again.`,
-                showConfirmButton: false,
-                showCancelButton: true
-            });
-        }
-    }, [setComment]);
-
-    const handleSaveAndDeny = React.useCallback(async ({ title, comment: content }: IFormikValues) => {
-        try {
-            if (!await confirmSave())
-                return;
-
-            const updated = await update(comment, title.trim() || null, content);
-
-            await deny(comment);
-
-            await withReactContent(Swal).fire({
-                icon: 'success',
-                title: 'Success!',
-                text: `The comment has been saved and denied.`,
-                showConfirmButton: true,
-                showCancelButton: false
-            });
-
-            setComment(updated);
-        } catch (err) {
-            console.error(err);
-
-            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-            await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `An error occurred saving and denying comment: ${message}\nPlease try again.`,
-                showConfirmButton: false,
-                showCancelButton: true
-            });
-        }
-    }, [setComment]);
-
-    const handleApprove = React.useCallback(async () => {
-        try {
-            if (!comment.comment.id)
-                throw new Error('Comment ID is missing.');
-
-            if (!await confirmSave())
-                return;
-
-            await approve(comment);
-
-            await withReactContent(Swal).fire({
-                icon: 'success',
-                title: 'Success!',
-                text: `The comment has been approved.`,
-                showConfirmButton: true,
-                showCancelButton: false
-            });
-
-            const updated = await loadOne(comment.comment.id);
-            setComment(updated);
-        } catch (err) {
-            console.error(err);
-
-            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-            await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `An error occurred approving comment: ${message}\nPlease try again.`,
-                showConfirmButton: false,
-                showCancelButton: true
-            });
-        }
-    }, [setComment]);
-
-    const handleDeny = React.useCallback(async () => {
-        try {
-            if (!comment.comment.id)
-                throw new Error('Comment ID is missing.');
-
-            if (!await confirmSave())
-                return;
-
-            await deny(comment);
-
-            await withReactContent(Swal).fire({
-                icon: 'success',
-                title: 'Success!',
-                text: `The comment has been denied.`,
-                showConfirmButton: true,
-                showCancelButton: false
-            });
-
-            const updated = await loadOne(comment.comment.id);
-            setComment(updated);
-        } catch (err) {
-            console.error(err);
-
-            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-            await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `An error occurred denying comment: ${message}\nPlease try again.`,
-                showConfirmButton: false,
-                showCancelButton: true
-            });
-        }
-    }, [setComment]);
+    }, [comment, setComment]);
 
     return (
         <>
@@ -241,7 +98,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 onSubmit={handleSave}
             >
                 {({ values, dirty, touched, errors }) => (
-                    <>
+                    <Form>
                         <Heading>
                             <HeadingTitle>
                                 Edit Comment
@@ -261,48 +118,16 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                                     <FaExternalLinkAlt />{' '}
                                     Preview
                                 </Button>
-                                <Dropdown toggle={() => setButtonDropdownOpen((prev) => !prev)} isOpen={buttonDropdownOpen} className='me-1'>
-                                    <DropdownToggle caret color='primary'>
-                                        <FaSave />{' '}
-                                        Save
-                                    </DropdownToggle>
-                                    <DropdownMenu>
-                                            <>
-                                                <DropdownItem type='submit'>Save</DropdownItem>
-
-                                                {comment.status !== Comment.STATUS_APPROVED && (
-                                                    <DropdownItem onClick={() => handleSaveAndApprove(values)}>Save &amp; Approve</DropdownItem>
-                                                )}
-
-                                                {comment.status !== Comment.STATUS_DENIED && (
-                                                    <DropdownItem onClick={() => handleSaveAndDeny(values)}>Save &amp; Deny</DropdownItem>
-                                                )}
-                                            </>
-                                    </DropdownMenu>
-                                </Dropdown>
-                                {(comment.status === Comment.STATUS_AWAITING || comment.status === Comment.STATUS_DENIED) && (
-                                    <Button
-                                        color="success"
-                                        className='me-1'
-                                        onClick={() => handleApprove()}
-                                    >
-                                        <FaCheckCircle />{' '}
-                                        Approve
-                                    </Button>
-                                )}
-
-                                {(comment.status === Comment.STATUS_AWAITING || comment.status === Comment.STATUS_APPROVED) && (
-                                    <Button
-                                        color="danger"
-                                        onClick={() => handleDeny()}
-                                    >
-                                        <FaTimesCircle />{' '}
-                                        Deny
-                                    </Button>
-                                )}
+                                <Button
+                                    color="primary"
+                                    className='me-1'
+                                    type='submit'
+                                >
+                                    <FaSave />{' '}Save
+                                </Button>
                             </div>
                         </Heading>
-                        <Form>
+                        <>
                             <Row>
                                 <Col md={9}>
                                     <Card>
@@ -348,16 +173,26 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                                             <Row>
                                                 <Col xs={12}>
                                                     <FormGroup className='has-validation'>
-                                                        <Label for='comment'>Status:</Label>
-                                                        <Input plaintext value={S(comment.status).humanize().s} />
+                                                        <Label for='status'>Status:</Label>
+                                                        <Field
+                                                            as={Input}
+                                                            type='select'
+                                                            name='status'
+                                                            id='status'
+                                                            className={classNames({ 'is-invalid': errors.status && touched.status })}
+                                                        >
+                                                            {statuses.map((status, index) => (
+                                                                <option key={index} value={status}>{S(status).humanize().titleCase().s}</option>
+                                                            ))}
+                                                        </Field>
                                                     </FormGroup>
                                                 </Col>
 
                                                 <Col xs={12}>
                                                     <FormGroup className='has-validation'>
-                                                        <Label for='comment'>Parent Comment:</Label>
+                                                        <Label for='comment_parent'>Parent Comment:</Label>
                                                         <InputGroup>
-                                                            <Input readOnly value={comment.comment.parent_id ?? '(N/A)'} />
+                                                            <Input name='comment_parent' readOnly value={comment.comment.parent_id ?? '(N/A)'} />
 
                                                             {comment.comment.parent_id && (
                                                                 <Button color='primary' tag='a'>
@@ -371,28 +206,14 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
 
                                                 <Col xs={12}>
                                                     <FormGroup className='has-validation'>
-                                                        <Label for='comment'>Posted By:</Label>
+                                                        <Label for='comment_posted_by'>Posted By:</Label>
                                                         <InputGroup>
-                                                            <Input readOnly value={comment.postedBy?.displayName} />
-                                                            <Button color='primary' tag='a' href={comment.postedBy?.generatePath()}>
-                                                                <FaExternalLinkAlt />
-                                                            </Button>
-                                                        </InputGroup>
-                                                    </FormGroup>
-                                                </Col>
-
-                                                <Col xs={12}>
-                                                    <FormGroup className='has-validation'>
-                                                        <Label for='comment'>Approved By:</Label>
-                                                        <InputGroup>
-                                                            <Input readOnly value={comment.approvedBy?.displayName ?? '(N/A)'} />
-
-                                                            {comment.approvedBy && (
-                                                                <Button tag='a' color='primary' href={comment.approvedBy.generatePath()}>
+                                                            <Input name='comment_posted_by' readOnly value={comment.commenterInfo.display_name} />
+                                                            {comment.postedBy && (
+                                                                <Button color='primary' tag='a' href={comment.postedBy.generatePath()}>
                                                                     <FaExternalLinkAlt />
                                                                 </Button>
                                                             )}
-
                                                         </InputGroup>
                                                     </FormGroup>
                                                 </Col>
@@ -401,10 +222,8 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                                     </Card>
                                 </Col>
                             </Row>
-
-
-                        </Form>
-                    </>
+                        </>
+                    </Form>
                 )}
 
             </Formik>

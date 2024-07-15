@@ -4,12 +4,7 @@ import { DateTime } from "luxon";
 import Article from "./Article";
 import User from "./User";
 
-export type TCommentStatuses = 'awaiting' | 'approved' | 'denied';
-
 export default class Comment {
-    public static readonly STATUS_AWAITING: TCommentStatuses = 'awaiting';
-    public static readonly STATUS_APPROVED: TCommentStatuses = 'approved';
-    public static readonly STATUS_DENIED: TCommentStatuses = 'denied';
 
     /**
      * Gets Article associated with Comment.
@@ -38,12 +33,7 @@ export default class Comment {
      * @memberof Comment
      */
     public get status(): TCommentStatuses {
-        if (this.deletedAt)
-            return 'denied';
-        else if (this.approvedAt)
-            return 'approved';
-        else
-            return 'awaiting';
+        return this.comment.status;
     }
 
     /**
@@ -76,24 +66,8 @@ export default class Comment {
         return this.comment.post.deleted_at ? DateTime.fromISO(this.comment.post.deleted_at) : null;
     }
 
-    /**
-     * Gets when comment was approved (or null if not)
-     *
-     * @readonly
-     * @memberof Comment
-     */
-    public get approvedAt() {
-        return this.comment.approved_at ? DateTime.fromISO(this.comment.approved_at) : null;
-    }
-
-    /**
-     * Gets who approved comment (or null if not)
-     *
-     * @readonly
-     * @memberof Comment
-     */
-    public get approvedBy() {
-        return this.comment.approved_by ? new User(this.comment.approved_by) : null;
+    public get commenterInfo() {
+        return this.comment.commenter_info;
     }
 
     /**

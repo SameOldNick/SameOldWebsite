@@ -1,10 +1,10 @@
 import { Tag } from "react-tag-autocomplete";
 import { DateTime } from "luxon";
 
-import { createAuthRequest } from "../factories";
+import { createAuthRequest } from "@admin/utils/api/factories";
 
-import Article from "../models/Article";
-import Revision from "../models/Revision";
+import Article from "@admin/utils/api/models/Article";
+import Revision from "@admin/utils/api/models/Revision";
 
 export enum ArticleStatuses {
     unpublished = 'unpublished',

@@ -22,7 +22,7 @@ export default class Article {
     constructor(
         public readonly article: IArticle
     ) {
-        this.currentRevision = this.article.current_revision !== null ? new Revision(this.article.current_revision) : null;
+        this.currentRevision = article.current_revision !== null ? new Revision(article.current_revision) : null;
     }
 
     /**

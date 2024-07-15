@@ -27,35 +27,24 @@ const CommentList: React.FC<IProps> = ({ }) => {
     const waitToLoadCommentsRef = React.createRef<IWaitToLoadHandle>();
     const paginatedTableRef = React.createRef<PaginatedTable<IComment>>();
 
-    const [show, setShow] = React.useState<CommentStatuses>(CommentStatuses.All);
+    const [show, setShow] = React.useState<CommentStatuses | 'all'>('all');
     const [article, setArticle] = React.useState<Article | undefined>();
     const [user, setUser] = React.useState<User | undefined>();
 
-    const load = React.useCallback(async (link?: string) => link === undefined ? loadInitial() : loadUpdate(link), []);
+    const load = React.useCallback(async (link?: string) => link === undefined ? loadInitial() : loadUpdate(link), [show, article, user]);
 
-    const loadInitial = React.useCallback(async () => {
-        const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>('blog/comments', {
-            show,
+    const loadInitial = React.useCallback(async () => loadAll({
+            show: show !== 'all' ? show : undefined,
             article: article ? article.article.id : undefined,
             user: user ? user.user.id : undefined
-        });
+    }), [show, article, user]);
 
-        return loadAll({
-            show,
+    const loadUpdate = React.useCallback(async (link: string) =>
+        (await createAuthRequest().get<IPaginateResponseCollection<IComment>>(link, {
+            show: show !== 'all' ? show : undefined,
             article: article ? article.article.id : undefined,
             user: user ? user.user.id : undefined
-        });
-    }, [article, user]);
-
-    const loadUpdate = React.useCallback(async (link: string) => {
-        const response = await createAuthRequest().get<IPaginateResponseCollection<IComment>>(link, {
-            show,
-            article: article ? article.article.id : undefined,
-            user: user ? user.user.id : undefined
-        });
-
-        return response.data;
-    }, [article, user]);
+        })).data, [show, article, user]);
 
     const handleUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -115,10 +104,13 @@ const CommentList: React.FC<IProps> = ({ }) => {
                                 <label className="visually-hidden" htmlFor="show">Show</label>
 
                                 <Input type='select' name='show' id='show' value={show} onChange={(e) => setShow(e.target.value as CommentStatuses)}>
-                                    <option value={CommentStatuses.Awaiting}>Awaiting Only</option>
-                                    <option value={CommentStatuses.Approved}>Approved Only</option>
-                                    <option value={CommentStatuses.Denied}>Denied Only</option>
-                                    <option value={CommentStatuses.All}>All</option>
+                                    <option value={CommentStatuses.AwaitingVerification}>Awaiting Verification</option>
+                                    <option value={CommentStatuses.AwaitingApproval}>Awaiting Approval</option>
+                                    <option value={CommentStatuses.Approved}>Approved</option>
+                                    <option value={CommentStatuses.Denied}>Denied</option>
+                                    <option value={CommentStatuses.Flagged}>Flagged</option>
+
+                                    <option value='all'>All</option>
                                 </Input>
                             </Col>
                             <Col xs={12}>
