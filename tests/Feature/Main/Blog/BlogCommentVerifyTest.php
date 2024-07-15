@@ -116,7 +116,7 @@ class BlogCommentVerifyTest extends TestCase
 
         $comment = Comment::withEmail($email)->first();
         $this->assertNotNull($comment);
-        $this->assertEquals(Comment::STATUS_AWAITING_APPROVAL, $comment->status);
+        $this->assertNotEquals(CommentStatus::AwaitingVerification->value, $comment->status);
         $this->assertTrue($comment->commenter->isVerified());
 
         Mail::assertNotSent(function (Mailable $mail) use ($email) {

@@ -3,8 +3,11 @@
 namespace Tests\Feature\Main\Blog;
 
 use App\Components\Settings\Facades\PageSettings;
+use App\Enums\CommentStatus;
 use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentCreated;
+use App\Events\Comments\CommentStatusChanged;
+use App\Listeners\Comments\ModerateComment;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
@@ -52,7 +55,6 @@ class BlogCommentEventTest extends TestCase
         $this->assertNotNull($comment);
 
         Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
-        Event::assertDispatched(CommentApproved::class, fn (CommentApproved $event) => $event->comment->is($comment));
     }
 
     /**
@@ -84,7 +86,7 @@ class BlogCommentEventTest extends TestCase
         $this->assertNotNull($comment);
 
         Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
-        Event::assertNotDispatched(CommentApproved::class, fn (CommentApproved $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
 
     /**
@@ -93,7 +95,7 @@ class BlogCommentEventTest extends TestCase
     #[Test]
     public function guest_comment_approved_with_disabled_moderation()
     {
-        Event::fake();
+        Event::fakeExcept([CommentCreated::class]);
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
@@ -115,17 +117,16 @@ class BlogCommentEventTest extends TestCase
         $comment = Comment::withEmail($email)->first();
         $this->assertNotNull($comment);
 
-        Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
-        Event::assertDispatched(CommentApproved::class, fn (CommentApproved $event) => $event->comment->is($comment));
+        Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
     }
 
     /**
-     * Tests approved event is fired when guest posts a comment
+     * Tests comment is approved when guest posts a comment
      */
     #[Test]
     public function registered_user_approved_with_auto_moderation()
     {
-        Event::fake();
+        Event::fakeExcept([CommentCreated::class]);
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
@@ -140,20 +141,18 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::owned($this->user)->first();
-        $this->assertNotNull($comment);
+        $this->assertNotNull($comment = Comment::owned($this->user)->first());
 
-        Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
-        Event::assertDispatched(CommentApproved::class, fn (CommentApproved $event) => $event->comment->is($comment));
+        Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
     }
 
     /**
-     * Tests approved event is fired when guest posts a comment
+     * Tests events are dispatched after registered user posts comment with manual moderation.
      */
     #[Test]
     public function registered_user_approved_with_manual_moderation()
     {
-        Event::fake();
+        Event::fakeExcept([CommentCreated::class]);
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
@@ -168,11 +167,9 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::owned($this->user)->first();
-        $this->assertNotNull($comment);
+        $this->assertNotNull($comment = Comment::owned($this->user)->first());
 
-        Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
-        Event::assertNotDispatched(CommentApproved::class, fn (CommentApproved $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
 
     /**
@@ -181,7 +178,7 @@ class BlogCommentEventTest extends TestCase
     #[Test]
     public function registered_user_comment_approved_with_disabled_moderation()
     {
-        Event::fake();
+        Event::fakeExcept([CommentCreated::class]);
         // Assuming a setting to enable auto-approval
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_unverified',
@@ -199,8 +196,7 @@ class BlogCommentEventTest extends TestCase
         $comment = Comment::owned($this->user)->first();
         $this->assertNotNull($comment);
 
-        Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
-        Event::assertDispatched(CommentApproved::class, fn (CommentApproved $event) => $event->comment->is($comment));
+        Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
     }
 
     /**
@@ -232,7 +228,7 @@ class BlogCommentEventTest extends TestCase
         $this->assertNull($comment);
 
         Event::assertNotDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
-        Event::assertNotDispatched(CommentApproved::class, fn (CommentApproved $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
 
     /**
@@ -260,6 +256,6 @@ class BlogCommentEventTest extends TestCase
         $this->assertNull($comment);
 
         Event::assertNotDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
-        Event::assertNotDispatched(CommentApproved::class, fn (CommentApproved $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
 }

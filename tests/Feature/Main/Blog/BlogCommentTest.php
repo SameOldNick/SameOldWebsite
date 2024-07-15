@@ -3,6 +3,7 @@
 namespace Tests\Feature\Main\Blog;
 
 use App\Components\Settings\Facades\PageSettings;
+use App\Enums\CommentStatus;
 use App\Models\Article;
 use App\Models\Comment;
 use Biscolab\ReCaptcha\Facades\ReCaptcha;
@@ -42,8 +43,8 @@ class BlogCommentTest extends TestCase
 
         $comment = Comment::owned($this->user)->first();
         $this->assertNotNull($comment);
-        $this->assertEquals($this->user->email, $comment->email);
-        $this->assertEquals(Comment::STATUS_APPROVED, $comment->status);
+        $this->assertEquals($this->user->email, $comment->commenter_info['email']);
+        $this->assertEquals(CommentStatus::Approved->value, $comment->status);
     }
 
     /**
@@ -73,7 +74,7 @@ class BlogCommentTest extends TestCase
 
         $comment = Comment::withEmail($email)->first();
         $this->assertNotNull($comment);
-        $this->assertEquals(Comment::STATUS_APPROVED, $comment->status);
+        $this->assertEquals(CommentStatus::Approved->value, $comment->status);
     }
 
     /**
@@ -103,7 +104,7 @@ class BlogCommentTest extends TestCase
 
         $comment = Comment::withEmail($email)->first();
         $this->assertNotNull($comment);
-        $this->assertEquals(Comment::STATUS_AWAITING_APPROVAL, $comment->status);
+        $this->assertEquals(CommentStatus::AwaitingApproval->value, $comment->status);
     }
 
     /**
@@ -133,7 +134,7 @@ class BlogCommentTest extends TestCase
 
         $comment = Comment::withEmail($email)->first();
         $this->assertNotNull($comment);
-        $this->assertEquals(Comment::STATUS_APPROVED, $comment->status);
+        $this->assertEquals(CommentStatus::Approved->value, $comment->status);
     }
 
     /**
