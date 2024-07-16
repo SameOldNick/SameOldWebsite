@@ -46,7 +46,8 @@ class ModerateComment
     }
 
     public function handleCommentStatusChanged(CommentStatusChanged $event): void {
-        if ($event->comment->commenter && $event->comment->commenter->isVerified()) {
+        // Moderate comment if guest verified email
+        if ($event->comment->status === CommentStatus::AwaitingApproval->value && $event->previous === CommentStatus::AwaitingVerification) {
             $this->moderate($event->comment);
         }
     }
