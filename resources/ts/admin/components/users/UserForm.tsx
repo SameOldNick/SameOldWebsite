@@ -1,12 +1,15 @@
 import React from 'react';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikProps } from 'formik';
-import { Button, Col, FormGroup, Input, Label, Row } from 'reactstrap';
+import { Button, Col, FormGroup, Input, InputGroup, Label, Row } from 'reactstrap';
 
 import * as Yup from 'yup';
 import classNames from 'classnames';
 
 import Countries from './Countries';
 import States from './States';
+import SelectRolesModal from './SelectRolesModal';
+
+import awaitModalPrompt from '@admin/utils/modals';
 
 export interface IFormikValues {
     name: string;
@@ -15,7 +18,7 @@ export interface IFormikValues {
     confirm_password: string;
     state: string;
     country: string;
-    roles: string[];
+    roles: TRole[];
 }
 
 type TFormikProps = React.ComponentProps<typeof Formik<IFormikValues>>;
@@ -28,9 +31,11 @@ interface IProps  {
 
 export type TForwardedRef = FormikProps<IFormikValues>;
 
-type TProps = IProps & Omit<TFormikProps, 'onSubmit' | 'ref'>;
+type TProps = IProps & Omit<TFormikProps, 'onSubmit' | 'innerRef'>;
 
-const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props }) => {
+const UserForm = React.forwardRef<TForwardedRef, TProps>(({ buttonContent, fields, onSubmit, ...props }, forwardedRef) => {
+    const innerRef = React.useRef<TForwardedRef>();
+
     const schema = React.useMemo(() => {
         if (fields === 'create') {
             return Yup.object().shape({
@@ -40,7 +45,7 @@ const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props 
                 confirm_password: Yup.string().required('Please confirm your password').oneOf([Yup.ref('password')], 'Your passwords do not match.'),
                 state: Yup.string(),
                 country: Yup.string().length(3),
-                roles: Yup.array().optional().of(Yup.string().oneOf(['admin']))
+                roles: Yup.array().optional().of(Yup.string())
             });
         } else {
             return Yup.object().shape({
@@ -50,7 +55,7 @@ const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props 
                 confirm_password: Yup.string().oneOf([Yup.ref('password')], 'Your passwords do not match.'),
                 state: Yup.string(),
                 country: Yup.string().length(3),
-                roles: Yup.array().optional().of(Yup.string().oneOf(['admin']))
+                roles: Yup.array().optional().of(Yup.string())
             });
         }
     }, [fields]);
@@ -61,9 +66,26 @@ const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props 
         return Promise.resolve();
     }, [onSubmit]);
 
+    const handleSelectRolesClicked = React.useCallback(async (e: React.MouseEvent, roles: TRole[]) => {
+        e.preventDefault();
+
+        const updated = await awaitModalPrompt(SelectRolesModal, { roles });
+
+        innerRef.current?.setFieldValue('roles', updated);
+    }, [innerRef.current]);
+
+    const assignRef = (instance: TForwardedRef) => {
+        innerRef.current = instance;
+
+        if (typeof forwardedRef === "function")
+            forwardedRef(instance);
+        else if (forwardedRef !== null)
+            forwardedRef.current = instance;
+    };
+
     return (
         <>
-            <Formik<IFormikValues> validationSchema={schema} onSubmit={handleSubmit} {...props}>
+            <Formik<IFormikValues> innerRef={assignRef} validationSchema={schema} onSubmit={handleSubmit} {...props}>
                 {({ errors, touched, isSubmitting, values, ...helpers }) => (
                     <>
                         <Form>
@@ -84,8 +106,6 @@ const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props 
                                         <ErrorMessage name='email' component='div' className='invalid-feedback' />
                                     </FormGroup>
                                 </Col>
-
-
                             </Row>
 
                             <Row>
@@ -126,10 +146,10 @@ const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props 
                                     <FormGroup className='has-validation'>
                                         <Label for='roles'>Roles:</Label>
 
-                                        <FormGroup check>
-                                            <Field as={Input} type='checkbox' name='roles' value='admin' />
-                                            <Label check>Admin</Label>
-                                        </FormGroup>
+                                        <InputGroup>
+                                            <Input type='text' readOnly value={`${values.roles.length} roles selected`} />
+                                            <Button type='button' color='primary' onClick={(e) => handleSelectRolesClicked(e, values.roles)}>Select...</Button>
+                                        </InputGroup>
 
                                         <ErrorMessage name='roles' component='div' className='invalid-feedback' />
                                     </FormGroup>
@@ -150,6 +170,6 @@ const UserForm: React.FC<TProps> = ({ buttonContent, fields, onSubmit, ...props 
             </Formik>
         </>
     );
-}
+});
 
 export default UserForm;

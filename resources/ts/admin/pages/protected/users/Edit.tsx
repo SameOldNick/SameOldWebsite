@@ -124,7 +124,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
                                     <>
                                         {user && (
                                             <UserForm
-                                                innerRef={formikRef}
+                                                ref={formikRef}
                                                 fields='edit'
                                                 initialValues={getInitialValues(user)}
                                                 buttonContent='Edit User'
