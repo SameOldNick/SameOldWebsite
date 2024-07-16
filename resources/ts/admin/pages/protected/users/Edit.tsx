@@ -103,7 +103,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
         await withReactContent(Swal).fire({
             icon: 'error',
             title: 'Oops...',
-            text: `An error occurred: ${message}`,
+            text: message,
         });
     }, []);
 
