@@ -20,6 +20,7 @@ class CommentStatusChanged
     public function __construct(
         public readonly Comment $comment,
         public readonly CommentStatus $previous,
+        public readonly bool $fromModerator,
     ) {
         //
     }

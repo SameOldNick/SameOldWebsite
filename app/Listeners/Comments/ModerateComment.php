@@ -46,6 +46,10 @@ class ModerateComment
     }
 
     public function handleCommentStatusChanged(CommentStatusChanged $event): void {
+        // Don't allow infinite loop from dispatching event here
+        if ($event->fromModerator)
+            return;
+
         // Moderate comment if guest verified email
         if ($event->comment->status === CommentStatus::AwaitingApproval->value && $event->previous === CommentStatus::AwaitingVerification) {
             $this->moderate($event->comment);
@@ -76,7 +80,7 @@ class ModerateComment
             $comment->statuses()->create(['status' => CommentStatus::Approved]);
 
             // Dispatch event
-            CommentStatusChanged::dispatch($comment->refresh(), CommentStatus::from($oldStatus));
+            CommentStatusChanged::dispatch($comment->refresh(), CommentStatus::from($oldStatus), true);
         }
     }
 }
