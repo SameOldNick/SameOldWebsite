@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -51,6 +52,23 @@ class UpdateUserRequest extends FormRequest
             'roles.*' => [
                 Rule::exists('roles', 'role'),
             ],
+        ];
+    }
+
+    /**
+     * Get the "after" validation callables for the request.
+     */
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+                if ($this->user->is($this->user()) && !in_array('manage_users', $this->roles)) {
+                    $validator->errors()->add(
+                        'roles',
+                        'The "manage_users" role cannot be revoked from yourself.'
+                    );
+                }
+            }
         ];
     }
 }
