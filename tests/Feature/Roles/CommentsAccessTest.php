@@ -122,7 +122,9 @@ class CommentsAccessTest extends TestCase
     {
         $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
 
-        $response = $this->withRoles(['manage_comments'])->postJson(sprintf('/api/blog/comments/%d/approve', $comment->getKey()));
+        $response = $this->withRoles(['manage_comments'])->putJson(route('api.comments.update', ['comment' => $comment]), [
+            'status' => 'approved',
+        ]);
 
         $response->assertSuccessful();
     }
@@ -134,7 +136,9 @@ class CommentsAccessTest extends TestCase
     {
         $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
 
-        $response = $this->withRoles([])->postJson(sprintf('/api/blog/comments/%d/approve', $comment->getKey()));
+        $response = $this->withRoles([])->putJson(route('api.comments.update', ['comment' => $comment]), [
+            'status' => 'approved',
+        ]);
 
         $response->assertForbidden();
     }
