@@ -4,10 +4,8 @@ namespace Tests\Feature\Main\Blog;
 
 use App\Components\Settings\Facades\PageSettings;
 use App\Enums\CommentStatus;
-use App\Events\Comments\CommentApproved;
 use App\Events\Comments\CommentCreated;
 use App\Events\Comments\CommentStatusChanged;
-use App\Listeners\Comments\ModerateComment;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;

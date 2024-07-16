@@ -7,6 +7,7 @@ use App\Models\User;
 
 /**
  * @property-read ?Post $post
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static> owned(mixed $user = null)
  */
 trait Postable

@@ -7,8 +7,8 @@ use App\Events\Comments\CommentCreated;
 use App\Events\Comments\CommentStatusChanged;
 use App\Models\Comment;
 use App\Notifications\CommentPosted;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\Log;
 
 class NotifyArticleAuthorCommentPosted
 {
@@ -27,20 +27,23 @@ class NotifyArticleAuthorCommentPosted
         }
     }
 
-    public function handleCommentStatusChanged(CommentStatusChanged $event): void {
+    public function handleCommentStatusChanged(CommentStatusChanged $event): void
+    {
         if ($this->commentIsVisible($event->comment)) {
             $this->sendNotification($event->comment);
         }
     }
 
-    protected function commentIsVisible(Comment $comment) {
+    protected function commentIsVisible(Comment $comment)
+    {
         /**
          * We don't use the policy because the additional logic (based on the user) could be true.
          */
         return in_array($comment->status, [CommentStatus::Approved->value, CommentStatus::Locked->value]);
     }
 
-    protected function sendNotification(Comment $comment) {
+    protected function sendNotification(Comment $comment)
+    {
         $author = $comment->article->post->user;
 
         /**
