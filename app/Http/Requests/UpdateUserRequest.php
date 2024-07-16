@@ -62,13 +62,13 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             function (Validator $validator) {
-                if ($this->user->is($this->user()) && !in_array('manage_users', $this->roles)) {
+                if ($this->user->is($this->user()) && ! in_array('manage_users', $this->roles)) {
                     $validator->errors()->add(
                         'roles',
                         'The "manage_users" role cannot be revoked from yourself.'
                     );
                 }
-            }
+            },
         ];
     }
 }
