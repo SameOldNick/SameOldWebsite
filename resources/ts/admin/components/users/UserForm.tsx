@@ -39,7 +39,7 @@ const UserForm = React.forwardRef<TForwardedRef, TProps>(({ buttonContent, field
     const schema = React.useMemo(() => {
         if (fields === 'create') {
             return Yup.object().shape({
-                name: Yup.string().required('Name is required').min(1, 'Name cannot be empty'),
+                name: Yup.string().optional(),
                 email: Yup.string().required('E-mail is required').email(),
                 password: Yup.string().required('Password is required'),
                 confirm_password: Yup.string().required('Please confirm your password').oneOf([Yup.ref('password')], 'Your passwords do not match.'),
@@ -49,7 +49,7 @@ const UserForm = React.forwardRef<TForwardedRef, TProps>(({ buttonContent, field
             });
         } else {
             return Yup.object().shape({
-                name: Yup.string().required('Name is required').min(1, 'Name cannot be empty'),
+                name: Yup.string().optional(),
                 email: Yup.string().required('E-mail is required').email(),
                 password: Yup.string().notRequired(),
                 confirm_password: Yup.string().oneOf([Yup.ref('password')], 'Your passwords do not match.'),
