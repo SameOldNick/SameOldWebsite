@@ -86,8 +86,9 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        if ($request->has('name'))
+        if ($request->has('name')) {
             $user->name = $request->str('name');
+        }
 
         $user->email = $request->email;
 
