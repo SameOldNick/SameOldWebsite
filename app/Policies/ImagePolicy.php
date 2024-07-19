@@ -12,6 +12,7 @@ class ImagePolicy
      */
     public function viewAny(User $user): bool
     {
+        // Controller will determine what images are displayed.
         return true;
     }
 
@@ -20,7 +21,7 @@ class ImagePolicy
      */
     public function view(User $user, Image $image): bool
     {
-        return $image->file->user->is($user) || $user->hasAllRoles(['admin']);
+        return $image->file->user->is($user) || $user->roles->containsAll(['manage_images']);
     }
 
     /**
@@ -36,7 +37,7 @@ class ImagePolicy
      */
     public function update(User $user, Image $image): bool
     {
-        return ($image->file->user && $image->file->user->is($user)) || $user->hasAllRoles(['admin']);
+        return ($image->file->user && $image->file->user->is($user)) || $user->roles->containsAll(['manage_images']);
     }
 
     /**
@@ -44,7 +45,7 @@ class ImagePolicy
      */
     public function delete(User $user, Image $image): bool
     {
-        return ($image->file->user && $image->file->user->is($user)) || $user->hasAllRoles(['admin']);
+        return ($image->file->user && $image->file->user->is($user)) || $user->roles->containsAll(['manage_images']);
     }
 
     /**
