@@ -26,4 +26,20 @@ trait WithRoles
 
         return $this->actingAs($user);
     }
+
+    /**
+     * Attaches user with all roles except those specified.
+     *
+     * @param array $roles Roles to exclude
+     */
+    protected function withoutRoles(array $roles = []) {
+        return $this->withRoles(array_diff($this->possibleRoles(), $roles));
+    }
+
+    /**
+     * Attaches user with no roles.
+     */
+    protected function noRoles() {
+        return $this->withRoles([]);
+    }
 }
