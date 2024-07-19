@@ -5,18 +5,23 @@ namespace App\Http\Controllers\Api\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Image;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Image::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $this->authorize(Image::class);
+        return $request->user()->roles->containsAll(['manage_images']) ? Image::all() : Image::owned($request->user())->get();
 
-        return $request->user()->hasAllRoles(['admin']) ? Image::all() : Image::owned($request->user())->get();
     }
 
     /**
@@ -24,8 +29,6 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize(Image::class);
-
         $request->validate([
             'image' => 'required|image',
             'description' => 'nullable|string|max:255',
@@ -52,7 +55,6 @@ class ImageController extends Controller
      */
     public function show(Image $image)
     {
-        $this->authorize($image);
 
         return $image;
     }
