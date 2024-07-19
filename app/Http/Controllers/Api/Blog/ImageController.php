@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Blog;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateImageRequest;
 use App\Models\File;
 use App\Models\Image;
 use App\Models\User;
@@ -21,7 +22,14 @@ class ImageController extends Controller
     public function index(Request $request)
     {
         return $request->user()->roles->containsAll(['manage_images']) ? Image::all() : Image::owned($request->user())->get();
+    }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(Image $image)
+    {
+        return $image;
     }
 
     /**
@@ -51,10 +59,18 @@ class ImageController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Update the specified resource in storage.
      */
-    public function show(Image $image)
+    public function update(UpdateImageRequest $request, Image $image)
     {
+        if ($request->has('description'))
+            $image->description = $request->description;
+
+        if ($request->filled('user') && $request->canChangeUser()) {
+            $image->file->user()->associate(User::find($request->user));
+        }
+
+        $image->push();
 
         return $image;
     }

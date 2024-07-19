@@ -22,6 +22,8 @@ Route::namespace(Api::class)->group(function () {
             ->middleware([Middleware\AuthenticateJWTWithAdapter::adapter(App\Components\LittleJWT\RefreshTokenGuardAdapter::class)]);
     });
 
+    Route::apiResource('images', Api\Blog\ImageController::class);
+
     Route::middleware(['auth:jwt', 'can:any-roles-admin'])->group(function () {
         Route::post('/logout', [Auth\LoginController::class, 'apiLogout'])->name('logout');
 
@@ -52,8 +54,6 @@ Route::namespace(Api::class)->group(function () {
             Route::get('/contact', [Api\Contact\MetaDataController::class, 'show']);
             Route::post('/contact', [Api\Contact\MetaDataController::class, 'update']);
         });
-
-        Route::apiResource('images', Api\Blog\ImageController::class)->except(['update']);
 
         Route::prefix('/blog')->group(function () {
             Route::apiResource('articles', Api\Blog\ArticleController::class);
