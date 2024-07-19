@@ -31,7 +31,7 @@ class SkillsAccessTest extends TestCase
      */
     public function testCannotGetSkills(): void
     {
-        $response = $this->withRoles([])->getJson('/api/skills');
+        $response = $this->withNoRoles()->getJson('/api/skills');
 
         $response->assertForbidden();
     }
@@ -55,7 +55,7 @@ class SkillsAccessTest extends TestCase
     {
         $skill = Skill::factory()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/skills/%d', $skill->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/skills/%d', $skill->getKey()));
 
         $response->assertForbidden();
     }
@@ -78,7 +78,7 @@ class SkillsAccessTest extends TestCase
      */
     public function testCannotCreateSkill(): void
     {
-        $response = $this->withRoles([])->postJson('/api/skills', [
+        $response = $this->withNoRoles()->postJson('/api/skills', [
             'icon' => $this->faker->iconName(),
             'skill' => $this->faker->unique()->jobTitle(),
         ]);
@@ -108,7 +108,7 @@ class SkillsAccessTest extends TestCase
     {
         $skill = Skill::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/skills/%d', $skill->getKey()), [
+        $response = $this->withNoRoles()->putJson(sprintf('/api/skills/%d', $skill->getKey()), [
             'skill' => $this->faker->unique()->jobTitle(),
         ]);
 
@@ -134,7 +134,7 @@ class SkillsAccessTest extends TestCase
     {
         $skill = Skill::factory()->create();
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/skills/%d', $skill->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/skills/%d', $skill->getKey()));
 
         $response->assertForbidden();
     }

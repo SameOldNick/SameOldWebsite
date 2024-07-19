@@ -37,7 +37,7 @@ class ArticleTagsAccessTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()));
 
         $response->assertForbidden();
     }
@@ -63,7 +63,7 @@ class ArticleTagsAccessTest extends TestCase
     {
         $article = Article::factory()->has(Revision::factory())->create();
 
-        $response = $this->withRoles([])->postJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
+        $response = $this->withNoRoles()->postJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
             'tags' => $this->faker()->words(5),
         ]);
 
@@ -97,7 +97,7 @@ class ArticleTagsAccessTest extends TestCase
 
         $article->tags()->attach($tag);
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
             'tags' => [$tag->tag],
         ]);
 
@@ -125,7 +125,7 @@ class ArticleTagsAccessTest extends TestCase
     {
         $article = Article::factory()->has(Revision::factory())->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
+        $response = $this->withNoRoles()->putJson(sprintf('/api/blog/articles/%d/tags', $article->getKey()), [
             'tags' => $this->faker()->words(),
         ]);
 

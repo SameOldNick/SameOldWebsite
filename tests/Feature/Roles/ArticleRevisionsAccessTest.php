@@ -36,7 +36,7 @@ class ArticleRevisionsAccessTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/blog/articles/%d/revisions', $article->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/blog/articles/%d/revisions', $article->getKey()));
 
         $response->assertForbidden();
     }
@@ -62,7 +62,7 @@ class ArticleRevisionsAccessTest extends TestCase
         $article = Article::factory()->has(Revision::factory())->create();
         $revision = $article->revisions()->first();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/blog/articles/%d/revisions/%s', $article->getKey(), $revision->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/blog/articles/%d/revisions/%s', $article->getKey(), $revision->getKey()));
 
         $response->assertForbidden();
     }
@@ -88,7 +88,7 @@ class ArticleRevisionsAccessTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->withRoles([])->postJson(sprintf('/api/blog/articles/%d/revisions', $article->getKey()), [
+        $response = $this->withNoRoles()->postJson(sprintf('/api/blog/articles/%d/revisions', $article->getKey()), [
             'content' => $this->faker()->paragraphs(4, true),
         ]);
 
@@ -116,7 +116,7 @@ class ArticleRevisionsAccessTest extends TestCase
         $article = Article::factory()->has(Revision::factory())->create();
         $revision = $article->revisions()->first();
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/blog/articles/%d/revisions/%s', $article->getKey(), $revision->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/blog/articles/%d/revisions/%s', $article->getKey(), $revision->getKey()));
 
         $response->assertForbidden();
     }

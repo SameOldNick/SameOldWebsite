@@ -42,7 +42,7 @@ class AvatarAccessTest extends TestCase
 
         $file = UploadedFile::fake()->image('avatar.jpg');
 
-        $response = $this->withRoles([])->postJson('/api/user/avatar', [
+        $response = $this->withNoRoles()->postJson('/api/user/avatar', [
             'avatar' => $file,
         ]);
 
@@ -64,7 +64,7 @@ class AvatarAccessTest extends TestCase
      */
     public function testCannotDeleteAvatar(): void
     {
-        $response = $this->withRoles([])->deleteJson('/api/user/avatar');
+        $response = $this->withNoRoles()->deleteJson('/api/user/avatar');
 
         $response->assertForbidden();
     }

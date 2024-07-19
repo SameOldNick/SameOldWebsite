@@ -34,7 +34,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCannotGetComments(): void
     {
-        $response = $this->withRoles([])->getJson('/api/blog/comments');
+        $response = $this->withNoRoles()->getJson('/api/blog/comments');
 
         $response->assertForbidden();
     }
@@ -58,7 +58,7 @@ class CommentsAccessTest extends TestCase
     {
         $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/blog/comments/%d', $comment->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/blog/comments/%d', $comment->getKey()));
 
         $response->assertForbidden();
     }
@@ -84,7 +84,7 @@ class CommentsAccessTest extends TestCase
     {
         $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/blog/comments/%d', $comment->getKey()), [
+        $response = $this->withNoRoles()->putJson(sprintf('/api/blog/comments/%d', $comment->getKey()), [
             'comment' => $this->faker()->realText(),
         ]);
 
@@ -110,7 +110,7 @@ class CommentsAccessTest extends TestCase
     {
         $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/blog/comments/%d', $comment->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/blog/comments/%d', $comment->getKey()));
 
         $response->assertForbidden();
     }
@@ -136,7 +136,7 @@ class CommentsAccessTest extends TestCase
     {
         $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
 
-        $response = $this->withRoles([])->putJson(route('api.comments.update', ['comment' => $comment]), [
+        $response = $this->withNoRoles()->putJson(route('api.comments.update', ['comment' => $comment]), [
             'status' => 'approved',
         ]);
 

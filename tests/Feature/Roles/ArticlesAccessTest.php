@@ -32,7 +32,7 @@ class ArticlesAccessTest extends TestCase
      */
     public function testCannotGetArticles(): void
     {
-        $response = $this->withRoles([])->getJson('/api/blog/articles');
+        $response = $this->withNoRoles()->getJson('/api/blog/articles');
 
         $response->assertForbidden();
     }
@@ -56,7 +56,7 @@ class ArticlesAccessTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/blog/articles/%d', $article->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/blog/articles/%d', $article->getKey()));
 
         $response->assertForbidden();
     }
@@ -84,7 +84,7 @@ class ArticlesAccessTest extends TestCase
      */
     public function testCannotCreateArticle(): void
     {
-        $response = $this->withRoles([])->postJson('/api/blog/articles', [
+        $response = $this->withNoRoles()->postJson('/api/blog/articles', [
             'icon' => $this->faker->iconName(),
             'skill' => $this->faker->unique()->jobTitle(),
         ]);
@@ -114,7 +114,7 @@ class ArticlesAccessTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/blog/articles/%d', $article->getKey()), [
+        $response = $this->withNoRoles()->putJson(sprintf('/api/blog/articles/%d', $article->getKey()), [
             'skill' => $this->faker->unique()->jobTitle(),
         ]);
 
@@ -140,7 +140,7 @@ class ArticlesAccessTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/blog/articles/%d', $article->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/blog/articles/%d', $article->getKey()));
 
         $response->assertForbidden();
     }
@@ -164,7 +164,7 @@ class ArticlesAccessTest extends TestCase
     {
         $article = Article::factory()->deleted()->create();
 
-        $response = $this->withRoles([])->postJson(sprintf('/api/blog/articles/restore/%d', $article->getKey()));
+        $response = $this->withNoRoles()->postJson(sprintf('/api/blog/articles/restore/%d', $article->getKey()));
 
         $response->assertForbidden();
     }

@@ -36,7 +36,7 @@ class UsersAccessTest extends TestCase
     {
         User::factory(5)->create();
 
-        $response = $this->withRoles([])->getJson('/api/users');
+        $response = $this->withNoRoles()->getJson('/api/users');
 
         $response->assertForbidden();
     }
@@ -60,7 +60,7 @@ class UsersAccessTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/users/%d', $user->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/users/%d', $user->getKey()));
 
         $response->assertForbidden();
     }
@@ -92,7 +92,7 @@ class UsersAccessTest extends TestCase
         $email = $this->faker()->unique()->email();
         $password = Password::default()->generate();
 
-        $response = $this->withRoles([])->postJson('/api/users', [
+        $response = $this->withNoRoles()->postJson('/api/users', [
             'name' => $this->faker->name(),
             'email' => $email,
             'password' => $password,
@@ -128,7 +128,7 @@ class UsersAccessTest extends TestCase
         $user = User::factory()->create();
         $email = $this->faker()->unique()->email();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/users/%d', $user->getKey()), [
+        $response = $this->withNoRoles()->putJson(sprintf('/api/users/%d', $user->getKey()), [
             'name' => $this->faker->name(),
             'email' => $email,
         ]);
@@ -157,7 +157,7 @@ class UsersAccessTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/users/%d', $user->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/users/%d', $user->getKey()));
 
         $response->assertForbidden();
         $this->assertFalse($user->refresh()->trashed());

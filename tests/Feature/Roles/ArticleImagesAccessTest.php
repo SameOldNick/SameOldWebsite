@@ -37,7 +37,7 @@ class ArticleImagesAccessTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/blog/articles/%d/images', $article->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/blog/articles/%d/images', $article->getKey()));
 
         $response->assertForbidden();
     }
@@ -63,7 +63,7 @@ class ArticleImagesAccessTest extends TestCase
         $article = Article::factory()->has(Revision::factory())->create();
         $image = Image::factory()->fakedImage()->create();
 
-        $response = $this->withRoles([])->postJson(sprintf('/api/blog/articles/%d/images/%s', $article->getKey(), $image->getKey()));
+        $response = $this->withNoRoles()->postJson(sprintf('/api/blog/articles/%d/images/%s', $article->getKey(), $image->getKey()));
 
         $response->assertForbidden();
     }
@@ -93,7 +93,7 @@ class ArticleImagesAccessTest extends TestCase
         $article = Article::factory()->create();
         $article->images()->attach($image);
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/blog/articles/%d/images/%s', $article->getKey(), $image->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/blog/articles/%d/images/%s', $article->getKey(), $image->getKey()));
 
         $response->assertForbidden();
     }
@@ -123,7 +123,7 @@ class ArticleImagesAccessTest extends TestCase
 
         $article->images()->attach($image);
 
-        $response = $this->withRoles([])->postJson(sprintf('/api/blog/articles/%d/images/%s/main-image', $article->getKey(), $image->getKey()));
+        $response = $this->withNoRoles()->postJson(sprintf('/api/blog/articles/%d/images/%s/main-image', $article->getKey(), $image->getKey()));
 
         $response->assertForbidden();
     }
@@ -155,7 +155,7 @@ class ArticleImagesAccessTest extends TestCase
         $article->images()->attach($image);
         $article->mainImage()->associate($image);
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/blog/articles/%d/main-image', $article->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/blog/articles/%d/main-image', $article->getKey()));
 
         $response->assertForbidden();
     }

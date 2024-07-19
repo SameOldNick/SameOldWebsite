@@ -32,7 +32,7 @@ class ProjectsAccessTest extends TestCase
      */
     public function testCannotGetProjects(): void
     {
-        $response = $this->withRoles([])->getJson('/api/projects');
+        $response = $this->withNoRoles()->getJson('/api/projects');
 
         $response->assertForbidden();
     }
@@ -56,7 +56,7 @@ class ProjectsAccessTest extends TestCase
     {
         $project = Project::factory()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/projects/%d', $project->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/projects/%d', $project->getKey()));
 
         $response->assertForbidden();
     }
@@ -81,7 +81,7 @@ class ProjectsAccessTest extends TestCase
      */
     public function testCannotCreateProject(): void
     {
-        $response = $this->withRoles([])->postJson('/api/projects', [
+        $response = $this->withNoRoles()->postJson('/api/projects', [
             'title' => Str::headline($this->faker->realText(25)),
             'description' => $this->faker->realText(),
             'url' => $this->faker->url(),
@@ -114,7 +114,7 @@ class ProjectsAccessTest extends TestCase
     {
         $project = Project::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/projects/%d', $project->getKey()), [
+        $response = $this->withNoRoles()->putJson(sprintf('/api/projects/%d', $project->getKey()), [
             'title' => Str::headline($this->faker->realText(25)),
             'description' => $this->faker->realText(),
             'url' => $this->faker->url(),
@@ -143,7 +143,7 @@ class ProjectsAccessTest extends TestCase
     {
         $project = Project::factory()->create();
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/projects/%d', $project->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/projects/%d', $project->getKey()));
 
         $response->assertForbidden();
     }

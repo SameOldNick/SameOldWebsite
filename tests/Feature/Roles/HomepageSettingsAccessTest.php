@@ -30,7 +30,7 @@ class HomepageSettingsAccessTest extends TestCase
      */
     public function testCannotGetHomepageMetadata(): void
     {
-        $response = $this->withRoles([])->get('/api/pages/homepage');
+        $response = $this->withNoRoles()->get('/api/pages/homepage');
 
         $response->assertForbidden();
     }
@@ -50,7 +50,7 @@ class HomepageSettingsAccessTest extends TestCase
      */
     public function testCannotPostHomepageMetadata(): void
     {
-        $response = $this->withRoles([])->post('/api/pages/homepage');
+        $response = $this->withNoRoles()->post('/api/pages/homepage');
 
         $response->assertForbidden();
     }

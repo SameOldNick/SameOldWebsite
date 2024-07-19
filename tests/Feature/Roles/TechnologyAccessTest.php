@@ -31,7 +31,7 @@ class TechnologyAccessTest extends TestCase
      */
     public function testCannotGetTechnologies(): void
     {
-        $response = $this->withRoles([])->getJson('/api/technologies');
+        $response = $this->withNoRoles()->getJson('/api/technologies');
 
         $response->assertForbidden();
     }
@@ -55,7 +55,7 @@ class TechnologyAccessTest extends TestCase
     {
         $technology = Technology::factory()->create();
 
-        $response = $this->withRoles([])->getJson(sprintf('/api/technologies/%d', $technology->getKey()));
+        $response = $this->withNoRoles()->getJson(sprintf('/api/technologies/%d', $technology->getKey()));
 
         $response->assertForbidden();
     }
@@ -78,7 +78,7 @@ class TechnologyAccessTest extends TestCase
      */
     public function testCannotCreateTechnology(): void
     {
-        $response = $this->withRoles([])->postJson('/api/technologies', [
+        $response = $this->withNoRoles()->postJson('/api/technologies', [
             'icon' => $this->faker->iconName(),
             'technology' => $this->faker()->unique()->technology(),
         ]);
@@ -108,7 +108,7 @@ class TechnologyAccessTest extends TestCase
     {
         $technology = Technology::factory()->create();
 
-        $response = $this->withRoles([])->putJson(sprintf('/api/technologies/%d', $technology->getKey()), [
+        $response = $this->withNoRoles()->putJson(sprintf('/api/technologies/%d', $technology->getKey()), [
             'icon' => $this->faker->iconName(),
             'technology' => $this->faker()->unique()->technology(),
         ]);
@@ -135,7 +135,7 @@ class TechnologyAccessTest extends TestCase
     {
         $technology = Technology::factory()->create();
 
-        $response = $this->withRoles([])->deleteJson(sprintf('/api/technologies/%d', $technology->getKey()));
+        $response = $this->withNoRoles()->deleteJson(sprintf('/api/technologies/%d', $technology->getKey()));
 
         $response->assertForbidden();
     }
