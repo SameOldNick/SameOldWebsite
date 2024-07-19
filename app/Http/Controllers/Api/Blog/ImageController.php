@@ -35,7 +35,7 @@ class ImageController extends Controller
         ]);
 
         $image = new Image([
-            'description' => isset($request->description) ? $request->description : null,
+            'description' => $request->has('description') ? $request->description : null,
         ]);
 
         $path = $request->file('image')->store('images');
