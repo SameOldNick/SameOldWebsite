@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Revision;
 use App\Models\User;
-use App\Rules\Slugified;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -32,7 +30,7 @@ class UpdateImageRequest extends FormRequest
         if ($this->canChangeUser()) {
             $rules['user'] = [
                 'nullable',
-                Rule::exists(User::class, 'id')
+                Rule::exists(User::class, 'id'),
             ];
         }
 
@@ -41,10 +39,9 @@ class UpdateImageRequest extends FormRequest
 
     /**
      * Checks if user can be changed.
-     *
-     * @return boolean
      */
-    public function canChangeUser(): bool {
+    public function canChangeUser(): bool
+    {
         return $this->user() && $this->user()->roles->containsAll(['manage_images']);
     }
 }

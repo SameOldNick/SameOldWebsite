@@ -63,8 +63,9 @@ class ImageController extends Controller
      */
     public function update(UpdateImageRequest $request, Image $image)
     {
-        if ($request->has('description'))
+        if ($request->has('description')) {
             $image->description = $request->description;
+        }
 
         if ($request->filled('user') && $request->canChangeUser()) {
             $image->file->user()->associate(User::find($request->user));

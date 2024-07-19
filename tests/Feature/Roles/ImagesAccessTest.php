@@ -130,7 +130,7 @@ class ImagesAccessTest extends TestCase
 
         $response = $this->withRoles(['manage_images'])->postJson(route('api.images.store'), [
             'image' => $uploadedFile,
-            'description' => $this->faker->text
+            'description' => $this->faker->text,
         ]);
 
         $response->assertSuccessful();
@@ -151,7 +151,7 @@ class ImagesAccessTest extends TestCase
 
         $response = $this->actingAs($this->user)->postJson(route('api.images.store'), [
             'image' => $uploadedFile,
-            'description' => $this->faker->text
+            'description' => $this->faker->text,
         ]);
 
         $response->assertSuccessful();
@@ -172,7 +172,7 @@ class ImagesAccessTest extends TestCase
 
         $response = $this->postJson(route('api.images.store'), [
             'image' => $uploadedFile,
-            'description' => $this->faker->text
+            'description' => $this->faker->text,
         ]);
 
         $response->assertForbidden();
@@ -182,12 +182,13 @@ class ImagesAccessTest extends TestCase
      * Tests user with role change image user
      */
     #[Test]
-    public function user_with_role_can_change_image_user() {
+    public function user_with_role_can_change_image_user()
+    {
         $user = User::factory()->create();
         $image = Image::factory()->fakedImage(user: $this->user)->create();
 
         $response = $this->withRoles(['manage_images'])->putJson(route('api.images.update', ['image' => $image]), [
-            'user' => $user->getKey()
+            'user' => $user->getKey(),
         ]);
 
         $response->assertSuccessful();
@@ -199,12 +200,13 @@ class ImagesAccessTest extends TestCase
      * Tests user with role change image user
      */
     #[Test]
-    public function user_without_role_cannot_change_image_user() {
+    public function user_without_role_cannot_change_image_user()
+    {
         $user = User::factory()->create();
         $image = Image::factory()->fakedImage(user: $this->user)->create();
 
         $response = $this->actingAs($this->user)->putJson(route('api.images.update', ['image' => $image]), [
-            'user' => $user->getKey()
+            'user' => $user->getKey(),
         ]);
 
         $response->assertSuccessful();
@@ -216,12 +218,13 @@ class ImagesAccessTest extends TestCase
      * Tests user with role can change image description
      */
     #[Test]
-    public function user_with_role_can_change_image_description() {
+    public function user_with_role_can_change_image_description()
+    {
         $user = User::factory()->create();
         $image = Image::factory()->fakedImage(user: $user)->create();
 
         $data = [
-            'description' => $this->faker->sentence
+            'description' => $this->faker->sentence,
         ];
 
         $response = $this->withRoles(['manage_images'])->putJson(route('api.images.update', ['image' => $image]), $data);
@@ -235,11 +238,12 @@ class ImagesAccessTest extends TestCase
      * Tests user without role can change image description
      */
     #[Test]
-    public function user_without_role_can_change_image_description() {
+    public function user_without_role_can_change_image_description()
+    {
         $image = Image::factory()->fakedImage(user: $this->user)->create();
 
         $data = [
-            'description' => $this->faker->sentence
+            'description' => $this->faker->sentence,
         ];
 
         $response = $this->actingAs($this->user)->putJson(route('api.images.update', ['image' => $image]), $data);
@@ -253,12 +257,13 @@ class ImagesAccessTest extends TestCase
      * Tests user without role cannot change other image description
      */
     #[Test]
-    public function user_without_role_cannot_change_other_image_description() {
+    public function user_without_role_cannot_change_other_image_description()
+    {
         $user = User::factory()->create();
         $image = Image::factory()->fakedImage(user: $user)->create();
 
         $data = [
-            'description' => $this->faker->sentence
+            'description' => $this->faker->sentence,
         ];
 
         $response = $this->actingAs($this->user)->putJson(route('api.images.update', ['image' => $image]), $data);
@@ -272,7 +277,8 @@ class ImagesAccessTest extends TestCase
      * Tests user with role can delete image
      */
     #[Test]
-    public function user_with_role_can_delete_image() {
+    public function user_with_role_can_delete_image()
+    {
         $user = User::factory()->create();
         $image = Image::factory()->fakedImage(user: $user)->create();
 
@@ -287,7 +293,8 @@ class ImagesAccessTest extends TestCase
      * Tests user without role can delete image
      */
     #[Test]
-    public function user_without_role_can_delete_image() {
+    public function user_without_role_can_delete_image()
+    {
         $image = Image::factory()->fakedImage(user: $this->user)->create();
 
         $response = $this->actingAs($this->user)->deleteJson(route('api.images.destroy', ['image' => $image]));
@@ -301,7 +308,8 @@ class ImagesAccessTest extends TestCase
      * Tests user without role cannot delete other image
      */
     #[Test]
-    public function user_without_role_cannot_delete_other_image() {
+    public function user_without_role_cannot_delete_other_image()
+    {
         $user = User::factory()->create();
         $image = Image::factory()->fakedImage(user: $user)->create();
 
