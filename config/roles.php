@@ -12,6 +12,7 @@ if (! defined('ROLES_DEFINED')) {
     define('MANAGE_PROJECTS_ROLE', 'manage_projects');
     define('MANAGE_USERS_ROLE', 'manage_users');
     define('MANAGE_BACKUPS_ROLE', 'manage_backups');
+    define('MANAGE_IMAGES_ROLE', 'manage_images');
 
     define('ROLES_DEFINED', true);
 }
@@ -69,6 +70,11 @@ return [
             'name' => 'Manage Backups',
             'description' => 'Allows users to manage backups, such as performing and downloading backups.',
         ],
+        [
+            'id' => MANAGE_IMAGES_ROLE,
+            'name' => 'Manage Images',
+            'description' => 'Allows users to view, edit, and delete images.',
+        ],
     ],
 
     // Groups definition
@@ -87,6 +93,7 @@ return [
                 MANAGE_PROJECTS_ROLE,
                 MANAGE_USERS_ROLE,
                 MANAGE_BACKUPS_ROLE,
+                MANAGE_IMAGES_ROLE,
             ],
         ],
     ],

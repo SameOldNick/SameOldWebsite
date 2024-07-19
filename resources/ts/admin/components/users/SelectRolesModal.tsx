@@ -18,11 +18,12 @@ const SelectRolesModal: React.FC<ISelectRolesModalProps> = ({ roles, onSuccess, 
         "edit_profile",
         "manage_backups",
         "manage_comments",
+        "manage_images",
         "manage_projects",
         "manage_users",
         "receive_contact_messages",
         "view_contact_messages",
-        "write_posts"
+        "write_posts",
     ]), []);
 
     const handleRoleClicked = React.useCallback((e: React.MouseEvent, role: TRole) => {

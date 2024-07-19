@@ -19,7 +19,7 @@ declare global {
         role: TRole;
     }
 
-    type TRole = "change_avatar" | "change_contact_settings" | "edit_profile" | "manage_backups" | "manage_comments" | "manage_projects" | "manage_users" | "receive_contact_messages" | "view_contact_messages" | "write_posts";
+    type TRole = "change_avatar" | "change_contact_settings" | "edit_profile" | "manage_backups" | "manage_images" | "manage_comments" | "manage_projects" | "manage_users" | "receive_contact_messages" | "view_contact_messages" | "write_posts";
 
     interface IState {
         code: string;
