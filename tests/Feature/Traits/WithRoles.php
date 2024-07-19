@@ -39,7 +39,7 @@ trait WithRoles
     /**
      * Attaches user with no roles.
      */
-    protected function noRoles() {
+    protected function withNoRoles() {
         return $this->withRoles([]);
     }
 }
