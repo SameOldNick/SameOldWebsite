@@ -139,6 +139,65 @@ class ImagesAccessTest extends TestCase
     }
 
     /**
+     * Tests user with role is authorized to post image and assign user.
+     */
+    #[Test]
+    public function can_post_image_assign_user_with_role(): void
+    {
+        Storage::fake();
+
+        $user = User::factory()->create();
+
+        $name = sprintf('%s.jpg', $this->faker()->uuid);
+        $uploadedFile = UploadedFile::fake()->image($name);
+
+        $data = [
+            'image' => $uploadedFile,
+            'description' => $this->faker->text,
+            'user' => $user->getKey()
+        ];
+
+        $response = $this->withRoles(['manage_images'])->postJson(route('api.images.store'), $data);
+
+        $response->assertSuccessful();
+
+        Storage::assertExists($uploadedFile->hashName('images'));
+
+        $this->assertNotNull($image = Image::firstWhere('description', $data['description']));
+        $this->assertEquals($user->getKey(), $image->file->user->getKey());
+    }
+
+    /**
+     * Tests user without role is authorized to post image but not assign user.
+     */
+    #[Test]
+    public function can_post_image_cannot_assign_user_without_role(): void
+    {
+        Storage::fake();
+
+        $user = User::factory()->create();
+
+        $name = sprintf('%s.jpg', $this->faker()->uuid);
+        $uploadedFile = UploadedFile::fake()->image($name);
+
+        $data = [
+            'image' => $uploadedFile,
+            'description' => $this->faker->text,
+            'user' => $user->getKey()
+        ];
+
+        $response = $this->actingAs($this->user)->postJson(route('api.images.store'), $data);
+
+        $response->assertSuccessful();
+
+        Storage::assertExists($uploadedFile->hashName('images'));
+
+        $this->assertNotNull($image = Image::firstWhere('description', $data['description']));
+        $this->assertNotEquals($user->getKey(), $image->file->user->getKey());
+        $this->assertEquals($this->user->getKey(), $image->file->user->getKey());
+    }
+
+    /**
      * Tests user without role is authorized to post image.
      */
     #[Test]
