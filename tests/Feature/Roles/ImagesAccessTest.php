@@ -154,7 +154,7 @@ class ImagesAccessTest extends TestCase
         $data = [
             'image' => $uploadedFile,
             'description' => $this->faker->text,
-            'user' => $user->getKey()
+            'user' => $user->getKey(),
         ];
 
         $response = $this->withRoles(['manage_images'])->postJson(route('api.images.store'), $data);
@@ -183,7 +183,7 @@ class ImagesAccessTest extends TestCase
         $data = [
             'image' => $uploadedFile,
             'description' => $this->faker->text,
-            'user' => $user->getKey()
+            'user' => $user->getKey(),
         ];
 
         $response = $this->actingAs($this->user)->postJson(route('api.images.store'), $data);
