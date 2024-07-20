@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Blog;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Models\File;
 use App\Models\Image;
@@ -35,7 +36,7 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreImageRequest $request)
     {
         $request->validate([
             'image' => 'required|image',
@@ -49,7 +50,7 @@ class ImageController extends Controller
         $path = $request->file('image')->store('images');
         $file = File::createFromFilePath($path, null, true);
 
-        $file->user()->associate($request->user());
+        $file->user()->associate($request->filled('user') && $request->canAssignUser() ? User::find($request->user) : $request->user());
 
         $image->save();
 
