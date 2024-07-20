@@ -18,6 +18,6 @@ For additional details on development procedures, please refer to the [CONTRIBUT
  * Connect on LinkedIn: Nick Profile
  * Subscribe to the Newsletter: Stay Updated
 
-## 💽 Installing Same Old Website
+## 💽 More Information
 
-Installation instructions are located in the [INSTALL.md](INSTALL.md) file.
+Check out the [wiki](https://github.com/SameOldNick/SameOldWebsite/wiki) for more information, such as installing, contributing, etc.
