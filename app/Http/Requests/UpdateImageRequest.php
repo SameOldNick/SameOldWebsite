@@ -3,11 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Traits\Support\HasRoles;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateImageRequest extends FormRequest
 {
+    use HasRoles;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -27,7 +30,7 @@ class UpdateImageRequest extends FormRequest
             'description' => 'nullable|string|max:255',
         ];
 
-        if ($this->canChangeUser()) {
+        if ($this->hasRoles(['manage_images'])) {
             $rules['user'] = [
                 'nullable',
                 Rule::exists(User::class, 'id'),
@@ -35,13 +38,5 @@ class UpdateImageRequest extends FormRequest
         }
 
         return $rules;
-    }
-
-    /**
-     * Checks if user can be changed.
-     */
-    public function canChangeUser(): bool
-    {
-        return $this->user() && $this->user()->roles->containsAll(['manage_images']);
     }
 }

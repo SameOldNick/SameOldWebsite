@@ -3,11 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Traits\Support\HasRoles;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreImageRequest extends FormRequest
 {
+    use HasRoles;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,7 +31,7 @@ class StoreImageRequest extends FormRequest
             'description' => 'nullable|string|max:255',
         ];
 
-        if ($this->canAssignUser()) {
+        if ($this->hasRoles(['manage_images'])) {
             $rules['user'] = [
                 'nullable',
                 Rule::exists(User::class, 'id'),
@@ -36,13 +39,5 @@ class StoreImageRequest extends FormRequest
         }
 
         return $rules;
-    }
-
-    /**
-     * Checks if user can be assigned.
-     */
-    public function canAssignUser(): bool
-    {
-        return $this->user() && $this->user()->roles->containsAll(['manage_images']);
     }
 }

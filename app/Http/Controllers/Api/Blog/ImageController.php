@@ -50,7 +50,7 @@ class ImageController extends Controller
         $path = $request->file('image')->store('images');
         $file = File::createFromFilePath($path, null, true);
 
-        $file->user()->associate($request->filled('user') && $request->canAssignUser() ? User::find($request->user) : $request->user());
+        $file->user()->associate($request->filled('user') && $request->hasRoles(['manage_images']) ? User::find($request->user) : $request->user());
 
         $image->save();
 
@@ -68,7 +68,7 @@ class ImageController extends Controller
             $image->description = $request->description;
         }
 
-        if ($request->filled('user') && $request->canChangeUser()) {
+        if ($request->filled('user') && $request->hasRoles(['manage_images'])) {
             $image->file->user()->associate(User::find($request->user));
         }
 
