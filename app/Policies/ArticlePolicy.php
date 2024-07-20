@@ -38,7 +38,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article): bool
     {
-        return ($article->post->user && $article->post->user->is($user)) || $user->hasAllRoles(['admin']);
+        return ($article->post->user && $article->post->user->is($user)) || $user->roles->containsAll(['write_posts']);
     }
 
     /**
