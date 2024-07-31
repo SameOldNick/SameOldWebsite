@@ -24,9 +24,9 @@ class CodeExtension implements ConfigurableExtensionInterface
         $theme = $environment->getConfiguration()->get('code/theme');
 
         $environment
-            ->addRenderer(Node\Block\FencedCode::class, new Renderer\Block\FencedCodeRenderer(), 0)
-            ->addRenderer(Node\Inline\Code::class, new Renderer\Inline\CodeRenderer(), 0)
-            ->addRenderer(Node\Block\IndentedCode::class, new Renderer\Block\IndentedCodeRenderer(), 0)
+            ->addRenderer(Node\Block\FencedCode::class, new Renderer\Block\FencedCodeRenderer, 0)
+            ->addRenderer(Node\Inline\Code::class, new Renderer\Inline\CodeRenderer, 0)
+            ->addRenderer(Node\Block\IndentedCode::class, new Renderer\Block\IndentedCodeRenderer, 0)
 
             ->addExtension(new HighlightCodeExtension($theme));
     }

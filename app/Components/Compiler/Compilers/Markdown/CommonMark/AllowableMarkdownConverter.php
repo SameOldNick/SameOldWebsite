@@ -17,8 +17,8 @@ class AllowableMarkdownConverter extends MarkdownConverter
     public function __construct(array $config = [])
     {
         $environment = new Environment($config);
-        $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new GithubFlavoredMarkdownExtension());
+        $environment->addExtension(new CommonMarkCoreExtension);
+        $environment->addExtension(new GithubFlavoredMarkdownExtension);
 
         parent::__construct($environment);
     }

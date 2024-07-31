@@ -23,9 +23,9 @@ class ListExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addBlockStartParser(new Parser\Block\ListBlockStartParser(), 10)
-            ->addRenderer(Node\Block\ListBlock::class, new Renderer\Block\ListBlockRenderer(), 0)
-            ->addRenderer(Node\Block\ListItem::class, new Renderer\Block\ListItemRenderer(), 0);
+            ->addBlockStartParser(new Parser\Block\ListBlockStartParser, 10)
+            ->addRenderer(Node\Block\ListBlock::class, new Renderer\Block\ListBlockRenderer, 0)
+            ->addRenderer(Node\Block\ListItem::class, new Renderer\Block\ListItemRenderer, 0);
 
         if ($environment->getConfiguration()->get('list/tasklist')) {
             $this->registerTasklist($environment);

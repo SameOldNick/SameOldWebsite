@@ -22,6 +22,6 @@ final class MultiAuthNotConfiguredException extends Exception
      */
     public static function throw(): static
     {
-        throw new self();
+        throw new self;
     }
 }

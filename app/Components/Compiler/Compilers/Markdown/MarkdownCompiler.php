@@ -18,7 +18,7 @@ class MarkdownCompiler implements Compiler
 
         $html = ! Arr::get($config, 'inline', false) ? Str::markdown($input, $commonmark) : Str::inlineMarkdown($input, $commonmark);
 
-        $dom = (new HTML5())->loadHTML($html);
+        $dom = (new HTML5)->loadHTML($html);
 
         foreach ($filters as $filter) {
             if ($filter instanceof HtmlFilter) {

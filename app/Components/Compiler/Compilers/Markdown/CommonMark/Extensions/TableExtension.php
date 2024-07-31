@@ -19,6 +19,6 @@ class TableExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addExtension(new CommonMarkTableExtension());
+            ->addExtension(new CommonMarkTableExtension);
     }
 }

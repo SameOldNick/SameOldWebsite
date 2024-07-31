@@ -87,7 +87,7 @@ class SweetAlerts
      */
     public function createBuilder()
     {
-        return new SweetAlertBuilder();
+        return new SweetAlertBuilder;
     }
 
     /**

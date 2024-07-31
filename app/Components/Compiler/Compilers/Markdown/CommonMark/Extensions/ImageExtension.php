@@ -20,6 +20,6 @@ class ImageExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addRenderer(Node\Inline\Image::class, new Renderer\Inline\ImageRenderer(), 0);
+            ->addRenderer(Node\Inline\Image::class, new Renderer\Inline\ImageRenderer, 0);
     }
 }

@@ -54,7 +54,7 @@ final class Responder extends Manager
      */
     protected function createEventDriver()
     {
-        return new EventResponder();
+        return new EventResponder;
     }
 
     /**

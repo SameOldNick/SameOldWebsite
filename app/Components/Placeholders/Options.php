@@ -22,7 +22,7 @@ class Options
     ) {
         $this->builders = [];
         $this->defaultBuilders = false;
-        $this->customBuilder = new Builders\CustomBuilder();
+        $this->customBuilder = new Builders\CustomBuilder;
     }
 
     /**

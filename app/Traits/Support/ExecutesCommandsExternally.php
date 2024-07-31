@@ -21,7 +21,7 @@ trait ExecutesCommandsExternally
     protected function executeCommand($commandLine, array $outputs = [], array $additional = [])
     {
         // Create output stack
-        $bufferedOutput = new BufferedOutput();
+        $bufferedOutput = new BufferedOutput;
 
         $stackOutput = new StackOutput([$bufferedOutput, ...$outputs]);
 

@@ -16,7 +16,7 @@ final class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->extend(DuskCommand::class, function () {
-            return new ExtendedDuskCommand();
+            return new ExtendedDuskCommand;
         });
     }
 

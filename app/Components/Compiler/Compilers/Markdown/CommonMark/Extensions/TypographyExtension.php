@@ -27,8 +27,8 @@ class TypographyExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addRenderer(CoreNode\Block\Paragraph::class, new CoreRenderer\Block\ParagraphRenderer(), 0)
-            ->addRenderer(CoreNode\Inline\Text::class, new CoreRenderer\Inline\TextRenderer(), 0);
+            ->addRenderer(CoreNode\Block\Paragraph::class, new CoreRenderer\Block\ParagraphRenderer, 0)
+            ->addRenderer(CoreNode\Inline\Text::class, new CoreRenderer\Inline\TextRenderer, 0);
 
         if ($environment->getConfiguration()->get('typography/bold')) {
             $this->registerBold($environment);
@@ -46,13 +46,13 @@ class TypographyExtension implements ConfigurableExtensionInterface
     protected function registerBold(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addRenderer(Node\Inline\Strong::class, new Renderer\Inline\StrongRenderer(), 0);
+            ->addRenderer(Node\Inline\Strong::class, new Renderer\Inline\StrongRenderer, 0);
     }
 
     protected function registerItalic(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addRenderer(Node\Inline\Emphasis::class, new Renderer\Inline\EmphasisRenderer(), 0);
+            ->addRenderer(Node\Inline\Emphasis::class, new Renderer\Inline\EmphasisRenderer, 0);
 
         if ($environment->getConfiguration()->get('commonmark/use_asterisk')) {
             $environment->addDelimiterProcessor(new EmphasisDelimiterProcessor('*'));

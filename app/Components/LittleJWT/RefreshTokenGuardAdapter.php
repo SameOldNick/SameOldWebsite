@@ -39,7 +39,7 @@ class RefreshTokenGuardAdapter extends AbstractAdapter
         return function (ExtendedValidator $validator) {
             $validator
                 ->with($this->container->make('littlejwt.validatables.guard'))
-                ->with(new RefreshTokenValidatable());
+                ->with(new RefreshTokenValidatable);
         };
     }
 }

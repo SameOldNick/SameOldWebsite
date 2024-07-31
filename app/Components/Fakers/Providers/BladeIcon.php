@@ -152,7 +152,7 @@ class BladeIcon extends Base
         } else {
             // Creating new Filesystem gives access to project root.
             // Don't use FilesystemFactory as that will open it in the storage/ folder.
-            return new Filesystem();
+            return new Filesystem;
         }
     }
 }

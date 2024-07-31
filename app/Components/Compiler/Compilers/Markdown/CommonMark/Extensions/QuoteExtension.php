@@ -20,6 +20,6 @@ class QuoteExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addRenderer(Node\Block\BlockQuote::class, new Renderer\Block\BlockQuoteRenderer(), 0);
+            ->addRenderer(Node\Block\BlockQuote::class, new Renderer\Block\BlockQuoteRenderer, 0);
     }
 }

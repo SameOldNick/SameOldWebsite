@@ -64,7 +64,7 @@ class AuthDriver implements AuthServiceInterface
      */
     public function setup(MultiAuthenticatable $authenticatable, string $secret)
     {
-        $otp = (new TimebasedFactory())->createForAuthenticatable($secret, $authenticatable);
+        $otp = (new TimebasedFactory)->createForAuthenticatable($secret, $authenticatable);
 
         return new SetupConfiguration($otp);
     }

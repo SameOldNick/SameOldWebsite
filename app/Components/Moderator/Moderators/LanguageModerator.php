@@ -52,7 +52,7 @@ class LanguageModerator implements Moderator
      */
     protected function detectLanguage(string $text): Language
     {
-        $detector = new LanguageDetector();
+        $detector = new LanguageDetector;
 
         return $detector->evaluate($text)->getLanguage();
     }

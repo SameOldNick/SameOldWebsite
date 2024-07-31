@@ -182,7 +182,7 @@ abstract class Driver
             }
         } else {
             // Create a new user account
-            $newUser = new User();
+            $newUser = new User;
             $newUser->name = $oauthUser->getName();
             $newUser->email = $oauthUser->getEmail();
             $newUser->save();
@@ -197,7 +197,7 @@ abstract class Driver
 
     protected function mapToOAuthProvider(SocialiteUser $oauthUser): OAuthProvider
     {
-        $oauthProvider = new OAuthProvider();
+        $oauthProvider = new OAuthProvider;
 
         $oauthProvider->provider_name = $this->providerName();
         $oauthProvider->provider_id = $oauthUser->getId();

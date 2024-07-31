@@ -21,7 +21,7 @@ class HeadingExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addBlockStartParser(new Parser\Block\HeadingStartParser(), 60)
-            ->addRenderer(Node\Block\Heading::class, new Renderer\Block\HeadingRenderer(), 0);
+            ->addBlockStartParser(new Parser\Block\HeadingStartParser, 60)
+            ->addRenderer(Node\Block\Heading::class, new Renderer\Block\HeadingRenderer, 0);
     }
 }

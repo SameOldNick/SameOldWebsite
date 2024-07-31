@@ -16,7 +16,7 @@ final class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton('menus', function ($app) {
-            return new Menus();
+            return new Menus;
         });
 
         $this->app->singleton('menus.render', function ($app) {

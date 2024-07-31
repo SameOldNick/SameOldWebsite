@@ -27,7 +27,7 @@ class Menus
      */
     public function create(string $name, callable $callback)
     {
-        $this->menus[$name] = new Menu();
+        $this->menus[$name] = new Menu;
 
         $callback($this->menus[$name]);
 

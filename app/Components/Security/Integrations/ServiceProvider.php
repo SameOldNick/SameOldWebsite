@@ -12,7 +12,8 @@ final class ServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         /**
          * The log driver needs to be registered immediately.
          * Registering the driver later will cause it to be not found and the log will be
@@ -31,7 +32,5 @@ final class ServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-    }
+    public function boot() {}
 }

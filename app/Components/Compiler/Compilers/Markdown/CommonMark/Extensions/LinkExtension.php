@@ -22,7 +22,7 @@ class LinkExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addRenderer(Node\Inline\Link::class, new Renderer\Inline\LinkRenderer(), 0);
+            ->addRenderer(Node\Inline\Link::class, new Renderer\Inline\LinkRenderer, 0);
 
         if ($environment->getConfiguration()->get('link/autolink')) {
             $this->registerAutolink($environment);

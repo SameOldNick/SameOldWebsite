@@ -28,7 +28,7 @@ final class ComposerAuditWatchdog implements WatchdogDriver
     {
         putenv('COMPOSER_HOME='.base_path('/vendor/bin/composer'));
 
-        $this->application = new Application();
+        $this->application = new Application;
         $this->application->setAutoExit(false);
 
         // Disable warning message
@@ -55,7 +55,7 @@ final class ComposerAuditWatchdog implements WatchdogDriver
         Log::info('Running the "composer audit --format=json" command.');
 
         $input = new ArrayInput(['command' => 'audit', '--format' => 'json']);
-        $output = new BufferedOutput();
+        $output = new BufferedOutput;
 
         $errorCode = $this->application->run($input, $output);
 

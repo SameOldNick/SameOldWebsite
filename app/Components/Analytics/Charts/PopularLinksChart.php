@@ -43,7 +43,7 @@ class PopularLinksChart extends Chart
     protected function createReportRequest()
     {
         // See https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema for metrics and dimensions
-        $request = (new RunReportRequest())
+        $request = (new RunReportRequest)
             ->setProperty(sprintf('properties/%s', $this->getPropertyId()))
             ->setKeepEmptyRows(true)
             ->setDateRanges([

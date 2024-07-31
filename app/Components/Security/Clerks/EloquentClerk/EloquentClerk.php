@@ -39,7 +39,7 @@ final class EloquentClerk implements ClerkDriver
 
     protected function mapIssueToModel(Issue $issue): IssueModel
     {
-        $model = new IssueModel();
+        $model = new IssueModel;
 
         $model->hash = $this->getHash($issue);
         $model->data = $issue->toArray();
