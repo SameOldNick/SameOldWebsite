@@ -13,8 +13,6 @@ class FakedDriver implements Driver
 
     /**
      * Decorated driver
-     *
-     * @var ?Driver
      */
     protected ?Driver $decoratedDriver = null;
 

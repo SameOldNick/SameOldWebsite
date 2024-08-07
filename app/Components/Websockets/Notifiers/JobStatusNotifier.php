@@ -127,8 +127,6 @@ class JobStatusNotifier extends AbstractNotifier
 
     /**
      * Creates JobStatusNotifier instance
-     *
-     * @param  ?UuidInterface  $uuid
      */
     public static function create(object $notifiable, ?UuidInterface $uuid = null): JobStatusNotifier
     {

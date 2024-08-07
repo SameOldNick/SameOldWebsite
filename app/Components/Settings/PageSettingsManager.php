@@ -28,7 +28,6 @@ class PageSettingsManager extends Manager
      * Set the current page to retrieve settings for.
      *
      * @param  string  $page  The page identifier.
-     * @param  ?string  $driver
      * @return PageSettingsHandler
      */
     public function page(string $page, ?string $driver = null)

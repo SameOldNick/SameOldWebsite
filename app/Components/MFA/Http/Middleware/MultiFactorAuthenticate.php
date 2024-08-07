@@ -39,8 +39,6 @@ class MultiFactorAuthenticate
 
     /**
      * Gets the authenticatable subject.
-     *
-     * @return ?MultiAuthenticatable
      */
     protected function getAuthenticatable(Request $request): ?MultiAuthenticatable
     {

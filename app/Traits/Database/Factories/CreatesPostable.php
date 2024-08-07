@@ -11,7 +11,6 @@ trait CreatesPostable
     /**
      * Include post without user.
      *
-     * @param  ?Factory  $postFactory
      * @return static
      */
     public function hasPost(?Factory $postFactory = null)

@@ -19,8 +19,6 @@ class CacheDriver implements Driver
 
     /**
      * Decorated driver
-     *
-     * @var ?Driver
      */
     protected ?Driver $decoratedDriver = null;
 
