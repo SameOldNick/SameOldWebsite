@@ -77,7 +77,7 @@
         "laravel-vite-plugin": "^1.0",
         "lodash": "^4.17.19",
         "luxon": "^3.4.4",
-        "postcss": "^8.4.40",
+        "postcss": "^8.4.41",
         "pusher-js": "^8.4.0-rc2",
         "query-string": "^9.1.0",
         "react": "18",
