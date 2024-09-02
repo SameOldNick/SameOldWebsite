@@ -5400,9 +5400,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:^28.8.0":
-  version: 28.8.0
-  resolution: "eslint-plugin-jest@npm:28.8.0"
+"eslint-plugin-jest@npm:^28.8.2":
+  version: 28.8.2
+  resolution: "eslint-plugin-jest@npm:28.8.2"
   dependencies:
     "@typescript-eslint/utils": "npm:^6.0.0 || ^7.0.0 || ^8.0.0"
   peerDependencies:
@@ -5414,7 +5414,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 10/0da6aba90067845ef723f70f40ab7f79fabf3465e46014b8aafee15c2cb4ce648a0f7b57c758127d770928994ee2a0f4c68dbcfbce582dd021d6a8e240f69f9d
+  checksum: 10/5868bc0f825fdb5c26ff5939a55baa6e6b9bf9c7de5a45388babb876b17e0253a1e8c4d343b404fd5fcd2b7ab1808b47e20b06fb193a4e73f145fe25473eada4
   languageName: node
   linkType: hard
 
@@ -8008,7 +8008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.5.0":
+"luxon@npm:^3.4.4":
   version: 3.5.0
   resolution: "luxon@npm:3.5.0"
   checksum: 10/48f86e6c1c96815139f8559456a3354a276ba79bcef0ae0d4f2172f7652f3ba2be2237b0e103b8ea0b79b47715354ac9fac04eb1db3485dcc72d5110491dd47f
@@ -10826,7 +10826,7 @@ __metadata:
     eslint: "npm:^9.7.0"
     eslint-config-react-app: "npm:^7.0.1"
     eslint-plugin-github: "npm:^5.0.1"
-    eslint-plugin-jest: "npm:^28.8.0"
+    eslint-plugin-jest: "npm:^28.8.2"
     eslint-plugin-react: "npm:latest"
     formik: "npm:^2.4.3"
     github-markdown-css: "npm:^5.6.1"
@@ -10838,7 +10838,7 @@ __metadata:
     laravel-echo: "npm:^1.16.1"
     laravel-vite-plugin: "npm:^1.0"
     lodash: "npm:^4.17.19"
-    luxon: "npm:^3.5.0"
+    luxon: "npm:^3.4.4"
     moment: "npm:^2.29.3"
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
