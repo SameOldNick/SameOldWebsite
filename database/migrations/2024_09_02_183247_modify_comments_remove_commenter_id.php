@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->foreignId('commenter_id')->nullable()->after('article_id')->constrained();
+            $table->dropForeignSafe(['commenter_id']);
+
+            $table->dropColumnSafe('commenter_id');
         });
     }
 
@@ -22,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumnSafe('commenter_id');
+            //
         });
     }
 };

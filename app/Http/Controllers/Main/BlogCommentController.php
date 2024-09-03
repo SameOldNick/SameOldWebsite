@@ -10,9 +10,11 @@ use App\Events\Comments\CommentCreated;
 use App\Events\Comments\CommentStatusChanged;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
+use App\Mail\CommentVerification;
 use App\Models\Article;
 use App\Models\Comment;
-use App\Models\Commenter;
+use App\Models\Person;
+use App\Models\Post;
 use App\Traits\Controllers\HasPage;
 use Illuminate\Support\Facades\URL;
 
@@ -79,7 +81,7 @@ class BlogCommentController extends Controller
         $this->authorize('view', [$article, $comment]);
 
         $oldStatus = CommentStatus::from($comment->status);
-        $comment->commenter->markEmailAsVerified();
+        $comment->post->person->markEmailAsVerified();
 
         $swal->success(function (SweetAlertBuilder $builder) {
             $builder
@@ -99,7 +101,7 @@ class BlogCommentController extends Controller
     {
         $verificationLink = URL::signedRoute('blog.comment.verify', ['article' => $comment->article, 'comment' => $comment]);
 
-        $comment->commenter->sendEmailVerificationNotification($verificationLink);
+        $comment->post->person->sendMailable((new CommentVerification)->with(['link' => $verificationLink]));
     }
 
     /**
@@ -142,33 +144,34 @@ class BlogCommentController extends Controller
     {
         $userAuthentication = $this->getSettings()->setting('user_authentication');
 
-        $comment = Comment::createWithPost(function (Comment $comment) use ($request, $article, $userAuthentication, $parent) {
-            $comment->fill(['title' => $request->title, 'comment' => $request->comment]);
+        $comment = Comment::createWithPost(
+            function (Comment $comment) use ($request, $article, $parent) {
+                $comment->fill(['title' => $request->title, 'comment' => $request->comment]);
 
-            $comment->article()->associate($article);
+                $comment->article()->associate($article);
 
-            if (! is_null($parent)) {
-                $comment->parent()->associate($parent);
+                if (! is_null($parent)) {
+                    $comment->parent()->associate($parent);
+                }
+            },
+            function (Post $post) use ($request, $userAuthentication) {
+                if ($request->isGuest()) {
+                    $person = Person::guest($request->name, $request->email);
+
+                    /**
+                    * Set email has verified if 'guest_unverified' is set.
+                    * This is so later if the setting is changed to 'guest_verified' the comments won't be hidden.
+                    */
+                    $person->email_verified_at = $userAuthentication === 'guest_unverified' ? now() : null;
+                } else {
+                    $person = Person::registered($request->user());
+                }
+
+                $person->save();
+
+                $post->person()->associate($person);
             }
-
-            // Attach commenter if user is guest.
-            if ($request->isGuest()) {
-                $commenter = new Commenter([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                ]);
-
-                /**
-                 * Set email has verified if 'guest_unverified' is set.
-                 * This is so later if the setting is changed to 'guest_verified' the comments won't be hidden.
-                 */
-                $commenter->email_verified_at = $userAuthentication === 'guest_unverified' ? now() : null;
-
-                $commenter->save();
-
-                $comment->commenter()->associate($commenter);
-            }
-        });
+        );
 
         // Update will only occur if comment is dirty (has changes).
         $comment->save();

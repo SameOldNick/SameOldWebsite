@@ -67,7 +67,7 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request)
     {
         // Create a new article with the provided data
-        $article = Article::createWithPost(function (Article $article) use ($request) {
+        $article = Article::createWithUser(function (Article $article) use ($request) {
             $article->fill([
                 'title' => $request->title,
                 'slug' => $request->slug,

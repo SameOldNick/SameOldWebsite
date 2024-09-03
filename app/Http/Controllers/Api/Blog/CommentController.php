@@ -58,30 +58,30 @@ class CommentController extends Controller
             ],
         ]);
 
-        $query = Comment::with(['article' => fn (BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.user']);
+        $query = Comment::with(['article' => fn (BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.person']);
 
         if ($request->has('article')) {
             $query->where('article_id', $request->integer('article'));
         }
 
         if ($request->has('user')) {
-            $query->whereHas('post', function (Builder $query) use ($request) {
-                $query->where('posts.user_id', $request->integer('user'));
-            });
+            $query->withPersonDetails('user_id', $request->integer('user'));
         }
 
         if ($request->has('commenter')) {
-            $query->whereHas('commenter', function (Builder $query) use ($request) {
-                $commenter = $request->collect('commenter');
+            $commenter = $request->collect('commenter');
 
-                if ($name = $commenter->get('name')) {
-                    $query->search('commenters.name', $name);
-                }
+            $details = [];
 
-                if ($email = $commenter->get('email')) {
-                    $query->search('commenters.email', $email);
-                }
-            });
+            if ($name = $commenter->get('name')) {
+                $details['name'] = $name;
+            }
+
+            if ($email = $commenter->get('email')) {
+                $details['email'] = $email;
+            }
+
+            $query->findPersonDetails($details);
         }
 
         return new CommentCollection($query->afterQuery(function ($found) use ($request) {
@@ -100,7 +100,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        return $comment->load(['post.user']);
+        return $comment->load(['post.person']);
     }
 
     /**

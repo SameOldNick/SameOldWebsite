@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Person;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,8 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->foreignId('commenter_id')->nullable()->after('article_id')->constrained();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropForeignSafe(['user_id']);
+
+            $table->dropColumnSafe('user_id');
+
+            $table->foreignIdFor(Person::class)->after('id')->constrained();
         });
     }
 
@@ -21,8 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumnSafe('commenter_id');
+        Schema::table('posts', function (Blueprint $table) {
+            //
         });
     }
 };

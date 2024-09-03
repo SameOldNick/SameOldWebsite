@@ -24,13 +24,11 @@ use Spatie\Url\Url as SpatieUrl;
  * @property-read Article $article
  * @property-read ?Comment $parent
  * @property-read CommentCollection $children
- * @property-read ?Commenter $commenter
  * @property-read ?CommentStatus $lastStatus
  * @property-read ?User $marked_by
  * @property-read string $status {@see CommentStatusEnum}
  * @property-read string $user_type {@see CommentUserType}
- * @property-read ?string $email Email address of user who posted comment
- * @property-read string $display_name Display name of user who posted comment
+ * @property-read array $commenter Commenters information
  *
  * @method static \Database\Factories\CommentFactory factory($count = null, $state = [])
  */
@@ -66,7 +64,6 @@ class Comment extends Model
     protected $with = [
         'post',
         'article',
-        'commenter',
         'statuses',
         'children',
     ];
@@ -80,7 +77,7 @@ class Comment extends Model
         'status',
         'user_type',
         'marked_by',
-        'commenter_info',
+        'commenter',
     ];
 
     /**
@@ -174,14 +171,6 @@ class Comment extends Model
     }
 
     /**
-     * Get the associated commenter.
-     */
-    public function commenter(): BelongsTo
-    {
-        return $this->belongsTo(Commenter::class);
-    }
-
-    /**
      * Gets flags for comment.
      */
     public function flags(): HasMany
@@ -210,11 +199,12 @@ class Comment extends Model
     /**
      * Gets the commenter info
      */
-    protected function commenterInfo(): Attribute
+    protected function commenter(): Attribute
     {
         return Attribute::get(fn () => [
-            'display_name' => $this->commenter?->display_name ?? $this->post->user?->getDisplayName(),
-            'email' => $this->commenter?->email ?? $this->post->user?->email,
+            'display_name' => $this->post->person->display_name,
+            'name' => $this->post->person->name,
+            'email' => $this->post->person->email,
         ]);
     }
 
@@ -229,10 +219,7 @@ class Comment extends Model
 
         return match (true) {
             $this->isFlagged() => CommentStatusEnum::Flagged,
-            $this->commenter && $this->commenter->isVerified() => CommentStatusEnum::AwaitingApproval,
-            $this->commenter && ! $this->commenter->isVerified() => CommentStatusEnum::AwaitingVerification,
-            $this->post->user && ! $this->post->user->hasVerifiedEmail() => CommentStatusEnum::AwaitingVerification,
-            $this->post->user && $this->post->user->hasVerifiedEmail() => CommentStatusEnum::AwaitingApproval,
+            ! $this->post->person->hasVerifiedEmail() => CommentStatusEnum::AwaitingVerification,
             default => CommentStatusEnum::AwaitingApproval
         };
     }
@@ -250,7 +237,7 @@ class Comment extends Model
      */
     protected function userType(): Attribute
     {
-        return Attribute::get(fn () => $this->post->user ? CommentUserType::Registered->value : CommentUserType::Guest->value);
+        return Attribute::get(fn () => $this->post->person->user ? CommentUserType::Registered->value : CommentUserType::Guest->value);
     }
 
     /**
@@ -274,7 +261,7 @@ class Comment extends Model
      */
     protected function avatarUrl(): Attribute
     {
-        return Attribute::get(fn () => $this->post?->user ? $this->post->user->avatar_url : $this->commenter->avatar_url)->shouldCache();
+        return Attribute::get(fn () => $this->post->person->avatar_url)->shouldCache();
     }
 
     /**
@@ -329,18 +316,5 @@ class Comment extends Model
     public function scopeParents($query)
     {
         return $query->whereNull('parent_id');
-    }
-
-    /**
-     * Scope a query to only comment with email.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeWithEmail($query, string $email)
-    {
-        return $query->whereHas('commenter', function ($query) use ($email) {
-            $query->where('email', $email);
-        });
     }
 }

@@ -80,7 +80,7 @@ class NotifyCommentRepliedTo
         $parent = $comment->parent;
 
         while ($parent) {
-            if ($notifiable = $parent->commenter ?? $parent->post->user) {
+            if ($notifiable = $parent->post->person) {
                 $notifiables->push($notifiable);
             }
 

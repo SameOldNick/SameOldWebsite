@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Commenter;
+use App\Models\Comment;
 use App\Models\CommentStatus;
 use App\Models\User;
 use App\Traits\Database\Factories\CreatesPostable;
@@ -46,18 +46,27 @@ class CommentFactory extends Factory
      */
     public function registered($user = null, ?PostFactory $postFactory = null)
     {
-        return $this->hasPostWithUser($user, $postFactory);
+        return $this->createPostWithRegisteredPerson($user, $postFactory);
     }
 
     /**
-     * Sets as guest user comment.
+     * Sets as unverified guest user comment.
      *
-     * @param  CommenterFactory|Commenter|null  $commenter
      * @return static
      */
-    public function guest($commenter = null, ?PostFactory $postFactory = null)
+    public function guest(?PostFactory $postFactory = null)
     {
-        return $this->hasPost($postFactory)->for($commenter ?? Commenter::factory());
+        return $this->createPostWithGuestPerson(false, $postFactory);
+    }
+
+    /**
+     * Sets as verified guest user comment.
+     *
+     * @return static
+     */
+    public function verifiedGuest(?PostFactory $postFactory = null)
+    {
+        return $this->createPostWithGuestPerson(true, $postFactory);
     }
 
     /**

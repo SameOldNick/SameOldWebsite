@@ -44,7 +44,7 @@ class NotifyArticleAuthorCommentPosted
 
     protected function sendNotification(Comment $comment)
     {
-        $author = $comment->article->post->user;
+        $author = $comment->article->post->person;
 
         /**
          * The article should have a user.

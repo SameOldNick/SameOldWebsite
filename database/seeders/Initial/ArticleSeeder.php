@@ -14,7 +14,7 @@ class ArticleSeeder extends Seeder
      */
     public function run(?User $user = null): void
     {
-        $article = Article::createWithPost(function (Article $article) {
+        $article = Article::createWithUser(function (Article $article) {
             $article->fill([
                 'title' => 'Welcome to Same Old Nick\'s Corner of the Internet! 🚀',
                 'slug' => 'welcome',

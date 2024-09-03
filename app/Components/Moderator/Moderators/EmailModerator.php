@@ -29,7 +29,7 @@ class EmailModerator implements Moderator
      */
     public function moderate(Comment $comment): void
     {
-        $email = $comment->email;
+        ['email' => $email] = $comment->commenter;
 
         if (is_null($email)) {
             return;

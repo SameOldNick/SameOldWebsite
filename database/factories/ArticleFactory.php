@@ -45,7 +45,7 @@ class ArticleFactory extends Factory
     {
         return
             $this
-                ->hasPostWithUser(is_callable($user) ? $user() : $user)
+                ->createPostWithRegisteredPerson(value($user))
                 ->has($revisionFactory)
                 ->afterCreating(function (Article $article) {
                     $revisions = $article->revisions;
