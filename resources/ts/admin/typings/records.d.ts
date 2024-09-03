@@ -33,21 +33,6 @@ declare global {
         states: IState[];
     }
 
-    interface IProduct {
-        id: number;
-        name: string;
-        slug: string;
-        description: string;
-        summary_auto: boolean;
-        summary: string;
-        tags: Record<string | number, string>;
-        faq_category: IFaqCategory | null;
-        main_image: IImage | null;
-        position: number | null;
-        featured: boolean;
-        deleted_at: string | null;
-    }
-
     interface IFileMeta {
         size: number;
         last_modified: string;
@@ -61,32 +46,6 @@ declare global {
         meta: IFileMeta;
         created_at: string;
         updated_at: string | null;
-    }
-
-    interface IProductImage {
-        id: number;
-        position: number | null;
-        file: IFile;
-    }
-
-    interface IProductOffering {
-        id: number;
-        title: string;
-        description: string | null;
-        old_price: number | null;
-        price: number;
-        old_price_formatted: string | null;
-        price_formatted: string;
-        currency_code: string;
-        created_at: string;
-        updated_at: string | null;
-        deleted_at: string | null;
-    }
-
-    interface IFaqCategory {
-        id: number;
-        category: string;
-        parent: IFaqCategory | null;
     }
 
     interface IImage {
