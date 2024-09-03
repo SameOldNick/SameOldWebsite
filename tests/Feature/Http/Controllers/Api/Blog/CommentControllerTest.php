@@ -85,8 +85,8 @@ class CommentControllerTest extends TestCase
                 [
                     'post' => [
                         'person' => [
-                            'user_id' => $this->user->getKey()
-                        ]
+                            'user_id' => $this->user->getKey(),
+                        ],
                     ],
                 ],
             ]]);
@@ -119,8 +119,8 @@ class CommentControllerTest extends TestCase
                     'article' => ['id' => $article1->getKey()],
                     'post' => [
                         'person' => ['user_id' => $this->user->getKey()],
-                    ]
-                ]
+                    ],
+                ],
             ]]);
 
         $this->assertNotEmpty($response->json('data'));
@@ -394,7 +394,7 @@ class CommentControllerTest extends TestCase
                 'user_type' => 'registered',
                 'post' => [
                     'person' => ['user_id' => $this->user->getKey()],
-                ]
+                ],
             ]);
 
     }
@@ -418,7 +418,7 @@ class CommentControllerTest extends TestCase
                 'user_type' => 'guest',
                 'post' => [
                     'person' => ['user_id' => null],
-                ]
+                ],
             ]);
 
         $this->assertIsString($response->json('commenter.name'));
@@ -442,15 +442,15 @@ class CommentControllerTest extends TestCase
                 'id',
                 'comment',
                 'post' => [
-                    'person' => ['name', 'email', 'email_verified_at']
-                ]
+                    'person' => ['name', 'email', 'email_verified_at'],
+                ],
             ])
             ->assertJson($comment->toArray())
             ->assertJson([
                 'user_type' => 'guest',
                 'post' => [
-                    'person' => ['user_id' => null]
-                ]
+                    'person' => ['user_id' => null],
+                ],
             ]);
 
         $this->assertIsString($response->json('post.person.name'));

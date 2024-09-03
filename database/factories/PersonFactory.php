@@ -27,7 +27,7 @@ class PersonFactory extends Factory
     /**
      * Indicate that the Person is associated with a registered User.
      *
-     * @param mixed $user User to associate. If null, a new user is created. (default: null)
+     * @param  mixed  $user  User to associate. If null, a new user is created. (default: null)
      * @return static
      */
     public function user($user = null)

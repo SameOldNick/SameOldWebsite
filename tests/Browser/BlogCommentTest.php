@@ -3,15 +3,13 @@
 namespace Tests\Browser;
 
 use App\Models\Article;
-use App\Components\Settings\Facades\PageSettings;
 use App\Models\Page;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Browser\Pages\Blog\Article as BlogArticle;
+use Tests\DuskTestCase;
 
 class BlogCommentTest extends DuskTestCase
 {
@@ -34,10 +32,10 @@ class BlogCommentTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($article) {
             $browser->visit(new BlogArticle($article))
-                    ->assertGuest()
-                    ->click('input#uncollapseLeaveComment')
-                    ->waitFor('@commentForm')
-                    ->assertVisible('@commentForm');
+                ->assertGuest()
+                ->click('input#uncollapseLeaveComment')
+                ->waitFor('@commentForm')
+                ->assertVisible('@commentForm');
         });
     }
 
@@ -57,8 +55,8 @@ class BlogCommentTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($article) {
             $browser->visit(new BlogArticle($article))
-                    ->assertGuest()
-                    ->assertNotPresent('@commentForm');
+                ->assertGuest()
+                ->assertNotPresent('@commentForm');
         });
     }
 }

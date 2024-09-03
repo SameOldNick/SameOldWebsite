@@ -159,9 +159,9 @@ class BlogCommentController extends Controller
                     $person = Person::guest($request->name, $request->email);
 
                     /**
-                    * Set email has verified if 'guest_unverified' is set.
-                    * This is so later if the setting is changed to 'guest_verified' the comments won't be hidden.
-                    */
+                     * Set email has verified if 'guest_unverified' is set.
+                     * This is so later if the setting is changed to 'guest_verified' the comments won't be hidden.
+                     */
                     $person->email_verified_at = $userAuthentication === 'guest_unverified' ? now() : null;
                 } else {
                     $person = Person::registered($request->user());

@@ -3,7 +3,9 @@
 namespace App\Traits\Models;
 
 use App\Exceptions\NoUserAvailableException;
-use App\Models\{Post, Person, User};
+use App\Models\Person;
+use App\Models\Post;
+use App\Models\User;
 use InvalidArgumentException;
 
 /**
@@ -13,7 +15,6 @@ use InvalidArgumentException;
  * @method static \Illuminate\Database\Eloquent\Builder<static> withPersonDetails(string $field, string $value)
  * @method static \Illuminate\Database\Eloquent\Builder<static> findPersonDetails(array $params)
  * @method static \Illuminate\Database\Eloquent\Builder<static> findPersonDetails(string $field, string $value)
- *
  */
 trait Postable
 {
@@ -26,7 +27,7 @@ trait Postable
      * Creates a Postable with a Post model using provided callbacks.
      *
      * @param  callable(static $postable): void  $callback  The callback to configure the Postable instance.
-     * @param  callable(Post $post): void    $postCallback  The callback to create and configure the Post instance.
+     * @param  callable(Post $post): void  $postCallback  The callback to create and configure the Post instance.
      * @return static
      */
     public static function createWithPost(callable $callback, callable $postCallback)
@@ -39,7 +40,7 @@ trait Postable
             $postable->save();
 
             // Create Post instance
-            $post = new Post();
+            $post = new Post;
 
             // Execute the callback to configure the Post instance
             $postCallback($post, $postable);
@@ -58,7 +59,8 @@ trait Postable
      * @param  callable(static $postable): void  $callback  The callback to configure the Postable instance.
      * @param  User|null  $user  The User to associate with the Post. If null, the current user is used. (default: null)
      * @return static
-     * @throws NoUserAvailableException  If no User is provided and no current user is available.
+     *
+     * @throws NoUserAvailableException If no User is provided and no current user is available.
      */
     public static function createWithUser(callable $callback, ?User $user = null)
     {
@@ -75,8 +77,8 @@ trait Postable
                 $userToAssociate = $user ?? request()->user();
 
                 // Throw a custom exception if no User is available
-                if (!$userToAssociate) {
-                    throw new NoUserAvailableException();
+                if (! $userToAssociate) {
+                    throw new NoUserAvailableException;
                 }
 
                 // Associate the Post with the Person model linked to the User
@@ -179,7 +181,7 @@ trait Postable
      * @param  mixed  ...$params  The field name and value, or an associative array of field names and values.
      * @return \Illuminate\Database\Eloquent\Builder
      *
-     * @throws \InvalidArgumentException  If an unsupported field is provided.
+     * @throws \InvalidArgumentException If an unsupported field is provided.
      */
     public function scopeWithPersonDetails($query, ...$params)
     {
@@ -223,7 +225,7 @@ trait Postable
      * @param  mixed  ...$params  The field name and value, or an associative array of field names and values.
      * @return \Illuminate\Database\Eloquent\Builder
      *
-     * @throws \InvalidArgumentException  If an unsupported field is provided.
+     * @throws \InvalidArgumentException If an unsupported field is provided.
      */
     public function scopeFindPersonDetails($query, ...$params)
     {

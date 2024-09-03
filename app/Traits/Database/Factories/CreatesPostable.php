@@ -9,11 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 trait CreatesPostable
 {
-
     /**
      * Include post without user.
      *
-     * @param  ?Factory  $postFactory
      * @return static
      */
     public function hasPost(?Factory $postFactory = null)
@@ -41,11 +39,11 @@ trait CreatesPostable
     /**
      * Creates post with a registered user
      *
-     * @param User|null $user User to associate or if null, a new user.
-     * @param Factory|null $postFactory
+     * @param  User|null  $user  User to associate or if null, a new user.
      * @return $this
      */
-    public function createPostWithRegisteredPerson($user = null, ?Factory $postFactory = null) {
+    public function createPostWithRegisteredPerson($user = null, ?Factory $postFactory = null)
+    {
         return $this->createPostWithPerson(
             Person::factory()->user($user),
             $postFactory
@@ -55,11 +53,11 @@ trait CreatesPostable
     /**
      * Creates post with a guest person
      *
-     * @param boolean $verified If true, sets email as verified.
-     * @param Factory|null $postFactory
+     * @param  bool  $verified  If true, sets email as verified.
      * @return $this
      */
-    public function createPostWithGuestPerson(bool $verified = false, ?Factory $postFactory = null) {
+    public function createPostWithGuestPerson(bool $verified = false, ?Factory $postFactory = null)
+    {
         return $this->createPostWithPerson(
             $verified ? Person::factory()->guest()->verified() : Person::factory()->guest(),
             $postFactory

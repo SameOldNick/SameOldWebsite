@@ -12,7 +12,6 @@ use App\Models\Article;
 use App\Models\Comment;
 use App\Models\CommentStatus;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;

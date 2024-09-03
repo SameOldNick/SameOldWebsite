@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use App\Mail\CommentVerification;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -42,11 +40,13 @@ class Person extends Model
         'user_id',
     ];
 
-    public static function guest(string $name, string $email): static {
+    public static function guest(string $name, string $email): static
+    {
         return static::firstOrCreate(['name' => $name, 'email' => $email]);
     }
 
-    public static function registered($user): static {
+    public static function registered($user): static
+    {
         $userId = $user instanceof User ? $user->getKey() : $user;
 
         return static::firstOrCreate(['user_id' => $userId]);

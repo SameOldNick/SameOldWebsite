@@ -97,8 +97,9 @@ class SchemaMixin
                 foreach ($indexes as $key => $index) {
                     // Creating an explicit primary key will cause a conflict
                     // As mentioned above, columns that are integers and auto increment are set as the primary key.
-                    if ($primaryKey && in_array($primaryKey, $index['columns']))
+                    if ($primaryKey && in_array($primaryKey, $index['columns'])) {
                         continue;
+                    }
 
                     if ($index['primary'] && ! $hasAutoIncrement) {
                         $newTable->primary($index['columns']);

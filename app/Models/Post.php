@@ -71,7 +71,7 @@ class Post extends Model
      * Scope a query to only include posts from user ID.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int $userId User ID
+     * @param  int  $userId  User ID
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeOwned($query, int $userId)
@@ -85,7 +85,6 @@ class Post extends Model
      * Scope a query to only include posts from user with name.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string $name
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFindName($query, string $name, bool $caseSensitive = false)
@@ -103,7 +102,6 @@ class Post extends Model
      * Scope a query to only include posts from user with name.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string $name
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithName($query, string $name)
@@ -119,7 +117,6 @@ class Post extends Model
      * Scope a query to only include posts from user with email.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string $email
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFindEmail($query, string $email, bool $caseSensitive = false)
@@ -137,7 +134,6 @@ class Post extends Model
      * Scope a query to only include posts from user with email.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string $email
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithEmail($query, string $email)

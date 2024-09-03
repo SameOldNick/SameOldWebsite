@@ -10,10 +10,7 @@ class Article extends Page
 {
     public function __construct(
         public readonly ArticleModel $article
-    )
-    {
-
-    }
+    ) {}
 
     /**
      * Get the URL for the page.
