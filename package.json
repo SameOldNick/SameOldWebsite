@@ -96,7 +96,7 @@
         "redux-thunk": "^3.1.0",
         "rehype-sanitize": "^6.0.0",
         "sass": "^1.77.8",
-        "shiki": "^1.12.1",
+        "shiki": "^1.16.1",
         "store2": "^2.14.3",
         "string": "^3.3.3",
         "sweetalert2": "^11.12.4",
