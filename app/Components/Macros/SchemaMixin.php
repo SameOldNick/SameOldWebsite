@@ -52,10 +52,11 @@ class SchemaMixin
                  * Setting column as auto increment in SQLite causes
                  * it to also be set as primary key. If a primary key
                  * index also exists, it will cause an error. Therefore,
-                 * only a column can be set as auto increment or an index
+                 * only one column can be set as auto increment or an index
                  * can be set as primary.
                  */
                 $hasAutoIncrement = false;
+                $primaryKey = null;
 
                 foreach ($structure as $col) {
                     // Add each column to the new table
@@ -82,14 +83,23 @@ class SchemaMixin
                             }
                         } elseif ($key === 'auto_increment') {
                             $params['autoIncrement'] = $value;
-                            $hasAutoIncrement = true;
+
+                            if ($value) {
+                                $hasAutoIncrement = true;
+                                $primaryKey = $name;
+                            }
                         }
                     }
 
                     $newTable->addColumn($type, $name, $params);
                 }
 
-                foreach ($indexes as $index) {
+                foreach ($indexes as $key => $index) {
+                    // Creating an explicit primary key will cause a conflict
+                    // As mentioned above, columns that are integers and auto increment are set as the primary key.
+                    if ($primaryKey && in_array($primaryKey, $index['columns']))
+                        continue;
+
                     if ($index['primary'] && ! $hasAutoIncrement) {
                         $newTable->primary($index['columns']);
                     } elseif ($index['unique']) {
