@@ -92,7 +92,7 @@ export default class User {
      */
     public hasAllRoles(...roles: string[]) {
         for (const role of roles) {
-            if (!this.roles.includes(role))
+            if (!this.roles.includes(role as TRole))
                 return false;
         }
 
@@ -108,7 +108,7 @@ export default class User {
      */
     public hasAnyRoles(...roles: string[]) {
         for (const role of roles) {
-            if (this.roles.includes(role))
+            if (this.roles.includes(role as TRole))
                 return true;
         }
 
