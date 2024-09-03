@@ -32,9 +32,9 @@ class ArticleControllerTest extends TestCase
     #[Test]
     public function getting_all_articles()
     {
-        Article::factory(5)->withRevision()->hasPostWithUser()->published()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->scheduled()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->deleted()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->scheduled()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->deleted()->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.articles.index'));
         $response
@@ -49,10 +49,10 @@ class ArticleControllerTest extends TestCase
     #[Test]
     public function getting_unpublished_articles()
     {
-        Article::factory(5)->withRevision()->hasPostWithUser()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->published()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->scheduled()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->deleted()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->scheduled()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->deleted()->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.articles.index', ['show' => 'unpublished']));
         $response
@@ -70,10 +70,10 @@ class ArticleControllerTest extends TestCase
     #[Test]
     public function getting_published_articles()
     {
-        Article::factory(5)->withRevision()->hasPostWithUser()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->published()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->scheduled()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->deleted()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->scheduled()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->deleted()->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.articles.index', ['show' => 'published']));
         $response
@@ -91,10 +91,10 @@ class ArticleControllerTest extends TestCase
     #[Test]
     public function getting_scheduled_articles()
     {
-        Article::factory(5)->withRevision()->hasPostWithUser()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->published()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->scheduled()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->deleted()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->scheduled()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->deleted()->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.articles.index', ['show' => 'scheduled']));
         $response
@@ -112,10 +112,10 @@ class ArticleControllerTest extends TestCase
     #[Test]
     public function getting_removed_articles()
     {
-        Article::factory(5)->withRevision()->hasPostWithUser()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->published()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->scheduled()->create();
-        Article::factory(5)->withRevision()->hasPostWithUser()->deleted()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->scheduled()->create();
+        Article::factory(5)->withRevision()->createPostWithRegisteredPerson()->deleted()->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.articles.index', ['show' => 'removed']));
         $response
@@ -133,7 +133,7 @@ class ArticleControllerTest extends TestCase
     #[Test]
     public function getting_single_article()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->admin)->getJson("/api/blog/articles/{$article->id}");
         $response
@@ -167,7 +167,7 @@ class ArticleControllerTest extends TestCase
 
         $this->assertNotNull($article);
         // Test article has associated user
-        $this->assertNotNull($article->post->user);
+        $this->assertNotNull($article->post->person->user);
         // Test the article is published.
         $this->assertTrue($article->is_published);
 
@@ -183,7 +183,7 @@ class ArticleControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
         $data = [
             'title' => 'Updated Title',
             'slug' => 'updated-title',
@@ -206,7 +206,7 @@ class ArticleControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
         $revision = Revision::factory()->create(['article_id' => $article->id]);
 
         $data = ['revision' => $revision->uuid];
@@ -227,7 +227,7 @@ class ArticleControllerTest extends TestCase
     {
         Event::fake();
 
-        [$article1, $article2] = Article::factory(2)->withRevision()->hasPostWithUser()->create();
+        [$article1, $article2] = Article::factory(2)->withRevision()->createPostWithRegisteredPerson()->create();
         $revision = Revision::factory()->create(['article_id' => $article2->id]);
 
         $data = ['revision' => $revision->uuid];
@@ -246,7 +246,7 @@ class ArticleControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->deleted()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->deleted()->create();
 
         $response = $this->actingAs($this->admin)->postJson(route('api.articles.restore', ['article' => $article]));
 
@@ -266,7 +266,7 @@ class ArticleControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $response = $this->actingAs($this->admin)->postJson(route('api.articles.restore', ['article' => $article]));
 
@@ -291,7 +291,7 @@ class ArticleControllerTest extends TestCase
         // The post won't be marked as deleted if event is caught by event faker.
         Event::fakeExcept(sprintf('eloquent.deleting: %s', Article::class));
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $response = $this->actingAs($this->admin)->deleteJson(route('api.articles.destroy', ['article' => $article]));
 
@@ -312,7 +312,7 @@ class ArticleControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->deleted()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->deleted()->create();
 
         $response = $this->actingAs($this->admin)->deleteJson(route('api.articles.destroy', ['article' => $article]));
 

@@ -22,7 +22,7 @@ class BlogTest extends TestCase
     {
         $this->withoutVite();
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->create();
 
         $response = $this->get(route('blog.single', ['article' => $article]));
 
@@ -38,7 +38,7 @@ class BlogTest extends TestCase
     {
         $this->withoutVite();
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->published()->create();
 
         $response = $this->get(route('blog.single', ['article' => $article]));
 
@@ -54,7 +54,7 @@ class BlogTest extends TestCase
     {
         $this->withoutVite();
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->published($this->faker->dateTimeBetween('+1 week', '+3 weeks'))->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->published($this->faker->dateTimeBetween('+1 week', '+3 weeks'))->create();
 
         $response = $this->get(route('blog.single', ['article' => $article]));
 
@@ -72,7 +72,7 @@ class BlogTest extends TestCase
 
         $published = Carbon::instance($this->faker->dateTimeBetween('+1 week', '+3 weeks'));
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->published($published)->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->published($published)->create();
 
         $this->travelTo($published->addMinute(1));
 
@@ -90,7 +90,7 @@ class BlogTest extends TestCase
     {
         $this->withoutVite();
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->deleted()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->deleted()->create();
 
         $response = $this->get(route('blog.single', ['article' => $article]));
 
@@ -106,7 +106,7 @@ class BlogTest extends TestCase
     {
         $this->withoutVite();
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->create();
 
         $response = $this->get($article->createPrivateUrl());
 
@@ -122,7 +122,7 @@ class BlogTest extends TestCase
     {
         $this->withoutVite();
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->published()->create();
 
         $response = $this->get($article->createPrivateUrl());
 
@@ -138,7 +138,7 @@ class BlogTest extends TestCase
     {
         $this->withoutVite();
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->published($this->faker->dateTimeBetween('+1 week', '+3 weeks'))->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->published($this->faker->dateTimeBetween('+1 week', '+3 weeks'))->create();
 
         $response = $this->get($article->createPrivateUrl());
 
@@ -154,7 +154,7 @@ class BlogTest extends TestCase
     {
         $this->withoutVite();
 
-        $article = Article::factory()->hasPostWithUser()->withRevision()->deleted()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->deleted()->create();
 
         $response = $this->get($article->createPrivateUrl());
 

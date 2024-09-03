@@ -7,7 +7,7 @@ use App\Events\Comments\CommentStatusChanged;
 use App\Events\Comments\CommentUpdated;
 use App\Models\Article;
 use App\Models\Comment;
-use App\Models\Commenter;
+use App\Models\Person;
 use App\Models\Post;
 use App\Models\User;
 use Database\Seeders\Fakes\CommentSeeder;
@@ -34,7 +34,7 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_all_comments()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
         $this->seedWith(CommentSeeder::class, ['article' => $article]);
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index'));
@@ -51,7 +51,7 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_all_comments_with_article()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
         $this->seedWith(CommentSeeder::class, ['article' => $article]);
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', ['article' => $article]));
@@ -69,7 +69,7 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_all_comments_with_user()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         Comment::factory()->registered($this->user)->for($article)->create();
 
@@ -83,9 +83,13 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data' => [['id', 'comment']], 'meta', 'links'])
             ->assertJson(['data' => [
                 [
-                    'post' => ['user_id' => $this->user->getKey()]],
-            ],
-            ]);
+                    'post' => [
+                        'person' => [
+                            'user_id' => $this->user->getKey()
+                        ]
+                    ],
+                ],
+            ]]);
 
         $this->assertNotEmpty($response->json('data'));
     }
@@ -96,7 +100,7 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_all_comments_with_article_user()
     {
-        [$article1, $article2] = Article::factory(2)->withRevision()->hasPostWithUser()->create();
+        [$article1, $article2] = Article::factory(2)->withRevision()->createPostWithRegisteredPerson()->create();
 
         Comment::factory()->registered($this->user)->for($article1)->create();
         Comment::factory()->registered($this->user)->for($article2)->create();
@@ -113,27 +117,29 @@ class CommentControllerTest extends TestCase
             ->assertJson(['data' => [
                 [
                     'article' => ['id' => $article1->getKey()],
-                    'post' => ['user_id' => $this->user->getKey()]],
-            ],
-            ]);
+                    'post' => [
+                        'person' => ['user_id' => $this->user->getKey()],
+                    ]
+                ]
+            ]]);
 
         $this->assertNotEmpty($response->json('data'));
     }
 
     /**
-     * Tests getting all comments matching commenter name
+     * Tests getting all comments matching person name
      */
     #[Test]
-    public function getting_all_comments_with_commenter_name()
+    public function getting_all_comments_with_person_name()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $info = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
         ];
 
-        Comment::factory()->guest(Commenter::factory($info))->for($article)->create();
+        Comment::factory()->createPostWithPerson(Person::factory($info))->for($article)->create();
 
         $params = [
             'article' => $article,
@@ -163,14 +169,14 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_all_comments_with_commenter_partial_name()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $info = [
             'name' => 'Joe Blow',
             'email' => $this->faker->email,
         ];
 
-        $comment = Comment::factory()->guest(Commenter::factory($info))->for($article)->create();
+        $comment = Comment::factory()->createPostWithPerson(Person::factory($info))->for($article)->create();
 
         $params = [
             'article' => $article,
@@ -200,14 +206,14 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_all_comments_with_commenter_email()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $info = [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
         ];
 
-        Comment::factory()->guest(Commenter::factory($info))->for($article)->create();
+        Comment::factory()->createPostWithPerson(Person::factory($info))->for($article)->create();
 
         $params = [
             'article' => $article,
@@ -235,14 +241,14 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_all_comments_with_commenter_partial_email()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $info = [
             'name' => $this->faker->name,
             'email' => 'joe.blow@gmail.com',
         ];
 
-        Comment::factory(5)->guest(Commenter::factory($info))->for($article)->create();
+        Comment::factory(5)->createPostWithPerson(Person::factory($info))->for($article)->create();
 
         $params = [
             'article' => $article,
@@ -270,14 +276,14 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_all_comments_with_commenter_not_found()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $info = [
             'name' => $this->faker->name,
             'email' => 'joe.blow@gmail.com',
         ];
 
-        Comment::factory(5)->guest(Commenter::factory($info))->for($article)->create();
+        Comment::factory(5)->createPostWithPerson(Person::factory($info))->for($article)->create();
 
         $params = [
             'article' => $article,
@@ -299,7 +305,7 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_awaiting_verification_comments()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         Comment::factory(5)->guest()->for($article)->create();
 
@@ -318,7 +324,7 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_awaiting_approval_comments()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         Comment::factory(5)->registered()->awaitingApproval(User::factory())->for($article)->create();
 
@@ -337,9 +343,9 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_approved_comments()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
-        Comment::factory(5)->registered()->approved(User::factory())->for($article)->create();
+        Comment::factory(5)->guest()->registered()->approved(User::factory())->for($article)->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', ['show' => 'approved']));
         $response
@@ -356,9 +362,9 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_denied_comments()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
-        Comment::factory(5)->denied()->approved(User::factory())->for($article)->create();
+        Comment::factory(5)->guest()->denied()->approved(User::factory())->for($article)->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', ['show' => 'denied']));
         $response
@@ -375,18 +381,20 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_comment_with_registered_user()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $comment = Comment::factory()->registered($this->user)->for($article)->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.show', ['comment' => $comment]));
         $response
             ->assertSuccessful()
-            ->assertJsonStructure(['id', 'comment', 'post' => ['user_id']])
+            ->assertJsonStructure(['id', 'comment', 'post' => ['person' => ['user_id']]])
             ->assertJson($comment->toArray())
             ->assertJson([
                 'user_type' => 'registered',
-                'post' => ['user_id' => $this->user->getKey()],
+                'post' => [
+                    'person' => ['user_id' => $this->user->getKey()],
+                ]
             ]);
 
     }
@@ -397,7 +405,7 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_comment_with_guest_user()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
         $comment = Comment::factory()->guest()->for($article)->create();
 
@@ -408,7 +416,9 @@ class CommentControllerTest extends TestCase
             ->assertJson($comment->toArray())
             ->assertJson([
                 'user_type' => 'guest',
-                'post' => ['user_id' => null],
+                'post' => [
+                    'person' => ['user_id' => null],
+                ]
             ]);
 
         $this->assertIsString($response->json('commenter.name'));
@@ -421,23 +431,31 @@ class CommentControllerTest extends TestCase
     #[Test]
     public function getting_comment_with_guest_user_verified()
     {
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.show', ['comment' => $comment]));
         $response
             ->assertSuccessful()
-            ->assertJsonStructure(['id', 'comment', 'commenter' => ['name', 'email', 'email_verified_at']])
+            ->assertJsonStructure([
+                'id',
+                'comment',
+                'post' => [
+                    'person' => ['name', 'email', 'email_verified_at']
+                ]
+            ])
             ->assertJson($comment->toArray())
             ->assertJson([
                 'user_type' => 'guest',
-                'post' => ['user_id' => null],
+                'post' => [
+                    'person' => ['user_id' => null]
+                ]
             ]);
 
-        $this->assertIsString($response->json('commenter.name'));
-        $this->assertIsString($response->json('commenter.email'));
-        $this->assertIsString($response->json('commenter.email_verified_at'));
+        $this->assertIsString($response->json('post.person.name'));
+        $this->assertIsString($response->json('post.person.email'));
+        $this->assertIsString($response->json('post.person.email_verified_at'));
     }
 
     /**
@@ -448,8 +466,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $data = [
             'title' => $this->faker->text,
@@ -473,8 +491,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $data = [
             'comment' => $this->faker->text,
@@ -498,8 +516,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $data = [
             'status' => 'awaiting_verification',
@@ -526,8 +544,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $data = [
             'status' => 'awaiting_approval',
@@ -554,8 +572,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $data = [
             'status' => 'denied',
@@ -582,8 +600,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $data = [
             'status' => 'approved',
@@ -610,8 +628,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $data = [
             'status' => 'unknown',
@@ -632,8 +650,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $data = [
             'status' => 'invalid',
@@ -654,7 +672,7 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
         $comment = Comment::factory()->registered()->for($article)->create();
 
         $response = $this->actingAs($this->admin)->deleteJson(route('api.comments.destroy', ['comment' => $comment]));
@@ -673,8 +691,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->guest(Commenter::factory()->verified())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
 
         $response = $this->actingAs($this->admin)->deleteJson(route('api.comments.destroy', ['comment' => $comment]));
         $response->assertSuccessful();
@@ -692,8 +710,8 @@ class CommentControllerTest extends TestCase
     {
         Event::fake();
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->create();
-        $comment = Comment::factory()->hasPost(Post::factory()->deleted())->for($article)->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->createPostWithRegisteredPerson(postFactory: Post::factory()->deleted())->for($article)->create();
 
         $response = $this->actingAs($this->admin)->deleteJson(route('api.comments.destroy', ['comment' => $comment]));
         $response->assertSuccessful();

@@ -33,7 +33,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => $this->faker->realText(),
@@ -41,9 +41,9 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::owned($this->user)->first();
+        $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNotNull($comment);
-        $this->assertEquals($this->user->email, $comment->commenter_info['email']);
+        $this->assertEquals($this->user->email, $comment->commenter['email']);
         $this->assertEquals(CommentStatus::Approved->value, $comment->status);
     }
 
@@ -60,7 +60,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -72,7 +72,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
         $this->assertEquals(CommentStatus::Approved->value, $comment->status);
     }
@@ -90,7 +90,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -102,7 +102,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
         $this->assertEquals(CommentStatus::AwaitingApproval->value, $comment->status);
     }
@@ -120,7 +120,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -132,7 +132,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
         $this->assertEquals(CommentStatus::Approved->value, $comment->status);
     }
@@ -153,7 +153,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -166,7 +166,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::withEmail($email)->first());
+        $this->assertNotNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -182,7 +182,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -194,7 +194,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertInvalid(['comment']);
 
-        $this->assertNull(Comment::withEmail($email)->first());
+        $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -210,7 +210,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -223,7 +223,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertInvalid([recaptchaFieldName()]);
 
-        $this->assertNull(Comment::withEmail($email)->first());
+        $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -239,7 +239,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => 'This is a test comment',
@@ -247,7 +247,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::owned($this->user)->first();
+        $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNotNull($comment);
     }
 
@@ -266,7 +266,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -279,7 +279,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::withEmail($email)->first());
+        $this->assertNotNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -297,7 +297,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => 'This is a test comment',
@@ -306,7 +306,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::owned($this->user)->first());
+        $this->assertNotNull(Comment::withPersonDetails('user', $this->user)->first());
     }
 
     /**
@@ -325,7 +325,7 @@ class BlogCommentTest extends TestCase
         ]);
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->post(route('blog.comment', ['article' => $article]), [
             'comment' => 'This is a test comment',
@@ -338,7 +338,7 @@ class BlogCommentTest extends TestCase
             ->assertRedirect() // Assuming redirect after submission
             ->assertInvalid([recaptchaFieldName()]);
 
-        $this->assertNull(Comment::withEmail($email)->first());
+        $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -356,7 +356,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => 'This is a test comment',
@@ -367,7 +367,7 @@ class BlogCommentTest extends TestCase
             ->assertRedirect() // Assuming redirect after submission
             ->assertInvalid([recaptchaFieldName()]);
 
-        $this->assertNull(Comment::owned($this->user)->first());
+        $this->assertNull(Comment::withPersonDetails('user', $this->user)->first());
     }
 
     /**
@@ -385,7 +385,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -398,7 +398,7 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::withEmail($email)->first());
+        $this->assertNotNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -415,7 +415,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => 'This is a test comment',
@@ -423,6 +423,6 @@ class BlogCommentTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::owned($this->user)->first());
+        $this->assertNotNull(Comment::withPersonDetails('user', $this->user)->first());
     }
 }

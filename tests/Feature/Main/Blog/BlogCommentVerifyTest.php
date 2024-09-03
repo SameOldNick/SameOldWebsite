@@ -32,7 +32,7 @@ class BlogCommentVerifyTest extends TestCase
             'comment_moderation' => 'disabled',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -44,10 +44,10 @@ class BlogCommentVerifyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
         $this->assertEquals(CommentStatus::AwaitingVerification->value, $comment->status);
-        $this->assertFalse($comment->commenter->isVerified());
+        $this->assertFalse($comment->post->person->hasVerifiedEmail());
 
         Mail::assertSent(function (Mailable $mail) use ($email) {
             return $mail->hasTo($email) && is_string($mail->viewData['link']);
@@ -65,7 +65,7 @@ class BlogCommentVerifyTest extends TestCase
             'user_authentication' => 'guest_verified',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -84,11 +84,11 @@ class BlogCommentVerifyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after verification
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
 
         $this->assertNotNull($comment);
-        $this->assertNotNull($comment->commenter);
-        $this->assertTrue($comment->commenter->isVerified());
+        $this->assertNotNull($comment->post->person);
+        $this->assertTrue($comment->post->person->hasVerifiedEmail());
     }
 
     /**
@@ -102,7 +102,7 @@ class BlogCommentVerifyTest extends TestCase
             'user_authentication' => 'guest_unverified',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -114,10 +114,10 @@ class BlogCommentVerifyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
         $this->assertNotEquals(CommentStatus::AwaitingVerification->value, $comment->status);
-        $this->assertTrue($comment->commenter->isVerified());
+        $this->assertTrue($comment->post->person->hasVerifiedEmail());
 
         Mail::assertNotSent(function (Mailable $mail) use ($email) {
             return $mail->hasTo($email);

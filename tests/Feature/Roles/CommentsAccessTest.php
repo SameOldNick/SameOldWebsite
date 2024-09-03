@@ -22,7 +22,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCanGetComments(): void
     {
-        Comment::factory(5)->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        Comment::factory(5)->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withRoles(['manage_comments'])->getJson('/api/blog/comments');
 
@@ -44,7 +44,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCanGetComment(): void
     {
-        $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withRoles(['manage_comments'])->getJson(sprintf('/api/blog/comments/%d', $comment->getKey()));
 
@@ -56,7 +56,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCannotGetComment(): void
     {
-        $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withNoRoles()->getJson(sprintf('/api/blog/comments/%d', $comment->getKey()));
 
@@ -68,7 +68,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCanUpdateComment(): void
     {
-        $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withRoles(['manage_comments'])->putJson(sprintf('/api/blog/comments/%d', $comment->getKey()), [
             'comment' => $this->faker()->realText(),
@@ -82,7 +82,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCannotUpdateComment(): void
     {
-        $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withNoRoles()->putJson(sprintf('/api/blog/comments/%d', $comment->getKey()), [
             'comment' => $this->faker()->realText(),
@@ -96,7 +96,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCanDeleteComment(): void
     {
-        $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withRoles(['manage_comments'])->deleteJson(sprintf('/api/blog/comments/%d', $comment->getKey()));
 
@@ -108,7 +108,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCannotDeleteComment(): void
     {
-        $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withNoRoles()->deleteJson(sprintf('/api/blog/comments/%d', $comment->getKey()));
 
@@ -120,7 +120,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCanApproveComment(): void
     {
-        $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withRoles(['manage_comments'])->putJson(route('api.comments.update', ['comment' => $comment]), [
             'status' => 'approved',
@@ -134,7 +134,7 @@ class CommentsAccessTest extends TestCase
      */
     public function testCannotApproveComment(): void
     {
-        $comment = Comment::factory()->for(Article::factory()->hasPostWithUser())->hasPostWithUser()->create();
+        $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
         $response = $this->withNoRoles()->putJson(route('api.comments.update', ['comment' => $comment]), [
             'status' => 'approved',

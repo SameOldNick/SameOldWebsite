@@ -33,7 +33,7 @@ class BlogCommentReplyTest extends TestCase
         ]);
 
         $article = Article::factory()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -43,9 +43,9 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::owned($this->user)->first();
+        $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNotNull($comment);
-        $this->assertEquals($this->user->email, $comment->commenter_info['email']);
+        $this->assertEquals($this->user->email, $comment->commenter['email']);
         $this->assertEquals(CommentStatus::AwaitingApproval->value, $comment->status);
     }
 
@@ -61,8 +61,8 @@ class BlogCommentReplyTest extends TestCase
             'comment_moderation' => 'auto',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -76,7 +76,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
         $this->assertEquals(CommentStatus::Approved->value, $comment->status);
     }
@@ -93,8 +93,8 @@ class BlogCommentReplyTest extends TestCase
             'comment_moderation' => 'manual',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -108,7 +108,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
         $this->assertEquals(CommentStatus::AwaitingApproval->value, $comment->status);
     }
@@ -125,8 +125,8 @@ class BlogCommentReplyTest extends TestCase
             'comment_moderation' => 'disabled',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -140,7 +140,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
         $this->assertEquals(CommentStatus::Approved->value, $comment->status);
     }
@@ -161,8 +161,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -177,7 +177,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::withEmail($email)->first());
+        $this->assertNotNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -192,8 +192,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -208,7 +208,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertInvalid(['comment']);
 
-        $this->assertNull(Comment::withEmail($email)->first());
+        $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -223,8 +223,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -239,7 +239,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertInvalid([recaptchaFieldName()]);
 
-        $this->assertNull(Comment::withEmail($email)->first());
+        $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -254,8 +254,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -265,7 +265,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::owned($this->user)->first();
+        $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNotNull($comment);
     }
 
@@ -285,8 +285,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -301,7 +301,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::withEmail($email)->first());
+        $this->assertNotNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -320,8 +320,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -332,7 +332,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::owned($this->user)->first());
+        $this->assertNotNull(Comment::withPersonDetails('user', $this->user)->first());
     }
 
     /**
@@ -350,8 +350,8 @@ class BlogCommentReplyTest extends TestCase
         ]);
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -366,7 +366,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertInvalid([recaptchaFieldName()]);
 
-        $this->assertNull(Comment::withEmail($email)->first());
+        $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -383,8 +383,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -397,7 +397,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertInvalid([recaptchaFieldName()]);
 
-        $this->assertNull(Comment::owned($this->user)->first());
+        $this->assertNull(Comment::withPersonDetails('user', $this->user)->first());
     }
 
     /**
@@ -415,8 +415,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -431,7 +431,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::withEmail($email)->first());
+        $this->assertNotNull(Comment::withPersonDetails('email', $email)->first());
     }
 
     /**
@@ -448,8 +448,8 @@ class BlogCommentReplyTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->withRevision()->hasPostWithUser()->published()->create();
-        $parent = Comment::factory()->hasPostWithUser()->state([
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
+        $parent = Comment::factory()->createPostWithRegisteredPerson()->state([
             'article_id' => $article,
         ])->create();
 
@@ -459,6 +459,6 @@ class BlogCommentReplyTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull(Comment::owned($this->user)->first());
+        $this->assertNotNull(Comment::withPersonDetails('user', $this->user)->first());
     }
 }

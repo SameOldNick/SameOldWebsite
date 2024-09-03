@@ -186,7 +186,7 @@ class ModeratorTest extends TestCase
     {
         $comment = Comment::factory([
             'comment' => $this->faker()->profanity,
-        ])->for(Article::factory())->create();
+        ])->createPostWithGuestPerson()->for(Article::factory())->create();
 
         $moderator = $this->app->make(ModerationService::class);
 
@@ -202,7 +202,7 @@ class ModeratorTest extends TestCase
     {
         $comment = Comment::factory([
             'comment' => $this->faker('ar_SA')->realText,
-        ])->for(Article::factory())->create();
+        ])->createPostWithGuestPerson()->for(Article::factory())->create();
 
         $moderator = $this->app->make(ModerationService::class);
 
@@ -218,7 +218,7 @@ class ModeratorTest extends TestCase
     {
         $comment = Comment::factory([
             'comment' => $this->faker()->profanity,
-        ])->for(Article::factory())->create();
+        ])->createPostWithGuestPerson()->for(Article::factory())->create();
 
         $moderator = $this->app->make(ModerationService::class);
 
@@ -232,7 +232,7 @@ class ModeratorTest extends TestCase
      */
     public function test_comment_not_flagged(): void
     {
-        $comment = Comment::factory()->for(Article::factory())->create();
+        $comment = Comment::factory()->for(Article::factory())->createPostWithGuestPerson()->create();
 
         $moderator = $this->app->make(ModerationService::class);
 

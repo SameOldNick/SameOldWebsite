@@ -28,7 +28,7 @@ class ArticleImageControllerTest extends TestCase
         $article =
             Article::factory()
                 ->recycle($this->admin)
-                ->hasPostWithUser()
+                ->createPostWithRegisteredPerson()
                 ->withRevision(1)
                 ->published()
                 ->has(Image::factory(5)->fakedImage(user: $this->admin))
@@ -67,7 +67,7 @@ class ArticleImageControllerTest extends TestCase
         $article =
             Article::factory()
                 ->recycle($this->admin)
-                ->hasPostWithUser()
+                ->createPostWithRegisteredPerson()
                 ->withRevision(1)
                 ->published()
                 ->create();
@@ -94,7 +94,7 @@ class ArticleImageControllerTest extends TestCase
         $articleFactory =
             Article::factory(1)
                 ->recycle($this->admin)
-                ->hasPostWithUser()
+                ->createPostWithRegisteredPerson()
                 ->withRevision(1)
                 ->published();
 
@@ -122,7 +122,7 @@ class ArticleImageControllerTest extends TestCase
         $article =
             Article::factory()
                 ->recycle($this->admin)
-                ->hasPostWithUser()
+                ->createPostWithRegisteredPerson()
                 ->withRevision(1)
                 ->published()
                 ->has(Image::factory()->fakedImage(user: $this->admin))
@@ -153,7 +153,7 @@ class ArticleImageControllerTest extends TestCase
         $article =
             Article::factory()
                 ->recycle($this->admin)
-                ->hasPostWithUser()
+                ->createPostWithRegisteredPerson()
                 ->withRevision(1)
                 ->published()
                 ->has(Image::factory()->fakedImage(user: $this->admin))

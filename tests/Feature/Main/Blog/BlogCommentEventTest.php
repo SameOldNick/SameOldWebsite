@@ -37,7 +37,7 @@ class BlogCommentEventTest extends TestCase
             'comment_moderation' => 'auto',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -49,7 +49,7 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
 
         Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
@@ -68,7 +68,7 @@ class BlogCommentEventTest extends TestCase
             'comment_moderation' => 'manual',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -80,7 +80,7 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
 
         Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
@@ -100,7 +100,7 @@ class BlogCommentEventTest extends TestCase
             'comment_moderation' => 'disabled',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -112,7 +112,7 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
 
         Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
@@ -131,7 +131,7 @@ class BlogCommentEventTest extends TestCase
             'comment_moderation' => 'auto',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => 'This is the comment.',
@@ -139,7 +139,7 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull($comment = Comment::owned($this->user)->first());
+        $this->assertNotNull($comment = Comment::withPersonDetails('user', $this->user)->first());
 
         Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
     }
@@ -157,7 +157,7 @@ class BlogCommentEventTest extends TestCase
             'comment_moderation' => 'manual',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => 'This is the comment.',
@@ -165,7 +165,7 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $this->assertNotNull($comment = Comment::owned($this->user)->first());
+        $this->assertNotNull($comment = Comment::withPersonDetails('user', $this->user)->first());
 
         Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
@@ -183,7 +183,7 @@ class BlogCommentEventTest extends TestCase
             'comment_moderation' => 'disabled',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => 'This is the comment.',
@@ -191,7 +191,7 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::owned($this->user)->first();
+        $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNotNull($comment);
 
         Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
@@ -210,7 +210,7 @@ class BlogCommentEventTest extends TestCase
             'comment_moderation' => 'auto',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
@@ -222,7 +222,7 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::withEmail($email)->first();
+        $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNull($comment);
 
         Event::assertNotDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
@@ -242,7 +242,7 @@ class BlogCommentEventTest extends TestCase
             'comment_moderation' => 'auto',
         ]);
 
-        $article = Article::factory()->hasPostWithUser()->published()->create();
+        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
 
         $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
             'comment' => null,
@@ -250,7 +250,7 @@ class BlogCommentEventTest extends TestCase
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $comment = Comment::owned($this->user)->first();
+        $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNull($comment);
 
         Event::assertNotDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
