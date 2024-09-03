@@ -15,7 +15,7 @@
                 </li>
                 <li class="list-inline-item">
                     <i class="fa-solid fa-user-pen me-1"></i>
-                    {{ $article->post->user->getDisplayName() }}
+                    {{ $article->post->person->user->getDisplayName() }}
                 </li>
             </ul>
 

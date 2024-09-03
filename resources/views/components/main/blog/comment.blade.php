@@ -3,13 +3,13 @@
 @can('view', $comment)
 <article class="blog-article-comment" id="{{ $comment->generateElementId() }}">
     <section class="blog-article-comment-left">
-        <img src="{{ $comment->avatar_url }}" alt="{{ __('Avatar for: :name', ['name' => $comment->commenter_info['display_name']]) }}" class="blog-article-comment-avatar" />
+        <img src="{{ $comment->avatar_url }}" alt="{{ __('Avatar for: :name', ['name' => $comment->commenter['display_name']]) }}" class="blog-article-comment-avatar" />
     </section>
     <section class="blog-article-comment-right">
         <section class="blog-article-comment-header">
             <div class="blog-article-comment-header-left">
                 <h5 class="blog-article-comment-name">
-                    {{ $comment->commenter_info['display_name'] }}
+                    {{ $comment->commenter['display_name'] }}
                 </h5>
 
                 @can('role-manage-comments')

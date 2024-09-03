@@ -2,7 +2,7 @@ import { generatePath } from "react-router-dom";
 import { DateTime } from "luxon";
 
 import Article from "./Article";
-import User from "./User";
+import Person from "./Person";
 
 export default class Comment {
 
@@ -67,7 +67,7 @@ export default class Comment {
     }
 
     public get commenterInfo() {
-        return this.comment.commenter_info;
+        return this.comment.commenter;
     }
 
     /**
@@ -77,7 +77,7 @@ export default class Comment {
      * @memberof Comment
      */
     public get postedBy() {
-        return this.comment.post.user ? new User(this.comment.post.user) : null;
+        return new Person(this.comment.post.person);
     }
 
     /**

@@ -101,7 +101,16 @@ declare global {
 
     interface IPost {
         id: number;
-        user_id: number;
+        person: IPerson;
+        created_at: string;
+        updated_at: string;
+        deleted_at: string | null
+    }
+
+    interface IPerson {
+        name: string | null;
+        email: string | null;
+        user_id: number | null;
         user: IUser | null;
         created_at: string;
         updated_at: string;
@@ -143,7 +152,7 @@ declare global {
         article: IArticle;
         title: string | null;
         comment: string;
-        commenter_info: Record<'display_name' | 'email', string>;
+        commenter: Record<'display_name' | 'name' | 'email', string>;
         status: TCommentStatuses;
     }
 

@@ -209,8 +209,8 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                                                         <Label for='comment_posted_by'>Posted By:</Label>
                                                         <InputGroup>
                                                             <Input name='comment_posted_by' readOnly value={comment.commenterInfo.display_name} />
-                                                            {comment.postedBy && (
-                                                                <Button color='primary' tag='a' href={comment.postedBy.generatePath()}>
+                                                            {comment.postedBy.user && (
+                                                                <Button color='primary' tag='a' href={comment.postedBy.user.generatePath()}>
                                                                     <FaExternalLinkAlt />
                                                                 </Button>
                                                             )}
