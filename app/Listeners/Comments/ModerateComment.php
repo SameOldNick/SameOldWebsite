@@ -72,10 +72,15 @@ class ModerateComment
         // Run comment through moderator
         $commentModeration = PageSettings::page('blog')->setting('comment_moderation');
 
-        $flagged = $commentModeration !== 'disabled' ? $this->moderationService->moderate($comment) : false;
+        $flags = $commentModeration !== 'disabled' ? $this->moderationService->moderate($comment) : [];
+
         $oldStatus = $comment->status;
 
-        if (($commentModeration === 'auto' && ! $flagged) || $commentModeration === 'disabled') {
+        if (!empty($flags)) {
+            $comment->flags()->saveMany($flags);
+        }
+
+        if (($commentModeration === 'auto' && empty($flags)) || $commentModeration === 'disabled') {
             $comment->statuses()->create(['status' => CommentStatus::Approved]);
 
             // Dispatch event
