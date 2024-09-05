@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Main;
 
-use App\Components\Moderator\ModerationService;
 use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Components\SweetAlert\SweetAlerts;
 use App\Enums\CommentStatus;
@@ -22,9 +21,7 @@ class BlogCommentController extends Controller
 {
     use HasPage;
 
-    public function __construct(
-        protected readonly ModerationService $moderationService
-    ) {}
+    public function __construct() {}
 
     /**
      * Shows the comment (if user has access)
