@@ -2,19 +2,11 @@
 
 namespace Tests\Feature\Comments;
 
-use App\Components\Moderator\Contracts\Moderator;
-use App\Components\Moderator\Factories\ModeratorsConfigFactory;
-use App\Components\Moderator\Factories\ModeratorsDatabaseFactory;
-use App\Components\Moderator\Factories\ModeratorsFileFactory;
 use App\Components\Moderator\ModerationService;
-use App\Components\Moderator\Moderators;
 use App\Models\Article;
 use App\Models\Comment;
-use App\Models\Page;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ModeratorTest extends TestCase

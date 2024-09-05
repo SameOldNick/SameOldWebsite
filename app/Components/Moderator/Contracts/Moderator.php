@@ -17,7 +17,8 @@ interface Moderator
     /**
      * Moderates a moderatable
      *
-     * @param TModeratable $moderatable
+     * @param  TModeratable  $moderatable
+     *
      * @throws FlagException Thrown if should be flagged.
      */
     public function moderate($moderatable): void;

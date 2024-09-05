@@ -4,7 +4,6 @@ namespace App\Components\Moderator;
 
 use App\Components\Moderator\Contracts\Moderatable;
 use App\Components\Moderator\Contracts\Moderator;
-use App\Components\Moderator\Contracts\ModeratorsFactory;
 use App\Components\Moderator\Exceptions\FlagException;
 
 class ModerationService
@@ -17,7 +16,7 @@ class ModerationService
     /**
      * Moderates a model
      *
-     * @param  Moderatable $moderatable  Model to moderate
+     * @param  Moderatable  $moderatable  Model to moderate
      * @return array Array of flags
      */
     public function moderate(Moderatable $moderatable)

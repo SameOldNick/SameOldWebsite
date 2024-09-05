@@ -93,7 +93,7 @@ return [
                     'enabled' => true,
                 ],
             ],
-        ]
+        ],
     ],
 
     // Fallback builder configuration

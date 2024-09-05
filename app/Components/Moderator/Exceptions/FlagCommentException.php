@@ -47,9 +47,10 @@ class FlagCommentException extends FlagException
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function transformToFlag() {
+    public function transformToFlag()
+    {
         return new CommentFlag([
             'reason' => $this->getMessage(),
             'proposed' => $this->getProposed(),

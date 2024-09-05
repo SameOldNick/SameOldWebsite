@@ -11,20 +11,22 @@ trait CreatesModeratorsFactory
     /**
      * Creates moderators factory
      *
-     * @param string $key Key in config file
+     * @param  string  $key  Key in config file
      * @return ModeratorsFactory
      */
     public function createModeratorsFactory(string $key)
     {
         $config = config("moderators.{$key}");
 
-        if (!$config)
+        if (! $config) {
             throw new InvalidArgumentException("No configuration options found for 'moderators.{$key}'.");
+        }
 
         $factory = $config['factory'];
 
-        if (!is_a($factory, ModeratorsFactory::class, true))
+        if (! is_a($factory, ModeratorsFactory::class, true)) {
             throw new Exception("The factory for '{$key}' does not implement ModeratorsFactory.");
+        }
 
         $options = $config['options'] ?? [];
 

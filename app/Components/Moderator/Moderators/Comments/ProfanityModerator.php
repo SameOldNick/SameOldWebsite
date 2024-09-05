@@ -41,7 +41,7 @@ class ProfanityModerator implements Moderator
             return;
         }
 
-        $patterns = array_map(fn($word) => sprintf('/%s/i', preg_quote($word)), $profanity);
+        $patterns = array_map(fn ($word) => sprintf('/%s/i', preg_quote($word)), $profanity);
 
         $updated = preg_replace($patterns, '[redacted]', $comment->comment);
 

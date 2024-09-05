@@ -76,7 +76,7 @@ class ModerateComment
 
         $oldStatus = $comment->status;
 
-        if (!empty($flags)) {
+        if (! empty($flags)) {
             $comment->flags()->saveMany($flags);
         }
 
