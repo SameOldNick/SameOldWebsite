@@ -2,46 +2,41 @@
 
 namespace App\Components\Moderator;
 
+use App\Components\Moderator\Contracts\Moderatable;
 use App\Components\Moderator\Contracts\Moderator;
 use App\Components\Moderator\Contracts\ModeratorsFactory;
-use App\Components\Moderator\Exceptions\FlagCommentException;
-use App\Models\Comment;
-use App\Models\CommentFlag;
+use App\Components\Moderator\Exceptions\FlagException;
 
 class ModerationService
 {
     /**
      * Initializes moderation service
      */
-    public function __construct(
-        public readonly ModeratorsFactory $factory,
-    ) {}
+    public function __construct() {}
 
     /**
-     * Moderates comment
+     * Moderates a model
      *
-     * @param  Comment  $comment  Comment to moderate
-     * @return bool True if comment was flagged.
+     * @param  Moderatable $moderatable  Model to moderate
+     * @return array Array of flags
      */
-    public function moderate(Comment $comment)
+    public function moderate(Moderatable $moderatable)
     {
         $flags = [];
 
-        foreach ($this->getModerators() as $moderator) {
+        foreach ($moderatable->getModerators() as $moderator) {
             if (! $moderator->isEnabled()) {
                 continue;
             }
 
             try {
-                $moderator->moderate($comment);
-            } catch (FlagCommentException $ex) {
-                array_push($flags, $this->exceptionToFlag($ex));
+                $moderator->moderate($moderatable);
+            } catch (FlagException $ex) {
+                array_push($flags, $ex->transformToFlag());
             }
         }
 
-        $comment->flags()->saveMany($flags);
-
-        return ! empty($flags);
+        return $flags;
     }
 
     /**
@@ -52,21 +47,5 @@ class ModerationService
     public function getModerators(): array
     {
         return $this->factory->build();
-    }
-
-    /**
-     * Transforms FlagCommentException to CommentFlag
-     *
-     * @return CommentFlag
-     */
-    protected function exceptionToFlag(FlagCommentException $ex)
-    {
-        $flag = new CommentFlag([
-            'reason' => $ex->getMessage(),
-            'proposed' => $ex->getProposed(),
-            'extra' => $ex->getExtra(),
-        ]);
-
-        return $flag;
     }
 }

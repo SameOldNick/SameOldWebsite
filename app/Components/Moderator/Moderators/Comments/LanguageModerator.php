@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Moderator\Moderators;
+namespace App\Components\Moderator\Moderators\Comments;
 
 use App\Components\Moderator\Contracts\Moderator;
 use App\Components\Moderator\Exceptions\FlagCommentException;
@@ -8,6 +8,9 @@ use App\Models\Comment;
 use LanguageDetector\Language;
 use LanguageDetector\LanguageDetector;
 
+/**
+ * @implements Moderator<Comment>
+ */
 class LanguageModerator implements Moderator
 {
     public function __construct(
@@ -25,7 +28,7 @@ class LanguageModerator implements Moderator
     /**
      * {@inheritDoc}
      */
-    public function moderate(Comment $comment): void
+    public function moderate($comment): void
     {
         $detected = $this->detectLanguage($comment->comment);
 

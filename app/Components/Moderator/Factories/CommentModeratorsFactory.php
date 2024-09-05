@@ -3,14 +3,16 @@
 namespace App\Components\Moderator\Factories;
 
 use App\Components\Moderator\Contracts\ModeratorsFactory;
-use App\Components\Moderator\Moderators;
+use App\Components\Moderator\Moderators\Comments as Moderators;
 use App\Components\Settings\Facades\PageSettings;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Support\Arr;
 
-class ModeratorsDatabaseFactory implements ModeratorsFactory
+class CommentModeratorsFactory implements ModeratorsFactory
 {
     public function __construct(
         protected readonly Container $container,
+        protected readonly array $options
     ) {}
 
     /**
@@ -21,9 +23,8 @@ class ModeratorsDatabaseFactory implements ModeratorsFactory
         $mapped = $this->getMappedClasses();
 
         $enabled = $this->getEnabledModerators();
-        $options = $this->getExistingOptions();
 
-        $options['moderators'] = array_map(function ($moderator) use ($mapped, $enabled) {
+        $moderators = array_map(function ($moderator) use ($mapped, $enabled) {
             $class = $moderator['moderator'];
 
             if ($key = array_search($class, $mapped)) {
@@ -31,26 +32,25 @@ class ModeratorsDatabaseFactory implements ModeratorsFactory
             }
 
             return $moderator;
-        }, $options['moderators']);
+        }, $this->getModeratorsOptions());
 
-        return ModeratorsConfigFactory::buildFromOptions($options)->build();
-
+        return ModeratorsConfigFactory::buildFromOptions(['moderators' => $moderators])->build();
     }
 
     /**
-     * Gets database options
+     * Gets fallback moderators
      */
-    protected function getOptions(): array
+    protected function getFallback(): array
     {
-        return (array) $this->container->config->get('moderators.builders.database.options', []);
+        return Arr::get($this->options, 'fallback', []);
     }
 
     /**
      * Gets existing config options
      */
-    protected function getExistingOptions(): array
+    protected function getModeratorsOptions(): array
     {
-        return (array) $this->container->config->get('moderators.builders.config.options', []);
+        return Arr::get($this->options, 'moderators', []);
     }
 
     /**
@@ -62,7 +62,7 @@ class ModeratorsDatabaseFactory implements ModeratorsFactory
     {
         $enabled = PageSettings::page('blog')->setting('moderators');
 
-        return ! is_null($enabled) ? $enabled : $this->getOptions()['fallback'];
+        return ! is_null($enabled) ? $enabled : $this->getFallback();
     }
 
     /**

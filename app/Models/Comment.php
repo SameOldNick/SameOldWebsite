@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Components\Moderator\Concerns\CreatesModeratorsFactory;
+use App\Components\Moderator\Contracts\Moderatable;
 use App\Enums\CommentStatus as CommentStatusEnum;
 use App\Enums\CommentUserType;
 use App\Models\Collections\CommentCollection;
@@ -32,12 +34,13 @@ use Spatie\Url\Url as SpatieUrl;
  *
  * @method static \Database\Factories\CommentFactory factory($count = null, $state = [])
  */
-class Comment extends Model
+class Comment extends Model implements Moderatable
 {
     use Displayable;
     use HasFactory;
     use Immutable;
     use Postable;
+    use CreatesModeratorsFactory;
 
     /**
      * Indicates if the model should be timestamped.
@@ -294,6 +297,14 @@ class Comment extends Model
         $url = SpatieUrl::fromString($this->article->createPrivateUrl($minutes, $absolute, $params))->withFragment($fragment);
 
         return (string) $url;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getModerators(): array
+    {
+        return $this->createModeratorsFactory('comments')->build();
     }
 
     /**

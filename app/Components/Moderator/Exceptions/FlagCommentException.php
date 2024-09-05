@@ -2,9 +2,12 @@
 
 namespace App\Components\Moderator\Exceptions;
 
-use Exception;
+use App\Models\CommentFlag;
 
-class FlagCommentException extends Exception
+/**
+ * @extends FlagException<CommentFlag>
+ */
+class FlagCommentException extends FlagException
 {
     /**
      * Proposed new comment
@@ -41,5 +44,16 @@ class FlagCommentException extends Exception
     public function getExtra(): array
     {
         return $this->extra;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function transformToFlag() {
+        return new CommentFlag([
+            'reason' => $this->getMessage(),
+            'proposed' => $this->getProposed(),
+            'extra' => $this->getExtra(),
+        ]);
     }
 }

@@ -16,17 +16,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ModerationService::class, function (Container $app) {
-            $config = $app->config->get('moderators', []);
-
-            $name = $config['builder'];
-            $builder = $config['builders'][$name];
-
-            $factory = $app->make($builder['factory']);
-
-            return new ModerationService($factory);
-        });
-
         $this->app->alias(ModerationService::class, 'moderator');
     }
 

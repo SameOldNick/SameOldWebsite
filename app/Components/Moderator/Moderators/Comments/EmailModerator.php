@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Moderator\Moderators;
+namespace App\Components\Moderator\Moderators\Comments;
 
 use App\Components\Moderator\Concerns\CompilesList;
 use App\Components\Moderator\Contracts\Moderator;
@@ -8,6 +8,9 @@ use App\Components\Moderator\Exceptions\FlagCommentException;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @implements Moderator<Comment>
+ */
 class EmailModerator implements Moderator
 {
     use CompilesList;
@@ -27,7 +30,7 @@ class EmailModerator implements Moderator
     /**
      * {@inheritDoc}
      */
-    public function moderate(Comment $comment): void
+    public function moderate($comment): void
     {
         ['email' => $email] = $comment->commenter;
 
@@ -35,7 +38,7 @@ class EmailModerator implements Moderator
             return;
         }
 
-        [,$domain] = $this->extractEmailParts($email);
+        [, $domain] = $this->extractEmailParts($email);
 
         if (in_array($domain, $this->getAllowed())) {
             return;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Moderator\Moderators;
+namespace App\Components\Moderator\Moderators\Comments;
 
 use App\Components\Moderator\Concerns\CompilesList;
 use App\Components\Moderator\Contracts\Moderator;
@@ -11,6 +11,9 @@ use Illuminate\Support\Str;
 use function Safe\preg_match;
 use function Safe\preg_replace;
 
+/**
+ * @implements Moderator<Comment>
+ */
 class ProfanityModerator implements Moderator
 {
     use CompilesList;
@@ -30,7 +33,7 @@ class ProfanityModerator implements Moderator
     /**
      * {@inheritDoc}
      */
-    public function moderate(Comment $comment): void
+    public function moderate($comment): void
     {
         $profanity = $this->findProfanity($comment->comment);
 
@@ -38,7 +41,7 @@ class ProfanityModerator implements Moderator
             return;
         }
 
-        $patterns = array_map(fn ($word) => sprintf('/%s/i', preg_quote($word)), $profanity);
+        $patterns = array_map(fn($word) => sprintf('/%s/i', preg_quote($word)), $profanity);
 
         $updated = preg_replace($patterns, '[redacted]', $comment->comment);
 

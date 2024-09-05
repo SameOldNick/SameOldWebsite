@@ -2,9 +2,11 @@
 
 namespace App\Components\Moderator\Contracts;
 
-use App\Components\Moderator\Exceptions\FlagCommentException;
-use App\Models\Comment;
+use App\Components\Moderator\Exceptions\FlagException;
 
+/**
+ * @template TModeratable of Moderatable
+ */
 interface Moderator
 {
     /**
@@ -13,9 +15,10 @@ interface Moderator
     public function isEnabled(): bool;
 
     /**
-     * Moderates a comment
+     * Moderates a moderatable
      *
-     * @throws FlagCommentException Thrown if comment should be flagged.
+     * @param TModeratable $moderatable
+     * @throws FlagException Thrown if should be flagged.
      */
-    public function moderate(Comment $comment): void;
+    public function moderate($moderatable): void;
 }
