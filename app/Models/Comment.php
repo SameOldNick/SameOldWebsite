@@ -92,14 +92,9 @@ class Comment extends Model implements Moderatable
     ];
 
     /**
-     * Create a new Eloquent Collection instance.
-     *
-     * @return CommentCollection
+     * The Eloquent collection class to use for the model.
      */
-    public function newCollection(array $models = [])
-    {
-        return new CommentCollection($models);
-    }
+    protected static string $collectionClass = CommentCollection::class;
 
     /**
      * Gets the parent comment (if any)
