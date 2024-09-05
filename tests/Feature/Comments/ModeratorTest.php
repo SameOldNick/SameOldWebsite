@@ -33,8 +33,11 @@ class ModeratorTest extends TestCase
 
         $moderator = $this->app->make(ModerationService::class);
 
-        $moderator->moderate($comment);
+        $flags = $moderator->moderate($comment);
 
+        $comment->flags()->saveMany($flags);
+
+        $this->assertNotEmpty($flags);
         $this->assertTrue($comment->isFlagged());
     }
 
@@ -49,8 +52,11 @@ class ModeratorTest extends TestCase
 
         $moderator = $this->app->make(ModerationService::class);
 
-        $moderator->moderate($comment);
+        $flags = $moderator->moderate($comment);
 
+        $comment->flags()->saveMany($flags);
+
+        $this->assertNotEmpty($flags);
         $this->assertTrue($comment->isFlagged());
     }
 
@@ -65,8 +71,11 @@ class ModeratorTest extends TestCase
 
         $moderator = $this->app->make(ModerationService::class);
 
-        $moderator->moderate($comment);
+        $flags = $moderator->moderate($comment);
 
+        $comment->flags()->saveMany($flags);
+
+        $this->assertNotEmpty($flags);
         $this->assertTrue($comment->isFlagged());
     }
 
@@ -79,8 +88,11 @@ class ModeratorTest extends TestCase
 
         $moderator = $this->app->make(ModerationService::class);
 
-        $moderator->moderate($comment);
+        $flags = $moderator->moderate($comment);
 
+        $comment->flags()->saveMany($flags);
+
+        $this->assertEmpty($flags);
         $this->assertFalse($comment->isFlagged(), optional($comment->flags()->first())->reason ?? '');
     }
 }
