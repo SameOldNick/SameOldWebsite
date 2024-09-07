@@ -17,7 +17,8 @@ class ModerationService
      * Moderates a model
      *
      * @param  Moderatable  $moderatable  Model to moderate
-     * @return array Array of flags
+     * @return TFlag[] Array of flags
+     * @template TFlag The flag type
      */
     public function moderate(Moderatable $moderatable)
     {
