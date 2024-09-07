@@ -38,7 +38,7 @@ class CommentPosted extends Notification
         return (new MailMessage)
             ->greeting('Hello!')
             ->line(sprintf('A new comment has been posted on the blog article, "%s".', $this->comment->article->title))
-            ->line(sprintf('%s said:', $this->comment->display_name))
+            ->line(sprintf('%s said:', $this->comment->commenter['display_name']))
             ->line($this->comment->comment)
             ->action('View Comment', route('blog.comment.show', ['article' => $this->comment->article, 'comment' => $this->comment]))
             ->line('Thank you for being an active member!');
