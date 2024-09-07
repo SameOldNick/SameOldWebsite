@@ -126,7 +126,10 @@ class CommentController extends Controller
         $newStatus = $request->enum('status', CommentStatusEnum::class);
         $oldStatus = CommentStatusEnum::from($comment->status);
 
-        if ($newStatus) {
+        // A new status may have been passed, but it's the same status
+        $changedStatus = $newStatus && $newStatus !== $oldStatus;
+
+        if ($changedStatus) {
             $status = new CommentStatus([
                 'status' => $newStatus,
             ]);
@@ -143,7 +146,7 @@ class CommentController extends Controller
         $comment->refresh();
 
         CommentUpdated::dispatchIf($comment->wasChanged(), $comment);
-        CommentStatusChanged::dispatchIf(! is_null($newStatus), $comment, $oldStatus);
+        CommentStatusChanged::dispatchIf($changedStatus, $comment, $oldStatus);
 
         return $comment;
     }
