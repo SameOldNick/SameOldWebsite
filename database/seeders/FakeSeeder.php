@@ -12,11 +12,11 @@ class FakeSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            Fakes\TagSeeder::class,
             Fakes\ArticleSeeder::class,
             Fakes\ProjectSeeder::class,
             Fakes\PageMetaDataSeeder::class,
             Fakes\ContactMessageSeeder::class,
+            Fakes\TagSeeder::class,
         ]);
     }
 }
