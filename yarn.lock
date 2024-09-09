@@ -10882,7 +10882,7 @@ __metadata:
     uuid: "npm:^10.0.0"
     vite: "npm:^5.3.4"
     vite-plugin-external: "npm:^4.3.0"
-    vite-plugin-global-const: "npm:^0.0.5"
+    vite-plugin-global-const: "npm:^0.0.6"
     vite-plugin-static-copy: "npm:^1.0.6"
     web-vitals: "npm:^4.2.3"
     xterm-for-react: "npm:^1.0.4"
@@ -12100,10 +12100,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-global-const@npm:^0.0.5":
-  version: 0.0.5
-  resolution: "vite-plugin-global-const@npm:0.0.5"
-  checksum: 10/e5497d55f59245c0f239a5bb1fab9e1a06d4cbae79ae98ddf0339d22e4bae566df0d5d09757ede9d9cfc6d78a3a95a8e6658f1569821d3624b9089cc1abe36fd
+"vite-plugin-global-const@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "vite-plugin-global-const@npm:0.0.6"
+  checksum: 10/2d833ba3201052612470a107592cfc30771f322d164eff2a955646a22643a6ac577a3eec8a104b4b45f1d8d404a3d7cdc6a782ccaa88598494c9de58a7914310
   languageName: node
   linkType: hard
 
