@@ -28,7 +28,7 @@ class ServiceProvider extends BaseServiceProvider
 
                 return new LittleJWT($app, $jwk);
             } catch (InvalidArgumentException) {
-                throw new MissingKeyException();
+                throw new MissingKeyException;
             }
         });
     }
