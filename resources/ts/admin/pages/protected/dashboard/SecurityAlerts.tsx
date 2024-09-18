@@ -60,11 +60,8 @@ const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
         const alerts: TSecurityAlertNotification[] = [];
         const response = await createAuthRequest().get<INotification[]>('/user/notifications');
 
-        const isSecurityNotification = (notification: INotification): notification is TSecurityAlertNotification =>
-            isNotificationType(notification, SecurityAlertNotificationType);
-
         response.data.forEach((notification) => {
-            if (isSecurityNotification(notification)) {
+            if (isNotificationType(notification, SecurityAlertNotificationType)) {
                 alerts.push(notification as TSecurityAlertNotification);
             }
         });
