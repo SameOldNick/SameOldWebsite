@@ -75,5 +75,5 @@ Route::namespace(Controllers\Main::class)->group(function () {
         });
     });
 
-    Route::get('/user/{user}/avatar', [Controllers\Main\User\AvatarController::class, 'view'])->name('user.avatar');
+    Route::get('/user/{user:uuid}/avatar', [Controllers\Main\User\AvatarController::class, 'view'])->name('user.avatar');
 });
