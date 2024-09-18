@@ -12,25 +12,6 @@ interface IProps extends IPromptModalProps {
 }
 
 const RemoveAvatarModal: React.FC<IProps> = ({ onSuccess, onCancelled }) => {
-    const displayPrompt = React.useCallback(async () => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Remove Your Avatar?',
-            showConfirmButton: true,
-            confirmButtonText: 'Yes',
-            confirmButtonColor: 'danger',
-            showCancelButton: true,
-            cancelButtonText: 'No',
-            cancelButtonColor: 'primary',
-        });
-
-        if (result.isConfirmed) {
-            await deleteAvatar();
-        } else {
-            onCancelled();
-        }
-    }, [onCancelled]);
-
     const deleteAvatar = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().delete<IMessageResponse>('user/avatar');
@@ -58,6 +39,25 @@ const RemoveAvatarModal: React.FC<IProps> = ({ onSuccess, onCancelled }) => {
 
         }
     }, [onSuccess, onCancelled]);
+
+    const displayPrompt = React.useCallback(async () => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Remove Your Avatar?',
+            showConfirmButton: true,
+            confirmButtonText: 'Yes',
+            confirmButtonColor: 'danger',
+            showCancelButton: true,
+            cancelButtonText: 'No',
+            cancelButtonColor: 'primary',
+        });
+
+        if (result.isConfirmed) {
+            await deleteAvatar();
+        } else {
+            onCancelled();
+        }
+    }, [deleteAvatar, onCancelled]);
 
     React.useEffect(() => {
         displayPrompt();
