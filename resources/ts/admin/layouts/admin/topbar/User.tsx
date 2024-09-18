@@ -40,7 +40,7 @@ const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage })
 
             await logout();
         } catch (err) {
-
+            logger.error(err);
         }
 
     }, [logout]);
