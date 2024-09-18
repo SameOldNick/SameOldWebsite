@@ -10,6 +10,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class RouteServiceProvider extends ServiceProvider
@@ -31,6 +32,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this
+            ->enforceHttps(true)
             ->configureRateLimiting()
             ->bootRouteBindings()
             ->routes(function () {
@@ -48,6 +50,21 @@ class RouteServiceProvider extends ServiceProvider
                     ->name('admin.')
                     ->group(base_path('routes/admin.php'));
             });
+    }
+
+    /**
+     * Enforces HTTPS for URLs
+     *
+     * @param boolean $enabled
+     * @return $this
+     */
+    protected function enforceHttps(bool $enabled)
+    {
+        if ($enabled) {
+            URL::forceScheme('https');
+        }
+
+        return $this;
     }
 
     /**
@@ -71,7 +88,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function bootRouteBindings()
     {
-        Route::bind('tag', fn ($value) => Tag::firstWhere('slug', $value));
+        Route::bind('tag', fn($value) => Tag::firstWhere('slug', $value));
 
         Route::bind('file', function ($value) {
             if (Str::isUuid($value)) {
