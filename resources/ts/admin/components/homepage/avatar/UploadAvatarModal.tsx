@@ -18,17 +18,14 @@ export interface IAvatarUploaded {
 }
 
 const UploadAvatarModal: React.FC<IPromptModalProps> = ({ onSuccess, onCancelled }) => {
-    const [uploaded, setUploaded] = React.useState<IAvatarUploaded | undefined>(undefined);
+    const [selected, setSelected] = React.useState<IAvatarUploaded | undefined>(undefined);
     const [alerts, setAlerts] = React.useState<IAlert[]>([]);
 
-    const uploadAvatar = React.useCallback(async () => {
-        if (uploaded === undefined)
-            return;
-
+    const uploadAvatar = React.useCallback(async (avatar: IAvatarUploaded) => {
         try {
             const data = new FormData();
 
-            data.append('avatar', uploaded.file);
+            data.append('avatar', avatar.file);
 
             const response = await createAuthRequest().post<IMessageResponse>('user/avatar', data, { headers: { 'Content-Type': 'multipart/form-data' } });
 
@@ -44,14 +41,25 @@ const UploadAvatarModal: React.FC<IPromptModalProps> = ({ onSuccess, onCancelled
     const onFileSelected = React.useCallback(async (file: File) => {
         const src = await createBase64UrlFromFile(file);
 
-        setUploaded({ file, src });
+        setSelected({ file, src });
     }, []);
 
-    const onFileRemoved = React.useCallback(() => setUploaded(undefined), []);
+    const onFileRemoved = React.useCallback(() => setSelected(undefined), []);
+
+    const handleUploadClicked = React.useCallback((e: React.MouseEvent) => {
+        e.preventDefault();
+
+        if (!selected) {
+            logger.error('Upload was clicked when no avatar is selected.');
+            return;
+        }
+
+        uploadAvatar(selected);
+    }, [selected, uploadAvatar]);
 
     React.useEffect(() => {
         return () => {
-            setUploaded(undefined);
+            setSelected(undefined);
             setAlerts([]);
         };
     }, []);
@@ -69,11 +77,11 @@ const UploadAvatarModal: React.FC<IPromptModalProps> = ({ onSuccess, onCancelled
                         </Col>
                     </Row>
                     <DragDropFile multiple={false} accept="image/*" onFileSelected={onFileSelected} onFileRemoved={onFileRemoved}>
-                        {uploaded && <Avatar src={uploaded.src} alt='Avatar to upload' style={{ maxWidth: '100%' }} />}
+                        {selected && <Avatar src={selected.src} alt='Avatar to upload' style={{ maxWidth: '100%' }} />}
                     </DragDropFile>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => uploadAvatar()} disabled={uploaded === undefined}>
+                    <Button color="primary" onClick={handleUploadClicked} disabled={selected === undefined}>
                         Upload
                     </Button>
                     {' '}
