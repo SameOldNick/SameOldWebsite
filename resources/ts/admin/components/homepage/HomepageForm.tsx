@@ -60,7 +60,7 @@ const HomepageForm: React.FC<IProps> = (props) => {
         return initialValues;
     }, []);
 
-    const onHomepageFormSubmitted = React.useCallback(async ({ name, headline, location, biography }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+    const handleHomepageFormSubmitted = React.useCallback(async ({ name, headline, location, biography }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().post<IPageMetaData[]>('/pages/homepage', {
                 name,
@@ -127,7 +127,7 @@ const HomepageForm: React.FC<IProps> = (props) => {
                                 <Formik<IFormikValues>
                                     validationSchema={schema}
                                     initialValues={getInitialHomePageValues(metaData)}
-                                    onSubmit={onHomepageFormSubmitted}
+                                    onSubmit={handleHomepageFormSubmitted}
                                 >
                                     {({ errors, touched, isSubmitting, values, setFieldValue }) => (
                                         <>
