@@ -80,9 +80,7 @@ const Authenticated: React.FC<TProps> = ({ account: { fetchUser, user }, setUser
         return (
             <LoaderOverlay display={{ type: 'page', show: true }} />
         );
-    }
-
-    if (fetchUser.status === 'fulfilled') {
+    } else if (fetchUser.status === 'fulfilled') {
         return (
             <>
                 <PageVisibilityWrapper>
