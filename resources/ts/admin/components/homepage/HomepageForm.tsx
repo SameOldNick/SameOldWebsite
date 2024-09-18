@@ -178,8 +178,11 @@ const HomepageForm: React.FC<IProps> = (props) => {
                                                     <Col md={12}>
                                                         <FormGroup className='has-validation'>
                                                             <Label for='biography'>Biography:</Label>
-                                                            <MarkdownEditor mode='split' value={values.biography} onChange={(v) => setFieldValue('biography', v)} />
-                                                            {/* TODO: Fix error message not being displayed. */}
+
+                                                            <div className={classNames({ 'is-invalid': errors.biography })}>
+                                                                <MarkdownEditor mode='split' value={values.biography} onChange={(v) => setFieldValue('biography', v)} />
+                                                            </div>
+
                                                             <ErrorMessage name='biography' component='div' className='invalid-feedback' />
 
                                                         </FormGroup>
