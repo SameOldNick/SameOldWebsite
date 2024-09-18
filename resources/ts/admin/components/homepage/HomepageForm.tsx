@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikErrors, FormikHelpers } from 'formik';
 import { Button, Col, FormGroup, Input, Label, Row } from 'reactstrap';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -15,6 +15,7 @@ import { IHasRouter } from '@admin/components/hoc/WithRouter';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import Alerts, { IAlert } from '@admin/components/Alerts';
 
 export interface IFormikValues {
     name: string;
@@ -42,6 +43,14 @@ const HomepageForm: React.FC<IProps> = (props) => {
 
         return response.data;
     }, []);
+
+    const mapFormikErrorsToAlerts =
+        React.useCallback((errors: FormikErrors<IFormikValues>) =>
+            Object.entries(errors).filter(([, value]) => value).map<IAlert>(([key, value]) => ({
+                type: 'danger',
+                message: value
+            })),
+            []);
 
     const getInitialHomePageValues = React.useCallback((metaData: IPageMetaData[]) => {
         const initialValues = {
@@ -132,6 +141,11 @@ const HomepageForm: React.FC<IProps> = (props) => {
                                     {({ errors, touched, isSubmitting, values, setFieldValue }) => (
                                         <>
                                             <Form>
+                                                <Row>
+                                                    <Col md={12}>
+                                                        <Alerts alerts={mapFormikErrorsToAlerts(errors)} />
+                                                    </Col>
+                                                </Row>
 
                                                 <Row>
                                                     <Col md={12}>
