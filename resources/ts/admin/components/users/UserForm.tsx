@@ -86,7 +86,7 @@ const UserForm = React.forwardRef<TForwardedRef, TProps>(({ buttonContent, field
     return (
         <>
             <Formik<IFormikValues> innerRef={assignRef} validationSchema={schema} onSubmit={handleSubmit} {...props}>
-                {({ errors, touched, isSubmitting, values, ...helpers }) => (
+                {({ errors, touched, isSubmitting, values }) => (
                     <>
                         <Form>
 
