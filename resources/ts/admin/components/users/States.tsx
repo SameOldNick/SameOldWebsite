@@ -10,7 +10,7 @@ interface IStatesProps extends Omit<InputProps, 'type' | 'ref'> {
 
 type TStates = Record<string, string>;
 
-const States = React.forwardRef<Input, IStatesProps>(({ country, optional, ...props }, ref) => {
+const States = React.forwardRef<Input, IStatesProps>(({ country, optional = false, ...props }, ref) => {
     const [states, setStates] = React.useState<TStates>({});
 
     const fetchStates = React.useCallback(async (code: string) => {
@@ -55,9 +55,5 @@ const States = React.forwardRef<Input, IStatesProps>(({ country, optional, ...pr
 });
 
 States.displayName = 'States';
-
-States.defaultProps = {
-    optional: false
-}
 
 export default States;
