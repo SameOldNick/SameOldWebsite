@@ -62,7 +62,7 @@ const ContactFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 otherwise: (schema) => schema.notRequired()
             }),
         }),
-    []);
+        []);
 
     const getMetaData = React.useCallback(async () => {
         const response = await createAuthRequest().get<IPageMetaData[]>('/pages/contact');
@@ -99,16 +99,6 @@ const ContactFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
         return Object.assign(initialValues, values) as IFormikValues;
     }, []);
 
-    const onFormSubmitted = React.useCallback(async (values: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
-        try {
-            const response = await createAuthRequest().post<IPageMetaData[]>('/pages/contact', values);
-
-            await onUpdated(response);
-        } catch (e) {
-            await onError(e);
-        }
-    }, []);
-
     const onUpdated = React.useCallback(async (response: AxiosResponse<IPageMetaData[]>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
@@ -128,6 +118,16 @@ const ContactFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
             text: `An error occurred: ${message}`,
         });
     }, []);
+
+    const handleFormSubmit = React.useCallback(async (values: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+        try {
+            const response = await createAuthRequest().post<IPageMetaData[]>('/pages/contact', values);
+
+            await onUpdated(response);
+        } catch (e) {
+            await onError(e);
+        }
+    }, [onUpdated, onError]);
 
     const handleError = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -159,7 +159,7 @@ const ContactFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                 <Formik<IFormikValues>
                                     validationSchema={schema}
                                     initialValues={getInitialFormValues(metaData)}
-                                    onSubmit={onFormSubmitted}
+                                    onSubmit={handleFormSubmit}
                                 >
                                     {({ values, errors, touched, isSubmitting, setFieldValue }) => (
                                         <>
