@@ -34,9 +34,9 @@ const CommentList: React.FC<IProps> = ({ }) => {
     const load = React.useCallback(async (link?: string) => link === undefined ? loadInitial() : loadUpdate(link), [show, article, user]);
 
     const loadInitial = React.useCallback(async () => loadAll({
-            show: show !== 'all' ? show : undefined,
-            article: article ? article.article.id : undefined,
-            user: user ? user.user.id : undefined
+        show: show !== 'all' ? show : undefined,
+        article: article ? article.article.id : undefined,
+        user: user ? user.user.id : undefined
     }), [show, article, user]);
 
     const loadUpdate = React.useCallback(async (link: string) =>

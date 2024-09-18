@@ -33,8 +33,6 @@ const Edit = withRouter(({ router }: IProps) => {
     }, [router.params]);
 
     const handleLoadArticleError = React.useCallback(async (err: unknown) => {
-        const { navigate } = router;
-
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         const result = await withReactContent(Swal).fire({
@@ -49,9 +47,9 @@ const Edit = withRouter(({ router }: IProps) => {
         if (result.isConfirmed) {
             waitToLoadArticleRef.current?.load();
         } else {
-            navigate(-1);
+            router.navigate(-1);
         }
-    }, []);
+    }, [router.navigate, waitToLoadArticleRef.current]);
 
     React.useEffect(() => {
         setRenderCount(renderCount + 1);

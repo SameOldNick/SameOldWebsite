@@ -88,7 +88,7 @@ const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle
                 showCancelButton: true
             });
         }
-    }, [comment]);
+    }, [comment, onUpdated]);
 
     return (
         <>

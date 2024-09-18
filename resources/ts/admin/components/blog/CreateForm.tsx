@@ -106,7 +106,7 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
         } finally {
             setSubmitting(false);
         }
-    }, [onSaveAndPublishClicked]);
+    }, [onSaveAndPublishClicked, mainImage, images, tags]);
 
     const handleSaveButtonClicked = React.useCallback(async (e: React.MouseEvent<HTMLButtonElement>, { values, setSubmitting }: FormikProps<ICreateArticleFormValues>) => {
         try {
@@ -128,7 +128,7 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
         } finally {
             setSubmitting(false);
         }
-    }, [onSaveClicked]);
+    }, [onSaveClicked, mainImage, images, tags]);
 
     return (
         <>

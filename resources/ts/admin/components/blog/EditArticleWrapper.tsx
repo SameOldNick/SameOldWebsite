@@ -261,7 +261,7 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
             await handleApiError(err, () => handleActionButtonClicked(action, inputs, dirty));
         }
 
-    }, [article]);
+    }, [article, displaySuccess]);
 
     const handleRestoreRevisionClicked = React.useCallback(async () => {
         try {
@@ -310,7 +310,7 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
         const revision = await loadRevision();
 
         return createEditFormPropsFromRevision(revision);
-    }, []);
+    }, [createEditFormPropsFromRevision]);
 
     return (
         <>

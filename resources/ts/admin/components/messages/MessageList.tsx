@@ -142,11 +142,11 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
 
     }, []);
 
-    const handleDisplayOptionsFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleDisplayOptionsFormSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         waitToLoadRef.current?.load();
-    }
+    }, [waitToLoadRef.current]);
 
     return (
         <>

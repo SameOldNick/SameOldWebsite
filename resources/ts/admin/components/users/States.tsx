@@ -39,14 +39,12 @@ const States = React.forwardRef<Input, IStatesProps>(({ country, optional, ...pr
     React.useEffect(() => {
         if (country)
             fetchStates(country);
-    }, [country]);
-
-    const entries = Object.entries(states);
+    }, [country, fetchStates]);
 
     return (
         <>
             <Input ref={ref} type='select' {...props}>
-                {entries.map(([code, state], index) => (
+                {Object.entries(states).map(([code, state], index) => (
                     <option key={index} value={code}>
                         {state}
                     </option>

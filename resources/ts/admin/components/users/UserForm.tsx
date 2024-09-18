@@ -23,7 +23,7 @@ export interface IFormikValues {
 
 type TFormikProps = React.ComponentProps<typeof Formik<IFormikValues>>;
 
-interface IProps  {
+interface IProps {
     fields: 'create' | 'edit';
     buttonContent: React.ReactNode;
     onSubmit: (values: IFormikValues, helpers: Parameters<TFormikProps['onSubmit']>[1]) => Promise<void>;
@@ -61,7 +61,7 @@ const UserForm = React.forwardRef<TForwardedRef, TProps>(({ buttonContent, field
     }, [fields]);
 
     const handleSubmit = React.useCallback(async (values: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
-        await onSubmit({ ...values }, helpers);
+        await onSubmit(values, helpers);
 
         return Promise.resolve();
     }, [onSubmit]);
@@ -74,14 +74,14 @@ const UserForm = React.forwardRef<TForwardedRef, TProps>(({ buttonContent, field
         innerRef.current?.setFieldValue('roles', updated);
     }, [innerRef.current]);
 
-    const assignRef = (instance: TForwardedRef) => {
+    const assignRef = React.useCallback((instance: TForwardedRef) => {
         innerRef.current = instance;
 
         if (typeof forwardedRef === "function")
             forwardedRef(instance);
         else if (forwardedRef !== null)
             forwardedRef.current = instance;
-    };
+    }, [forwardedRef]);
 
     return (
         <>

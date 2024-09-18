@@ -112,9 +112,9 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
             tags: tags !== original.tags,
             images: images.length > 0
         };
-    }, [original, images]);
+    }, [original, images, tags, mainImage]);
 
-    const hasDirty = React.useCallback((values: IArticleFormValues): boolean => Object.values(getDirty(values)).includes(true), []);
+    const hasDirty = React.useCallback((values: IArticleFormValues): boolean => Object.values(getDirty(values)).includes(true), [getDirty]);
 
     const handleActionButtonClick = React.useCallback(async (action: TArticleActions) => {
         if (!formikRef.current) {
@@ -210,13 +210,13 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
         }
     }, [onActionButtonClicked]);
 
-    const handleSaveAsRevisionClicked = React.useCallback(() => handleActionButtonClick('save-as-revision'), []);
-    const handleUpdateClicked = React.useCallback(() => handleActionButtonClick('update'), []);
-    const handlePublishClicked = React.useCallback(() => handleActionButtonClick('publish'), []);
-    const handleUnpublishClicked = React.useCallback(() => handleActionButtonClick('unpublish'), []);
-    const handleScheduleClicked = React.useCallback(() => handleActionButtonClick('schedule'), []);
-    const handleUnscheduleClicked = React.useCallback(() => handleActionButtonClick('unschedule'), []);
-    const handleDeleteClicked = React.useCallback(() => handleActionButtonClick('delete'), []);
+    const handleSaveAsRevisionClicked = React.useCallback(() => handleActionButtonClick('save-as-revision'), [handleActionButtonClick]);
+    const handleUpdateClicked = React.useCallback(() => handleActionButtonClick('update'), [handleActionButtonClick]);
+    const handlePublishClicked = React.useCallback(() => handleActionButtonClick('publish'), [handleActionButtonClick]);
+    const handleUnpublishClicked = React.useCallback(() => handleActionButtonClick('unpublish'), [handleActionButtonClick]);
+    const handleScheduleClicked = React.useCallback(() => handleActionButtonClick('schedule'), [handleActionButtonClick]);
+    const handleUnscheduleClicked = React.useCallback(() => handleActionButtonClick('unschedule'), [handleActionButtonClick]);
+    const handleDeleteClicked = React.useCallback(() => handleActionButtonClick('delete'), [handleActionButtonClick]);
     const handleUploadMainImageClicked = React.useCallback(async () => {
         try {
             const uploaded = await awaitModalPrompt(UploadImageModal);

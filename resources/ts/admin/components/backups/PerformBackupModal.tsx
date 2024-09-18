@@ -138,7 +138,7 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
                 onClose();
         }
 
-    }, [canClose]);
+    }, [canClose, onClose]);
 
     const handleJobStatusEvent = React.useCallback((data: IJobData, event: string) => {
         if (event === '.JobStarted')

@@ -31,14 +31,6 @@ const Authenticated: React.FC<TProps> = ({ account: { fetchUser, user }, setUser
     const [performHeartbeat, setPerformHeartbeat] = React.useState(true);
     const [lastChecked, setLastChecked] = React.useState<DateTime | undefined>();
 
-    const ping = React.useCallback(async (params: IHeartbeatCallbackParams) => {
-        try {
-            await createAuthRequest().get<IUser>('user');
-        } catch (e) {
-            await onPingFailed(e);
-        }
-    }, []);
-
     const onPingFailed = React.useCallback(async (e: unknown) => {
         // Disable heartbeat from displaying alert over and over
         setPerformHeartbeat(false);
@@ -47,7 +39,7 @@ const Authenticated: React.FC<TProps> = ({ account: { fetchUser, user }, setUser
             defaultFormatter()
                 .addFormatterForStatusCode(401, 'You are no longer logged in. Click "Login" to be redirected to the login page.')
                 .addFallbackFormatter('An unknown error occurred determining if you\'re logged in. Click "Login" to be redirected to the login page.')
-                    .parse(axios.isAxiosError(e) ? e.response : undefined);
+                .parse(axios.isAxiosError(e) ? e.response : undefined);
 
         const result = await withReactContent(Swal).fire({
             icon: 'error',
@@ -61,6 +53,14 @@ const Authenticated: React.FC<TProps> = ({ account: { fetchUser, user }, setUser
             window.location.href = '/login';
         }
     }, []);
+
+    const ping = React.useCallback(async (params: IHeartbeatCallbackParams) => {
+        try {
+            await createAuthRequest().get<IUser>('user');
+        } catch (e) {
+            await onPingFailed(e);
+        }
+    }, [onPingFailed]);
 
     React.useEffect(() => {
         dispatchFetchUser();

@@ -47,7 +47,7 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         } else {
             navigate(-1);
         }
-    }, []);
+    }, [waitToLoadRef.current, navigate]);
 
     const getInitialValues = React.useCallback((project: IProject) => ({
         name: project.project,
@@ -57,6 +57,26 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
 
     const transformProjectTags = React.useCallback((tags: ITag[]): Tag[] => {
         return tags.map(({ tag, slug }, index) => ({ label: tag, value: slug ?? index }));
+    }, []);
+
+    const onUpdated = React.useCallback(async ({ }: AxiosResponse<IProject>) => {
+        await withReactContent(Swal).fire({
+            icon: 'success',
+            title: 'Project Updated',
+            text: 'The project was successfully updated.',
+        });
+
+        waitToLoadRef.current?.load();
+    }, [waitToLoadRef.current]);
+
+    const onError = React.useCallback(async (err: unknown) => {
+        const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+        await withReactContent(Swal).fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `An error occurred: ${message}`,
+        });
     }, []);
 
     const onSubmit = React.useCallback(async (project: IProject, { name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
@@ -72,27 +92,7 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         } catch (e) {
             await onError(e);
         }
-    }, []);
-
-    const onUpdated = React.useCallback(async ({ }: AxiosResponse<IProject>) => {
-        await withReactContent(Swal).fire({
-            icon: 'success',
-            title: 'Project Updated',
-            text: 'The project was successfully updated.',
-        });
-
-        waitToLoadRef.current?.load();
-    }, []);
-
-    const onError = React.useCallback(async (err: unknown) => {
-        const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-        await withReactContent(Swal).fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `An error occurred: ${message}`,
-        });
-    }, []);
+    }, [onUpdated, onError]);
 
     return (
         <>

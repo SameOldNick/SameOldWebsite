@@ -27,32 +27,34 @@ export type TSecurityAlertNotification = INotification<typeof SecurityAlertNotif
 interface ISecurityAlertsProps {
 }
 
-const determineBadgeColorForSeverity = (severity: string): string => {
-    switch (severity) {
-        case 'low': {
-            return 'success';
-        }
 
-        case 'medium': {
-            return 'info';
-        }
-
-        case 'high': {
-            return 'warning';
-        }
-
-        case 'critical': {
-            return 'danger';
-        }
-
-        default: {
-            return '';
-        }
-    }
-}
 
 const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
     const [selectedAlert, setSelectedAlert] = React.useState<TSecurityAlertNotification>();
+
+    const determineBadgeColorForSeverity = React.useCallback((severity: string): string => {
+        switch (severity) {
+            case 'low': {
+                return 'success';
+            }
+
+            case 'medium': {
+                return 'info';
+            }
+
+            case 'high': {
+                return 'warning';
+            }
+
+            case 'critical': {
+                return 'danger';
+            }
+
+            default: {
+                return '';
+            }
+        }
+    }, []);
 
     const fetchSecurityAlerts = React.useCallback(async () => {
         const alerts: TSecurityAlertNotification[] = [];
@@ -72,7 +74,7 @@ const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
 
     const handleModalClosed = React.useCallback(() => setSelectedAlert(undefined), []);
 
-    const getBadgeColorForAlert = React.useCallback((alert: TSecurityAlertNotification) => determineBadgeColorForSeverity(alert.data.issue.severity), []);
+    const getBadgeColorForAlert = React.useCallback((alert: TSecurityAlertNotification) => determineBadgeColorForSeverity(alert.data.issue.severity), [determineBadgeColorForSeverity]);
 
     return (
         <>

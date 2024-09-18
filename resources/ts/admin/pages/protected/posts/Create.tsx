@@ -87,7 +87,7 @@ const Create: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await handleSave(params);
         }
-    }, []);
+    }, [setMainImage, associateImages, associateTags]);
 
     const handleSaveAndPublish = React.useCallback(async (params: TSaveAndPublishArticleParams) => {
         try {
@@ -131,7 +131,7 @@ const Create: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await handleSaveAndPublish(params);
         }
-    }, []);
+    }, [setMainImage, associateImages, associateTags]);
 
     return (
         <>

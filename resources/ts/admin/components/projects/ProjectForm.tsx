@@ -45,7 +45,7 @@ const ProjectForm: React.FC<IProps> = ({ initialTags = [], buttonContent, onSubm
         await onSubmit({ tags, ...values }, helpers);
 
         return Promise.resolve();
-    }, [onSubmit]);
+    }, [tags, onSubmit]);
 
     return (
         <>

@@ -18,16 +18,6 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ open, onSave, onCancel }) 
 
     const allIcons = React.useMemo(getAllIcons, []);
 
-    const handleSelect = React.useCallback((icon: IIconType) => {
-        setSelected(icon !== selected ? icon : undefined);
-    }, [selected]);
-
-    const handleSubmit = React.useCallback((e: React.FormEvent) => {
-        e.preventDefault();
-
-        refreshIcons();
-    }, []);
-
     const refreshIcons = React.useCallback(() => {
         const input = inputRef.current?.value.toLowerCase() || '';
         const found: IIconType[] = [];
@@ -44,6 +34,16 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ open, onSave, onCancel }) 
 
         setIcons(found);
     }, []);
+
+    const handleSelect = React.useCallback((icon: IIconType) => {
+        setSelected(icon !== selected ? icon : undefined);
+    }, [selected]);
+
+    const handleSubmit = React.useCallback((e: React.FormEvent) => {
+        e.preventDefault();
+
+        refreshIcons();
+    }, [refreshIcons]);
 
     const handleSave = React.useCallback(() => {
         if (!selected)

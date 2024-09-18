@@ -75,7 +75,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await addSkill(newSkill);
         }
-    }, []);
+    }, [load]);
 
     const editSkill = React.useCallback(async (skill: ISkill) => {
         try {
@@ -105,32 +105,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await editSkill(skill);
         }
-    }, []);
-
-    const promptDeleteSkill = React.useCallback(async (skill: ISkill) => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `Do you really want to remove "${skill.skill}"?`,
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (!result.isConfirmed)
-            return;
-
-        const data = await deleteSkill(skill);
-
-        if (data !== false) {
-            await withReactContent(Swal).fire({
-                icon: 'success',
-                title: 'Success!',
-                text: data.success
-            });
-        }
-
-        await load();
-    }, []);
+    }, [load]);
 
     const deleteSkill = React.useCallback(async (skill: ISkill): Promise<Record<'success', string> | false> => {
         try {
@@ -157,6 +132,31 @@ const SkillList: React.FC<IProps> = ({ }) => {
                 return false;
         }
     }, []);
+
+    const promptDeleteSkill = React.useCallback(async (skill: ISkill) => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `Do you really want to remove "${skill.skill}"?`,
+            showConfirmButton: true,
+            showCancelButton: true
+        });
+
+        if (!result.isConfirmed)
+            return;
+
+        const data = await deleteSkill(skill);
+
+        if (data !== false) {
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Success!',
+                text: data.success
+            });
+        }
+
+        await load();
+    }, [load, deleteSkill]);
 
     const deleteSkills = React.useCallback(async () => {
         const toDelete = skills.filter((value) => value.selected);
@@ -191,7 +191,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
         });
 
         await load();
-    }, []);
+    }, [load, skills, deleteSkill]);
 
     const onItemSelected = React.useCallback((skill: ISkill, selected: boolean) => {
         setSkills((skills) => skills.map((item) => item.skill === skill ? { skill, selected } : item));
@@ -201,13 +201,13 @@ const SkillList: React.FC<IProps> = ({ }) => {
         const skill = await awaitModalPrompt(SkillPrompt);
 
         await addSkill(skill);
-    }, []);
+    }, [addSkill]);
 
     const handleEditButtonClicked = React.useCallback(async (skill: ISkill) => {
         const updated = await awaitModalPrompt(SkillPrompt, { existing: skill });
 
         await editSkill(updated);
-    }, []);
+    }, [editSkill]);
 
     React.useEffect(() => {
         load();

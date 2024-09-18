@@ -146,7 +146,7 @@ const ContactFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
         } else {
             navigate(-1);
         }
-    }, []);
+    }, [waitToLoadRef.current]);
 
     return (
         <>

@@ -9,7 +9,7 @@ interface IModalProps extends IPromptModalProps {
 }
 
 const MessageModal: React.FC<IModalProps> = ({ message, onSuccess }) => {
-    const toggle = React.useCallback(() => onSuccess(), []);
+    const toggle = React.useCallback(() => onSuccess(), [onSuccess]);
 
     const badges = React.useMemo(() => {
         const badges = [];
@@ -24,7 +24,7 @@ const MessageModal: React.FC<IModalProps> = ({ message, onSuccess }) => {
 
         if (message.expiresAt) {
             if (message.expiresAt.isAfter()) {
-                 badges.push(
+                badges.push(
                     <Badge title={message.expiresAt.toLocaleString()} color='info' className='me-1'>
                         {`Expires ${message.expiresAt.fromNow()}`}
                     </Badge>

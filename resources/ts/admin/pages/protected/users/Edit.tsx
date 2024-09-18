@@ -35,8 +35,6 @@ const Edit: React.FC<IProps> = ({ router }) => {
     }, [router.params]);
 
     const handleErrorGettingUser = React.useCallback(async (err: unknown, { reload }: IWaitToLoadHelpers) => {
-        const { navigate } = router;
-
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         const result = await withReactContent(Swal).fire({
@@ -51,9 +49,9 @@ const Edit: React.FC<IProps> = ({ router }) => {
         if (result.isConfirmed) {
             await reload();
         } else {
-            navigate(-1);
+            router.navigate(-1);
         }
-    }, []);
+    }, [router.navigate]);
 
     const getInitialValues = React.useCallback((user: User) => ({
         name: user.user.name || '',
@@ -68,24 +66,6 @@ const Edit: React.FC<IProps> = ({ router }) => {
     React.useEffect(() => {
         getUser();
     }, [router.params.user]);
-
-    const handleSubmit = React.useCallback(async(user: User, { name, email, password, confirm_password, state, country, roles }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
-        try {
-            const response = await createAuthRequest().put<IUser>(`users/${user.user.id}`, {
-                name,
-                email,
-                password,
-                password_confirmation: confirm_password,
-                state_code: state,
-                country_code: country,
-                roles
-            });
-
-            await handleUpdated(response);
-        } catch (e) {
-            await handleErrorUpdatingUser(e);
-        }
-    }, []);
 
     const handleUpdated = React.useCallback(async (response: AxiosResponse<IUser>) => {
         await withReactContent(Swal).fire({
@@ -106,6 +86,24 @@ const Edit: React.FC<IProps> = ({ router }) => {
             text: message,
         });
     }, []);
+
+    const handleSubmit = React.useCallback(async (user: User, { name, email, password, confirm_password, state, country, roles }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+        try {
+            const response = await createAuthRequest().put<IUser>(`users/${user.user.id}`, {
+                name,
+                email,
+                password,
+                password_confirmation: confirm_password,
+                state_code: state,
+                country_code: country,
+                roles
+            });
+
+            await handleUpdated(response);
+        } catch (e) {
+            await handleErrorUpdatingUser(e);
+        }
+    }, [handleUpdated, handleErrorUpdatingUser]);
 
     return (
         <>

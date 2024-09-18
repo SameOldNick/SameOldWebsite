@@ -151,13 +151,13 @@ const RecentActivity: React.FC<IRecentActivityProps> = ({ }) => {
         await markRead(activity.id);
 
         await waitToLoadRef.current?.load();
-    }, []);
+    }, [waitToLoadRef.current]);
 
     const handleMarkUnreadClicked = React.useCallback(async (activity: TActivityNotification) => {
         await markUnread(activity.id);
 
         await waitToLoadRef.current?.load();
-    }, []);
+    }, [waitToLoadRef.current]);
 
     return (
         <>

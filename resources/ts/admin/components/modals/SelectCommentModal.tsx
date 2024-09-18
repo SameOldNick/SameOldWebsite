@@ -78,7 +78,7 @@ const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allo
 
             onSuccess(selected);
         }
-    }, [onSuccess]);
+    }, [selected, onSuccess]);
 
     const passCommentsThru = React.useCallback((comments: IComment[]) => {
         return comments

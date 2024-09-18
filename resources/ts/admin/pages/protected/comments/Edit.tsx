@@ -31,8 +31,6 @@ const Edit = withRouter(({ router }: IProps) => {
     }, [comment, router.params]);
 
     const handleLoadError = React.useCallback(async (err: unknown) => {
-        const { navigate } = router;
-
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
         const result = await withReactContent(Swal).fire({
@@ -47,9 +45,9 @@ const Edit = withRouter(({ router }: IProps) => {
         if (result.isConfirmed) {
             load();
         } else {
-            navigate(-1);
+            router.navigate(-1);
         }
-    }, []);
+    }, [load, router.navigate]);
 
     React.useEffect(() => {
         try {

@@ -25,7 +25,7 @@ const ProjectListRow: React.FC<IProjectListRowProps> = ({ project, onDeleted, on
         } catch (err) {
             // Modal was cancelled.
         }
-    }, [onDeleted]);
+    }, [project, onDeleted]);
 
     const handleRestoreClicked = React.useCallback(async () => {
         try {
@@ -35,7 +35,7 @@ const ProjectListRow: React.FC<IProjectListRowProps> = ({ project, onDeleted, on
         } catch (err) {
             // Modal was cancelled.
         }
-    }, [onRestored]);
+    }, [project, onRestored]);
 
     return (
         <>

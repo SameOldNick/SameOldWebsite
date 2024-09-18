@@ -68,15 +68,14 @@ export default class Sidebar extends React.Component<TProps, IState> {
     }
 
     private static Toggle: React.FC<IToggleProps> = ({ toggled, onToggle }) => {
-        const toggle = (e: React.MouseEvent) => {
-
+        const toggle = React.useCallback((e: React.MouseEvent) => {
             e.preventDefault();
 
             onToggle();
-        }
+        }, [onToggle]);
 
         return (
-           <div className="text-center d-none d-md-inline">
+            <div className="text-center d-none d-md-inline">
                 <button id="sidebarToggle" className="rounded-circle border-0" onClick={toggle}>
                     {toggled ? <FaAngleRight /> : <FaAngleLeft />}
                 </button>
@@ -122,7 +121,7 @@ export default class Sidebar extends React.Component<TProps, IState> {
             window.addEventListener('resize', onResize);
 
             return () => window.removeEventListener('resize', onResize);
-        });
+        }, [onResize]);
 
         return (
             <DropdownContext.Provider value={{ hasActive, setHasActive, inDropdown: true }}>
@@ -178,7 +177,7 @@ export default class Sidebar extends React.Component<TProps, IState> {
             }
 
             return () => setIsActive(false);
-        }, [location]);
+        }, [location, href, exact]);
 
         return (
             <>

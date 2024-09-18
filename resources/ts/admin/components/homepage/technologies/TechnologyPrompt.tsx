@@ -28,13 +28,13 @@ const TechnologyPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }
             icon: `${selectedIcon?.prefix}-${selectedIcon?.name}`,
             technology: values.technology
         });
-    }, [existing, selectedIcon]);
+    }, [existing, selectedIcon, onSuccess]);
 
     const schema = React.useMemo(() =>
         Yup.object().shape({
             technology: Yup.string().required('Technology is required').max(255),
         })
-    , []);
+        , []);
 
     const initialValues = React.useMemo<IFormikValues>(() => ({ technology: existing?.technology || '' }), [existing]);
 

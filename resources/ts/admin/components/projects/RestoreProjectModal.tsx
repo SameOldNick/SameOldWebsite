@@ -13,23 +13,6 @@ interface IProps extends IPromptModalProps {
 }
 
 const RestoreProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled }) => {
-    const displayPrompt = React.useCallback(async () => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `Do you really want to restore the "${project.project}" project?`,
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            await restoreProject();
-
-            onSuccess();
-        } else {
-            onCancelled();
-        }
-    }, [onSuccess, onCancelled]);
-
     const restoreProject = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().post(`/projects/restore/${project.id}`, {});
@@ -50,7 +33,24 @@ const RestoreProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled
 
             onCancelled();
         }
-    }, [onCancelled]);
+    }, [project, onCancelled]);
+
+    const displayPrompt = React.useCallback(async () => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `Do you really want to restore the "${project.project}" project?`,
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            await restoreProject();
+
+            onSuccess();
+        } else {
+            onCancelled();
+        }
+    }, [project, restoreProject, onSuccess, onCancelled]);
 
     React.useEffect(() => {
         displayPrompt();

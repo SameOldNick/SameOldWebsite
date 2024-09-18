@@ -73,11 +73,21 @@ interface IAuthorizedProps {
 
 type TAuthorizedProps = ConnectedProps<typeof connector> & IAuthorizedProps;
 
-const Authorized: React.FC<TAuthorizedProps> = ({ account: { user }, roles, hasAll = true, oneOf = false, children, loading = <LoaderOverlay display={{ type: 'over-element' }} />, unauthorized = <></>, fetchUser, ...props }) => {
+const Authorized: React.FC<TAuthorizedProps> = ({
+    account: { user },
+    roles,
+    hasAll = true,
+    oneOf = false,
+    children,
+    loading = <LoaderOverlay display={{ type: 'over-element' }} />,
+    unauthorized = <></>,
+    fetchUser
+}) => {
     const [status, setStatus] = React.useState<'loading' | 'authorized' | 'unauthorized'>('loading');
-    const hasRoles = React.useCallback(async (user: User) => oneOf && !hasAll ? user.hasAnyRoles(...roles) : user.hasAllRoles(...roles), [user, roles]);
 
-    const checkForRoles = async () => {
+    const hasRoles = React.useCallback(async (user: User) => oneOf && !hasAll ? user.hasAnyRoles(...roles) : user.hasAllRoles(...roles), [user, roles, oneOf, hasAll]);
+
+    const checkForRoles = React.useCallback(async () => {
         setStatus('loading');
 
         if (user === undefined) {
@@ -89,7 +99,7 @@ const Authorized: React.FC<TAuthorizedProps> = ({ account: { user }, roles, hasA
         const found = await hasRoles(new User(user));
 
         setStatus(found ? 'authorized' : 'unauthorized');
-    }
+    }, [fetchUser, hasRoles]);
 
     React.useEffect(() => {
         checkForRoles();
@@ -105,7 +115,7 @@ const Authorized: React.FC<TAuthorizedProps> = ({ account: { user }, roles, hasA
         } else {
             return status === 'authorized' ? children : unauthorized;
         }
-    }, [status]);
+    }, [status, children, unauthorized]);
 
     return (
         <>

@@ -17,7 +17,7 @@ const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, on
     React.useEffect(() => {
         if (existing !== currentDateTime)
             setCurrentDateTime(existing ?? DateTime.now());
-    }, [existing]);
+    }, [existing, currentDateTime]);
 
     const handleDateChanged = React.useCallback((newValue: string) => {
         setDate(newValue);

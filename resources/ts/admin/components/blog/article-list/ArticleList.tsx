@@ -23,9 +23,7 @@ const ArticleList: React.FC<IProps> = ({ }) => {
 
     const [show, setShow] = React.useState<ArticleStatuses>(ArticleStatuses.all);
 
-    const loadArticles = React.useCallback(async (link?: string) => {
-        return link === undefined ? loadInitialArticles() : updateArticles(link);
-    }, []);
+
 
     const loadInitialArticles = React.useCallback(async () => {
         return fetchArticles(show);
@@ -36,6 +34,10 @@ const ArticleList: React.FC<IProps> = ({ }) => {
 
         return response.data;
     }, [show]);
+
+    const loadArticles = React.useCallback(async (link?: string) => {
+        return link === undefined ? loadInitialArticles() : updateArticles(link);
+    }, [loadInitialArticles, updateArticles]);
 
     const handleUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

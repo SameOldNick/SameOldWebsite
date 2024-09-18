@@ -69,6 +69,26 @@ const HomepageForm: React.FC<IProps> = (props) => {
         return initialValues;
     }, []);
 
+    const onUpdated = React.useCallback(async (response: AxiosResponse<IPageMetaData[]>) => {
+        await withReactContent(Swal).fire({
+            icon: 'success',
+            title: 'Updated',
+            text: 'The homepage was successfully updated.',
+        });
+
+        waitToLoadRef.current?.load();
+    }, [waitToLoadRef.current]);
+
+    const onError = React.useCallback(async (err: unknown) => {
+        const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+        await withReactContent(Swal).fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `An error occurred: ${message}`,
+        });
+    }, []);
+
     const handleHomepageFormSubmitted = React.useCallback(async ({ name, headline, location, biography }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().post<IPageMetaData[]>('/pages/homepage', {
@@ -82,27 +102,7 @@ const HomepageForm: React.FC<IProps> = (props) => {
         } catch (e) {
             await onError(e);
         }
-    }, []);
-
-    const onUpdated = React.useCallback(async (response: AxiosResponse<IPageMetaData[]>) => {
-        await withReactContent(Swal).fire({
-            icon: 'success',
-            title: 'Updated',
-            text: 'The homepage was successfully updated.',
-        });
-
-        waitToLoadRef.current?.load();
-    }, []);
-
-    const onError = React.useCallback(async (err: unknown) => {
-        const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-        await withReactContent(Swal).fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `An error occurred: ${message}`,
-        });
-    }, []);
+    }, [onUpdated, onError]);
 
     const handleError = React.useCallback(async (err: unknown) => {
         const { router: { navigate } } = props;
@@ -123,7 +123,7 @@ const HomepageForm: React.FC<IProps> = (props) => {
         } else {
             navigate(-1);
         }
-    }, [props.router]);
+    }, [props.router, waitToLoadRef.current]);
 
     return (
         <>

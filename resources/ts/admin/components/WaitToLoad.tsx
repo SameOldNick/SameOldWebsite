@@ -7,24 +7,24 @@ export interface IWaitToLoadHelpers {
 export type TWaitToLoadCallback<T> = (param: T | undefined, err: unknown | undefined, helpers: IWaitToLoadHelpers) => React.ReactNode;
 
 interface IProps<T> {
-	callback: () => Promise<T>;
-	loading: React.ReactNode;
-	maxTime?: number;
-	children?: React.ReactNode | TWaitToLoadCallback<T>;
+    callback: () => Promise<T>;
+    loading: React.ReactNode;
+    maxTime?: number;
+    children?: React.ReactNode | TWaitToLoadCallback<T>;
 }
 
 interface IIsLoadingState {
-	loading: true;
+    loading: true;
 }
 
 interface IFinishedState<T> {
-	loading: false;
-	returnValue: T;
+    loading: false;
+    returnValue: T;
 }
 
 interface IErrorState {
-	loading: false;
-	error: unknown;
+    loading: false;
+    error: unknown;
 }
 
 type TIsNotLoadingStates<T> = IFinishedState<T> | IErrorState;
@@ -49,6 +49,14 @@ function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime }: IPro
         }
     }));
 
+    const resolved = React.useCallback((value: TReturnValue) => {
+        setState({ loading: false, returnValue: value });
+    }, []);
+
+    const error = React.useCallback((err: unknown) => {
+        setState({ loading: false, error: err });
+    }, []);
+
     const load = React.useCallback(async () => {
         try {
             setState({ loading: true });
@@ -62,48 +70,32 @@ function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime }: IPro
             error(e);
         }
 
-		if (maxTime) {
-			waitTimeout = setTimeout(() => state.loading && setState({ loading: false, error: 'Maximum wait time reached.' }), maxTime);
-		}
-    }, [callback, maxTime]);
+        if (maxTime) {
+            waitTimeout = setTimeout(() => state.loading && setState({ loading: false, error: 'Maximum wait time reached.' }), maxTime);
+        }
+    }, [callback, maxTime, resolved, error]);
+
+    const isChildrenCallback = React.useCallback((value: any): value is TWaitToLoadCallback<any> => typeof value === 'function', []);
+
+    const isNotLoadingState = React.useCallback((state: TState<TReturnValue>): state is TIsNotLoadingStates<TReturnValue> => !state.loading, []);
+
+    const isErrorState = React.useCallback((state: any): state is IErrorState => !state.loading && state.error !== undefined && state.returnValue === undefined, []);
+
+    const isFinishedState = React.useCallback((state: any): state is IFinishedState<TReturnValue> => !state.loading && state.error === undefined && state.returnValue !== undefined, []);
 
     const helpers: IWaitToLoadHelpers = React.useMemo(() => ({
         reload: () => load()
-    }), []);
+    }), [load]);
 
-	const resolved = React.useCallback((value: TReturnValue) => {
-		setState({ loading: false, returnValue: value });
-	}, []);
-
-	const error = React.useCallback((err: unknown) => {
-		setState({ loading: false, error: err });
-	}, []);
-
-	const isChildrenCallback = React.useCallback((value: any): value is TWaitToLoadCallback<any> => {
-		return typeof value === 'function';
-	}, []);
-
-	const isNotLoadingState = React.useCallback((state: TState<TReturnValue>): state is TIsNotLoadingStates<TReturnValue> => {
-		return !state.loading;
-	}, []);
-
-	const isErrorState = React.useCallback((state: any): state is IErrorState => {
-		return !state.loading && state.error !== undefined && state.returnValue === undefined;
-	}, []);
-
-	const isFinishedState = React.useCallback((state: any): state is IFinishedState<TReturnValue> => {
-		return !state.loading && state.error === undefined && state.returnValue !== undefined;
-	}, []);
-
-	const renderChildren = React.useCallback((state: TIsNotLoadingStates<TReturnValue>) => {
-		if (isChildrenCallback(children) && isFinishedState(state)) {
-			return children(state.returnValue, undefined, helpers);
-		} else if (isErrorState(state) && isChildrenCallback(children)) {
-			return children(undefined, state.error, helpers);
-		} else {
-			return children;
-		}
-	}, [children]);
+    const renderChildren = React.useCallback((state: TIsNotLoadingStates<TReturnValue>) => {
+        if (isChildrenCallback(children) && isFinishedState(state)) {
+            return children(state.returnValue, undefined, helpers);
+        } else if (isErrorState(state) && isChildrenCallback(children)) {
+            return children(undefined, state.error, helpers);
+        } else {
+            return children;
+        }
+    }, [isChildrenCallback, isErrorState, isFinishedState, children, helpers]);
 
     React.useEffect(() => {
         load();

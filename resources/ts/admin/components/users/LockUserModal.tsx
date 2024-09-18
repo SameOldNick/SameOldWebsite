@@ -14,24 +14,6 @@ interface IProps extends IPromptModalProps {
 }
 
 const LockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => {
-    const displayPrompt = React.useCallback(async () => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `Do you really want to lock out user with email "${user.user.email}"?`,
-            confirmButtonColor: 'danger',
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            await lockUser();
-
-            onSuccess();
-        } else {
-            onCancelled();
-        }
-    }, [onSuccess, onCancelled]);
-
     // TODO: Move to seperate API class.
     const lockUser = React.useCallback(async () => {
         try {
@@ -53,7 +35,25 @@ const LockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => {
 
             onCancelled();
         }
-    }, [onCancelled]);
+    }, [user, onCancelled]);
+
+    const displayPrompt = React.useCallback(async () => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `Do you really want to lock out user with email "${user.user.email}"?`,
+            confirmButtonColor: 'danger',
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            await lockUser();
+
+            onSuccess();
+        } else {
+            onCancelled();
+        }
+    }, [user, lockUser, onSuccess, onCancelled]);
 
     React.useEffect(() => {
         displayPrompt();

@@ -87,7 +87,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 showCancelButton: true
             });
         }
-    }, [comment, setComment]);
+    }, [formikRef, comment, setComment]);
 
     return (
         <>
@@ -113,7 +113,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                                 <Button
                                     color="info"
                                     className='me-1'
-                                    onClick={() => {}}
+                                    onClick={() => { }}
                                 >
                                     <FaExternalLinkAlt />{' '}
                                     Preview

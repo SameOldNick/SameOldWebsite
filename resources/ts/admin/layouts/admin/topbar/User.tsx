@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import Avatar from '@admin/components/UserAvatar';
 import LogoutModal from '@admin/components/modals/LogoutModal';
 
-import accountSlice  from '@admin/store/slices/account';
+import accountSlice from '@admin/store/slices/account';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import awaitModalPrompt from '@admin/utils/modals';
 
@@ -28,6 +28,12 @@ type TProps = ConnectedProps<typeof connector> & IProps;
 const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage }) => {
     const [open, setOpen] = React.useState(false);
 
+    const logout = React.useCallback(async () => {
+        await createAuthRequest().post('logout', {});
+
+        dispatchAuthStage({ stage: 'none' });
+    }, [dispatchAuthStage]);
+
     const handleLogoutButtonClicked = React.useCallback(async () => {
         try {
             await awaitModalPrompt(LogoutModal);
@@ -37,13 +43,7 @@ const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage })
 
         }
 
-    }, []);
-
-    const logout = React.useCallback(async () => {
-        await createAuthRequest().post('logout', {});
-
-        dispatchAuthStage({ stage: 'none' });
-    }, [dispatchAuthStage]);
+    }, [logout]);
 
     React.useEffect(() => {
         if (stage.stage === 'none') {

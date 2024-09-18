@@ -13,24 +13,6 @@ interface IProps extends IPromptModalProps {
 }
 
 const DeleteProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled }) => {
-    const displayPrompt = React.useCallback(async () => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `Do you really want to delete the "${project.project}" project?`,
-            confirmButtonColor: 'danger',
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            await deleteProject();
-
-            onSuccess();
-        } else {
-            onCancelled();
-        }
-    }, [onSuccess, onCancelled]);
-
     const deleteProject = React.useCallback(async () => {
         try {
             const response = await createAuthRequest().delete(`/projects/${project.id}`);
@@ -51,7 +33,25 @@ const DeleteProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled 
 
             onCancelled();
         }
-    }, [onCancelled]);
+    }, [project, onCancelled]);
+
+    const displayPrompt = React.useCallback(async () => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `Do you really want to delete the "${project.project}" project?`,
+            confirmButtonColor: 'danger',
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            await deleteProject();
+
+            onSuccess();
+        } else {
+            onCancelled();
+        }
+    }, [project, deleteProject, onSuccess, onCancelled]);
 
     React.useEffect(() => {
         displayPrompt();

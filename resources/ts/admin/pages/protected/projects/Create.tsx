@@ -22,20 +22,7 @@ interface IProps {
 const Create: React.FC<IProps> = ({ }) => {
     const [project, setProject] = React.useState<IProject | undefined>();
 
-    const handleSubmit = React.useCallback(async ({ name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
-        try {
-            const response = await createAuthRequest().post<IProject>('projects', {
-                title: name,
-                description,
-                url,
-                tags: tags.map(({ label }) => label)
-            });
 
-            await onCreated(response);
-        } catch (e) {
-            await onError(e);
-        }
-    }, []);
 
     const onCreated = React.useCallback(async (response: AxiosResponse<IProject>) => {
         await withReactContent(Swal).fire({
@@ -56,6 +43,21 @@ const Create: React.FC<IProps> = ({ }) => {
             text: `An error occurred: ${message}`,
         });
     }, []);
+
+    const handleSubmit = React.useCallback(async ({ name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
+        try {
+            const response = await createAuthRequest().post<IProject>('projects', {
+                title: name,
+                description,
+                url,
+                tags: tags.map(({ label }) => label)
+            });
+
+            await onCreated(response);
+        } catch (e) {
+            await onError(e);
+        }
+    }, [onCreated, onError]);
 
     const initialValues = React.useMemo(() => ({
         name: '',

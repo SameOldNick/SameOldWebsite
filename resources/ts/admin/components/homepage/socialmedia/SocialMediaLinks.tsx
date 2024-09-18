@@ -75,7 +75,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             if (result.isConfirmed)
                 await addLink(link);
         }
-    }, []);
+    }, [load]);
 
     const updateLink = React.useCallback(async (item: ISocialMediaLinkItem, updatedLink: string) => {
         try {
@@ -105,26 +105,10 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             if (result.isConfirmed)
                 await updateLink(item, updatedLink);
         }
-    }, []);
-
-    const promptDeleteLink = React.useCallback(async (link: ISocialMediaLink) => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `Do you really want to remove "${link.link}"?`,
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (!result.isConfirmed)
-            return;
-
-        await deleteLink(link);
-
-    }, []);
+    }, [load]);
 
     const deleteLink = React.useCallback(async (link: ISocialMediaLink) => {
-         try {
+        try {
             const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${link.id}`);
 
             await withReactContent(Swal).fire({
@@ -152,6 +136,45 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
                 await deleteLink(link);
         }
 
+    }, [load]);
+
+    const promptDeleteLink = React.useCallback(async (link: ISocialMediaLink) => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `Do you really want to remove "${link.link}"?`,
+            showConfirmButton: true,
+            showCancelButton: true
+        });
+
+        if (!result.isConfirmed)
+            return;
+
+        await deleteLink(link);
+
+    }, [deleteLink]);
+
+    const deleteLinksOne = React.useCallback(async (item: ISocialMediaLinkItem) => {
+        try {
+            const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${item.link.id}`);
+
+        } catch (err) {
+            console.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to delete social media link ID "${item.link.id}": ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
+
+            if (result.isConfirmed)
+                await deleteLinksOne(item);
+        }
     }, []);
 
     const promptDeleteLinks = React.useCallback(async () => {
@@ -183,30 +206,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
         }
 
         await load();
-    }, []);
-
-    const deleteLinksOne = React.useCallback(async (item: ISocialMediaLinkItem) => {
-        try {
-            const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${item.link.id}`);
-
-        } catch (err) {
-            console.error(err);
-
-            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-            const result = await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `Unable to delete social media link ID "${item.link.id}": ${message}`,
-                confirmButtonText: 'Try Again',
-                showConfirmButton: true,
-                showCancelButton: true
-            });
-
-            if (result.isConfirmed)
-                await deleteLinksOne(item);
-        }
-    }, []);
+    }, [deleteLinksOne, load, links]);
 
     React.useEffect(() => {
         load();
@@ -233,7 +233,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
         } catch (err) {
             // Modal was cancelled.
         }
-    }, []);
+    }, [addLink]);
 
     const handleEditLinkClicked = React.useCallback(async (item: ISocialMediaLinkItem) => {
         try {
@@ -243,7 +243,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
         } catch (err) {
             // Modal was cancelled.
         }
-    }, []);
+    }, [updateLink]);
 
     return (
         <>

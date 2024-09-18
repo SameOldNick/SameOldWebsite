@@ -29,7 +29,7 @@ const ProjectList: React.FC<IProps> = ({ }) => {
         e.preventDefault();
 
         fetchProjects();
-    }, []);
+    }, [fetchProjects]);
 
     React.useEffect(() => {
         fetchProjects();

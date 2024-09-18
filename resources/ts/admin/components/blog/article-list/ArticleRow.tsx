@@ -21,91 +21,6 @@ interface IArticleProps {
 }
 
 const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
-    const handlePreviewClicked = React.useCallback((e: React.MouseEvent) => {
-        e.preventDefault();
-
-        // From https://stackoverflow.com/a/11384018/533242: Opens URL in new tab.
-        window.open(article.article.private_url, '_blank')?.focus();
-    }, [article]);
-
-    const handleEditClicked = React.useCallback((e: React.MouseEvent) => {
-        e.preventDefault();
-
-        // TODO: Use router instead
-        window.location.href = `posts/edit/${article.article.id}`;
-    }, []);
-
-    const handlePublishClicked = React.useCallback(async (e: React.MouseEvent) => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `The article will become visible to all users.`,
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            await publishArticle();
-
-            onUpdated();
-        }
-    }, [onUpdated]);
-
-    const handleScheduleClicked = React.useCallback(async (e: React.MouseEvent) => {
-        try {
-            const dateTime = await awaitModalPrompt(SelectDateTimeModal);
-
-            scheduleArticle(dateTime);
-        } catch (err) {
-            // User cancelled modal.
-        }
-    }, []);
-
-    const handleUnpublishClicked = React.useCallback(async (e: React.MouseEvent) => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `The article will become hidden.`,
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            await unpublishArticle();
-            onUpdated();
-        }
-    }, [onUpdated]);
-
-    const handleDeleteClicked = React.useCallback(async (e: React.MouseEvent) => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `The article can be restored later, if needed.`,
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            await deleteArticle();
-            onUpdated();
-        }
-    }, [onUpdated]);
-
-    const handleRestoreClicked = React.useCallback(async (e: React.MouseEvent) => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `The article maybe made public.`,
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (result.isConfirmed) {
-            await restoreArticle();
-            onUpdated();
-        }
-    }, [onUpdated]);
-
     const publishArticle = React.useCallback(async () => {
         try {
             await updateArticle(article.article.id, article.article.title, article.article.slug, DateTime.now());
@@ -226,6 +141,91 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
             }
         }
     }, [onUpdated]);
+
+    const handlePreviewClicked = React.useCallback((e: React.MouseEvent) => {
+        e.preventDefault();
+
+        // From https://stackoverflow.com/a/11384018/533242: Opens URL in new tab.
+        window.open(article.article.private_url, '_blank')?.focus();
+    }, [article]);
+
+    const handleEditClicked = React.useCallback((e: React.MouseEvent) => {
+        e.preventDefault();
+
+        // TODO: Use router instead
+        window.location.href = `posts/edit/${article.article.id}`;
+    }, []);
+
+    const handlePublishClicked = React.useCallback(async (e: React.MouseEvent) => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `The article will become visible to all users.`,
+            showConfirmButton: true,
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            await publishArticle();
+
+            onUpdated();
+        }
+    }, [publishArticle, onUpdated]);
+
+    const handleScheduleClicked = React.useCallback(async (e: React.MouseEvent) => {
+        try {
+            const dateTime = await awaitModalPrompt(SelectDateTimeModal);
+
+            scheduleArticle(dateTime);
+        } catch (err) {
+            // User cancelled modal.
+        }
+    }, [scheduleArticle]);
+
+    const handleUnpublishClicked = React.useCallback(async (e: React.MouseEvent) => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `The article will become hidden.`,
+            showConfirmButton: true,
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            await unpublishArticle();
+            onUpdated();
+        }
+    }, [unpublishArticle, onUpdated]);
+
+    const handleDeleteClicked = React.useCallback(async (e: React.MouseEvent) => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `The article can be restored later, if needed.`,
+            showConfirmButton: true,
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            await deleteArticle();
+            onUpdated();
+        }
+    }, [deleteArticle, onUpdated]);
+
+    const handleRestoreClicked = React.useCallback(async (e: React.MouseEvent) => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `The article maybe made public.`,
+            showConfirmButton: true,
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            await restoreArticle();
+            onUpdated();
+        }
+    }, [restoreArticle, onUpdated]);
 
     return (
         <>

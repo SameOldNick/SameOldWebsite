@@ -53,10 +53,7 @@ const Loader: React.FC<IProps> = ({ display }) => {
         }
     }, []);
 
-    if (display.type === 'page')
-        return renderPage(display);
-    else
-        return renderOverElement(display);
+    return React.useMemo(() => display.type === 'page' ? renderPage(display) : renderOverElement(display), [display]);
 }
 
 export default Loader;

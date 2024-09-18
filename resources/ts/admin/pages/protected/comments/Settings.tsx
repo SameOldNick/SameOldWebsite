@@ -30,18 +30,6 @@ const Settings: React.FC<IProps> = ({ }) => {
         }, {}) as ICommentSettings;
     }, []);
 
-    const handleSaveSettings = React.useCallback(async (settings: ICommentSettings) => {
-        try {
-            const response = await createAuthRequest().post<ICommentSettings>('blog/settings', settings);
-
-            await handleResponse(response.data);
-        } catch (err) {
-            await handleError(err);
-        } finally {
-            waitToLoadRef.current?.load();
-        }
-    }, []);
-
     const handleResponse = React.useCallback(async (response: ICommentSettings) => {
         await withReactContent(Swal).fire({
             icon: 'success',
@@ -61,6 +49,18 @@ const Settings: React.FC<IProps> = ({ }) => {
             text: `An error occurred: ${message}`,
         });
     }, []);
+
+    const handleSaveSettings = React.useCallback(async (settings: ICommentSettings) => {
+        try {
+            const response = await createAuthRequest().post<ICommentSettings>('blog/settings', settings);
+
+            await handleResponse(response.data);
+        } catch (err) {
+            await handleError(err);
+        } finally {
+            waitToLoadRef.current?.load();
+        }
+    }, [handleResponse, handleError, waitToLoadRef.current]);
 
     return (
         <>
@@ -87,7 +87,7 @@ const Settings: React.FC<IProps> = ({ }) => {
                         )}
                     </>
 
-            )}
+                )}
             </WaitToLoad>
         </>
     );
