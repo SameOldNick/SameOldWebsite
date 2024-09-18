@@ -10,6 +10,8 @@ return Application::configure(basePath: dirname(__DIR__))
         Illuminate\Contracts\Console\Kernel::class => App\Console\Kernel::class,
     ])->withMiddleware(function (Middleware $middleware) {
         $middleware->preventRequestsDuringMaintenance(except: [
+            '/api/*',
+            '/admin/*',
         ])->use([
             // \App\Http\Middleware\TrustHosts::class,
             \App\Http\Middleware\TrustProxies::class,
