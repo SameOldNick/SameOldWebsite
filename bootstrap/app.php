@@ -9,11 +9,11 @@ return Application::configure(basePath: dirname(__DIR__))
         Illuminate\Contracts\Http\Kernel::class => App\Http\Kernel::class,
         Illuminate\Contracts\Console\Kernel::class => App\Console\Kernel::class,
     ])->withMiddleware(function (Middleware $middleware) {
-        $middleware->use([
+        $middleware->preventRequestsDuringMaintenance(except: [
+        ])->use([
             // \App\Http\Middleware\TrustHosts::class,
             \App\Http\Middleware\TrustProxies::class,
             \Illuminate\Http\Middleware\HandleCors::class,
-            \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
             \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
             \App\Http\Middleware\TrimStrings::class,
             \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
