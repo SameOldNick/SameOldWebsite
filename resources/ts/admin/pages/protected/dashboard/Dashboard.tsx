@@ -3,6 +3,9 @@ import { Button, Col, Row } from 'reactstrap';
 import { FaDownload } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
 import Heading from '@admin/layouts/admin/Heading';
 
 import DashboardCard from '@admin/components/dashboard/Card';
@@ -16,9 +19,9 @@ import PopularLinks from './charts/PopularLinks';
 import StatCards from './StatCards';
 import SecurityAlerts from './SecurityAlerts';
 import RecentActivity from './RecentActivity';
+import QuickLinks from './QuickLinks';
 
 import { fetchPopularBrowsers, fetchPopularLinks, fetchVisitorsOverTime } from '@admin/utils/api/endpoints/dashboard';
-import QuickLinks from './QuickLinks';
 
 interface IProps {
 
@@ -37,6 +40,14 @@ const Dashboard: React.FC<IProps> = ({ }) => {
         }
     }, []);
 
+    const handleGenerateReportClicked = React.useCallback(async () => {
+        await withReactContent(Swal).fire({
+            icon: 'info',
+            title: 'Not Implemented',
+            text: 'This feature is not yet implemented. Please check back later!',
+        });
+    }, []);
+
     React.useEffect(() => {
         tryFetchVisitors();
     }, []);
@@ -48,7 +59,7 @@ const Dashboard: React.FC<IProps> = ({ }) => {
             </Helmet>
 
             <Heading title="Dashboard">
-                <Button size="sm" color="primary" className="d-none d-sm-inline-block shadow-sm">
+                <Button size="sm" color="primary" className="d-none d-sm-inline-block shadow-sm" onClick={handleGenerateReportClicked}>
                     <FaDownload className='fa-sm text-white-50' /> Generate Report
                 </Button>
             </Heading>
