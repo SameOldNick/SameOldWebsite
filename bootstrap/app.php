@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->preventRequestsDuringMaintenance(except: [
             '/api/*',
             '/admin/*',
-            '/user/*/avatar'
+            '/user/*/avatar',
         ])->use([
             // \App\Http\Middleware\TrustHosts::class,
             \App\Http\Middleware\TrustProxies::class,
