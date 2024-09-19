@@ -32,6 +32,7 @@ export function getEchoOptions() {
         wsHost: import.meta.env.VITE_REVERB_HOST,
         wsPort: import.meta.env.VITE_REVERB_PORT,
         wssPort: import.meta.env.VITE_REVERB_PORT,
+        wsPath: import.meta.env.VITE_REVERB_PATH,
         forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
         enabledTransports: ['ws', 'wss'],
         authorizer
