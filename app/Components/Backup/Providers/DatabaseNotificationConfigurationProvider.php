@@ -9,13 +9,11 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
 {
     /**
      * The table storing the configuration.
-     *
-     * @var string
      */
     protected string $table = 'backup_config';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function channels(string $notification): array
     {
@@ -23,7 +21,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getMailToEmails(): array
     {
@@ -31,7 +29,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getMailFromEmail(): string
     {
@@ -39,7 +37,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getMailFromName(): ?string
     {
@@ -47,7 +45,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getDiscordWebhook(): string
     {
@@ -55,7 +53,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getDiscordUsername(): string
     {
@@ -63,7 +61,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getDiscordAvatarUrl(): ?string
     {
@@ -71,7 +69,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getSlackWebhook(): string
     {
@@ -79,7 +77,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getSlackUsername(): string
     {
@@ -87,7 +85,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getSlackIcon(): ?string
     {
@@ -95,7 +93,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getSlackChannel(): string
     {
@@ -104,8 +102,6 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
 
     /**
      * Gets table name
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -114,9 +110,6 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
 
     /**
      * Creates table key name
-     *
-     * @param string $key
-     * @return string
      */
     protected function createKey(string $key): string
     {
@@ -125,9 +118,6 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
 
     /**
      * Gets array value from table
-     *
-     * @param string $key
-     * @return array
      */
     protected function getArrayValue(string $key, array $default = []): array
     {
@@ -144,8 +134,7 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     /**
      * Gets string value or default
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  mixed  $default
      * @return mixed
      */
     protected function getStringValue(string $key, $default = null)

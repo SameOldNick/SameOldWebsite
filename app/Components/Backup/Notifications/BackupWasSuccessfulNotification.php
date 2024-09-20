@@ -2,8 +2,8 @@
 
 namespace App\Components\Backup\Notifications;
 
-use Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification as BaseNotification;
 use App\Components\Backup\Concerns\PullsNotificationConfiguration;
+use Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification as BaseNotification;
 
 class BackupWasSuccessfulNotification extends BaseNotification
 {

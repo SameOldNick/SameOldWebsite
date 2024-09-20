@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\Setup;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -30,12 +29,12 @@ class BackupConfigSeeder extends Seeder
         ];
 
         foreach ($defaults as $key => $value) {
-            $wrapped = array_filter(!is_array($value) ? [$value] : $value);
+            $wrapped = array_filter(! is_array($value) ? [$value] : $value);
 
             foreach ($wrapped as $value) {
                 DB::table('backup_config')->insert([
                     'key' => $key,
-                    'value' => $value
+                    'value' => $value,
                 ]);
             }
         }

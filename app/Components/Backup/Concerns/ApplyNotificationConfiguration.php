@@ -4,15 +4,13 @@ namespace App\Components\Backup\Concerns;
 
 use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
 use Illuminate\Notifications\Messages\MailMessage;
-use Spatie\Backup\Notifications\Channels\Discord\DiscordMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Spatie\Backup\Notifications\Channels\Discord\DiscordMessage;
 
 trait ApplyNotificationConfiguration
 {
     /**
      * Gets the configuration provider.
-     *
-     * @return NotificationConfigurationProviderInterface
      */
     protected function getConfigurationProvider(): NotificationConfigurationProviderInterface
     {
@@ -21,9 +19,6 @@ trait ApplyNotificationConfiguration
 
     /**
      * Applies configuration to mail message.
-     *
-     * @param MailMessage $mailMessage
-     * @return MailMessage
      */
     protected function applyConfigurationToMailMessage(MailMessage $mailMessage): MailMessage
     {
@@ -34,9 +29,6 @@ trait ApplyNotificationConfiguration
 
     /**
      * Applies configuration to slack message.
-     *
-     * @param SlackMessage $slackMessage
-     * @return SlackMessage
      */
     protected function applyConfigurationToSlackMessage(SlackMessage $slackMessage): SlackMessage
     {
@@ -49,9 +41,6 @@ trait ApplyNotificationConfiguration
 
     /**
      * Applies configuration to discord message.
-     *
-     * @param DiscordMessage $discordMessage
-     * @return DiscordMessage
      */
     protected function applyConfigurationToDiscordMessage(DiscordMessage $discordMessage): DiscordMessage
     {

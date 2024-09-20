@@ -3,8 +3,8 @@
 namespace App\Components\Backup\Concerns;
 
 use Illuminate\Notifications\Messages\MailMessage;
-use Spatie\Backup\Notifications\Channels\Discord\DiscordMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Spatie\Backup\Notifications\Channels\Discord\DiscordMessage;
 
 trait PullsNotificationConfiguration
 {
