@@ -22,6 +22,7 @@ class SetupSeeder extends Seeder
             Setup\PageSeeder::class,
             Setup\ContactPageSettingsSeeder::class,
             Setup\CommentSettingsSeeder::class,
+            Setup\BackupConfigSeeder::class,
         ]);
     }
 }
