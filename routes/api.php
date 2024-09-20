@@ -96,10 +96,10 @@ Route::namespace(Api::class)->group(function () {
         ]);
 
         Route::prefix('/backups')->group(function () {
-            Route::get('/', [Api\BackupController::class, 'index']);
-            Route::get('/{backup}', [Api\BackupController::class, 'show']);
-            Route::get('/{backup}/download', [Api\BackupController::class, 'generateDownloadLink']);
-            Route::post('/perform', [Api\BackupController::class, 'performBackup']);
+            Route::get('/', [Api\Backup\BackupController::class, 'index']);
+            Route::get('/{backup}', [Api\Backup\BackupController::class, 'show']);
+            Route::get('/{backup}/download', [Api\Backup\BackupController::class, 'generateDownloadLink']);
+            Route::post('/perform', [Api\Backup\BackupController::class, 'performBackup']);
         });
 
         Route::apiResource('contact-messages', Api\ContactMessagesController::class)->except(['store']);

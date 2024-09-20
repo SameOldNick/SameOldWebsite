@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Backup;
 
 use App\Components\Websockets\Notifiers\JobStatusNotifier;
 use App\Http\Controllers\Controller;
@@ -8,7 +8,6 @@ use App\Jobs\BackupJob;
 use App\Models\Backup;
 use App\Models\Collections\BackupCollection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class BackupController extends Controller
 {
@@ -46,28 +45,6 @@ class BackupController extends Controller
              */
             return ! is_null($collection) ? $collection->values() : null;
         });
-
-        /*$query = match ((string) $request->str('show')) {
-            'successful' => $query->filter(fn($model) => $model->status === 'successful')
-        };*/
-
-        /*switch ($request->str('show', 'both')) {
-            case 'successful': {
-                $query = $query->where('status', 'successful');
-
-                break;
-            }
-
-            case 'failed': {
-                $query = $query->where('status', 'failed');
-
-                break;
-            }
-
-            default: {
-                break;
-            }
-        }*/
 
         return $query->paginate();
     }
