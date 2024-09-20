@@ -121,14 +121,9 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
      */
     protected function getArrayValue(string $key, array $default = []): array
     {
-        $values = [];
-        $rows = DB::table($this->getTable())->where('key', $key)->get();
+        $row = DB::table($this->getTable())->where('key', $key)->first();
 
-        foreach ($rows as $row) {
-            $values[] = $row->value;
-        }
-
-        return count($values) > 0 ? $values : $default;
+        return $row ? explode(';', $row->value) : $default;
     }
 
     /**

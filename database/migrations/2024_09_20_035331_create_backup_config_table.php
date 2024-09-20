@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('backup_config', function (Blueprint $table) {
             $table->id();
-            $table->string('key');
-            $table->string('value');
+            $table->string('key')->unique();
+            $table->text('value');
         });
     }
 

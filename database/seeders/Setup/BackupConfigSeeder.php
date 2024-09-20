@@ -29,14 +29,12 @@ class BackupConfigSeeder extends Seeder
         ];
 
         foreach ($defaults as $key => $value) {
-            $wrapped = array_filter(! is_array($value) ? [$value] : $value);
+            $value = is_array($value) ? implode(';', $value) : $value;
 
-            foreach ($wrapped as $value) {
-                DB::table('backup_config')->insert([
-                    'key' => $key,
-                    'value' => $value,
-                ]);
-            }
+            DB::table('backup_config')->insert([
+                'key' => $key,
+                'value' => $value ?? '',
+            ]);
         }
     }
 }
