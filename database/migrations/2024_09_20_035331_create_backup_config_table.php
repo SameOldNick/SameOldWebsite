@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('backup_config', function (Blueprint $table) {
             $table->id();
             $table->string('key');
-            $table->text('value');
+            $table->string('value');
         });
     }
 
