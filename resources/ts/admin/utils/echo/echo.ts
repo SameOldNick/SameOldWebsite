@@ -82,8 +82,20 @@ export function attachEchoWrapperToWindow(echo: EchoWrapper): EchoWrapper {
  * @export
  * @returns {Echo}
  */
-export default function createEcho(): Echo {
+export function createEcho(): Echo {
     const options = getEchoOptions();
 
     return new Echo(options);
+}
+
+/**
+ * Creates Echo for EchoProvider
+ *
+ * @export
+ * @return {EchoWrapper} 
+ */
+export default function factory() {
+    const echo = attachEchoToWindow(createEcho());
+
+    return attachEchoWrapperToWindow(wrapEcho(echo));
 }

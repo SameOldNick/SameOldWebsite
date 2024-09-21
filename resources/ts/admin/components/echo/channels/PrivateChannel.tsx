@@ -24,7 +24,13 @@ const PrivateChannel: React.ForwardRefRenderFunction<IPrivateChannelHandle, IPri
         return null;
     }
 
-    const echoChannel = React.useMemo(() => context.echo.private(channel), [channel]);
+    const echoChannel = React.useMemo(() => context.echo?.private(channel), [channel]);
+
+    if (!echoChannel) {
+        logger.error('Echo functionality is unavailable.');
+
+        return null;
+    }
 
     React.useImperativeHandle(ref, () => ({
         channel: echoChannel

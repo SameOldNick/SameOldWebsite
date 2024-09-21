@@ -22,7 +22,13 @@ const Channel: React.ForwardRefRenderFunction<IChannelHandle, IChannelProps> = (
         return null;
     }
 
-    const pusherChannel = React.useMemo(() => typeof channel === 'string' ? context.echo.channel(channel) : channel, [channel]);
+    const pusherChannel = React.useMemo(() => typeof channel === 'string' ? context.echo?.channel(channel) : channel, [channel]);
+
+    if (!pusherChannel) {
+        logger.error('Echo functionality is unavailable.');
+
+        return null;
+    }
 
     React.useImperativeHandle(ref, () => ({
         channel: pusherChannel
