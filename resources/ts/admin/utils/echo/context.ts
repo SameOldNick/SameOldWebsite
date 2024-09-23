@@ -5,7 +5,7 @@ import EchoWrapper from './wrappers/EchoWrapper';
 import ChannelWrapper from './wrappers/ChannelWrapper';
 
 export interface IEchoContextValue {
-    echo: EchoWrapper | null;
+    echo: EchoWrapper;
 }
 
 export interface IPusherChannelValue {

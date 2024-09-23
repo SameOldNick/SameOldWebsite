@@ -18,6 +18,14 @@ const Provider: React.FC<IProviderEchoProps> = ({ factory, children }) => {
         }
     }, [factory]);
 
+    if (!echo) {
+        logger.warn('The Echo functionality is disabled.');
+        
+        return (
+            <>{children}</>
+        );
+    }
+
     return (
         <>
             <EchoContext.Provider value={{ echo }}>
