@@ -1,5 +1,5 @@
 
-import { combineReducers, Middleware } from 'redux';
+import { Middleware } from 'redux';
 import { configureStore, Tuple } from '@reduxjs/toolkit'
 import { thunk } from 'redux-thunk';
 import logger from 'redux-logger';
@@ -15,11 +15,11 @@ const createRootMiddlewares = () => {
     return new Tuple(...middleware);
 }
 
-const createStore = () => configureStore({
-});
-
-const store = createStore();
+const factory = () => {
+    return configureStore({
         middleware: createRootMiddlewares,
         reducer: reducers,
+    });
+}
 
-export default store;
+export default factory;

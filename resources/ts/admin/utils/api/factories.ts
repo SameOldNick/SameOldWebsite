@@ -1,7 +1,6 @@
 import { buildUrl } from 'build-url-ts';
 import { AxiosRequestConfig } from 'axios';
-
-import store from '@admin/store';
+import { Store } from 'redux';
 
 import account from '@admin/store/slices/account';
 
@@ -33,21 +32,17 @@ export const createRequest = (config: AxiosRequestConfig = {}) => {
 	});
 }
 
-/**
- * Attaches token to each API request for authenticated API calls
- * @returns Request instance
- */
-export const createAuthRequest = (config: AxiosRequestConfig = {}) => {
+export const createAuthRequestWithStore = (store: Store, config: AxiosRequestConfig = {}) => {
     const request = createRequest(config);
 
     request.onAxiosInstanceCreated((instance) => {
-        const { account: { stage } } = store.getState();
+        const { account: { stage } } = store.getState();  // Access store here
 
         if (stage.stage === 'authenticated') {
             instance.interceptors.request.use((config) => {
-                if (config.headers)
+                if (config.headers) {
                     config.headers.Authorization = `Bearer ${stage.accessToken.access_token}`;
-
+                }
                 return config;
             });
         }
@@ -83,4 +78,23 @@ export const createAuthRequest = (config: AxiosRequestConfig = {}) => {
     }
 
     return new RefreshAccessTokenHttpRequest(request, requestNewToken, storeAccessToken);
+};
+
+let initializedStore: Store | null = null; // Lazy store reference
+
+/**
+ * Attaches token to each API request for authenticated API calls
+ * @returns Request instance
+ */
+export const createAuthRequest = (config: AxiosRequestConfig = {}) => {
+    if (!initializedStore) {
+        throw new Error("Store has not been initialized.");
+    }
+
+    return createAuthRequestWithStore(initializedStore, config);
 }
+
+// Function to set the store after it's initialized
+export const setStore = (store: Store) => {
+    initializedStore = store;
+};

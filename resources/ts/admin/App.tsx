@@ -7,20 +7,26 @@ import { IconContext } from "react-icons";
 import Pages from '@admin/pages';
 import EchoProvider from '@admin/components/echo/Provider';
 
-import store from '@admin/store/index';
+import storeFactory from '@admin/store/index';
 import echoFactory from '@admin/utils/echo/echo';
+import { setStore } from './utils/api/factories';
 
 interface IProps {
 
 }
 
 const App: React.FC<IProps> = ({ }) => {
+    const store = storeFactory();
+
+    setStore(store);
+
     return (
         <>
             <Helmet titleTemplate='%s | Same Old Nick' />
 
             <Provider store={store}>
                 <EchoProvider factory={echoFactory}>
+                    
                     <IconContext.Provider value={{ className: 'react-icons' }}>
                         <Router>
                             <Pages />
@@ -28,6 +34,7 @@ const App: React.FC<IProps> = ({ }) => {
                     </IconContext.Provider>
                 </EchoProvider>
             </Provider>
+
         </>
     );
 }
