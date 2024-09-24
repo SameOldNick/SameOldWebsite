@@ -5,16 +5,16 @@ import { Badge, Button } from 'reactstrap';
 import moment from 'moment';
 import S from 'string';
 
-import { TSecurityAlertNotification } from '@admin/pages/protected/dashboard/SecurityAlerts';
+import SecurityNotification from '@admin/utils/api/models/notifications/SecurityNotification';
 
 interface ISecurityAlertRowProps {
     badgeColor: string;
-    alert: TSecurityAlertNotification;
+    notification: SecurityNotification;
     onViewClicked: () => void;
 }
 
-const SecurityAlertRow: React.FC<ISecurityAlertRowProps> = ({ badgeColor, alert, onViewClicked }) => {
-    const { data: { issue } } = alert;
+const SecurityAlertRow: React.FC<ISecurityAlertRowProps> = ({ badgeColor, notification, onViewClicked }) => {
+    const { issue } = notification.getData();
 
     const handleViewClicked = React.useCallback((e: React.MouseEvent) => {
         e.preventDefault();

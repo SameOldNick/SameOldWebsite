@@ -3,16 +3,16 @@ import { Badge, Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, Mo
 
 import moment from 'moment';
 import S from 'string';
-import { TSecurityAlertNotification } from '@admin/pages/protected/dashboard/SecurityAlerts';
+import SecurityNotification from '@admin/utils/api/models/notifications/SecurityNotification';
 
 interface ISecurityAlertModalProps {
-    alert: TSecurityAlertNotification;
+    notification: SecurityNotification;
     badgeColor: string;
     onClosed: () => void;
 }
 
-const SecurityAlertModal: React.FC<ISecurityAlertModalProps> = ({ badgeColor, alert, onClosed }) => {
-    const { data: { issue } } = alert;
+const SecurityAlertModal: React.FC<ISecurityAlertModalProps> = ({ badgeColor, notification, onClosed }) => {
+    const { issue } = notification.getData();
 
     return (
         <Modal isOpen onClosed={onClosed} size='lg'>

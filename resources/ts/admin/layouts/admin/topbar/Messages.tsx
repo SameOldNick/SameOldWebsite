@@ -2,10 +2,9 @@ import React from 'react';
 import { FaEnvelope } from 'react-icons/fa';
 import { Dropdown, DropdownToggle, Badge, DropdownMenu, DropdownItem } from 'reactstrap';
 
+import { ConnectedProps, connect } from 'react-redux';
 import classNames from 'classnames';
 import md5 from 'blueimp-md5';
-import { DateTime } from 'luxon';
-import { ConnectedProps, connect } from 'react-redux';
 
 import { fetchMessages } from '@admin/store/slices/notifications';
 
@@ -59,16 +58,17 @@ const Messages: React.FC<TProps> = ({ stored, fetchMessages }) => {
     }, []);
 
     const messages = React.useMemo(() => stored.map((message) => {
-        const address = message.data.addresses.replyTo.length > 0 ? message.data.addresses.replyTo[0].address : null;
+        const data = message.getData(); console.log(data);
+        const address = data.addresses.replyTo.length > 0 ? data.addresses.replyTo[0].address : null;
         const imageUrl = address !== null ? buildGravatarUrl(address) : user;
 
         return {
             link: '/admin/contact/messages',
             author: address ?? 'Unknown',
             image: imageUrl,
-            text: message.data.subject,
-            timeAgo: DateTime.fromISO(message.created_at).toRelative() ?? 'unknown',
-            read: message.read_at !== null
+            text: data.subject,
+            timeAgo: message.createdAt.toRelative() ?? 'unknown',
+            read: message.readAt !== null
         };
     }), [stored]);
 
