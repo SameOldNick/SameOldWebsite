@@ -1,11 +1,12 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
-import { createAuthRequest } from "@admin/utils/api/factories";
-import { all, isNotificationType } from "@admin/utils/api/endpoints/notifications";
+import { all } from "@admin/utils/api/endpoints/notifications";
+import MessageNotification from "@admin/utils/api/models/notifications/MessageNotification";
+import Notification from "@admin/utils/api/models/notifications/Notification";
 
 export interface INotificationsState {
-    messages: TMessageNotification[];
+    messages: MessageNotification[];
     error?: unknown;
 }
 
@@ -13,17 +14,14 @@ const initialState: INotificationsState = {
     messages: [],
 };
 
-const messageNotificationType = '6414fd8c-847a-492b-a919-a5fc539456e8';
-
-export const isMessageNotification = (notification: INotification) => isNotificationType(notification, messageNotificationType);
-
-export const fetchMessages = createAsyncThunk<TMessageNotification[], void>(
+export const fetchMessages = createAsyncThunk<MessageNotification[], void>(
     'notifications/fetch-messages',
     async (_, { rejectWithValue }) => {
         try {
-            const data = await all();
+            
+            const data = await all({ type: Notification.NOTIFICATION_TYPE_MESSAGE });
 
-            return data.filter((notification) => isMessageNotification(notification as INotification)) as TMessageNotification[];
+            return data.map((record) => new MessageNotification(record as any));
         } catch (e) {
             if (!axios.isAxiosError(e) && import.meta.env.VITE_APP_DEBUG) {
                 logger.error(e);
@@ -38,7 +36,7 @@ export const fetchMessages = createAsyncThunk<TMessageNotification[], void>(
 export default createSlice({
     name: "notifications",
     initialState,
-    reducers: { },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchMessages.fulfilled, (state, action) => ({ ...state, messages: action.payload }))

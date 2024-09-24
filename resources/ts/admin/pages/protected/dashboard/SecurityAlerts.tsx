@@ -3,34 +3,19 @@ import { Table } from 'reactstrap';
 
 import Loader from '@admin/components/Loader';
 import WaitToLoad from '@admin/components/WaitToLoad';
-
-import { createAuthRequest } from '@admin/utils/api/factories';
-import { isNotificationType } from '@admin/utils/api/endpoints/notifications';
 import SecurityAlertModal from '@admin/components/dashboard/security-alerts/SecurityAlertModal';
 import SecurityAlertRow from '@admin/components/dashboard/security-alerts/SecurityAlertRow';
 
-export const SecurityAlertNotificationType = '513a8515-ae2a-47d9-9052-212b61f166b0';
+import Notification from '@admin/utils/api/models/notifications/Notification';
+import SecurityNotification from '@admin/utils/api/models/notifications/SecurityNotification';
 
-export interface ISecurityAlertNotificationData {
-    id: string;
-    issue: {
-        id: string;
-        datetime: string;
-        severity: string;
-        message: string;
-        context: object;
-    }
-}
-
-export type TSecurityAlertNotification = INotification<typeof SecurityAlertNotificationType, ISecurityAlertNotificationData>;
+import { all } from '@admin/utils/api/endpoints/notifications';
 
 interface ISecurityAlertsProps {
 }
 
-
-
 const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
-    const [selectedAlert, setSelectedAlert] = React.useState<TSecurityAlertNotification>();
+    const [selectedAlert, setSelectedAlert] = React.useState<SecurityNotification>();
 
     const determineBadgeColorForSeverity = React.useCallback((severity: string): string => {
         switch (severity) {
@@ -57,25 +42,18 @@ const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
     }, []);
 
     const fetchSecurityAlerts = React.useCallback(async () => {
-        const alerts: TSecurityAlertNotification[] = [];
-        const response = await createAuthRequest().get<INotification[]>('/user/notifications');
+        const notifications = await all({ type: Notification.NOTIFICATION_TYPE_SECURITY_ALERT });
 
-        response.data.forEach((notification) => {
-            if (isNotificationType(notification, SecurityAlertNotificationType)) {
-                alerts.push(notification as TSecurityAlertNotification);
-            }
-        });
-
-        return alerts;
+        return notifications.map((record) => new SecurityNotification(record as any));
     }, []);
 
     const handleModalClosed = React.useCallback(() => setSelectedAlert(undefined), []);
 
-    const getBadgeColorForAlert = React.useCallback((alert: TSecurityAlertNotification) => determineBadgeColorForSeverity(alert.data.issue.severity), [determineBadgeColorForSeverity]);
+    const getBadgeColorForAlert = React.useCallback((notification: SecurityNotification) => determineBadgeColorForSeverity(notification.getData().issue.severity), [determineBadgeColorForSeverity]);
 
     return (
         <>
-            {selectedAlert && <SecurityAlertModal badgeColor={getBadgeColorForAlert(selectedAlert)} alert={selectedAlert} onClosed={handleModalClosed} />}
+            {selectedAlert && <SecurityAlertModal badgeColor={getBadgeColorForAlert(selectedAlert)} notification={selectedAlert} onClosed={handleModalClosed} />}
             <WaitToLoad loading={<Loader display={{ type: 'over-element' }} />} callback={fetchSecurityAlerts}>
                 {(alerts, err) => (
                     <>
@@ -98,7 +76,7 @@ const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
                                     <SecurityAlertRow
                                         key={index}
                                         badgeColor={getBadgeColorForAlert(notification)}
-                                        alert={notification}
+                                        notification={notification}
                                         onViewClicked={() => setSelectedAlert(notification)}
                                     />
                                 ))}
@@ -110,8 +88,6 @@ const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
                     </>
                 )}
             </WaitToLoad>
-
-
         </>
     );
 }

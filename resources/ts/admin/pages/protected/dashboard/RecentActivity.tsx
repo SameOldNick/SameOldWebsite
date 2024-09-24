@@ -8,45 +8,25 @@ import moment from 'moment';
 import Loader from '@admin/components/Loader';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 
-import { createAuthRequest } from '@admin/utils/api/factories';
 import Article from '@admin/utils/api/models/Article';
 import Comment from '@admin/utils/api/models/Comment';
 import User from '@admin/utils/api/models/User';
+import Notification from '@admin/utils/api/models/notifications/Notification';
+import ActivityNotification, { ActivityEvent } from '@admin/utils/api/models/notifications/ActivityNotification';
 
-import { isNotificationType, markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
-
-const ActivityNotificationType = 'ce659a33-08dd-4c9c-a421-7bb54393b76d';
-
-enum ActivityEvent {
-    UserRegistered = 'user-registered',
-    CommentCreated = 'comment-created',
-    ArticleCreated = 'article-created',
-    ArticlePublished = 'article-published',
-    ArticleScheduled = 'article-scheduled',
-    ArticleUnpublished = 'article-unpublished',
-    ArticleDeleted = 'article-deleted',
-}
-
-interface IActivityNotificationData<TContext extends object = object> {
-    dateTime: string;
-    event: ActivityEvent;
-    message: string;
-    context: TContext;
-}
-
-type TActivityNotification = INotification<typeof ActivityNotificationType, IActivityNotificationData>;
+import { all, markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
 
 interface IRecentActivityProps {
 }
 
 interface IActivityRowProps {
-    activity: TActivityNotification;
-    onMarkReadClicked: (notification: TActivityNotification) => void;
-    onMarkUnreadClicked: (notification: TActivityNotification) => void;
+    activity: ActivityNotification;
+    onMarkReadClicked: (notification: ActivityNotification) => void;
+    onMarkUnreadClicked: (notification: ActivityNotification) => void;
 }
 
 const ActivityRow: React.FC<IActivityRowProps> = ({ activity, onMarkReadClicked, onMarkUnreadClicked }) => {
-    const { data: { event, dateTime, message, context } } = activity;
+    const { event, dateTime, message, context } = activity.getData();
 
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
@@ -85,7 +65,7 @@ const ActivityRow: React.FC<IActivityRowProps> = ({ activity, onMarkReadClicked,
             );
         }
 
-        if (activity.read_at === null) {
+        if (activity.readAt === null) {
             elements.push(
                 <DropdownItem onClick={() => onMarkReadClicked(activity)}>
                     <FaEnvelopeOpen />{' '}Mark Read
@@ -104,7 +84,7 @@ const ActivityRow: React.FC<IActivityRowProps> = ({ activity, onMarkReadClicked,
 
     return (
         <>
-            <tr className={classNames({ 'table-light': activity.read_at === null })}>
+            <tr className={classNames({ 'table-light': activity.readAt === null })}>
                 <th scope='row'>
                     <abbr title={moment(dateTime).fromNow()}>
                         {moment(dateTime).format('MM-DD-YYYY HH:mm')}
@@ -132,28 +112,20 @@ const RecentActivity: React.FC<IRecentActivityProps> = ({ }) => {
     const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
 
     const fetchRecentActivity = React.useCallback(async () => {
-        const activities: TActivityNotification[] = [];
-        const response = await createAuthRequest().get<INotification[]>('/user/notifications');
+        const notifications = await all({ type: Notification.NOTIFICATION_TYPE_ACTIVITY });
 
-        const isActivityNotification = (notification: INotification): notification is TActivityNotification =>
-            isNotificationType(notification, ActivityNotificationType);
-
-        response.data.forEach((notification) => {
-            if (isActivityNotification(notification)) {
-                activities.push(notification);
-            }
-        });
-
-        return activities.sort((a, b) => moment(b.created_at).diff(moment(a.created_at), 'seconds')).slice(0, 5);
+        return notifications
+            .map((record) => new ActivityNotification(record as any))
+            .sort((a, b) => b.createdAt.diff(a.createdAt, 'seconds').seconds).slice(0, 5);
     }, []);
 
-    const handleMarkReadClicked = React.useCallback(async (activity: TActivityNotification) => {
+    const handleMarkReadClicked = React.useCallback(async (activity: ActivityNotification) => {
         await markRead(activity.id);
 
         await waitToLoadRef.current?.load();
     }, [waitToLoadRef.current]);
 
-    const handleMarkUnreadClicked = React.useCallback(async (activity: TActivityNotification) => {
+    const handleMarkUnreadClicked = React.useCallback(async (activity: ActivityNotification) => {
         await markUnread(activity.id);
 
         await waitToLoadRef.current?.load();

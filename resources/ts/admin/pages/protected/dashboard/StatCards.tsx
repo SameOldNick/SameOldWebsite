@@ -11,9 +11,8 @@ import ContactMessagesCard from "./stat-cards/ContactMessagesCard";
 import { fetchArticles } from "@admin/utils/api/endpoints/articles";
 import { loadAll } from "@admin/utils/api/endpoints/comments";
 import { all } from "@admin/utils/api/endpoints/notifications";
-
 import PaginateResponse from "@admin/utils/api/models/PaginateResponse";
-import { isMessageNotification } from "@admin/store/slices/notifications";
+import Notification from "@admin/utils/api/models/notifications/Notification";
 
 interface IStatCardsProps {
     visitors: TApiState<IChartVisitors, unknown>;
@@ -50,7 +49,7 @@ const StatCards: React.FC<IStatCardsProps> = ({ visitors }) => {
         try {
             const notifications = await all();
 
-            setCommentCount(notifications.filter(isMessageNotification).length);
+            setCommentCount(notifications.map((record) => new Notification(record)).filter((notification) => notification.isType(Notification.NOTIFICATION_TYPE_MESSAGE)).length);
         } catch (e) {
             if (import.meta.env.VITE_APP_DEBUG)
                 logger.error(e);
