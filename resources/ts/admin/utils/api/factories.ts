@@ -32,6 +32,12 @@ export const createRequest = (config: AxiosRequestConfig = {}) => {
 	});
 }
 
+/**
+ * Creates auth request from Store instance
+ * @param store Store instance
+ * @param config Configuration
+ * @returns {RefreshAccessTokenHttpRequest}
+ */
 export const createAuthRequestWithStore = (store: Store, config: AxiosRequestConfig = {}) => {
     const request = createRequest(config);
 
