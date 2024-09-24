@@ -37,10 +37,10 @@ class NotificationFactory extends Factory
     /**
      * Sets the notifiable
      *
-     * @param Model $notifiable
      * @return static
      */
-    public function notifiable(Model $notifiable) {
+    public function notifiable(Model $notifiable)
+    {
         return $this->state([
             'notifiable_type' => get_class($notifiable),
             'notifiable_id' => $notifiable->getKey(),
@@ -50,10 +50,11 @@ class NotificationFactory extends Factory
     /**
      * Randomly chooses a notifiable
      *
-     * @param \Illuminate\Database\Eloquent\Model[] $notifiables
+     * @param  \Illuminate\Database\Eloquent\Model[]  $notifiables
      * @return static
      */
-    public function notifiables(array $notifiables) {
+    public function notifiables(array $notifiables)
+    {
         return $this->state(function () use ($notifiables) {
             $notifiable = Arr::random($notifiables);
 
@@ -67,10 +68,11 @@ class NotificationFactory extends Factory
     /**
      * Gets a random notifiable of type
      *
-     * @param class-string<\Illuminate\Database\Eloquent\Model> $class
+     * @param  class-string<\Illuminate\Database\Eloquent\Model>  $class
      * @return static
      */
-    public function notifiableType(string $class) {
+    public function notifiableType(string $class)
+    {
         $models = $class::all();
 
         return $this->notifiables($models->all());
@@ -79,11 +81,12 @@ class NotificationFactory extends Factory
     /**
      * Randomly assigns a notification type
      *
-     * @param string|string[] $types
+     * @param  string|string[]  $types
      * @return static
      */
-    public function types($types) {
-        $types = !is_array($types) ? [$types] : $types;
+    public function types($types)
+    {
+        $types = ! is_array($types) ? [$types] : $types;
 
         return $this->state(fn () => [
             'type' => $this->faker->randomElement($types),
@@ -95,9 +98,10 @@ class NotificationFactory extends Factory
      *
      * @return static
      */
-    public function read() {
+    public function read()
+    {
         return $this->state(fn () => [
-            'read_at' => $this->faker->dateTime()
+            'read_at' => $this->faker->dateTime(),
         ]);
     }
 
@@ -106,7 +110,8 @@ class NotificationFactory extends Factory
      *
      * @return static
      */
-    public function unread() {
+    public function unread()
+    {
         return $this->state(['read_at' => null]);
     }
 
@@ -115,7 +120,8 @@ class NotificationFactory extends Factory
      *
      * @return static
      */
-    public function messageNotification() {
+    public function messageNotification()
+    {
         return $this->types('6414fd8c-847a-492b-a919-a5fc539456e8')->state([
             'data' => json_encode([
                 'addresses' => [
@@ -130,7 +136,7 @@ class NotificationFactory extends Factory
                     'text' => $this->faker->paragraphs(3, true),
                 ],
                 'type' => $this->faker->randomElement([\App\Mail\Contacted::class, \App\Mail\ConfirmMessage::class]),
-            ])
+            ]),
         ]);
     }
 
@@ -139,7 +145,8 @@ class NotificationFactory extends Factory
      *
      * @return static
      */
-    public function securityAlert() {
+    public function securityAlert()
+    {
         return $this->types('513a8515-ae2a-47d9-9052-212b61f166b0')->state([
             'data' => json_encode([
                 'id' => $this->faker->sha1(),
@@ -149,17 +156,16 @@ class NotificationFactory extends Factory
                     'severity' => $this->faker->randomElement(['low', 'medium', 'high', 'critical']),
                     'message' => $this->faker->sentence(),
                     'context' => [],
-                ]
-            ])
+                ],
+            ]),
         ]);
     }
 
     /**
      * Generates a name and address for message notfication
-     *
-     * @return array
      */
-    protected function generateAddress(): array {
+    protected function generateAddress(): array
+    {
         return ['name' => $this->faker->optional()->name, 'address' => $this->faker->email];
     }
 }
