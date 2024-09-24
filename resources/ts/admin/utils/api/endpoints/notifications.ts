@@ -9,13 +9,24 @@ import { createAuthRequest } from "../factories";
 export const isNotificationType = <T extends INotification>(notification: INotification, type: string): notification is T => notification.type === type;
 
 /**
+ * Notification filters
+ *
+ * @export
+ * @interface INotificationFilters
+ */
+export interface INotificationFilters {
+    show?: 'read' | 'unread' | 'all';
+    type?: string;
+}
+
+/**
  * Gets all notifications
  * @returns Array of INotification objects
  */
-export const all = async () => {
-    const response = await createAuthRequest().get<INotification[]>('/user/notifications');
+export const all = async (filters: INotificationFilters = {}) => {
+    const response = await createAuthRequest().get<INotification[]>('/user/notifications', filters);
 
-    return response.data;
+    return  response.data;
 }
 
 /**

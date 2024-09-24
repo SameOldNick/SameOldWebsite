@@ -16,7 +16,24 @@ class NotificationsController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->notifications;
+        $request->validate([
+            'show' => 'sometimes|in:read,unread,all',
+            'type' => 'sometimes|string',
+        ]);
+
+        $show = $request->str('show', 'all');
+
+        $query = match ((string) $show) {
+            'read' => $request->user()->readNotifications(),
+            'unread' => $request->user()->unreadNotifications(),
+            default => $request->user()->notifications(),
+        };
+
+        if ($type = (string) $request->str('type')) {
+            $query->where('type', $type);
+        }
+
+        return $query->get();
     }
 
     /**
