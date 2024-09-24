@@ -9,7 +9,7 @@ import EchoProvider from '@admin/components/echo/Provider';
 
 import storeFactory from '@admin/store/index';
 import echoFactory from '@admin/utils/echo/echo';
-import { setStore } from './utils/api/factories';
+import { setStore } from '@admin/utils/api/factories';
 
 interface IProps {
 
