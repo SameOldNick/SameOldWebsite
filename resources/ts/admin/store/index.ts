@@ -15,11 +15,9 @@ const createRootMiddlewares = () => {
     return new Tuple(...middleware);
 }
 
-const factory = () => {
-    return configureStore({
-        middleware: createRootMiddlewares,
-        reducer: reducers,
-    });
-}
+const factory = () => configureStore({
+    middleware: createRootMiddlewares,
+    reducer: reducers,
+});
 
 export default factory;
