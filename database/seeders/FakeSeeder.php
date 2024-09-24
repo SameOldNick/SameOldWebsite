@@ -17,6 +17,7 @@ class FakeSeeder extends Seeder
             Fakes\PageMetaDataSeeder::class,
             Fakes\ContactMessageSeeder::class,
             Fakes\TagSeeder::class,
+            Fakes\NotificationSeeder::class,
         ]);
     }
 }
