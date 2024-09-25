@@ -43,11 +43,21 @@ final class IssueNotification extends Notification
         return sha1($this->data['id']);
     }
 
+    /**
+     * Gets the severity
+     *
+     * @return string
+     */
     public function getSeverity()
     {
         return $this->data['severity'];
     }
 
+    /**
+     * Gets the message
+     *
+     * @return string
+     */
     public function getMessage()
     {
         return $this->data['message'];

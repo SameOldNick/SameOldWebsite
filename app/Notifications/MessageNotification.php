@@ -64,6 +64,11 @@ class MessageNotification extends Notification
         ];
     }
 
+    /**
+     * Gets the default data
+     *
+     * @return array
+     */
     protected function getDefaultData()
     {
         $addresses = [];
