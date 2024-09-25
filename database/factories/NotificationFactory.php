@@ -158,8 +158,6 @@ class NotificationFactory extends Factory
 
     /**
      * Generate addresses for each group
-     *
-     * @return array
      */
     protected function generateAddressGroup(): array
     {
@@ -174,11 +172,11 @@ class NotificationFactory extends Factory
     /**
      * Generates an array of random addresses
      *
-     * @param integer $min Min. # of addresses
-     * @param integer $max Max. # of addresses
-     * @return array
+     * @param  int  $min  Min. # of addresses
+     * @param  int  $max  Max. # of addresses
      */
-    protected function generateAddresses(int $min, int $max): array {
+    protected function generateAddresses(int $min, int $max): array
+    {
         $count = $this->faker->numberBetween($min, $max);
 
         return array_map(fn () => $this->generateAddress(), range(1, $count));
