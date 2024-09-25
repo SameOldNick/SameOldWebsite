@@ -124,12 +124,7 @@ class NotificationFactory extends Factory
     {
         return $this->types('6414fd8c-847a-492b-a919-a5fc539456e8')->state([
             'data' => json_encode([
-                'addresses' => [
-                    'to' => array_map(fn () => $this->generateAddress(), array_fill(0, $this->faker->numberBetween(1, 3), '')),
-                    'cc' => array_map(fn () => $this->generateAddress(), array_fill(0, $this->faker->numberBetween(0, 3), '')),
-                    'bcc' => array_map(fn () => $this->generateAddress(), array_fill(0, $this->faker->numberBetween(0, 3), '')),
-                    'replyTo' => array_map(fn () => $this->generateAddress(), array_fill(0, $this->faker->numberBetween(0, 3), '')),
-                ],
+                'addresses' => $this->generateAddressGroup(),
                 'subject' => $this->faker->sentence(),
                 'view' => [
                     'html' => $this->faker->randomHtml(),
@@ -159,6 +154,34 @@ class NotificationFactory extends Factory
                 ],
             ]),
         ]);
+    }
+
+    /**
+     * Generate addresses for each group
+     *
+     * @return array
+     */
+    protected function generateAddressGroup(): array
+    {
+        return [
+            'to' => $this->generateMultipleAddresses(1, 3),
+            'cc' => $this->generateMultipleAddresses(0, 3),
+            'bcc' => $this->generateMultipleAddresses(0, 3),
+            'replyTo' => $this->generateMultipleAddresses(0, 3),
+        ];
+    }
+
+    /**
+     * Generates an array of random addresses
+     *
+     * @param integer $min Min. # of addresses
+     * @param integer $max Max. # of addresses
+     * @return array
+     */
+    protected function generateAddresses(int $min, int $max): array {
+        $count = $this->faker->numberBetween($min, $max);
+
+        return array_map(fn () => $this->generateAddress(), range(1, $count));
     }
 
     /**
