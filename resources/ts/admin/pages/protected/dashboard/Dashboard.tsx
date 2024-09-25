@@ -18,7 +18,7 @@ import PopularLinks from './charts/PopularLinks';
 
 import StatCards from './StatCards';
 import SecurityAlerts from './SecurityAlerts';
-import RecentActivity from './RecentActivity';
+import RecentActivity from './recent-activity/RecentActivity';
 import QuickLinks from './QuickLinks';
 
 import { fetchPopularBrowsers, fetchPopularLinks, fetchVisitorsOverTime } from '@admin/utils/api/endpoints/dashboard';
