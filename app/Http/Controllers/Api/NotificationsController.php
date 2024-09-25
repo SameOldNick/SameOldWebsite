@@ -40,6 +40,7 @@ class NotificationsController extends Controller
      * Gets the read notifications.
      *
      * @return \Illuminate\Support\Collection
+     *
      * @deprecated
      */
     public function read(Request $request)
@@ -51,6 +52,7 @@ class NotificationsController extends Controller
      * Gets the unread notifications.
      *
      * @return \Illuminate\Support\Collection
+     *
      * @deprecated
      */
     public function unread(Request $request)
