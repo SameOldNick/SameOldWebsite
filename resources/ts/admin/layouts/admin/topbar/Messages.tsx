@@ -58,7 +58,7 @@ const Messages: React.FC<TProps> = ({ stored, fetchMessages }) => {
     }, []);
 
     const messages = React.useMemo(() => stored.map((message) => {
-        const data = message.getData(); console.log(data);
+        const data = message.getData();
         const address = data.addresses.replyTo.length > 0 ? data.addresses.replyTo[0].address : null;
         const imageUrl = address !== null ? buildGravatarUrl(address) : user;
 
