@@ -102,6 +102,9 @@ Route::namespace(Api::class)->group(function () {
             Route::post('/perform', [Api\Backup\BackupController::class, 'performBackup']);
         });
 
+        Route::get('/backup/settings', [Api\Backup\BackupSettingsController::class, 'show']);
+        Route::post('/backup/settings', [Api\Backup\BackupSettingsController::class, 'update']);
+
         Route::apiResource('contact-messages', Api\ContactMessagesController::class)->except(['store']);
 
         Route::post('/projects/restore/{project}', [Api\Homepage\ProjectsController::class, 'restore'])->withTrashed();
