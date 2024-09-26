@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { SweetAlertOptions } from "sweetalert2";
 
 import { buildInitialState } from "@admin/store/helpers/api";
-import { IAlert } from "@admin/components/Alerts";
 
 export const components = [
     'auth',

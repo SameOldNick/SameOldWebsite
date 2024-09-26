@@ -12,10 +12,10 @@ import MarkdownEditor from '@admin/components/MarkdownEditor';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import { IHasRouter } from '@admin/components/hoc/WithRouter';
+import FormikAlerts from '@admin/components/alerts/hoc/FormikAlerts';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import Alerts, { IAlert } from '@admin/components/Alerts';
 
 export interface IFormikValues {
     name: string;
@@ -43,14 +43,6 @@ const HomepageForm: React.FC<IProps> = (props) => {
 
         return response.data;
     }, []);
-
-    const mapFormikErrorsToAlerts =
-        React.useCallback((errors: FormikErrors<IFormikValues>) =>
-            Object.entries(errors).filter(([, value]) => value).map<IAlert>(([key, value]) => ({
-                type: 'danger',
-                message: value
-            })),
-            []);
 
     const getInitialHomePageValues = React.useCallback((metaData: IPageMetaData[]) => {
         const initialValues = {
@@ -143,7 +135,7 @@ const HomepageForm: React.FC<IProps> = (props) => {
                                             <Form>
                                                 <Row>
                                                     <Col md={12}>
-                                                        <Alerts alerts={mapFormikErrorsToAlerts(errors)} />
+                                                        <FormikAlerts errors={errors} />
                                                     </Col>
                                                 </Row>
 
