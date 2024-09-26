@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Backup;
 
 use App\Http\Controllers\Controller;
 use App\Models\BackupConfig;
-use App\Traits\Controllers\HasPage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
