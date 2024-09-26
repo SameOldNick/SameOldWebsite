@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import DragDropFile from '@admin/components/DragDropFile';
 import Avatar from '@admin/components/Avatar';
-import Alerts, { IAlert } from '@admin/components/Alerts';
+import Alerts from '@admin/components/alerts/Alerts';
 
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { createAuthRequest } from '@admin/utils/api/factories';

@@ -4,7 +4,7 @@ import { Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Mo
 import axios from 'axios';
 
 import DragDropFile from '@admin/components/DragDropFile';
-import Alerts, { IAlert } from '@admin/components/Alerts';
+import Alerts from '@admin/components/alerts/Alerts';
 
 import { createBase64UrlFromFile } from '@admin/utils';
 import { IPromptModalProps } from '@admin/utils/modals';
