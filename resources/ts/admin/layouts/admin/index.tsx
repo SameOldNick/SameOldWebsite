@@ -77,6 +77,7 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
                         <Authorized roles={['manage_backups']}>
                             <Sidebar.Dropdown text='Backups' icon={<FaCloudUploadAlt />}>
                                 <Sidebar.DropdownItem href='/admin/backups'>View Backups</Sidebar.DropdownItem>
+                                <Sidebar.DropdownItem href='/admin/backups/settings'>Backup Settings</Sidebar.DropdownItem>
                             </Sidebar.Dropdown>
                         </Authorized>
 

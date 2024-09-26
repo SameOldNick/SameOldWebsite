@@ -194,6 +194,11 @@ declare global {
         updated_at: string | null;
         file: IFile | null;
     }
+
+    interface IBackupSetting {
+        key: string;
+        value: string;
+    }
 }
 
 export { };
