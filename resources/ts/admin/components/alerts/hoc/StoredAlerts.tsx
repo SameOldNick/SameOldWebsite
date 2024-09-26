@@ -3,7 +3,7 @@ import { AlertProps } from "reactstrap";
 import { ConnectedProps, connect } from "react-redux";
 
 import { TComponent } from "@admin/store/slices/alerts";
-import Alerts from "@admin/components/Alerts";
+import Alerts from "@admin/components/alerts/Alerts";
 
 const connector = connect(
     ({ alerts: { alerts } }: RootState) => ({ stored: alerts })
