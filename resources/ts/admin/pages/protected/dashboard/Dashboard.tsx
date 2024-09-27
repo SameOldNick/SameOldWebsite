@@ -48,6 +48,24 @@ const Dashboard: React.FC<IProps> = ({ }) => {
         });
     }, []);
 
+    const renderError = React.useCallback((err: unknown, status?: number) => {
+        if (status === undefined && (err && typeof err === 'object' && 'status' in err)) {
+            status = Number(err.status);
+        }
+
+        if (status === 501) {
+            return (
+                <p className="text-muted">(Not configured properly)</p>
+            );
+        } else {
+            logger.error(err);
+
+            return (
+                <p className="text-muted">(An error occurred)</p>
+            );
+        }        
+    }, []);
+
     React.useEffect(() => {
         tryFetchVisitors();
     }, []);
@@ -76,7 +94,7 @@ const Dashboard: React.FC<IProps> = ({ }) => {
                         <DashboardCard.Body>
                             {visitors.status === 'pending' && <Loader display={{ type: 'over-element' }} />}
                             {visitors.status === 'fulfilled' && <VisitorsOverTime data={visitors.response} />}
-                            {visitors.status === 'rejected' && <p className="text-muted">(An error occurred)</p>}
+                            {visitors.status === 'rejected' && renderError(visitors.error)}
                         </DashboardCard.Body>
                     </DashboardCard>
                 </Col>
@@ -86,11 +104,15 @@ const Dashboard: React.FC<IProps> = ({ }) => {
                             Popular Browsers
                         </DashboardCard.Header>
                         <DashboardCard.Body>
-                            <WaitToLoad loading={<Loader display={{ type: 'over-element' }} />} callback={fetchPopularBrowsers}>
+                            <WaitToLoad 
+                                loading={<Loader display={{ type: 'over-element' }} />} 
+                                callback={fetchPopularBrowsers}
+                                log={false}
+                            >
                                 {(data, err) => (
                                     <>
                                         {data && <PopularBrowsers data={data} />}
-                                        {err && <p className="text-muted">(An error occurred)</p>}
+                                        {err && renderError(err)}
                                     </>
                                 )}
                             </WaitToLoad>
@@ -109,11 +131,15 @@ const Dashboard: React.FC<IProps> = ({ }) => {
                                     Popular URLs
                                 </DashboardCard.Header>
                                 <DashboardCard.Body>
-                                    <WaitToLoad loading={<Loader display={{ type: 'over-element' }} />} callback={fetchPopularLinks}>
+                                    <WaitToLoad 
+                                        loading={<Loader display={{ type: 'over-element' }} />} 
+                                        callback={fetchPopularLinks}
+                                        log={false}
+                                    >
                                         {(data, err) => (
                                             <>
                                                 {data && <PopularLinks data={data} />}
-                                                {err && <p className="text-muted">(An error occurred)</p>}
+                                                {err && renderError(err)}
                                             </>
                                         )}
                                     </WaitToLoad>
