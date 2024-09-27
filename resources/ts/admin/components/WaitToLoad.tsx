@@ -66,8 +66,8 @@ function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime, log = 
 
             resolved(value);
         } catch (e) {
-            console.error(e);
             if (log)
+                logger.error(e);
 
             error(e);
         }
