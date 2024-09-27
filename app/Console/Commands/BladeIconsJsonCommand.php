@@ -8,6 +8,8 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use SimpleXMLElement;
 
+use function Safe\json_encode;
+
 class BladeIconsJsonCommand extends Command
 {
     /**
