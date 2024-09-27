@@ -1,8 +1,11 @@
-/vendor/
+# NodeJS
 node_modules/
 .yarn/
 npm-debug.log
 yarn-error.log
+.pnp.loader.mjs
+.pnp.cjs
+.node-version
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -11,11 +14,13 @@ app/storage/
 # Laravel 5 & Lumen specific
 public/storage
 public/hot
+public/build
 
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage
 public_html/hot
 
+# Configuration files
 storage/*.key
 .env
 .env.backup
@@ -23,7 +28,14 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 
+# PHPUnit
 .phpunit.cache
 .phpunit.result.cache
-.pnp.cjs
+
+# Composer
 composer.lock
+/vendor/
+
+# Log files
+reverb.log
+worker.log
