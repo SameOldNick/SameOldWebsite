@@ -8,6 +8,6 @@ class GoogleAnalyticsNotConfiguredException extends HttpException
 {
     public function __construct()
     {
-        parent::__construct(500, __('The Google Analytics client is not configured correctly.'));
+        parent::__construct(501, __('The Google Analytics client is not configured correctly.'));
     }
 }
