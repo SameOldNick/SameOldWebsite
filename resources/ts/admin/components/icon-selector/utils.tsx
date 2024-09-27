@@ -30,7 +30,7 @@ const loadIconsFromFile = async (): Promise<IIconsFile> => {
 
     return {
         file: './icons/blade-icons.json',
-        icons: icons.default
+        icons: icons.default.sets
     };
 }
 

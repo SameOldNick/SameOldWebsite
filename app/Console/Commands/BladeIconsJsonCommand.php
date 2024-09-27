@@ -15,7 +15,10 @@ class BladeIconsJsonCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'icons:json {--force : If set, overwrites file if it exists.} {file : Where to write JSON file}';
+    protected $signature = 'icons:json 
+                            {--force : If set, overwrites file if it exists.} 
+                            {--compact : Compacts JSON output}
+                            {file : Where to write JSON file}';
 
     /**
      * The console command description.
@@ -31,12 +34,24 @@ class BladeIconsJsonCommand extends Command
     {
         $file = $this->argument('file');
 
+        if ($filesystem->exists($file)) {
+            $this->info(sprintf('File "%s" already exists.', $file));
+
+            if (! $this->option('force') && ! $this->confirm('Do you want to overwrite it?')) {
+                return 0;
+            }
+
+            $this->info(sprintf('File "%s" will be overwritten.', $file));
+        }
+
         $sets = $factory->all();
         $manifest = $iconsManifest->getManifest($sets);
 
         $icons = [];
 
         foreach ($manifest as $set => $resources) {
+            $this->info(sprintf('Collecting icons from "%s" set...', $set));
+
             $prefix = $sets[$set]['prefix'];
 
             $icons[$set] = [
@@ -53,17 +68,14 @@ class BladeIconsJsonCommand extends Command
             }
         }
 
-        if ($filesystem->exists($file)) {
-            $this->info(sprintf('File "%s" already exists.', $file));
+        $this->info(sprintf('Saving to file "%s"...', $file));
 
-            if (! $this->option('force') && ! $this->confirm('Do you want to overwrite it?')) {
-                return 0;
-            }
+        $flags = $this->option('compact') ? 0 : JSON_PRETTY_PRINT;
 
-            $this->info(sprintf('File "%s" will be overwritten.', $file));
-        }
-
-        $encoded = json_encode($icons, JSON_PRETTY_PRINT);
+        $encoded = json_encode([
+            'metadata' => $this->getMetaData(),
+            'sets' => $icons
+        ], $flags);
 
         if (! $filesystem->put($file, $encoded)) {
             $this->error(sprintf('Unable to write to file "%s".', $file));
@@ -76,7 +88,27 @@ class BladeIconsJsonCommand extends Command
         return 0;
     }
 
-    private function xmlToArray(SimpleXMLElement $xml)
+    /**
+     * Gets metadata for JSON file
+     *
+     * @return array
+     */
+    private function getMetaData(): array {
+        return [
+            'description' => sprintf('This file was generated for the "%s" web app.', config('app.name')),
+            "generated_at" => now()->toIso8601String(),
+            "generated_by"=> sprintf("Artisan command: `php artisan %s`", $this->getName()),
+            "reason" => "Automated generation of icon sets for use in the frontend application.",
+        ];
+    }
+
+    /**
+     * Transforms XML to array
+     *
+     * @param SimpleXMLElement $xml
+     * @return array
+     */
+    private function xmlToArray(SimpleXMLElement $xml): array
     {
         $props = [];
         $children = [];
