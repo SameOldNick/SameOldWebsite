@@ -74,7 +74,7 @@ class BladeIconsJsonCommand extends Command
 
         $encoded = json_encode([
             'metadata' => $this->getMetaData(),
-            'sets' => $icons
+            'sets' => $icons,
         ], $flags);
 
         if (! $filesystem->put($file, $encoded)) {
@@ -90,23 +90,19 @@ class BladeIconsJsonCommand extends Command
 
     /**
      * Gets metadata for JSON file
-     *
-     * @return array
      */
-    private function getMetaData(): array {
+    private function getMetaData(): array
+    {
         return [
             'description' => sprintf('This file was generated for the "%s" web app.', config('app.name')),
-            "generated_at" => now()->toIso8601String(),
-            "generated_by"=> sprintf("Artisan command: `php artisan %s`", $this->getName()),
-            "reason" => "Automated generation of icon sets for use in the frontend application.",
+            'generated_at' => now()->toIso8601String(),
+            'generated_by' => sprintf('Artisan command: `php artisan %s`', $this->getName()),
+            'reason' => 'Automated generation of icon sets for use in the frontend application.',
         ];
     }
 
     /**
      * Transforms XML to array
-     *
-     * @param SimpleXMLElement $xml
-     * @return array
      */
     private function xmlToArray(SimpleXMLElement $xml): array
     {
