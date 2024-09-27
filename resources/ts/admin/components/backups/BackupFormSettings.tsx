@@ -225,7 +225,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                     initialValues={getInitialFormValues(settings)}
                                     onSubmit={handleFormSubmit}
                                 >
-                                    {({ values, errors, touched, isSubmitting }) => (
+                                    {({ values, errors, touched, isSubmitting, isValid }) => (
                                         <>
                                             <Form>
                                                 <Row>
@@ -421,7 +421,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
 
                                                 <Row>
                                                     <Col className='text-end'>
-                                                        <Button color='primary' type='submit' disabled={isSubmitting}>
+                                                        <Button color='primary' type='submit' disabled={!isValid || isSubmitting}>
                                                             Save Settings
                                                         </Button>
                                                     </Col>
