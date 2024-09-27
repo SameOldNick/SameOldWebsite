@@ -11,6 +11,7 @@ interface IProps<T> {
     loading: React.ReactNode;
     maxTime?: number;
     children?: React.ReactNode | TWaitToLoadCallback<T>;
+    log?: boolean;
 }
 
 interface IIsLoadingState {
@@ -34,7 +35,7 @@ export interface IWaitToLoadHandle {
     load: () => void;
 }
 
-function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime }: IProps<TReturnValue>, ref: React.ForwardedRef<IWaitToLoadHandle>) {
+function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime, log = true }: IProps<TReturnValue>, ref: React.ForwardedRef<IWaitToLoadHandle>) {
     let waitTimeout: Timeout | undefined;
 
     const [state, setState] = React.useState<TState<TReturnValue>>({ loading: true });
@@ -66,6 +67,7 @@ function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime }: IPro
             resolved(value);
         } catch (e) {
             console.error(e);
+            if (log)
 
             error(e);
         }
