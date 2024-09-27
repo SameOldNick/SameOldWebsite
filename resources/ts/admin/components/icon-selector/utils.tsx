@@ -1,21 +1,40 @@
 import React from 'react';
 
-import bladeIcons from './icons/blade-icons.json';
+interface IIconsFile {
+    file: string;
+    icons: IIconsFileContents;
+}
 
-export interface ISvg {
+interface IIconsFileContents {
+    [group: string]: {
+        prefix: string;
+        icons: Record<string, ISvg>;
+    }
+}
+
+interface ISvg {
     tag: string;
     props: Record<string, string | number>;
     children?: ISvg[];
 }
 
-export interface IIconType {
+interface IIconType {
     family: string;
     prefix: string;
     name: string;
     svg: ISvg;
 }
 
-const getAllIcons = () => Object.entries(bladeIcons).flatMap<IIconType>(
+const loadIconsFromFile = async (): Promise<IIconsFile> => {
+    const icons = await import('./icons/blade-icons.json');
+
+    return {
+        file: './icons/blade-icons.json',
+        icons: icons.default
+    };
+}
+
+const getAllIcons = (file: IIconsFile) => Object.entries(file.icons).flatMap<IIconType>(
     ([family, { prefix, icons }]) =>
         Object.entries(icons).map<IIconType>(([key, value]) => ({
             family,
@@ -33,14 +52,14 @@ const createIconFromSvgJson = ({ tag, props, children }: ISvg, index: number = 0
         children?.map((child, i) => createIconFromSvgJson(child, i))
     );
 
-const lookupIcon = (icon: string): IIconType | undefined => {
+const lookupIcon = (file: IIconsFile, icon: string): IIconType | undefined => { console.log(file);
     const prefix = icon.split('-')[0];
 
     const name = icon.substring(icon.indexOf('-') + 1);
 
-    for (const [family, value] of Object.entries(bladeIcons)) {
+    for (const [family, value] of Object.entries(file.icons)) { console.log(family, value);
         if (value.prefix === prefix && name in value.icons) {
-            const svg = (value.icons as Record<string, ISvg>)[name];
+            const svg = (value.icons)[name];
 
             return {
                 family,
@@ -54,4 +73,4 @@ const lookupIcon = (icon: string): IIconType | undefined => {
     return undefined;
 }
 
-export { getAllIcons, createIconFromSvgJson, lookupIcon };
+export { IIconsFile, ISvg, IIconType, loadIconsFromFile, getAllIcons, createIconFromSvgJson, lookupIcon };

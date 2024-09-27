@@ -4,21 +4,28 @@ import { Button, Col, Form, Input, InputGroup, Modal, ModalBody, ModalFooter, Mo
 
 import { IIconType, getAllIcons } from "./utils";
 import IconItem from "./IconItem";
+import { IHasIconsFile, withIconsFile } from "./WithIcons";
 
-interface IIconSelectorProps {
+interface IIconSelectorProps extends IHasIconsFile {
     open: boolean;
     onSave: (icon: IIconType) => void;
     onCancel: () => void;
 }
 
-const IconSelector: React.FC<IIconSelectorProps> = ({ open, onSave, onCancel }) => {
+const IconSelector: React.FC<IIconSelectorProps> = ({ getAllIcons, open, onSave, onCancel }) => {
     const inputRef = React.createRef<HTMLInputElement>();
     const [icons, setIcons] = React.useState<IIconType[]>([]);
     const [selected, setSelected] = React.useState<IIconType>();
 
-    const allIcons = React.useMemo(getAllIcons, []);
+    const allIcons = React.useMemo(() => getAllIcons(), [getAllIcons]);
 
     const refreshIcons = React.useCallback(() => {
+        if (!allIcons) {
+            logger.error('Icons are not loaded.');
+
+            return;
+        }
+
         const input = inputRef.current?.value.toLowerCase() || '';
         const found: IIconType[] = [];
 
@@ -33,7 +40,7 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ open, onSave, onCancel }) 
         }
 
         setIcons(found);
-    }, []);
+    }, [allIcons]);
 
     const handleSelect = React.useCallback((icon: IIconType) => {
         setSelected(icon !== selected ? icon : undefined);
@@ -51,10 +58,6 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ open, onSave, onCancel }) 
 
         onSave(selected);
     }, [onSave]);
-
-    React.useEffect(() => {
-        refreshIcons();
-    }, []);
 
     return (
         <>
@@ -99,4 +102,4 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ open, onSave, onCancel }) 
     );
 }
 
-export default IconSelector;
+export default withIconsFile(IconSelector);

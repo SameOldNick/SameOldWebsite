@@ -9,6 +9,7 @@ import IconSelector from '@admin/components/icon-selector/IconSelector';
 import { lookupIcon, IIconType } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
 import { IPromptModalProps } from '@admin/utils/modals';
+import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
 
 interface IFormikValues {
     skill: string;
@@ -18,7 +19,9 @@ interface IProps extends IPromptModalProps<ISkill> {
     existing?: ISkill;
 }
 
-const SkillPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }) => {
+type TProps = IProps & IHasIconsFile;
+
+const SkillPrompt: React.FC<TProps> = ({ lookupIcon, existing, onSuccess, onCancelled }) => {
     const [iconSelector, setIconSelector] = React.useState(false);
     const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(existing !== undefined ? lookupIcon(existing.icon) : undefined);
 
@@ -110,4 +113,4 @@ const SkillPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }) => 
     );
 }
 
-export default SkillPrompt;
+export default withIconsFile(SkillPrompt);

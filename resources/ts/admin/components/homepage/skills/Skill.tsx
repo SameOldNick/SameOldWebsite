@@ -6,9 +6,9 @@ import classNames from 'classnames';
 
 import Icon from '@admin/components/icon-selector/Icon';
 
-import { lookupIcon } from '@admin/components/icon-selector/utils';
+import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
 
-interface ISkillProps {
+interface ISkillProps extends IHasIconsFile {
     skill: ISkill;
     selected: boolean;
 
@@ -17,7 +17,7 @@ interface ISkillProps {
     onSelected: (selected: boolean) => void;
 }
 
-const Skill: React.FC<ISkillProps> = ({ skill, selected, onSelected, onEditClicked, onDeleteClicked }) => {
+const Skill: React.FC<ISkillProps> = ({ lookupIcon, skill, selected, onSelected, onEditClicked, onDeleteClicked }) => {
     const icon = React.useMemo(() => lookupIcon(skill.icon), [skill]);
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -70,4 +70,4 @@ const Skill: React.FC<ISkillProps> = ({ skill, selected, onSelected, onEditClick
     );
 }
 
-export default Skill;
+export default withIconsFile(Skill);
