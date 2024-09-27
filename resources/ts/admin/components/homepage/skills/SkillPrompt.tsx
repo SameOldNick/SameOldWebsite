@@ -33,11 +33,9 @@ const SkillPrompt: React.FC<TProps> = ({ lookupIcon, existing, onSuccess, onCanc
         });
     }, [existing, onSuccess, selectedIcon]);
 
-    const schema = React.useMemo(() =>
-        Yup.object().shape({
-            skill: Yup.string().required('Skill is required').max(255),
-        })
-    , []);
+    const schema = React.useMemo(() => Yup.object().shape({
+        skill: Yup.string().required('Skill is required').max(255),
+    }), []);
 
     const initialValues = React.useMemo<IFormikValues>(() => ({ skill: existing?.skill || '' }), [existing]);
 
