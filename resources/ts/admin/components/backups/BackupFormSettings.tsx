@@ -248,7 +248,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                                         className={classNames({ 'is-invalid': errors.notification_channels && touched.notification_channels })}
                                                     />
                                                     {' '}
-                                                    <Label check htmlFor='channelMail'>
+                                                    <Label check for='channelMail'>
                                                         Enable Mail Notifications
                                                     </Label>
                                                 </FormGroup>
@@ -308,7 +308,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                                         className={classNames({ 'is-invalid': errors.notification_channels && touched.notification_channels })}
                                                     />
                                                     {' '}
-                                                    <Label check htmlFor='channelDiscord'>
+                                                    <Label check for='channelDiscord'>
                                                         Enable Discord Notifications
                                                     </Label>
                                                 </FormGroup>
@@ -365,7 +365,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                                         className={classNames({ 'is-invalid': errors.notification_channels && touched.notification_channels })}
                                                     />
                                                     {' '}
-                                                    <Label check htmlFor='channelSlack'>
+                                                    <Label check for='channelSlack'>
                                                         Enable Slack Notifications
                                                     </Label>
                                                 </FormGroup>
