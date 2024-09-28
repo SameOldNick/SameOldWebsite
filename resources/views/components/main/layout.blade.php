@@ -19,10 +19,14 @@
 
     <x-sweetalerts />
 
+    @include('googletagmanager::head')
+
     @stack('head')
 </head>
 
 <body class="bg-secondary">
+    @include('googletagmanager::body')
+
     <header class="bg-secondary sticky-top">
         <x-main.top.navbar />
     </header>
