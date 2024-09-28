@@ -88,10 +88,10 @@ class BackupController extends Controller
 
         $notifier = JobStatusNotifier::create($request->user())->openChannel();
 
-        BackupJob::dispatch($notifier, [
+        $this->dispatch(new BackupJob($notifier, [
             '--only-db' => $only->exactly('database'),
             '--only-files' => $only->exactly('files'),
-        ]);
+        ]));
 
         return ['uuid' => (string) $notifier->getUuid()];
     }
