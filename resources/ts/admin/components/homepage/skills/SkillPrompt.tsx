@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 
 import IconSelector from '@admin/components/icon-selector/IconSelector';
-import { lookupIcon, IIconType } from '@admin/components/icon-selector/utils';
+import { IIconType } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
 import { IPromptModalProps } from '@admin/utils/modals';
 import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
