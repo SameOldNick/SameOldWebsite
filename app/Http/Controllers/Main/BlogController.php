@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogSearchRequest;
 use App\Models\Article;
+use App\Traits\Controllers\Trackable;
 use Illuminate\Support\Carbon;
 
 class BlogController extends Controller
 {
+    use Trackable;
+
     /**
      * Display a listing of the resource.
      *
@@ -82,6 +85,11 @@ class BlogController extends Controller
          * @var \Illuminate\Pagination\AbstractPaginator
          */
         $articles = $articles->paginate(5)->withQueryString();
+
+        $this->tracker()->set('search', [
+            'query' => (string) $request->str('q'),
+            'found' => $articles->count()
+        ]);
 
         return view('main.blog.search-results', compact('request', 'articles', 'sortBy', 'order'));
     }
