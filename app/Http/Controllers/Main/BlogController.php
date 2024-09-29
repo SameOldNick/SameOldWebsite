@@ -88,7 +88,7 @@ class BlogController extends Controller
 
         $this->tracker()->set('search', [
             'query' => (string) $request->str('q'),
-            'found' => $articles->count()
+            'found' => $articles->count(),
         ]);
 
         return view('main.blog.search-results', compact('request', 'articles', 'sortBy', 'order'));

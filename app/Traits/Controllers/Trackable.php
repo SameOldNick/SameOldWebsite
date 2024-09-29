@@ -9,10 +9,9 @@ trait Trackable
 {
     /**
      * Gets the tracker instance.
-     *
-     * @return GoogleTagManager
      */
-    protected function tracker(): GoogleTagManager {
+    protected function tracker(): GoogleTagManager
+    {
         return GoogleTagManagerFacade::getFacadeRoot();
     }
 }

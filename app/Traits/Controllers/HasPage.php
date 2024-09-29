@@ -43,7 +43,8 @@ trait HasPage
      *
      * @return string
      */
-    protected function getPageKey() {
+    protected function getPageKey()
+    {
         return class_basename($this);
     }
 }
