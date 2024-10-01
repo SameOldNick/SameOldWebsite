@@ -10,7 +10,7 @@ return [
     /*
      * Enable or disable script rendering. Useful for local development.
      */
-    'enabled' => env('GOOGLE_TAG_MANAGER_ENABLED', (bool) env('GOOGLE_TAG_MANAGER_ID', '')),
+    'enabled' => is_bool(env('GOOGLE_TAG_MANAGER_ENABLED')) ? env('GOOGLE_TAG_MANAGER_ENABLED') : (bool) env('GOOGLE_TAG_MANAGER_ID', ''),
 
     /*
      * If you want to use some macro's you 'll probably store them
