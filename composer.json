@@ -5,6 +5,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-gd": "*",
+        "ext-bcmath": "*",
         "axlon/laravel-postal-code-validation": "^3.3",
         "biscolab/laravel-recaptcha": "^6.1",
         "blade-ui-kit/blade-icons": "^1.5",
