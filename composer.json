@@ -25,7 +25,7 @@
         "owenvoke/blade-fontawesome": "^2.4",
         "simplesoftwareio/simple-qrcode": "~4",
         "spatie/commonmark-shiki-highlighter": "^2.1",
-        "spatie/laravel-backup": "^8.0",
+        "spatie/laravel-backup": "^9.1",
         "spatie/laravel-googletagmanager": "^2.7",
         "spatie/url": "^2.2",
         "spomky-labs/otphp": "^11.2",
