@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Main;
 
+use App\Components\Macros\Collection\WeightManager;
+use App\Components\Search\QueryParser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogSearchRequest;
 use App\Models\Article;
@@ -54,19 +56,16 @@ class BlogController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function search(BlogSearchRequest $request)
+    public function search(BlogSearchRequest $request, QueryParser $queryParser)
     {
-        $sortBy = $request->has('sort') && $request->str('sort')->lower()->exactly('date') ? 'date' : 'relevance';
-        $order = $request->has('order') && $request->str('order')->lower()->exactly('asc') ? 'asc' : 'desc';
-
         /**
          * @var \App\Models\Collections\ArticleCollection
          */
         $articles = Article::published()->get();
 
-        if ($request->filled('q')) {
-            $query = $request->parsedSearchQuery();
+        $query = $request->filled('q') ? $queryParser->parse((string) $request->str('q')) : null;
 
+        if ($query) {
             if ($query->has('tags')) {
                 $articles = $articles->withTags($query->get('tags')->all());
             }
@@ -74,12 +73,14 @@ class BlogController extends Controller
             if ($query->has('keywords')) {
                 $articles = $articles->withKeywords($query->get('keywords')->all());
             }
+        }
 
-            if ($sortBy === 'relevance') {
-                $articles = $articles->sortByWeights($order);
-            } else {
-                $articles = $order === 'asc' ? $articles->sortBy('published_at') : $articles->sortByDesc('published_at');
-            }
+        if ($request->sortBy() === 'relevance') {
+            $articles = $articles instanceof WeightManager ? $articles->sortByWeights($request->order()) : $articles;
+        } else if ($request->sortBy() === 'date') {
+            $articles = $articles instanceof WeightManager ? $articles->getCollection() : $articles;
+
+            $articles = $request->order() === 'asc' ? $articles->sortBy('published_at') : $articles->sortByDesc('published_at');
         }
 
         /**
@@ -92,6 +93,6 @@ class BlogController extends Controller
             'found' => $articles->count(),
         ]);
 
-        return view('main.blog.search-results', compact('request', 'articles', 'sortBy', 'order'));
+        return view('main.blog.search-results', compact('request', 'query', 'articles'));
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Components\Search\ParsedQuery;
 use App\Components\Search\QueryParser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Stringable;
@@ -15,12 +14,6 @@ class BlogSearchRequest extends FormRequest
      * @var string
      */
     protected $redirectRoute = 'blog.search';
-
-    protected ?ParsedQuery $parsed;
-
-    public function __construct(
-        public readonly QueryParser $queryParser
-    ) {}
 
     /**
      * Get the validation rules that apply to the request.
@@ -37,22 +30,61 @@ class BlogSearchRequest extends FormRequest
     }
 
     /**
+     * Gets how results are sorted
+     *
+     * @return string Either 'date' or 'relevance'
+     */
+    public function sortBy()
+    {
+        return $this->has('sort') && $this->str('sort')->lower()->exactly('date') ? 'date' : 'relevance';
+    }
+
+    /**
+     * Gets how results are ordered
+     *
+     * @return string Either 'asc' or 'desc'
+     */
+    public function order()
+    {
+        return $this->has('order') && $this->str('order')->lower()->exactly('asc') ? 'asc' : 'desc';
+    }
+
+    /**
+     * Checks if sorting by
+     *
+     * @param string $sortBy
+     * @return boolean
+     */
+    public function isSortBy(string $sortBy): bool
+    {
+        return $this->sortBy() === $sortBy;
+    }
+
+    /**
+     * Checks if results should be in ascending order
+     *
+     * @return boolean
+     */
+    public function isOrderAscending(): bool
+    {
+        return $this->order() === 'asc';
+    }
+
+    /**
+     * Checks if results should be in descending order
+     *
+     * @return boolean
+     */
+    public function isOrderDescending(): bool
+    {
+        return $this->order() === 'desc';
+    }
+
+    /**
      * Gets the search query
      */
     public function getSearchQuery(): Stringable
     {
         return $this->str('q');
-    }
-
-    /**
-     * Gets parsed search query
-     */
-    public function parsedSearchQuery(): ParsedQuery
-    {
-        if (isset($this->parsed)) {
-            return $this->parsed;
-        }
-
-        return $this->parsed = $this->queryParser->parse((string) $this->getSearchQuery());
     }
 }
