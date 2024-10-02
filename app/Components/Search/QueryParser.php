@@ -16,7 +16,7 @@ class QueryParser
     /**
      * Initializes the parser
      *
-     * @param Gatherer[] $gatherers
+     * @param  Gatherer[]  $gatherers
      */
     public function __construct(array $gatherers)
     {
@@ -25,8 +25,6 @@ class QueryParser
 
     /**
      * Parses search query
-     *
-     * @return ParsedQuery
      */
     public function parse(string $query): ParsedQuery
     {

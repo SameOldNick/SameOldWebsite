@@ -9,10 +9,11 @@ use Illuminate\Support\Str;
 class KeywordGatherer implements Gatherer
 {
     const REGEX_TAGS = '/\[([^\]]+)\]/';
+
     const REGEX_GROUPED = '/"([^"]+)"/';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getName(): string
     {
@@ -20,7 +21,7 @@ class KeywordGatherer implements Gatherer
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function gather(string $input): Collection
     {

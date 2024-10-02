@@ -4,7 +4,6 @@ namespace App\Components\Search;
 
 use App\Components\Search\Gatherers\KeywordGatherer;
 use App\Components\Search\Gatherers\TagGatherer;
-use App\Components\Search\QueryParser;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider

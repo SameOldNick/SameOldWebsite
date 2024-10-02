@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Components\Search\ParsedQuery;
 use App\Components\Search\QueryParser;
-use App\Http\Requests\Parsers\SearchQueryParser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Stringable;
 
@@ -39,8 +38,6 @@ class BlogSearchRequest extends FormRequest
 
     /**
      * Gets the search query
-     *
-     * @return Stringable
      */
     public function getSearchQuery(): Stringable
     {
@@ -49,8 +46,6 @@ class BlogSearchRequest extends FormRequest
 
     /**
      * Gets parsed search query
-     *
-     * @return ParsedQuery
      */
     public function parsedSearchQuery(): ParsedQuery
     {

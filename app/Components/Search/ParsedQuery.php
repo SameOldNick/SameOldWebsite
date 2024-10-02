@@ -10,8 +10,8 @@ class ParsedQuery
     /**
      * Initializes the parsed query.
      *
-     * @param string $query The original query.
-     * @param array $gathered Gathered tags.
+     * @param  string  $query  The original query.
+     * @param  array  $gathered  Gathered tags.
      */
     public function __construct(
         protected readonly string $query,
@@ -20,8 +20,6 @@ class ParsedQuery
 
     /**
      * Gets the original search query.
-     *
-     * @return string
      */
     public function getQuery(): string
     {
@@ -30,8 +28,6 @@ class ParsedQuery
 
     /**
      * Gets the gatherer names.
-     *
-     * @return array
      */
     public function getNames(): array
     {
@@ -41,8 +37,7 @@ class ParsedQuery
     /**
      * Checks if has any tags for gatherer.
      *
-     * @param string $name Name of gatherer
-     * @return boolean
+     * @param  string  $name  Name of gatherer
      */
     public function has(string $name): bool
     {
@@ -51,14 +46,12 @@ class ParsedQuery
 
     /**
      * Gets tags gathered from gatherer.
-     *
-     * @param string $name
-     * @return Collection
      */
     public function get(string $name): Collection
     {
-        if (!isset($this->gathered[$name]))
+        if (! isset($this->gathered[$name])) {
             throw new InvalidArgumentException("Gatherer '{$name}' does not exist.");
+        }
 
         return $this->gathered[$name];
     }
