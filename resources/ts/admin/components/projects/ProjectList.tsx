@@ -21,7 +21,7 @@ const ProjectList: React.FC<IProps> = ({ }) => {
 
             setProjects(response.data);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
     }, [show]);
 

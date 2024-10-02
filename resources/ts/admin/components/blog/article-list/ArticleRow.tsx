@@ -25,7 +25,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
         try {
             await updateArticle(article.article.id, article.article.title, article.article.slug, DateTime.now());
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -50,7 +50,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
 
             onUpdated();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -73,7 +73,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
         try {
             await updateArticle(article.article.id, article.article.title, article.article.slug, null);
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -98,7 +98,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
 
             onUpdated();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -123,7 +123,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
 
             onUpdated();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

@@ -328,7 +328,7 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
             >
                 {(props, err) => (
                     <>
-                        {err && console.error(err)}
+                        {err && logger.error(err)}
                         {props && <EditForm {...props} />}
                     </>
                 )}

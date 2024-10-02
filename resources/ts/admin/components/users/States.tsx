@@ -32,7 +32,7 @@ const States = React.forwardRef<Input, IStatesProps>(({ country, optional = fals
 
             setStates(newStates);
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     }, []);
 

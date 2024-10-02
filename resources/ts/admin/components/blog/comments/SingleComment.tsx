@@ -76,7 +76,7 @@ const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle
 
             onUpdated();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

@@ -41,7 +41,7 @@ const UserAvatar: React.FC<IAvatarProps> = ({ user, size, style, ...props }) => 
             setSrc(response.data.avatar_url);
             setLastRefreshed(DateTime.now());
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     }, [user]);
 

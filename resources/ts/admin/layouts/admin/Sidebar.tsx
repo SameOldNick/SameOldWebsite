@@ -159,7 +159,7 @@ export default class Sidebar extends React.Component<TProps, IState> {
         const location = useLocation();
 
         if (!inDropdown) {
-            console.error('DropdownItem component must be inside Dropdown component.');
+            logger.error('DropdownItem component must be inside Dropdown component.');
             return;
         }
 

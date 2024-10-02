@@ -69,7 +69,7 @@ const Create: React.FC<IProps> = ({ }) => {
 
             setCreated(created);
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             // TODO: Revert API calls that were successful.
 
@@ -115,7 +115,7 @@ const Create: React.FC<IProps> = ({ }) => {
 
             setCreated(created);
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

@@ -118,7 +118,7 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
 
     const handleActionButtonClick = React.useCallback(async (action: TArticleActions) => {
         if (!formikRef.current) {
-            console.error('No reference to formik.');
+            logger.error('No reference to formik.');
             return;
         }
 
@@ -262,7 +262,7 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
                 ref={(instance) => formikRef.current = React.assignRef(ref, instance)}
                 enableReinitialize
                 initialValues={original.article}
-                onSubmit={() => console.error('Form submit is not implemented.')}
+                onSubmit={() => logger.error('Form submit is not implemented.')}
                 {...props}
             >
                 {(formikProps) => (

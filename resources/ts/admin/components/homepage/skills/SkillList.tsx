@@ -31,7 +31,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
 
             setSkills(response.data.map((skill) => ({ skill, selected: false })));
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const result = await withReactContent(Swal).fire({
                 icon: 'error',
@@ -59,7 +59,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
 
             await load();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -89,7 +89,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
 
             await load();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -113,7 +113,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
 
             return response.data;
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

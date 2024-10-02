@@ -69,7 +69,7 @@ const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, 
             onSuccess(selected);
         } else {
             if (!selected) {
-                console.error('No user selected.');
+                logger.error('No user selected.');
                 return;
             }
 
@@ -129,7 +129,7 @@ const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, 
                                 >
                                     {(response, err) => (
                                         <>
-                                            {err && console.error(err)}
+                                            {err && logger.error(err)}
                                             {response && (
                                                 <PaginatedTable ref={paginatedTableRef} initialResponse={response} pullData={loadUsers}>
                                                     {(data) => (

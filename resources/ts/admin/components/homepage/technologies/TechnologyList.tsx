@@ -32,7 +32,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
 
             setTechnologies(response.data.map((technology) => ({ technology, selected: false })));
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const result = await withReactContent(Swal).fire({
                 icon: 'error',
@@ -60,7 +60,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
 
             await load();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -90,7 +90,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
 
             await load();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -114,7 +114,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
 
             return response.data;
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

@@ -32,7 +32,7 @@ const All: React.FC<IProps> = ({ router: { navigate } }) => {
     }, []);
 
     const handleLoadError = React.useCallback((err: unknown, { reload }: IWaitToLoadHelpers) => {
-        console.error(err);
+        logger.error(err);
 
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

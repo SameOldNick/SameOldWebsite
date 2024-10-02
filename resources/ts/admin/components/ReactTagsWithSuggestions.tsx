@@ -18,7 +18,7 @@ const ReactTagsWithSuggestions: React.FC<IReactTagsWrapperProps> = ({ ...props }
 
             setSuggestions(response.data.map(({ tag, slug }, index) => ({ label: tag, value: slug ?? index })))
         } catch (e) {
-            console.error(`Unable to get tag suggestions: ${JSON.stringify(e)}`);
+            logger.error(`Unable to get tag suggestions: ${JSON.stringify(e)}`);
         }
     }, []);
 

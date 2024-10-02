@@ -130,7 +130,7 @@ const CommentList: React.FC<IProps> = ({ }) => {
                     >
                         {(response, err) => (
                             <>
-                                {err && console.error(err)}
+                                {err && logger.error(err)}
                                 {response && (
                                     <PaginatedTable ref={paginatedTableRef} initialResponse={response} pullData={load}>
                                         {(data) => (

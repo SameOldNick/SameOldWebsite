@@ -30,7 +30,7 @@ if (rootEl) {
     const root = ReactDOMClient.createRoot(rootEl);
     root.render(<App />);
 } else {
-    console.error(`Unable to find DOM element with ID 'root'.`)
+    logger.error(`Unable to find DOM element with ID 'root'.`)
 }
 
 // If you want to start measuring performance in your app, pass a function

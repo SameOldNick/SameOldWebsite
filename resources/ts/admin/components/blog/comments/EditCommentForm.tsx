@@ -75,7 +75,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
             setComment(updated);
             formikRef.current?.resetForm();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

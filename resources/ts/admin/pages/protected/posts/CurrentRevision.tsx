@@ -20,7 +20,7 @@ const CurrentRevision: React.FC<IProps> = ({ router }) => {
                     <>
                         {/*article && <Navigate to={`revisions/${article.article.current_revision?.uuid}`} />*/}
                         {article && <Navigate to={article.generatePath(article.article.current_revision?.uuid)} />}
-                        {err && console.error(err)}
+                        {err && logger.error(err)}
                     </>
                 )}
             </WithArticle>

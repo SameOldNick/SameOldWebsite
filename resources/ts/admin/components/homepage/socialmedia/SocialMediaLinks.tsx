@@ -30,7 +30,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
 
             setLinks(response.data.map<ISocialMediaLinkItem>((link) => ({ link, selected: false })));
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const result = await withReactContent(Swal).fire({
                 icon: 'error',
@@ -59,7 +59,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
 
             load();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -89,7 +89,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
 
             load();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -119,7 +119,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
 
             load();
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
@@ -159,7 +159,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${item.link.id}`);
 
         } catch (err) {
-            console.error(err);
+            logger.error(err);
 
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

@@ -72,7 +72,7 @@ const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allo
             onSuccess(selected);
         } else {
             if (!selected) {
-                console.error('No comment selected.');
+                logger.error('No comment selected.');
                 return;
             }
 
@@ -132,7 +132,7 @@ const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allo
                                 >
                                     {(response, err) => (
                                         <>
-                                            {err && console.error(err)}
+                                            {err && logger.error(err)}
                                             {response && (
                                                 <PaginatedTable ref={paginatedTableRef} initialResponse={response} pullData={loadComments}>
                                                     {(data) => (
