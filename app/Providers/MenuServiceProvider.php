@@ -53,7 +53,7 @@ class MenuServiceProvider extends ServiceProvider
                 ->groupedByDateTime('Y-m')
                 ->sortKeysDesc()
                 ->keys()
-                ->map(fn ($value) => Carbon::parse($value));
+                ->map(fn($value) => Carbon::parse($value));
 
             foreach ($yearMonths as $yearMonth) {
                 $menu->route(['blog.archive', ['year' => $yearMonth->year, 'month' => $yearMonth->month]], $yearMonth->format('F Y'));
@@ -61,6 +61,12 @@ class MenuServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Creates shared menu for main and fotter.
+     *
+     * @param Menu $menu
+     * @return Menu
+     */
     private function createSharedMenu(Menu $menu)
     {
         return $menu
