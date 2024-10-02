@@ -7,8 +7,9 @@ import classNames from 'classnames';
 import Icon from '@admin/components/icon-selector/Icon';
 
 import { lookupIcon } from '@admin/components/icon-selector/utils';
+import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
 
-interface ITechnologyProps {
+interface ITechnologyProps extends IHasIconsFile {
     technology: ITechnology;
     selected: boolean;
 
@@ -17,7 +18,7 @@ interface ITechnologyProps {
     onSelected: (selected: boolean) => void;
 }
 
-const Technology: React.FC<ITechnologyProps> = ({ technology, selected, onSelected, onEditClicked, onDeleteClicked }) => {
+const Technology: React.FC<ITechnologyProps> = ({ lookupIcon, technology, selected, onSelected, onEditClicked, onDeleteClicked }) => {
     const icon = React.useMemo(() => lookupIcon(technology.icon), [technology]);
 
     const handleClick = React.useCallback((e: React.MouseEvent<HTMLElement>) => {
@@ -70,4 +71,4 @@ const Technology: React.FC<ITechnologyProps> = ({ technology, selected, onSelect
     );
 }
 
-export default Technology;
+export default withIconsFile(Technology);
