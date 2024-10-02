@@ -41,8 +41,7 @@ const getAllIcons = (file: IIconsFile) => Object.entries(file.icons).flatMap<IIc
             prefix,
             name: key,
             svg: value
-        })
-    )
+        }))
 );
 
 const createIconFromSvgJson = ({ tag, props, children }: ISvg, index: number = 0): React.ReactNode =>
@@ -52,12 +51,12 @@ const createIconFromSvgJson = ({ tag, props, children }: ISvg, index: number = 0
         children?.map((child, i) => createIconFromSvgJson(child, i))
     );
 
-const lookupIcon = (file: IIconsFile, icon: string): IIconType | undefined => { console.log(file);
+const lookupIcon = (file: IIconsFile, icon: string): IIconType | undefined => {
     const prefix = icon.split('-')[0];
 
     const name = icon.substring(icon.indexOf('-') + 1);
 
-    for (const [family, value] of Object.entries(file.icons)) { console.log(family, value);
+    for (const [family, value] of Object.entries(file.icons)) {
         if (value.prefix === prefix && name in value.icons) {
             const svg = (value.icons)[name];
 
