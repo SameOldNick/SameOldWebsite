@@ -18,27 +18,23 @@ class SearchResultsHeader extends Component
 
     /**
      * Gets link for sorting by relevance
-     *
-     * @return string
      */
     public function sortByRelevanceLink(): string
     {
         return $this->request->fullUrlWithQuery([
             'sort' => 'relevance',
-            'order' => $this->request->isSortBy('relevance') && $this->request->isOrderAscending() ? 'desc' : 'asc'
+            'order' => $this->request->isSortBy('relevance') && $this->request->isOrderAscending() ? 'desc' : 'asc',
         ]);
     }
 
     /**
      * Gets link for sorting by date
-     *
-     * @return string
      */
     public function sortByDateLink(): string
     {
         return $this->request->fullUrlWithQuery([
             'sort' => 'date',
-            'order' => $this->request->isSortBy('date') && $this->request->order() === 'desc' ? 'asc' : 'desc'
+            'order' => $this->request->isSortBy('date') && $this->request->order() === 'desc' ? 'asc' : 'desc',
         ]);
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Components\Search\QueryParser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Stringable;
 
@@ -51,9 +50,6 @@ class BlogSearchRequest extends FormRequest
 
     /**
      * Checks if sorting by
-     *
-     * @param string $sortBy
-     * @return boolean
      */
     public function isSortBy(string $sortBy): bool
     {
@@ -62,8 +58,6 @@ class BlogSearchRequest extends FormRequest
 
     /**
      * Checks if results should be in ascending order
-     *
-     * @return boolean
      */
     public function isOrderAscending(): bool
     {
@@ -72,8 +66,6 @@ class BlogSearchRequest extends FormRequest
 
     /**
      * Checks if results should be in descending order
-     *
-     * @return boolean
      */
     public function isOrderDescending(): bool
     {

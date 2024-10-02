@@ -77,7 +77,7 @@ class BlogController extends Controller
 
         if ($request->sortBy() === 'relevance') {
             $articles = $articles instanceof WeightManager ? $articles->sortByWeights($request->order()) : $articles;
-        } else if ($request->sortBy() === 'date') {
+        } elseif ($request->sortBy() === 'date') {
             $articles = $articles instanceof WeightManager ? $articles->getCollection() : $articles;
 
             $articles = $request->order() === 'asc' ? $articles->sortBy('published_at') : $articles->sortByDesc('published_at');
