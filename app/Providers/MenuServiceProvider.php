@@ -72,7 +72,7 @@ class MenuServiceProvider extends ServiceProvider
         return $menu
             ->route('home', 'Home', $this->applyIcon('fa-solid fa-house'))
             ->route('blog', 'Blog', $this->applyIcon('fa-solid fa-newspaper'))
-            ->url('/contact', 'Contact Me', $this->applyIcon('fa-solid fa-envelope'));
+            ->route('contact', 'Contact Me', $this->applyIcon('fa-solid fa-envelope'));
     }
 
     /**
