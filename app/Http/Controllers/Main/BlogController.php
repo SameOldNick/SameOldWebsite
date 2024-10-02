@@ -23,9 +23,9 @@ class BlogController extends Controller
     {
         $articles =
             Article::published()
-                ->sortedByPublishDate()
-                ->paginate(5)
-                ->withQueryString();
+            ->sortedByPublishDate()
+            ->paginate(5)
+            ->withQueryString();
 
         return view('main.blog.main', compact('articles'));
     }
@@ -42,11 +42,11 @@ class BlogController extends Controller
 
         $articles =
             Article::published()
-                ->whereMonth('published_at', $dateTime->month)
-                ->whereYear('published_at', $dateTime->year)
-                ->sortedByPublishDate()
-                ->paginate(5)
-                ->withQueryString();
+            ->whereMonth('published_at', $dateTime->month)
+            ->whereYear('published_at', $dateTime->year)
+            ->sortedByPublishDate()
+            ->paginate(5)
+            ->withQueryString();
 
         return view('main.blog.archive', compact('dateTime', 'articles'));
     }
