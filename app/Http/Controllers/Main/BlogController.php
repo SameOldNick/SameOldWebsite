@@ -56,7 +56,6 @@ class BlogController extends Controller
      */
     public function search(BlogSearchRequest $request)
     {
-        $query = $request->parsedSearchedQuery();
         $sortBy = $request->has('sort') && $request->str('sort')->lower()->exactly('date') ? 'date' : 'relevance';
         $order = $request->has('order') && $request->str('order')->lower()->exactly('asc') ? 'asc' : 'desc';
 
@@ -66,12 +65,14 @@ class BlogController extends Controller
         $articles = Article::published()->get();
 
         if ($request->filled('q')) {
-            if ($query->hasTags()) {
-                $articles = $articles->withTags($query->getTags()->all());
+            $query = $request->parsedSearchQuery();
+
+            if ($query->has('tags')) {
+                $articles = $articles->withTags($query->get('tags')->all());
             }
 
-            if ($query->hasKeywords()) {
-                $articles = $articles->withKeywords($query->getKeywords()->all());
+            if ($query->has('keywords')) {
+                $articles = $articles->withKeywords($query->get('keywords')->all());
             }
 
             if ($sortBy === 'relevance') {

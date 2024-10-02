@@ -18,11 +18,11 @@
                                 <div>
                                     <h3>
                                         {{ __('Results for: ') }}
-                                        @foreach ($request->parsedSearchedQuery()->getTags() as $tag)
+                                        @foreach ($request->parsedSearchQuery()->get('tags') as $tag)
                                             <span class="badge rounded-pill bg-primary">#{{ $tag }}</span>
                                         @endforeach
 
-                                        @foreach ($request->parsedSearchedQuery()->getKeywords() as $keyword)
+                                        @foreach ($request->parsedSearchQuery()->get('keywords') as $keyword)
                                             <span class="badge rounded-pill bg-secondary">{{ $keyword }}</span>
                                         @endforeach
                                     </h3>

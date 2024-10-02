@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Components\Search\ParsedQuery;
+use App\Components\Search\QueryParser;
 use App\Http\Requests\Parsers\SearchQueryParser;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Stringable;
 
 class BlogSearchRequest extends FormRequest
 {
@@ -14,7 +17,11 @@ class BlogSearchRequest extends FormRequest
      */
     protected $redirectRoute = 'blog.search';
 
-    protected $searchQuery;
+    protected ?ParsedQuery $parsed;
+
+    public function __construct(
+        public readonly QueryParser $queryParser
+    ) {}
 
     /**
      * Get the validation rules that apply to the request.
@@ -31,16 +38,26 @@ class BlogSearchRequest extends FormRequest
     }
 
     /**
+     * Gets the search query
+     *
+     * @return Stringable
+     */
+    public function getSearchQuery(): Stringable
+    {
+        return $this->str('q');
+    }
+
+    /**
      * Gets parsed search query
      *
-     * @return SearchQueryParser
+     * @return ParsedQuery
      */
-    public function parsedSearchedQuery()
+    public function parsedSearchQuery(): ParsedQuery
     {
-        if (isset($this->searchQuery)) {
-            return $this->searchQuery;
+        if (isset($this->parsed)) {
+            return $this->parsed;
         }
 
-        return $this->searchQuery = (new SearchQueryParser($this))->parse();
+        return $this->parsed = $this->queryParser->parse((string) $this->getSearchQuery());
     }
 }
