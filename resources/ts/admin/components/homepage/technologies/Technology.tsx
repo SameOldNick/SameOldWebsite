@@ -6,7 +6,6 @@ import classNames from 'classnames';
 
 import Icon from '@admin/components/icon-selector/Icon';
 
-import { lookupIcon } from '@admin/components/icon-selector/utils';
 import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
 
 interface ITechnologyProps extends IHasIconsFile {
