@@ -2,21 +2,31 @@
 
 [![PHPUnit Tests](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml/badge.svg)](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml)
 
-Welcome to the Same Old Website GitHub repository! This repository serves as the digital canvas for Same Old Nick, where creativity meets code. Here, you'll find the code that powers Nick's personal corner of the internet. 
+Welcome to **Same Old Website** - a personal web app built by SameOldNick using Laravel and React. This app is designed to be a personal portfolio and blog platform with an admin panel for easy management.
 
-## 🚀 Goals
-This repository embodies Nick's journey of self-expression and growth, serving as a testament to his technical prowess and artistic vision. It's a space for experimentation, innovation, and sharing with the world.
+## 🛠️ Features
+
+- **Multi-Factor Authentication (MFA)**: Enhance account security with MFA support.
+- **OAuth SSO Login**: Log in using popular platforms like Google and GitHub.
+- **Role-Based Access Control (RBAC)**: Fine-grained user permissions for different roles.
+- **Google Analytics Integration**: Pulls analytics data and displays it in the admin panel with charts.
+- **Markdown Blog Editor**: Easily write blog articles in Markdown format.
+- **Image Attachments for Blog**: Attach images to blog articles for better content presentation.
+- **Automated Comment Moderation**: Automatically filter out inappropriate comments.
+- **Guest and Registered Comments**: Both guests and registered users can post comments.
+- **Backup Functionality**: Backup your website data for safety.
+- **Advanced Search**: Search for articles and content using tags and keywords.
 
 ## 🤝 Contributions
 Contributions, feedback, and suggestions are all warmly welcome! Whether you're helping fix a bug, suggesting design improvements, or adding a new feature, your input is valued.
 
 For additional details on development procedures, please refer to the [CONTRIBUTIONS.md](CONTRIBUTIONS.md) file.
 
-## 🔗 Connect with Same Old Nick
+## 🔗 Connect with Me
 
- * Follow Nick on Twitter: @SameOldNick
- * Connect on LinkedIn: Nick Profile
- * Subscribe to the Newsletter: Stay Updated
+- [LinkedIn](https://www.linkedin.com/in/nickhamnett/)
+- [GitHub](https://github.com/SameOldNick)
+- [Twitter/X](https://twitter.com/SameOldNick)
 
 ## 💽 More Information
 
