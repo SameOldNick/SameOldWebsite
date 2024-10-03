@@ -10,7 +10,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @vite('resources/scss/main/all.scss')
-    {{-- <link type="text/css" rel="stylesheet" href="{{ Str::uniqueUrl(mix('css/main.css')) }}"> --}}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
