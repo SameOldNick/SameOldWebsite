@@ -23,7 +23,14 @@
                     <nav class="navbar navbar-expand-md sections-submenu">
                         <div class="container-fluid">
 
-                            <button class="navbar-toggler w-100" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSectionsSubmenu" aria-controls="navbarSectionsSubmenu" aria-expanded="false" aria-label="Toggle navigation">
+                            <button
+                                class="navbar-toggler w-100"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarSectionsSubmenu"
+                                aria-controls="navbarSectionsSubmenu"
+                                aria-expanded="false"
+                                aria-label="{{ __('Toggle navigation') }}">
                                 <span class="sections-submenu-current">{{ __('Biography') }}</span>
                                 <i class="fa-solid fa-caret-down ms-1"></i>
                             </button>
