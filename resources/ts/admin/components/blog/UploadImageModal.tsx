@@ -31,8 +31,10 @@ const UploadImageModal: React.FC<IPromptModalProps<IImage>> = ({ onSuccess, onCa
     const handleFileRemoved = React.useCallback(() => setSelected(undefined), []);
 
     const handleSelectClicked = React.useCallback(async () => {
-        if (!selected)
+        if (!selected) {
+            logger.error('No image is selected.');
             return;
+        }
 
         try {
             const uploaded = await uploadImage(selected.file, descriptionRef.current?.value || '');
@@ -43,7 +45,7 @@ const UploadImageModal: React.FC<IPromptModalProps<IImage>> = ({ onSuccess, onCa
 
             setAlerts([...alerts, { type: 'danger', message }]);
         }
-    }, [onSuccess]);
+    }, [selected, onSuccess]);
 
     React.useEffect(() => {
         return () => {
