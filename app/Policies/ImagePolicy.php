@@ -10,10 +10,11 @@ class ImagePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
         // Controller will determine what images are displayed.
-        return true;
+        // User must be logged in.
+        return !is_null($user);
     }
 
     /**
@@ -27,9 +28,9 @@ class ImagePolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(?User $user): bool
     {
-        return true;
+        return !is_null($user);
     }
 
     /**
