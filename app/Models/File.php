@@ -33,10 +33,11 @@ use Illuminate\Support\Str;
 final class File extends Model
 {
     use HasFactory;
+
     /** @use HasPresenter<FilePresenter> */
     use HasPresenter;
-    use HasUuids;
 
+    use HasUuids;
     use SoftDeletes;
 
     /**

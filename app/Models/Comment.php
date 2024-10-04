@@ -38,10 +38,11 @@ class Comment extends Model implements Moderatable
 {
     use CreatesModeratorsFactory;
     use HasFactory;
+
     /** @use HasPresenter<CommentPresenter> */
     use HasPresenter;
-    use Immutable;
 
+    use Immutable;
     use Postable;
 
     /**

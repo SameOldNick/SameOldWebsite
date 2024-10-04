@@ -14,7 +14,7 @@ class ImagePolicy
     {
         // Controller will determine what images are displayed.
         // User must be logged in.
-        return !is_null($user);
+        return ! is_null($user);
     }
 
     /**
@@ -30,7 +30,7 @@ class ImagePolicy
      */
     public function create(?User $user): bool
     {
-        return !is_null($user);
+        return ! is_null($user);
     }
 
     /**
