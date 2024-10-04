@@ -139,6 +139,9 @@ declare global {
         uuid: string;
         description: string;
         file: IFile;
+        extra: {
+            url: string;
+        };
     }
 
     interface IComment {
