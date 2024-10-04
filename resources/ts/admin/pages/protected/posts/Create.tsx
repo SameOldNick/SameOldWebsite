@@ -16,6 +16,7 @@ import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { attachImage, attachTags, createArticle, setMainImage as setMainImageApi } from '@admin/utils/api/endpoints/articles';
 
 import Article from '@admin/utils/api/models/Article';
+import Image from '@admin/utils/api/models/Image';
 
 interface IProps {
 
@@ -28,12 +29,12 @@ const Create: React.FC<IProps> = ({ }) => {
         return createArticle(title, slug, content, summary || null, publishedAt || null);
     }, []);
 
-    const setMainImage = React.useCallback(async (article: Article, mainImage: IImage) => {
+    const setMainImage = React.useCallback(async (article: Article, mainImage: Image) => {
         await attachImage(article.article.id, mainImage.uuid);
         await setMainImageApi(article.article.id, mainImage.uuid);
     }, []);
 
-    const associateImages = React.useCallback(async (article: Article, images: IImage[]) => {
+    const associateImages = React.useCallback(async (article: Article, images: Image[]) => {
         for (const image of images) {
             await attachImage(article.article.id, image.uuid);
         }

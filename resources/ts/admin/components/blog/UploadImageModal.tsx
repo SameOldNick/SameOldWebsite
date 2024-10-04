@@ -10,13 +10,14 @@ import { createBase64UrlFromFile } from '@admin/utils';
 import { IPromptModalProps } from '@admin/utils/modals';
 import { uploadImage } from '@admin/utils/api/endpoints/articles';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import Image from '@admin/utils/api/models/Image';
 
 export interface ISelectedImage {
     file: File;
     src: string;
 }
 
-const UploadImageModal: React.FC<IPromptModalProps<IImage>> = ({ onSuccess, onCancelled }) => {
+const UploadImageModal: React.FC<IPromptModalProps<Image>> = ({ onSuccess, onCancelled }) => {
     const descriptionRef = React.createRef<HTMLInputElement>();
 
     const [selected, setSelected] = React.useState<ISelectedImage | undefined>(undefined);
@@ -39,7 +40,7 @@ const UploadImageModal: React.FC<IPromptModalProps<IImage>> = ({ onSuccess, onCa
         try {
             const uploaded = await uploadImage(selected.file, descriptionRef.current?.value || '');
 
-            onSuccess(uploaded);
+            onSuccess(new Image(uploaded));
         } catch (err) {
             const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 

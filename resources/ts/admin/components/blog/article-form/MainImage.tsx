@@ -1,3 +1,4 @@
+import Image from "@admin/utils/api/models/Image";
 import React from "react";
 import { FaRegImage, FaTrash, FaUpload } from "react-icons/fa";
 import { Button, Card, CardProps, CardBody, CardTitle, Col, Row } from "reactstrap";
@@ -8,7 +9,7 @@ export interface IMainImage {
 }
 
 interface IProps extends Omit<CardProps, 'children' | 'onChange'> {
-    current?: IImage;
+    current?: Image;
     onUploadClicked: () => Promise<void>;
     onRemoveClicked: () => Promise<void>;
 }
@@ -57,8 +58,8 @@ const MainImage: React.FC<IProps> = ({ current, onUploadClicked, onRemoveClicked
 
                 {current !== undefined && (
                     <div className='text-center'>
-                        <img src={current.file.url || ''} className='img-fluid mb-3' style={{ maxHeight: '250px' }} />
-                        <p className='mb-0 fw-bold'>{current.description}</p>
+                        <img src={current.url} className='img-fluid mb-3' style={{ maxHeight: '250px' }} />
+                        <p className='mb-0 fw-bold'>{current.image.description}</p>
                     </div>
                 )}
 

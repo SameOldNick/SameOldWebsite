@@ -21,6 +21,7 @@ import Revision from '@admin/utils/api/models/Revision';
 import Article, { TArticleStatus } from '@admin/utils/api/models/Article';
 import { uploadImage } from '@admin/utils/api/endpoints/articles';
 import awaitModalPrompt from '@admin/utils/modals';
+import Image from '@admin/utils/api/models/Image';
 
 export interface IArticleValues {
     title: string;
@@ -34,7 +35,7 @@ export type TArticleActions = 'save-as-revision' | 'update' | 'publish' | 'sched
 
 export interface IEditArticleValues {
     article: IArticleFormValues;
-    mainImage?: IImage;
+    mainImage?: Image;
     tags: Tag[];
 }
 
@@ -44,8 +45,8 @@ export interface IArticleActionInputs {
     content: string;
     summary: string | null;
     publishedAt: DateTime | null;
-    images: IImage[];
-    mainImage?: IImage;
+    images: Image[];
+    mainImage?: Image;
     tags: Tag[];
 }
 
@@ -81,8 +82,8 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
     const [buttonDropdownOpen, setButtonDropdownOpen] = React.useState(false);
 
     const [tags, setTags] = React.useState<Tag[]>(original.tags);
-    const [mainImage, setMainImage] = React.useState<IImage | undefined>(original.mainImage);
-    const [images, setImages] = React.useState<IImage[]>([]);
+    const [mainImage, setMainImage] = React.useState<Image | undefined>(original.mainImage);
+    const [images, setImages] = React.useState<Image[]>([]);
 
     React.useEffect(() => {
         if (original.tags !== tags)
@@ -217,7 +218,6 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
             const uploaded = await awaitModalPrompt(UploadImageModal);
 
             setMainImage(uploaded);
-
         } catch (e) {
             // Modal was cancelled.
         }
@@ -238,13 +238,14 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
         for (const file of files) {
             const uploaded = await uploadImage(file);
 
-            setImages((prev) => prev.concat(uploaded));
+            const image = new Image(uploaded);
 
+            setImages((prev) => prev.concat(image));
 
             images.push({
-                url: uploaded.file.url as string,
-                alt: uploaded.description,
-                title: uploaded.file.name
+                url: image.url,
+                alt: image.description,
+                title: image.image.file.name
             });
         }
 

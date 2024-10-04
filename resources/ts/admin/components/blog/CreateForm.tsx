@@ -8,12 +8,13 @@ import { DateTime } from 'luxon';
 import FormWrapper, { IArticleFormValues } from './FormWrapper';
 import MainImage from './article-form/MainImage';
 import Tags from './article-form/Tags';
-import Content, { TMarkdownImage, TUploadImagesCallback, transformImageToMarkdownImage } from './article-form/Content';
+import Content, { TMarkdownImage, TUploadImagesCallback } from './article-form/Content';
 import UploadImageModal from './UploadImageModal';
 import UnsavedChangesWarning from '@admin/components/UnsavedChangesWarning';
 
 import { uploadImage } from '@admin/utils/api/endpoints/articles';
 import awaitModalPrompt from '@admin/utils/modals';
+import Image from '@admin/utils/api/models/Image';
 
 export interface ICreateArticleFormValues extends IArticleFormValues {
 }
@@ -25,8 +26,8 @@ interface ISaveArticleParamsBase {
         content: string;
         summary?: string;
     }
-    mainImage?: IImage;
-    images: IImage[];
+    mainImage?: Image;
+    images: Image[];
     tags: Tag[];
 }
 
@@ -39,20 +40,17 @@ interface IProps {
 }
 
 const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProps>(({ onSaveClicked, onSaveAndPublishClicked, ...props }, ref) => {
-    const initialValues = React.useMemo(
-        () => ({
-            title: '',
-            content: '',
-            summary: '',
-            summary_auto_generate: true,
-            slug: '',
-            slug_auto_generate: true
-        }),
-        []
-    );
+    const initialValues = React.useMemo(() => ({
+        title: '',
+        content: '',
+        summary: '',
+        summary_auto_generate: true,
+        slug: '',
+        slug_auto_generate: true
+    }), []);
 
-    const [mainImage, setMainImage] = React.useState<IImage | undefined>(undefined);
-    const [images, setImages] = React.useState<IImage[]>([]);
+    const [mainImage, setMainImage] = React.useState<Image | undefined>(undefined);
+    const [images, setImages] = React.useState<Image[]>([]);
     const [tags, setTags] = React.useState<Tag[]>([]);
 
     const handleUploadMainImageClicked = React.useCallback(async () => {
@@ -74,9 +72,9 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
 
         // Upload images
         for (const file of files) {
-            const image = await uploadImage(file);
+            const image = new Image(await uploadImage(file));
 
-            uploaded.push(transformImageToMarkdownImage(image));
+            uploaded.push(image.toMarkdownImage());
 
             // Add image to state so they're attached to article once it's created
             setImages((images) => [...images, image]);
