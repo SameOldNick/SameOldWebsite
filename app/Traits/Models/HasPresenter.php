@@ -9,10 +9,7 @@ use RuntimeException;
  */
 trait HasPresenter
 {
-    /**
-     * Whether to append presenter data to array.
-     */
-    protected bool $appendPresenter = false;
+    use AppendsPresenter;
 
     /**
      * Get a new presenter instance
@@ -30,32 +27,6 @@ trait HasPresenter
         }
 
         return $this->newPresenter($presenter);
-    }
-
-    /**
-     * Initializes presenter array.
-     */
-    public function initializePresenterArray(): array
-    {
-        return [$this->getPresenterKey() => $this->presenter()->toArray()];
-    }
-
-    /**
-     * Gets the presenter key
-     */
-    public function getPresenterKey(): string
-    {
-        return 'presenter';
-    }
-
-    /**
-     * Appends presenter data to model array
-     */
-    public function appendPresenter(bool $enabled = true): static
-    {
-        $this->appendPresenter = $enabled;
-
-        return $this;
     }
 
     /**
@@ -83,15 +54,5 @@ trait HasPresenter
         $presenter = new $class($this);
 
         return $presenter;
-    }
-
-    public function toArray()
-    {
-        $array = parent::toArray();
-
-        return $this->appendPresenter ? [
-            ...$array,
-            ...$this->initializePresenterArray(),
-        ] : $array;
     }
 }
