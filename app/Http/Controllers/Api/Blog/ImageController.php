@@ -48,7 +48,7 @@ class ImageController extends Controller
         ]);
 
         $path = $request->file('image')->store('images');
-        $file = File::createFromFilePath($path, null, true);
+        $file = File::createFromFilePath($path, public: true);
 
         $file->user()->associate($request->filled('user') && $request->hasRoles(['manage_images']) ? User::find($request->user) : $request->user());
 
