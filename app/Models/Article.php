@@ -93,8 +93,7 @@ class Article extends Model
      *
      * @var class-string
      */
-    protected static ?string $presenter = ArticlePresenter::class;
-
+    protected static string $presenter = ArticlePresenter::class;
 
     /**
      * Create a new Eloquent Collection instance.

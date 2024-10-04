@@ -98,7 +98,7 @@ class Comment extends Model implements Moderatable
      *
      * @var class-string
      */
-    protected static ?string $presenter = CommentPresenter::class;
+    protected static string $presenter = CommentPresenter::class;
 
     /**
      * The Eloquent collection class to use for the model.

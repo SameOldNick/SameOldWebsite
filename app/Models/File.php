@@ -101,7 +101,7 @@ final class File extends Model
      *
      * @var class-string
      */
-    protected static ?string $presenter = FilePresenter::class;
+    protected static string $presenter = FilePresenter::class;
 
     /**
      * Gets the parent fileable model (ProductImage, Download, or Release)
