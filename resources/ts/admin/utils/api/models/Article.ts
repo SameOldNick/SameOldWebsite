@@ -3,6 +3,7 @@ import S from "string";
 import { generatePath } from "react-router-dom";
 
 import Revision from "./Revision";
+import Image from "./Image";
 
 export type TArticleStatusRevision = 'revision';
 export type TArticleStatusPublished = 'published';
@@ -33,6 +34,16 @@ export default class Article {
      */
     public get url() {
         return this.article.extra.url;
+    }
+
+    /**
+     * Gets the main image
+     *
+     * @readonly
+     * @memberof Article
+     */
+    public get mainImage() {
+        return this.article.main_image ? new Image(this.article.main_image) : null;
     }
 
     /**
