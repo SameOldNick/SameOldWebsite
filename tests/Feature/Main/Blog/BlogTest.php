@@ -108,7 +108,7 @@ class BlogTest extends TestCase
 
         $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->create();
 
-        $response = $this->get($article->createPrivateUrl());
+        $response = $this->get($article->presenter()->privateUrl());
 
         $response->assertSuccessful();
     }
@@ -124,7 +124,7 @@ class BlogTest extends TestCase
 
         $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->published()->create();
 
-        $response = $this->get($article->createPrivateUrl());
+        $response = $this->get($article->presenter()->privateUrl());
 
         $response->assertSuccessful();
     }
@@ -140,7 +140,7 @@ class BlogTest extends TestCase
 
         $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->published($this->faker->dateTimeBetween('+1 week', '+3 weeks'))->create();
 
-        $response = $this->get($article->createPrivateUrl());
+        $response = $this->get($article->presenter()->privateUrl());
 
         $response->assertSuccessful();
     }
@@ -156,7 +156,7 @@ class BlogTest extends TestCase
 
         $article = Article::factory()->createPostWithRegisteredPerson()->withRevision()->deleted()->create();
 
-        $response = $this->get($article->createPrivateUrl());
+        $response = $this->get($article->presenter()->privateUrl());
 
         $response->assertSuccessful();
     }
