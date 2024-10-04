@@ -39,7 +39,7 @@
     <div class="loader show">
         <div class="loader-content">
             <div class="spin-skeleton light" role="status">
-                <span class="visually-hidden">Loading...</span>
+                <span class="visually-hidden">{{ __('Loading...') }}</span>
             </div>
         </div>
 
