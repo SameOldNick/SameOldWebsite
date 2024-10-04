@@ -61,11 +61,6 @@ export interface IEditFormProps {
     onRestoreRevisionClicked: () => void;
     onPreviewArticleClicked: () => void;
     onActionButtonClicked: (action: TArticleActions, inputs: IArticleActionInputs, dirty: TArticleActionDirtyValues) => Promise<void>;
-
-    onUpdate: (values: IArticleValues) => Promise<void>;
-    onPublish: (values: IArticleValues, dateTime: DateTime) => Promise<void>;
-    onUnpublish: (values: IArticleValues) => Promise<void>;
-    onUnschedule: (values: IArticleValues) => Promise<void>;
 }
 
 const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProps>((props, ref) => {
