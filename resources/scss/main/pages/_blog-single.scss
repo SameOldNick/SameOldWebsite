@@ -1,70 +1,76 @@
 .page-blog-single {
-	.blog-article {
-		.blog-article-header {
-			margin-bottom: 1.5rem;
+    .blog-article {
+        .blog-article-header {
+            margin-bottom: 1.5rem;
 
-			.blog-article-title {
-				font-weight: bolder;
-				margin-bottom: 0.25rem;
-			}
-		}
+            .blog-article-title {
+                font-weight: bolder;
+                margin-bottom: 0.25rem;
+            }
+        }
 
-		.blog-article-preview {
-			margin-bottom: 1.5rem;
+        .blog-article-preview {
+            margin-bottom: 1.5rem;
+            text-align: center;
 
-			img {
-				border-radius: 0.25rem;
-				max-width: 100%;
-				height: auto;
-			}
-		}
+            img {
+                border-radius: 0.25rem;
+                max-width: 100%;
+                height: auto;
+            }
+        }
 
-		.blog-article-content {
-			margin-bottom: 3rem;
+        .blog-article-content {
+            margin-bottom: 3rem;
 
-			p {
-				font-size: 1.25rem;
-				margin-bottom: 1.25rem;
-			}
+            p {
+                font-size: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
 
-			h1, h2, h3, h4, h5, h6 {
-				font-weight: bolder;
-				margin-bottom: 1.25rem;
-				margin-top: 1.25rem;
-			}
-		}
-	}
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-weight: bolder;
+                margin-bottom: 1.25rem;
+                margin-top: 1.25rem;
+            }
+        }
+    }
 
-	.blog-article-comments {
-		margin-top: 3rem;
-		margin-bottom: 3rem;
+    .blog-article-comments {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
 
-		.blog-article-comment {
-			display: flex;
-			margin-bottom: 1.5rem;
+        .blog-article-comment {
+            display: flex;
+            margin-bottom: 1.5rem;
 
-			.blog-article-comment-left {
-				flex-shrink: 0;
+            .blog-article-comment-left {
+                flex-shrink: 0;
                 max-width: 80px;
 
-				img.blog-article-comment-avatar {
-					border-radius: 50%;
-				}
-			}
+                img.blog-article-comment-avatar {
+                    border-radius: 50%;
+                }
+            }
 
-			.blog-article-comment-right {
-				margin-left: 1rem;
+            .blog-article-comment-right {
+                margin-left: 1rem;
                 flex-grow: 1;
 
-				.blog-article-comment-header {
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					margin-bottom: 0.25rem;
+                .blog-article-comment-header {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    margin-bottom: 0.25rem;
 
                     small {
-						color: $text-muted;
-					}
+                        color: $text-muted;
+                    }
 
                     .blog-article-comment-header-left {
                         .blog-article-comment-name {
@@ -76,40 +82,39 @@
 
                     .blog-article-comment-header-right {
                         small {
-						    font-style: italic;
+                            font-style: italic;
                         }
                     }
 
 
 
 
-				}
+                }
 
-				> p {
-					margin-bottom: 0.25rem;
-				}
+                >p {
+                    margin-bottom: 0.25rem;
+                }
 
-				.blog-article-comment-actions {
-					a {
+                .blog-article-comment-actions {
+                    a {
                         color: $dark;
-						text-decoration: none;
+                        text-decoration: none;
 
-						&:hover {
-							font-weight: bold;
-						}
-					}
-				}
-			}
+                        &:hover {
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
 
-			// Child comment
-			.blog-article-comment {
-				margin-top: 1.5rem;
+            // Child comment
+            .blog-article-comment {
+                margin-top: 1.5rem;
 
-				&:last-child {
-					margin-bottom: 0 !important;
-				}
-			}
-		}
-	}
+                &:last-child {
+                    margin-bottom: 0 !important;
+                }
+            }
+        }
+    }
 }
-
