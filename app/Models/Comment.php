@@ -7,7 +7,6 @@ use App\Components\Moderator\Contracts\Moderatable;
 use App\Enums\CommentStatus as CommentStatusEnum;
 use App\Enums\CommentUserType;
 use App\Models\Collections\CommentCollection;
-use App\Traits\Models\Displayable;
 use App\Traits\Models\Immutable;
 use App\Traits\Models\Postable;
 use BackedEnum;
@@ -37,7 +36,6 @@ use Spatie\Url\Url as SpatieUrl;
 class Comment extends Model implements Moderatable
 {
     use CreatesModeratorsFactory;
-    use Displayable;
     use HasFactory;
     use Immutable;
     use Postable;
