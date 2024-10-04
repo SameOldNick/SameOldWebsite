@@ -57,6 +57,10 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
         return response.isConfirmed;
     }, []);
 
+    const handlePreview = React.useCallback((e: React.MouseEvent) => {
+        window.open(comment.url, '_blank')?.focus();
+    }, [comment]);
+
     const handleSave = React.useCallback(async ({ title, comment: content, status }: IFormikValues) => {
         try {
             if (!await confirmSave())
@@ -113,7 +117,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                                 <Button
                                     color="info"
                                     className='me-1'
-                                    onClick={() => { }}
+                                    onClick={handlePreview}
                                 >
                                     <FaExternalLinkAlt />{' '}
                                     Preview
