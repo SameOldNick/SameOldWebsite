@@ -204,7 +204,7 @@ const EditForm = React.forwardRef<FormikProps<IArticleFormValues>, IEditFormProp
                 break;
             }
         }
-    }, [onActionButtonClicked]);
+    }, [article, mainImage, images, tags, onActionButtonClicked]);
 
     const handleSaveAsRevisionClicked = React.useCallback(() => handleActionButtonClick('save-as-revision'), [handleActionButtonClick]);
     const handleUpdateClicked = React.useCallback(() => handleActionButtonClick('update'), [handleActionButtonClick]);
