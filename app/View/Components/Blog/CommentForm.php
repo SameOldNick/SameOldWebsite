@@ -44,6 +44,8 @@ class CommentForm extends Component
      */
     public function render(): View|Closure|string
     {
-        return ! is_null($this->parent) ? view('components.main.blog.comment-form-reply') : view('components.main.blog.comment-form');
+        return ! is_null($this->parent) ?
+            view('components.main.blog.comment-form-reply') :
+            view('components.main.blog.comment-form');
     }
 }
