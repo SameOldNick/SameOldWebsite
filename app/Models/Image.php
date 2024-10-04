@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Presenters\ImagePresenter;
 use App\Traits\Models\Fileable;
+use App\Traits\Models\HasPresenter;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +23,9 @@ class Image extends Model
     use Fileable;
     use HasFactory;
     use HasUuids;
+
+    /** @use HasPresenter<FilePresenter> */
+    use HasPresenter;
 
     /**
      * Indicates if the model should be timestamped.
@@ -62,6 +67,23 @@ class Image extends Model
      * @var list<string>
      */
     protected $with = ['file'];
+
+    /**
+     * The presenter class
+     *
+     * @var class-string
+     */
+    protected static string $presenter = ImagePresenter::class;
+
+    /**
+     * @inheritDoc
+     *
+     * @return boolean
+     */
+    public function shouldAppendPresenter(): bool
+    {
+        return true;
+    }
 
     /**
      * Gets the articles this image belongs to
