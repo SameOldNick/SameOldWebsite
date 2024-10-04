@@ -42,7 +42,6 @@ declare global {
     interface IFile {
         id: string;
         name: string;
-        url: string | null;
         meta: IFileMeta;
         created_at: string;
         updated_at: string | null;
