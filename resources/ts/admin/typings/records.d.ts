@@ -48,10 +48,6 @@ declare global {
         updated_at: string | null;
     }
 
-    interface IImage {
-
-    }
-
     interface IProject {
         id?: number;
         project: string;
