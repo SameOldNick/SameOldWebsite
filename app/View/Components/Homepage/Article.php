@@ -18,6 +18,11 @@ class Article extends Component
         //
     }
 
+    public function url()
+    {
+        return $this->article->presenter()->publicUrl();
+    }
+
     /**
      * Gets the total number of viewable comments
      *

@@ -11,7 +11,7 @@
 
         <div class="blog-sidebar-articles">
             @foreach ($mostRecent as $article)
-            <a href="{{ $article->createPublicLink() }}" class="blog-sidebar-article py-3">
+            <a href="{{ $article->presenter()->publicUrl() }}" class="blog-sidebar-article py-3">
                 <div class="blog-sidebar-article-media">
                     @isset($article->mainImage)
                     <img src="{{ $article->mainImage->file->createPublicUrl() }}" alt="{{ $article->mainImage->alternativeText }}" class="img-cover img-thumbnail">

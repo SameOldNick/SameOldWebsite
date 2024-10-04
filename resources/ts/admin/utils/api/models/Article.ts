@@ -26,6 +26,16 @@ export default class Article {
     }
 
     /**
+     * Gets the URL to the article (on the main site)
+     *
+     * @readonly
+     * @memberof Article
+     */
+    public get url() {
+        return this.article.extra.url;
+    }
+
+    /**
      * Gets when article was created
      *
      * @readonly

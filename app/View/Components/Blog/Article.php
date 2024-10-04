@@ -26,6 +26,16 @@ class Article extends Component
     }
 
     /**
+     * Gets the URL for the article.
+     *
+     * @return string
+     */
+    public function url(): string
+    {
+        return $this->article->presenter()->publicUrl();
+    }
+
+    /**
      * Gets the total number of viewable comments
      *
      * @return int
@@ -50,6 +60,8 @@ class Article extends Component
      */
     public function render(): View|Closure|string
     {
-        return $this->preview ? view('components.main.blog.article-preview') : view('components.main.blog.article');
+        return $this->preview ?
+            view('components.main.blog.article-preview') :
+            view('components.main.blog.article');
     }
 }

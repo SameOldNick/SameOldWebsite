@@ -126,7 +126,9 @@ declare global {
         current_revision: IRevision | null;
         published_at: string | null;
         deleted_at: string | null;
-        private_url?: string;
+        extra: {
+            url: string;
+        };
     }
 
     interface IRevision {

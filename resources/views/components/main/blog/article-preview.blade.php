@@ -1,6 +1,6 @@
 @props(['article'])
 
-<a href="{{ $article->createPublicLink() }}" class="blog-article-link">
+<a href="{{ $url }}" class="blog-article-link">
     <article class="blog-article card">
         <div class="card-body">
             <h3 class="blog-article-title">{{ $article->title }}</h3>

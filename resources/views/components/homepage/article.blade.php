@@ -1,7 +1,7 @@
 @props(['article'])
 
 <article class="card blog-post">
-    <a href="{{ $article->public_url }}">
+    <a href="{{ $url }}">
         <div class="card-body">
             <h3 class="blog-post-title h5 card-title">{{ $article->title }}</h3>
             <ul class="blog-post-metadata">

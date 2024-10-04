@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Collections\ArticleCollection;
+use App\Traits\Models\HasPresenter;
 use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\URL;
+use App\Models\Presenters\ArticlePresenter;
 
 /**
  * @property int $id
@@ -20,9 +21,6 @@ use Illuminate\Support\Facades\URL;
  * @property ?\Illuminate\Support\Carbon $published_at
  * @property-read bool $is_published
  * @property-read bool $is_scheduled
- * @property-read string $url
- * @property-read string $public_url
- * @property-read string $private_url
  * @property-read Revision $revision
  * @property-read ?Revision $currentRevision
  * @property-read ?Image $mainImage
@@ -34,12 +32,15 @@ use Illuminate\Support\Facades\URL;
  * @method static \Illuminate\Database\Eloquent\Builder published()
  * @method static \Illuminate\Database\Eloquent\Builder sortedByPublishDate()
  * @method static \Database\Factories\ArticleFactory factory($count = null, $state = [])
+ *
  */
 class Article extends Model
 {
     use HasFactory;
     use Postable;
     use SoftDeletes;
+    /** @use HasPresenter<ArticlePresenter> */
+    use HasPresenter;
 
     /**
      * Indicates if the model should be timestamped.
@@ -85,6 +86,21 @@ class Article extends Model
     protected $appends = [
         'revision',
     ];
+
+    /**
+     * The presenter class
+     *
+     * @var class-string
+     */
+    protected static ?string $presenter = ArticlePresenter::class;
+
+    /**
+     * @inheritDoc
+     */
+    public function getPresenterKey(): string
+    {
+        return 'extra';
+    }
 
     /**
      * Create a new Eloquent Collection instance.
@@ -171,7 +187,7 @@ class Article extends Model
      */
     protected function revision(): Attribute
     {
-        return Attribute::get(fn () => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
+        return Attribute::get(fn() => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
     }
 
     /**
@@ -179,7 +195,7 @@ class Article extends Model
      */
     protected function isPublished(): Attribute
     {
-        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isPast());
+        return Attribute::get(fn() => ! is_null($this->published_at) && $this->published_at->isPast());
     }
 
     /**
@@ -187,54 +203,6 @@ class Article extends Model
      */
     protected function isScheduled(): Attribute
     {
-        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isFuture());
-    }
-
-    /**
-     * Get the URL for the article.
-     */
-    protected function url(): Attribute
-    {
-        return Attribute::get(fn () => $this->is_published ? $this->public_url : $this->private_url);
-    }
-
-    /**
-     * Get the public URL for the article.
-     */
-    protected function publicUrl(): Attribute
-    {
-        return Attribute::get(fn () => $this->createPublicLink());
-    }
-
-    /**
-     * Get the private URL for the article.
-     */
-    protected function privateUrl(): Attribute
-    {
-        return Attribute::get(fn () => $this->createPrivateUrl());
-    }
-
-    /**
-     * Creates public link to this article
-     *
-     * @param  array  $params  Any extra parameters to include in URL
-     * @return string
-     */
-    public function createPublicLink(bool $absolute = true, array $params = [])
-    {
-        return URL::route('blog.single', [...$params, 'article' => $this], $absolute);
-    }
-
-    /**
-     * Creates temporary signed URL to this article
-     *
-     * @param  int  $minutes  Minutes until URL expires (default: 30)
-     * @param  bool  $absolute  If true, absolute URL is returned. (default: true)
-     * @param  array  $params  Any extra parameters to include in URL
-     * @return string
-     */
-    public function createPrivateUrl(int $minutes = 30, bool $absolute = true, array $params = [])
-    {
-        return URL::temporarySignedRoute('blog.preview', $minutes * 60, [...$params, 'article' => $this], $absolute);
+        return Attribute::get(fn() => ! is_null($this->published_at) && $this->published_at->isFuture());
     }
 }

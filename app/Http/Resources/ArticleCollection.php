@@ -14,7 +14,7 @@ class ArticleCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $this->collection->each->append('private_url');
+        $this->collection->each->appendPresenter();
 
         return parent::toArray($request);
     }

@@ -274,7 +274,7 @@ const EditArticleWrapper: React.FC<IEditArticleWrapperProps> = ({ article, route
     }, [router, article]);
 
     const handlePreviewArticleClicked = React.useCallback(() => {
-        window.open(article.article.private_url, '_blank')?.focus();
+        window.open(article.url, '_blank')?.focus();
     }, []);
 
     const [articleInfoModal, setArticleInfoModal] = React.useState(false);

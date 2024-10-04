@@ -146,7 +146,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
         e.preventDefault();
 
         // From https://stackoverflow.com/a/11384018/533242: Opens URL in new tab.
-        window.open(article.article.private_url, '_blank')?.focus();
+        window.open(article.url, '_blank')?.focus();
     }, [article]);
 
     const handleEditClicked = React.useCallback((e: React.MouseEvent) => {
