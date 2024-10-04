@@ -64,7 +64,7 @@ class BackupController extends Controller
      */
     public function generateDownloadLink(Backup $backup)
     {
-        $url = $backup->file->createPrivateUrl(30);
+        $url = $backup->file->presenter()->privateUrl(30);
 
         return [
             'url' => $url,

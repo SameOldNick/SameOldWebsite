@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\Models\HasPresenter;
+use App\Models\Presenters\FilePresenter;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,6 +36,8 @@ final class File extends Model
     use HasFactory;
     use HasUuids;
     use SoftDeletes;
+    /** @use HasPresenter<FilePresenter> */
+    use HasPresenter;
 
     /**
      * The "type" of the primary key ID.
@@ -69,7 +73,6 @@ final class File extends Model
     protected $visible = [
         'id',
         'name',
-        'url',
         'meta',
         'created_at',
     ];
@@ -89,17 +92,15 @@ final class File extends Model
      * @var list<string>
      */
     protected $appends = [
-        'url',
         'meta',
     ];
 
     /**
-     * Whether to include URL when serialized.
-     * Redundant when is_public is true.
+     * The presenter class
      *
-     * @var bool
+     * @var class-string
      */
-    protected $withUrl = false;
+    protected static ?string $presenter = FilePresenter::class;
 
     /**
      * Gets the parent fileable model (ProductImage, Download, or Release)
@@ -115,18 +116,6 @@ final class File extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Sets model to include URL in serialization.
-     *
-     * @return $this
-     */
-    public function withUrl(bool $enabled = true): static
-    {
-        $this->withUrl = $enabled;
-
-        return $this;
     }
 
     /**
@@ -172,7 +161,7 @@ final class File extends Model
      */
     protected function fileExists(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes = []) => $this->getStorageDisk()->exists($attributes['path']));
+        return Attribute::get(fn($value, $attributes = []) => $this->getStorageDisk()->exists($attributes['path']));
     }
 
     /**
@@ -181,17 +170,9 @@ final class File extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => is_null($value) ? Str::of($attributes['path'])->basename() : $value,
-            set: fn ($value) => $value,
+            get: fn($value, $attributes) => is_null($value) ? Str::of($attributes['path'])->basename() : $value,
+            set: fn($value) => $value,
         );
-    }
-
-    /**
-     * Get the URL for the file
-     */
-    protected function url(): Attribute
-    {
-        return Attribute::get(fn ($value, $attributes = []) => $attributes['is_public'] || $this->withUrl ? $this->createPublicUrl() : null);
     }
 
     /**
@@ -201,7 +182,7 @@ final class File extends Model
     {
         $defaults = [];
 
-        return Attribute::get(fn ($value, $attributes = []) => $this->file_exists ? [
+        return Attribute::get(fn($value, $attributes = []) => $this->file_exists ? [
             'size' => $this->getStorageDisk()->size($attributes['path']),
             'last_modified' => Carbon::parse($this->getStorageDisk()->lastModified($attributes['path'])),
             'mime_type' => $this->getStorageDisk()->mimeType($attributes['path']),
@@ -213,39 +194,7 @@ final class File extends Model
      */
     protected function pathInfo(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes = []) => pathinfo(Storage::path($attributes['path'])));
-    }
-
-    /**
-     * Creates public URL to access this file.
-     * Note: The 'is_public' attribute needs to be true in order for this URL to work.
-     *
-     * @param  bool  $absolute  If true, absolute URL is returned. (default: true)
-     * @param  bool  $withExt  If true, includes file extension in URL. (default: true)
-     * @return string
-     */
-    public function createPublicUrl(bool $absolute = true, bool $withExt = true)
-    {
-        $url = URL::route('file', ['file' => $this], $absolute);
-
-        if (! $withExt || ! ($ext = $this->pathInfo['extension'])) {
-            return $url;
-        }
-
-        return sprintf('%s.%s', $url, $ext);
-    }
-
-    /**
-     * Creates temporary signed URL to this file
-     *
-     * @param  int  $minutes  Minutes until URL expires (default: 30)
-     * @param  bool  $absolute  If true, absolute URL is returned. (default: true)
-     * @return string
-     */
-    public function createPrivateUrl(int $minutes = 30, bool $absolute = true)
-    {
-        // Can't insert file extension because it will ruin integrity of signature
-        return URL::temporarySignedRoute('file', $minutes * 60, ['file' => $this], $absolute);
+        return Attribute::get(fn($value, $attributes = []) => pathinfo(Storage::path($attributes['path'])));
     }
 
     /**

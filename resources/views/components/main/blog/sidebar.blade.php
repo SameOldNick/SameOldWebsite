@@ -14,7 +14,7 @@
             <a href="{{ $article->presenter()->publicUrl() }}" class="blog-sidebar-article py-3">
                 <div class="blog-sidebar-article-media">
                     @isset($article->mainImage)
-                    <img src="{{ $article->mainImage->file->createPublicUrl() }}" alt="{{ $article->mainImage->alternativeText }}" class="img-cover img-thumbnail">
+                    <img src="{{ $article->mainImage->file->presenter()->publicUrl() }}" alt="{{ $article->mainImage->alternativeText }}" class="img-cover img-thumbnail">
                     @else
                     <div class="blog-sidebar-article-media-placeholder img-thumbnail">
                         <i class="fa-solid fa-image"></i>

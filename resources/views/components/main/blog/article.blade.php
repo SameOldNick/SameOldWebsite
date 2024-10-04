@@ -34,7 +34,7 @@
 
         @isset($article->mainImage)
         <figure class="blog-article-preview">
-            <img src="{{ $article->mainImage->file->createPublicUrl() }}" alt="{{ $article->mainImage->alternativeText }}">
+            <img src="{{ $article->mainImage->file->presenter()->publicUrl() }}" alt="{{ $article->mainImage->alternativeText }}">
         </figure>
         @endisset
 
