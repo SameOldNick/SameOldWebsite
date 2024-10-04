@@ -8,6 +8,7 @@ main.page-home {
 
         .avatar-container {
             text-align: center;
+
             img {
                 max-height: 350px;
             }
@@ -31,7 +32,6 @@ main.page-home {
                 @each $icon, $color in $social-media-colors {
                     &.social-media-link-#{$icon}:hover {
                         color: $color;
-                        background-color: color-contrast($color);
                     }
                 }
             }
@@ -184,9 +184,7 @@ main.page-home {
             color: inherit !important;
             text-decoration: none;
 
-            .blog-post-title {
-
-            }
+            .blog-post-title {}
 
             ul.blog-post-metadata {
                 padding-left: 0;
