@@ -77,6 +77,12 @@ export default class Comment {
         return this.comment.post.deleted_at ? DateTime.fromISO(this.comment.post.deleted_at) : null;
     }
 
+    /**
+     * Gets commenter info
+     *
+     * @readonly
+     * @memberof Comment
+     */
     public get commenterInfo() {
         return this.comment.commenter;
     }
