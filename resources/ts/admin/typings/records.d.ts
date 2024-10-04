@@ -156,6 +156,9 @@ declare global {
         comment: string;
         commenter: Record<'display_name' | 'name' | 'email', string>;
         status: TCommentStatuses;
+        extra: {
+            url: string;
+        };
     }
 
     type TCommentStatuses = 'approved' | 'denied' | 'flagged' | 'awaiting_verification' | 'awaiting_approval' | 'locked';

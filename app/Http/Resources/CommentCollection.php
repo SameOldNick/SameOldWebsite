@@ -14,6 +14,8 @@ class CommentCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
+        $this->collection->each->appendPresenter();
+
         return parent::toArray($request);
     }
 }

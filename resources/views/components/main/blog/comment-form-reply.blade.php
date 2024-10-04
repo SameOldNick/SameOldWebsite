@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-12 text-end">
-            <a href='{{ $article->createPublicLink() }}' class="btn btn-link text-secondary">{{ __('Cancel') }}</a>
+            <a href='{{ $article->presenter()->publicUrl() }}' class="btn btn-link text-secondary">{{ __('Cancel') }}</a>
             <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
         </div>
     </form>

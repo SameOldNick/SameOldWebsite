@@ -37,6 +37,17 @@ export default class Comment {
     }
 
     /**
+     * Gets the URL to the comment (on the main site)
+     *
+     * @readonly
+     * @type {string}
+     * @memberof Comment
+     */
+    public get url(): string {
+        return this.comment.extra.url;
+    }
+
+    /**
      * Gets when comment was created.
      *
      * @readonly

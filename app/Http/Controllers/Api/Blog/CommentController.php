@@ -57,7 +57,7 @@ class CommentController extends Controller
             ],
         ]);
 
-        $query = Comment::with(['article' => fn (BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.person']);
+        $query = Comment::with(['article' => fn(BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.person']);
 
         if ($request->has('article')) {
             $query->where('article_id', $request->integer('article'));
@@ -83,7 +83,7 @@ class CommentController extends Controller
             $query->findPersonDetails($details);
         }
 
-        return new CommentCollection($query->afterQuery(function ($found) use ($request) {
+        $query->afterQuery(function ($found) use ($request) {
             $show = CommentStatusEnum::tryFrom((string) $request->str('show'));
 
             /**
@@ -91,7 +91,9 @@ class CommentController extends Controller
              */
 
             return ! is_null($show) ? $found->status($show)->values() : null;
-        })->paginate());
+        });
+
+        return new CommentCollection($query->paginate());
     }
 
     /**
@@ -99,7 +101,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        return $comment->load(['post.person']);
+        return $comment->load(['post.person'])->appendPresenter();
     }
 
     /**

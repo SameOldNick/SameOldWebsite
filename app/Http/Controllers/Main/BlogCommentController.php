@@ -32,7 +32,7 @@ class BlogCommentController extends Controller
     {
         $this->authorize('view', [Comment::class, $article]);
 
-        return redirect()->away($comment->createPublicLink());
+        return redirect()->away($comment->presenter()->publicUrl());
     }
 
     /**
@@ -42,7 +42,7 @@ class BlogCommentController extends Controller
      */
     public function preview(Article $article, Comment $comment)
     {
-        return redirect()->away($comment->createPrivateUrl());
+        return redirect()->away($comment->presenter()->privateUrl());
     }
 
     /**

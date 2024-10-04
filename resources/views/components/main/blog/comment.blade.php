@@ -1,7 +1,7 @@
 @props(['article', 'comment', 'parent', 'level' => 1])
 
 @can('view', $comment)
-<article class="blog-article-comment" id="{{ $comment->generateElementId() }}">
+<article class="blog-article-comment" id="{{ $comment->presenter()->elementId() }}">
     <section class="blog-article-comment-left">
         <img src="{{ $comment->avatar_url }}" alt="{{ __('Avatar for: :name', ['name' => $comment->commenter['display_name']]) }}" class="blog-article-comment-avatar" />
     </section>
