@@ -27,8 +27,6 @@ trait AppendsPresenter
 
     /**
      * Whether presenter should be appended.
-     *
-     * @return boolean
      */
     public function shouldAppendPresenter(): bool
     {

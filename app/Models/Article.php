@@ -180,7 +180,7 @@ class Article extends Model
      */
     protected function revision(): Attribute
     {
-        return Attribute::get(fn() => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
+        return Attribute::get(fn () => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
     }
 
     /**
@@ -188,7 +188,7 @@ class Article extends Model
      */
     protected function isPublished(): Attribute
     {
-        return Attribute::get(fn() => ! is_null($this->published_at) && $this->published_at->isPast());
+        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isPast());
     }
 
     /**
@@ -196,6 +196,6 @@ class Article extends Model
      */
     protected function isScheduled(): Attribute
     {
-        return Attribute::get(fn() => ! is_null($this->published_at) && $this->published_at->isFuture());
+        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isFuture());
     }
 }
