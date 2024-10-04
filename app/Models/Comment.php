@@ -7,10 +7,10 @@ use App\Components\Moderator\Contracts\Moderatable;
 use App\Enums\CommentStatus as CommentStatusEnum;
 use App\Enums\CommentUserType;
 use App\Models\Collections\CommentCollection;
+use App\Models\Presenters\CommentPresenter;
 use App\Traits\Models\HasPresenter;
 use App\Traits\Models\Immutable;
 use App\Traits\Models\Postable;
-use App\Models\Presenters\CommentPresenter;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,11 +38,11 @@ class Comment extends Model implements Moderatable
 {
     use CreatesModeratorsFactory;
     use HasFactory;
-    use Immutable;
-    use Postable;
     /** @use HasPresenter<CommentPresenter> */
     use HasPresenter;
+    use Immutable;
 
+    use Postable;
 
     /**
      * Indicates if the model should be timestamped.
@@ -105,7 +105,7 @@ class Comment extends Model implements Moderatable
     protected static string $collectionClass = CommentCollection::class;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getPresenterKey(): string
     {
@@ -215,7 +215,7 @@ class Comment extends Model implements Moderatable
      */
     protected function commenter(): Attribute
     {
-        return Attribute::get(fn() => [
+        return Attribute::get(fn () => [
             'display_name' => $this->post->person->display_name,
             'name' => $this->post->person->name,
             'email' => $this->post->person->email,
@@ -251,7 +251,7 @@ class Comment extends Model implements Moderatable
      */
     protected function userType(): Attribute
     {
-        return Attribute::get(fn() => $this->post->person->user ? CommentUserType::Registered->value : CommentUserType::Guest->value);
+        return Attribute::get(fn () => $this->post->person->user ? CommentUserType::Registered->value : CommentUserType::Guest->value);
     }
 
     /**
@@ -259,7 +259,7 @@ class Comment extends Model implements Moderatable
      */
     protected function status(): Attribute
     {
-        return Attribute::get(fn() => $this->determineStatus()->value);
+        return Attribute::get(fn () => $this->determineStatus()->value);
     }
 
     /**
@@ -267,7 +267,7 @@ class Comment extends Model implements Moderatable
      */
     protected function markedBy(): Attribute
     {
-        return Attribute::get(fn() => $this->lastStatus?->user);
+        return Attribute::get(fn () => $this->lastStatus?->user);
     }
 
     /**
@@ -275,7 +275,7 @@ class Comment extends Model implements Moderatable
      */
     protected function avatarUrl(): Attribute
     {
-        return Attribute::get(fn() => $this->post->person->avatar_url)->shouldCache();
+        return Attribute::get(fn () => $this->post->person->avatar_url)->shouldCache();
     }
 
     /**
@@ -294,7 +294,7 @@ class Comment extends Model implements Moderatable
      */
     public function scopeStatus($query, $status)
     {
-        return $query->afterQuery(fn($comments) => $comments->status($status));
+        return $query->afterQuery(fn ($comments) => $comments->status($status));
     }
 
     /**

@@ -3,9 +3,9 @@
 namespace App\Models\Presenters;
 
 use App\Models\Comment;
-use Spatie\Url\Url as SpatieUrl;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
+use Spatie\Url\Url as SpatieUrl;
 
 class CommentPresenter extends Presenter
 {
@@ -15,8 +15,6 @@ class CommentPresenter extends Presenter
 
     /**
      * Gets the ID to use for a HTML element.
-     *
-     * @return string
      */
     public function elementId(): string
     {
@@ -28,8 +26,6 @@ class CommentPresenter extends Presenter
 
     /**
      * Gets the public or private URL
-     *
-     * @return string
      */
     public function url(): string
     {
@@ -69,12 +65,12 @@ class CommentPresenter extends Presenter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function toArray()
     {
         return [
-            'url' => $this->url()
+            'url' => $this->url(),
         ];
     }
 }

@@ -13,8 +13,6 @@ class ArticlePresenter extends Presenter
 
     /**
      * Gets the article URL
-     *
-     * @return string
      */
     public function url(): string
     {
@@ -25,7 +23,6 @@ class ArticlePresenter extends Presenter
      * Creates public link to this article
      *
      * @param  array  $params  Any extra parameters to include in URL
-     * @return string
      */
     public function publicUrl(bool $absolute = true, array $params = []): string
     {
@@ -38,7 +35,6 @@ class ArticlePresenter extends Presenter
      * @param  int  $minutes  Minutes until URL expires (default: 30)
      * @param  bool  $absolute  If true, absolute URL is returned. (default: true)
      * @param  array  $params  Any extra parameters to include in URL
-     * @return string
      */
     public function privateUrl(int $minutes = 30, bool $absolute = true, array $params = []): string
     {
@@ -46,12 +42,12 @@ class ArticlePresenter extends Presenter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function toArray()
     {
         return [
-            'url' => $this->url()
+            'url' => $this->url(),
         ];
     }
 }

@@ -27,8 +27,6 @@ class Article extends Component
 
     /**
      * Gets the URL for the article.
-     *
-     * @return string
      */
     public function url(): string
     {

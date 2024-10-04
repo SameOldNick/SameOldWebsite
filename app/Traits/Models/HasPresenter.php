@@ -11,8 +11,6 @@ trait HasPresenter
 {
     /**
      * Whether to append presenter data to array.
-     *
-     * @var boolean
      */
     protected bool $appendPresenter = false;
 
@@ -20,13 +18,14 @@ trait HasPresenter
      * Get a new presenter instance
      *
      * @return TPresenter
+     *
      * @throws RuntimeException Thrown if presenter class is not found.
      */
     public function presenter()
     {
         $presenter = $this->presenterClass();
 
-        if (!$presenter) {
+        if (! $presenter) {
             throw new RuntimeException('Presenter class not found.');
         }
 
@@ -43,8 +42,6 @@ trait HasPresenter
 
     /**
      * Gets the presenter key
-     *
-     * @return string
      */
     public function getPresenterKey(): string
     {
@@ -53,9 +50,6 @@ trait HasPresenter
 
     /**
      * Appends presenter data to model array
-     *
-     * @param boolean $enabled
-     * @return static
      */
     public function appendPresenter(bool $enabled = true): static
     {
@@ -81,7 +75,7 @@ trait HasPresenter
     /**
      * Creates new presenter instance.
      *
-     * @param class-string<TPresenter> $class
+     * @param  class-string<TPresenter>  $class
      * @return TPresenter
      */
     protected function newPresenter(string $class)

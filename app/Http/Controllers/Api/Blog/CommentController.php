@@ -57,7 +57,7 @@ class CommentController extends Controller
             ],
         ]);
 
-        $query = Comment::with(['article' => fn(BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.person']);
+        $query = Comment::with(['article' => fn (BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.person']);
 
         if ($request->has('article')) {
             $query->where('article_id', $request->integer('article'));

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Collections\ArticleCollection;
+use App\Models\Presenters\ArticlePresenter;
 use App\Traits\Models\HasPresenter;
 use App\Traits\Models\Postable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -12,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Presenters\ArticlePresenter;
 
 /**
  * @property int $id
@@ -32,15 +32,15 @@ use App\Models\Presenters\ArticlePresenter;
  * @method static \Illuminate\Database\Eloquent\Builder published()
  * @method static \Illuminate\Database\Eloquent\Builder sortedByPublishDate()
  * @method static \Database\Factories\ArticleFactory factory($count = null, $state = [])
- *
  */
 class Article extends Model
 {
     use HasFactory;
-    use Postable;
-    use SoftDeletes;
     /** @use HasPresenter<ArticlePresenter> */
     use HasPresenter;
+    use Postable;
+
+    use SoftDeletes;
 
     /**
      * Indicates if the model should be timestamped.
@@ -95,7 +95,7 @@ class Article extends Model
     protected static ?string $presenter = ArticlePresenter::class;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getPresenterKey(): string
     {
@@ -187,7 +187,7 @@ class Article extends Model
      */
     protected function revision(): Attribute
     {
-        return Attribute::get(fn() => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
+        return Attribute::get(fn () => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
     }
 
     /**
@@ -195,7 +195,7 @@ class Article extends Model
      */
     protected function isPublished(): Attribute
     {
-        return Attribute::get(fn() => ! is_null($this->published_at) && $this->published_at->isPast());
+        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isPast());
     }
 
     /**
@@ -203,6 +203,6 @@ class Article extends Model
      */
     protected function isScheduled(): Attribute
     {
-        return Attribute::get(fn() => ! is_null($this->published_at) && $this->published_at->isFuture());
+        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isFuture());
     }
 }
