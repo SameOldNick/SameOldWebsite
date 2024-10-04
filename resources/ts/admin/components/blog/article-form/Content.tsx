@@ -17,12 +17,6 @@ interface IProps {
     uploadImages: TUploadImagesCallback;
 }
 
-// TODO: Move to services file
-export const transformImageToMarkdownImage = (source: IImage): TMarkdownImage => ({
-    url: source.file.url as string,
-    alt: source.description,
-    title: source.file.name
-});
 const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, handleChange, handleBlur, setFieldValue }, uploadImages }) => {
     const [slugTooltipOpen, setSlugTooltipOpen] = React.useState(false);
 
