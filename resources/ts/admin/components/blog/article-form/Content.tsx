@@ -4,10 +4,10 @@ import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row, Tooltip 
 import { FaInfoCircle } from 'react-icons/fa';
 
 import classNames from 'classnames';
-import S from 'string';
 
 import MarkdownEditor, { IMarkdownEditorProps } from '@admin/components/MarkdownEditor';
 import { IArticleFormValues } from '../FormWrapper';
+import Article from '@admin/utils/api/models/Article';
 
 export type TUploadImagesCallback = NonNullable<IMarkdownEditorProps['uploadImages']>;
 export type TMarkdownImage = ArrayElement<Awaited<ReturnType<TUploadImagesCallback>>>;
@@ -23,13 +23,6 @@ export const transformImageToMarkdownImage = (source: IImage): TMarkdownImage =>
     alt: source.description,
     title: source.file.name
 });
-
-export const generateSlugFromTitle = (title: string) => {
-    const slug = S(title).slugify().s;
-
-    return slug;
-}
-
 const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, handleChange, handleBlur, setFieldValue }, uploadImages }) => {
     const [slugTooltipOpen, setSlugTooltipOpen] = React.useState(false);
 
@@ -37,14 +30,14 @@ const Content: React.FC<IProps> = ({ formikProps: { errors, touched, values, han
         handleChange(e);
 
         if (values.slug_auto_generate)
-            setFieldValue('slug', generateSlugFromTitle(e.target.value));
+            setFieldValue('slug', Article.generateSlugFromTitle(e.target.value));
     }, [handleChange, setFieldValue]);
 
     const handleTitleBlur = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         handleBlur(e);
 
         if (values.slug_auto_generate)
-            setFieldValue('slug', generateSlugFromTitle(e.target.value));
+            setFieldValue('slug', Article.generateSlugFromTitle(e.target.value));
     }, [handleBlur, setFieldValue]);
 
     const handleUploadImages: TUploadImagesCallback = React.useCallback((files: File[]) => uploadImages(files), [uploadImages]);
