@@ -106,14 +106,6 @@ class Comment extends Model implements Moderatable
     protected static string $collectionClass = CommentCollection::class;
 
     /**
-     * {@inheritDoc}
-     */
-    public function getPresenterKey(): string
-    {
-        return 'extra';
-    }
-
-    /**
      * Gets the parent comment (if any)
      */
     public function parent(): BelongsTo

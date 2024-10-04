@@ -95,13 +95,6 @@ class Article extends Model
      */
     protected static ?string $presenter = ArticlePresenter::class;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getPresenterKey(): string
-    {
-        return 'extra';
-    }
 
     /**
      * Create a new Eloquent Collection instance.
