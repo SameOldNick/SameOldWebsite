@@ -22,6 +22,7 @@ class Image extends Model
 {
     use Fileable;
     use HasFactory;
+
     /** @use HasPresenter<FilePresenter> */
     use HasPresenter;
 
