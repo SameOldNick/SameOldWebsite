@@ -15,6 +15,7 @@ import UnsavedChangesWarning from '@admin/components/UnsavedChangesWarning';
 import { uploadImage } from '@admin/utils/api/endpoints/articles';
 import awaitModalPrompt from '@admin/utils/modals';
 import Image from '@admin/utils/api/models/Image';
+import Heading, { HeadingTitle } from '@admin/layouts/admin/Heading';
 
 export interface ICreateArticleFormValues extends IArticleFormValues {
 }
@@ -135,6 +136,31 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
                     <>
                         <UnsavedChangesWarning enabled={Object.values(formikProps.touched).filter((value) => value).length > 0} />
 
+                        <Heading>
+                            <HeadingTitle>
+                                Create Post
+                            </HeadingTitle>
+
+                            <div className='d-flex'>
+                                <Button
+                                    type='button'
+                                    color='primary'
+                                    disabled={formikProps.isSubmitting}
+                                    className='me-1'
+                                    onClick={(e) => handleSaveButtonClicked(e, formikProps)}
+                                >
+                                    Save
+                                </Button>
+                                <Button
+                                    type='submit'
+                                    color='primary'
+                                    disabled={formikProps.isSubmitting}
+                                >
+                                    Save &amp; Publish
+                                </Button>
+                            </div>
+                        </Heading>
+
                         <Row>
                             <Col md={8}>
                                 <Card>
@@ -153,31 +179,6 @@ const CreateForm = React.forwardRef<FormikProps<ICreateArticleFormValues>, IProp
                                 />
 
                                 <Tags className='mb-3' tags={tags} onTagsChanged={(tags) => setTags(tags)} />
-
-                                <Card>
-                                    <CardBody>
-                                        <Row>
-                                            <Col className='text-end'>
-                                                <Button
-                                                    type='button'
-                                                    color='primary'
-                                                    disabled={formikProps.isSubmitting}
-                                                    className='me-1'
-                                                    onClick={(e) => handleSaveButtonClicked(e, formikProps)}
-                                                >
-                                                    Save
-                                                </Button>
-                                                <Button
-                                                    type='submit'
-                                                    color='primary'
-                                                    disabled={formikProps.isSubmitting}
-                                                >
-                                                    Save &amp; Publish
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </CardBody>
-                                </Card>
                             </Col>
                         </Row>
                     </>

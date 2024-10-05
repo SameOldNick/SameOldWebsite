@@ -140,8 +140,6 @@ const Create: React.FC<IProps> = ({ }) => {
                 <title>Create Post</title>
             </Helmet>
 
-            <Heading title='Create Post' />
-
             {created !== undefined && <Navigate to={created.generatePath()} />}
 
             <CreateForm
