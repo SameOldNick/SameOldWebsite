@@ -45,25 +45,22 @@ const MainImage: React.FC<IProps> = ({ current, onUploadClicked, onRemoveClicked
         <>
             <Card {...props}>
                 <CardBody>
-                    <CardTitle tag='h5' className='mb-0'>Main Image</CardTitle>
+                    <CardTitle tag='h5'>Main Image</CardTitle>
 
-                </CardBody>
+                    {current === undefined && (
+                        <div className='text-center'>
+                            <FaRegImage size='200' />
+                            <p className='mb-0 fw-bold'>No Image Selected</p>
+                        </div>
+                    )}
 
-                {current === undefined && (
-                    <div className='text-center'>
-                        <FaRegImage size='200' />
-                        <p className='mb-0 fw-bold'>No Image Selected</p>
-                    </div>
-                )}
+                    {current !== undefined && (
+                        <div className='text-center'>
+                            <img src={current.url} className='img-fluid mb-3' style={{ maxHeight: '250px' }} />
+                            <p className='mb-0 fw-bold'>{current.image.description}</p>
+                        </div>
+                    )}
 
-                {current !== undefined && (
-                    <div className='text-center'>
-                        <img src={current.url} className='img-fluid mb-3' style={{ maxHeight: '250px' }} />
-                        <p className='mb-0 fw-bold'>{current.image.description}</p>
-                    </div>
-                )}
-
-                <CardBody>
                     <Row>
                         <Col style={{ textAlign: 'center' }}>
                             <Button color='primary' size='md' className='me-3' disabled={disableButtons} onClick={handleUploadButtonClicked}>
