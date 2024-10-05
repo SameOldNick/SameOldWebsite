@@ -2,8 +2,6 @@ import { DateTime } from "luxon";
 
 import File from "./File";
 
-export type BackupStatuses = 'successful' | 'failed';
-
 export default class Backup {
     constructor(
         public readonly backup: IBackup
@@ -14,10 +12,10 @@ export default class Backup {
      * Gets the backup status.
      *
      * @readonly
-     * @type {BackupStatuses}
+     * @type {TBackupStatuses}
      * @memberof Backup
      */
-    public get status(): BackupStatuses {
+    public get status() {
         return this.backup.status;
     }
 
