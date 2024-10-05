@@ -1,13 +1,12 @@
 import React from 'react';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import { Button, Col, Collapse, FormGroup, FormText, Input, Label, List, ListInlineItem, Row, Tooltip, Badge } from 'reactstrap';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { Button, Col, FormGroup, Input, Label, Row } from 'reactstrap';
 import withReactContent from 'sweetalert2-react-content';
-import { FaInfoCircle } from 'react-icons/fa';
 
 import * as Yup from 'yup';
 import axios, { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
-import S from 'string';
+import classNames from 'classnames';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
@@ -16,7 +15,6 @@ import FormikAlerts from '@admin/components/alerts/hoc/FormikAlerts';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import classNames from 'classnames';
 
 type TChannels = 'mail' | 'discord' | 'slack';
 
