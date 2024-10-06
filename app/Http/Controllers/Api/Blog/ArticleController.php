@@ -39,11 +39,11 @@ class ArticleController extends Controller
 
         // Define an array of conditions based on the 'show' parameter
         $conditions = [
-            'unpublished' => fn(Builder $query) => $query->whereNull('published_at'),
-            'published' => fn(Builder $query) => $query->whereNotNull('published_at')->where('published_at', '<=', now()),
-            'scheduled' => fn(Builder $query) => $query->whereNotNull('published_at')->where('published_at', '>', now()),
-            'removed' => fn(Builder $query) => $query->onlyTrashed(),
-            'all' => fn(Builder $query) => $query->withTrashed(),
+            'unpublished' => fn (Builder $query) => $query->whereNull('published_at'),
+            'published' => fn (Builder $query) => $query->whereNotNull('published_at')->where('published_at', '<=', now()),
+            'scheduled' => fn (Builder $query) => $query->whereNotNull('published_at')->where('published_at', '>', now()),
+            'removed' => fn (Builder $query) => $query->onlyTrashed(),
+            'all' => fn (Builder $query) => $query->withTrashed(),
         ];
 
         // Initialize the query for articles
