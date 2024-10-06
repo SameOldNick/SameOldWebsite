@@ -154,7 +154,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
 
         // TODO: Use router instead
         window.location.href = `posts/edit/${article.article.id}`;
-    }, []);
+    }, [article]);
 
     const handlePublishClicked = React.useCallback(async (e: React.MouseEvent) => {
         const result = await withReactContent(Swal).fire({
