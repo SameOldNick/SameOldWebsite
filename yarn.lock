@@ -10889,7 +10889,7 @@ __metadata:
     shiki: "npm:^1.16.2"
     store2: "npm:^2.14.3"
     string: "npm:^3.3.3"
-    sweetalert2: "npm:^11.13.3"
+    sweetalert2: "npm:^11.14.1"
     sweetalert2-react-content: "npm:^5.0.0"
     tinymce: "npm:^7.2.0"
     ts-deepmerge: "npm:^7.0.1"
@@ -11445,10 +11445,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sweetalert2@npm:^11.13.3":
-  version: 11.13.3
-  resolution: "sweetalert2@npm:11.13.3"
-  checksum: 10/ea4e6bdecd5d1f789a80bc3401a290f2144197d21d76f26de3ea539d95a41636c784c7194698e7029c8cd98bb14ef05a78a5721654a49495126a0cbfe925c656
+"sweetalert2@npm:^11.14.1":
+  version: 11.14.1
+  resolution: "sweetalert2@npm:11.14.1"
+  checksum: 10/a7a596e327ce0ec683ae8d4e8e1450151dc78daec4b866643037b60ca4f4981f53106c2cb2d98060916b14777c9bb80660c9b39d34bf892331558d5469475d3e
   languageName: node
   linkType: hard
 
