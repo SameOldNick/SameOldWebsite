@@ -111,7 +111,7 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
 
                         {/* Footer */}
                         <Footer>
-                            Copyright &copy; Little Apps, Ltd. {DateTime.now().year}
+                            Copyright &copy; <a href='https://www.sameoldnick.com' target='_blank'>Same Old Nick</a> {DateTime.now().year}
                         </Footer>
                         {/* End of Footer */}
 
