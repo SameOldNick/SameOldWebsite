@@ -66,7 +66,11 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
     return (
         <>
             {/* Doesn't use the Nav component from Reactstrap since it doesn't provide a ref to the actual <ul> tag. */}
-            <ul ref={sidebarRef} className={classNames('navbar-nav bg-gradient-primary sidebar sidebar-dark accordion', { 'sidebar-collapsed': toggled })} id='accordionSidebar'>
+            <ul
+                ref={sidebarRef}
+                className={classNames('navbar-nav bg-gradient-primary sidebar sidebar-dark accordion', { 'sidebar-collapsed': toggled })}
+                id='accordionSidebar'
+            >
 
                 {/* Sidebar - Brand */}
                 <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
