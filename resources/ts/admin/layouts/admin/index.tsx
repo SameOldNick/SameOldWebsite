@@ -7,8 +7,12 @@ import { Container } from 'reactstrap';
 
 import { DateTime } from 'luxon';
 
-import Footer from './Footer';
 import Sidebar from './Sidebar';
+import Item from './sidebar/Item';
+import Dropdown from './sidebar/Dropdown';
+import DropdownItem from './sidebar/DropdownItem';
+
+import Footer from './Footer';
 import Topbar from './Topbar';
 import ScrollToTop from './ScrollToTop';
 import Authorized from '@admin/middleware/Authorized';
@@ -32,60 +36,60 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
 
                     {/* Sidebar */}
                     <Sidebar>
-                        <Sidebar.Item href='/admin/dashboard' icon={<FaTachometerAlt />}>Dashboard</Sidebar.Item>
+                        <Item href='/admin/dashboard' icon={<FaTachometerAlt />}>Dashboard</Item>
 
                         <Authorized roles={['edit_profile']}>
-                            <Sidebar.Dropdown text='Homepage' icon={<FaHome />}>
-                                <Sidebar.DropdownItem href='/admin/homepage/profile'>Edit Profile</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/homepage/skills'>Update Skills</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/homepage/technologies'>Manage Technologies</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                            <Dropdown text='Homepage' icon={<FaHome />}>
+                                <DropdownItem href='/admin/homepage/profile'>Edit Profile</DropdownItem>
+                                <DropdownItem href='/admin/homepage/skills'>Update Skills</DropdownItem>
+                                <DropdownItem href='/admin/homepage/technologies'>Manage Technologies</DropdownItem>
+                            </Dropdown>
                         </Authorized>
 
                         <Authorized roles={['write_posts']}>
-                            <Sidebar.Dropdown text='Blog' icon={<FaNewspaper />}>
-                                <Sidebar.DropdownItem href='/admin/posts'>View All Posts</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/posts/create'>Create New Post</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                            <Dropdown text='Blog' icon={<FaNewspaper />}>
+                                <DropdownItem href='/admin/posts'>View All Posts</DropdownItem>
+                                <DropdownItem href='/admin/posts/create'>Create New Post</DropdownItem>
+                            </Dropdown>
                         </Authorized>
 
                         <Authorized roles={['manage_comments']}>
-                            <Sidebar.Dropdown text='Comments' icon={<FaComments />}>
-                                <Sidebar.DropdownItem href='/admin/comments'>View All Comments</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/comments/settings'>Comment Settings</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                            <Dropdown text='Comments' icon={<FaComments />}>
+                                <DropdownItem href='/admin/comments'>View All Comments</DropdownItem>
+                                <DropdownItem href='/admin/comments/settings'>Comment Settings</DropdownItem>
+                            </Dropdown>
                         </Authorized>
 
                         <Authorized roles={['view_contact_messages', 'change_contact_settings']} oneOf>
-                            <Sidebar.Dropdown text='Contact' icon={<FaEnvelope />}>
+                            <Dropdown text='Contact' icon={<FaEnvelope />}>
                                 <Authorized roles={['view_contact_messages']}>
-                                    <Sidebar.DropdownItem href='/admin/contact/messages'>View Messages</Sidebar.DropdownItem>
+                                    <DropdownItem href='/admin/contact/messages'>View Messages</DropdownItem>
                                 </Authorized>
                                 <Authorized roles={['change_contact_settings']}>
-                                    <Sidebar.DropdownItem href='/admin/contact/settings'>Settings</Sidebar.DropdownItem>
+                                    <DropdownItem href='/admin/contact/settings'>Settings</DropdownItem>
                                 </Authorized>
-                            </Sidebar.Dropdown>
+                            </Dropdown>
                         </Authorized>
 
                         <Authorized roles={['manage_projects']}>
-                            <Sidebar.Dropdown text='Projects' icon={<FaList />}>
-                                <Sidebar.DropdownItem href='/admin/projects'>View All Projects</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/projects/create'>Create New Project</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                            <Dropdown text='Projects' icon={<FaList />}>
+                                <DropdownItem href='/admin/projects'>View All Projects</DropdownItem>
+                                <DropdownItem href='/admin/projects/create'>Create New Project</DropdownItem>
+                            </Dropdown>
                         </Authorized>
 
                         <Authorized roles={['manage_backups']}>
-                            <Sidebar.Dropdown text='Backups' icon={<FaCloudUploadAlt />}>
-                                <Sidebar.DropdownItem href='/admin/backups'>View Backups</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/backups/settings'>Backup Settings</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                            <Dropdown text='Backups' icon={<FaCloudUploadAlt />}>
+                                <DropdownItem href='/admin/backups'>View Backups</DropdownItem>
+                                <DropdownItem href='/admin/backups/settings'>Backup Settings</DropdownItem>
+                            </Dropdown>
                         </Authorized>
 
                         <Authorized roles={['manage_users']}>
-                            <Sidebar.Dropdown text='Users' icon={<FaUsers />}>
-                                <Sidebar.DropdownItem href='/admin/users'>View All Users</Sidebar.DropdownItem>
-                                <Sidebar.DropdownItem href='/admin/users/create'>Create New User</Sidebar.DropdownItem>
-                            </Sidebar.Dropdown>
+                            <Dropdown text='Users' icon={<FaUsers />}>
+                                <DropdownItem href='/admin/users'>View All Users</DropdownItem>
+                                <DropdownItem href='/admin/users/create'>Create New User</DropdownItem>
+                            </Dropdown>
                         </Authorized>
                     </Sidebar>
                     {/* End of Sidebar */}
