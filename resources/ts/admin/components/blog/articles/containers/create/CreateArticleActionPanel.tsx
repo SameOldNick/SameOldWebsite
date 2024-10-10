@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 import axios from 'axios';
 
-import { ArticleFormValues } from '@admin/components/blog/articles/containers/formik/ArticleFormikProvider';
+import { ArticleFormValues, SelectedMainImage } from '@admin/components/blog/articles/containers/formik/ArticleFormikProvider';
 
 import Image from '@admin/utils/api/models/Image';
 import Article from '@admin/utils/api/models/Article';
@@ -18,12 +18,6 @@ import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 interface CreateArticleActionPanelProps {
     onArticleCreated: (article: Article) => void;
-}
-
-interface SelectedMainImage {
-    file: File;
-    src: string;
-    description: string;
 }
 
 const CreateArticleActionPanel: React.FC<CreateArticleActionPanelProps> = ({ onArticleCreated }) => {

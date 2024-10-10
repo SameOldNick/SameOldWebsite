@@ -14,12 +14,6 @@ import { uploadImage } from '@admin/utils/api/endpoints/articles';
 import Image from '@admin/utils/api/models/Image';
 import Article from '@admin/utils/api/models/Article';
 
-interface SelectedMainImage {
-    file: File;
-    src: string;
-    description: string;
-}
-
 interface ArticleFormikLayoutChildrenParams {
     formik: FormikProps<ArticleFormValues>;
     errors: ArticleEditorErrors;
@@ -124,4 +118,4 @@ const ArticleFormikLayout: React.FC<ArticleFormikLayoutProps> = ({
 
 
 export default ArticleFormikLayout;
-export { ArticleFormikLayoutProps, ArticleFormikLayoutChildren, ArticleFormikLayoutChildrenParams, SelectedMainImage };
+export { ArticleFormikLayoutProps, ArticleFormikLayoutChildren, ArticleFormikLayoutChildrenParams };
