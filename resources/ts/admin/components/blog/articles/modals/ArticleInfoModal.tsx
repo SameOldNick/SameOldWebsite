@@ -5,16 +5,26 @@ import S from 'string';
 import { DateTime } from 'luxon';
 
 import Article from '@admin/utils/api/models/Article';
+import { IPromptModalProps } from '@admin/utils/modals';
 
-interface IArticleInfoModalProps {
+interface IArticleInfoModalProps extends IPromptModalProps {
     article: Article;
-    onClosed: () => void;
 }
 
-const ArticleInfoModal: React.FC<IArticleInfoModalProps> = ({ article, onClosed }) => {
+const ArticleInfoModal: React.FC<IArticleInfoModalProps> = ({ article, onSuccess }) => {
     const handleClosed = React.useCallback(() => {
-        onClosed();
-    }, [onClosed]);
+        onSuccess();
+    }, [onSuccess]);
+
+    const generateDateTime = React.useCallback(
+        (dateTime?: DateTime) =>
+            dateTime ?
+                `${dateTime.toRelative()} (${dateTime.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)})` :
+                'N/A',
+        []);
+
+    const publishedAt = React.useMemo(() => generateDateTime(article.publishedAt ?? undefined), [article]);
+    const lastSavedAt = React.useMemo(() => generateDateTime(article.currentRevision?.createdAt ?? undefined), [article]);
 
     return (
         <>
@@ -50,7 +60,7 @@ const ArticleInfoModal: React.FC<IArticleInfoModalProps> = ({ article, onClosed 
                                         name="published"
                                         type="text"
                                         readOnly
-                                        value={`${article.publishedAt && article.publishedAt.toRelative() || 'N/A'} (${article.publishedAt?.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)})`}
+                                        value={publishedAt}
                                     />
                                 </Col>
                             </FormGroup>
@@ -64,8 +74,7 @@ const ArticleInfoModal: React.FC<IArticleInfoModalProps> = ({ article, onClosed 
                                         name="saved"
                                         type="text"
                                         readOnly
-                                        value={`${article.createdAt && article.createdAt.toRelative() || 'N/A'} (${article.createdAt?.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)})`}
-
+                                        value={lastSavedAt}
                                     />
                                 </Col>
                             </FormGroup>

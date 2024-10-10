@@ -1,21 +1,26 @@
 import React from 'react';
 import { Card, CardBody, CardProps, Col, FormGroup, Label, Row } from 'reactstrap';
-import { ErrorMessage } from 'formik';
 import { Tag } from 'react-tag-autocomplete';
 
 import ReactTagsWithSuggestions from '@admin/components/ReactTagsWithSuggestions';
 
-interface ITagsProps extends Omit<CardProps, 'children'> {
+import ErrorMessage from '@admin/components/blog/articles/editor/form/controls/fields/ErrorMessage';
+import ArticleEditorContext from '@admin/components/blog/articles/editor/ArticleEditorContext';
+
+interface TagsInputs {
     tags: Tag[];
     onTagsChanged: (tags: Tag[]) => void;
 }
 
-const Tags: React.FC<ITagsProps> = ({ tags, onTagsChanged, ...props }) => {
+type TTagsProps = Omit<CardProps, 'children'>;
+
+const Tags: React.FC<TTagsProps> = ({ ...props }) => {
+    const { inputs: { tags, onTagsChanged } } = React.useContext(ArticleEditorContext);
+
     return (
         <Card {...props}>
             <CardBody>
                 <Row>
-
                     <Col xs={12}>
                         <FormGroup className='has-validation'>
                             <Label for='tags'>Tags:</Label>
@@ -25,7 +30,7 @@ const Tags: React.FC<ITagsProps> = ({ tags, onTagsChanged, ...props }) => {
                                 onAdd={(tag) => onTagsChanged([...tags, tag])}
                                 onDelete={(i) => onTagsChanged(tags.filter((_, index) => i !== index))}
                             />
-                            <ErrorMessage name='tags' component='div' className='invalid-feedback' />
+                            <ErrorMessage input='tags' />
                         </FormGroup>
                     </Col>
                 </Row>
@@ -35,3 +40,4 @@ const Tags: React.FC<ITagsProps> = ({ tags, onTagsChanged, ...props }) => {
 }
 
 export default Tags;
+export { TTagsProps, TagsInputs };

@@ -9,19 +9,18 @@ import withReactContent from 'sweetalert2-react-content';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
+import { IPromptModalProps } from '@admin/utils/modals';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
-
-import { IPromptModalProps } from '@admin/utils/modals';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import Revision from '@admin/utils/api/models/Revision';
 
-export interface ISelectRevisionModalProps extends IPromptModalProps<IRevision> {
+interface SelectRevisionModalProps extends IPromptModalProps<IRevision> {
     articleId: number;
     existing?: Revision;
 }
 
-const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, existing, onSuccess, onCancelled }) => {
+const SelectRevisionModal: React.FC<SelectRevisionModalProps> = ({ articleId, existing, onSuccess, onCancelled }) => {
     const waitToLoadRevisionsRef = React.createRef<IWaitToLoadHandle>();
     const [selected, setSelected] = React.useState<IRevision>();
 
@@ -29,7 +28,7 @@ const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, e
         const response = await createAuthRequest().get<IRevision[]>(`blog/articles/${articleId}/revisions`);
 
         return response.data;
-    }, []);
+    }, [articleId]);
 
     const handleLoadRevisionsError = React.useCallback(async (err: unknown) => {
         const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
@@ -48,7 +47,7 @@ const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, e
         } else {
             onCancelled();
         }
-    }, [onCancelled]);
+    }, [waitToLoadRevisionsRef, onCancelled]);
 
     const isSelected = React.useCallback((revision: IRevision) => {
         if (selected !== undefined)
@@ -57,7 +56,7 @@ const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, e
             return existing.revision.uuid === revision.uuid;
         else
             return false;
-    }, [existing]);
+    }, [selected, existing]);
 
     return (
         <>
@@ -115,3 +114,4 @@ const SelectRevisionModal: React.FC<ISelectRevisionModalProps> = ({ articleId, e
 }
 
 export default SelectRevisionModal;
+export { SelectRevisionModalProps };

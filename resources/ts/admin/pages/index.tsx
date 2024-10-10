@@ -11,10 +11,11 @@ import Dashboard from '@admin/pages/protected/dashboard/Dashboard';
 import FourZeroFour from '@admin/pages/errors/FourZeroFour';
 import FourZeroThree from '@admin/pages/errors/FourZeroThree';
 
-import AllPosts from '@admin/pages/protected/posts/All';
-import CreatePost from '@admin/pages/protected/posts/Create';
-import EditPost from '@admin/pages/protected/posts/Edit';
-import CurrentRevision from '@admin/pages/protected/posts/CurrentRevision';
+import AllPosts from '@admin/pages/protected/articles/All';
+
+import CreateArticle from './protected/articles/Create';
+import EditRevision from '@admin/pages/protected/articles/EditRevision';
+import EditArticle from '@admin/pages/protected/articles/EditArticle';
 
 import AllComments from '@admin/pages/protected/comments/All';
 import EditComments from '@admin/pages/protected/comments/Edit';
@@ -56,9 +57,9 @@ const Pages: React.FC = () => {
                         </Route>
 
                         <Route path='posts'>
-                            <Route path='create' element={<CreatePost />} />
-                            <Route path='edit/:article' element={<CurrentRevision />} />
-                            <Route path='edit/:article/revisions/:revision' element={<EditPost />} />
+                            <Route path='create' element={<CreateArticle />} />
+                            <Route path='edit/:article' element={<EditArticle />} />
+                            <Route path='edit/:article/revisions/:revision' element={<EditRevision />} />
 
                             <Route index element={<AllPosts />} />
                         </Route>
