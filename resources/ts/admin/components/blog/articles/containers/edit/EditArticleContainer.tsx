@@ -26,6 +26,7 @@ const EditArticleContainer: React.FC<EditArticleContainerProps> = ({ article, re
         content: revision.revision.content,
         autoGenerateSummary: revision.revision.summary_auto,
         summary: revision.revision.summary,
+        mainImage: article.mainImage ? { src: article.mainImage.url, description: article.mainImage.description } : undefined,
         uploadedImages: [],
         tags: tags
     }), [article, revision]);
