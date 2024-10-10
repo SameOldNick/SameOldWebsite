@@ -18,7 +18,7 @@ export const isPromise = (value: any): value is Promise<any> => typeof value ===
  * @param included Array of keys to include
  * @returns Object with only keys included
  */
-export const includeInObject = <TObject extends Record<string, any>>(obj: TObject, included: string[]) => {
+export const includeInObject = <TObject extends Record<string, any>, TObjectKeys extends Array<keyof TObject>>(obj: TObject, included: TObjectKeys): Pick<TObject, TObjectKeys[number]> => {
     Object.keys(obj)
         .filter((key) => !included.includes(key))
         .forEach((key) => delete obj[key]);
