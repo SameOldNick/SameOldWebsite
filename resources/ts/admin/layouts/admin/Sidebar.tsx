@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                 {/* Sidebar - Brand */}
                 <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
                     <div className="sidebar-brand-icon">
-                        {/*<img src={icon} alt="Little Apps" className="img-fluid" />*/}
+                        {/*<img src={icon} alt="" className="img-fluid" />*/}
                     </div>
                     <div className="sidebar-brand-text mx-1">Same Old Nick</div>
                 </a>
