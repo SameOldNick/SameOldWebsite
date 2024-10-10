@@ -2,30 +2,21 @@ import React from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Row, Col, FormGroup, Label, Input, Form } from 'reactstrap';
 
 import { DateTime } from 'luxon';
-import { IPromptModalProps } from '../../utils/modals';
+import { IPromptModalProps } from '@admin/utils/modals';
 
 interface ISelectDateTimeModalProps extends IPromptModalProps<DateTime> {
     existing?: DateTime;
 }
 
 const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, onSuccess, onCancelled }) => {
-    const [currentDateTime, setCurrentDateTime] = React.useState<DateTime>(DateTime.now());
+    const currentDateTime = React.useMemo(() => existing ?? DateTime.now(), [existing]);
 
     const [date, setDate] = React.useState<string>(existing?.toFormat('yyyy-MM-dd') ?? '');
     const [time, setTime] = React.useState<string>(existing?.toFormat('HH:mm:ss') ?? '');
 
-    React.useEffect(() => {
-        if (existing !== currentDateTime)
-            setCurrentDateTime(existing ?? DateTime.now());
-    }, [existing, currentDateTime]);
-
-    const handleDateChanged = React.useCallback((newValue: string) => {
-        setDate(newValue);
-    }, []);
-
-    const handleTimeChanged = React.useCallback((newValue: string) => {
-        setTime(newValue);
-    }, []);
+    const handleChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        setter(e.currentTarget.value);
+    };
 
     const handleSubmit = React.useCallback((e: React.FormEvent) => {
         e.preventDefault();
@@ -57,8 +48,8 @@ const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, on
                                         name="date"
                                         type="date"
                                         value={date}
-                                        onChange={(e) => handleDateChanged(e.currentTarget.value)}
-                                        onBlur={(e) => handleDateChanged(e.currentTarget.value)}
+                                        onChange={handleChange(setDate)}
+                                        onBlur={handleChange(setDate)}
                                     />
                                 </FormGroup>
                             </Col>
@@ -72,8 +63,8 @@ const SelectDateTimeModal: React.FC<ISelectDateTimeModalProps> = ({ existing, on
                                         name="time"
                                         type="time"
                                         value={time}
-                                        onChange={(e) => handleTimeChanged(e.currentTarget.value)}
-                                        onBlur={(e) => handleTimeChanged(e.currentTarget.value)}
+                                        onChange={handleChange(setTime)}
+                                        onBlur={handleChange(setTime)}
                                     />
                                 </FormGroup>
                             </Col>
