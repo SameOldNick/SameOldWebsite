@@ -62,11 +62,11 @@ class TagController extends Controller
     public function sync(Request $request, Article $article)
     {
         $request->validate([
-            'tags' => 'required|array',
-            'tags.*' => 'required|string|max:255',
+            'tags' => 'nullable|array',
+            'tags.*' => 'string|max:255',
         ]);
 
-        $tags = $this->transformTags($request->tags);
+        $tags = $this->transformTags($request->collect('tags')->all());
 
         $article->tags()->sync($tags);
 
@@ -80,6 +80,6 @@ class TagController extends Controller
      */
     protected function transformTags(array $tags)
     {
-        return collect($tags)->map(fn ($tag) => Tag::firstOrCreate(['tag' => $tag])->getKey())->all();
+        return collect($tags)->map(fn($tag) => Tag::firstOrCreate(['tag' => $tag])->getKey())->all();
     }
 }
