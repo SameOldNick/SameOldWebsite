@@ -80,6 +80,6 @@ class TagController extends Controller
      */
     protected function transformTags(array $tags)
     {
-        return collect($tags)->map(fn($tag) => Tag::firstOrCreate(['tag' => $tag])->getKey())->all();
+        return collect($tags)->map(fn ($tag) => Tag::firstOrCreate(['tag' => $tag])->getKey())->all();
     }
 }
