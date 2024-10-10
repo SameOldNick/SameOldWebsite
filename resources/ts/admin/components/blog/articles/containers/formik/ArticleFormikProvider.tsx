@@ -22,7 +22,7 @@ interface ArticleFormValues {
 }
 
 interface SelectedMainImage {
-    file: File;
+    file?: File;
     src: string;
     description: string;
 }

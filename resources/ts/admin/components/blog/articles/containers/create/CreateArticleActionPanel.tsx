@@ -51,6 +51,10 @@ const CreateArticleActionPanel: React.FC<CreateArticleActionPanelProps> = ({ onA
     // Helper function for image upload
     const handleImageUpload = React.useCallback(async (articleId: number, mainImage: SelectedMainImage | undefined, uploadedImages: Image[]) => {
         if (mainImage) {
+            if (!mainImage.file) {
+                throw new Error('Main image is missing for new article');
+            }
+
             const image = new Image(await uploadImage(mainImage.file));
             await attachImage(articleId, image.uuid);
             await setMainImageApi(articleId, image.uuid);

@@ -80,6 +80,12 @@ const handleSaveAsRevisionClicked: ArticleEditActionHandler = async ({
     // Update main image if needed
     if (isFormikValuesDirty(formik, ['mainImage'])) {
         if (mainImage) {
+            // If the main image is changed, it should have a File.
+            if (!mainImage.file) {
+                // But if not, throw an error.
+                throw new Error('Main image is missing file. Please try again.');
+            }
+
             const image = await uploadImage(mainImage.file, mainImage.description);
             await setMainImage(article.article.id, image.uuid);
         } else {
@@ -128,6 +134,12 @@ const handleUpdateClicked: ArticleEditActionHandler = async ({
     // Update main image if needed
     if (isFormikValuesDirty(formik, ['mainImage'])) {
         if (mainImage) {
+            // If the main image is changed, it should have a File.
+            if (!mainImage.file) {
+                // But if not, throw an error.
+                throw new Error('Main image is missing file. Please try again.');
+            }
+
             const image = await uploadImage(mainImage.file, mainImage.description);
             await setMainImage(article.article.id, image.uuid);
         } else {
@@ -233,6 +245,12 @@ const publishArticle = async ({
     // Update main image if needed
     if (isFormikValuesDirty(formik, ['mainImage'])) {
         if (mainImage) {
+            // If the main image is changed, it should have a File.
+            if (!mainImage.file) {
+                // But if not, throw an error.
+                throw new Error('Main image is missing file. Please try again.');
+            }
+
             const image = await uploadImage(mainImage.file, mainImage.description);
             await setMainImage(article.article.id, image.uuid);
         } else {
@@ -297,6 +315,12 @@ const unpublishArticle = async ({
     // Update main image if needed
     if (isFormikValuesDirty(formik, ['mainImage'])) {
         if (mainImage) {
+            // If the main image is changed, it should have a File.
+            if (!mainImage.file) {
+                // But if not, throw an error.
+                throw new Error('Main image is missing file. Please try again.');
+            }
+
             const image = await uploadImage(mainImage.file, mainImage.description);
             await setMainImage(article.article.id, image.uuid);
         } else {
