@@ -88,12 +88,14 @@ export function areEqual<A, B>(a: A, b: B) {
  * @returns Promise with base64 url string when resolved
  */
 export function createBase64UrlFromFile(file: File) {
-    return new Promise<string>((resolve) => {
+    return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
 
         reader.onload = (ev: ProgressEvent<FileReader>) => {
-            if (!ev.target || !ev.target.result)
+            if (!ev.target || !ev.target.result) {
+                reject('The event is missing a target.');
                 return;
+            }
 
             let src: string;
 
