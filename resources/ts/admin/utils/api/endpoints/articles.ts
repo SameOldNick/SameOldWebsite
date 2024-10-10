@@ -21,6 +21,31 @@ export const fetchArticles = async (show?: ArticleStatuses) => {
 }
 
 /**
+ *
+ * @param articleId
+ * @returns
+ * @exports
+ */
+export const loadArticle = async (articleId: number) => {
+    const response = await createAuthRequest().get<IArticle>(`blog/articles/${articleId}`);
+
+    return new Article(response.data);
+}
+
+/**
+ *
+ * @param articleId
+ * @param revisionId
+ * @returns
+ * @exports
+ */
+export const loadRevision = async (articleId: number, revisionId: string) => {
+    const response = await createAuthRequest().get<IRevision>(`blog/articles/${articleId}/revisions/${revisionId}`);
+
+    return new Revision(response.data);
+}
+
+/**
  * Loads tags for article
  * @param articleId Article ID to get tags
  * @returns Array of Tag instances
