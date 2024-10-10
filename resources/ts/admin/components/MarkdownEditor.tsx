@@ -9,7 +9,7 @@ import gemoji from '@bytemd/plugin-gemoji';
 import highlight from '@bytemd/plugin-highlight';
 import mediumZoom from '@bytemd/plugin-medium-zoom';
 
-export interface IMarkdownEditorProps extends EditorProps {
+interface IMarkdownEditorProps extends EditorProps {
 
 }
 
@@ -37,3 +37,4 @@ const MarkdownEditor: React.FC<IMarkdownEditorProps> = ({ plugins, ...props }) =
 }
 
 export default MarkdownEditor;
+export { IMarkdownEditorProps };
