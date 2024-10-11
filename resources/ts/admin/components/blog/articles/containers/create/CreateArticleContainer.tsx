@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row } from 'reactstrap';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import UnsavedChangesWarning from '@admin/components/UnsavedChangesWarning';
 import Heading, { HeadingTitle } from '@admin/layouts/admin/Heading';
@@ -13,7 +13,8 @@ import CreateArticleActionPanel from '@admin/components/blog/articles/containers
 import Article from '@admin/utils/api/models/Article';
 
 const CreateArticleContainer: React.FC = ({ }) => {
-    const [created, setCreated] = React.useState<Article>();
+    const navigate = useNavigate();
+
     const [autoGenerateSummary, setAutoGenerateSummary] = React.useState(true);
     const [summary, setSummary] = React.useState('');
 
@@ -38,13 +39,11 @@ const CreateArticleContainer: React.FC = ({ }) => {
     }), [autoGenerateSummary, summary]);
 
     const handleArticleCreated = React.useCallback((article: Article) => {
-        setCreated(article);
+        navigate(article.generatePath());
     }, []);
 
     return (
         <>
-            {created !== undefined && <Navigate to={created.generatePath()} />}
-
             <ArticleFormikProvider
                 initialValues={initialValues}
                 inputs={articleEditorInputs}

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import withReactContent from 'sweetalert2-react-content';
 import { FormikHelpers } from 'formik';
 import { Card, CardBody, Col, Row } from 'reactstrap';
 
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import Swal from 'sweetalert2';
 
 import Heading from '@admin/layouts/admin/Heading';
@@ -21,7 +21,7 @@ interface IProps {
 }
 
 const Create: React.FC<IProps> = ({ }) => {
-    const [user, setUser] = React.useState<User | undefined>();
+    const navigate = useNavigate();
 
     const initialValues = React.useMemo(() => ({
         name: '',
@@ -33,14 +33,14 @@ const Create: React.FC<IProps> = ({ }) => {
         roles: []
     }), []);
 
-    const onCreated = React.useCallback(async (response: AxiosResponse<IUser>) => {
+    const onCreated = React.useCallback(async (user: User) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'User Created',
             text: 'The user was successfully created.',
         });
 
-        setUser(new User(response.data));
+        navigate(user.generatePath());
     }, []);
 
     const onError = React.useCallback(async (err: unknown) => {
@@ -64,17 +64,11 @@ const Create: React.FC<IProps> = ({ }) => {
                 country_code: country
             });
 
-            await onCreated(response);
+            await onCreated(new User(response.data));
         } catch (e) {
             await onError(e);
         }
     }, [onCreated, onError]);
-
-    if (user !== undefined) {
-        return (
-            <Navigate to={user.generatePath()} />
-        );
-    }
 
     return (
         <>
