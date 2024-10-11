@@ -4,12 +4,11 @@ import { FaPlus, FaSync } from 'react-icons/fa';
 import { Button, Col, Form, Input, Row, Table } from 'reactstrap';
 
 import ProjectListRow from './ProjectListRow';
-import WaitToLoad, { IWaitToLoadHandle, IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import LoadError from '@admin/components/LoadError';
 import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
-
 
 interface IProps {
 

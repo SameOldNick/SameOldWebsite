@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import Technology from './Technology';
 import TechnologyPrompt from './TechnologyPrompt';
-import WaitToLoad, { IWaitToLoadHandle, IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import LoadError from '@admin/components/LoadError';
 import Loader from '@admin/components/Loader';
 

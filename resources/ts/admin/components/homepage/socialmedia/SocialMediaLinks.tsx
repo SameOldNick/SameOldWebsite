@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 import SocialMediaLink from "./SocialMediaLink";
 import SocialMediaLinkPrompt from "./SocialMediaLinkPrompt";
-import WaitToLoad, { IWaitToLoadHandle, IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 
 import { createAuthRequest } from "@admin/utils/api/factories";
 import { defaultFormatter } from "@admin/utils/response-formatter/factories";
