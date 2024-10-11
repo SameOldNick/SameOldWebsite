@@ -16,6 +16,10 @@ const LoadError: React.FC<LoadErrorProps> = ({ error, onTryAgainClicked, onGoBac
         return `An error occurred: ${message}`;
     }, [error]);
 
+    React.useEffect(() => {
+        logger.error(errorMessage);
+    }, [errorMessage]);
+
     return (
         <Alert color='danger' className='text-center'>
             {errorMessage}
