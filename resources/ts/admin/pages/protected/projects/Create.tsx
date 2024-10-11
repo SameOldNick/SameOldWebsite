@@ -2,10 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { FormikHelpers } from 'formik';
 import { Card, CardBody } from 'reactstrap';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import withReactContent from 'sweetalert2-react-content';
 
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import Swal from 'sweetalert2';
 
 import Heading from '@admin/layouts/admin/Heading';
@@ -20,18 +20,16 @@ interface IProps {
 }
 
 const Create: React.FC<IProps> = ({ }) => {
-    const [project, setProject] = React.useState<IProject | undefined>();
+    const navigate = useNavigate();
 
-
-
-    const onCreated = React.useCallback(async (response: AxiosResponse<IProject>) => {
+    const onCreated = React.useCallback(async (project: IProject) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Project Created',
             text: 'The project was successfully created.',
         });
 
-        setProject(response.data);
+        navigate(`/admin/projects/edit/${project.id}`)
     }, []);
 
     const onError = React.useCallback(async (err: unknown) => {
@@ -53,7 +51,7 @@ const Create: React.FC<IProps> = ({ }) => {
                 tags: tags.map(({ label }) => label)
             });
 
-            await onCreated(response);
+            await onCreated(response.data);
         } catch (e) {
             await onError(e);
         }
@@ -64,12 +62,6 @@ const Create: React.FC<IProps> = ({ }) => {
         description: '',
         url: ''
     }), []);
-
-    if (project !== undefined) {
-        return (
-            <Navigate to={`/admin/projects/edit/${project.id}`} />
-        );
-    }
 
     return (
         <>
