@@ -8,45 +8,34 @@ import axios from 'axios';
 
 import Technology from './Technology';
 import TechnologyPrompt from './TechnologyPrompt';
+import WaitToLoad, { IWaitToLoadHandle, IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
+import LoadError from '@admin/components/LoadError';
+import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import awaitModalPrompt from '@admin/utils/modals';
 
+
 interface IProps {
 
 }
 
-interface ITechnologyItem {
-    technology: ITechnology;
-    selected: boolean;
-}
-
 const TechnologyList: React.FC<IProps> = ({ }) => {
-    const [renderCount, setRenderCount] = React.useState(1);
-    const [technologies, setTechnologies] = React.useState<ITechnologyItem[]>([]);
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
+    const [selected, setSelected] = React.useState<ITechnology[]>([]);
 
     const load = React.useCallback(async () => {
-        try {
-            const response = await createAuthRequest().get<ITechnology[]>('technologies');
+        const response = await createAuthRequest().get<ITechnology[]>('technologies');
 
-            setTechnologies(response.data.map((technology) => ({ technology, selected: false })));
-        } catch (err) {
-            logger.error(err);
-
-            const result = await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `An error occurred trying to load technologies.`,
-                confirmButtonText: 'Try Again',
-                showConfirmButton: true,
-                showCancelButton: true
-            });
-
-            if (result.isConfirmed)
-                await load();
-        }
+        return response.data;
     }, []);
+
+    const reload = React.useCallback(() => {
+        waitToLoadRef.current?.load();
+
+        setSelected([]);
+    }, [waitToLoadRef.current]);
 
     const addTechnology = React.useCallback(async (newTechnology: ITechnology) => {
         try {
@@ -57,8 +46,6 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
                 title: 'Success!',
                 text: 'Technology has been added.'
             });
-
-            await load();
         } catch (err) {
             logger.error(err);
 
@@ -76,7 +63,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await addTechnology(newTechnology);
         }
-    }, [load]);
+    }, []);
 
     const editTechnology = React.useCallback(async (technology: ITechnology) => {
         try {
@@ -87,8 +74,6 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
                 title: 'Success!',
                 text: 'Technology has been updated.'
             });
-
-            await load();
         } catch (err) {
             logger.error(err);
 
@@ -106,7 +91,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
             if (result.isConfirmed)
                 await editTechnology(technology);
         }
-    }, [load]);
+    }, []);
 
     const deleteTechnology = React.useCallback(async (technology: ITechnology): Promise<Record<'success', string> | false> => {
         try {
@@ -156,13 +141,11 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
             });
         }
 
-        await load();
-    }, [load, deleteTechnology]);
+        reload();
+    }, [reload, deleteTechnology]);
 
-    const deleteTechnologies = React.useCallback(async () => {
-        const toDelete = technologies.filter((value) => value.selected);
-
-        if (toDelete.length === 0) {
+    const handleDeleteTechnologies = React.useCallback(async () => {
+        if (selected.length === 0) {
             await withReactContent(Swal).fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -175,7 +158,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
-            text: `Do you really want to remove ${toDelete.length} technologies?`,
+            text: `Do you really want to remove ${selected.length} technologies?`,
             showConfirmButton: true,
             showCancelButton: true
         });
@@ -183,46 +166,36 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
         if (!result.isConfirmed)
             return;
 
-        await Promise.all(toDelete.map(({ technology }) => deleteTechnology(technology)));
+        await Promise.all(selected.map((technology) => deleteTechnology(technology)));
 
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Success!',
-            text: `Deleted ${toDelete.length} technologies.`
+            text: `Deleted ${selected.length} technologies.`
         });
 
-        await load();
-    }, [technologies, load]);
+        reload();
+    }, [reload, selected]);
 
     const handleAddButtonClicked = React.useCallback(async () => {
         const technology = await awaitModalPrompt(TechnologyPrompt);
 
         await addTechnology(technology);
-    }, [addTechnology]);
+
+        reload();
+    }, [reload, addTechnology]);
 
     const handleEditButtonClicked = React.useCallback(async (technology: ITechnology) => {
         const updated = await awaitModalPrompt(TechnologyPrompt, { existing: technology });
 
         await editTechnology(updated);
-    }, [editTechnology]);
 
-    const onItemSelected = React.useCallback(
-        (technology: ITechnology, selected: boolean) =>
-            setTechnologies((technologies) => technologies.map((item) => item.technology === technology ? { technology, selected } : item)),
-        []);
+        reload();
+    }, [reload, editTechnology]);
 
-    React.useEffect(() => {
-        load();
-    }, [renderCount]);
-
-    const hasSelected = React.useMemo(() => {
-        for (const { selected } of technologies) {
-            if (selected)
-                return true;
-        }
-
-        return false;
-    }, [technologies]);
+    const handleItemSelected = React.useCallback((technology: ITechnology, selected: boolean) => {
+        setSelected((prev) => selected ? prev.concat(technology) : prev.filter((item) => item !== technology));
+    }, []);
 
     return (
         <>
@@ -240,7 +213,7 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
                             Update
                         </Button>
 
-                        <Button color="danger" disabled={!hasSelected} onClick={deleteTechnologies}>
+                        <Button color="danger" disabled={selected.length === 0} onClick={handleDeleteTechnologies}>
                             <span className='me-1'>
                                 <FaTrash />
                             </span>
@@ -250,19 +223,39 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
                 </Col>
             </Row>
 
-            <Row className='mx-1 gap-2 justify-content-center'>
-                {technologies.length > 0 && technologies.map(({ technology, selected }, index) => (
-                    <Technology
-                        key={index}
-                        technology={technology}
-                        selected={selected}
-                        onSelected={(selected) => onItemSelected(technology, selected)}
-                        onEditClicked={() => handleEditButtonClicked(technology)}
-                        onDeleteClicked={() => promptDeleteTechnology(technology)}
-                    />
-                ))}
-                {technologies.length === 0 && <div>No technologies found.</div>}
-            </Row>
+            <WaitToLoad
+                ref={waitToLoadRef}
+                callback={load}
+                loading={<Loader display={{ type: 'over-element' }} />}
+            >
+                {(response, err, { reload }) => (
+                    <>
+                        {response && (
+                            <Row className='mx-1 gap-2 justify-content-center'>
+                                {response.length > 0 && response.map((technology, index) => (
+                                    <Technology
+                                        key={index}
+                                        technology={technology}
+                                        selected={selected.includes(technology)}
+                                        onSelected={(selected) => handleItemSelected(technology, selected)}
+                                        onEditClicked={() => handleEditButtonClicked(technology)}
+                                        onDeleteClicked={() => promptDeleteTechnology(technology)}
+                                    />
+                                ))}
+                                {response.length === 0 && <div>No technologies found.</div>}
+                            </Row>
+                        )}
+                        {err && (
+                            <LoadError
+                                error={err}
+                                onTryAgainClicked={() => reload()}
+                                onGoBackClicked={() => window.history.back()}
+                            />
+                        )}
+                    </>
+                )}
+            </WaitToLoad>
+
         </>
     );
 }

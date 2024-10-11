@@ -3,37 +3,33 @@ import { NavLink } from 'react-router-dom';
 import { FaPlus, FaSync } from 'react-icons/fa';
 import { Button, Col, Form, Input, Row, Table } from 'reactstrap';
 
-import { createAuthRequest } from '@admin/utils/api/factories';
 import ProjectListRow from './ProjectListRow';
+import WaitToLoad, { IWaitToLoadHandle, IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
+import LoadError from '@admin/components/LoadError';
+import Loader from '@admin/components/Loader';
+
+import { createAuthRequest } from '@admin/utils/api/factories';
+
 
 interface IProps {
 
 }
 
 const ProjectList: React.FC<IProps> = ({ }) => {
-    const [projects, setProjects] = React.useState<IProject[]>([]);
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
     const [show, setShow] = React.useState('both');
 
     const fetchProjects = React.useCallback(async () => {
+        const response = await createAuthRequest().get<IProject[]>('projects', { show });
 
-        try {
-            const response = await createAuthRequest().get<IProject[]>('projects', { show });
-
-            setProjects(response.data);
-        } catch (e) {
-            logger.error(e);
-        }
+        return response.data;
     }, [show]);
 
-    const onUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        fetchProjects();
-    }, [fetchProjects]);
-
-    React.useEffect(() => {
-        fetchProjects();
-    }, []);
+        waitToLoadRef.current?.load();
+    }, [waitToLoadRef.current]);
 
     return (
         <>
@@ -45,7 +41,7 @@ const ProjectList: React.FC<IProps> = ({ }) => {
                         </Button>
                     </div>
                     <div className="text-start text-md-end">
-                        <Form className="row row-cols-lg-auto g-3" onSubmit={onUpdateFormSubmitted}>
+                        <Form className="row row-cols-lg-auto g-3" onSubmit={handleUpdateFormSubmitted}>
                             <Col xs={12}>
                                 <label className="visually-hidden" htmlFor="show">Show</label>
                                 <Input type='select' name='show' id='show' value={show} onChange={(e) => setShow(e.target.value)}>
@@ -75,14 +71,31 @@ const ProjectList: React.FC<IProps> = ({ }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {projects.map((project, index) =>
-                                <ProjectListRow
-                                    key={index}
-                                    project={project}
-                                    onRestored={fetchProjects}
-                                    onDeleted={fetchProjects}
-                                />
-                            )}
+                            <WaitToLoad
+                                ref={waitToLoadRef}
+                                callback={fetchProjects}
+                                loading={<Loader display={{ type: 'over-element' }} />}
+                            >
+                                {(response, err, { reload }) => (
+                                    <>
+                                        {response && response.map((project, index) => (
+                                            <ProjectListRow
+                                                key={index}
+                                                project={project}
+                                                onRestored={() => reload()}
+                                                onDeleted={() => reload()}
+                                            />
+                                        ))}
+                                        {err && (
+                                            <LoadError
+                                                error={err}
+                                                onTryAgainClicked={() => reload()}
+                                                onGoBackClicked={() => window.history.back()}
+                                            />
+                                        )}
+                                    </>
+                                )}
+                            </WaitToLoad>
                         </tbody>
                     </Table>
                 </Col>

@@ -8,44 +8,32 @@ import Swal from "sweetalert2";
 
 import SocialMediaLink from "./SocialMediaLink";
 import SocialMediaLinkPrompt from "./SocialMediaLinkPrompt";
+import WaitToLoad, { IWaitToLoadHandle, IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
 
 import { createAuthRequest } from "@admin/utils/api/factories";
 import { defaultFormatter } from "@admin/utils/response-formatter/factories";
 import awaitModalPrompt from "@admin/utils/modals";
+import LoadError from "@admin/components/LoadError";
+import Loader from "@admin/components/Loader";
 
 interface ISocialMediaLinksProps {
 }
 
-interface ISocialMediaLinkItem {
-    link: ISocialMediaLink;
-    selected: boolean;
-}
-
 const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
-    const [links, setLinks] = React.useState<ISocialMediaLinkItem[]>([]);
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
+    const [selected, setSelected] = React.useState<ISocialMediaLink[]>([]);
 
     const load = React.useCallback(async () => {
-        try {
-            const response = await createAuthRequest().get<ISocialMediaLink[]>('social-media');
+        const response = await createAuthRequest().get<ISocialMediaLink[]>('social-media');
 
-            setLinks(response.data.map<ISocialMediaLinkItem>((link) => ({ link, selected: false })));
-        } catch (err) {
-            logger.error(err);
-
-            const result = await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `An error occurred trying to load social media links.`,
-                confirmButtonText: 'Try Again',
-                showConfirmButton: true,
-                showCancelButton: true
-            });
-
-            if (result.isConfirmed)
-                await load();
-        }
-
+        return response.data;
     }, []);
+
+    const reload = React.useCallback(() => {
+        waitToLoadRef.current?.load();
+
+        setSelected([]);
+    }, [waitToLoadRef.current]);
 
     const addLink = React.useCallback(async (link: string) => {
         try {
@@ -56,8 +44,6 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
                 title: 'Success!',
                 text: 'Social media link has been added.'
             });
-
-            load();
         } catch (err) {
             logger.error(err);
 
@@ -75,19 +61,17 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             if (result.isConfirmed)
                 await addLink(link);
         }
-    }, [load]);
+    }, []);
 
-    const updateLink = React.useCallback(async (item: ISocialMediaLinkItem, updatedLink: string) => {
+    const updateLink = React.useCallback(async (item: ISocialMediaLink, updatedLink: string) => {
         try {
-            const response = await createAuthRequest().put<ISocialMediaLink[]>(`social-media/${item.link.id}`, { link: updatedLink });
+            const response = await createAuthRequest().put<ISocialMediaLink[]>(`social-media/${item.id}`, { link: updatedLink });
 
             await withReactContent(Swal).fire({
                 icon: 'success',
                 title: 'Success!',
                 text: 'Social media link has been updated.'
             });
-
-            load();
         } catch (err) {
             logger.error(err);
 
@@ -105,82 +89,64 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             if (result.isConfirmed)
                 await updateLink(item, updatedLink);
         }
-    }, [load]);
-
-    const deleteLink = React.useCallback(async (link: ISocialMediaLink) => {
-        try {
-            const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${link.id}`);
-
-            await withReactContent(Swal).fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Social media link has been deleted.'
-            });
-
-            load();
-        } catch (err) {
-            logger.error(err);
-
-            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-            const result = await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `Unable to delete social media link: ${message}`,
-                confirmButtonText: 'Try Again',
-                showConfirmButton: true,
-                showCancelButton: true
-            });
-
-            if (result.isConfirmed)
-                await deleteLink(link);
-        }
-
-    }, [load]);
-
-    const promptDeleteLink = React.useCallback(async (link: ISocialMediaLink) => {
-        const result = await withReactContent(Swal).fire({
-            icon: 'question',
-            title: 'Are You Sure?',
-            text: `Do you really want to remove "${link.link}"?`,
-            showConfirmButton: true,
-            showCancelButton: true
-        });
-
-        if (!result.isConfirmed)
-            return;
-
-        await deleteLink(link);
-
-    }, [deleteLink]);
-
-    const deleteLinksOne = React.useCallback(async (item: ISocialMediaLinkItem) => {
-        try {
-            const response = await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${item.link.id}`);
-
-        } catch (err) {
-            logger.error(err);
-
-            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
-
-            const result = await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `Unable to delete social media link ID "${item.link.id}": ${message}`,
-                confirmButtonText: 'Try Again',
-                showConfirmButton: true,
-                showCancelButton: true
-            });
-
-            if (result.isConfirmed)
-                await deleteLinksOne(item);
-        }
     }, []);
 
-    const promptDeleteLinks = React.useCallback(async () => {
-        const toDelete = links.filter((value) => value.selected);
+    const deleteLink = React.useCallback(async (link: ISocialMediaLink) => {
+        await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${link.id}`);
+    }, []);
 
-        if (toDelete.length === 0) {
+    const tryDelete = React.useCallback(async (item: ISocialMediaLink) => {
+        try {
+            await deleteLink(item);
+        } catch (err) {
+            logger.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to delete social media link ID "${item.id}": ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
+
+            if (result.isConfirmed)
+                await tryDelete(item);
+        }
+    }, [deleteLink]);
+
+    const handleItemSelected = React.useCallback((link: ISocialMediaLink, selected: boolean) => {
+        setSelected((prev) => selected ? prev.concat(link) : prev.filter((item) => item !== link));
+    }, []);
+
+    const handleAddLinkClicked = React.useCallback(async () => {
+        try {
+            const link = await awaitModalPrompt(SocialMediaLinkPrompt);
+
+            await addLink(link);
+        } catch (err) {
+            // Modal was cancelled.
+        } finally {
+            reload();
+        }
+    }, [reload, addLink]);
+
+    const handleEditLinkClicked = React.useCallback(async (item: ISocialMediaLink) => {
+        try {
+            const updated = await awaitModalPrompt(SocialMediaLinkPrompt, { link: item });
+
+            await updateLink(item, updated);
+        } catch (err) {
+            // Modal was cancelled.
+        } finally {
+            reload();
+        }
+    }, [reload, updateLink]);
+
+    const handleDeleteSelectedClicked = React.useCallback(async () => {
+        if (selected.length === 0) {
             await withReactContent(Swal).fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -193,7 +159,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
-            text: `Do you really want to remove ${toDelete.length} link(s)?`,
+            text: `Do you really want to remove ${selected.length} link(s)?`,
             showConfirmButton: true,
             showCancelButton: true
         });
@@ -201,49 +167,50 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
         if (!result.isConfirmed)
             return;
 
-        for (const item of toDelete) {
-            deleteLinksOne(item);
+        for (const item of selected) {
+            tryDelete(item);
         }
 
-        await load();
-    }, [deleteLinksOne, load, links]);
+        reload();
+    }, [reload, tryDelete, selected]);
 
-    React.useEffect(() => {
-        load();
-    }, []);
+    const handleDeleteItemClicked = React.useCallback(async (link: ISocialMediaLink) => {
+        const result = await withReactContent(Swal).fire({
+            icon: 'question',
+            title: 'Are You Sure?',
+            text: `Do you really want to remove "${link.link}"?`,
+            showConfirmButton: true,
+            showCancelButton: true
+        });
 
-    const hasSelected = React.useMemo(() => {
-        for (const { selected } of links) {
-            if (selected)
-                return true;
-        }
+        if (!result.isConfirmed)
+            return;
 
-        return false;
-    }, [links]);
-
-    const onItemSelected = React.useCallback((link: ISocialMediaLink, selected: boolean) => {
-        setLinks((links) => links.map((item) => item.link === link ? { link, selected } : item));
-    }, []);
-
-    const handleAddLinkClicked = React.useCallback(async () => {
         try {
-            const link = await awaitModalPrompt(SocialMediaLinkPrompt);
+            await deleteLink(link);
 
-            await addLink(link);
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Social media link has been deleted.'
+            });
         } catch (err) {
-            // Modal was cancelled.
-        }
-    }, [addLink]);
+            logger.error(err);
 
-    const handleEditLinkClicked = React.useCallback(async (item: ISocialMediaLinkItem) => {
-        try {
-            const updated = await awaitModalPrompt(SocialMediaLinkPrompt, { link: item.link });
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
-            await updateLink(item, updated);
-        } catch (err) {
-            // Modal was cancelled.
+            await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to delete social media link: ${message}`,
+                showConfirmButton: false,
+                showCancelButton: true
+            });
+        } finally {
+            reload();
+
         }
-    }, [updateLink]);
+    }, [reload, deleteLink]);
 
     return (
         <>
@@ -254,14 +221,14 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
                     </div>
 
                     <div>
-                        <Button color='primary' className="me-1" onClick={() => load()}>
+                        <Button color='primary' className="me-1" onClick={() => reload()}>
                             <span className='me-1'>
                                 <FaSync />
                             </span>
                             Refresh
                         </Button>
 
-                        <Button color="danger" disabled={!hasSelected} onClick={promptDeleteLinks}>
+                        <Button color="danger" disabled={selected.length === 0} onClick={handleDeleteSelectedClicked}>
                             <span className='me-1'>
                                 <FaTrash />
                             </span>
@@ -271,27 +238,47 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
                 </Col>
             </Row>
 
-            <Row className="mb-3">
-                <Col>
-                    <ListGroup>
-                        {links.length > 0 ?
-                            links.map((item, index) => (
-                                <SocialMediaLink
-                                    key={index}
-                                    link={item.link}
-                                    selected={item.selected}
-                                    onSelected={(selected) => onItemSelected(item.link, selected)}
-                                    onEditClicked={() => handleEditLinkClicked(item)}
-                                    onDeleteClicked={() => promptDeleteLink(item.link)}
-                                />
-                            ))
-                            : (
-                                <ListGroupItem disabled>No links found.</ListGroupItem>
-                            )
-                        }
-                    </ListGroup>
-                </Col>
-            </Row>
+            <WaitToLoad
+                ref={waitToLoadRef}
+                callback={load}
+                loading={<Loader display={{ type: 'over-element' }} />}
+            >
+                {(response, err, { reload }) => (
+                    <>
+                        {response && (
+                            <Row className="mb-3">
+                                <Col>
+                                    <ListGroup>
+                                        {response.length > 0 ?
+                                            response.map((link, index) => (
+                                                <SocialMediaLink
+                                                    key={index}
+                                                    link={link}
+                                                    selected={selected.includes(link)}
+                                                    onSelected={(selected) => handleItemSelected(link, selected)}
+                                                    onEditClicked={() => handleEditLinkClicked(link)}
+                                                    onDeleteClicked={() => handleDeleteItemClicked(link)}
+                                                />
+                                            ))
+                                            : (
+                                                <ListGroupItem disabled>No links found.</ListGroupItem>
+                                            )
+                                        }
+                                    </ListGroup>
+                                </Col>
+                            </Row>
+                        )}
+                        {err && (
+                            <LoadError
+                                error={err}
+                                onTryAgainClicked={() => reload()}
+                                onGoBackClicked={() => window.history.back()}
+                            />
+                        )}
+                    </>
+                )}
+            </WaitToLoad>
+
         </>
     );
 }
