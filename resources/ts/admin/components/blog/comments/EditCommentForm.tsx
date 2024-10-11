@@ -104,7 +104,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 {({ values, dirty, touched, errors }) => (
                     <Form>
                         <Heading>
-                            <HeadingTitle>
+                            <HeadingTitle className='mb-2 mb-md-0'>
                                 Edit Comment
                                 {dirty && (
                                     <small className='ms-1 text-body-secondary'>
@@ -113,10 +113,10 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                                 )}
                             </HeadingTitle>
 
-                            <div className='d-flex'>
+                            <div className='d-flex flex-column flex-md-row'>
                                 <Button
                                     color="info"
-                                    className='me-1'
+                                    className='me-md-2 mb-2 mb-md-0'
                                     onClick={handlePreview}
                                 >
                                     <FaExternalLinkAlt />{' '}
@@ -124,7 +124,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                                 </Button>
                                 <Button
                                     color="primary"
-                                    className='me-1'
+                                    className='me-md-1'
                                     type='submit'
                                 >
                                     <FaSave />{' '}Save

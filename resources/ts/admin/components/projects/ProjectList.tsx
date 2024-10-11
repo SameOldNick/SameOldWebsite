@@ -38,34 +38,33 @@ const ProjectList: React.FC<IProps> = ({ }) => {
     return (
         <>
             <Row>
-                <Col xs={12} className='d-flex justify-content-between mb-3'>
-                    <div>
+                <Col xs={12} className='d-flex flex-column flex-md-row justify-content-between mb-3'>
+                    <div className="d-flex flex-column flex-md-row mb-3 mb-md-0">
                         <Button tag={NavLink} to='create' color='primary'>
                             <FaPlus /> Create New
                         </Button>
                     </div>
-                    <div className="text-end">
+                    <div className="text-start text-md-end">
                         <Form className="row row-cols-lg-auto g-3" onSubmit={onUpdateFormSubmitted}>
                             <Col xs={12}>
                                 <label className="visually-hidden" htmlFor="show">Show</label>
-
                                 <Input type='select' name='show' id='show' value={show} onChange={(e) => setShow(e.target.value)}>
                                     <option value="active">Active Only</option>
                                     <option value="inactive">Inactive Only</option>
                                     <option value="both">Both</option>
                                 </Input>
                             </Col>
-                            <Col xs={12}>
+                            <Col xs={12} className='d-flex flex-column flex-md-row'>
                                 <Button type='submit' color='primary'>
                                     <FaSync /> Update
                                 </Button>
                             </Col>
                         </Form>
-
                     </div>
                 </Col>
+
                 <Col xs={12}>
-                    <Table>
+                    <Table responsive>
                         <thead>
                             <tr>
                                 <th>ID</th>

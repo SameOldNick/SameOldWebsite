@@ -66,12 +66,13 @@ const All: React.FC<IProps> = ({ router: { navigate } }) => {
             <Card>
                 <CardBody>
                     <Row>
-                        <Col xs={12} className='d-flex justify-content-between mb-3'>
-                            <div>
+                        <Col xs={12} className='d-flex flex-column flex-md-row justify-content-between mb-3'>
+                            <div className="mb-3 mb-md-0">
                                 <Dropdown
                                     isOpen={dropdownOpen}
                                     toggle={() => setDropdownOpen(!dropdownOpen)}
                                     disabled={performBackup !== false}
+                                    className='d-flex flex-column flex-md-row'
                                 >
                                     <DropdownToggle color="primary" disabled={performBackup !== false} caret>
                                         <span className='me-1'>
@@ -86,11 +87,10 @@ const All: React.FC<IProps> = ({ router: { navigate } }) => {
                                     </DropdownMenu>
                                 </Dropdown>
                             </div>
-                            <div className="text-end">
+                            <div className="text-start text-md-end">
                                 <Form className="row row-cols-lg-auto g-3" onSubmit={handleUpdateFormSubmitted}>
                                     <Col xs={12}>
                                         <label className="visually-hidden" htmlFor="show">Show</label>
-
                                         <Input type='select' name='show' id='show' defaultValue={show}>
                                             <option value="successful">Successful Only</option>
                                             <option value="failed">Failed Only</option>
@@ -99,7 +99,7 @@ const All: React.FC<IProps> = ({ router: { navigate } }) => {
                                             <option value="all">All</option>
                                         </Input>
                                     </Col>
-                                    <Col xs={12}>
+                                    <Col xs={12} className='d-flex flex-column flex-md-row'>
                                         <Button type='submit' color='primary'>
                                             <span className='me-1'>
                                                 <FaRedo />
@@ -108,9 +108,9 @@ const All: React.FC<IProps> = ({ router: { navigate } }) => {
                                         </Button>
                                     </Col>
                                 </Form>
-
                             </div>
                         </Col>
+
                         <Col xs={12}>
                             <BackupList key={renderCount} show={show} />
                         </Col>

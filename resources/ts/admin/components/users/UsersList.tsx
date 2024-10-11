@@ -37,7 +37,7 @@ const UsersList: React.FC<IProps> = ({ show, onLoadError }) => {
                         {response !== undefined && (
                             <PaginatedTable initialResponse={response} pullData={fetchUsers}>
                                 {(data) => (
-                                    <Table>
+                                    <Table responsive>
                                         <thead>
                                             <tr>
                                                 {/* TODO: Sort columns */}

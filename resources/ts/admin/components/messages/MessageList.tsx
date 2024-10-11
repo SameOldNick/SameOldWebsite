@@ -153,14 +153,13 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
             <Card>
                 <CardBody>
                     <Row>
-                        <Col xs={12} className='d-flex justify-content-between mb-3'>
-                            <div></div>
-                            <div className="text-end">
+                        <Col xs={12} className='d-flex flex-column flex-md-row justify-content-between mb-3'>
+                            <div className="mb-3 mb-md-0"></div>
+                            <div className="text-start text-md-end">
                                 <Form className="row row-cols-lg-auto g-3" onSubmit={handleDisplayOptionsFormSubmit}>
                                     <Col xs={12}>
-                                        <Label htmlFor="sort" className="col-form-label float-start me-1">Sort By: </Label>
-
-                                        <Col className='float-start'>
+                                        <Label htmlFor="sort" className="col-form-label float-md-start me-1">Sort By: </Label>
+                                        <Col className="float-md-start">
                                             <Input type='select' name='sort' id='sort' value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                                                 <option value="from">From</option>
                                                 <option value="sent">Sent</option>
@@ -168,10 +167,10 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                                             </Input>
                                         </Col>
                                     </Col>
-                                    <Col xs={12}>
-                                        <Label htmlFor="sort" className="col-form-label float-start me-1">Show: </Label>
 
-                                        <Col className='float-start'>
+                                    <Col xs={12}>
+                                        <Label htmlFor="show" className="col-form-label float-md-start me-1">Show: </Label>
+                                        <Col className="float-md-start">
                                             <Input type='select' name='show' id='show' value={show} onChange={(e) => setShow(e.target.value)}>
                                                 <option value="accepted">Accepted</option>
                                                 <option value="confirmed">Confirmed</option>
@@ -181,13 +180,13 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                                             </Input>
                                         </Col>
                                     </Col>
-                                    <Col xs={12}>
+
+                                    <Col xs={12} className='d-flex flex-column flex-md-row'>
                                         <Button type='submit' color='primary'>
                                             <FaSync /> Update
                                         </Button>
                                     </Col>
                                 </Form>
-
                             </div>
                         </Col>
                         <Col xs={12}>
@@ -199,7 +198,7 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                             >
                                 {(messages, err, helpers) => (
                                     <>
-                                        <Table>
+                                        <Table responsive>
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>

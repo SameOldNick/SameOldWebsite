@@ -113,7 +113,7 @@ const CommentList: React.FC<IProps> = ({ }) => {
                                     <option value='all'>All</option>
                                 </Input>
                             </Col>
-                            <Col xs={12}>
+                            <Col xs={12} className='d-flex flex-column flex-md-row'>
                                 <Button type='submit' color='primary'>
                                     <FaSync /> Update
                                 </Button>
@@ -134,7 +134,7 @@ const CommentList: React.FC<IProps> = ({ }) => {
                                 {response && (
                                     <PaginatedTable ref={paginatedTableRef} initialResponse={response} pullData={load}>
                                         {(data) => (
-                                            <Table>
+                                            <Table responsive>
                                                 <thead>
                                                     <tr>
                                                         <th scope='col'>ID</th>

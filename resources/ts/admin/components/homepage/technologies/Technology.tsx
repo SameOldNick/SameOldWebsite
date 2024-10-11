@@ -36,7 +36,7 @@ const Technology: React.FC<ITechnologyProps> = ({ lookupIcon, technology, select
 
     return (
         <Col
-            xs={3}
+            md={3}
             className={classNames('border rounded p-3', { 'bg-body-secondary': selected })}
             onClick={handleClick}
             style={{ cursor: 'pointer' }}

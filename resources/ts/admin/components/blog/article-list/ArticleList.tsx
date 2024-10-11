@@ -52,17 +52,17 @@ const ArticleList: React.FC<IProps> = ({ }) => {
     return (
         <>
             <Row>
-                <Col xs={12} className='d-flex justify-content-between mb-3'>
-                    <div>
+                <Col xs={12} className='d-flex flex-column flex-md-row justify-content-between mb-3'>
+                    <div className="mb-3 mb-md-0 d-flex flex-column flex-md-row">
                         <Button tag={NavLink} to='create' color='primary'>
                             <FaPlus /> Create New
                         </Button>
                     </div>
-                    <div className="text-end">
-                        <Form className="row row-cols-lg-auto g-3" onSubmit={handleUpdateFormSubmitted}>
+
+                    <div className="text-start text-md-end">
+                        <Form className="row row-cols-1 row-cols-lg-auto g-3" onSubmit={handleUpdateFormSubmitted}>
                             <Col xs={12}>
                                 <label className="visually-hidden" htmlFor="show">Show</label>
-
                                 <Input type='select' name='show' id='show' value={show} onChange={(e) => setShow(e.target.value as ArticleStatuses)}>
                                     <option value={ArticleStatuses.unpublished}>Unpublished Only</option>
                                     <option value={ArticleStatuses.published}>Published Only</option>
@@ -71,13 +71,12 @@ const ArticleList: React.FC<IProps> = ({ }) => {
                                     <option value={ArticleStatuses.all}>All</option>
                                 </Input>
                             </Col>
-                            <Col xs={12}>
+                            <Col xs={12} className='d-flex flex-column flex-md-row'>
                                 <Button type='submit' color='primary'>
                                     <FaSync /> Update
                                 </Button>
                             </Col>
                         </Form>
-
                     </div>
                 </Col>
                 <Col xs={12}>
@@ -92,7 +91,7 @@ const ArticleList: React.FC<IProps> = ({ }) => {
                                 {response && (
                                     <PaginatedTable ref={paginatedTableRef} initialResponse={response} pullData={loadArticles}>
                                         {(data) => (
-                                            <Table>
+                                            <Table responsive>
                                                 <thead>
                                                     <tr>
                                                         <th>ID</th>

@@ -36,7 +36,7 @@ const Skill: React.FC<ISkillProps> = ({ lookupIcon, skill, selected, onSelected,
 
     return (
         <Col
-            xs={3}
+            md={3}
             className={classNames('border rounded p-3', { 'bg-body-secondary': selected })}
             onClick={handleClick}
             style={{ cursor: 'pointer' }}

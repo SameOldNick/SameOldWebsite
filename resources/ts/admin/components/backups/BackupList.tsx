@@ -45,7 +45,7 @@ const BackupList: React.FC<IBackupListProps> = ({ show }) => {
                         {response && (
                             <PaginatedTable initialResponse={response} pullData={retrieveBackups}>
                                 {(data) => (
-                                    <Table>
+                                    <Table responsive>
                                         <thead>
                                             <tr>
                                                 <th scope='col'>ID</th>

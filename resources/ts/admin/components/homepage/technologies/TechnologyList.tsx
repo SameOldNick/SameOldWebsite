@@ -227,13 +227,13 @@ const TechnologyList: React.FC<IProps> = ({ }) => {
     return (
         <>
             <Row className="mb-3">
-                <Col className="d-flex justify-content-between">
-                    <div>
+                <Col className="d-flex flex-column flex-md-row justify-content-md-between">
+                    <div className="mb-2 mb-md-0 d-flex flex-column flex-md-row">
                         <Button color='primary' onClick={handleAddButtonClicked}>Add Technology</Button>
                     </div>
 
-                    <div>
-                        <Button color='primary' className="me-1" onClick={load}>
+                    <div className="d-flex flex-column flex-md-row">
+                        <Button color='primary' className="me-md-1 mb-2 mb-md-0" onClick={load}>
                             <span className='me-1'>
                                 <FaSync />
                             </span>
