@@ -10,7 +10,7 @@ Welcome to **Same Old Website** - a personal web app built by SameOldNick using 
 ## 🛠️ Features
 
 - **Multi-Factor Authentication (MFA)**: Enhance account security with MFA support.
-- **OAuth SSO Login**: Log in using popular platforms like Google and GitHub.
+- **OAuth SSO Login**: Single-sign on using popular platforms like Google and GitHub.
 - **Role-Based Access Control (RBAC)**: Fine-grained user permissions for different roles.
 - **Google Analytics Integration**: Pulls analytics data and displays it in the admin panel with charts.
 - **Markdown Blog Editor**: Easily write blog articles in Markdown format.
