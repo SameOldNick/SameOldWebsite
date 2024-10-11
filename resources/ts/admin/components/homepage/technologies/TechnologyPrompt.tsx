@@ -6,8 +6,10 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 
 import IconSelector from '@admin/components/icon-selector/IconSelector';
-import { lookupIcon, IIconType } from '@admin/components/icon-selector/utils';
+import { IIconType } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
+import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
+
 import { IPromptModalProps } from '@admin/utils/modals';
 
 interface IFormikValues {
@@ -18,7 +20,9 @@ interface IProps extends IPromptModalProps<ITechnology> {
     existing?: ITechnology;
 }
 
-const TechnologyPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }) => {
+type TechnologyPromptProps = IProps & IHasIconsFile;
+
+const TechnologyPrompt: React.FC<TechnologyPromptProps> = ({ lookupIcon, existing, onSuccess, onCancelled }) => {
     const [iconSelector, setIconSelector] = React.useState(false);
     const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(existing !== undefined ? lookupIcon(existing.icon) : undefined);
 
@@ -30,11 +34,9 @@ const TechnologyPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }
         });
     }, [existing, selectedIcon, onSuccess]);
 
-    const schema = React.useMemo(() =>
-        Yup.object().shape({
-            technology: Yup.string().required('Technology is required').max(255),
-        })
-        , []);
+    const schema = React.useMemo(() => Yup.object().shape({
+        technology: Yup.string().required('Technology is required').max(255),
+    }), []);
 
     const initialValues = React.useMemo<IFormikValues>(() => ({ technology: existing?.technology || '' }), [existing]);
 
@@ -110,4 +112,4 @@ const TechnologyPrompt: React.FC<IProps> = ({ existing, onSuccess, onCancelled }
     );
 }
 
-export default TechnologyPrompt;
+export default withIconsFile(TechnologyPrompt);
