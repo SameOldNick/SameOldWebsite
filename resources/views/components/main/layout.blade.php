@@ -30,6 +30,8 @@
         <x-main.top.navbar />
     </header>
 
+    <div class="bg-light d-lg-none" id="headerSpacer"></div>
+
     <main {{ $attributes->merge(['class' => 'bg-light py-5']) }}>
         {{ $slot }}
     </main>
