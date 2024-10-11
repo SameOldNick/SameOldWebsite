@@ -6,12 +6,14 @@ import { Button, Col, Form, Input, Row, Table } from 'reactstrap';
 import PaginatedTable from '@admin/components/PaginatedTable';
 import Loader from '@admin/components/Loader';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
+import LoadError from '@admin/components/LoadError';
 import ArticleRow from './ArticleRow';
 
 import Article from '@admin/utils/api/models/Article';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { fetchArticles, ArticleStatuses } from '@admin/utils/api/endpoints/articles';
+
 
 interface IProps {
 
@@ -85,9 +87,15 @@ const ArticleList: React.FC<IProps> = ({ }) => {
                         callback={loadInitialArticles}
                         loading={<Loader display={{ type: 'over-element' }} />}
                     >
-                        {(response, err) => (
+                        {(response, err, { reload }) => (
                             <>
-                                {err && logger.error(err)}
+                                {err && (
+                                    <LoadError
+                                        error={err}
+                                        onTryAgainClicked={() => reload()}
+                                        onGoBackClicked={() => window.history.back()}
+                                    />
+                                )}
                                 {response && (
                                     <PaginatedTable ref={paginatedTableRef} initialResponse={response} pullData={loadArticles}>
                                         {(data) => (

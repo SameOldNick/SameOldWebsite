@@ -9,6 +9,7 @@ import BackupInfoModal from './BackupInfoModal';
 import PaginatedTable from '@admin/components/PaginatedTable';
 import Loader from '@admin/components/Loader';
 import WaitToLoad from '@admin/components/WaitToLoad';
+import LoadError from '@admin/components/LoadError';
 
 import Backup from '@admin/utils/api/models/Backup';
 import awaitModalPrompt from '@admin/utils/modals';
@@ -39,9 +40,16 @@ const BackupList: React.FC<IBackupListProps> = ({ show }) => {
                 callback={retrieveBackups}
                 loading={<Loader display={{ type: 'over-element' }} />}
             >
-                {(response, err) => (
+                {(response, err, { reload }) => (
                     <>
-                        {err && logger.error(err)}
+                        {/* Display error message */}
+                        {err && (
+                            <LoadError
+                                error={err}
+                                onTryAgainClicked={() => reload()}
+                                onGoBackClicked={() => window.history.back()}
+                            />
+                        )}
                         {response && (
                             <PaginatedTable initialResponse={response} pullData={retrieveBackups}>
                                 {(data) => (

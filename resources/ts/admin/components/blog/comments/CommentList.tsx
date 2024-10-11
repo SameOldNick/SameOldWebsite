@@ -10,6 +10,7 @@ import Loader from '@admin/components/Loader';
 import SingleComment from './SingleComment';
 import SelectArticleModal from '@admin/components/modals/SelectArticleModal';
 import SelectUserModal from '@admin/components/modals/SelectUserModal';
+import LoadError from '@admin/components/LoadError';
 
 import { CommentStatuses, loadAll } from '@admin/utils/api/endpoints/comments';
 
@@ -18,6 +19,7 @@ import User from '@admin/utils/api/models/User';
 import Comment from '@admin/utils/api/models/Comment';
 
 import awaitModalPrompt from '@admin/utils/modals';
+
 
 interface IProps {
 
@@ -128,9 +130,15 @@ const CommentList: React.FC<IProps> = ({ }) => {
                         callback={load}
                         loading={<Loader display={{ type: 'over-element' }} />}
                     >
-                        {(response, err) => (
+                        {(response, err, { reload }) => (
                             <>
-                                {err && logger.error(err)}
+                                {err && (
+                                    <LoadError
+                                        error={err}
+                                        onTryAgainClicked={() => reload()}
+                                        onGoBackClicked={() => window.history.back()}
+                                    />
+                                )}
                                 {response && (
                                     <PaginatedTable ref={paginatedTableRef} initialResponse={response} pullData={load}>
                                         {(data) => (
