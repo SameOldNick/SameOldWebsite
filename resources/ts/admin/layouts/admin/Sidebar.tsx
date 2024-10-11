@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import { viewportSize } from '@admin/utils';
 import Toggle from './sidebar/Toggle';
 
-interface SidebarProps extends React.PropsWithChildren {
+interface SidebarProps extends React.PropsWithChildren<React.ComponentProps<'ul'>> {
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+const Sidebar: React.FC<SidebarProps> = ({ children, className, ...extraProps }) => {
     const sidebarRef = React.createRef<HTMLUListElement>();
     const [toggled, setToggled] = React.useState(false);
 
@@ -68,8 +68,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             {/* Doesn't use the Nav component from Reactstrap since it doesn't provide a ref to the actual <ul> tag. */}
             <ul
                 ref={sidebarRef}
-                className={classNames('navbar-nav bg-gradient-primary sidebar sidebar-dark accordion', { 'sidebar-collapsed': toggled })}
+                className={classNames('navbar-nav bg-gradient-primary sidebar sidebar-dark accordion', { 'sidebar-collapsed': toggled }, className)}
                 id='accordionSidebar'
+                {...extraProps}
             >
 
                 {/* Sidebar - Brand */}

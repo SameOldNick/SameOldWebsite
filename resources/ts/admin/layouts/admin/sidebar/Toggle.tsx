@@ -15,7 +15,7 @@ const Toggle: React.FC<ToggleProps> = ({ toggled, onToggle }) => {
     }, [onToggle]);
 
     return (
-        <div className="text-center d-none d-md-inline">
+        <div className="text-center">
             <button id="sidebarToggle" className="rounded-circle border-0" onClick={toggle}>
                 {toggled ? <FaAngleRight /> : <FaAngleLeft />}
             </button>

@@ -16,6 +16,8 @@ import Footer from './Footer';
 import Topbar from './Topbar';
 import ScrollToTop from './ScrollToTop';
 import Authorized from '@admin/middleware/Authorized';
+import { createMainMenu } from '@admin/utils/menus/menus';
+import SidebarWrapper from './sidebar/wrapper/SidebarWrapper';
 
 interface IProps {
 }
@@ -23,6 +25,8 @@ interface IProps {
 type TProps = React.PropsWithChildren<IProps>;
 
 const AdminLayout: React.FC<TProps> = ({ }) => {
+    const menuItems = createMainMenu();
+
     return (
         <>
             <Helmet>
@@ -35,63 +39,7 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
                 <div id="wrapper">
 
                     {/* Sidebar */}
-                    <Sidebar>
-                        <Item href='/admin/dashboard' icon={<FaTachometerAlt />}>Dashboard</Item>
-
-                        <Authorized roles={['edit_profile']}>
-                            <Dropdown text='Homepage' icon={<FaHome />}>
-                                <DropdownItem href='/admin/homepage/profile'>Edit Profile</DropdownItem>
-                                <DropdownItem href='/admin/homepage/skills'>Update Skills</DropdownItem>
-                                <DropdownItem href='/admin/homepage/technologies'>Manage Technologies</DropdownItem>
-                            </Dropdown>
-                        </Authorized>
-
-                        <Authorized roles={['write_posts']}>
-                            <Dropdown text='Blog' icon={<FaNewspaper />}>
-                                <DropdownItem href='/admin/posts'>View All Posts</DropdownItem>
-                                <DropdownItem href='/admin/posts/create'>Create New Post</DropdownItem>
-                            </Dropdown>
-                        </Authorized>
-
-                        <Authorized roles={['manage_comments']}>
-                            <Dropdown text='Comments' icon={<FaComments />}>
-                                <DropdownItem href='/admin/comments'>View All Comments</DropdownItem>
-                                <DropdownItem href='/admin/comments/settings'>Comment Settings</DropdownItem>
-                            </Dropdown>
-                        </Authorized>
-
-                        <Authorized roles={['view_contact_messages', 'change_contact_settings']} oneOf>
-                            <Dropdown text='Contact' icon={<FaEnvelope />}>
-                                <Authorized roles={['view_contact_messages']}>
-                                    <DropdownItem href='/admin/contact/messages'>View Messages</DropdownItem>
-                                </Authorized>
-                                <Authorized roles={['change_contact_settings']}>
-                                    <DropdownItem href='/admin/contact/settings'>Settings</DropdownItem>
-                                </Authorized>
-                            </Dropdown>
-                        </Authorized>
-
-                        <Authorized roles={['manage_projects']}>
-                            <Dropdown text='Projects' icon={<FaList />}>
-                                <DropdownItem href='/admin/projects'>View All Projects</DropdownItem>
-                                <DropdownItem href='/admin/projects/create'>Create New Project</DropdownItem>
-                            </Dropdown>
-                        </Authorized>
-
-                        <Authorized roles={['manage_backups']}>
-                            <Dropdown text='Backups' icon={<FaCloudUploadAlt />}>
-                                <DropdownItem href='/admin/backups'>View Backups</DropdownItem>
-                                <DropdownItem href='/admin/backups/settings'>Backup Settings</DropdownItem>
-                            </Dropdown>
-                        </Authorized>
-
-                        <Authorized roles={['manage_users']}>
-                            <Dropdown text='Users' icon={<FaUsers />}>
-                                <DropdownItem href='/admin/users'>View All Users</DropdownItem>
-                                <DropdownItem href='/admin/users/create'>Create New User</DropdownItem>
-                            </Dropdown>
-                        </Authorized>
-                    </Sidebar>
+                    <SidebarWrapper items={menuItems} />
                     {/* End of Sidebar */}
 
                     {/* Content Wrapper */}
