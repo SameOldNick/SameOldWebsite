@@ -1,3 +1,6 @@
+@props(['links'])
+
+@if ($links->isNotEmpty())
 <section id="social-media" class="d-flex justify-content-center">
     <div class="mt-3 mb-2 social-media-links">
         @foreach ($links as $link)
@@ -7,3 +10,4 @@
         @endforeach
     </div>
 </section>
+@endif

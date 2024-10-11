@@ -1,3 +1,6 @@
+@props(['technologies'])
+
+@if ($technologies->isNotEmpty())
 <section id="technologies" class="row mb-4 technologies">
     <div class="col-12 mb-3">
         <h2 class="h3 fw-bold">Technologies</h2>
@@ -15,3 +18,4 @@
     </div>
 
 </section>
+@endif

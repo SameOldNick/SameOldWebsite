@@ -1,3 +1,6 @@
+@props(['projects'])
+
+@if ($projects->isNotEmpty())
 <section id="projects" class="row mb-4 projects">
     <div class="col-12 mb-3">
         <h2 class="h3 fw-bold">Projects</h2>
@@ -24,3 +27,4 @@
         </div>
     </div>
 </section>
+@endif
