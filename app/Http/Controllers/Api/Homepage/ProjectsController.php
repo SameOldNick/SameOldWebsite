@@ -54,9 +54,9 @@ class ProjectsController extends HomepageController
 
         $project->save();
 
-        $tags = collect($request->tags)->map(fn ($tag) => Tag::firstOrCreate(['tag' => $tag]));
+        $tags = $request->collect('tags')->map(fn($tag) => Tag::firstOrCreate(['tag' => $tag]));
 
-        $project->tags()->sync($tags->map(fn ($model) => $model->getKey()));
+        $project->tags()->sync($tags->map(fn($model) => $model->getKey()));
 
         $project->push();
 
@@ -82,7 +82,7 @@ class ProjectsController extends HomepageController
         $project->description = $request->description;
         $project->url = $request->url;
 
-        $tagIds = collect($request->tags)->map(fn ($tag) => Tag::firstOrCreate(['tag' => $tag])->getKey());
+        $tagIds = $request->collect('tags')->map(fn($tag) => Tag::firstOrCreate(['tag' => $tag])->getKey());
 
         $project->tags()->sync($tagIds);
 
