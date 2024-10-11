@@ -5,12 +5,12 @@ import { Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Mo
 import classNames from 'classnames';
 import * as Yup from 'yup';
 
-import IconSelector from '@admin/components/icon-selector/IconSelector';
+import IconSelectorModal from '@admin/components/icon-selector/IconSelectorModal';
 import { IIconType } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
 import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
 
-import { IPromptModalProps } from '@admin/utils/modals';
+import awaitModalPrompt, { IPromptModalProps } from '@admin/utils/modals';
 
 interface IFormikValues {
     technology: string;
@@ -23,7 +23,6 @@ interface IProps extends IPromptModalProps<ITechnology> {
 type TechnologyPromptProps = IProps & IHasIconsFile;
 
 const TechnologyPrompt: React.FC<TechnologyPromptProps> = ({ lookupIcon, existing, onSuccess, onCancelled }) => {
-    const [iconSelector, setIconSelector] = React.useState(false);
     const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(existing !== undefined ? lookupIcon(existing.icon) : undefined);
 
     const handleSubmit = React.useCallback(async (values: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
@@ -40,21 +39,18 @@ const TechnologyPrompt: React.FC<TechnologyPromptProps> = ({ lookupIcon, existin
 
     const initialValues = React.useMemo<IFormikValues>(() => ({ technology: existing?.technology || '' }), [existing]);
 
-    const handleIconSelect = React.useCallback((icon: IIconType) => {
-        setSelectedIcon(icon);
+    const handleChooseIconClicked = React.useCallback(async () => {
+        try {
+            const icon = await awaitModalPrompt(IconSelectorModal);
 
-        setIconSelector(false);
+            setSelectedIcon(icon);
+        } catch (err) {
+            // User cancelled modal
+        }
     }, []);
 
     return (
         <>
-            {iconSelector && (
-                <IconSelector
-                    open
-                    onSave={handleIconSelect}
-                    onCancel={() => setIconSelector(false)}
-                />
-            )}
             <Modal isOpen backdrop='static'>
                 <Formik<IFormikValues>
                     validationSchema={schema}
@@ -74,7 +70,7 @@ const TechnologyPrompt: React.FC<TechnologyPromptProps> = ({ lookupIcon, existin
                                             {selectedIcon && <Icon icon={selectedIcon} size={48} />}
                                         </Col>
                                         <Col xs={12} className='text-center'>
-                                            <Button color='primary' onClick={() => setIconSelector(true)}>Choose Icon...</Button>
+                                            <Button color='primary' onClick={handleChooseIconClicked}>Choose Icon...</Button>
                                         </Col>
                                     </Row>
 

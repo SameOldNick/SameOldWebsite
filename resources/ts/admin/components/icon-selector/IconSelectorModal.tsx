@@ -2,17 +2,14 @@ import React from "react";
 import { FaSearch } from 'react-icons/fa';
 import { Button, Col, Form, Input, InputGroup, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 
-import { IIconType, getAllIcons } from "./utils";
+import { IIconType } from "./utils";
 import IconItem from "./IconItem";
 import { IHasIconsFile, withIconsFile } from "./WithIcons";
+import { IPromptModalProps } from "@admin/utils/modals";
 
-interface IIconSelectorProps extends IHasIconsFile {
-    open: boolean;
-    onSave: (icon: IIconType) => void;
-    onCancel: () => void;
-}
+type IconSelectorModalProps = IHasIconsFile & IPromptModalProps<IIconType>;
 
-const IconSelector: React.FC<IIconSelectorProps> = ({ getAllIcons, open, onSave, onCancel }) => {
+const IconSelectorModal: React.FC<IconSelectorModalProps> = ({ getAllIcons, onSuccess, onCancelled }) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [icons, setIcons] = React.useState<IIconType[]>([]);
     const [selected, setSelected] = React.useState<IIconType>();
@@ -52,16 +49,22 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ getAllIcons, open, onSave,
         refreshIcons();
     }, [refreshIcons]);
 
-    const handleSave = React.useCallback(() => {
-        if (!selected)
+    const handleSaveClicked = React.useCallback(() => {
+        if (!selected) {
+            logger.error('The "Save" button was clicked when no icon is selected.');
             return;
+        }
 
-        onSave(selected);
-    }, [selected, onSave]);
+        onSuccess(selected);
+    }, [selected, onSuccess]);
+
+    const handleCancelClicked = React.useCallback(() => {
+        onCancelled();
+    }, [onCancelled]);
 
     return (
         <>
-            <Modal isOpen={open} backdrop='static' size="lg" scrollable>
+            <Modal isOpen={true} backdrop='static' size="lg" scrollable>
                 <ModalHeader>Select Icon</ModalHeader>
                 <ModalBody>
                     <Row className="justify-content-center mb-3">
@@ -89,11 +92,11 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ getAllIcons, open, onSave,
 
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" disabled={selected === undefined} onClick={handleSave}>
+                    <Button color="primary" disabled={selected === undefined} onClick={handleSaveClicked}>
                         Save
                     </Button>
                     {' '}
-                    <Button color="secondary" onClick={onCancel}>
+                    <Button color="secondary" onClick={handleCancelClicked}>
                         Cancel
                     </Button>
                 </ModalFooter>
@@ -102,4 +105,4 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ getAllIcons, open, onSave,
     );
 }
 
-export default withIconsFile(IconSelector);
+export default withIconsFile(IconSelectorModal);

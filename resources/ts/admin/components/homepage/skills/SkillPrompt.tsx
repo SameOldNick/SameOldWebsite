@@ -5,10 +5,10 @@ import { Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Mo
 import classNames from 'classnames';
 import * as Yup from 'yup';
 
-import IconSelector from '@admin/components/icon-selector/IconSelector';
+import IconSelectorModal from '@admin/components/icon-selector/IconSelectorModal';
 import { IIconType } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
-import { IPromptModalProps } from '@admin/utils/modals';
+import awaitModalPrompt, { IPromptModalProps } from '@admin/utils/modals';
 import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
 
 interface IFormikValues {
@@ -22,7 +22,6 @@ interface IProps extends IPromptModalProps<ISkill> {
 type TProps = IProps & IHasIconsFile;
 
 const SkillPrompt: React.FC<TProps> = ({ lookupIcon, existing, onSuccess, onCancelled }) => {
-    const [iconSelector, setIconSelector] = React.useState(false);
     const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(existing !== undefined ? lookupIcon(existing.icon) : undefined);
 
     const handleSubmit = React.useCallback(async (values: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
@@ -39,21 +38,18 @@ const SkillPrompt: React.FC<TProps> = ({ lookupIcon, existing, onSuccess, onCanc
 
     const initialValues = React.useMemo<IFormikValues>(() => ({ skill: existing?.skill || '' }), [existing]);
 
-    const handleIconSelect = React.useCallback((icon: IIconType) => {
-        setSelectedIcon(icon);
+    const handleChooseIconClicked = React.useCallback(async () => {
+        try {
+            const icon = await awaitModalPrompt(IconSelectorModal);
 
-        setIconSelector(false);
+            setSelectedIcon(icon);
+        } catch (err) {
+            // User cancelled modal
+        }
     }, []);
 
     return (
         <>
-            {iconSelector && (
-                <IconSelector
-                    open
-                    onSave={handleIconSelect}
-                    onCancel={() => setIconSelector(false)}
-                />
-            )}
             <Modal isOpen backdrop='static'>
                 <Formik<IFormikValues>
                     validationSchema={schema}
@@ -73,7 +69,7 @@ const SkillPrompt: React.FC<TProps> = ({ lookupIcon, existing, onSuccess, onCanc
                                             {selectedIcon && <Icon icon={selectedIcon} size={48} />}
                                         </Col>
                                         <Col xs={12} className='text-center'>
-                                            <Button color='primary' onClick={() => setIconSelector(true)}>Choose Icon...</Button>
+                                            <Button color='primary' onClick={handleChooseIconClicked}>Choose Icon...</Button>
                                         </Col>
                                     </Row>
 
