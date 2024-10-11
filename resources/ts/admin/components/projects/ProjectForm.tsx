@@ -27,12 +27,7 @@ interface IProps extends Omit<TFormikProps, 'onSubmit'> {
 }
 
 const ProjectForm: React.FC<IProps> = ({ initialTags = [], buttonContent, onSubmit, ...props }) => {
-    const [tags, setTags] = React.useState<Tag[]>([]);
-
-    React.useEffect(() => {
-        if (initialTags !== tags)
-            setTags(initialTags);
-    }, [initialTags]);
+    const [tags, setTags] = React.useState<Tag[]>(initialTags);
 
     const schema =
         React.useMemo(() => Yup.object().shape({
@@ -80,7 +75,7 @@ const ProjectForm: React.FC<IProps> = ({ initialTags = [], buttonContent, onSubm
                                         <ReactTagsWithSuggestions
                                             allowNew
                                             selected={tags}
-                                            onAdd={(tag) => setTags((tags) => [...tags, tag])}
+                                            onAdd={(tag) => setTags((tags) => tags.concat(tag))}
                                             onDelete={(i) => setTags((tags) => tags.filter((_, index) => i !== index))}
                                         />
                                         <ErrorMessage name='tags' component='div' className='invalid-feedback' />
