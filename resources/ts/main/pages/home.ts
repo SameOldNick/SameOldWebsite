@@ -87,9 +87,34 @@ $(() => {
         updateTogglerMenu();
     }
 
+    const adjustSubMenuHeight = () => {
+        const headerEl = document.querySelector<HTMLElement>("header");
+        const subMenuEl = document.querySelector<HTMLElement>('.sections-submenu');
+
+        if (!headerEl) {
+            console.error('Unable to find top header.');
+            return;
+        }
+
+        if (!subMenuEl) {
+            console.error('Unable to find top sub-menu.');
+            return;
+        }
+
+        if (window.matchMedia("(max-width: 768px)").matches) {
+            const headerHeight = headerEl.offsetHeight;
+
+            subMenuEl.style.top = `${headerHeight}px`;
+        } else {
+            subMenuEl.style.top = '0px';
+        }
+    }
+
     let updateMenuTimeout: Timeout | null;
 
     $(window).on('DOMContentLoaded load resize scroll', (e) => {
+        adjustSubMenuHeight();
+
         if (updateMenuTimeout) {
             clearTimeout(updateMenuTimeout);
             updateMenuTimeout = null;
