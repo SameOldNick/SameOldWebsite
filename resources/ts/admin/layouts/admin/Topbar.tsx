@@ -4,40 +4,53 @@ import { Nav, Navbar } from 'reactstrap';
 import Messages from '@admin/layouts/admin/topbar/Messages';
 import Search from '@admin/layouts/admin/topbar/SearchDropdown';
 import SearchForm from '@admin/layouts/admin/topbar/SearchForm';
-import SidebarToggle from '@admin/layouts/admin/topbar/SidebarToggle';
 import User from '@admin/layouts/admin/topbar/User';
+import MobileNavbar from './topbar/mobile-navbar/MobileNavbar';
+import MobileNavbarToggle from './topbar/mobile-navbar/MobileNavbarToggle';
 
-interface IProps {
+import { createMainMenu } from '@admin/utils/menus/menus';
+
+interface TopbarProps {
 
 }
 
-const Topbar: React.FC<IProps> = ({ }) => (
-    <>
-        <Navbar expand light color='white' container={false} className='topbar mb-4 static-top shadow'>
-            {/* Sidebar Toggle (Topbar) */}
-            <SidebarToggle />
+const Topbar: React.FC<TopbarProps> = ({ }) => {
+    const [mobileNavBarOpen, setMobileNavBarOpen] = React.useState(false);
 
-            {/* Topbar Search */}
-            <SearchForm className='d-none d-sm-inline-block form-inline me-auto ms-md-3 my-2 my-md-0 mw-100' />
+    const menuItems = createMainMenu();
 
-            <Nav navbar className='ms-auto'>
-                {/* Nav Item - Search Dropdown (Visible Only XS) */}
-                <Search />
+    return (
+        <div className='sticky-top'>
+            <Navbar expand light color='white' container={false} className='topbar mb-4 shadow'>
+                {/* Mobile Toggle (Topbar) */}
+                <MobileNavbarToggle onToggle={() => setMobileNavBarOpen(!mobileNavBarOpen)} />
 
-                {/* Nav Item - Alerts */}
-                {/*<Alerts />*/}
 
-                {/* Nav Item - Messages */}
-                <Messages />
+                {/* Topbar Search */}
+                <SearchForm className='d-none d-sm-inline-block form-inline me-auto ms-md-3 my-2 my-md-0 mw-100' />
 
-                <div className="topbar-divider d-none d-sm-block"></div>
+                <Nav navbar className='ms-auto'>
+                    {/* Nav Item - Search Dropdown (Visible Only XS) */}
+                    <Search />
 
-                {/* Nav Item - User Information */}
-                <User />
-            </Nav>
-        </Navbar>
+                    {/* Nav Item - Alerts */}
+                    {/*<Alerts />*/}
 
-    </>
-);
+                    {/* Nav Item - Messages */}
+                    <Messages />
+
+                    <div className="topbar-divider d-none d-sm-block"></div>
+
+                    {/* Nav Item - User Information */}
+                    <User />
+                </Nav>
+            </Navbar>
+
+            <MobileNavbar items={menuItems} isOpen={mobileNavBarOpen} />
+
+        </div>
+    );
+}
 
 export default Topbar;
+export { TopbarProps };

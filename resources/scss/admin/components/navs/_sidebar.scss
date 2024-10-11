@@ -1,6 +1,6 @@
 // Sidebar
 .sidebar {
-    width: $sidebar-collapsed-width;
+    display: none;
     min-height: 100vh;
 
     .nav-item {
@@ -72,7 +72,9 @@
                     border-radius: $border-radius;
                     white-space: nowrap;
 
-                    &:hover, &:active, &.active {
+                    &:hover,
+                    &:active,
+                    &.active {
                         background-color: $light;
                         color: $dark;
                     }
@@ -141,7 +143,9 @@
             border-radius: $border-radius !important;
             white-space: nowrap;
 
-            &:hover, &:active, &.active {
+            &:hover,
+            &:active,
+            &.active {
                 background-color: $dark;
                 color: $light;
             }
@@ -216,6 +220,7 @@
 
 @include media-breakpoint-up(md) {
     .sidebar {
+        display: block;
         width: $sidebar-base-width !important;
 
         .nav-item {
@@ -251,7 +256,8 @@
                 padding: 1rem;
                 width: $sidebar-base-width;
 
-                i, svg {
+                i,
+                svg {
                     font-size: 0.85rem;
                     margin-right: 0.25rem;
                 }
@@ -342,7 +348,8 @@
                         display: block;
                     }
 
-                    i, svg {
+                    i,
+                    svg {
                         margin-right: 0;
                     }
 
@@ -399,7 +406,8 @@ body.sidebar-hidden {
         .nav-link {
             color: $gray-600;
 
-            i, svg {
+            i,
+            svg {
                 color: $gray-400;
             }
 
@@ -408,7 +416,8 @@ body.sidebar-hidden {
             &:hover {
                 color: $gray-700;
 
-                i, svg {
+                i,
+                svg {
                     color: $gray-700;
                 }
             }
@@ -423,7 +432,8 @@ body.sidebar-hidden {
             &.active {
                 color: $gray-700;
 
-                i, svg {
+                i,
+                svg {
                     color: $gray-700;
                 }
             }
@@ -462,7 +472,8 @@ body.sidebar-hidden {
         .nav-link {
             color: fade-out($white, 0.2);
 
-            i, svg {
+            i,
+            svg {
                 color: fade-out($white, 0.7);
             }
 
@@ -471,7 +482,8 @@ body.sidebar-hidden {
             &:hover {
                 color: $white;
 
-                i, svg {
+                i,
+                svg {
                     color: $white;
                 }
             }
@@ -486,7 +498,8 @@ body.sidebar-hidden {
             &.active {
                 color: $white;
 
-                i, svg {
+                i,
+                svg {
                     color: $white;
                 }
             }
@@ -513,7 +526,9 @@ body.sidebar-hidden {
         .collapse-item {
             color: $light !important;
 
-            &:hover, &:active, &.active {
+            &:hover,
+            &:active,
+            &.active {
                 background-color: $light !important;
                 color: $dark !important;
             }
