@@ -51,8 +51,8 @@ const ArticleRow: React.FC<IArticleRowProps> = ({ article, selected, onSelected 
 }
 
 const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allowAll, onSuccess, onCancelled }) => {
-    const waitToLoadArticlesRef = React.createRef<IWaitToLoadHandle>();
-    const paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
+    const waitToLoadArticlesRef = React.useRef<IWaitToLoadHandle>(null);
+    const paginatedTableRef = React.useRef<PaginatedTable<IArticle>>(null);
 
     const [selected, setSelected] = React.useState<Article | undefined>(existing);
     const [show, setShow] = React.useState('all');

@@ -13,7 +13,7 @@ interface IIconSelectorProps extends IHasIconsFile {
 }
 
 const IconSelector: React.FC<IIconSelectorProps> = ({ getAllIcons, open, onSave, onCancel }) => {
-    const inputRef = React.createRef<HTMLInputElement>();
+    const inputRef = React.useRef<HTMLInputElement>(null);
     const [icons, setIcons] = React.useState<IIconType[]>([]);
     const [selected, setSelected] = React.useState<IIconType>();
 

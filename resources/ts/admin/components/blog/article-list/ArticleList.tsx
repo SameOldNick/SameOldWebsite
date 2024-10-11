@@ -20,8 +20,8 @@ interface IProps {
 }
 
 const ArticleList: React.FC<IProps> = ({ }) => {
-    const waitToLoadArticlesRef = React.createRef<IWaitToLoadHandle>();
-    const paginatedTableRef = React.createRef<PaginatedTable<IArticle>>();
+    const waitToLoadArticlesRef = React.useRef<IWaitToLoadHandle>(null);
+    const paginatedTableRef = React.useRef<PaginatedTable<IArticle>>(null);
 
     const [show, setShow] = React.useState<ArticleStatuses>(ArticleStatuses.all);
 

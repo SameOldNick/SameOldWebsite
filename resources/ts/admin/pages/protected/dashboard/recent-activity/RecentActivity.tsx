@@ -14,7 +14,7 @@ interface IRecentActivityProps {
 }
 
 const RecentActivity: React.FC<IRecentActivityProps> = ({ }) => {
-    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const fetchRecentActivity = React.useCallback(async () => {
         const notifications = await all({ type: Notification.NOTIFICATION_TYPE_ACTIVITY });

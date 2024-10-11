@@ -26,8 +26,8 @@ interface IProps {
 }
 
 const CommentList: React.FC<IProps> = ({ }) => {
-    const waitToLoadCommentsRef = React.createRef<IWaitToLoadHandle>();
-    const paginatedTableRef = React.createRef<PaginatedTable<IComment>>();
+    const waitToLoadCommentsRef = React.useRef<IWaitToLoadHandle>(null);
+    const paginatedTableRef = React.useRef<PaginatedTable<IComment>>(null);
 
     const [show, setShow] = React.useState<CommentStatuses | 'all'>('all');
     const [article, setArticle] = React.useState<Article | undefined>();

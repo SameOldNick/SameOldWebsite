@@ -22,7 +22,7 @@ interface IMessageListProps {
 }
 
 const MessageList: React.FC<IMessageListProps> = ({ }) => {
-    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const [sortBy, setSortBy] = React.useState('sent');
     const [show, setShow] = React.useState('all');

@@ -52,8 +52,8 @@ const CommentRow: React.FC<ICommentRowProps> = ({ comment, selected, onSelected 
 }
 
 const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allowAll, onSuccess, onCancelled }) => {
-    const waitToLoadCommentsRef = React.createRef<IWaitToLoadHandle>();
-    const paginatedTableRef = React.createRef<PaginatedTable<IComment>>();
+    const waitToLoadCommentsRef = React.useRef<IWaitToLoadHandle>(null);
+    const paginatedTableRef = React.useRef<PaginatedTable<IComment>>(null);
 
     const [selected, setSelected] = React.useState<Comment | undefined>(existing);
     const [show, setShow] = React.useState('all');

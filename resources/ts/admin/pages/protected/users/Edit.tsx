@@ -24,7 +24,7 @@ interface IProps extends IHasRouter<'user'> {
 
 const Edit: React.FC<IProps> = ({ router }) => {
     const [renderCount, setRenderCount] = React.useState(0);
-    const formikRef = React.createRef<TForwardedRef>();
+    const formikRef = React.useRef<TForwardedRef>(null);
 
     const getUser = React.useCallback(async () => {
         const { params: { user } } = router;

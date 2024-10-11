@@ -37,7 +37,7 @@ interface IProps extends IHasRouter {
 }
 
 const ContactFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
-    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const [senderMessageTooltipOpen, setSenderMessageTooltipOpen] = React.useState(false);
     const [recipientMessageTooltipOpen, setRecipientMessageTooltipOpen] = React.useState(false);

@@ -15,7 +15,7 @@ interface IProps extends IHasRouter<'article'> {
 }
 
 const EditArticle: React.FC<IProps> = ({ router: { params, navigate } }) => {
-    const waitToLoadArticleRef = React.createRef<IWaitToLoadHandle>();
+    const waitToLoadArticleRef = React.useRef<IWaitToLoadHandle>(null);
 
     const load = React.useCallback(async () => {
         const { article } = params;

@@ -21,7 +21,7 @@ interface SelectRevisionModalProps extends IPromptModalProps<IRevision> {
 }
 
 const SelectRevisionModal: React.FC<SelectRevisionModalProps> = ({ articleId, existing, onSuccess, onCancelled }) => {
-    const waitToLoadRevisionsRef = React.createRef<IWaitToLoadHandle>();
+    const waitToLoadRevisionsRef = React.useRef<IWaitToLoadHandle>(null);
     const [selected, setSelected] = React.useState<IRevision>();
 
     const loadRevisions = React.useCallback(async () => {

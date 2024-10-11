@@ -22,7 +22,7 @@ interface IProps extends IHasRouter<'project'> {
 }
 
 const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) => {
-    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const getProject = React.useCallback(async () => {
         const response = await createAuthRequest().get<IProject>(`/projects/${project}`);

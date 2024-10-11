@@ -9,7 +9,7 @@ interface SidebarProps extends React.PropsWithChildren<React.ComponentProps<'ul'
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children, className, ...extraProps }) => {
-    const sidebarRef = React.createRef<HTMLUListElement>();
+    const sidebarRef = React.useRef<HTMLUListElement>(null);
     const [toggled, setToggled] = React.useState(false);
 
     /**

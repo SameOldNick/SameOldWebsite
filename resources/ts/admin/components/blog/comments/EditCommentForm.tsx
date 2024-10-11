@@ -29,7 +29,7 @@ interface IFormikValues {
 }
 
 const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment }) => {
-    const formikRef = React.createRef<FormikProps<IFormikValues>>();
+    const formikRef = React.useRef<FormikProps<IFormikValues>>(null);
 
     const statuses = React.useMemo<TCommentStatuses[]>(() => ['approved', 'denied', 'flagged', 'awaiting_verification', 'awaiting_approval', 'locked'], []);
 

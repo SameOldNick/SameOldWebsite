@@ -28,7 +28,7 @@ interface IProps extends IHasRouter {
 }
 
 const HomepageForm: React.FC<IProps> = (props) => {
-    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const schema = React.useMemo(() =>
         Yup.object().shape({

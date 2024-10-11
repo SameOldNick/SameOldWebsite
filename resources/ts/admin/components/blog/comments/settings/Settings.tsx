@@ -24,7 +24,7 @@ export type TFilters = string[];
 type TFormikValues = Omit<ICommentSettings, 'moderators'>;
 
 const Settings: React.FC<ISettingsProps> = ({ settings, onSave }) => {
-    const formikRef = React.createRef<FormikProps<TFormikValues>>();
+    const formikRef = React.useRef<FormikProps<TFormikValues>>(null);
 
     const [filters, setFilters] = React.useState<TFilters>(settings.moderators);
 
@@ -52,7 +52,7 @@ const Settings: React.FC<ISettingsProps> = ({ settings, onSave }) => {
         await onSave({ ...values, moderators: filters });
     }, [onSave, filters]);
 
-    const displayedFilters = React.useMemo(() => filters.length > 0 ? filters.map((filter) => S(filter).humanize().s).join(', ') : '(None)' , [filters]);
+    const displayedFilters = React.useMemo(() => filters.length > 0 ? filters.map((filter) => S(filter).humanize().s).join(', ') : '(None)', [filters]);
 
     return (
         <Formik

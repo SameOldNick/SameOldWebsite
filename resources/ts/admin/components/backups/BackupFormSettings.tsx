@@ -37,7 +37,7 @@ interface IProps extends IHasRouter {
 
 
 const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
-    const waitToLoadRef = React.createRef<IWaitToLoadHandle>();
+    const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const schema = React.useMemo(() => Yup.object().shape({
         notification_channels: Yup.array().of(Yup.string().oneOf(['mail', 'discord', 'slack'])).notRequired(),
