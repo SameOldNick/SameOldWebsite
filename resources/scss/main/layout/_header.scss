@@ -1,3 +1,7 @@
 header.sticky-top {
+    max-height: 75px;
 
+    +#headerSpacer {
+        padding-top: 75px;
+    }
 }

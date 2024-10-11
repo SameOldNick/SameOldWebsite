@@ -29,7 +29,9 @@ header {
                 .nav-link {
                     text-shadow: none;
 
-                    &:hover, &:focus, &.active {
+                    &:hover,
+                    &:focus,
+                    &.active {
                         @include full-text-shadow($top-navbar-text-shadow-thickness, $top-navbar-text-shadow-color);
 
                     }
@@ -44,7 +46,7 @@ header {
         }
 
         .dropdown {
-            .dropdown-toggle > i {
+            .dropdown-toggle>i {
                 font-size: 1.25rem;
             }
 
