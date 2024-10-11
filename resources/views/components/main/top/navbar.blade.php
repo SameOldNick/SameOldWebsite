@@ -23,6 +23,7 @@
                 <li class="nav-item dropdown dropdown-search">
                     <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                         <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="d-inline d-lg-none">{{ __('Search') }}</span>
                     </a>
                     <form action="{{ route('blog.search') }}" class="dropdown-menu dropdown-menu-end p-4">
                         <div class="ibc-container">
@@ -37,7 +38,7 @@
                 <li class="nav-item dropdown dropdown-login">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" title="{{ __('Authentication') }}" role="button" aria-expanded="false">
                         <i class="fa-solid fa-lock-open"></i>
-                        <span class="visually-hidden-focusable">{{ __('Authentication') }}</span>
+                        <span class="d-inline d-lg-none">{{ __('Authentication') }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         @if (Route::has('login'))
