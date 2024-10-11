@@ -25,7 +25,7 @@ class StoreProjectRequest extends FormRequest
             'title' => 'required|string|max:255|unique:projects,project',
             'description' => 'required|string',
             'url' => 'required|url|max:255',
-            'tags' => 'required|array',
+            'tags' => 'nullable|array',
             'tags.*' => 'string',
         ];
     }

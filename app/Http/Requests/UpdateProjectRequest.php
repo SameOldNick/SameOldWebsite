@@ -32,7 +32,7 @@ class UpdateProjectRequest extends FormRequest
             ],
             'description' => 'required|string',
             'url' => 'required|url|max:255',
-            'tags' => 'required|array',
+            'tags' => 'nullable|array',
             'tags.*' => 'string',
         ];
     }
