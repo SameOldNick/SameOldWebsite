@@ -38,7 +38,7 @@
 
                                 <div class="d-flex justify-content-center flex-column">
                                     <div class="mx-auto mt-2 mb-4">
-                                        <button class="btn btn-secondary text-center fs-5" type="submit">
+                                        <button class="btn btn-secondary text-center" type="submit">
                                             {{ __('Confirm Password') }}
                                         </button>
                                     </div>
