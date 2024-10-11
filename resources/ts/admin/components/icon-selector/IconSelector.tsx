@@ -40,7 +40,7 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ getAllIcons, open, onSave,
         }
 
         setIcons(found);
-    }, [allIcons]);
+    }, [inputRef.current, allIcons]);
 
     const handleSelect = React.useCallback((icon: IIconType) => {
         setSelected(icon !== selected ? icon : undefined);
@@ -57,7 +57,7 @@ const IconSelector: React.FC<IIconSelectorProps> = ({ getAllIcons, open, onSave,
             return;
 
         onSave(selected);
-    }, [onSave]);
+    }, [selected, onSave]);
 
     return (
         <>
