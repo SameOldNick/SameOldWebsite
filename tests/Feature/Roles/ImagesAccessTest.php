@@ -234,7 +234,7 @@ class ImagesAccessTest extends TestCase
             'description' => $this->faker->text,
         ]);
 
-        $response->assertForbidden();
+        $response->assertUnauthorized();
     }
 
     /**
