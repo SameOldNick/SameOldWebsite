@@ -23,7 +23,7 @@ class Image extends Model
     use Fileable;
     use HasFactory;
 
-    /** @use HasPresenter<FilePresenter> */
+    /** @use HasPresenter<ImagePresenter> */
     use HasPresenter;
 
     use HasUuids;
@@ -108,6 +108,6 @@ class Image extends Model
      */
     protected function alternativeText(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes = []) => $attributes['description'] ? Str::squish($attributes['description']) : $this->file->path_info['filename']);
+        return Attribute::get(fn($value, $attributes = []) => $attributes['description'] ? Str::squish($attributes['description']) : $this->file->path_info['filename']);
     }
 }
