@@ -86,7 +86,7 @@ class BlogCommentController extends Controller
                 ->text(trans('blog.comments.verified'));
         });
 
-        $this->dispatch(new CommentStatusChanged($comment, $oldStatus));
+        CommentStatusChanged::dispatch($comment, $oldStatus);
 
         return redirect()->route('blog.single', compact('article'));
     }

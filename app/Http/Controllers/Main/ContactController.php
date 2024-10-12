@@ -67,14 +67,14 @@ class ContactController extends Controller
         });
 
         if ($requiresConfirmation) {
-            $this->dispatch(new ContactSubmissionRequiresConfirmation($message));
+            ContactSubmissionRequiresConfirmation::dispatch($message);
 
             return view('main.contact', [
                 'success' => __('Please check your e-mail for further instructions.'),
                 'settings' => $this->getSettings()->toArray(),
             ]);
         } else {
-            $this->dispatch(new ContactSubmissionConfirmed($message));
+            ContactSubmissionConfirmed::dispatch($message);
 
             return view('main.contact', [
                 'success' => __('Thank you for your message! You will receive a reply shortly.'),
@@ -98,7 +98,7 @@ class ContactController extends Controller
         $contactMessage->confirmed_at = now();
         $contactMessage->save();
 
-        $this->dispatch(new ContactSubmissionConfirmed($contactMessage));
+        ContactSubmissionConfirmed::dispatch($contactMessage);
 
         return view('main.contact', [
             'success' => __('Thank you for your message! You will receive a reply shortly.'),
