@@ -57,7 +57,7 @@ class CommentController extends Controller
             ],
         ]);
 
-        $query = Comment::with(['article' => fn (BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.person']);
+        $query = Comment::with(['article' => fn(BelongsTo $belongsTo) => $belongsTo->withTrashed(), 'post', 'post.person']);
 
         if ($request->has('article')) {
             $query->where('article_id', $request->integer('article'));
@@ -112,7 +112,7 @@ class CommentController extends Controller
         $request->validate([
             'title' => 'nullable|string|max:255',
             'comment' => 'nullable|string',
-            'status' => ['sometimes', Rule::enum(CommentStatusEnum::class)],
+            'status' => ['nullable', Rule::enum(CommentStatusEnum::class)],
         ]);
 
         $newComment = $request->str('comment');
@@ -125,21 +125,19 @@ class CommentController extends Controller
             $comment->comment = $newComment;
         }
 
-        $newStatus = $request->enum('status', CommentStatusEnum::class);
         $oldStatus = CommentStatusEnum::from($comment->status);
 
-        // A new status may have been passed, but it's the same status
-        $changedStatus = $newStatus && $newStatus !== $oldStatus;
+        if ($request->has('status')) {
+            $status = $request->enum('status', CommentStatusEnum::class);
 
-        if ($changedStatus) {
-            $status = new CommentStatus([
-                'status' => $newStatus,
+            $commentStatus = new CommentStatus([
+                'status' => $status,
             ]);
 
-            $status->user()->associate($request->user());
-            $status->comment()->associate($comment);
+            $commentStatus->user()->associate($request->user());
+            $commentStatus->comment()->associate($comment);
 
-            $status->save();
+            $commentStatus->save();
         }
 
         $comment->save();
@@ -148,7 +146,7 @@ class CommentController extends Controller
         $comment->refresh();
 
         CommentUpdated::dispatchIf($comment->wasChanged(), $comment);
-        CommentStatusChanged::dispatchIf($changedStatus, $comment, $oldStatus);
+        CommentStatusChanged::dispatchIf($request->has('status'), $comment, $oldStatus);
 
         return $comment;
     }
