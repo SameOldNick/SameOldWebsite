@@ -34,13 +34,15 @@ class ImageControllerTest extends TestCase
                     'file' => [
                         'id',
                         'name',
-                        'url',
                         'meta' => [
                             'size',
                             'last_modified',
                             'mime_type',
                         ],
                     ],
+                    'extra' => [
+                        'url'
+                    ]
                 ],
             ]);
     }
@@ -66,13 +68,15 @@ class ImageControllerTest extends TestCase
                 'file' => [
                     'id',
                     'name',
-                    'url',
                     'meta' => [
                         'size',
                         'last_modified',
                         'mime_type',
                     ],
                 ],
+                'extra' => [
+                    'url'
+                ]
             ])
             ->assertJson(['uuid' => $image->getKey()]);
     }
@@ -98,13 +102,15 @@ class ImageControllerTest extends TestCase
                 'file' => [
                     'id',
                     'name',
-                    'url',
                     'meta' => [
                         'size',
                         'last_modified',
                         'mime_type',
                     ],
                 ],
+                'extra' => [
+                    'url'
+                ]
             ]);
 
         $image = Image::all()->last();
