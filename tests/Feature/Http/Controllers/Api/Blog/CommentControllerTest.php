@@ -536,15 +536,15 @@ class CommentControllerTest extends TestCase
     }
 
     /**
-     * Tests updating comment status to awaiting_approval
+     * Tests updating comment status to awaiting_approval from guest comment (awaiting verification)
      */
     #[Test]
-    public function updating_comment_status_awaiting_approval()
+    public function updating_comment_status_awaiting_approval_from_unverified_guest()
     {
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
+        $comment = Comment::factory()->guest()->for($article)->create();
 
         $data = [
             'status' => 'awaiting_approval',
@@ -561,6 +561,35 @@ class CommentControllerTest extends TestCase
 
         Event::assertNotDispatched(CommentUpdated::class);
         Event::assertDispatched(CommentStatusChanged::class);
+    }
+
+    /**
+     * Tests updating comment status to awaiting_approval from verified guest comment (awaiting approval)
+     */
+    #[Test]
+    public function updating_comment_status_awaiting_approval_from_verified_guest()
+    {
+        Event::fake();
+
+        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
+
+        $data = [
+            'status' => 'awaiting_approval',
+        ];
+
+        $response = $this->actingAs($this->admin)->putJson(route('api.comments.update', ['comment' => $comment]), $data);
+        $response
+            ->assertSuccessful()
+            ->assertJsonStructure(['id', 'comment', 'status', 'marked_by'])
+            ->assertJson([
+                'status' => $data['status'],
+                // The marked_by will be null because the status doesn't change
+                'marked_by' => null,
+            ]);
+
+        Event::assertNotDispatched(CommentUpdated::class);
+        Event::assertNotDispatched(CommentStatusChanged::class);
     }
 
     /**
