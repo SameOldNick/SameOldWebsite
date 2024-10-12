@@ -22,7 +22,9 @@ class ImageController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->roles->containsAll(['manage_images']) ? Image::all() : Image::owned($request->user())->get();
+        return collect(
+            $request->user()->roles->containsAll(['manage_images']) ? Image::all() : Image::owned($request->user())->get()
+        )->each->appendPresenter();
     }
 
     /**
