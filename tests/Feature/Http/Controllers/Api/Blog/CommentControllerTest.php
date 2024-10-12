@@ -315,7 +315,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'awaiting_verification'));
+        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'awaiting_verification'));
     }
 
     /**
@@ -334,7 +334,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'awaiting_approval'));
+        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'awaiting_approval'));
     }
 
     /**
@@ -353,7 +353,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'approved'));
+        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'approved'));
     }
 
     /**
@@ -372,7 +372,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'denied'));
+        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'denied'));
     }
 
     /**
@@ -396,7 +396,6 @@ class CommentControllerTest extends TestCase
                     'person' => ['user_id' => $this->user->getKey()],
                 ],
             ]);
-
     }
 
     /**
@@ -467,7 +466,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $data = [
             'title' => $this->faker->text,
@@ -492,7 +491,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $data = [
             'comment' => $this->faker->text,
@@ -517,7 +516,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $data = [
             'status' => 'awaiting_verification',
@@ -545,7 +544,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $data = [
             'status' => 'awaiting_approval',
@@ -573,7 +572,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $data = [
             'status' => 'denied',
@@ -601,7 +600,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $data = [
             'status' => 'approved',
@@ -629,7 +628,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $data = [
             'status' => 'unknown',
@@ -651,7 +650,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $data = [
             'status' => 'invalid',
@@ -692,7 +691,7 @@ class CommentControllerTest extends TestCase
         Event::fake();
 
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
-        $comment = Comment::factory()->verifiedGuest()->for($article)->for($article)->create();
+        $comment = Comment::factory()->verifiedGuest()->for($article)->create();
 
         $response = $this->actingAs($this->admin)->deleteJson(route('api.comments.destroy', ['comment' => $comment]));
         $response->assertSuccessful();
