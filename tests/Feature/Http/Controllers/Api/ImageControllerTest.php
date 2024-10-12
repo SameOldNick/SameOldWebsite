@@ -41,8 +41,8 @@ class ImageControllerTest extends TestCase
                         ],
                     ],
                     'extra' => [
-                        'url'
-                    ]
+                        'url',
+                    ],
                 ],
             ]);
     }
@@ -75,8 +75,8 @@ class ImageControllerTest extends TestCase
                     ],
                 ],
                 'extra' => [
-                    'url'
-                ]
+                    'url',
+                ],
             ])
             ->assertJson(['uuid' => $image->getKey()]);
     }
@@ -109,8 +109,8 @@ class ImageControllerTest extends TestCase
                     ],
                 ],
                 'extra' => [
-                    'url'
-                ]
+                    'url',
+                ],
             ]);
 
         $image = Image::all()->last();
