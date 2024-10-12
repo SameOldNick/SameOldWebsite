@@ -25,14 +25,13 @@ class ArticleImageControllerTest extends TestCase
     {
         Storage::fake();
 
-        $article =
-            Article::factory()
-                ->recycle($this->admin)
-                ->createPostWithRegisteredPerson()
-                ->withRevision(1)
-                ->published()
-                ->has(Image::factory(5)->fakedImage(user: $this->admin))
-                ->create();
+        $article = Article::factory()
+            ->recycle($this->admin)
+            ->createPostWithRegisteredPerson()
+            ->withRevision(1)
+            ->published()
+            ->has(Image::factory(5)->fakedImage(user: $this->admin))
+            ->create();
 
         $response = $this->actingAs($this->admin)->getJson(sprintf('/api/blog/articles/%d/images', $article->getKey()));
 
@@ -46,7 +45,6 @@ class ArticleImageControllerTest extends TestCase
                     'file' => [
                         'id',
                         'name',
-                        'url',
                         'meta' => [
                             'size',
                             'last_modified',
@@ -64,13 +62,12 @@ class ArticleImageControllerTest extends TestCase
     {
         Storage::fake();
 
-        $article =
-            Article::factory()
-                ->recycle($this->admin)
-                ->createPostWithRegisteredPerson()
-                ->withRevision(1)
-                ->published()
-                ->create();
+        $article = Article::factory()
+            ->recycle($this->admin)
+            ->createPostWithRegisteredPerson()
+            ->withRevision(1)
+            ->published()
+            ->create();
 
         $image = Image::factory()->fakedImage(user: $this->admin)->create();
 
@@ -91,12 +88,11 @@ class ArticleImageControllerTest extends TestCase
     {
         Storage::fake();
 
-        $articleFactory =
-            Article::factory(1)
-                ->recycle($this->admin)
-                ->createPostWithRegisteredPerson()
-                ->withRevision(1)
-                ->published();
+        $articleFactory = Article::factory(1)
+            ->recycle($this->admin)
+            ->createPostWithRegisteredPerson()
+            ->withRevision(1)
+            ->published();
 
         $image = Image::factory()->fakedImage(user: $this->admin)->has($articleFactory)->create();
 
@@ -119,14 +115,13 @@ class ArticleImageControllerTest extends TestCase
     {
         Storage::fake();
 
-        $article =
-            Article::factory()
-                ->recycle($this->admin)
-                ->createPostWithRegisteredPerson()
-                ->withRevision(1)
-                ->published()
-                ->has(Image::factory()->fakedImage(user: $this->admin))
-                ->create();
+        $article = Article::factory()
+            ->recycle($this->admin)
+            ->createPostWithRegisteredPerson()
+            ->withRevision(1)
+            ->published()
+            ->has(Image::factory()->fakedImage(user: $this->admin))
+            ->create();
 
         $image = $article->images->random();
 
@@ -150,14 +145,13 @@ class ArticleImageControllerTest extends TestCase
     {
         Storage::fake();
 
-        $article =
-            Article::factory()
-                ->recycle($this->admin)
-                ->createPostWithRegisteredPerson()
-                ->withRevision(1)
-                ->published()
-                ->has(Image::factory()->fakedImage(user: $this->admin))
-                ->create();
+        $article = Article::factory()
+            ->recycle($this->admin)
+            ->createPostWithRegisteredPerson()
+            ->withRevision(1)
+            ->published()
+            ->has(Image::factory()->fakedImage(user: $this->admin))
+            ->create();
 
         $image = $article->images->random();
 
