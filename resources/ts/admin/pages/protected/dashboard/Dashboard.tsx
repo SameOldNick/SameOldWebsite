@@ -63,7 +63,7 @@ const Dashboard: React.FC<IProps> = ({ }) => {
             return (
                 <p className="text-muted">(An error occurred)</p>
             );
-        }        
+        }
     }, []);
 
     React.useEffect(() => {
@@ -104,8 +104,8 @@ const Dashboard: React.FC<IProps> = ({ }) => {
                             Popular Browsers
                         </DashboardCard.Header>
                         <DashboardCard.Body>
-                            <WaitToLoad 
-                                loading={<Loader display={{ type: 'over-element' }} />} 
+                            <WaitToLoad
+                                loading={<Loader display={{ type: 'over-element' }} />}
                                 callback={fetchPopularBrowsers}
                                 log={false}
                             >
@@ -124,15 +124,15 @@ const Dashboard: React.FC<IProps> = ({ }) => {
             <Row>
 
                 <Col xs={12}>
-                    <Row className='row-cols-2'>
+                    <Row className='row-cols-1 row-cols-lg-2'>
                         <Col>
                             <DashboardCard>
                                 <DashboardCard.Header>
                                     Popular URLs
                                 </DashboardCard.Header>
                                 <DashboardCard.Body>
-                                    <WaitToLoad 
-                                        loading={<Loader display={{ type: 'over-element' }} />} 
+                                    <WaitToLoad
+                                        loading={<Loader display={{ type: 'over-element' }} />}
                                         callback={fetchPopularLinks}
                                         log={false}
                                     >
