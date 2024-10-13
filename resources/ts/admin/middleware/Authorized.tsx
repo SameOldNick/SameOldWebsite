@@ -96,7 +96,7 @@ const Authorized: React.FC<TAuthorizedProps> = ({
             return;
         }
 
-        const found = await hasRoles(new User(user));
+        const found = await hasRoles(user);
 
         setStatus(found ? 'authorized' : 'unauthorized');
     }, [fetchUser, hasRoles]);

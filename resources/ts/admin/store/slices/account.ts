@@ -5,11 +5,12 @@ import { createAuthRequest } from "@admin/utils/api/factories";
 import storage from "@admin/utils/storage";
 
 import * as types from "./types/account";
+import User from "@admin/utils/api/models/User";
 
 export interface IAccountState {
     loading: boolean;
-    user?: IUser;
-    fetchUser: TApiState<IUser, AxiosError>;
+    user?: User;
+    fetchUser: TApiState<User, AxiosError>;
     stage: types.TAuthStages;
     signout: boolean;
 }
@@ -21,12 +22,12 @@ const initialState: IAccountState = {
     signout: false
 };
 
-export const fetchUser = createAsyncThunk<IUser, void, { rejectValue: AxiosError }>(
+export const fetchUser = createAsyncThunk<User, void, { rejectValue: AxiosError }>(
     'account/fetch-user',
     async (_, { rejectWithValue }) => {
         try {
             const response = await createAuthRequest().get<IUser>('user');
-            return response.data;
+            return new User(response.data);
         } catch (e) {
             if (!axios.isAxiosError(e) && import.meta.env.VITE_APP_DEBUG) {
                 logger.error(e);
@@ -42,7 +43,7 @@ export default createSlice({
     name: "account",
     initialState,
     reducers: {
-        setUser: (state, { payload }: PayloadAction<IUser | undefined>) => ({
+        setUser: (state, { payload }: PayloadAction<User | undefined>) => ({
             ...state, user: payload
         }),
         authStage: (state, { payload }: PayloadAction<types.TAuthStages>) => {
