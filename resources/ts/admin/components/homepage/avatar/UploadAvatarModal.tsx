@@ -4,7 +4,7 @@ import { Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 're
 import axios from 'axios';
 
 import DragDropFile from '@admin/components/DragDropFile';
-import Avatar from '@admin/components/Avatar';
+import Avatar from '@admin/components/avatar/Avatar';
 import Alerts from '@admin/components/alerts/Alerts';
 
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';

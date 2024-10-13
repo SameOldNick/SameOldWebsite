@@ -8,8 +8,8 @@ import Swal from 'sweetalert2';
 import Upload from './UploadAvatarModal';
 import Remove from './RemoveAvatarModal';
 
-import UserAvatar from '@admin/components/UserAvatar';
 import awaitModalPrompt from '@admin/utils/modals';
+import CurrentUserAvatar from '@admin/components/avatar/CurrentUserAvatar';
 
 interface IProps {
 }
@@ -53,7 +53,7 @@ const Avatar: React.FC<IProps> = ({ }) => {
         <>
             <Row className='mb-3'>
                 <Col style={{ textAlign: 'center' }}>
-                    <UserAvatar key={avatarKey} user='current' style={{ maxWidth: '100%' }} />
+                    <CurrentUserAvatar key={avatarKey} className='img-fluid' />
                 </Col>
             </Row>
             <Row>

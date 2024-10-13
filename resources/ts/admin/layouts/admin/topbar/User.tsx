@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 
 import classNames from 'classnames';
 
-import Avatar from '@admin/components/UserAvatar';
+import CurrentUserAvatar from '@admin/components/avatar/CurrentUserAvatar';
 import LogoutModal from '@admin/components/modals/LogoutModal';
 
 import accountSlice from '@admin/store/slices/account';
@@ -56,9 +56,9 @@ const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage })
         <>
             <Dropdown nav className='no-arrow me-md-3' isOpen={open} toggle={() => setOpen((prev) => !prev)}>
                 <DropdownToggle nav tag='a' href='#' id="userDropdown">
-                    <Avatar user='current' />
+                    <CurrentUserAvatar />
                     <span className={classNames("ms-2 d-none d-lg-inline text-gray-600 small", { placeholder: user === undefined })}>
-                        {user !== undefined && <>{user.email} <FaCaretDown /></>}
+                        {user !== undefined && <>{user.user.email} <FaCaretDown /></>}
                     </span>
                 </DropdownToggle>
 
