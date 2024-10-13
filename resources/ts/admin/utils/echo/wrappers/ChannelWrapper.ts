@@ -26,6 +26,7 @@ class ChannelWrapper<TChannel extends PusherChannel> {
 
     /**
      * Creates an instance of ChannelWrapper.
+     * @param {EchoWrapper} echo Echo wrapper
      * @param {TChannel} channel Channel to wrap
      * @memberof ChannelWrapper
      */
