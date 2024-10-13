@@ -12,8 +12,6 @@ class MessageNotification extends Notification
 
     const DATABASE_TYPE_UUID = '6414fd8c-847a-492b-a919-a5fc539456e8';
 
-    private $factory;
-
     /**
      * Create a new notification instance.
      */
