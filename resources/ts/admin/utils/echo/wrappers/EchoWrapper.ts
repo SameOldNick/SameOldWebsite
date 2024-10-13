@@ -22,7 +22,50 @@ class EchoWrapper {
     constructor(
         public readonly echo: Echo
     ) {
+    }
 
+    /**
+     * Gets the status of the WebSocket
+     *
+     * @readonly
+     * @type {EchoConnectionStates}
+     * @memberof EchoWrapper
+     */
+    public get connectionStatus(): EchoConnectionStates {
+        return this.connector.pusher.connection.state;
+    }
+
+    /**
+     * Waits for connection state to be updated to state(s)
+     *
+     * @param {(EchoConnectionStates | EchoConnectionStates[])} states
+     * @param {() => void} callback
+     * @returns {EchoWrapper}
+     * @memberof EchoWrapper
+     */
+    public onConnectionStateUpdated(states: EchoConnectionStates | EchoConnectionStates[], callback: Function) {
+        for (const state of Array.isArray(states) ? states : [states]) {
+            this.connector.pusher.connection.bind(state, () => callback());
+        }
+
+        return this;
+    }
+
+    /**
+     * Calls callback when state is changed
+     *
+     * @param {(state: EchoConnectionStates) => void} callback
+     * @returns {EchoWrapper}
+     * @memberof EchoWrapper
+     */
+    public onConnectionStatesUpdated(callback: (state: EchoConnectionStates) => void) {
+        const states: EchoConnectionStates[] = ['initialized', 'connecting', 'connected', 'unavailable', 'failed', 'disconnected'];
+
+        for (const state of states) {
+            this.connector.pusher.connection.bind(state, () => callback(state));
+        }
+
+        return this;
     }
 
     /**
@@ -107,3 +150,4 @@ class EchoWrapper {
 }
 
 export default EchoWrapper;
+export { EchoConnectionStates };
