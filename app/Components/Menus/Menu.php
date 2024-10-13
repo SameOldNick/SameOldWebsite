@@ -181,7 +181,7 @@ class Menu
      * Renders the menu with the specified renderer and attributes
      *
      * @param  string|null  $renderer  Name of renderer driver to use
-     * @param  ComponentAttributeBag $attributes Attributes specified in view.
+     * @param  ComponentAttributeBag  $attributes  Attributes specified in view.
      * @return string
      */
     public function renderWithAttributes($renderer, ComponentAttributeBag $attributes)

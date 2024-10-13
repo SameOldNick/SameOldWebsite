@@ -8,15 +8,12 @@ trait HasAttributes
 {
     /**
      * Attribute bag
-     *
-     * @var ComponentAttributeBag
      */
     protected ComponentAttributeBag $attributes;
 
     /**
      * Sets attributes
      *
-     * @param ComponentAttributeBag $attributes
      * @return $this
      */
     public function withAttributes(ComponentAttributeBag $attributes)
@@ -39,7 +36,6 @@ trait HasAttributes
     /**
      * Creates ComponentAttributeBag instance
      *
-     * @param array $attributes
      * @return ComponentAttributeBag
      */
     protected function createAttributesBag(array $attributes)

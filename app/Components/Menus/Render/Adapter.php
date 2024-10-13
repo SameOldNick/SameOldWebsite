@@ -105,7 +105,7 @@ class Adapter
      */
     protected function renderViews(array $views)
     {
-        return Arr::join(Arr::map($views, fn($view) => $this->renderView($view)), PHP_EOL);
+        return Arr::join(Arr::map($views, fn ($view) => $this->renderView($view)), PHP_EOL);
     }
 
     /**

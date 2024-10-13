@@ -3,7 +3,6 @@
 namespace App\Components\Menus\Render;
 
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\Component;
 
 class MenuComponent extends Component
