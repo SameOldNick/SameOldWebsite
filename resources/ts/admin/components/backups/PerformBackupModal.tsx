@@ -8,10 +8,13 @@ import { DateTime } from 'luxon';
 import Swal from "sweetalert2";
 
 import Events from '@admin/components/echo/events/Events';
-import PrivateChannel from '@admin/components/echo/channels/PrivateChannel';
+import PrivateChannel, { IPrivateChannelHandle } from '@admin/components/echo/channels/PrivateChannel';
 import Event from '@admin/components/echo/events/Event';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
+import Loader from '../Loader';
+import createErrorHandler from '@admin/utils/errors/factory';
 
 export type TBackupTypes = 'full' | 'database' | 'files';
 export type TJobStatuses = 'pending' | 'started' | 'finished';
@@ -90,9 +93,9 @@ const JobStatus: React.FC<IJobStatusProps> = ({ started, finished }) => {
 }
 
 const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose }) => {
+    const jobChannelRef = React.useRef<IPrivateChannelHandle>(null);
+    const processChannelRef = React.useRef<IPrivateChannelHandle>(null);
     const xtermRef = React.useRef<XTerm>(null);
-
-    const [response, setResponse] = React.useState<IPerformBackupResponse>();
 
     const [jobStarted, setJobStarted] = React.useState<DateTime>();
     const [jobFinished, setJobFinished] = React.useState<DateTime>();
@@ -101,23 +104,15 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
     const [canClose, setCanClose] = React.useState(false);
 
     React.useEffect(() => {
-        performBackup();
-    }, [type]);
-
-    React.useEffect(() => {
         setCanClose(jobFinished !== undefined);
     }, [jobFinished]);
 
-    const performBackup = React.useCallback(async () => {
-        try {
-            const response = await createAuthRequest().post<IPerformBackupResponse>('backups/perform', {
-                only: type !== 'full' ? type : undefined
-            });
+    const perform = React.useCallback(async () => {
+        const response = await createAuthRequest().post<IPerformBackupResponse>('backups/perform', {
+            only: type !== 'full' ? type : undefined
+        });
 
-            setResponse(response.data);
-        } catch (err) {
-
-        }
+        return response.data;
     }, [type]);
 
     const handleCloseClicked = React.useCallback(async (e: React.MouseEvent) => {
@@ -182,22 +177,34 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
                 </ModalHeader>
                 <ModalBody>
                     <JobStatus started={jobStarted} finished={jobFinished} />
+                    <WaitToLoad callback={perform} loading={<Loader display={{ type: 'over-element' }} />}>
+                        {(response, err) => (
+                            <>
+                                {response && (
+                                    <>
+                                        <PrivateChannel ref={jobChannelRef} channel={`jobs.${response.uuid}`}>
+                                            <Events callback={handleJobStatusEvent} />
+                                        </PrivateChannel>
+
+                                        <PrivateChannel ref={processChannelRef} channel={`processes.${response.uuid}`}>
+                                            <Event event='.ProcessBegin' callback={handleProcessStartEvent} />
+                                            <Event event='.ProcessComplete' callback={handleProcessCompleteEvent} />
+                                            <Event event='.ProcessOutput' callback={handleProcessOutputEvent} />
+                                        </PrivateChannel>
+                                    </>
+                                )}
+                                {err && (
+                                    <Alert color="danger" className="d-flex justify-content-between">
+                                        {`Error: ${createErrorHandler().handle(err)}`}
+                                    </Alert>
+                                )}
+                            </>
+                        )}
+                    </WaitToLoad>
 
                     {processStarted && <XTerm ref={xtermRef} />}
 
-                    {response && (
-                        <>
-                            <PrivateChannel channel={`jobs.${response.uuid}`}>
-                                <Events callback={handleJobStatusEvent} />
-                            </PrivateChannel>
 
-                            <PrivateChannel channel={`processes.${response.uuid}`}>
-                                <Event event='.ProcessBegin' callback={handleProcessStartEvent} />
-                                <Event event='.ProcessComplete' callback={handleProcessCompleteEvent} />
-                                <Event event='.ProcessOutput' callback={handleProcessOutputEvent} />
-                            </PrivateChannel>
-                        </>
-                    )}
                 </ModalBody>
                 <ModalFooter>
                     <Button color={canClose ? 'primary' : 'secondary'} onClick={handleCloseClicked}>
