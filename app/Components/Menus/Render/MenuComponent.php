@@ -34,6 +34,9 @@ class MenuComponent extends Component
      */
     public function render()
     {
+        /**
+         * Returns a callback because $this->attributes is not set when this method is first called.
+         */
         return function () {
             $menu = $this->app['menus']->get($this->name);
 
