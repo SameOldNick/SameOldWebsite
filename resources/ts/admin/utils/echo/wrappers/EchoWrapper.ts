@@ -5,13 +5,15 @@ import { PusherConnector } from 'laravel-echo/dist/connector';
 
 import ChannelWrapper from './ChannelWrapper';
 
+type EchoConnectionStates = 'initialized' | 'connecting' | 'connected' | 'unavailable' | 'failed' | 'disconnected';
+
 /**
  * Wraps existing Laravel Echo class
  *
  * @export
  * @class EchoWrapper
  */
-export default class EchoWrapper {
+class EchoWrapper {
     /**
      * Creates an instance of EchoWrapper.
      * @param {Echo} echo Echo instance to wrap
@@ -51,7 +53,7 @@ export default class EchoWrapper {
      * @returns Channel wrapper
      */
     public channel(channel: string): ChannelWrapper<PusherChannel> {
-        return new ChannelWrapper(this.echo.channel(channel) as PusherChannel);
+        return this.newChannelWrapper(this.echo.channel(channel) as PusherChannel);
     }
 
     /**
@@ -60,7 +62,7 @@ export default class EchoWrapper {
      * @returns Channel wrapper
      */
     public join(channel: string): ChannelWrapper<PusherPresenceChannel> {
-        return new ChannelWrapper(this.echo.join(channel) as PusherPresenceChannel);
+        return this.newChannelWrapper(this.echo.join(channel) as PusherPresenceChannel);
     }
 
     /**
@@ -69,7 +71,7 @@ export default class EchoWrapper {
      * @returns Channel wrapper
      */
     public listen(channel: string, event: string, callback: Function): ChannelWrapper<PusherChannel> {
-        return new ChannelWrapper(this.echo.listen(channel, event, callback) as PusherChannel);
+        return this.newChannelWrapper(this.echo.listen(channel, event, callback) as PusherChannel);
     }
 
     /**
@@ -78,7 +80,7 @@ export default class EchoWrapper {
      * @returns Channel wrapper
      */
     public private(channel: string): ChannelWrapper<PusherPrivateChannel> {
-        return new ChannelWrapper(this.echo.private(channel) as PusherPrivateChannel);
+        return this.newChannelWrapper(this.echo.private(channel) as PusherPrivateChannel);
     }
 
     /**
@@ -87,6 +89,21 @@ export default class EchoWrapper {
      * @returns Channel wrapper
      */
     public encryptedPrivate(channel: string): ChannelWrapper<PusherEncryptedPrivateChannel> {
-        return new ChannelWrapper(this.echo.encryptedPrivate(channel) as PusherEncryptedPrivateChannel);
+        return this.newChannelWrapper(this.echo.encryptedPrivate(channel) as PusherEncryptedPrivateChannel);
+    }
+
+    /**
+     * Creates new ChannelWrapper instance
+     *
+     * @protected
+     * @template TPusherChannel
+     * @param {TPusherChannel} channel
+     * @returns
+     * @memberof EchoWrapper
+     */
+    protected newChannelWrapper<TPusherChannel extends PusherChannel>(channel: TPusherChannel) {
+        return new ChannelWrapper<TPusherChannel>(this, channel);
     }
 }
+
+export default EchoWrapper;
