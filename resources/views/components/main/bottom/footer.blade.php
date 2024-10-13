@@ -7,7 +7,7 @@
                 </a>
             </p>
 
-            <x-menu name="footer" renderer="footer" />
+            <x-menu name="footer" renderer="footer" class="justify-content-center justify-content-md-end" />
         </div>
     </div>
 
