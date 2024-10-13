@@ -52,11 +52,12 @@ export interface IProcessOutputData {
 }
 
 interface IJobStatusProps {
+    connected: boolean;
     started?: DateTime;
     finished?: DateTime;
 }
 
-const JobStatus: React.FC<IJobStatusProps> = ({ started, finished }) => {
+const JobStatus: React.FC<IJobStatusProps> = ({ connected, started, finished }) => {
     const [renderCount, setRenderCount] = React.useState(1);
 
     React.useEffect(() => {
@@ -68,26 +69,34 @@ const JobStatus: React.FC<IJobStatusProps> = ({ started, finished }) => {
     }, []);
 
     const displayText = React.useMemo(() => {
-        if (finished)
-            return 'Job finished.';
-        else if (started)
-            return 'Job started.';
-        else
-            return 'Waiting for job to start...';
-    }, [started, finished]);
+        if (connected) {
+            if (finished)
+                return 'Job finished.';
+            else if (started)
+                return 'Job started.';
+            else
+                return 'Waiting for job to start...';
+        } else {
+            return 'Unable to perform backups because the WebSocket server is currently unreachable.';
+        }
+    }, [connected, started, finished]);
 
     return (
-        <Alert color="info" className="d-flex justify-content-between">
+        <Alert color={connected ? 'info' : 'danger'} className="d-flex justify-content-between">
             <div className='d-flex align-items-center'>
-                <span className="me-1">
-                    {!started && !finished && <ClipLoader size={25} />}
-                </span>
+                {connected && (
+                    <span className="me-1">
+                        {!started && !finished && <ClipLoader size={25} />}
+                    </span>
+                )}
                 {displayText}
             </div>
-            <div key={renderCount}>
-                {started && !finished && started.toRelative()}
-                {finished && finished?.toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS)}
-            </div>
+            {connected && (
+                <div key={renderCount}>
+                    {started && !finished && started.toRelative()}
+                    {finished && finished?.toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS)}
+                </div>
+            )}
         </Alert>
     );
 }
@@ -169,6 +178,12 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
         });
     }, []);
 
+    const isConnected = React.useMemo(() => {
+        const echo = jobChannelRef.current?.channel.echo || processChannelRef.current?.channel.echo;
+
+        return echo && echo.connectionStatus === 'connected' ? true : false;
+    }, [jobChannelRef, processChannelRef]);
+
     return (
         <>
             <Modal isOpen={true} backdrop='static' size='xl'>
@@ -176,7 +191,8 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
                     Perform Backup
                 </ModalHeader>
                 <ModalBody>
-                    <JobStatus started={jobStarted} finished={jobFinished} />
+                    <JobStatus connected={isConnected} started={jobStarted} finished={jobFinished} />
+
                     <WaitToLoad callback={perform} loading={<Loader display={{ type: 'over-element' }} />}>
                         {(response, err) => (
                             <>
