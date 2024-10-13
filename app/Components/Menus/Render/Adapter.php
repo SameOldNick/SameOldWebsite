@@ -9,12 +9,15 @@ use App\Components\Menus\Items\LinkItem;
 use App\Components\Menus\Items\MenuDivider;
 use App\Components\Menus\Items\RenderableItem;
 use App\Components\Menus\Menu;
+use App\Components\Menus\Traits\HasAttributes;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 
 class Adapter
 {
+    use HasAttributes;
+
     /**
      * Renderer to use
      *
@@ -37,11 +40,25 @@ class Adapter
      */
     public function render(Menu $menu)
     {
+        $this->attachAttributes();
+
         $views = $this->renderItems($menu->items()->all(), 1);
 
         $outer = $this->renderer->renderOuter($menu, $this->renderViews($views));
 
         return $this->renderView($outer);
+    }
+
+    /**
+     * Attaches attributes to renderer (if supported)
+     *
+     * @return void
+     */
+    protected function attachAttributes()
+    {
+        if (in_array(HasAttributes::class, class_uses_recursive($this->renderer))) {
+            $this->renderer->withAttributes($this->getAttributes());
+        }
     }
 
     /**
@@ -88,7 +105,7 @@ class Adapter
      */
     protected function renderViews(array $views)
     {
-        return Arr::join(Arr::map($views, fn ($view) => $this->renderView($view)), PHP_EOL);
+        return Arr::join(Arr::map($views, fn($view) => $this->renderView($view)), PHP_EOL);
     }
 
     /**

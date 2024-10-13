@@ -14,6 +14,7 @@ use App\Components\Menus\Links\Resolvers;
 use App\Components\Menus\Traits\HasProps;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\Conditionable;
+use Illuminate\View\ComponentAttributeBag;
 
 class Menu
 {
@@ -168,12 +169,24 @@ class Menu
     /**
      * Renders the menu with the specified renderer
      *
-     * @param  string  $renderer  Name of renderer driver to use
+     * @param  string|null  $renderer  Name of renderer driver to use
      * @return string
      */
     public function render($renderer)
     {
         return app('menus.render')->driver($renderer)->render($this);
+    }
+
+    /**
+     * Renders the menu with the specified renderer and attributes
+     *
+     * @param  string|null  $renderer  Name of renderer driver to use
+     * @param  ComponentAttributeBag $attributes Attributes specified in view.
+     * @return string
+     */
+    public function renderWithAttributes($renderer, ComponentAttributeBag $attributes)
+    {
+        return app('menus.render')->driver($renderer)->withAttributes($attributes)->render($this);
     }
 
     /**
