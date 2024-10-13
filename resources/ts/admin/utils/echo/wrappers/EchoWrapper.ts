@@ -32,7 +32,7 @@ class EchoWrapper {
      * @memberof EchoWrapper
      */
     public get connectionStatus(): EchoConnectionStates {
-        return this.connector.pusher.connection.state;
+        return this.connector.pusher.connection.state || 'unavailable';
     }
 
     /**
