@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PusherChannel } from 'laravel-echo/dist/channel';
 
-import ChannelWrapper from '@admin/utils/echo/wrappers/ChannelWrapper';
+import ChannelWrapper, { ListenCallback } from '@admin/utils/echo/wrappers/ChannelWrapper';
 import { EchoContext, PusherChannelContext } from '@admin/utils/echo/context';
 
 interface IChannelProps extends React.PropsWithChildren {
@@ -26,7 +26,20 @@ const Channel: React.ForwardRefRenderFunction<IChannelHandle, IChannelProps> = (
 
     React.useImperativeHandle(ref, () => ({
         channel: pusherChannel
-    }));
+    }), [pusherChannel]);
+
+    React.useEffect(() => {
+        const callback: ListenCallback = ({ state, event }) => {
+            if (state === 'listening' || state === 'stopListening')
+                logger.debug(`Channel ${pusherChannel.name} is ${state === 'listening' ? 'listening' : 'no longer listening'} for '${event}' events`);
+        }
+
+        pusherChannel.attachListener(callback);
+
+        return () => {
+            pusherChannel.detachListener(callback);
+        }
+    }, [pusherChannel]);
 
     return (
         <PusherChannelContext.Provider value={{ channel: pusherChannel }}>

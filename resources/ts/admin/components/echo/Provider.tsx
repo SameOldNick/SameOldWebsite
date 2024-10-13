@@ -20,11 +20,17 @@ const Provider: React.FC<IProviderEchoProps> = ({ factory, children }) => {
 
     if (!echo) {
         logger.warn('The Echo functionality is disabled.');
-        
+
         return (
             <>{children}</>
         );
     }
+
+    React.useEffect(() => {
+        echo.onConnectionStatesUpdated((state) => {
+            logger.info(`Echo connection state updated: ${state}`);
+        });
+    }, [echo]);
 
     return (
         <>
