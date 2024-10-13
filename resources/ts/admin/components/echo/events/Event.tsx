@@ -21,15 +21,15 @@ function Event<TEventData extends object = any>({ event, callback, whisper = fal
 
     React.useEffect(() => {
         if (whisper)
-            channel.channel.listenForWhisper(event, onEvent);
+            channel.listenForWhisper(event, onEvent);
         else
-            channel.channel.listen(event, onEvent);
+            channel.listen(event, onEvent);
 
         return () => {
             if (whisper)
-                channel.channel.stopListeningForWhisper(event, onEvent);
+                channel.stopListeningForWhisper(event, onEvent);
             else
-                channel.channel.stopListening(event, onEvent);
+                channel.stopListening(event, onEvent);
         };
     }, [channel, event, whisper, callback]);
 
