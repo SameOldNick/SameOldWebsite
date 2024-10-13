@@ -34,10 +34,10 @@ const Channel: React.ForwardRefRenderFunction<IChannelHandle, IChannelProps> = (
                 logger.debug(`Channel ${pusherChannel.name} is ${state === 'listening' ? 'listening' : 'no longer listening'} for '${event}' events`);
         }
 
-        pusherChannel.attachListener(callback);
+        pusherChannel.registerChannelListener(callback);
 
         return () => {
-            pusherChannel.detachListener(callback);
+            pusherChannel.unregisterChannelListener(callback);
         }
     }, [pusherChannel]);
 
