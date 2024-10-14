@@ -26,7 +26,7 @@ export interface INotificationFilters {
 export const all = async (filters: INotificationFilters = {}) => {
     const response = await createAuthRequest().get<INotification[]>('/user/notifications', filters);
 
-    return  response.data;
+    return response.data;
 }
 
 /**
@@ -77,7 +77,7 @@ export const markRead = async (notification: string) => {
  * @returns INotification
  */
 export const markUnread = async (notification: string) => {
-    const response = await createAuthRequest().post<INotification>(`/user/notifications/${notification}/read`, {});
+    const response = await createAuthRequest().post<INotification>(`/user/notifications/${notification}/unread`, {});
 
     return response.data;
 }
