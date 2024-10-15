@@ -1,7 +1,6 @@
 import React from 'react';
 import { Nav, Navbar } from 'reactstrap';
 
-import Messages from '@admin/layouts/admin/topbar/Messages';
 import Search from '@admin/layouts/admin/topbar/SearchDropdown';
 import SearchForm from '@admin/layouts/admin/topbar/SearchForm';
 import User from '@admin/layouts/admin/topbar/User';
@@ -33,9 +32,6 @@ const Topbar: React.FC<TopbarProps> = ({ }) => {
                 <Nav navbar className='ms-auto'>
                     {/* Nav Item - Search Dropdown (Visible Only XS) */}
                     <Search />
-
-                    {/* Nav Item - Messages */}
-                    <Messages />
 
                     {/* Nav Item - Alerts */}
                     <NotificationsIcon />
