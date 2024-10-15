@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Notifications\Alert;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\Alert;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 
 class SendAlertCommand extends Command
 {
@@ -44,13 +44,13 @@ class SendAlertCommand extends Command
 
         $possibleColors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
 
-        if (!in_array($color, $possibleColors)) {
+        if (! in_array($color, $possibleColors)) {
             $this->error(sprintf('Color must be one of the following: %s', implode(', ', $possibleColors)));
 
             return 1;
         }
 
-        if ($link && !Str::isUrl($link)) {
+        if ($link && ! Str::isUrl($link)) {
             $this->error(sprintf("The url '%s' is invalid.", $link));
 
             return 1;
@@ -80,7 +80,7 @@ class SendAlertCommand extends Command
     {
         if ($this->option('all-users')) {
             return User::all();
-        } else if ($this->option('user')) {
+        } elseif ($this->option('user')) {
             $user = User::firstWhere('uuid', $this->option('user'));
 
             if (! $user) {
@@ -90,10 +90,10 @@ class SendAlertCommand extends Command
             }
 
             return collect([$user]);
-        } else if ($this->option('role')) {
+        } elseif ($this->option('role')) {
             $role = Role::firstWhere('role', $this->option('role'));
 
-            if (!$role) {
+            if (! $role) {
                 $this->error(sprintf('The role "%s" could not be found.', $this->option('role')));
 
                 exit(1);

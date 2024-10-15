@@ -6,7 +6,6 @@ use App\Components\Websockets\Notifications\BroadcastNotification;
 use App\Models\User;
 use DateTimeInterface;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Support\Str;
 
 class Alert extends BroadcastNotification
 {
@@ -27,12 +26,6 @@ class Alert extends BroadcastNotification
 
     /**
      * Creates a new Alert notification.
-     *
-     * @param User $user
-     * @param string $color
-     * @param string $message
-     * @param string|null $link
-     * @param DateTimeInterface|null $dateTime
      */
     public function __construct(
         public readonly User $user,
@@ -55,7 +48,7 @@ class Alert extends BroadcastNotification
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function via(object $notifiable): array
     {
@@ -97,10 +90,6 @@ class Alert extends BroadcastNotification
     /**
      * Creates an Alert notification
      *
-     * @param string $color
-     * @param string $message
-     * @param string|null $link
-     * @param DateTimeInterface|null $dateTime
      * @return static
      */
     public static function create(string $color, string $message, ?string $link = null, ?DateTimeInterface $dateTime = null)
