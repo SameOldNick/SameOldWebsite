@@ -88,7 +88,7 @@ class NotificationFactory extends Factory
     {
         $types = ! is_array($types) ? [$types] : $types;
 
-        return $this->state(fn () => [
+        return $this->state(fn() => [
             'type' => $this->faker->randomElement($types),
         ]);
     }
@@ -100,7 +100,7 @@ class NotificationFactory extends Factory
      */
     public function read()
     {
-        return $this->state(fn () => [
+        return $this->state(fn() => [
             'read_at' => $this->faker->dateTime(),
         ]);
     }
@@ -115,7 +115,23 @@ class NotificationFactory extends Factory
         return $this->state(['read_at' => null]);
     }
 
-
+    /**
+     * Creates a random message notification
+     *
+     * @return static
+     */
+    public function alertNotification()
+    {
+        return $this->types('cffa9651-88f5-4247-abae-63df928e34b7')->state([
+            'data' => json_encode([
+                'dateTime' => $this->faker->dateTime(),
+                'id' => $this->faker->uuid,
+                'color' => $this->faker->randomElement(['info', 'warning', 'error', 'success']),
+                'message' => $this->faker->paragraphs(3, true),
+                'link' => $this->faker->url(),
+            ]),
+        ]);
+    }
 
     /**
      * Creates a random security alert notification
@@ -161,7 +177,7 @@ class NotificationFactory extends Factory
     {
         $count = $this->faker->numberBetween($min, $max);
 
-        return array_map(fn () => $this->generateAddress(), range(1, $count));
+        return array_map(fn() => $this->generateAddress(), range(1, $count));
     }
 
     /**

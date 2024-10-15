@@ -15,6 +15,7 @@ class NotificationSeeder extends Seeder
     {
         $users = User::all();
 
+        Notification::factory()->count(20)->notifiables($users->all())->alertNotification()->create();
         Notification::factory()->count(20)->notifiables($users->all())->securityAlert()->create();
     }
 }
