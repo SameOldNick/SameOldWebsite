@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Col, Form, Input, Label, ListGroup, Row } from 'reactstrap';
-import { FaSync } from 'react-icons/fa';
+import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Label, ListGroup, Row } from 'reactstrap';
+import { FaEnvelope, FaEnvelopeOpen, FaSync, FaToolbox } from 'react-icons/fa';
 import { connect, ConnectedProps } from 'react-redux';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -24,6 +24,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
     const [sortBy, setSortBy] = React.useState('newest_oldest');
     const [show, setShow] = React.useState('both');
     const [selected, setSelected] = React.useState<string[]>([]);
+    const [showDropdown, setShowDropdown] = React.useState(false);
 
     const refresh = React.useCallback(() => {
         fetchFromApi();
@@ -101,6 +102,43 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
         setSelected([]);
     }, []);
 
+    const markNotifications = React.useCallback(async (as: 'read' | 'unread', uuids: string[]) => {
+        try {
+            for (const uuid of uuids) {
+                if (as === 'read')
+                    await markRead(uuid);
+                else
+                    await markUnread(uuid);
+            }
+
+            await withReactContent(Swal).fire({
+                icon: 'success',
+                title: 'Updated',
+                text: `The notifications were marked as ${as}.`,
+            });
+        } catch (err) {
+            const message = createErrorHandler().handle(err);
+
+            await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `An error occurred: ${message}\nPlease try again.`,
+            });
+        }
+    }, []);
+
+    const handleMarkReadClicked = React.useCallback(async () => {
+        await markNotifications('read', selected);
+
+        refresh();
+    }, [selected, refresh]);
+
+    const handleMarkUnreadClicked = React.useCallback(async () => {
+        await markNotifications('unread', selected);
+
+        refresh();
+    }, [selected, refresh]);
+
     return (
         <>
             <Row>
@@ -109,9 +147,26 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
                         <Button color='primary' className='me-1' disabled={selected.length === notifications.length} onClick={handleSelectAllClicked}>
                             Select All
                         </Button>
-                        <Button color='primary' disabled={selected.length === 0} onClick={handleSelectNoneClicked}>
+                        <Button color='primary' className='me-1' disabled={selected.length === 0} onClick={handleSelectNoneClicked}>
                             Select None
                         </Button>
+
+                        {selected.length > 0 && (
+                            <Dropdown group toggle={() => setShowDropdown((prev) => !prev)} isOpen={showDropdown}>
+                                <DropdownToggle caret color='primary'>
+                                    <FaToolbox />{' '}
+                                    Actions
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem onClick={handleMarkReadClicked}>
+                                        <FaEnvelopeOpen />{' '}Mark Read
+                                    </DropdownItem>
+                                    <DropdownItem onClick={handleMarkUnreadClicked}>
+                                        <FaEnvelope />{' '}Mark Unread
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        )}
                     </div>
                     <div className="text-start text-md-end">
                         <Form className="row row-cols-lg-auto g-3" onSubmit={handleUpdateFormSubmitted}>
