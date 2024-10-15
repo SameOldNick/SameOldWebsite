@@ -39,7 +39,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
                     <div>
                         <strong>{message}</strong>
                         <br />
-                        <small className="text-muted">Sent: {dateTime.toRelative()}</small>
+                        <small className="text-muted" title={dateTime.toLocaleString(DateTime.DATETIME_FULL)}>Sent: {dateTime.toRelative()}</small>
                     </div>
                 </div>
                 <div className='d-flex gap-2'>
