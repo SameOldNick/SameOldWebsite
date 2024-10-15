@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Notifications;
+
+use App\Components\Websockets\Notifications\BroadcastNotification;
+use App\Models\User;
+use DateTimeInterface;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Support\Str;
+
+class Alert extends BroadcastNotification
+{
+    /**
+     * When notification was created.
+     */
+    public readonly DateTimeInterface $dateTime;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected string $broadcastAs = 'Alert';
+
+    /**
+     * {@inheritDoc}
+     */
+    protected string $broadcastType = 'cffa9651-88f5-4247-abae-63df928e34b7';
+
+    /**
+     * Creates a new Alert notification.
+     *
+     * @param User $user
+     * @param string $color
+     * @param string $message
+     * @param string|null $link
+     * @param DateTimeInterface|null $dateTime
+     */
+    public function __construct(
+        public readonly User $user,
+        public readonly string $color,
+        public readonly string $message,
+        public readonly ?string $link = null,
+        ?DateTimeInterface $dateTime = null
+    ) {
+        $this->dateTime = $dateTime ?? now();
+    }
+
+    /**
+     * Gets the type to store in the 'type' column in the database table.
+     *
+     * @return string
+     */
+    public function databaseType()
+    {
+        return $this->broadcastType();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function via(object $notifiable): array
+    {
+        return ['broadcast', 'database'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function broadcastOn()
+    {
+        return new PrivateChannel("alerts.{$this->user->uuid}");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toBroadcast(object $notifiable): array
+    {
+        return $this->toArray($notifiable);
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(object $notifiable): array
+    {
+        return [
+            'dateTime' => $this->dateTime,
+            'id' => $this->id,
+            'color' => $this->color,
+            'message' => $this->message,
+            'link' => $this->link,
+        ];
+    }
+
+    /**
+     * Creates an Alert notification
+     *
+     * @param string $color
+     * @param string $message
+     * @param string|null $link
+     * @param DateTimeInterface|null $dateTime
+     * @return static
+     */
+    public static function create(string $color, string $message, ?string $link = null, ?DateTimeInterface $dateTime = null)
+    {
+        return app(static::class, [
+            'color' => $color,
+            'message' => $message,
+            'link' => $link,
+            'dateTime' => $dateTime,
+        ]);
+    }
+}
