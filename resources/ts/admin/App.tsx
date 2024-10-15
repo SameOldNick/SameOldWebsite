@@ -10,6 +10,7 @@ import EchoProvider from '@admin/components/echo/Provider';
 import storeFactory from '@admin/store/index';
 import echoFactory from '@admin/utils/echo/echo';
 import { setStore } from '@admin/utils/api/factories';
+import NotificationProvider from './components/notifications/NotificationProvider';
 
 interface IProps {
 
