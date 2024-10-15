@@ -60,7 +60,7 @@ class Alert extends BroadcastNotification
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("alerts.{$this->user->uuid}");
+        return new PrivateChannel("users.{$this->user->uuid}");
     }
 
     /**

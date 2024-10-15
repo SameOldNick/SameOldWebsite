@@ -35,7 +35,7 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
             return;
         }
 
-        const channel = window.EchoWrapper.private(`alerts.${account.user.user.uuid}`);
+        const channel = window.EchoWrapper.private(`users.${account.user.user.uuid}`);
 
         channel.listen('.Alert', onAlert);
 
