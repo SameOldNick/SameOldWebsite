@@ -4,6 +4,7 @@ import { Button, ListGroupItem } from 'reactstrap';
 import { IStoredNotification } from '../hoc/WithNotifications';
 
 import { DateTime } from 'luxon';
+import { FaEnvelope, FaEnvelopeOpen } from 'react-icons/fa';
 
 interface INotificationItem {
     uuid: string;
@@ -48,7 +49,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
                         </Button>
                     )}
                     <Button size="sm" color={readAt ? "secondary" : "primary"} onClick={onMarkClicked}>
-                        {readAt ? "Mark as Unread" : "Mark as Read"}
+                        {readAt ? <FaEnvelope /> : <FaEnvelopeOpen />}{' '}
+                        {readAt ? "Mark Unread" : "Mark Read"}
                     </Button>
                 </div>
             </ListGroupItem>
