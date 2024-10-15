@@ -179,10 +179,8 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
     }, []);
 
     const isConnected = React.useMemo(() => {
-        const echo = jobChannelRef.current?.channel.echo || processChannelRef.current?.channel.echo;
-
-        return echo && echo.connectionStatus === 'connected' ? true : false;
-    }, [jobChannelRef, processChannelRef]);
+        return window.EchoWrapper?.connectionStatus === 'connected' ? true : false;
+    }, [window.EchoWrapper]);
 
     return (
         <>
