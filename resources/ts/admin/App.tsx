@@ -26,12 +26,13 @@ const App: React.FC<IProps> = ({ }) => {
 
             <Provider store={store}>
                 <EchoProvider factory={echoFactory}>
-                    
-                    <IconContext.Provider value={{ className: 'react-icons' }}>
-                        <Router>
-                            <Pages />
-                        </Router>
-                    </IconContext.Provider>
+                    <NotificationProvider delay={50000}>
+                        <IconContext.Provider value={{ className: 'react-icons' }}>
+                            <Router>
+                                <Pages />
+                            </Router>
+                        </IconContext.Provider>
+                    </NotificationProvider>
                 </EchoProvider>
             </Provider>
 
