@@ -1,78 +1,78 @@
 .page-blog {
-	.blog-articles {
-		.blog-article-link {
-			text-decoration: none;
-			color: inherit;
-		}
+    .blog-articles {
+        .blog-article-link {
+            text-decoration: none;
+            color: inherit;
+        }
 
-		.blog-article {
-			margin-bottom: 3rem;
+        .blog-article {
+            margin-bottom: 3rem;
 
-			.blog-article-title {
+            .blog-article-title {
                 @extend .text-underline-on-hover;
 
-				color: $dark;
-				font-weight: bold;
-				margin-bottom: 0.5rem;
-			}
+                color: $dark;
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+            }
 
-			.blog-article-img {
-				display: inline-block;
-				overflow: hidden;
-				border-radius: $border-radius;
+            .blog-article-img {
+                display: flex;
+                justify-content: center;
+                overflow: hidden;
+                border-radius: $border-radius;
 
-				img {
-					width: 100%;
-					height: auto;
-					margin-bottom: 1rem;
-					object-fit: cover;
-					transition: all .3s ease;
-					transform-origin: 50% 50%;
-					border-radius: $border-radius;
+                img {
+                    width: 100%;
+                    height: auto;
+                    margin-bottom: 1rem;
+                    object-fit: cover;
+                    transition: all .3s ease;
+                    transform-origin: 50% 50%;
+                    border-radius: $border-radius;
 
-					&:hover {
-						transform: scale(1.2);
-					}
-				}
-			}
+                    &:hover {
+                        transform: scale(1.2);
+                    }
+                }
+            }
 
-			.blog-article-read-more {
-				display: flex;
-				flex-direction: row;
-				justify-content: end;
-				gap: 0.25rem;
+            .blog-article-read-more {
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+                gap: 0.25rem;
 
-				p {
-					color: $dark;
-					margin-bottom: 0 !important;
-				}
-			}
+                p {
+                    color: $dark;
+                    margin-bottom: 0 !important;
+                }
+            }
 
-			&:hover {
-				.blog-article-title {
-					//text-decoration: underline;
+            &:hover {
+                .blog-article-title {
+                    //text-decoration: underline;
                     text-decoration-color: rgba($dark, 1);
-				}
+                }
 
-				.blog-article-read-more p {
-					font-weight: bold;
-				}
-			}
-		}
-	}
+                .blog-article-read-more p {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 
-	.blog-pagination {
-		display: flex;
-		justify-content: space-between;
+    .blog-pagination {
+        display: flex;
+        justify-content: space-between;
 
-		>a {
-			text-decoration: none;
+        >a {
+            text-decoration: none;
             color: $dark;
 
-			&:hover {
-				font-weight: bold;
-			}
-		}
-	}
+            &:hover {
+                font-weight: bold;
+            }
+        }
+    }
 }
-

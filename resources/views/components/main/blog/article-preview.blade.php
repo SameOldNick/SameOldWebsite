@@ -21,7 +21,9 @@
 
             @isset($article->mainImage)
             <div class="blog-article-img">
-                <img src="{{ $article->mainImage->file->presenter()->publicUrl() }}" alt="{{ $article->mainImage->alternativeText }}">
+                <div>
+                    <img src="{{ $article->mainImage->file->presenter()->publicUrl() }}" alt="{{ $article->mainImage->alternativeText }}">
+                </div>
             </div>
             @endisset
 
