@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\Contact\ContactSubmissionConfirmed;
+use App\Models\User;
 use App\Notifications\Alert;
 use App\Traits\Support\NotifiesRoles;
 use Illuminate\Auth\Events\Failed;
@@ -29,7 +30,8 @@ class NotificationListeners
     {
         $message = $event->message;
 
-        $this->notifyRoles(['receive_contact_messages'], Alert::create(
+        $this->notifyRoles(['receive_contact_messages'], fn(User $user) => new Alert(
+            $user,
             'info',
             "A contact message was sent by '{$message->email}'.",
             '/admin/contact/messages'
@@ -47,7 +49,7 @@ class NotificationListeners
             sprintf("Somebody with IP address '%s' logged in to your account.", $ipAddress) :
             'Somebody logged in to your account.';
 
-        Notification::send($event->user, Alert::create('info', $message));
+        Notification::send($event->user, new Alert($event->user, 'info', $message));
     }
 
     /**
@@ -61,7 +63,7 @@ class NotificationListeners
             sprintf("Somebody with IP address '%s' tried to login to your account.", $ipAddress) :
             'Somebody tried to login to your account.';
 
-        Notification::send($event->user, Alert::create('info', $message));
+        Notification::send($event->user, new Alert($event->user, 'info', $message));
     }
 
     /**

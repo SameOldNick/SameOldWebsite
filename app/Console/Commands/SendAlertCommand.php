@@ -57,7 +57,8 @@ class SendAlertCommand extends Command
         }
 
         foreach ($users as $user) {
-            $notification = Alert::create(
+            $notification = new Alert(
+                $user,
                 $color,
                 $message,
                 $link

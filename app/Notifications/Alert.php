@@ -86,19 +86,4 @@ class Alert extends BroadcastNotification
             'link' => $this->link,
         ];
     }
-
-    /**
-     * Creates an Alert notification
-     *
-     * @return static
-     */
-    public static function create(string $color, string $message, ?string $link = null, ?DateTimeInterface $dateTime = null)
-    {
-        return app(static::class, [
-            'color' => $color,
-            'message' => $message,
-            'link' => $link,
-            'dateTime' => $dateTime,
-        ]);
-    }
 }
