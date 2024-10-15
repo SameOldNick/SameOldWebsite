@@ -33,9 +33,6 @@ const Topbar: React.FC<TopbarProps> = ({ }) => {
                     {/* Nav Item - Search Dropdown (Visible Only XS) */}
                     <Search />
 
-                    {/* Nav Item - Alerts */}
-                    {/*<Alerts />*/}
-
                     {/* Nav Item - Messages */}
                     <Messages />
 
