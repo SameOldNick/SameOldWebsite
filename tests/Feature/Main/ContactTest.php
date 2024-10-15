@@ -6,11 +6,10 @@ use App\Components\Settings\Facades\PageSettings;
 use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Mail\ConfirmMessage;
-use App\Mail\Contacted;
 use App\Mail\ContactedConfirmation;
 use App\Models\ContactMessage;
 use App\Models\User;
-use App\Notifications\MessageNotification;
+use App\Notifications\Alert;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
@@ -105,14 +104,14 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->assertGuest()
-                ->post(route('contact.process'), $data);
+            ->assertGuest()
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Please check your e-mail for further instructions.'));
+            ->assertViewHas('success', fn($success) => $success === __('Please check your e-mail for further instructions.'));
 
-        Mail::assertSent(ConfirmMessage::class, fn (ConfirmMessage $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ConfirmMessage::class, fn(ConfirmMessage $mail) => $mail->hasTo($data['email']));
     }
 
     /**
@@ -137,14 +136,14 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->actingAs($this->user)
-                ->post(route('contact.process'), $data);
+            ->actingAs($this->user)
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Please check your e-mail for further instructions.'));
+            ->assertViewHas('success', fn($success) => $success === __('Please check your e-mail for further instructions.'));
 
-        Mail::assertSent(ConfirmMessage::class, fn (ConfirmMessage $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ConfirmMessage::class, fn(ConfirmMessage $mail) => $mail->hasTo($data['email']));
     }
 
     /**
@@ -169,14 +168,14 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->assertGuest()
-                ->post(route('contact.process'), $data);
+            ->assertGuest()
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Please check your e-mail for further instructions.'));
+            ->assertViewHas('success', fn($success) => $success === __('Please check your e-mail for further instructions.'));
 
-        Mail::assertSent(ConfirmMessage::class, fn (ConfirmMessage $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ConfirmMessage::class, fn(ConfirmMessage $mail) => $mail->hasTo($data['email']));
     }
 
     /**
@@ -203,14 +202,16 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->actingAs($this->user)
-                ->post(route('contact.process'), $data);
+            ->actingAs($this->user)
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
+            ->assertViewHas('success', fn($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
-        Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ContactedConfirmation::class, fn(ContactedConfirmation $mail) => $mail->hasTo($data['email']));
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, 'A contact message was sent'));
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, $data['email']));
     }
 
     /**
@@ -235,14 +236,14 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->assertGuest()
-                ->post(route('contact.process'), $data);
+            ->assertGuest()
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Please check your e-mail for further instructions.'));
+            ->assertViewHas('success', fn($success) => $success === __('Please check your e-mail for further instructions.'));
 
-        Mail::assertSent(ConfirmMessage::class, fn (ConfirmMessage $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ConfirmMessage::class, fn(ConfirmMessage $mail) => $mail->hasTo($data['email']));
     }
 
     /**
@@ -269,14 +270,14 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->actingAs($user)
-                ->post(route('contact.process'), $data);
+            ->actingAs($user)
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Please check your e-mail for further instructions.'));
+            ->assertViewHas('success', fn($success) => $success === __('Please check your e-mail for further instructions.'));
 
-        Mail::assertSent(ConfirmMessage::class, fn (ConfirmMessage $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ConfirmMessage::class, fn(ConfirmMessage $mail) => $mail->hasTo($data['email']));
     }
 
     /**
@@ -303,14 +304,17 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->actingAs($this->user)
-                ->post(route('contact.process'), $data);
+            ->actingAs($this->user)
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
+            ->assertViewHas('success', fn($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
-        Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ContactedConfirmation::class, fn(ContactedConfirmation $mail) => $mail->hasTo($data['email']));
+
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, 'A contact message was sent'));
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, $data['email']));
     }
 
     /**
@@ -336,14 +340,17 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->assertGuest()
-                ->post(route('contact.process'), $data);
+            ->assertGuest()
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
+            ->assertViewHas('success', fn($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
-        Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ContactedConfirmation::class, fn(ContactedConfirmation $mail) => $mail->hasTo($data['email']));
+
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, 'A contact message was sent'));
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, $data['email']));
     }
 
     /**
@@ -369,14 +376,17 @@ class ContactTest extends TestCase
 
         $response =
             $this
-                ->actingAs($this->user)
-                ->post(route('contact.process'), $data);
+            ->actingAs($this->user)
+            ->post(route('contact.process'), $data);
 
         $response
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
+            ->assertViewHas('success', fn($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
-        Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
+        Mail::assertSent(ContactedConfirmation::class, fn(ContactedConfirmation $mail) => $mail->hasTo($data['email']));
+
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, 'A contact message was sent'));
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, $data['email']));
     }
 
     /**
@@ -405,9 +415,9 @@ class ContactTest extends TestCase
             ->assertGuest()
             ->post(route('contact.process'), $data)
             ->assertSuccessful()
-            ->assertViewHas('success', fn ($success) => $success === __('Please check your e-mail for further instructions.'));
+            ->assertViewHas('success', fn($success) => $success === __('Please check your e-mail for further instructions.'));
 
-        [$mailable] = Mail::sent(ConfirmMessage::class, fn (ConfirmMessage $mailable) => $mailable->hasTo($data['email']));
+        [$mailable] = Mail::sent(ConfirmMessage::class, fn(ConfirmMessage $mailable) => $mailable->hasTo($data['email']));
 
         $content = $mailable->content();
 
@@ -417,6 +427,8 @@ class ContactTest extends TestCase
             ->get($content->with['url'])
             ->assertSuccessful();
 
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, 'A contact message was sent'));
+        Notification::assertSentTo($this->admin, Alert::class, fn($notification) => str_contains($notification->message, $data['email']));
     }
 
     /**
