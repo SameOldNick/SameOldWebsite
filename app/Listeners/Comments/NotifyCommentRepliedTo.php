@@ -21,12 +21,10 @@ class NotifyCommentRepliedTo
     }
 
     /**
-     * Handle the event.
-     */
-    public function handle(CommentCreated $event): void {}
-
-    /**
-     * Handle the event.
+     * Handle CommentCreated event
+     *
+     * @param CommentCreated $event
+     * @return void
      */
     public function handleCommentCreated(CommentCreated $event): void
     {
@@ -35,6 +33,12 @@ class NotifyCommentRepliedTo
         }
     }
 
+    /**
+     * Handle CommentStatusChanged event
+     *
+     * @param CommentStatusChanged $event
+     * @return void
+     */
     public function handleCommentStatusChanged(CommentStatusChanged $event): void
     {
         if ($this->commentIsVisible($event->comment)) {
@@ -55,6 +59,12 @@ class NotifyCommentRepliedTo
         ];
     }
 
+    /**
+     * Checks if comment is visible
+     *
+     * @param Comment $comment
+     * @return boolean
+     */
     protected function commentIsVisible(Comment $comment)
     {
         /**
@@ -63,6 +73,12 @@ class NotifyCommentRepliedTo
         return in_array($comment->status, [CommentStatus::Approved->value, CommentStatus::Locked->value]);
     }
 
+    /**
+     * Sends notification
+     *
+     * @param Comment $comment
+     * @return void
+     */
     protected function sendNotification(Comment $comment)
     {
         Notification::send($this->getNotifiables($comment), new CommentPosted($comment));

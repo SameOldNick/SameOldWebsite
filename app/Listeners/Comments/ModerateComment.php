@@ -22,14 +22,11 @@ class ModerateComment
     }
 
     /**
-     * Handle the event.
+     * Handles CommentCreated event
+     *
+     * @param CommentCreated $event
+     * @return void
      */
-    public function handle(CommentCreated $event): void
-    {
-        $comment = $event->comment;
-
-    }
-
     public function handleCommentCreated(CommentCreated $event): void
     {
         /**
@@ -41,6 +38,12 @@ class ModerateComment
         }
     }
 
+    /**
+     * Handles CommentStatusChanged event
+     *
+     * @param CommentStatusChanged $event
+     * @return void
+     */
     public function handleCommentStatusChanged(CommentStatusChanged $event): void
     {
         // Don't allow infinite loop from dispatching event here
@@ -67,6 +70,12 @@ class ModerateComment
         ];
     }
 
+    /**
+     * Moderates a comment
+     *
+     * @param Comment $comment
+     * @return void
+     */
     protected function moderate(Comment $comment)
     {
         // Run comment through moderator

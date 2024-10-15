@@ -20,6 +20,12 @@ class NotifyArticleAuthorCommentPosted
         //
     }
 
+    /**
+     * Handles CommentCreated event
+     *
+     * @param CommentCreated $event
+     * @return void
+     */
     public function handleCommentCreated(CommentCreated $event): void
     {
         if ($this->commentIsVisible($event->comment)) {
@@ -27,6 +33,12 @@ class NotifyArticleAuthorCommentPosted
         }
     }
 
+    /**
+     * Handles CommentStatusChanged event
+     *
+     * @param CommentStatusChanged $event
+     * @return void
+     */
     public function handleCommentStatusChanged(CommentStatusChanged $event): void
     {
         if ($this->commentIsVisible($event->comment)) {
@@ -34,6 +46,12 @@ class NotifyArticleAuthorCommentPosted
         }
     }
 
+    /**
+     * Checks if comment is visible
+     *
+     * @param Comment $comment
+     * @return boolean
+     */
     protected function commentIsVisible(Comment $comment)
     {
         /**
@@ -42,6 +60,12 @@ class NotifyArticleAuthorCommentPosted
         return in_array($comment->status, [CommentStatus::Approved->value, CommentStatus::Locked->value]);
     }
 
+    /**
+     * Sends notification
+     *
+     * @param Comment $comment
+     * @return void
+     */
     protected function sendNotification(Comment $comment)
     {
         $author = $comment->article->post->person;
