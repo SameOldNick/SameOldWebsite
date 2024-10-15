@@ -6,12 +6,12 @@ import { ConnectedProps, connect } from 'react-redux';
 import classNames from 'classnames';
 import md5 from 'blueimp-md5';
 
-import { fetchMessages } from '@admin/store/slices/notifications';
+import { fetchMessages } from '@admin/store/slices/messages';
 
 import user from '@images/user.png';
 
 const connector = connect(
-    ({ notifications: { messages } }: RootState) => ({ stored: messages }),
+    ({ messages: { messages } }: RootState) => ({ stored: messages }),
     { fetchMessages }
 );
 

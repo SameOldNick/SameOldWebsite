@@ -36,6 +36,7 @@ const Topbar: React.FC<TopbarProps> = ({ }) => {
 
                     {/* Nav Item - Messages */}
                     <Messages />
+
                     {/* Nav Item - Alerts */}
                     <NotificationsIcon />
 
