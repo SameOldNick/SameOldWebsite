@@ -9,6 +9,7 @@ import MobileNavbar from './topbar/mobile-navbar/MobileNavbar';
 import MobileNavbarToggle from './topbar/mobile-navbar/MobileNavbarToggle';
 
 import { createMainMenu } from '@admin/utils/menus/menus';
+import NotificationsIcon from './topbar/NotificationsIcon';
 
 interface TopbarProps {
 
@@ -35,6 +36,8 @@ const Topbar: React.FC<TopbarProps> = ({ }) => {
 
                     {/* Nav Item - Messages */}
                     <Messages />
+                    {/* Nav Item - Alerts */}
+                    <NotificationsIcon />
 
                     <div className="topbar-divider d-none d-sm-block"></div>
 
