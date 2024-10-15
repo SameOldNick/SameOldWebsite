@@ -115,25 +115,7 @@ class NotificationFactory extends Factory
         return $this->state(['read_at' => null]);
     }
 
-    /**
-     * Creates a random message notification
-     *
-     * @return static
-     */
-    public function messageNotification()
-    {
-        return $this->types('6414fd8c-847a-492b-a919-a5fc539456e8')->state([
-            'data' => json_encode([
-                'addresses' => $this->generateAddressGroup(),
-                'subject' => $this->faker->sentence(),
-                'view' => [
-                    'html' => $this->faker->randomHtml(),
-                    'text' => $this->faker->paragraphs(3, true),
-                ],
-                'type' => $this->faker->randomElement([\App\Mail\Contacted::class, \App\Mail\ConfirmMessage::class]),
-            ]),
-        ]);
-    }
+
 
     /**
      * Creates a random security alert notification

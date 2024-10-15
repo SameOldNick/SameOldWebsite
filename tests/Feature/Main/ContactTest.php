@@ -211,7 +211,6 @@ class ContactTest extends TestCase
             ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
         Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
-        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
@@ -312,7 +311,6 @@ class ContactTest extends TestCase
             ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
         Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
-        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
@@ -346,7 +344,6 @@ class ContactTest extends TestCase
             ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
         Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
-        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
@@ -380,7 +377,6 @@ class ContactTest extends TestCase
             ->assertViewHas('success', fn ($success) => $success === __('Thank you for your message! You will receive a reply shortly.'));
 
         Mail::assertSent(ContactedConfirmation::class, fn (ContactedConfirmation $mail) => $mail->hasTo($data['email']));
-        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
@@ -421,7 +417,6 @@ class ContactTest extends TestCase
             ->get($content->with['url'])
             ->assertSuccessful();
 
-        Notification::assertSentTo($this->admin, MessageNotification::class, fn ($notification) => $notification->mailable instanceof Contacted);
     }
 
     /**
