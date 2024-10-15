@@ -39,6 +39,8 @@ import Technologies from './protected/homepage/Technologies';
 import AllBackups from '@admin/pages/protected/backups/All';
 import BackupSettings from '@admin/pages/protected/backups/Settings';
 
+import Notifications from './protected/notifications/Notifications';
+
 const Pages: React.FC = () => {
     return (
         <Routes>
@@ -48,6 +50,7 @@ const Pages: React.FC = () => {
                 <Route element={<Authenticated errorElement={<FourZeroThree />} />}>
                     <Route element={<Layout />}>
                         <Route path='dashboard' element={<Dashboard />} />
+                        <Route path='notifications' element={<Notifications />} />
 
                         <Route path='homepage'>
                             <Route path='profile' element={<Profile />} />
