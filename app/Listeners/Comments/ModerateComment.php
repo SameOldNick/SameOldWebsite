@@ -23,9 +23,6 @@ class ModerateComment
 
     /**
      * Handles CommentCreated event
-     *
-     * @param CommentCreated $event
-     * @return void
      */
     public function handleCommentCreated(CommentCreated $event): void
     {
@@ -40,9 +37,6 @@ class ModerateComment
 
     /**
      * Handles CommentStatusChanged event
-     *
-     * @param CommentStatusChanged $event
-     * @return void
      */
     public function handleCommentStatusChanged(CommentStatusChanged $event): void
     {
@@ -73,7 +67,6 @@ class ModerateComment
     /**
      * Moderates a comment
      *
-     * @param Comment $comment
      * @return void
      */
     protected function moderate(Comment $comment)

@@ -22,9 +22,6 @@ class NotifyCommentRepliedTo
 
     /**
      * Handle CommentCreated event
-     *
-     * @param CommentCreated $event
-     * @return void
      */
     public function handleCommentCreated(CommentCreated $event): void
     {
@@ -35,9 +32,6 @@ class NotifyCommentRepliedTo
 
     /**
      * Handle CommentStatusChanged event
-     *
-     * @param CommentStatusChanged $event
-     * @return void
      */
     public function handleCommentStatusChanged(CommentStatusChanged $event): void
     {
@@ -62,8 +56,7 @@ class NotifyCommentRepliedTo
     /**
      * Checks if comment is visible
      *
-     * @param Comment $comment
-     * @return boolean
+     * @return bool
      */
     protected function commentIsVisible(Comment $comment)
     {
@@ -76,7 +69,6 @@ class NotifyCommentRepliedTo
     /**
      * Sends notification
      *
-     * @param Comment $comment
      * @return void
      */
     protected function sendNotification(Comment $comment)

@@ -22,9 +22,6 @@ class NotifyArticleAuthorCommentPosted
 
     /**
      * Handles CommentCreated event
-     *
-     * @param CommentCreated $event
-     * @return void
      */
     public function handleCommentCreated(CommentCreated $event): void
     {
@@ -35,9 +32,6 @@ class NotifyArticleAuthorCommentPosted
 
     /**
      * Handles CommentStatusChanged event
-     *
-     * @param CommentStatusChanged $event
-     * @return void
      */
     public function handleCommentStatusChanged(CommentStatusChanged $event): void
     {
@@ -49,8 +43,7 @@ class NotifyArticleAuthorCommentPosted
     /**
      * Checks if comment is visible
      *
-     * @param Comment $comment
-     * @return boolean
+     * @return bool
      */
     protected function commentIsVisible(Comment $comment)
     {
@@ -63,7 +56,6 @@ class NotifyArticleAuthorCommentPosted
     /**
      * Sends notification
      *
-     * @param Comment $comment
      * @return void
      */
     protected function sendNotification(Comment $comment)
