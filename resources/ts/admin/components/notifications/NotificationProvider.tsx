@@ -3,6 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 
 import { IAlertNotificationData } from '@admin/utils/api/models/notifications/AlertNotification';
 import notifications, { fetchFromApi } from '@admin/store/slices/notifications';
+import { EchoContext } from '@admin/utils/echo/context';
 
 const connector = connect(
     ({ account, notifications }: RootState) => ({ account, notifications }),
@@ -28,6 +29,8 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
     },
     children
 }) => {
+    const context = React.useContext(EchoContext);
+
     const loadFromEcho = React.useCallback((onAlert: (alert: IAlertNotificationData) => void) => {
         if (!account.user) {
             logger.info('No user found. Unable to load alerts from Echo.');
@@ -35,30 +38,40 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
             return;
         }
 
-        const channel = window.EchoWrapper.private(`users.${account.user.user.uuid}`);
+        if (!context) {
+            logger.info('Echo context is missing.');
+
+            return;
+        }
+
+        const channel = context.echo.private(`users.${account.user.user.uuid}`);
 
         channel.listen('.Alert', onAlert);
 
         return channel;
-    }, [account]);
+    }, [account, context]);
 
     const handleListenedAlert = React.useCallback((alert: IAlertNotificationData) => {
         setEchoNotifications(echoNotifications.concat(alert));
     }, [setEchoNotifications, echoNotifications]);
 
     React.useEffect(() => {
-        const echoChannel = loadFromEcho(handleListenedAlert);
-
         fetchFromApi();
 
         const timer = delay ? window.setInterval(fetchFromApi, delay) : undefined;
 
         return () => {
-            echoChannel?.stopListening('.Alert', handleListenedAlert);
-
             window.clearInterval(timer);
         };
-    }, [delay, loadFromEcho, fetchFromApi, handleListenedAlert])
+    }, [delay, fetchFromApi])
+
+    React.useEffect(() => {
+        const echoChannel = loadFromEcho(handleListenedAlert);
+
+        return () => {
+            echoChannel?.stopListening('.Alert', handleListenedAlert);
+        };
+    }, [loadFromEcho, handleListenedAlert])
 
     return (
         <>
