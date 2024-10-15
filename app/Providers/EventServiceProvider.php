@@ -19,6 +19,7 @@ use App\Listeners\Comments\NotifyArticleAuthorCommentPosted;
 use App\Listeners\Comments\NotifyCommentRepliedTo;
 use App\Listeners\Contact\SendConfirmMessage;
 use App\Listeners\Contact\SendContactedConfirmationMessage;
+use App\Listeners\NotificationListeners;
 use App\Listeners\RecentActivity\LogArticleCreated;
 use App\Listeners\RecentActivity\LogArticleDeleted;
 use App\Listeners\RecentActivity\LogArticlePublished;
@@ -94,6 +95,7 @@ class EventServiceProvider extends ServiceProvider
         ModerateComment::class,
         NotifyArticleAuthorCommentPosted::class,
         NotifyCommentRepliedTo::class,
+        NotificationListeners::class,
     ];
 
     /**
