@@ -19,7 +19,6 @@ use App\Listeners\Comments\NotifyArticleAuthorCommentPosted;
 use App\Listeners\Comments\NotifyCommentRepliedTo;
 use App\Listeners\Contact\SendConfirmMessage;
 use App\Listeners\Contact\SendContactedConfirmationMessage;
-use App\Listeners\Contact\SendContactedMessages;
 use App\Listeners\RecentActivity\LogArticleCreated;
 use App\Listeners\RecentActivity\LogArticleDeleted;
 use App\Listeners\RecentActivity\LogArticlePublished;
@@ -52,7 +51,6 @@ class EventServiceProvider extends ServiceProvider
             SendConfirmMessage::class,
         ],
         ContactSubmissionConfirmed::class => [
-            SendContactedMessages::class,
             SendContactedConfirmationMessage::class,
         ],
         ArticleCreated::class => [
