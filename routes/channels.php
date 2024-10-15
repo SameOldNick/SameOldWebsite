@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel(User::class, UserChannel::class);
+Broadcast::channel('users.{userId}', UserChannel::class);
 
 Broadcast::channel('jobs.{jobId}', JobChannel::class);
 Broadcast::channel('processes.{processId}', ProcessChannel::class);
