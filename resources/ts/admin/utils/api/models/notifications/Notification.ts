@@ -2,7 +2,6 @@ import { DateTime } from "luxon";
 
 export default class Notification<TType extends string, TData extends object> {
     public static readonly NOTIFICATION_TYPE_ACTIVITY = 'ce659a33-08dd-4c9c-a421-7bb54393b76d';
-    public static readonly NOTIFICATION_TYPE_MESSAGE = '6414fd8c-847a-492b-a919-a5fc539456e8';
     public static readonly NOTIFICATION_TYPE_SECURITY_ALERT = '513a8515-ae2a-47d9-9052-212b61f166b0';
     public static readonly NOTIFICATION_TYPE_ALERT = 'cffa9651-88f5-4247-abae-63df928e34b7';
 
