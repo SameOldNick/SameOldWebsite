@@ -25,13 +25,13 @@ class EchoWrapper {
     }
 
     /**
-     * Gets the status of the WebSocket
+     * Gets the state of the WebSocket
      *
      * @readonly
      * @type {EchoConnectionStates}
      * @memberof EchoWrapper
      */
-    public get connectionStatus(): EchoConnectionStates {
+    public get connectionState(): EchoConnectionStates {
         return this.connector.pusher.connection.state || 'unavailable';
     }
 

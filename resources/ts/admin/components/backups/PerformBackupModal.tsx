@@ -179,7 +179,7 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
     }, []);
 
     const isConnected = React.useMemo(() => {
-        return window.EchoWrapper?.connectionStatus === 'connected' ? true : false;
+        return window.EchoWrapper?.connectionState === 'connected' ? true : false;
     }, [window.EchoWrapper]);
 
     return (
