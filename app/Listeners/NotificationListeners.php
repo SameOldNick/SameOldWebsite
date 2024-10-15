@@ -24,9 +24,6 @@ class NotificationListeners
 
     /**
      * Handles ContactSubmissionConfirmed event
-     *
-     * @param ContactSubmissionConfirmed $event
-     * @return void
      */
     public function handleContactSubmissionConfirmed(ContactSubmissionConfirmed $event): void
     {
@@ -41,9 +38,6 @@ class NotificationListeners
 
     /**
      * Handles Login event
-     *
-     * @param Login $event
-     * @return void
      */
     public function handleAuthLogin(Login $event): void
     {
@@ -51,16 +45,13 @@ class NotificationListeners
 
         $message = $ipAddress ?
             sprintf("Somebody with IP address '%s' logged in to your account.", $ipAddress) :
-            "Somebody logged in to your account.";
+            'Somebody logged in to your account.';
 
         Notification::send($event->user, Alert::create('info', $message));
     }
 
     /**
      * Handles Failed event
-     *
-     * @param Failed $event
-     * @return void
      */
     public function handleAuthFailed(Failed $event): void
     {
@@ -68,7 +59,7 @@ class NotificationListeners
 
         $message = $ipAddress ?
             sprintf("Somebody with IP address '%s' tried to login to your account.", $ipAddress) :
-            "Somebody tried to login to your account.";
+            'Somebody tried to login to your account.';
 
         Notification::send($event->user, Alert::create('info', $message));
     }

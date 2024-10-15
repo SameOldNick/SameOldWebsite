@@ -88,7 +88,7 @@ class NotificationFactory extends Factory
     {
         $types = ! is_array($types) ? [$types] : $types;
 
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'type' => $this->faker->randomElement($types),
         ]);
     }
@@ -100,7 +100,7 @@ class NotificationFactory extends Factory
      */
     public function read()
     {
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'read_at' => $this->faker->dateTime(),
         ]);
     }
@@ -177,7 +177,7 @@ class NotificationFactory extends Factory
     {
         $count = $this->faker->numberBetween($min, $max);
 
-        return array_map(fn() => $this->generateAddress(), range(1, $count));
+        return array_map(fn () => $this->generateAddress(), range(1, $count));
     }
 
     /**
