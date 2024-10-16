@@ -17,6 +17,8 @@ return new class extends Migration
                 $table->string('address2')->nullable();
                 $table->string('city')->nullable();
                 $table->string('postal_code')->nullable();
+                // State is set if no associated row in states exists
+                $table->string('state')->nullable();
             });
         });
     }
@@ -31,6 +33,7 @@ return new class extends Migration
             $table->dropColumn('address2');
             $table->dropColumn('city');
             $table->dropColumn('postal_code');
+            $table->dropColumn('state');
         });
     }
 };

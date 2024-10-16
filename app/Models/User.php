@@ -24,6 +24,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $address1
  * @property string|null $address2
  * @property string|null $city
+ * @property string|null $state
  * @property string|null $postal_code
  * @property string|null $country_code
  * @property-read string $avatar_url
@@ -77,6 +78,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
         'address2',
         'city',
         'postal_code',
+        'state',
         'state_id',
         'country_code',
     ];
