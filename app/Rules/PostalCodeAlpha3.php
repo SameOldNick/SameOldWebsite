@@ -35,6 +35,7 @@ class PostalCodeAlpha3 extends NestedRules
             return 'bail';
         }
 
+        // Uses axlon/laravel-postal-code-validation package
         // Must be an array (seperating string with : doesn't work for some reason)
         return ['postal_code', $country->code_alpha2];
     }
