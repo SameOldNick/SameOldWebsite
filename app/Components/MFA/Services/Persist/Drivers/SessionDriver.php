@@ -75,6 +75,6 @@ class SessionDriver implements PersistServiceDriver
      */
     protected function getDefaultVerifiedExpiry()
     {
-        return $this->config['expiry'] > 0 ? Carbon::now()->addSeconds($this->config['expiry']) : Carbon::createFromTimestampUtc(0xffffffff);
+        return $this->config['expiry'] > 0 ? Carbon::now()->addSeconds($this->config['expiry']) : Carbon::createFromTimestampUtc(0xFFFFFFFF);
     }
 }
