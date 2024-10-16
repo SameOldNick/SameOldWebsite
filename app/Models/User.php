@@ -137,7 +137,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
         }
 
         // Get the roles associated with the user and extract role names
-        $userRoles = $this->roles->map(fn($role) => $role->role);
+        $userRoles = $this->roles->map(fn ($role) => $role->role);
 
         // Check if all specified roles are matched with user roles
         $matchedRoles = $userRoles->intersect($roles);
@@ -160,7 +160,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
         }
 
         // Get the roles associated with the user and extract role names
-        $userRoles = $this->roles->map(fn($role) => $role->role);
+        $userRoles = $this->roles->map(fn ($role) => $role->role);
 
         // Return true if there are any matched roles
         return $userRoles->intersect($roles)->isNotEmpty();
@@ -290,7 +290,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      */
     protected function avatarUrl(): Attribute
     {
-        return Attribute::get(fn() => $this->getAvatarUrl())->shouldCache();
+        return Attribute::get(fn () => $this->getAvatarUrl())->shouldCache();
     }
 
     /**
@@ -310,7 +310,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
                     $query->where('role', $roleName);
                 }
             } else {
-                $query->whereIn('role', array_map(fn($item) => $item instanceof Role ? $item->role : $item, (array) $roles));
+                $query->whereIn('role', array_map(fn ($item) => $item instanceof Role ? $item->role : $item, (array) $roles));
             }
         })->get();
     }
