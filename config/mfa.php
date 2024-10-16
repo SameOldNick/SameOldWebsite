@@ -6,7 +6,7 @@ return [
          * Default MFA driver.
          * Specifies the driver used for authentication. Typically, this would be a TOTP (Time-based One-Time Password) for apps like Google Authenticator.
          */
-        'driver' => 'totp',
+        'driver' => env('MFA_AUTH_DRIVER', 'totp'),
 
         /**
          * List of available MFA drivers.
@@ -23,7 +23,7 @@ return [
                  * These codes are used when the user cannot access their primary MFA method.
                  * Default: 6 backup codes.
                  */
-                'codes' => 6,
+                'codes' => env('MFA_AUTH_BACKUP_CODES', 6),
             ],
         ],
 
@@ -43,7 +43,7 @@ return [
          * Driver for persisting MFA sessions.
          * Defines how MFA session persistence is managed. The default is 'session', meaning the MFA state is stored in the session.
          */
-        'driver' => 'session',
+        'driver' => env('MFA_PERSIST_DRIVER', 'session'),
 
         /**
          * Configuration for different persistence drivers.
@@ -56,7 +56,7 @@ return [
                  * If set to 0, the session will not expire and will persist until explicitly invalidated.
                  * Default: 0 (no expiry).
                  */
-                'expiry' => 0,
+                'expiry' => env('MFA_PERSIST_SESSION_EXPIRY', 0),
             ],
         ],
     ],
