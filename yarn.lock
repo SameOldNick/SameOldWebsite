@@ -9467,13 +9467,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:^2.29.3":
-  version: 2.30.1
-  resolution: "moment@npm:2.30.1"
-  checksum: 10/ae42d876d4ec831ef66110bdc302c0657c664991e45cf2afffc4b0f6cd6d251dde11375c982a5c0564ccc0fa593fc564576ddceb8c8845e87c15f58aa6baca69
-  languageName: node
-  linkType: hard
-
 "mri@npm:^1.1.0":
   version: 1.2.0
   resolution: "mri@npm:1.2.0"
@@ -11025,7 +11018,6 @@ __metadata:
     laravel-vite-plugin: "npm:^1.0"
     lodash: "npm:^4.17.19"
     luxon: "npm:^3.4.4"
-    moment: "npm:^2.29.3"
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
     postcss: "npm:^8.4.41"

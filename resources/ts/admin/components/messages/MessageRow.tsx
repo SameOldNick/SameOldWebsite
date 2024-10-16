@@ -5,6 +5,7 @@ import { FaExternalLinkAlt, FaRegCheckCircle, FaRegTimesCircle, FaToolbox, FaTra
 import S from 'string';
 
 import ContactMessage from '@admin/utils/api/models/ContactMessage';
+import { DateTime } from 'luxon';
 
 interface IRowProps {
     message: ContactMessage;
@@ -22,8 +23,8 @@ const MessageRow: React.FC<IRowProps> = ({ message, onViewClicked, onMarkUnconfi
             <td>{message.message.uuid}</td>
             <td>{message.displayName}</td>
             <td>{S(message.message.message).truncate(75).s}</td>
-            <td title={message.createdAt.toISOString()}>
-                {message.createdAt.fromNow()}
+            <td title={message.createdAt.toLocaleString(DateTime.DATETIME_FULL)}>
+                {message.createdAt.toRelative()}
             </td>
             <td>{S(message.status).humanize().s}</td>
             <td>

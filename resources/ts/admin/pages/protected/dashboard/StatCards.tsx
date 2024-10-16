@@ -1,8 +1,6 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
 
-import moment from "moment";
-
 import VisitorsCard from "./stat-cards/VisitorsCard";
 import BlogArticlesCard from "./stat-cards/BlogArticlesCard";
 import CommentsCard from "./stat-cards/CommentsCard";
@@ -13,6 +11,8 @@ import { loadAll } from "@admin/utils/api/endpoints/comments";
 import { all } from "@admin/utils/api/endpoints/notifications";
 import PaginateResponse from "@admin/utils/api/models/PaginateResponse";
 import Notification from "@admin/utils/api/models/notifications/Notification";
+
+import { DateTime } from "luxon";
 
 interface IStatCardsProps {
     visitors: TApiState<IChartVisitors, unknown>;
@@ -60,13 +60,11 @@ const StatCards: React.FC<IStatCardsProps> = ({ visitors }) => {
         if (visitors.status !== 'fulfilled')
             return;
 
-        const now = moment();
-
         // Sort visitor date ranges by closest to now
         // The key is start date/time in ISO8601 format
         const keyValues =
             Object.entries(visitors.response)
-                .sort(([a], [b]) => moment(b).diff(now, 'seconds') - moment(a).diff(now, 'seconds'));
+                .sort(([a], [b]) => DateTime.fromISO(b).diffNow().seconds - DateTime.fromISO(a).diffNow().seconds);
 
         // Gets closest date to now
         const closest = keyValues.shift();

@@ -4,7 +4,6 @@ import { FaSync } from 'react-icons/fa';
 
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
-import moment from 'moment';
 import axios from 'axios';
 
 import MessageRow from './MessageRow';
@@ -16,6 +15,7 @@ import ContactMessage from '@admin/utils/api/models/ContactMessage';
 import awaitModalPrompt from '@admin/utils/modals';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import { DateTime } from 'luxon';
 
 interface IMessageListProps {
 
@@ -41,7 +41,7 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                 else if (sortBy === 'status')
                     return a.status.localeCompare(b.status);
                 else
-                    return a.createdAt.diff(b.createdAt);
+                    return a.createdAt.diff(b.createdAt).seconds;
             });
     }, [sortBy, show]);
 
@@ -80,7 +80,7 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
     const handleMarkConfirmedClicked = React.useCallback(async (message: ContactMessage, { reload }: IWaitToLoadHelpers) => {
         try {
             await createAuthRequest().put<IContactMessage>(`/contact-messages/${message.message.uuid}`, {
-                confirmed_at: moment().toISOString()
+                confirmed_at: DateTime.now().toISO()
             });
 
             await withReactContent(Swal).fire({

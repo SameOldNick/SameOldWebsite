@@ -3,13 +3,13 @@ import { FaEnvelope, FaEnvelopeOpen, FaExternalLinkAlt } from 'react-icons/fa';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
 import classNames from 'classnames';
-import moment from 'moment';
 
 import Article from '@admin/utils/api/models/Article';
 import Comment from '@admin/utils/api/models/Comment';
 import User from '@admin/utils/api/models/User';
 
 import ActivityNotification, { ActivityEvent } from '@admin/utils/api/models/notifications/ActivityNotification';
+import { DateTime } from 'luxon';
 
 interface IRecentActivityRowProps {
     activity: ActivityNotification;
@@ -18,7 +18,7 @@ interface IRecentActivityRowProps {
 }
 
 const RecentActivityRow: React.FC<IRecentActivityRowProps> = ({ activity, onMarkReadClicked, onMarkUnreadClicked }) => {
-    const { event, dateTime, message, context } = activity.getData();
+    const { event, dateTime: dateTimeIso, message, context } = activity.getData();
 
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
@@ -74,12 +74,14 @@ const RecentActivityRow: React.FC<IRecentActivityRowProps> = ({ activity, onMark
         return elements;
     }, [event, activity]);
 
+    const dateTime = React.useMemo(() => DateTime.fromISO(dateTimeIso), [dateTimeIso]);
+
     return (
         <>
             <tr className={classNames({ 'table-light': activity.readAt === null })}>
                 <th scope='row'>
-                    <abbr title={moment(dateTime).fromNow()}>
-                        {moment(dateTime).format('MM-DD-YYYY HH:mm')}
+                    <abbr title={dateTime.toRelative() ?? undefined}>
+                        {dateTime.toLocaleString(DateTime.DATETIME_MED)}
                     </abbr>
                 </th>
                 <td>{message}</td>

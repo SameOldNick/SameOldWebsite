@@ -24,7 +24,7 @@ export default abstract class BaseStorage implements IStorageDriver {
      * @template T
      * @param {string} key Key of item.
      * @param {T} value Value.
-     * @param {moment.Moment} [expires] When item expires (as Moment object).
+     * @param {DateTime} [expires] When item expires (as DateTime object).
      * @returns
      * @memberof Store
      */
@@ -114,7 +114,7 @@ export default abstract class BaseStorage implements IStorageDriver {
      * Gets the expiration of an item.
      *
      * @param {string} key Key of item to get expiration for.
-     * @returns {(moment.Moment | undefined)} The expiration of the key (as Moment object) or undefined if key doesn't exist or has no expiration.
+     * @returns {(DateTime | undefined)} The expiration of the key (as DateTime object) or undefined if key doesn't exist or has no expiration.
      * @memberof Store
      */
     public getExpiration(key: string): DateTime | undefined {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Badge, Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table } from 'reactstrap';
 
-import moment from 'moment';
 import S from 'string';
 import SecurityNotification from '@admin/utils/api/models/notifications/SecurityNotification';
+import { DateTime } from 'luxon';
 
 interface ISecurityAlertModalProps {
     notification: SecurityNotification;
@@ -36,7 +36,7 @@ const SecurityAlertModal: React.FC<ISecurityAlertModalProps> = ({ badgeColor, no
                             Filed
                         </Label>
                         <Col sm={10}>
-                            <Input type='text' readOnly value={moment(issue.datetime).toLocaleString()} />
+                            <Input type='text' readOnly value={DateTime.fromISO(issue.datetime).toLocaleString()} />
                         </Col>
                     </FormGroup>
                     <FormGroup row>

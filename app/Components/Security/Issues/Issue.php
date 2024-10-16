@@ -54,7 +54,7 @@ abstract class Issue implements Arrayable
         return [
             'id' => $this->getFullIdentifier(),
             'severity' => $this->getSeverity()->value,
-            'datetime' => $this->getDateTime(),
+            'datetime' => $this->getDateTime()->toIso8601String(),
             'message' => $this->getMessage(),
             'context' => $this->getContext(),
         ];

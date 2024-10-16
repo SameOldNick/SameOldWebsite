@@ -1,4 +1,4 @@
-import moment from "moment";
+import { DateTime } from "luxon";
 import S from "string";
 
 export type TContactMessageStatuses = 'accepted' | 'unconfirmed' | 'confirmed' | 'expired';
@@ -42,7 +42,7 @@ export default class ContactMessage {
      * @memberof ContactMessage
      */
     public get createdAt() {
-        return moment(this.message.created_at);
+        return DateTime.fromISO(this.message.created_at);
     }
 
     /**
@@ -52,7 +52,7 @@ export default class ContactMessage {
      * @memberof ContactMessage
      */
     public get updatedAt() {
-        return this.message.updated_at ? moment(this.message.updated_at) : null;
+        return this.message.updated_at ? DateTime.fromISO(this.message.updated_at) : null;
     }
 
     /**
@@ -62,7 +62,7 @@ export default class ContactMessage {
      * @memberof ContactMessage
      */
     public get confirmedAt() {
-        return this.message.confirmed_at ? moment(this.message.confirmed_at) : null;
+        return this.message.confirmed_at ? DateTime.fromISO(this.message.confirmed_at) : null;
     }
 
     /**
@@ -72,7 +72,7 @@ export default class ContactMessage {
      * @memberof ContactMessage
      */
     public get expiresAt() {
-        return this.message.expires_at ? moment(this.message.expires_at) : null;
+        return this.message.expires_at ? DateTime.fromISO(this.message.expires_at) : null;
     }
 
     /**
@@ -84,7 +84,7 @@ export default class ContactMessage {
     public get status() {
         if (this.message.confirmed_at !== null)
             return ContactMessage.STATUS_CONFIRMED;
-        else if (this.expiresAt && moment().isBefore(this.expiresAt))
+        else if (this.expiresAt && DateTime.now() < this.expiresAt)
             return ContactMessage.STATUS_UNCONFIRMED;
         else if (this.expiresAt === null)
             return ContactMessage.STATUS_ACCEPTED;

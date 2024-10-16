@@ -2,10 +2,10 @@ import React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Badge, Button } from 'reactstrap';
 
-import moment from 'moment';
 import S from 'string';
 
 import SecurityNotification from '@admin/utils/api/models/notifications/SecurityNotification';
+import { DateTime } from 'luxon';
 
 interface ISecurityAlertRowProps {
     badgeColor: string;
@@ -22,6 +22,8 @@ const SecurityAlertRow: React.FC<ISecurityAlertRowProps> = ({ badgeColor, notifi
         onViewClicked();
     }, [onViewClicked]);
 
+    const dateTime = React.useMemo(() => DateTime.fromISO(issue.datetime), [issue]);
+
     return (
         <>
             <tr>
@@ -30,7 +32,7 @@ const SecurityAlertRow: React.FC<ISecurityAlertRowProps> = ({ badgeColor, notifi
                         {S(issue.severity).humanize().s}
                     </Badge>
                 </td>
-                <td>{moment(issue.datetime).fromNow()}</td>
+                <td title={dateTime.toLocaleString(DateTime.DATETIME_FULL)}>{dateTime.toRelative()}</td>
                 <td>{S(issue.message).truncate(75).s}</td>
                 <td>
                     <Button color='link' title='View more information' onClick={handleViewClicked}>

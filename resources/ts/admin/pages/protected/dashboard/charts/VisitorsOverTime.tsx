@@ -1,7 +1,7 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 
-import moment from "moment";
+import { DateTime } from "luxon";
 
 import ChartWrapper from "@admin/components/hoc/ChartWrapper";
 
@@ -23,7 +23,7 @@ const VisitorsOverTime: React.FC<IProps> = ({ data }) => {
             },
         },
         data: {
-            labels: Object.keys(data).map((date) => moment(date).format('YYYY-MM-DD')),
+            labels: Object.keys(data).map((date) => DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)),
             datasets: [
                 {
                     label: 'New Users',
