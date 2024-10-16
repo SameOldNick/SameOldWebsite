@@ -2,21 +2,36 @@
 
 return [
     'authenticator' => [
+        /**
+         * Default MFA driver.
+         * Specifies the driver used for authentication. Typically, this would be a TOTP (Time-based One-Time Password) for apps like Google Authenticator.
+         */
         'driver' => 'totp',
 
+        /**
+         * List of available MFA drivers.
+         * Each driver can have its own configuration settings.
+         */
         'drivers' => [
             'totp' => [
-
+                // Currently, there are no configuration options for the TOTP driver.
             ],
+
             'backup' => [
                 /**
-                 * How many backup codes to generate.
+                 * Number of backup codes to generate for MFA.
+                 * These codes are used when the user cannot access their primary MFA method.
+                 * Default: 6 backup codes.
                  */
                 'codes' => 6,
             ],
         ],
 
-        /** Which drivers to register routes for. */
+        /**
+         * Routes to be registered for MFA drivers.
+         * Specify which authentication methods should have routes automatically generated for them.
+         * Available drivers: 'totp', 'backup'.
+         */
         'routes' => [
             'totp',
             'backup',
@@ -24,13 +39,22 @@ return [
     ],
 
     'persist' => [
+        /**
+         * Driver for persisting MFA sessions.
+         * Defines how MFA session persistence is managed. The default is 'session', meaning the MFA state is stored in the session.
+         */
         'driver' => 'session',
 
+        /**
+         * Configuration for different persistence drivers.
+         */
         'drivers' => [
             'session' => [
                 /**
-                 * How long MFA is valid for in seconds.
-                 * 0 means no expiry.
+                 * MFA session expiration time (in seconds).
+                 * Defines how long the MFA session is valid.
+                 * If set to 0, the session will not expire and will persist until explicitly invalidated.
+                 * Default: 0 (no expiry).
                  */
                 'expiry' => 0,
             ],
