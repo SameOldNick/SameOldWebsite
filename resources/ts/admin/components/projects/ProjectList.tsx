@@ -59,44 +59,47 @@ const ProjectList: React.FC<IProps> = ({ }) => {
                 </Col>
 
                 <Col xs={12}>
-                    <Table responsive>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>URL</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <WaitToLoad
-                                ref={waitToLoadRef}
-                                callback={fetchProjects}
-                                loading={<Loader display={{ type: 'over-element' }} />}
-                            >
-                                {(response, err, { reload }) => (
-                                    <>
-                                        {response && response.map((project, index) => (
-                                            <ProjectListRow
-                                                key={index}
-                                                project={project}
-                                                onRestored={() => reload()}
-                                                onDeleted={() => reload()}
-                                            />
-                                        ))}
-                                        {err && (
-                                            <LoadError
-                                                error={err}
-                                                onTryAgainClicked={() => reload()}
-                                                onGoBackClicked={() => window.history.back()}
-                                            />
-                                        )}
-                                    </>
+                    <WaitToLoad
+                        ref={waitToLoadRef}
+                        callback={fetchProjects}
+                        loading={<Loader display={{ type: 'over-element' }} />}
+                    >
+                        {(response, err, { reload }) => (
+                            <>
+                                {response && (
+                                    <Table responsive>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>URL</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {response.map((project, index) => (
+                                                <ProjectListRow
+                                                    key={index}
+                                                    project={project}
+                                                    onRestored={() => reload()}
+                                                    onDeleted={() => reload()}
+                                                />
+                                            ))}
+
+                                        </tbody>
+                                    </Table>
                                 )}
-                            </WaitToLoad>
-                        </tbody>
-                    </Table>
+                                {err && (
+                                    <LoadError
+                                        error={err}
+                                        onTryAgainClicked={() => reload()}
+                                        onGoBackClicked={() => window.history.back()}
+                                    />
+                                )}
+                            </>
+                        )}
+                    </WaitToLoad>
                 </Col>
             </Row>
         </>
