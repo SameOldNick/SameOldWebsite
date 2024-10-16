@@ -91,11 +91,13 @@ class Guard implements GuardContract
     /**
      * Set the current user.
      *
-     * @return void
+     * @return $this
      */
     public function setUser(Authenticatable $user)
     {
         $this->getGuard()->setUser($user);
+
+        return $this;
     }
 
     /**
