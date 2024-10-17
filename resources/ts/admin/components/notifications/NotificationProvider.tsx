@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { IAlertNotificationData } from '@admin/utils/api/models/notifications/AlertNotification';
 import notifications, { fetchFromApi } from '@admin/store/slices/notifications';
 import { EchoContext } from '@admin/utils/echo/context';
+import NotificationToasts from './toasts/NotificationToasts';
 
 const connector = connect(
     ({ account, notifications }: RootState) => ({ account, notifications }),
@@ -75,6 +76,7 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
 
     return (
         <>
+            <NotificationToasts />
             {children}
         </>
     );
