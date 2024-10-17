@@ -34,7 +34,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
                 <div className="d-flex align-items-center">
                     <div>
                         <span className='visually-hidden'>Select notification</span>
-                        <input type="checkbox" className="me-2" checked={selected} onClick={() => onSelect(selected)} />
+                        <input type="checkbox" className="me-2" checked={selected} onChange={() => onSelect(selected)} />
                     </div>
                     <div>
                         <strong>{message}</strong>
