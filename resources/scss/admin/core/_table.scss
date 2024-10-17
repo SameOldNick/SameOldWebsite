@@ -1,0 +1,16 @@
+// Fixes dropdown menus expanding inside table (instead of on top) on desktops
+// Source: https://stackoverflow.com/a/39087326/533242
+
+@media (max-width: 767px) {
+    .table-responsive {
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+}
+
+@media (min-width: 767px) {
+    .table-responsive {
+        overflow: inherit !important;
+        /* Sometimes needs !important */
+    }
+}
