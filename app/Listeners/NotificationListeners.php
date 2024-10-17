@@ -10,8 +10,8 @@ use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\Notification;
-use Spatie\Backup\Events\BackupWasSuccessful;
 use Spatie\Backup\Events\BackupHasFailed;
+use Spatie\Backup\Events\BackupWasSuccessful;
 use Spatie\Backup\Events\CleanupWasSuccessful;
 
 class NotificationListeners
@@ -33,7 +33,7 @@ class NotificationListeners
     {
         $message = $event->message;
 
-        $this->notifyRoles([RECEIVE_CONTACT_MESSAGES_ROLE], fn(User $user) => new Alert(
+        $this->notifyRoles([RECEIVE_CONTACT_MESSAGES_ROLE], fn (User $user) => new Alert(
             $user,
             'info',
             "A contact message was sent by '{$message->email}'.",
@@ -74,10 +74,10 @@ class NotificationListeners
      */
     public function handleBackupSuccessful(BackupWasSuccessful $event): void
     {
-        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn(User $user) => new Alert(
+        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn (User $user) => new Alert(
             $user,
             'info',
-            "A backup was successfully created.",
+            'A backup was successfully created.',
             '/admin/backups'
         ));
     }
@@ -87,10 +87,10 @@ class NotificationListeners
      */
     public function handleBackupFailed(BackupHasFailed $event): void
     {
-        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn(User $user) => new Alert(
+        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn (User $user) => new Alert(
             $user,
             'info',
-            "A backup failed to complete.",
+            'A backup failed to complete.',
             '/admin/backups'
         ));
     }
@@ -100,10 +100,10 @@ class NotificationListeners
      */
     public function handleBackupCleanupSuccessful(CleanupWasSuccessful $event): void
     {
-        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn(User $user) => new Alert(
+        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn (User $user) => new Alert(
             $user,
             'info',
-            "Backup cleanup was successful.",
+            'Backup cleanup was successful.',
             '/admin/backups'
         ));
     }
