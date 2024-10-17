@@ -10,6 +10,9 @@ use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\Notification;
+use Spatie\Backup\Events\BackupWasSuccessful;
+use Spatie\Backup\Events\BackupHasFailed;
+use Spatie\Backup\Events\CleanupWasSuccessful;
 
 class NotificationListeners
 {
@@ -67,6 +70,45 @@ class NotificationListeners
     }
 
     /**
+     * Handles BackupWasSuccessful event
+     */
+    public function handleBackupSuccessful(BackupWasSuccessful $event): void
+    {
+        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn(User $user) => new Alert(
+            $user,
+            'info',
+            "A backup was successfully created.",
+            '/admin/backups'
+        ));
+    }
+
+    /**
+     * Handles BackupHasFailed event
+     */
+    public function handleBackupFailed(BackupHasFailed $event): void
+    {
+        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn(User $user) => new Alert(
+            $user,
+            'info',
+            "A backup failed to complete.",
+            '/admin/backups'
+        ));
+    }
+
+    /**
+     * Handles CleanupWasSuccessful event
+     */
+    public function handleBackupCleanupSuccessful(CleanupWasSuccessful $event): void
+    {
+        $this->notifyRoles([MANAGE_BACKUPS_ROLE], fn(User $user) => new Alert(
+            $user,
+            'info',
+            "Backup cleanup was successful.",
+            '/admin/backups'
+        ));
+    }
+
+    /**
      * Register the listeners for the subscriber.
      *
      * @return array<string, string>
@@ -77,6 +119,9 @@ class NotificationListeners
             ContactSubmissionConfirmed::class => 'handleContactSubmissionConfirmed',
             Login::class => 'handleAuthLogin',
             Failed::class => 'handleAuthFailed',
+            BackupWasSuccessful::class => 'handleBackupSuccessful',
+            BackupHasFailed::class => 'handleBackupFailed',
+            CleanupWasSuccessful::class => 'handleBackupCleanupSuccessful',
         ];
     }
 }
