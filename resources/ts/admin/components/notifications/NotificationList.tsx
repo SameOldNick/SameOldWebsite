@@ -7,11 +7,12 @@ import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 
 import NotificationItem, { INotificationItem } from './NotificationItem';
-import createErrorHandler from '@admin/utils/errors/factory';
 import withNotifications, { IHasNotifications, IStoredNotification } from '@admin/components/hoc/WithNotifications';
+import Loader from '@admin/components/Loader';
 
 import { markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
 import { fetchFromApi } from '@admin/store/slices/notifications';
+import createErrorHandler from '@admin/utils/errors/factory';
 
 const connector = connect(
     ({ }: RootState) => ({}),
@@ -26,19 +27,31 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
     const [show, setShow] = React.useState('both');
     const [selected, setSelected] = React.useState<string[]>([]);
     const [showDropdown, setShowDropdown] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     const refresh = React.useCallback(() => {
-        fetchFromApi();
+        return fetchFromApi();
     }, [fetchFromApi]);
 
     const handleUpdateFormSubmitted = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        refresh();
+        try {
+            setLoading(true);
+
+            await refresh();
+        } catch (err) {
+            logger.error(err);
+        } finally {
+            setLoading(false);
+        }
+
     }, [refresh]);
 
     const handleMarkAsClicked = React.useCallback(async (notification: INotificationItem) => {
         try {
+            setLoading(true);
+
             if (notification.readAt) {
                 await markUnread(notification.uuid);
             } else {
@@ -60,6 +73,8 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
                 title: 'Oops...',
                 text: `An error occurred: ${message}\nPlease try again.`,
             });
+        } finally {
+            setLoading(false);
         }
     }, [refresh]);
 
@@ -129,15 +144,32 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
     }, []);
 
     const handleMarkReadClicked = React.useCallback(async () => {
-        await markNotifications('read', selected);
+        try {
+            setLoading(true);
 
-        refresh();
+            await markNotifications('read', selected);
+
+            refresh();
+        } catch (err) {
+            logger.error(err);
+        } finally {
+            setLoading(false);
+        }
     }, [selected, refresh]);
 
     const handleMarkUnreadClicked = React.useCallback(async () => {
-        await markNotifications('unread', selected);
+        try {
+            setLoading(true);
 
-        refresh();
+            await markNotifications('unread', selected);
+
+            refresh();
+        } catch (err) {
+            logger.error(err);
+        } finally {
+            setLoading(false);
+        }
+
     }, [selected, refresh]);
 
     React.useEffect(() => {
@@ -151,6 +183,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
 
     return (
         <>
+            {loading && <Loader display={{ type: 'over-element' }} />}
             <Row>
                 <Col xs={12} className='d-flex flex-column flex-md-row justify-content-between mb-3'>
                     <div className="d-flex flex-column flex-md-row mb-3 mb-md-0">
