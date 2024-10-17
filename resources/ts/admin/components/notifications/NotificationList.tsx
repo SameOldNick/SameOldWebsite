@@ -21,6 +21,7 @@ const connector = connect(
 type NotificationListProps = ConnectedProps<typeof connector> & IHasNotifications;
 
 const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetchFromApi }) => {
+    const [renderCount, setRenderCount] = React.useState(1);
     const [sortBy, setSortBy] = React.useState('newest_oldest');
     const [show, setShow] = React.useState('both');
     const [selected, setSelected] = React.useState<string[]>([]);
@@ -138,6 +139,15 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
 
         refresh();
     }, [selected, refresh]);
+
+    React.useEffect(() => {
+        // Updates the relative time notifications were sent
+        const timer = window.setInterval(() => setRenderCount((count) => count + 1), 10 * 1000);
+
+        return () => {
+            window.clearInterval(timer);
+        }
+    }, []);
 
     return (
         <>
