@@ -4,7 +4,7 @@ import { Button, ListGroupItem } from 'reactstrap';
 import { IStoredNotification } from '../hoc/WithNotifications';
 
 import { DateTime } from 'luxon';
-import { FaEnvelope, FaEnvelopeOpen } from 'react-icons/fa';
+import { FaEnvelope, FaEnvelopeOpen, FaExternalLinkAlt } from 'react-icons/fa';
 
 interface INotificationItem {
     uuid: string;
@@ -45,6 +45,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
                 <div className='d-flex gap-2'>
                     {link && (
                         <Button size="sm" color="info" onClick={() => window.open(link, '_blank')}>
+                            <FaExternalLinkAlt />{' '}
                             Open Link
                         </Button>
                     )}
