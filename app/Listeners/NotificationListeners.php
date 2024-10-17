@@ -33,7 +33,7 @@ class NotificationListeners
     {
         $message = $event->message;
 
-        $this->notifyRoles(['receive_contact_messages'], fn (User $user) => new Alert(
+        $this->notifyRoles([RECEIVE_CONTACT_MESSAGES_ROLE], fn(User $user) => new Alert(
             $user,
             'info',
             "A contact message was sent by '{$message->email}'.",
