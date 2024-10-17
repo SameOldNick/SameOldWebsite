@@ -7,10 +7,12 @@ import withNotifications, { IHasNotifications } from '@admin/components/hoc/With
 
 const NotificationsIcon: React.FC<IHasNotifications> = ({ notifications }) => {
     const displayCount = React.useMemo(() => {
-        if (notifications.length === 0)
+        const unreadCount = notifications.filter((notification) => !notification.readAt).length;
+
+        if (unreadCount === 0)
             return undefined;
 
-        return notifications.length > 9 ? '9+' : `${notifications.length}`;
+        return unreadCount > 9 ? '9+' : `${unreadCount}`;
     }, [notifications]);
 
     return (
