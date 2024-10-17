@@ -24,7 +24,7 @@ const NotificationToasts: React.FC<NotificationToastsProps> = ({
     const [displayed, setDisplayed] = React.useState<IAlertNotificationData[]>([]);
 
     React.useEffect(() => {
-        const difference = displayed.filter((notification) => !echoNotifications.includes(notification));
+        const difference = echoNotifications.filter((notification) => !displayed.includes(notification));
 
         setDisplayed((prev) => [
             ...prev,
