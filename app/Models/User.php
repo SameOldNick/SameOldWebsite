@@ -78,7 +78,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
         'address2',
         'city',
         'postal_code',
-        'state',
         'state_id',
         'country_code',
     ];
