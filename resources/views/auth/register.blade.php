@@ -73,7 +73,7 @@
                                         <i class="fa-solid fa-globe"></i>
                                     </span>
 
-                                    <select name="country" class="selectpicker form-control" title="{{ __('Select Country') }}" data-live-search="true" data-type="country" id="country">
+                                    <select name="country" class="selectpicker form-control" title="{{ __('Select Country') }}" data-live-search="true" data-type="country" data-country="{{ old('country', 'CAN') }}" id="country">
                                         <option value="">{{ __('Select a country') }}</option>
                                     </select>
                                 </div>
