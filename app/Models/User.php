@@ -24,7 +24,6 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $address1
  * @property string|null $address2
  * @property string|null $city
- * @property string|null $state
  * @property string|null $postal_code
  * @property string|null $country_code
  * @property-read string $avatar_url
@@ -32,6 +31,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read Country|null $country
+ * @property-read State|null $state
  * @property-read \App\Models\Collections\RoleCollection $roles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OAuthProvider> $oauthProviders
  * @property-read \App\Models\Collections\PrivateChannelCollection $privateChannels
