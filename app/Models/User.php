@@ -241,20 +241,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
     }
 
     /**
-     * Gets readable state name
-     *
-     * @return string
-     */
-    public function stateReadable()
-    {
-        if ($this->isStateAssociated()) {
-            return (string) $this->getRelationValue('state');
-        } else {
-            return $this->getAttributeValue('state');
-        }
-    }
-
-    /**
      * Gets name to publicly display
      *
      * @return string

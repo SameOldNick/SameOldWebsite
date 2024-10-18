@@ -53,17 +53,12 @@ class State implements DataAwareRule, Rule
         $states = $country->states;
 
         if ($states->count() > 0) {
-            // Just passing $value as a parameter contains() won't work cause 'id' is the primary key column.
-            return $states->contains(fn ($model) => $model->code == $value);
-        } else {
-            if (! is_string($value)) {
-                return false;
-            }
-
-            $length = Str::length($value);
-
-            return $length > 1 && $length <= 255;
+            // Just passing $value as a parameter to contains() won't work cause 'id' is the primary key column.
+            return $states->contains(fn($model) => $model->code == $value);
         }
+
+        // No states for country exist, but require field to be empty.
+        return empty($value);
     }
 
     /**

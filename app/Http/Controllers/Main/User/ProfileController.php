@@ -63,18 +63,9 @@ class ProfileController extends Controller
 
         $user->country()->associate($country);
 
-        if (array_key_exists('state', $validated)) {
-            $user->state()->dissociate();
-            $user->setAttribute('state', null);
-
-            if (! is_null($validated['state'])) {
-                // Determine if it's state_id or state that's to be set (not both)
-                if ($user->isStateAssociated()) {
-                    $user->state()->associate($country->states->firstWhere('code', $validated['state']));
-                } else {
-                    $user->setAttribute('state', $validated['state']);
-                }
-            }
+        if (isset($validated['state'])) {
+            $state = $country->states->firstWhere('code', $validated['state']);
+            $user->state()->associate($state);
         }
 
         if ($user->isDirty()) {
