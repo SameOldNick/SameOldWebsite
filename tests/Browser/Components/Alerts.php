@@ -2,7 +2,6 @@
 
 namespace Tests\Browser\Components;
 
-use Illuminate\Support\Arr;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Component as BaseComponent;
 
@@ -34,7 +33,6 @@ class Alerts extends BaseComponent
     /**
      * Asserts page has alerts
      *
-     * @param Browser $browser
      * @return void
      */
     public function assertHasAlerts(Browser $browser)
@@ -45,17 +43,18 @@ class Alerts extends BaseComponent
     /**
      * Asserts page has alert
      *
-     * @param Browser $browser
-     * @param string|null $type Type of alert (danger, warning, etc.)
-     * @param string|null $message Alert message
+     * @param  string|null  $type  Type of alert (danger, warning, etc.)
+     * @param  string|null  $message  Alert message
      * @return void
      */
     public function assertHasAlert(Browser $browser, ?string $type = null, ?string $message = null)
     {
-        if ($type)
+        if ($type) {
             $browser->assertAttributeContains('.alert', 'class', "alert-{$type}");
+        }
 
-        if ($message)
+        if ($message) {
             $browser->assertSeeIn('.alert', $message);
+        }
     }
 }

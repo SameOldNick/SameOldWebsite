@@ -89,7 +89,7 @@ class DuskCommand extends BaseDuskCommand
         });
 
         // Make sure process is running
-        if (! $this->serveProcess->waitUntil(fn() => $this->serveProcess->isRunning())) {
+        if (! $this->serveProcess->waitUntil(fn () => $this->serveProcess->isRunning())) {
             $this->error('An error occurred starting the web server:');
             $this->error($this->serveProcess->getOutput());
 

@@ -2,15 +2,12 @@
 
 namespace Tests\Browser;
 
-use App\Models\Article;
-use App\Models\Page;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Dusk\Browser;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Browser\Components\Alerts;
 use Tests\Browser\Components\SweetAlerts;
-use Tests\Browser\Pages\Blog\Article as BlogArticle;
 use Tests\Browser\Pages\RegisterPage;
 use Tests\DuskTestCase;
 

@@ -39,7 +39,7 @@ abstract class DuskTestCase extends BaseTestCase
             $port = $_ENV['DUSK_DRIVER_PORT'] ?? env('DUSK_DRIVER_PORT') ?? '9515';
 
             static::startChromeDriver([
-                sprintf('--port=%s', $port)
+                sprintf('--port=%s', $port),
             ]);
         }
     }

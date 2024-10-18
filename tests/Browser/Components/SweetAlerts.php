@@ -37,8 +37,6 @@ class SweetAlerts extends BaseComponent
     /**
      * Asserts page has sweet alerts
      *
-     * @param Browser $browser
-     * @param integer|null $count
      * @return void
      */
     public function assertHasSweetAlerts(Browser $browser, ?int $count = null)
@@ -53,14 +51,12 @@ class SweetAlerts extends BaseComponent
     /**
      * Asserts page has sweet alert with options
      *
-     * @param Browser $browser
-     * @param array $options
      * @return void
      */
     public function assertSweetAlertExists(Browser $browser, array $options)
     {
         // Build conditions to check against SweetAlert options
-        $alertConditions = Arr::map($options, fn($value, $key) => sprintf('alert.%s === %s', $key, json_encode($value)));
+        $alertConditions = Arr::map($options, fn ($value, $key) => sprintf('alert.%s === %s', $key, json_encode($value)));
 
         // Create the script for checking SweetAlert existence
         $script = sprintf(

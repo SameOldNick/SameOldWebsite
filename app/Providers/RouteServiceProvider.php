@@ -32,7 +32,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this
-            ->enforceHttps(!$this->app->environment("testing", "dusk")) // Don't enforce HTTPS in Dusk
+            ->enforceHttps(! $this->app->environment('testing', 'dusk')) // Don't enforce HTTPS in Dusk
             ->configureRateLimiting()
             ->bootRouteBindings()
             ->routes(function () {
@@ -87,7 +87,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function bootRouteBindings()
     {
-        Route::bind('tag', fn($value) => Tag::firstWhere('slug', $value));
+        Route::bind('tag', fn ($value) => Tag::firstWhere('slug', $value));
 
         Route::bind('file', function ($value) {
             if (Str::isUuid($value)) {

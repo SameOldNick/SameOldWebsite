@@ -7,7 +7,6 @@ use App\Traits\Rules\DataAware;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class State implements DataAwareRule, Rule
 {
@@ -54,7 +53,7 @@ class State implements DataAwareRule, Rule
 
         if ($states->count() > 0) {
             // Just passing $value as a parameter to contains() won't work cause 'id' is the primary key column.
-            return $states->contains(fn($model) => $model->code == $value);
+            return $states->contains(fn ($model) => $model->code == $value);
         }
 
         // No states for country exist, but require field to be empty.
