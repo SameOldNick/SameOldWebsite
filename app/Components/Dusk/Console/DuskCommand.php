@@ -107,7 +107,7 @@ class DuskCommand extends BaseDuskCommand
         $host = $this->option('serve-host');
         $port = (int) $this->option('serve-port');
 
-        $command = sprintf('%s artisan serve --host=%s --port=%d', PHP_BINARY, $host, $port);
+        $command = sprintf('%s artisan serve --host=%s --port=%d --env=%s', PHP_BINARY, $host, $port, $env);
 
         return Process::fromShellCommandline($command, base_path(), $this->getServeEnvVariables());
     }
