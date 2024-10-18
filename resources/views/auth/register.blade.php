@@ -73,12 +73,8 @@
                                         <i class="fa-solid fa-globe"></i>
                                     </span>
 
-                                    <select name="country" class="selectpicker form-control" data-live-search="true" id="country">
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->code }}" @selected(old('country', 'USA') == $country->code)>
-                                                {{ __($country->country) }} ({{ $country->code }})
-                                            </option>
-                                        @endforeach
+                                    <select name="country" class="selectpicker form-control" title="{{ __('Select Country') }}" data-live-search="true" data-type="country" id="country">
+                                        <option value="">{{ __('Select a country') }}</option>
                                     </select>
                                 </div>
 

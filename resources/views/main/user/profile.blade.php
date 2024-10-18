@@ -80,11 +80,8 @@
                                     <div class="col-12">
                                         <label for="country" class="form-label">{{ __('Country') }}</label>
 
-                                        <select name="country" id="country" class="form-control" title="{{ __('Select Country') }}" data-searchable-modal="true">
+                                        <select name="country" id="country" class="form-control" title="{{ __('Select Country') }}" data-type="country" data-country="{{ Auth::user()->country_code }}" data-searchable-modal="true">
                                             <option value="" disabled @selected(is_null(Auth::user()->country_code))></option>
-                                            @foreach ($countries as $country)
-                                                <option value="{{ $country->code }}" @selected(old('country', Auth::user()->country_code) == $country->code)>{{ __($country->country) }} ({{ $country->code }})</option>
-                                            @endforeach
                                         </select>
 
                                         @error('country')
@@ -97,20 +94,18 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-12">
-                                        <label for="state" class="form-label">{{ __('State/Province') }}</label>
+                                        <label for="state" class="form-label" data-type="state-label">{{ __('State/Province') }}</label>
+                                        <select
+                                            name="state"
+                                            id="state"
+                                            class="form-control @error('state') is-invalid @enderror"
+                                            title="{{ __('Select State/Province') }}"
+                                            data-type="state"
+                                            data-state="{{ old('state', optional(Auth::user()->state)->code) }}"
+                                            data-searchable-modal="true"
+                                        >
 
-                                        <div data-update-states="#country">
-                                            @if(Auth::user()->isStateAssociated())
-                                            <select name="state" id="state" class="form-control" title="{{ __('Select State/Province') }}" data-searchable-modal="true">
-                                                @foreach (Auth::user()->country->states as $state)
-                                                    <option value="{{ $state->code }}" @selected(old('state', Auth::user()->stateReadable() ?? null) == $state->state)>{{ __($state->state) }} ({{ $state->code }})</option>
-                                                @endforeach
-                                            </select>
-                                            @else
-                                            <input name="state" id="state" type="text" class="form-control @error('state') is-invalid @enderror" value="{{ old('state', Auth::user()->stateReadable()) }}">
-                                            @endif
-
-                                        </div>
+                                        </select>
 
                                         @error('state')
                                             <span class="invalid-feedback" role="alert">
