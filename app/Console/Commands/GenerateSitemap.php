@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Article;
 use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
-use Spatie\Sitemap\SitemapGenerator;
-use Spatie\Sitemap\SitemapIndex;
 
 class GenerateSitemap extends Command
 {
@@ -46,8 +44,6 @@ class GenerateSitemap extends Command
 
     /**
      * Gets pages sitemap
-     *
-     * @return Sitemap
      */
     protected function getPagesSitemap(): Sitemap
     {
@@ -60,8 +56,6 @@ class GenerateSitemap extends Command
 
     /**
      * Gets auth sitemap
-     *
-     * @return Sitemap
      */
     protected function getAuthSitemap(): Sitemap
     {
@@ -74,8 +68,6 @@ class GenerateSitemap extends Command
 
     /**
      * Gets articles sitemap
-     *
-     * @return Sitemap
      */
     protected function getArticlesSitemap(): Sitemap
     {
