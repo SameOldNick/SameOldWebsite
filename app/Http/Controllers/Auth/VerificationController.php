@@ -44,7 +44,7 @@ class VerificationController extends Controller
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function verified(Request $request)
     {
