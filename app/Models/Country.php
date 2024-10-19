@@ -52,16 +52,6 @@ class Country extends Model
     ];
 
     /**
-     * The codes of country to include in Javascript (for caching)
-     *
-     * @var array
-     */
-    protected static $includeInJs = [
-        'CAN',
-        'USA',
-    ];
-
-    /**
      * Gets the users with this country.
      */
     public function users(): HasMany
@@ -105,20 +95,5 @@ class Country extends Model
     public static function sortedByCode()
     {
         return static::orderBy('code', 'asc')->get();
-    }
-
-    /**
-     * Gets countries to transfer to JavaScript.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public static function getTransferToJs()
-    {
-        return static::whereIn('code', static::$includeInJs)->get()->mapWithKeys(fn ($country) => [
-            $country->code => [
-                'country' => $country->country,
-                'states' => $country->states,
-            ],
-        ]);
     }
 }
