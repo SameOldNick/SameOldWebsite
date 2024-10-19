@@ -31,8 +31,8 @@
                                         <p>Status: <span class="badge bg-success">{{ __('Configured') }}</span></p>
                                     </div>
                                     <div class="col-12 fw-bold fs-6">
-                                        <x-alert type="warning">Warning: Disabling MFA reduces the security of your account. Only proceed if you are sure.</x-alert>
-                                        <p class="card-text">To disable MFA, please provide verification:</p>
+                                        <x-alert type="warning">{{ __('Warning: Disabling MFA reduces the security of your account. Only proceed if you are sure.') }}</x-alert>
+                                        <p class="card-text">{{ __('To disable MFA, please provide verification:') }}</p>
                                     </div>
                                 </div>
 
