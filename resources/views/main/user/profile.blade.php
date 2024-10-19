@@ -155,7 +155,5 @@
             </div>
         </div>
 
-        <x-country-states />
-
     </div>
 </x-main.layout>
