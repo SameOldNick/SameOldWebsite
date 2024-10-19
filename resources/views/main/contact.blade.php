@@ -105,9 +105,7 @@
                 function attachTokenToForm(token) {
                     document.getElementById('gRecaptcha').value = token;
 
-                    document.querySelectorAll('form button, form input, form textarea').forEach(function (el) {
-                        disableForm(false);
-                    });
+                    disableForm(false);
                 }
             </script>
             {!! htmlScriptTagJsApi([
