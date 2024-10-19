@@ -2,8 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Events\PageUpdated;
 use App\Components\Settings\Facades\PageSettings;
+use App\Events\PageUpdated;
 
 class RefreshUpdatedPages
 {

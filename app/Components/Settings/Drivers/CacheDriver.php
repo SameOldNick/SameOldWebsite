@@ -67,7 +67,6 @@ class CacheDriver implements Driver
     /**
      * Purges cache for page
      *
-     * @param string $page
      * @return bool
      */
     public function purge(string $page)
