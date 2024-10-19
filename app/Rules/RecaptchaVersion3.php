@@ -2,9 +2,9 @@
 
 namespace App\Rules;
 
+use Biscolab\ReCaptcha\Facades\ReCaptcha;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Biscolab\ReCaptcha\Facades\ReCaptcha;
 
 /**
  * This fixes Recaptcha v3 validation from the biscolab/laravel-recaptcha package.
@@ -24,8 +24,9 @@ class RecaptchaVersion3 implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             $fail('The :attribute value must be a string.');
+
             return;
         }
 
@@ -41,13 +42,13 @@ class RecaptchaVersion3 implements ValidationRule
     /**
      * Checks if validate response is successful
      *
-     * @param array|bool $result
-     * @return boolean
+     * @param  array|bool  $result
      */
     protected function isSuccessful($result): bool
     {
-        if (is_bool($result))
+        if (is_bool($result)) {
             return $result;
+        }
 
         return $result['success'];
     }
@@ -55,8 +56,7 @@ class RecaptchaVersion3 implements ValidationRule
     /**
      * Translates validate response to message
      *
-     * @param array|bool $result
-     * @return string
+     * @param  array|bool  $result
      */
     protected function getMessage($result): string
     {
@@ -85,11 +85,12 @@ class RecaptchaVersion3 implements ValidationRule
                 ];
             }
 
-            $errorCodes = !empty($result['error-codes']) ? $result['error-codes'] : [];
+            $errorCodes = ! empty($result['error-codes']) ? $result['error-codes'] : [];
 
             foreach ($errorCodes as $errorCode) {
-                if (isset($errorMapping[$errorCode]))
+                if (isset($errorMapping[$errorCode])) {
                     return $errorMapping[$errorCode];
+                }
             }
         }
 
