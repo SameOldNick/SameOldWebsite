@@ -37,6 +37,20 @@ class ContactRequest extends FormRequest
     }
 
     /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            recaptchaFieldName() => [
+                'required' => __('You appear to be a robot. Please ensure your web browser supports JavaScript.')
+            ]
+        ];
+    }
+
+    /**
      * Get the "after" validation callables for the request.
      */
     public function after(): array
