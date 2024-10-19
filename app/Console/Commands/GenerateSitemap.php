@@ -29,19 +29,27 @@ class GenerateSitemap extends Command
      */
     public function handle()
     {
-        $sitemaps = [
-            $this->getPagesSitemap(),
-            $this->getAuthSitemap(),
-            $this->getArticlesSitemap(),
-        ];
 
         $sitemap = Sitemap::create();
 
-        foreach ($sitemaps as $value) {
+        foreach ($this->getSitemaps() as $value) {
             $sitemap->add($value->getTags());
         }
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
+
+    /**
+     * Gets sitemaps to include.
+     *
+     * @return Sitemap[]
+     */
+    protected function getSitemaps(): array
+    {
+        return [
+            $this->getPagesSitemap(),
+            $this->getAuthSitemap(),
+            $this->getArticlesSitemap(),
+        ];
     }
 
     /**
