@@ -29,7 +29,7 @@ class GenerateSitemap extends Command
     {
         $outputFile = $this->argument('output');
 
-        if (!$this->option('force') && !is_writable($outputFile)) {
+        if (! $this->option('force') && ! is_writable($outputFile)) {
             $this->error(sprintf('The file "%s" is not writable.', $outputFile));
 
             return 1;
@@ -46,7 +46,7 @@ class GenerateSitemap extends Command
         if (count($sitemap->getTags()) === 0) {
             $this->info('No tags were to found to add to sitemap.');
 
-            if (!$this->option('force') && !$this->confirm('Would you like to continue creating the sitemap?')) {
+            if (! $this->option('force') && ! $this->confirm('Would you like to continue creating the sitemap?')) {
                 $this->info('Exiting...');
 
                 return 1;
