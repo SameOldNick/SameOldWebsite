@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Components\SweetAlert\Swal;
+use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
@@ -38,5 +41,19 @@ class VerificationController extends Controller
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function verified(Request $request)
+    {
+        Swal::success(function (SweetAlertBuilder $builder) {
+            $builder
+                ->title(__('Verified'))
+                ->content(__('auth.verified'), false);
+        });
+
+        return redirect($this->redirectPath())->with('verified', true);
     }
 }

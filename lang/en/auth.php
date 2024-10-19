@@ -19,4 +19,5 @@ return [
 
     'registered' => 'You have been registered. Please check your inbox to verify your e-mail address.',
 
+    'verified' => 'Your e-mail address has been verified.',
 ];
