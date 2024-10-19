@@ -29,6 +29,10 @@
                             <form method="POST" name="contact" action="{{ route('contact') }}">
                                 @csrf
 
+                                @if ($settings['require_recaptcha'])
+                                <input type="hidden" name="{{ recaptchaFieldName() }}" id="gRecaptcha">
+                                @endif
+
                                 <div class="row mb-3">
                                     <div class="col-12">
                                         <label for="name" class="form-label">{{ __('Name') }}</label>
@@ -87,7 +91,28 @@
 
     @push('head')
         @if ($settings['require_recaptcha'])
-            {!! htmlScriptTagJsApi() !!}
+            <script type="text/javascript">
+                function disableForm(disabled) {
+                    document.querySelectorAll('form button, form input, form textarea').forEach(function (el) {
+                        el.disabled = disabled;
+                    });
+                }
+
+                $(function () {
+                    disableForm(true);
+                });
+
+                function attachTokenToForm(token) {
+                    document.getElementById('gRecaptcha').value = token;
+
+                    document.querySelectorAll('form button, form input, form textarea').forEach(function (el) {
+                        disableForm(false);
+                    });
+                }
+            </script>
+            {!! htmlScriptTagJsApi([
+                'custom_validation' => 'attachTokenToForm'
+            ]) !!}
         @endif
     @endpush
 </x-main.layout>

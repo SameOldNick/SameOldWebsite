@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Components\Settings\Facades\PageSettings;
+use App\Rules\RecaptchaVersion3;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
@@ -29,7 +30,7 @@ class ContactRequest extends FormRequest
         ];
 
         if (PageSettings::page('contact')->setting('require_recaptcha')) {
-            $rules[recaptchaFieldName()] = recaptchaRuleName();
+            $rules[recaptchaFieldName()] = ['required', new RecaptchaVersion3];
         }
 
         return $rules;
