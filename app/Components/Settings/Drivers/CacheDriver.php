@@ -65,6 +65,17 @@ class CacheDriver implements Driver
     }
 
     /**
+     * Purges cache for page
+     *
+     * @param string $page
+     * @return bool
+     */
+    public function purge(string $page)
+    {
+        return $this->cache->forget($this->createCacheKey($page));
+    }
+
+    /**
      * Forwards calls to underlying driver.
      *
      * @param  string  $name
