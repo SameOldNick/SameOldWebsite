@@ -15,7 +15,7 @@ class GenerateSitemap extends Command
      *
      * @var string
      */
-    protected $signature = 'sitemap:generate';
+    protected $signature = 'sitemap:generate {--force : Force sitemap to be created} {output : File to write sitemap to}';
 
     /**
      * The console command description.
@@ -29,6 +29,15 @@ class GenerateSitemap extends Command
      */
     public function handle()
     {
+        $outputFile = $this->argument('output');
+
+        if (!$this->option('force') && !is_writable($outputFile)) {
+            $this->error(sprintf('The file "%s" is not writable.', $outputFile));
+
+            return 1;
+        }
+
+        $this->info('Generating sitemap...');
 
         $sitemap = Sitemap::create();
 
@@ -36,7 +45,20 @@ class GenerateSitemap extends Command
             $sitemap->add($value->getTags());
         }
 
-        $sitemap->writeToFile(public_path('sitemap.xml'));
+        if (count($sitemap->getTags()) === 0) {
+            $this->info('No tags were to found to add to sitemap.');
+
+            if (!$this->option('force') && !$this->confirm('Would you like to continue creating the sitemap?')) {
+                $this->info('Exiting...');
+
+                return 1;
+            }
+        }
+
+        $sitemap->writeToFile($outputFile);
+
+        $this->info(sprintf('Sitemap saved to "%s".', $outputFile));
+    }
 
     /**
      * Gets sitemaps to include.
