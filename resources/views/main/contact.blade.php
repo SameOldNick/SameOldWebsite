@@ -26,7 +26,7 @@
                                 </div>
                             @endif
 
-                            <form method="POST" name="contact" action="{{ route('contact') }}">
+                            <form method="POST" id="contact" name="contact" action="{{ route('contact') }}">
                                 @csrf
 
                                 @if ($settings['require_recaptcha'])
@@ -93,7 +93,7 @@
         @if ($settings['require_recaptcha'])
             <script type="text/javascript">
                 function disableForm(disabled) {
-                    document.querySelectorAll('form button, form input, form textarea').forEach(function (el) {
+                    document.querySelectorAll('form#contact button, form#contact input, for#contactm textarea').forEach(function (el) {
                         el.disabled = disabled;
                     });
                 }
