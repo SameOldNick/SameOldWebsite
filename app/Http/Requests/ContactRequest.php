@@ -45,8 +45,8 @@ class ContactRequest extends FormRequest
     {
         return [
             recaptchaFieldName() => [
-                'required' => __('You appear to be a robot. Please ensure your web browser supports JavaScript.')
-            ]
+                'required' => __('You appear to be a robot. Please ensure your web browser supports JavaScript.'),
+            ],
         ];
     }
 
