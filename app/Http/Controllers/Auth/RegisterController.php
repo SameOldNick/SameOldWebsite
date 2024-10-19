@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Components\SweetAlert\Swal;
 use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Http\Controllers\Controller;
-use App\Models\Country;
 use App\Models\User;
 use App\Traits\Controllers\ReturnsToUrl;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -47,7 +46,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm(Request $request)
     {
-        $data = ['countries' => Country::sortedByCountry()];
+        $data = [];
         $returnUrl = $request->get('return_url');
 
         if (is_string($returnUrl)) {

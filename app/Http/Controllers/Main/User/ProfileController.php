@@ -19,9 +19,7 @@ class ProfileController extends Controller
      */
     public function view(Request $request)
     {
-        return view('main.user.profile', [
-            'countries' => Country::sortedByCountry(),
-        ]);
+        return view('main.user.profile');
     }
 
     /**
@@ -77,7 +75,6 @@ class ProfileController extends Controller
         }
 
         return view('main.user.profile', [
-            'countries' => Country::sortedByCountry(),
             'success' => $message,
         ]);
     }
