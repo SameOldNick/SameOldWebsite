@@ -26,12 +26,15 @@ class ContactMessagesController extends Controller
     public function index(Request $request)
     {
         $request->validate([
+            'per_page' => 'nullable|numeric|min:0',
             'sort' => 'sometimes|in:from,sent_ascending,sent_descending',
             'show' => [
                 'sometimes',
                 Rule::enum(ContactMessageStatus::class),
             ],
         ]);
+
+        $perPage = $request->has('per_page') ? $request->integer('per_page') : null;
 
         $query = ContactMessage::query();
 
@@ -54,7 +57,13 @@ class ContactMessagesController extends Controller
             });
         }
 
-        return new ContactMessageCollection($query->paginate());
+        if ($request->has('per_page')) {
+            $perPage = $request->integer('per_page') ?: $query->count();
+        } else {
+            $perPage = null;
+        }
+
+        return new ContactMessageCollection($query->paginate($perPage));
     }
 
     /**
