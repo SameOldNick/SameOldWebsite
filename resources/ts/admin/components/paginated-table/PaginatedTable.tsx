@@ -16,6 +16,7 @@ interface PaginatedTableProps<TData = unknown> {
 
 interface PaginatedTableHandle {
     currentPage: number;
+    reset: () => Promise<void>;
     reload: () => Promise<void>;
 }
 
@@ -28,11 +29,17 @@ function PaginatedTable<TData>({ initialResponse, children, loader, ...props }: 
 
     React.useImperativeHandle(ref, () => ({
         currentPage,
+        reset: async () => {
+            setLastResponse(new PaginateResponse(initialResponse));
+            setCurrentPage(1);
+            setLastLink(undefined);
+            setRenderCount(1);
+        },
         reload: async () => {
             // TODO: Reload doesn't work when on first page
             setRenderCount((prev) => prev + 1);
         }
-    }), [renderCount, currentPage]);
+    }), [renderCount, currentPage, initialResponse]);
 
     const tryPullData = React.useCallback(async (link: string) => {
         const { pullData, onError, onUpdate } = props;
