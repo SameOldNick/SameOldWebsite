@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Card, CardBody, Col, Form, Input, Label, Row, Table } from 'reactstrap';
-import { FaSync } from 'react-icons/fa';
+import { Button, Card, CardBody, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Label, Row, Table } from 'reactstrap';
+import { FaRegCheckCircle, FaRegTimesCircle, FaSync, FaToolbox, FaTrash } from 'react-icons/fa';
 
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
@@ -18,6 +18,7 @@ import ContactMessage from '@admin/utils/api/models/ContactMessage';
 import awaitModalPrompt from '@admin/utils/modals';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
+import classNames from 'classnames';
 
 interface IMessageListProps {
 
@@ -30,6 +31,7 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
     const [sortBy, setSortBy] = React.useState('sent_descending');
     const [show, setShow] = React.useState('all');
     const [selected, setSelected] = React.useState<string[]>([]);
+    const [actionDropdown, setActionDropdown] = React.useState(false);
 
     const load = React.useCallback(async (link?: string) => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IContactMessage>>(
@@ -42,16 +44,36 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
         return response.data;
     }, [sortBy, show]);
 
-    const reload = React.useCallback(async () => {
-        return paginatedTableRef.current?.reload();
-    }, [paginatedTableRef.current]);
+    const reload = React.useCallback(() => {
+        if (paginatedTableRef.current?.currentPage === 1) {
+            waitToLoadRef.current?.load();
+        } else {
+            paginatedTableRef.current?.reload();
+        }
+
+        setSelected([]);
+    }, [waitToLoadRef.current, paginatedTableRef.current]);
 
     const handleViewClicked = React.useCallback((message: ContactMessage) => {
         awaitModalPrompt(MessageModal, { message });
     }, []);
 
+    const confirmPrompt = React.useCallback(async (text: string) => {
+        const result = await withReactContent(Swal).fire({
+            title: 'Are you sure?',
+            text,
+            icon: 'question',
+            showCancelButton: true
+        });
+
+        return result.isConfirmed;
+    }, []);
+
     const handleMarkUnconfirmedClicked = React.useCallback(async (message: ContactMessage) => {
         try {
+            if (!await confirmPrompt(`This will mark contact message with ID "${message.message.uuid}" as unconfirmed.`))
+                return;
+
             await createAuthRequest().put<IContactMessage>(`/contact-messages/${message.message.uuid}`, {
                 confirmed_at: null
             });
@@ -80,6 +102,9 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
 
     const handleMarkConfirmedClicked = React.useCallback(async (message: ContactMessage) => {
         try {
+            if (!await confirmPrompt(`This will mark contact message with ID "${message.message.uuid}" as confirmed.`))
+                return;
+
             await createAuthRequest().put<IContactMessage>(`/contact-messages/${message.message.uuid}`, {
                 confirmed_at: DateTime.now().toISO()
             });
@@ -108,22 +133,115 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
 
     const handleDeleteClicked = React.useCallback(async (message: ContactMessage) => {
         try {
-            const result = await withReactContent(Swal).fire({
-                title: 'Are You Sure?',
-                text: `This will remove contact message with ID "${message.message.uuid}".`,
-                icon: 'question',
-                showCancelButton: true
-            });
-
-            if (!result.isConfirmed) {
+            if (!await confirmPrompt(`This will remove contact message with ID "${message.message.uuid}".`))
                 return;
-            }
 
             const response = await createAuthRequest().delete<Record<'success', string>>(`/contact-messages/${message.message.uuid}`);
 
             await withReactContent(Swal).fire({
                 title: 'Success!',
                 text: response.data.success,
+                icon: 'success'
+            });
+
+        } catch (err) {
+            logger.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined)
+
+            await withReactContent(Swal).fire({
+                title: 'Oops...',
+                text: `An error occurred: ${message}`,
+                icon: 'error'
+            });
+        } finally {
+            reload();
+        }
+
+    }, [reload]);
+
+    const handleMarkSelectedUnconfirmedClicked = React.useCallback(async () => {
+        try {
+            if (!await confirmPrompt(`This will mark ${selected.length} contact messages as unconfirmed.`))
+                return;
+
+            const data = {
+                messages: selected.map((uuid) => ({
+                    uuid,
+                    confirmed_at: null
+                }))
+            };
+
+            await createAuthRequest().put<IContactMessage>(`/contact-messages`, data);
+
+            await withReactContent(Swal).fire({
+                title: 'Success!',
+                text: 'The selected contact messages were marked as unconfirmed.',
+                icon: 'success'
+            });
+
+        } catch (err) {
+            logger.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined)
+
+            await withReactContent(Swal).fire({
+                title: 'Oops...',
+                text: `An error occurred: ${message}`,
+                icon: 'error'
+            });
+        } finally {
+            reload();
+        }
+    }, [reload, selected]);
+
+    const handleMarkSelectedConfirmedClicked = React.useCallback(async () => {
+        try {
+            if (!await confirmPrompt(`This will mark ${selected.length} contact messages as confirmed.`))
+                return;
+
+            const data = {
+                messages: selected.map((uuid) => ({
+                    uuid,
+                    confirmed_at: DateTime.now().toISO()
+                }))
+            };
+
+            await createAuthRequest().put<IContactMessage>(`/contact-messages`, data);
+
+            await withReactContent(Swal).fire({
+                title: 'Success!',
+                text: 'The selected contact messages were marked as confirmed.',
+                icon: 'success'
+            });
+
+        } catch (err) {
+            logger.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined)
+
+            await withReactContent(Swal).fire({
+                title: 'Oops...',
+                text: `An error occurred: ${message}`,
+                icon: 'error'
+            });
+        } finally {
+            reload();
+        }
+    }, [reload, selected]);
+
+    const handleDeleteSelectedClicked = React.useCallback(async () => {
+        try {
+            if (!await confirmPrompt(`This will delete ${selected.length} contact messages.`))
+                return;
+
+            const data = { messages: selected.map((uuid) => uuid) };
+
+            await createAuthRequest().delete<IContactMessage>(`/contact-messages`, data);
+
+            await withReactContent(Swal).fire({
+                title: 'Success!',
+                text: 'The selected contact messages were deleted.',
                 icon: 'success'
             });
 
@@ -169,7 +287,30 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                 <CardBody>
                     <Row>
                         <Col xs={12} className='d-flex flex-column flex-md-row justify-content-between mb-3'>
-                            <div className="mb-3 mb-md-0"></div>
+                            <div className="mb-3 mb-md-0">
+                                {selected.length > 0 && (
+                                    <Dropdown group toggle={() => setActionDropdown((prev) => !prev)} isOpen={actionDropdown}>
+                                        <DropdownToggle caret color='primary'>
+                                            <FaToolbox />{' '}
+                                            Actions
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem onClick={handleMarkSelectedUnconfirmedClicked}>
+                                                <FaRegTimesCircle />{' '}
+                                                Mark Unconfirmed
+                                            </DropdownItem>
+                                            <DropdownItem onClick={handleMarkSelectedConfirmedClicked}>
+                                                <FaRegCheckCircle />{' '}
+                                                Mark Confirmed
+                                            </DropdownItem>
+                                            <DropdownItem onClick={handleDeleteSelectedClicked}>
+                                                <FaTrash />{' '}
+                                                Remove
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                )}
+                            </div>
                             <div className="text-start text-md-end">
                                 <Form className="row row-cols-lg-auto g-3" onSubmit={handleDisplayOptionsFormSubmit}>
                                     <Col xs={12}>
