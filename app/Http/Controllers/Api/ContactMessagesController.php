@@ -37,9 +37,9 @@ class ContactMessagesController extends Controller
         $sort = (string) $request->str('sort', 'sent_ascending');
 
         $sorters = [
-            'from' => fn(Builder $query) => $query->orderBy('email'),
-            'sent_ascending' => fn(Builder $query) => $query->orderBy('created_at', 'asc'),
-            'sent_descending' => fn(Builder $query) => $query->orderBy('created_at', 'desc'),
+            'from' => fn (Builder $query) => $query->orderBy('email'),
+            'sent_ascending' => fn (Builder $query) => $query->orderBy('created_at', 'asc'),
+            'sent_descending' => fn (Builder $query) => $query->orderBy('created_at', 'desc'),
         ];
 
         if (isset($sorters[$sort])) {
@@ -48,7 +48,7 @@ class ContactMessagesController extends Controller
 
         if ($show) {
             $query->afterQuery(function (Collection $found) use ($show) {
-                return $found->filter(fn(ContactMessage $contactMessage) => $contactMessage->status === $show);
+                return $found->filter(fn (ContactMessage $contactMessage) => $contactMessage->status === $show);
             });
         }
 
