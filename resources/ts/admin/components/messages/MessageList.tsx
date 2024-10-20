@@ -29,6 +29,7 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
 
     const [sortBy, setSortBy] = React.useState('sent_descending');
     const [show, setShow] = React.useState('all');
+    const [selected, setSelected] = React.useState<string[]>([]);
 
     const load = React.useCallback(async (link?: string) => {
         const response = await createAuthRequest().get<IPaginateResponseCollection<IContactMessage>>(
@@ -148,6 +149,20 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
         reload();
     }, [reload]);
 
+    const handleSelected = React.useCallback((uuid: string) => {
+        setSelected((prev) => prev.includes(uuid) ? prev.filter((value) => value !== uuid) : prev.concat(uuid));
+    }, []);
+
+    const isAllSelected = React.useCallback((messages: IContactMessage[]) => {
+        const uuids = messages.map((message) => message.uuid);
+
+        return selected.filter((value) => uuids.includes(value)).length === uuids.length;
+    }, [selected]);
+
+    const handleSelectAll = React.useCallback((e: React.ChangeEvent<HTMLInputElement>, messages: IContactMessage[]) => {
+        setSelected(e.target.checked ? messages.map((message) => message.uuid) : []);
+    }, []);
+
     return (
         <>
             <Card>
@@ -209,6 +224,13 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                                                     <Table key={key} responsive>
                                                         <thead>
                                                             <tr>
+                                                                <th>
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        checked={isAllSelected(messages)}
+                                                                        onChange={(e) => handleSelectAll(e, messages)}
+                                                                    />
+                                                                </th>
                                                                 <th>ID</th>
                                                                 <th>From</th>
                                                                 <th>Message</th>
@@ -222,6 +244,9 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                                                                 <MessageRow
                                                                     key={index}
                                                                     message={message}
+                                                                    selected={selected.includes(message.message.uuid)}
+                                                                    className={classNames({ 'table-active': selected.includes(message.message.uuid) })}
+                                                                    onSelected={() => handleSelected(message.message.uuid)}
                                                                     onViewClicked={() => handleViewClicked(message)}
                                                                     onMarkUnconfirmedClicked={() => handleMarkUnconfirmedClicked(message)}
                                                                     onMarkConfirmedClicked={() => handleMarkConfirmedClicked(message)}

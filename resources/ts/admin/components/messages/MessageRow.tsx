@@ -7,19 +7,37 @@ import S from 'string';
 import ContactMessage from '@admin/utils/api/models/ContactMessage';
 import { DateTime } from 'luxon';
 
-interface IRowProps {
+interface IRowProps extends Omit<React.HTMLAttributes<HTMLTableRowElement>, 'children'> {
+    selected: boolean;
     message: ContactMessage;
+    onSelected: () => void;
     onViewClicked: () => void;
     onMarkUnconfirmedClicked: () => void;
     onMarkConfirmedClicked: () => void;
     onRemoveClicked: () => void;
 }
 
-const MessageRow: React.FC<IRowProps> = ({ message, onViewClicked, onMarkUnconfirmedClicked, onMarkConfirmedClicked, onRemoveClicked }) => {
+const MessageRow: React.FC<IRowProps> = ({
+    selected,
+    message,
+    onSelected,
+    onViewClicked,
+    onMarkUnconfirmedClicked,
+    onMarkConfirmedClicked,
+    onRemoveClicked,
+    ...props
+}) => {
     const [actionDropdown, setActionDropdown] = React.useState(false);
 
     return (
-        <tr>
+        <tr {...props}>
+            <td>
+                <input
+                    type="checkbox"
+                    checked={selected}
+                    onChange={onSelected}
+                />
+            </td>
             <td>{message.message.uuid}</td>
             <td>{message.displayName}</td>
             <td>{S(message.message.message).truncate(75).s}</td>
