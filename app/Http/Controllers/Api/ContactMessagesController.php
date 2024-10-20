@@ -95,7 +95,6 @@ class ContactMessagesController extends Controller
     /**
      * Updates multiple messages
      *
-     * @param Request $request
      * @return mixed
      */
     public function bulkUpdate(Request $request)
@@ -105,7 +104,7 @@ class ContactMessagesController extends Controller
             'messages.*.uuid' => [
                 'required',
                 'uuid',
-                Rule::exists(ContactMessage::class)
+                Rule::exists(ContactMessage::class),
             ],
             'messages.*.name' => 'sometimes|string|min:1|max:255',
             'messages.*.email' => 'sometimes|email|max:255',
@@ -144,8 +143,9 @@ class ContactMessagesController extends Controller
      */
     public function destroy(ContactMessage $contactMessage)
     {
-        if (!$this->performDestroy($contactMessage))
+        if (! $this->performDestroy($contactMessage)) {
             return response()->json(['error' => 'Failed to delete message.'], 500);
+        }
 
         return [
             'success' => __('Contact message was removed.'),
@@ -155,7 +155,6 @@ class ContactMessagesController extends Controller
     /**
      * Removes multiple messages
      *
-     * @param Request $request
      * @return mixed
      */
     public function bulkDestroy(Request $request)
@@ -165,7 +164,7 @@ class ContactMessagesController extends Controller
             'messages.*' => [
                 'required',
                 'uuid',
-                Rule::exists(ContactMessage::class, 'uuid')
+                Rule::exists(ContactMessage::class, 'uuid'),
             ],
         ]);
 
@@ -177,8 +176,9 @@ class ContactMessagesController extends Controller
                 // Find the contact message by ID
                 $contactMessage = ContactMessage::findOrFail($uuid);
 
-                if (!$this->performDestroy($contactMessage))
+                if (! $this->performDestroy($contactMessage)) {
                     throw new Exception("Deleting message with UUID '{$uuid}' failed.");
+                }
             }
 
             // Commit the transaction if all updates succeed
@@ -198,8 +198,6 @@ class ContactMessagesController extends Controller
     /**
      * Updates a contact message
      *
-     * @param ContactMessage $contactMessage
-     * @param array $data
      * @return ContactMessage
      */
     protected function performUpdate(ContactMessage $contactMessage, array $data)
@@ -219,7 +217,6 @@ class ContactMessagesController extends Controller
     /**
      * Deletes a contact message
      *
-     * @param ContactMessage $contactMessage
      * @return bool
      */
     protected function performDestroy(ContactMessage $contactMessage)
