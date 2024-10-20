@@ -117,14 +117,8 @@ function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime, log = 
     );
 }
 
-/**
- * This essentially hacks TSX so that a generic type is required when using the component.
- * React.forwardRef by itself doesn't work with generic types.
- */
-interface GenericForwardedRefComponent<T> {
-    <TReturnValue>(props: React.PropsWithoutRef<IProps<TReturnValue>> & React.RefAttributes<T>): React.ReactNode;
-}
-
-const ForwardedWaitToLoad: GenericForwardedRefComponent<IWaitToLoadHandle> = React.forwardRef<IWaitToLoadHandle, IProps<any>>(WaitToLoad);
+const ForwardedWaitToLoad = React.forwardRef(WaitToLoad) as <TReturnValue>(
+    props: IProps<TReturnValue> & React.RefAttributes<IWaitToLoadHandle>
+) => ReturnType<typeof WaitToLoad>;
 
 export default ForwardedWaitToLoad;
