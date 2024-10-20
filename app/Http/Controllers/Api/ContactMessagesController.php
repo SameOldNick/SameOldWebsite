@@ -6,9 +6,11 @@ use App\Enums\ContactMessageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ContactMessageCollection;
 use App\Models\ContactMessage;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ContactMessagesController extends Controller
@@ -76,15 +78,56 @@ class ContactMessagesController extends Controller
             'expires_at' => 'sometimes|nullable|date',
         ]);
 
-        foreach ($validated as $key => $value) {
-            $contactMessage->{$key} = $value;
+        $updatedMessage = $this->performUpdate($contactMessage, $validated);
+
+        return $updatedMessage;
+    }
+
+    /**
+     * Updates multiple messages
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function bulkUpdate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'messages' => 'required|array',
+            'messages.*.uuid' => [
+                'required',
+                'uuid',
+                Rule::exists(ContactMessage::class)
+            ],
+            'messages.*.name' => 'sometimes|string|min:1|max:255',
+            'messages.*.email' => 'sometimes|email|max:255',
+            'messages.*.message' => 'sometimes|string',
+            'messages.*.confirmed_at' => 'sometimes|nullable|date',
+            'messages.*.expires_at' => 'sometimes|nullable|date',
+        ]);
+
+        $updatedMessages = [];
+
+        // Use a transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            foreach ($validatedData['messages'] as $data) {
+                // Find the contact message by ID
+                $contactMessage = ContactMessage::findOrFail($data['uuid']);
+
+                $updatedMessages[] = $this->performUpdate($contactMessage, $data);
+            }
+
+            // Commit the transaction if all updates succeed
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if anything fails
+            DB::rollBack();
+
+            return response()->json(['error' => 'Failed to update messages.'], 500);
         }
 
-        if ($contactMessage->isDirty(array_keys($validated))) {
-            $contactMessage->save();
-        }
-
-        return $contactMessage;
+        return response()->json($updatedMessages);
     }
 
     /**
@@ -92,10 +135,86 @@ class ContactMessagesController extends Controller
      */
     public function destroy(ContactMessage $contactMessage)
     {
-        $contactMessage->delete();
+        if (!$this->performDestroy($contactMessage))
+            return response()->json(['error' => 'Failed to delete message.'], 500);
 
         return [
             'success' => __('Contact message was removed.'),
         ];
+    }
+
+    /**
+     * Removes multiple messages
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $validatedData = $request->validate([
+            'messages' => 'required|array',
+            'messages.*' => [
+                'required',
+                'uuid',
+                Rule::exists(ContactMessage::class, 'uuid')
+            ],
+        ]);
+
+        // Use a transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            foreach ($validatedData['messages'] as $uuid) {
+                // Find the contact message by ID
+                $contactMessage = ContactMessage::findOrFail($uuid);
+
+                if (!$this->performDestroy($contactMessage))
+                    throw new Exception("Deleting message with UUID '{$uuid}' failed.");
+            }
+
+            // Commit the transaction if all updates succeed
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if anything fails
+            DB::rollBack();
+
+            return response()->json(['error' => 'Failed to delete messages.'], 500);
+        }
+
+        return [
+            'success' => __('Contact messages were removed.'),
+        ];
+    }
+
+    /**
+     * Updates a contact message
+     *
+     * @param ContactMessage $contactMessage
+     * @param array $data
+     * @return ContactMessage
+     */
+    protected function performUpdate(ContactMessage $contactMessage, array $data)
+    {
+        foreach ($data as $key => $value) {
+            $contactMessage->{$key} = $value;
+        }
+
+        // Save only if there are changes
+        if ($contactMessage->isDirty()) {
+            $contactMessage->save();
+        }
+
+        return $contactMessage;
+    }
+
+    /**
+     * Deletes a contact message
+     *
+     * @param ContactMessage $contactMessage
+     * @return bool
+     */
+    protected function performDestroy(ContactMessage $contactMessage)
+    {
+        return (bool) $contactMessage->delete();
     }
 }

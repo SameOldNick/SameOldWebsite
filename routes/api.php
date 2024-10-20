@@ -106,6 +106,8 @@ Route::namespace(Api::class)->group(function () {
         Route::post('/backup/settings', [Api\Backup\BackupSettingsController::class, 'update']);
 
         Route::apiResource('contact-messages', Api\ContactMessagesController::class)->except(['store']);
+        Route::put('contact-messages', [Api\ContactMessagesController::class, 'bulkUpdate']);
+        Route::delete('contact-messages', [Api\ContactMessagesController::class, 'bulkDestroy']);
 
         Route::post('/projects/restore/{project}', [Api\Homepage\ProjectsController::class, 'restore'])->withTrashed();
         Route::post('/users/restore/{user}', [Api\UsersController::class, 'restore'])->withTrashed();
