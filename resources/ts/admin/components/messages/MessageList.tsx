@@ -30,6 +30,7 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
 
     const [sortBy, setSortBy] = React.useState('sent_descending');
     const [show, setShow] = React.useState('all');
+    const [perPage, setPerPage] = React.useState('15');
     const [selected, setSelected] = React.useState<string[]>([]);
     const [actionDropdown, setActionDropdown] = React.useState(false);
 
@@ -38,18 +39,16 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
             link ?? '/contact-messages',
             {
                 sort: sortBy,
-                show: show !== 'all' ? show : undefined
+                show: show !== 'all' ? show : undefined,
+                per_page: !isNaN(parseInt(perPage)) ? Number(perPage) : 0
             });
 
         return response.data;
-    }, [sortBy, show]);
+    }, [sortBy, show, perPage]);
 
     const reload = React.useCallback(() => {
-        if (paginatedTableRef.current?.currentPage === 1) {
-            waitToLoadRef.current?.load();
-        } else {
-            paginatedTableRef.current?.reload();
-        }
+        paginatedTableRef.current?.reset();
+        waitToLoadRef.current?.load();
 
         setSelected([]);
     }, [waitToLoadRef.current, paginatedTableRef.current]);
@@ -313,6 +312,19 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                             </div>
                             <div className="text-start text-md-end">
                                 <Form className="row row-cols-lg-auto g-3" onSubmit={handleDisplayOptionsFormSubmit}>
+                                    <Col xs={12}>
+                                        <Label htmlFor="sort" className="col-form-label float-md-start me-1">Items Per Page: </Label>
+                                        <Col className="float-md-start">
+                                            <Input type='select' name='per_page' id='perPage' value={perPage} onChange={(e) => setPerPage(e.target.value)}>
+                                                <option value="15">15</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="all">All</option>
+                                            </Input>
+                                        </Col>
+                                    </Col>
+
                                     <Col xs={12}>
                                         <Label htmlFor="sort" className="col-form-label float-md-start me-1">Sort By: </Label>
                                         <Col className="float-md-start">
