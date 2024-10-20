@@ -6,7 +6,7 @@ import classNames from 'classnames';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import PaginatedTable from '@admin/components/PaginatedTable';
+import PaginatedTable, { PaginatedTableHandle } from '@admin/components/paginated-table/PaginatedTable';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 
@@ -50,7 +50,7 @@ const UserRow: React.FC<IUserRowProps> = ({ user, selected, onSelected }) => {
 
 const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, onSuccess, onCancelled }) => {
     const waitToLoadUsersRef = React.useRef<IWaitToLoadHandle>(null);
-    const paginatedTableRef = React.useRef<PaginatedTable<IUser>>(null);
+    const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 
     const [selected, setSelected] = React.useState<User | undefined>(existing);
     const [show, setShow] = React.useState('both');

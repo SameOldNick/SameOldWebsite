@@ -4,7 +4,7 @@ import { Button, Col, Form, Input, InputGroup, Row, Table } from 'reactstrap';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 
-import PaginatedTable from '@admin/components/PaginatedTable';
+import PaginatedTable, { PaginatedTableHandle } from '@admin/components/paginated-table/PaginatedTable';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import SingleComment from './SingleComment';
@@ -27,7 +27,7 @@ interface IProps {
 
 const CommentList: React.FC<IProps> = ({ }) => {
     const waitToLoadCommentsRef = React.useRef<IWaitToLoadHandle>(null);
-    const paginatedTableRef = React.useRef<PaginatedTable<IComment>>(null);
+    const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 
     const [show, setShow] = React.useState<CommentStatuses | 'all'>('all');
     const [article, setArticle] = React.useState<Article | undefined>();

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { FaPlus, FaSync } from 'react-icons/fa';
 import { Button, Col, Form, Input, Row, Table } from 'reactstrap';
 
-import PaginatedTable from '@admin/components/PaginatedTable';
+import PaginatedTable, { PaginatedTableHandle } from '@admin/components/paginated-table/PaginatedTable';
 import Loader from '@admin/components/Loader';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import LoadError from '@admin/components/LoadError';
@@ -21,7 +21,7 @@ interface IProps {
 
 const ArticleList: React.FC<IProps> = ({ }) => {
     const waitToLoadArticlesRef = React.useRef<IWaitToLoadHandle>(null);
-    const paginatedTableRef = React.useRef<PaginatedTable<IArticle>>(null);
+    const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 
     const [show, setShow] = React.useState<ArticleStatuses>(ArticleStatuses.all);
 

@@ -6,7 +6,7 @@ import S from 'string';
 import { DateTime } from 'luxon';
 
 import BackupInfoModal from './BackupInfoModal';
-import PaginatedTable from '@admin/components/PaginatedTable';
+import PaginatedTable from '@admin/components/paginated-table/PaginatedTable';
 import Loader from '@admin/components/Loader';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import LoadError from '@admin/components/LoadError';

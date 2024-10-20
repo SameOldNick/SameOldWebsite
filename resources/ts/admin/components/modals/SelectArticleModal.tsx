@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import PaginatedTable from '@admin/components/PaginatedTable';
+import PaginatedTable, { PaginatedTableHandle } from '@admin/components/paginated-table/PaginatedTable';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 
@@ -52,7 +52,7 @@ const ArticleRow: React.FC<IArticleRowProps> = ({ article, selected, onSelected 
 
 const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allowAll, onSuccess, onCancelled }) => {
     const waitToLoadArticlesRef = React.useRef<IWaitToLoadHandle>(null);
-    const paginatedTableRef = React.useRef<PaginatedTable<IArticle>>(null);
+    const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 
     const [selected, setSelected] = React.useState<Article | undefined>(existing);
     const [show, setShow] = React.useState('all');

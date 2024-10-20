@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 
 import WaitToLoad, { IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import PaginatedTable from '@admin/components/PaginatedTable';
+import PaginatedTable from '@admin/components/paginated-table/PaginatedTable';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import UserModel from '@admin/utils/api/models/User';
