@@ -93,10 +93,10 @@ class ContactMessage extends Model
      */
     protected function status(): Attribute
     {
-        return Attribute::get(fn () => match (true) {
-            $this->confirmed_at => ContactMessageStatus::Confirmed,
-            $this->expires_at && $this->expires_at->isFuture() => ContactMessageStatus::Unconfirmed,
-            $this->expires_at && $this->expires_at->isPast() => ContactMessageStatus::Expired,
+        return Attribute::get(fn() => match (true) {
+            isset($this->confirmed_at) => ContactMessageStatus::Confirmed,
+            isset($this->expires_at) && $this->expires_at->isFuture() => ContactMessageStatus::Unconfirmed,
+            isset($this->expires_at) && $this->expires_at->isPast() => ContactMessageStatus::Expired,
             default => ContactMessageStatus::Accepted
         });
     }
