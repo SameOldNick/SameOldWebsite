@@ -82,13 +82,6 @@ export default class ContactMessage {
      * @memberof ContactMessage
      */
     public get status() {
-        if (this.message.confirmed_at !== null)
-            return ContactMessage.STATUS_CONFIRMED;
-        else if (this.expiresAt && DateTime.now() < this.expiresAt)
-            return ContactMessage.STATUS_UNCONFIRMED;
-        else if (this.expiresAt === null)
-            return ContactMessage.STATUS_ACCEPTED;
-        else
-            return ContactMessage.STATUS_EXPIRED;
+        return this.message.status;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ContactMessageStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\URL;
  * @property string $name
  * @property string $email
  * @property string $message
+ * @property-read ContactMessageStatus $status
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $confirmed_at
@@ -55,6 +58,15 @@ class ContactMessage extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'status',
+    ];
+
+    /**
      * Uses default expires at date/time for message.
      *
      * @return $this
@@ -74,6 +86,21 @@ class ContactMessage extends Model
     public function generateUrl()
     {
         return URL::temporarySignedRoute('contact.confirm', $this->expires_at, ['contactMessage' => $this]);
+    }
+
+    /**
+     * Gets the statud of the message
+     *
+     * @return Attribute
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::get(fn() => match (true) {
+            $this->confirmed_at => ContactMessageStatus::Confirmed,
+            $this->expires_at && $this->expires_at->isFuture() => ContactMessageStatus::Unconfirmed,
+            $this->expires_at && $this->expires_at->isPast() => ContactMessageStatus::Expired,
+            default => ContactMessageStatus::Accepted
+        });
     }
 
     /**

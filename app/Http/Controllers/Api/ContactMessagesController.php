@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\ContactMessageStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ContactMessageCollection;
 use App\Models\ContactMessage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ContactMessagesController extends Controller
 {
@@ -16,9 +21,38 @@ class ContactMessagesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ContactMessage::all();
+        $request->validate([
+            'sort' => 'sometimes|in:from,sent_ascending,sent_descending',
+            'show' => [
+                'sometimes',
+                Rule::enum(ContactMessageStatus::class),
+            ],
+        ]);
+
+        $query = ContactMessage::query();
+
+        $show = $request->enum('show', ContactMessageStatus::class);
+        $sort = (string) $request->str('sort', 'sent_ascending');
+
+        $sorters = [
+            'from' => fn(Builder $query) => $query->orderBy('email'),
+            'sent_ascending' => fn(Builder $query) => $query->orderBy('created_at', 'asc'),
+            'sent_descending' => fn(Builder $query) => $query->orderBy('created_at', 'desc'),
+        ];
+
+        if (isset($sorters[$sort])) {
+            $sorters[$sort]($query);
+        }
+
+        if ($show) {
+            $query->afterQuery(function (Collection $found) use ($show) {
+                return $found->filter(fn(ContactMessage $contactMessage) => $contactMessage->status === $show);
+            });
+        }
+
+        return new ContactMessageCollection($query->paginate());
     }
 
     /**

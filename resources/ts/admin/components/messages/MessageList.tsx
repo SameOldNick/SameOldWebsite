@@ -5,17 +5,19 @@ import { FaSync } from 'react-icons/fa';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { DateTime } from 'luxon';
 
 import MessageRow from './MessageRow';
 import MessageModal from './MessageModal';
-import WaitToLoad, { IWaitToLoadHandle, IWaitToLoadHelpers } from '../WaitToLoad';
-import Loader from '../Loader';
+import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
+import Loader from '@admin/components/Loader';
+import PaginatedTable, { PaginatedTableHandle } from '@admin/components/paginated-table/PaginatedTable';
+import LoadError from '@admin/components/LoadError';
 
 import ContactMessage from '@admin/utils/api/models/ContactMessage';
 import awaitModalPrompt from '@admin/utils/modals';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import { DateTime } from 'luxon';
 
 interface IMessageListProps {
 
@@ -23,33 +25,31 @@ interface IMessageListProps {
 
 const MessageList: React.FC<IMessageListProps> = ({ }) => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
+    const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 
-    const [sortBy, setSortBy] = React.useState('sent');
+    const [sortBy, setSortBy] = React.useState('sent_descending');
     const [show, setShow] = React.useState('all');
 
-    const fetchMessages = React.useCallback(async () => {
-        const response = await createAuthRequest().get<IContactMessage[]>('/contact-messages');
-
-        return response.data
-            .map((message) => new ContactMessage(message))
-            .filter((message) => show !== 'all' ? message.status === show : true)
-            .sort((a, b) => {
-                // TODO: Allow ascending and descending ordering.
-
-                if (sortBy === 'from')
-                    return a.displayName.localeCompare(b.displayName);
-                else if (sortBy === 'status')
-                    return a.status.localeCompare(b.status);
-                else
-                    return a.createdAt.diff(b.createdAt).seconds;
+    const load = React.useCallback(async (link?: string) => {
+        const response = await createAuthRequest().get<IPaginateResponseCollection<IContactMessage>>(
+            link ?? '/contact-messages',
+            {
+                sort: sortBy,
+                show: show !== 'all' ? show : undefined
             });
+
+        return response.data;
     }, [sortBy, show]);
+
+    const reload = React.useCallback(async () => {
+        return paginatedTableRef.current?.reload();
+    }, [paginatedTableRef.current]);
 
     const handleViewClicked = React.useCallback((message: ContactMessage) => {
         awaitModalPrompt(MessageModal, { message });
     }, []);
 
-    const handleMarkUnconfirmedClicked = React.useCallback(async (message: ContactMessage, { reload }: IWaitToLoadHelpers) => {
+    const handleMarkUnconfirmedClicked = React.useCallback(async (message: ContactMessage) => {
         try {
             await createAuthRequest().put<IContactMessage>(`/contact-messages/${message.message.uuid}`, {
                 confirmed_at: null
@@ -72,12 +72,12 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                 icon: 'error'
             });
         } finally {
-            await reload();
+            reload();
         }
 
-    }, []);
+    }, [reload]);
 
-    const handleMarkConfirmedClicked = React.useCallback(async (message: ContactMessage, { reload }: IWaitToLoadHelpers) => {
+    const handleMarkConfirmedClicked = React.useCallback(async (message: ContactMessage) => {
         try {
             await createAuthRequest().put<IContactMessage>(`/contact-messages/${message.message.uuid}`, {
                 confirmed_at: DateTime.now().toISO()
@@ -100,12 +100,12 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                 icon: 'error'
             });
         } finally {
-            await reload();
+            reload();
         }
 
-    }, []);
+    }, [reload]);
 
-    const handleDeleteClicked = React.useCallback(async (message: ContactMessage, { reload }: IWaitToLoadHelpers) => {
+    const handleDeleteClicked = React.useCallback(async (message: ContactMessage) => {
         try {
             const result = await withReactContent(Swal).fire({
                 title: 'Are You Sure?',
@@ -137,16 +137,16 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                 icon: 'error'
             });
         } finally {
-            await reload();
+            reload();
         }
 
-    }, []);
+    }, [reload]);
 
     const handleDisplayOptionsFormSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        waitToLoadRef.current?.load();
-    }, [waitToLoadRef.current]);
+        reload();
+    }, [reload]);
 
     return (
         <>
@@ -162,8 +162,8 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                                         <Col className="float-md-start">
                                             <Input type='select' name='sort' id='sort' value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                                                 <option value="from">From</option>
-                                                <option value="sent">Sent</option>
-                                                <option value="status">Status</option>
+                                                <option value="sent_descending">Sent (Newest to Oldest)</option>
+                                                <option value="sent_ascending">Sent (Oldest to Newest)</option>
                                             </Input>
                                         </Col>
                                     </Col>
@@ -194,39 +194,53 @@ const MessageList: React.FC<IMessageListProps> = ({ }) => {
                             <WaitToLoad
                                 ref={waitToLoadRef}
                                 loading={<Loader display={{ type: 'over-element' }} />}
-                                callback={fetchMessages}
+                                callback={load}
                             >
-                                {(messages, err, helpers) => (
+                                {(response, err) => (
                                     <>
-                                        <Table responsive>
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>From</th>
-                                                    <th>Message</th>
-                                                    <th>Sent</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {messages && messages.map((message, index) => (
-                                                    <MessageRow
-                                                        key={index}
-                                                        message={message}
-                                                        onViewClicked={() => handleViewClicked(message)}
-                                                        onMarkUnconfirmedClicked={() => handleMarkUnconfirmedClicked(message, helpers)}
-                                                        onMarkConfirmedClicked={() => handleMarkConfirmedClicked(message, helpers)}
-                                                        onRemoveClicked={() => handleDeleteClicked(message, helpers)}
-                                                    />
-                                                ))}
-                                                {err !== undefined && (
-                                                    <tr>
-                                                        <td colSpan={5}>(An error occurred)</td>
-                                                    </tr>
+                                        {response && (
+                                            <PaginatedTable
+                                                ref={paginatedTableRef}
+                                                loader={<Loader display={{ type: 'over-element' }} />}
+                                                initialResponse={response}
+                                                pullData={load}
+                                            >
+                                                {(messages, key) => (
+                                                    <Table key={key} responsive>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th>
+                                                                <th>From</th>
+                                                                <th>Message</th>
+                                                                <th>Sent</th>
+                                                                <th>Status</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {messages.map((message) => new ContactMessage(message)).map((message, index) => (
+                                                                <MessageRow
+                                                                    key={index}
+                                                                    message={message}
+                                                                    onViewClicked={() => handleViewClicked(message)}
+                                                                    onMarkUnconfirmedClicked={() => handleMarkUnconfirmedClicked(message)}
+                                                                    onMarkConfirmedClicked={() => handleMarkConfirmedClicked(message)}
+                                                                    onRemoveClicked={() => handleDeleteClicked(message)}
+                                                                />
+                                                            ))}
+                                                        </tbody>
+                                                    </Table>
                                                 )}
-                                            </tbody>
-                                        </Table>
+                                            </PaginatedTable>
+                                        )}
+                                        {err && (
+                                            <LoadError
+                                                error={err}
+                                                onTryAgainClicked={() => reload()}
+                                                onGoBackClicked={() => window.history.back()}
+                                            />
+                                        )}
+
                                     </>
                                 )}
                             </WaitToLoad>
