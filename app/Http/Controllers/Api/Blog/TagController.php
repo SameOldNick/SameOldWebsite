@@ -76,10 +76,10 @@ class TagController extends Controller
     /**
      * Tranforms tag strings to Tag model keys.
      *
-     * @return list<int>
+     * @return list<int> Array of keys for Tag models
      */
     protected function transformTags(array $tags)
     {
-        return collect($tags)->map(fn ($tag) => Tag::firstOrCreate(['tag' => $tag])->getKey())->all();
+        return Tag::createFromStrings($tags)->map(fn(Tag $tag) => $tag->getKey())->all();
     }
 }
