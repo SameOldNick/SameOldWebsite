@@ -135,6 +135,10 @@ class NotificationsController extends Controller
                 // Find the notification by ID
                 $notification = Notification::findOrFail($data['id']);
 
+                if ($request->user()->isNot($notification->notifiable)) {
+                    throw new Exception("Notification '{$notification->id}' does not belong to user.");
+                }
+
                 $updated[] = $this->performUpdate($notification, $data);
             }
 
