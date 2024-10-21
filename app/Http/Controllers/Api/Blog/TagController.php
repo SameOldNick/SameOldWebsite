@@ -80,6 +80,6 @@ class TagController extends Controller
      */
     protected function transformTags(array $tags)
     {
-        return Tag::createFromStrings($tags)->map(fn(Tag $tag) => $tag->getKey())->all();
+        return Tag::createFromStrings($tags)->map(fn (Tag $tag) => $tag->getKey())->all();
     }
 }
