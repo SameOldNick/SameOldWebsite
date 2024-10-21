@@ -12,7 +12,7 @@ const LinkItemWrapper: React.FC<IProps> = ({ item }) => {
 
     return (
         <>
-            <Item href={item.href} icon={icon}>{item.text}</Item>
+            <Item href={item.href} icon={icon}>{item.content}</Item>
 
         </>
     );

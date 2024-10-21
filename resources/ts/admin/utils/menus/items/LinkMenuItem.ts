@@ -2,11 +2,11 @@ import MenuItem, { MenuItemOptions } from './MenuItem';
 
 class LinkMenuItem extends MenuItem {
     constructor(
-        text: string,
+        content: string,
         public readonly href: string,
         options?: MenuItemOptions,
     ) {
-        super(text, options);
+        super(content, options);
     }
 }
 

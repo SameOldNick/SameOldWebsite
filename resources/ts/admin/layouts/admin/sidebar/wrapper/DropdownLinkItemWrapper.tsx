@@ -12,7 +12,7 @@ const DropdownLinkItemWrapper: React.FC<DropdownLinkItemWrapperProps> = ({ item 
 
     return (
         <>
-            <DropdownItem href={item.href} icon={icon}>{item.text}</DropdownItem>
+            <DropdownItem href={item.href} icon={icon}>{item.content}</DropdownItem>
         </>
     );
 

@@ -13,7 +13,7 @@ const DropdownWrapper: React.FC<IProps> = ({ item }) => {
 
     return (
         <>
-            <Dropdown text={item.text} icon={icon}>
+            <Dropdown text={item.content} icon={icon}>
                 {item.items.map((item, index) => <ItemWrapper key={index} item={item} inDropdown />)}
             </Dropdown>
 
