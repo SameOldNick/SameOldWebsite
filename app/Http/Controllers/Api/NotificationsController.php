@@ -19,6 +19,8 @@ class NotificationsController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize(Notification::class);
+
         $request->validate([
             'show' => 'sometimes|in:read,unread,all',
             'type' => 'sometimes|string',
@@ -70,10 +72,7 @@ class NotificationsController extends Controller
      */
     public function show(Request $request, Notification $notification)
     {
-        // TODO: Create policy for notifications.
-        if ($request->user()->isNot($notification->notifiable)) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
+        $this->authorize($notification);
 
         return $notification;
     }
@@ -85,13 +84,10 @@ class NotificationsController extends Controller
      */
     public function markRead(Request $request, Notification $notification)
     {
-        if ($request->user()->isNot($notification->notifiable)) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
+        $this->authorize('update', $notification);
 
         return tap($notification)->markAsRead();
     }
-
 
     /**
      * Marks notification as unread.
@@ -100,9 +96,7 @@ class NotificationsController extends Controller
      */
     public function markUnread(Request $request, Notification $notification)
     {
-        if ($request->user()->isNot($notification->notifiable)) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
+        $this->authorize('update', $notification);
 
         return tap($notification)->markAsUnread();
     }
@@ -135,10 +129,6 @@ class NotificationsController extends Controller
                 // Find the notification by ID
                 $notification = Notification::findOrFail($data['id']);
 
-                if ($request->user()->isNot($notification->notifiable)) {
-                    throw new Exception("Notification '{$notification->id}' does not belong to user.");
-                }
-
                 $updated[] = $this->performUpdate($notification, $data);
             }
 
@@ -161,10 +151,6 @@ class NotificationsController extends Controller
      */
     public function destroy(Request $request, Notification $notification)
     {
-        if ($request->user()->isNot($notification->notifiable)) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
-
         $this->performDestroy($notification);
 
         return $notification;
@@ -195,10 +181,6 @@ class NotificationsController extends Controller
                 // Find the notification by ID
                 $notification = Notification::findOrFail($id);
 
-                if ($request->user()->isNot($notification->notifiable)) {
-                    throw new Exception("Notification '{$notification->id}' does not belong to user.");
-                }
-
                 $this->performDestroy($notification);
             }
 
@@ -223,6 +205,8 @@ class NotificationsController extends Controller
      */
     protected function performUpdate(Notification $notification, array $data)
     {
+        $this->authorize('update', $notification);
+
         foreach ($data as $key => $value) {
             $notification->{$key} = $value;
         }
@@ -242,6 +226,8 @@ class NotificationsController extends Controller
      */
     protected function performDestroy(Notification $notification)
     {
+        $this->authorize('delete', $notification);
+
         return (bool) $notification->delete();
     }
 }
