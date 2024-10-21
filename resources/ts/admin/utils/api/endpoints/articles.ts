@@ -153,25 +153,83 @@ export const syncTags = async (articleId: number, tags: Tag[]): Promise<ITag[]> 
     return response.data;
 }
 
+export interface ICreateArticleParams {
+    title: string;
+    slug: string;
+    content: string;
+    summary: string | null;
+    publishedAt: DateTime | null;
+    mainImage?: {
+        image: File;
+        description?: string;
+    };
+    images?: string[];
+    tags?: string[];
+}
+
 /**
  * Creates article
- * @param title Title
- * @param slug Slug
- * @param content Initial content
- * @param summary Summary
- * @param publishedAt When article is published
+ * @param params
  * @returns Article object
  */
-export const createArticle = async (title: string, slug: string, content: string, summary: string | null, publishedAt: DateTime | null): Promise<Article> => {
-    const response = await createAuthRequest().post<IArticle>('blog/articles', {
-        title,
-        slug,
-        published_at: publishedAt ? publishedAt.toISO() : null,
-        revision: {
-            content,
-            summary
+export const createArticle = async ({
+    title,
+    slug,
+    content,
+    summary,
+    publishedAt,
+    mainImage,
+    images,
+    tags
+}: ICreateArticleParams): Promise<Article> => {
+    const formData = new FormData();
+
+    // Add basic string fields
+    formData.append('title', title);
+    formData.append('slug', slug);
+    formData.append('content', content);
+
+    // Add summary if available
+    if (summary !== null) {
+        formData.append('summary', summary);
+    }
+
+    // Add published date if available, convert it to ISO string
+    if (publishedAt !== null) {
+        formData.append('published_at', publishedAt.toISO() ?? '');
+    }
+
+    // Add revision content
+    formData.append('revision[content]', content);
+
+    // Add revision summary (if exists)
+    if (summary) {
+        formData.append('revision[summary]', summary);
+    }
+
+    // Handle main image as an object
+    if (mainImage) {
+        formData.append('main_image[image]', mainImage.image);  // Add the image file
+        if (mainImage.description) {
+            formData.append('main_image[description]', mainImage.description);  // Add image description (optional)
         }
-    });
+    }
+
+    // Add images array if provided (e.g., additional image URLs or metadata)
+    if (images) {
+        images.forEach((image, index) => {
+            formData.append(`images[${index}]`, image);
+        });
+    }
+
+    // Add tags array if provided
+    if (tags) {
+        tags.forEach((tag, index) => {
+            formData.append(`tags[${index}]`, tag);
+        });
+    }
+
+    const response = await createAuthRequest().post<IArticle>('blog/articles', formData);
 
     return new Article(response.data);
 }

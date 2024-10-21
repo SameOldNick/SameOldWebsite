@@ -1,5 +1,4 @@
 import React from 'react';
-import { Tag } from 'react-tag-autocomplete';
 import { Button } from 'reactstrap';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -8,12 +7,11 @@ import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 import axios from 'axios';
 
-import { ArticleFormValues, SelectedMainImage } from '@admin/components/blog/articles/containers/formik/ArticleFormikProvider';
+import { ArticleFormValues } from '@admin/components/blog/articles/containers/formik/ArticleFormikProvider';
 
-import Image from '@admin/utils/api/models/Image';
 import Article from '@admin/utils/api/models/Article';
 
-import { attachImage, attachTags, createArticle, uploadImage, setMainImage as setMainImageApi } from '@admin/utils/api/endpoints/articles';
+import { createArticle } from '@admin/utils/api/endpoints/articles';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 interface CreateArticleActionPanelProps {
@@ -30,12 +28,24 @@ const CreateArticleActionPanel: React.FC<CreateArticleActionPanelProps> = ({ onA
             const { title, slug, content, summary, autoGenerateSummary, mainImage, uploadedImages, tags } = formik.values;
             const publishDate = publish ? DateTime.now() : null;
 
-            // Create the article with either a publish date or null
-            const created = await createArticle(title, slug, content, !autoGenerateSummary ? summary : null, publishDate);
+            if (mainImage && mainImage.file === undefined) {
+                throw new Error('Main image file is missing. Try attaching the image again.');
+            }
 
-            // Handle image and tag uploads
-            await handleImageUpload(created.article.id, mainImage, uploadedImages);
-            await handleTagAttachment(created.article.id, tags);
+            // Create the article
+            const created = await createArticle({
+                title,
+                slug,
+                content,
+                summary: !autoGenerateSummary ? summary : null,
+                publishedAt: publishDate,
+                mainImage: mainImage && mainImage.file ? {
+                    image: mainImage.file,
+                    description: mainImage.description
+                } : undefined,
+                images: uploadedImages.map((image) => image.uuid),
+                tags: tags.map((tag) => tag.label)
+            });
 
             // Show success notification
             await showSuccessAlert(publish);
@@ -47,32 +57,6 @@ const CreateArticleActionPanel: React.FC<CreateArticleActionPanelProps> = ({ onA
             formik.setSubmitting(false);
         }
     }, [formik, onArticleCreated]);
-
-    // Helper function for image upload
-    const handleImageUpload = React.useCallback(async (articleId: number, mainImage: SelectedMainImage | undefined, uploadedImages: Image[]) => {
-        if (mainImage) {
-            if (!mainImage.file) {
-                throw new Error('Main image is missing for new article');
-            }
-
-            const image = new Image(await uploadImage(mainImage.file));
-            await attachImage(articleId, image.uuid);
-            await setMainImageApi(articleId, image.uuid);
-        }
-
-        if (uploadedImages.length > 0) {
-            for (const image of uploadedImages) {
-                await attachImage(articleId, image.uuid);
-            }
-        }
-    }, []);
-
-    // Helper function for attaching tags
-    const handleTagAttachment = React.useCallback(async (articleId: number, tags: Tag[]) => {
-        if (tags.length > 0) {
-            await attachTags(articleId, tags);
-        }
-    }, []);
 
     // Helper function for success alert
     const showSuccessAlert = React.useCallback(async (publish: boolean) => {
