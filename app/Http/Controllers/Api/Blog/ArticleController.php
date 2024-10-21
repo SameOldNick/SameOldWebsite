@@ -14,9 +14,14 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleCollection as ArticleResourceCollection;
 use App\Models\Article;
+use App\Models\File;
+use App\Models\Image;
 use App\Models\Revision;
+use App\Models\Tag;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ArticleController extends Controller
@@ -66,32 +71,91 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        // Create a new article with the provided data
-        $article = Article::createWithUser(function (Article $article) use ($request) {
-            $article->fill([
-                'title' => $request->title,
-                'slug' => $request->slug,
+        // Use a transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            // Create a new article with the provided data
+            $article = Article::createWithUser(function (Article $article) use ($request) {
+                $article->fill([
+                    'title' => $request->title,
+                    'slug' => $request->slug,
+                ]);
+
+                $article->published_at = $request->date('published_at');
+            });
+
+            // Create a new revision for the article
+            $revision = $article->revisions()->create([
+                'content' => $request->string('revision.content'),
+                'summary' => $request->filled('revision.summary') ? $request->string('revision.summary') : null,
             ]);
 
-            $article->published_at = $request->date('published_at');
-        });
+            // Associate the new revision with the article
+            $article->currentRevision()->associate($revision);
 
-        // Create a new revision for the article
-        $revision = $article->revisions()->create([
-            'content' => $request->string('revision.content'),
-            'summary' => $request->filled('revision.summary') ? $request->string('revision.summary') : null,
-        ]);
+            // Save the article without using push to avoid circular dependency
+            $article->save();
 
-        // Associate the new revision with the article
-        $article->currentRevision()->associate($revision);
+            // Check if main image is supplied
+            if ($request->has('main_image')) {
+                // Create Image model
+                $mainImage = new Image([
+                    'description' => $request->has('main_image.description') ? $request->str('main_image.description') : null,
+                ]);
 
-        // Save the article without using push to avoid circular dependency
-        $article->save();
+                // Store image on disk
+                $path = $request->file('main_image.image')->store('images');
 
-        // Dispatch events related to article creation and publication status
-        ArticleCreated::dispatch($article);
-        ArticlePublished::dispatchIf($article->is_published, $article);
-        ArticleScheduled::dispatchIf($article->is_scheduled, $article);
+                // Create File model
+                $file = File::createFromFilePath($path, public: true);
+
+                // Associate current user with file
+                $file->user()->associate($request->user());
+
+                // Save file and image models
+                $mainImage->save();
+                $mainImage->file()->save($file);
+
+                // Attach image to article
+                $article->images()->attach($mainImage);
+
+                // Set as main image
+                $article->mainImage()->associate($mainImage);
+            }
+
+            // Check for images
+            if ($request->has('images')) {
+                // Attach image UUIDs to article
+                $images = $request->collect('images')->all();
+
+                $article->images()->attach($images);
+            }
+
+            // Check if tags were supplied
+            if ($request->has('tags')) {
+                // Transform strings to Tag models
+                $tags = Tag::createFromStrings($request->collect('tags'));
+
+                // Attach tags to article
+                $article->tags()->attach($tags->map(fn(Tag $tag) => $tag->getKey()));
+            }
+
+            $article->save();
+
+            // Dispatch events related to article creation and publication status
+            ArticleCreated::dispatch($article);
+            ArticlePublished::dispatchIf($article->is_published, $article);
+            ArticleScheduled::dispatchIf($article->is_scheduled, $article);
+
+            // Commit the transaction if all updates succeed
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if anything fails
+            DB::rollBack();
+
+            return response()->json(['error' => 'Failed to create article.'], 500);
+        }
 
         return $article;
     }

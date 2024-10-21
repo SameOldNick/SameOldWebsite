@@ -35,6 +35,13 @@ class StoreArticleRequest extends FormRequest
             'revision' => 'required|array:content,summary',
             'revision.content' => 'required|string',
             'revision.summary' => 'nullable|string',
+            'main_image' => 'sometimes|array',
+            'main_image.image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'main_image.description' => 'string|max:255',
+            'images' => 'sometimes|array',
+            'images.*' => 'uuid',
+            'tags' => 'sometimes|array',
+            'tags.*' => 'string',
             'published_at' => 'nullable|date',
         ];
     }
