@@ -38,8 +38,6 @@ Route::namespace(Api::class)->group(function () {
 
             Route::prefix('/notifications')->group(function () {
                 Route::get('/', [Api\NotificationsController::class, 'index']);
-                Route::get('/read', [Api\NotificationsController::class, 'read']);
-                Route::get('/unread', [Api\NotificationsController::class, 'unread']);
                 Route::get('/{notification}', [Api\NotificationsController::class, 'show']);
                 Route::post('/', [Api\NotificationsController::class, 'bulkUpdate']);
                 Route::post('/{notification}/read', [Api\NotificationsController::class, 'markRead']);

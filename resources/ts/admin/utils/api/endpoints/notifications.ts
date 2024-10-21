@@ -33,21 +33,13 @@ export const all = async (filters: INotificationFilters = {}) => {
  * Gets read notifications
  * @returns Array of INotification objects
  */
-export const read = async () => {
-    const response = await createAuthRequest().get<INotification[]>('/user/notifications/read');
-
-    return response.data;
-}
+export const read = async () => all({ show: 'read' });
 
 /**
  * Gets unread notifications
  * @returns Array of INotification objects
  */
-export const unread = async () => {
-    const response = await createAuthRequest().get<INotification[]>('/user/notifications/unread');
-
-    return response.data;
-}
+export const unread = async () => all({ show: 'unread' });
 
 /**
  * Gets single notification

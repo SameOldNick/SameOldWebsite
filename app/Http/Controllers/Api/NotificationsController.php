@@ -42,30 +42,6 @@ class NotificationsController extends Controller
     }
 
     /**
-     * Gets the read notifications.
-     *
-     * @return \Illuminate\Support\Collection
-     *
-     * @deprecated
-     */
-    public function read(Request $request)
-    {
-        return $this->index($request)->whereNotNull('read_at');
-    }
-
-    /**
-     * Gets the unread notifications.
-     *
-     * @return \Illuminate\Support\Collection
-     *
-     * @deprecated
-     */
-    public function unread(Request $request)
-    {
-        return $this->index($request)->whereNull('read_at');
-    }
-
-    /**
      * Display the specified resource.
      *
      * @return Notification
