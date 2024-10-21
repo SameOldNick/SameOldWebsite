@@ -5,12 +5,13 @@ import { connect, ConnectedProps } from 'react-redux';
 import withReactContent from 'sweetalert2-react-content';
 
 import Swal from 'sweetalert2';
+import { DateTime } from 'luxon';
 
 import NotificationItem, { INotificationItem } from './NotificationItem';
 import withNotifications, { IHasNotifications, IStoredNotification } from '@admin/components/hoc/WithNotifications';
 import Loader from '@admin/components/Loader';
 
-import { markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
+import { bulkUpdate, markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
 import { fetchFromApi } from '@admin/store/slices/notifications';
 import createErrorHandler from '@admin/utils/errors/factory';
 
@@ -92,12 +93,14 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
 
     const markNotifications = React.useCallback(async (as: 'read' | 'unread', uuids: string[]) => {
         try {
-            for (const uuid of uuids) {
-                if (as === 'read')
-                    await markRead(uuid);
-                else
-                    await markUnread(uuid);
-            }
+            const data = {
+                notifications: uuids.map((uuid) => ({
+                    id: uuid,
+                    read_at: as === 'read' ? DateTime.now().toISO() : null
+                }))
+            };
+
+            await bulkUpdate(data);
 
             await withReactContent(Swal).fire({
                 icon: 'success',
