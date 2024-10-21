@@ -165,7 +165,9 @@ class NotificationsController extends Controller
             abort(Response::HTTP_NOT_FOUND);
         }
 
-        return tap($notification)->delete();
+        $this->performDestroy($notification);
+
+        return $notification;
     }
 
     /**
