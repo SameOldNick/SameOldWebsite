@@ -80,7 +80,6 @@ class NotificationsController extends Controller
     /**
      * Bulk updates notifications
      *
-     * @param Request $request
      * @return void
      */
     public function bulkUpdate(Request $request)
@@ -135,7 +134,6 @@ class NotificationsController extends Controller
     /**
      * Bulk destroy notifications
      *
-     * @param Request $request
      * @return mixed
      */
     public function bulkDestroy(Request $request)
