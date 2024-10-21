@@ -83,6 +83,17 @@ export const markUnread = async (notification: string) => {
 }
 
 /**
+ * Bulk update notifications
+ * @param data Update data
+ * @returns INotification[]
+ */
+export const bulkUpdate = async (data: { notifications: Array<{ id: string; read_at: string | null; }> }) => {
+    const response = await createAuthRequest().post<INotification[]>(`/user/notifications`, data);
+
+    return response.data;
+}
+
+/**
  * Deletes notification
  * @param notification Notification UUID
  * @returns INotification
