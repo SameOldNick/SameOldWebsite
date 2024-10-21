@@ -10,7 +10,7 @@ interface MenuItemOptions {
 
 abstract class MenuItem {
     constructor(
-        public readonly text: string,
+        public readonly content: string,
         public readonly options?: MenuItemOptions,
     ) { }
 }
