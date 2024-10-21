@@ -14,7 +14,7 @@ const DropdownItemWrapper: React.FC<DropdownItemWrapperProps> = ({ item, ...prop
             <DropdownItem href={item.href} {...props}>
                 {item.options?.icon && <NavIcon icon={item.options.icon} />}
 
-                {item.text}
+                {item.content}
             </DropdownItem>
         </>
     );

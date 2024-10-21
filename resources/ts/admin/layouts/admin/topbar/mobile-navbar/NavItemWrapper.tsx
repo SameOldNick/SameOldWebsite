@@ -16,7 +16,7 @@ const NavItemWrapper: React.FC<NavItemWrapperProps> = ({ item }) => {
                 <NavLink href={item.href}>
                     {item.options?.icon && <NavIcon icon={item.options.icon} />}
 
-                    {item.text}
+                    {item.content}
                 </NavLink>
             </NavItem>
 

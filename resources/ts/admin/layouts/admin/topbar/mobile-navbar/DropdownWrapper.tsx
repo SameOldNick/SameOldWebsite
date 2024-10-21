@@ -16,7 +16,7 @@ const DropdownWrapper: React.FC<IProps> = ({ item }) => {
                 <DropdownToggle nav caret>
                     {item.options?.icon && <NavIcon icon={item.options.icon} />}
 
-                    {item.text}
+                    {item.content}
                 </DropdownToggle>
                 <DropdownMenu right>
                     {item.items.map((menuItem, index) => <ItemWrapper key={index} inDropdown item={menuItem} />)}
