@@ -7,7 +7,7 @@
                 <div class="card card-container shadow-lg mt-3">
 
                     <div class="card-header card-header-banner">
-                        <h2 class="text-center">{{ __('Verify Your Email Address') }}</h2>
+                        <h2 class="text-center">{{ __('Verification Required') }}</h2>
                     </div>
                     <div class="card-body">
                         <div class="px-1 py-4">
