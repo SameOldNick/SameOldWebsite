@@ -82,34 +82,6 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
         setSelected((prev) => !previous ? prev.concat(notification.uuid) : prev.filter((uuid) => uuid !== notification.uuid));
     }, []);
 
-    const renderNotifications = React.useCallback((notifications: IStoredNotification[]) => {
-        return Object.entries(notifications)
-            .filter(([, item]) => {
-                if (show === 'unread')
-                    return !item.readAt;
-                else if (show === 'read')
-                    return item.readAt;
-
-                return true;
-            })
-            .sort(([, a], [, b]) => {
-                if (sortBy === 'oldest_newest') {
-                    return a.dateTime.diff(b.dateTime).milliseconds;
-                } else {
-                    return b.dateTime.diff(a.dateTime).milliseconds;
-                }
-            })
-            .map(([, item], index) => (
-                <NotificationItem
-                    key={index}
-                    notification={item}
-                    selected={selected.includes(item.uuid)}
-                    onSelect={(checked) => handleSelected(checked, item)}
-                    onMarkClicked={() => handleMarkAsClicked(item)}
-                />
-            ));
-    }, [sortBy, show, selected, handleSelected, handleMarkAsClicked]);
-
     const handleSelectAllClicked = React.useCallback(() => {
         setSelected(notifications.map((notification) => notification.uuid));
     }, [notifications]);
@@ -180,6 +152,34 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
             window.clearInterval(timer);
         }
     }, []);
+
+    const renderNotifications = React.useCallback((notifications: IStoredNotification[]) => {
+        return Object.entries(notifications)
+            .filter(([, item]) => {
+                if (show === 'unread')
+                    return !item.readAt;
+                else if (show === 'read')
+                    return item.readAt;
+
+                return true;
+            })
+            .sort(([, a], [, b]) => {
+                if (sortBy === 'oldest_newest') {
+                    return a.dateTime.diff(b.dateTime).milliseconds;
+                } else {
+                    return b.dateTime.diff(a.dateTime).milliseconds;
+                }
+            })
+            .map(([, item], index) => (
+                <NotificationItem
+                    key={index}
+                    notification={item}
+                    selected={selected.includes(item.uuid)}
+                    onSelect={(checked) => handleSelected(checked, item)}
+                    onMarkClicked={() => handleMarkAsClicked(item)}
+                />
+            ));
+    }, [sortBy, show, selected, handleSelected, handleMarkAsClicked]);
 
     return (
         <>
