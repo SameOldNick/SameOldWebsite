@@ -9,10 +9,10 @@ import { ArticleEditorInputs } from '@admin/components/blog/articles/editor/Arti
 import ChooseImageModal from '@admin/components/blog/articles/modals/ChooseImageModal';
 
 import awaitModalPrompt from '@admin/utils/modals';
-import { uploadImage } from '@admin/utils/api/endpoints/articles';
 
 import Image from '@admin/utils/api/models/Image';
 import Article from '@admin/utils/api/models/Article';
+import { uploadImage } from '@admin/utils/api/endpoints/images';
 
 interface ArticleFormikLayoutChildrenParams {
     formik: FormikProps<ArticleFormValues>;

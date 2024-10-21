@@ -11,8 +11,11 @@ import { ArticleEditActionHandler, ArticleEditActionsHandlerParams, ArticleEditA
 
 import awaitModalPrompt from '@admin/utils/modals';
 
-import { createRevision, setCurrentRevision, setMainImage, syncTags, unsetMainImage, updateArticle, uploadImage } from '@admin/utils/api/endpoints/articles';
+import { createRevision, setCurrentRevision, updateArticle } from '@admin/utils/api/endpoints/articles';
 import { createAuthRequest } from '@admin/utils/api/factories';
+import { uploadImage } from '@admin/utils/api/endpoints/images';
+import { setMainImage, unsetMainImage } from '@admin/utils/api/endpoints/article-images';
+import { syncTags } from '@admin/utils/api/endpoints/article-tags';
 
 /**
  * Checks if values for keys are dirty
