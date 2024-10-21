@@ -163,6 +163,53 @@ class NotificationsController extends Controller
 
         return tap($notification)->delete();
     }
+
+    /**
+     * Bulk destroy notifications
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $validatedData = $request->validate([
+            'notifications' => 'required|array',
+            'notifications.*' => [
+                'required',
+                'uuid',
+                Rule::exists(Notification::class, 'id'),
+            ],
+        ]);
+
+        // Use a transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            foreach ($validatedData['notifications'] as $id) {
+                // Find the notification by ID
+                $notification = Notification::findOrFail($id);
+
+                if ($request->user()->isNot($notification->notifiable)) {
+                    throw new Exception("Notification '{$notification->id}' does not belong to user.");
+                }
+
+                $this->performDestroy($notification);
+            }
+
+            // Commit the transaction if all updates succeed
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if anything fails
+            DB::rollBack();
+
+            return response()->json(['error' => 'Failed to update notifications.'], 500);
+        }
+
+        return [
+            'success' => __('Notifications were removed.'),
+        ];
+    }
+
     /**
      * Updates a notification
      *
@@ -182,4 +229,13 @@ class NotificationsController extends Controller
         return $notification;
     }
 
+    /**
+     * Deletes a notification
+     *
+     * @return bool
+     */
+    protected function performDestroy(Notification $notification)
+    {
+        return (bool) $notification->delete();
+    }
 }

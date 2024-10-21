@@ -45,6 +45,7 @@ Route::namespace(Api::class)->group(function () {
                 Route::post('/{notification}/read', [Api\NotificationsController::class, 'markRead']);
                 Route::post('/{notification}/unread', [Api\NotificationsController::class, 'markUnread']);
                 Route::delete('/{notification}', [Api\NotificationsController::class, 'destroy']);
+                Route::delete('/', [Api\NotificationsController::class, 'bulkDestroy']);
             });
         });
 
