@@ -102,11 +102,11 @@ class Tag extends Model
     /**
      * Creates Tag models from strings
      *
-     * @param iterable<string> $strings
+     * @param  iterable<string>  $strings
      * @return \Illuminate\Support\Collection<int, Tag>
      */
     public static function createFromStrings($strings)
     {
-        return collect($strings)->map(fn($tag) => Tag::firstOrCreate(['tag' => $tag]));
+        return collect($strings)->map(fn ($tag) => Tag::firstOrCreate(['tag' => $tag]));
     }
 }
