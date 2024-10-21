@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class NotificationsController extends Controller
 {
@@ -89,6 +92,7 @@ class NotificationsController extends Controller
         return tap($notification)->markAsRead();
     }
 
+
     /**
      * Marks notification as unread.
      *
@@ -104,6 +108,49 @@ class NotificationsController extends Controller
     }
 
     /**
+     * Bulk updates notifications
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function bulkUpdate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'notifications' => 'required|array',
+            'notifications.*.id' => [
+                'required',
+                'uuid',
+                Rule::exists(Notification::class),
+            ],
+            'notifications.*.read_at' => 'nullable|date',
+        ]);
+
+        $updated = [];
+
+        // Use a transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            foreach ($validatedData['notifications'] as $data) {
+                // Find the notification by ID
+                $notification = Notification::findOrFail($data['id']);
+
+                $updated[] = $this->performUpdate($notification, $data);
+            }
+
+            // Commit the transaction if all updates succeed
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if anything fails
+            DB::rollBack();
+
+            return response()->json(['error' => 'Failed to update notifications.'], 500);
+        }
+
+        return response()->json($updated);
+    }
+
+    /**
      * Destroys notification.
      *
      * @return Notification
@@ -116,4 +163,23 @@ class NotificationsController extends Controller
 
         return tap($notification)->delete();
     }
+    /**
+     * Updates a notification
+     *
+     * @return Notification
+     */
+    protected function performUpdate(Notification $notification, array $data)
+    {
+        foreach ($data as $key => $value) {
+            $notification->{$key} = $value;
+        }
+
+        // Save only if there are changes
+        if ($notification->isDirty()) {
+            $notification->save();
+        }
+
+        return $notification;
+    }
+
 }
