@@ -47,6 +47,6 @@ export default createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchFromApi.fulfilled, (state, action) => ({ ...state, apiNotifications: state.apiNotifications.concat(action.payload) }));
+            .addCase(fetchFromApi.fulfilled, (state, action) => ({ ...state, apiNotifications: action.payload }));
     }
 });
