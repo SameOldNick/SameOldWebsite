@@ -7,6 +7,7 @@ use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class VerificationController extends Controller
@@ -22,7 +23,9 @@ class VerificationController extends Controller
     |
     */
 
-    use VerifiesEmails;
+    use VerifiesEmails {
+        resend as originalResend;
+    }
 
     /**
      * Where to redirect users after verification.
@@ -41,6 +44,17 @@ class VerificationController extends Controller
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    public function resend(Request $request)
+    {
+        Swal::success(function (SweetAlertBuilder $builder) {
+            $builder
+                ->title(__('Resent'))
+                ->content(__('A fresh verification link has been sent to your email address.'), false);
+        });
+
+        return $this->originalResend($request);
     }
 
     /**
