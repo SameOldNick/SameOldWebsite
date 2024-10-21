@@ -11,12 +11,6 @@
                     </div>
                     <div class="card-body">
                         <div class="px-1 py-4">
-                            @if (session('resent'))
-                                <x-alert type="success">
-                                    {{ __('A fresh verification link has been sent to your email address.') }}
-                                </x-alert>
-                            @endif
-
                             <p class="text-center">
                                 {{ __('Before proceeding, please check your email for a verification link.') }}
                             </p>
