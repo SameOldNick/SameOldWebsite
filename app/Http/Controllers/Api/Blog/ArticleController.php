@@ -138,7 +138,7 @@ class ArticleController extends Controller
                 $tags = Tag::createFromStrings($request->collect('tags'));
 
                 // Attach tags to article
-                $article->tags()->attach($tags->map(fn(Tag $tag) => $tag->getKey()));
+                $article->tags()->attach($tags->map(fn (Tag $tag) => $tag->getKey()));
             }
 
             $article->save();
