@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Label, ListGroup, Row } from 'reactstrap';
-import { FaEnvelope, FaEnvelopeOpen, FaSync, FaToolbox } from 'react-icons/fa';
+import { FaEnvelope, FaEnvelopeOpen, FaSync, FaToolbox, FaTrash } from 'react-icons/fa';
 import { connect, ConnectedProps } from 'react-redux';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -11,7 +11,7 @@ import NotificationItem, { INotificationItem } from './NotificationItem';
 import withNotifications, { IHasNotifications, IStoredNotification } from '@admin/components/hoc/WithNotifications';
 import Loader from '@admin/components/Loader';
 
-import { bulkUpdate, markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
+import { bulkDestroy, bulkUpdate, markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
 import { fetchFromApi } from '@admin/store/slices/notifications';
 import createErrorHandler from '@admin/utils/errors/factory';
 
@@ -147,6 +147,31 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
 
     }, [selected, refresh]);
 
+    const handleDeleteClicked = React.useCallback(async () => {
+        const result = await withReactContent(Swal).fire({
+            title: 'Are you sure?',
+            text: `This will delete the ${selected.length} selected notifications forever.`,
+            icon: 'question',
+            showCancelButton: true
+        });
+
+        if (!result.isConfirmed)
+            return;
+
+        try {
+            setLoading(true);
+
+            await bulkDestroy(selected);
+
+            refresh();
+        } catch (err) {
+            logger.error(err);
+        } finally {
+            setLoading(false);
+        }
+
+    }, [selected, refresh]);
+
     React.useEffect(() => {
         // Updates the relative time notifications were sent
         const timer = window.setInterval(() => setRenderCount((count) => count + 1), 10 * 1000);
@@ -209,6 +234,9 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
                                     </DropdownItem>
                                     <DropdownItem onClick={handleMarkUnreadClicked}>
                                         <FaEnvelope />{' '}Mark Unread
+                                    </DropdownItem>
+                                    <DropdownItem onClick={handleDeleteClicked}>
+                                        <FaTrash />{' '}Delete
                                     </DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>

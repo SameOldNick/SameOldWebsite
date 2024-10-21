@@ -103,3 +103,14 @@ export const destroy = async (notification: string) => {
 
     return response.data;
 }
+
+/**
+ * Bulk deletes notification
+ * @param notifications Notification UUIDs
+ * @returns INotification[]
+ */
+export const bulkDestroy = async (notifications: string[]) => {
+    const response = await createAuthRequest().delete<INotification[]>(`/user/notifications`, { notifications });
+
+    return response.data;
+}
