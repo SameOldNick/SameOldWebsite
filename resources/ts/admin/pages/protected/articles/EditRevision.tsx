@@ -9,7 +9,8 @@ import Loader from '@admin/components/Loader';
 import EditArticleContainer from '@admin/components/blog/articles/containers/edit/EditArticleContainer';
 import LoadArticleError from '@admin/components/blog/articles/containers/edit/LoadArticleError';
 
-import { loadArticle, loadRevision, loadTags } from '@admin/utils/api/endpoints/articles';
+import { loadArticle, loadRevision } from '@admin/utils/api/endpoints/articles';
+import { loadTags } from '@admin/utils/api/endpoints/article-tags';
 
 interface IProps extends IHasRouter<'article' | 'revision'> {
 
