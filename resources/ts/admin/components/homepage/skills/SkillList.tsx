@@ -12,9 +12,9 @@ import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import LoadError from '@admin/components/LoadError';
 import Loader from '@admin/components/Loader';
 
-import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import awaitModalPrompt from '@admin/utils/modals';
+import { addSkill, deleteSkill, loadSkills, updateSkill } from '@admin/utils/api/endpoints/skills';
 
 
 interface IProps {
@@ -25,11 +25,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
     const [selected, setSelected] = React.useState<ISkill[]>([]);
 
-    const load = React.useCallback(async () => {
-        const response = await createAuthRequest().get<ISkill[]>('skills');
-
-        return response.data;
-    }, []);
+    const load = React.useCallback(async () => loadSkills(), []);
 
     const reload = React.useCallback(() => {
         waitToLoadRef.current?.load();
@@ -38,9 +34,9 @@ const SkillList: React.FC<IProps> = ({ }) => {
     }, [waitToLoadRef.current]);
 
     // TODO: Move to API services
-    const addSkill = React.useCallback(async (newSkill: ISkill) => {
+    const handleAddSkill = React.useCallback(async (newSkill: ISkill) => {
         try {
-            const response = await createAuthRequest().post('skills', newSkill);
+            await addSkill(newSkill);
 
             await withReactContent(Swal).fire({
                 icon: 'success',
@@ -62,13 +58,13 @@ const SkillList: React.FC<IProps> = ({ }) => {
             });
 
             if (result.isConfirmed)
-                await addSkill(newSkill);
+                await handleAddSkill(newSkill);
         }
     }, []);
 
-    const editSkill = React.useCallback(async (skill: ISkill) => {
+    const handleEditSkill = React.useCallback(async (skill: ISkill) => {
         try {
-            const response = await createAuthRequest().put(`skills/${skill.id}`, skill);
+            await updateSkill(skill);
 
             await withReactContent(Swal).fire({
                 icon: 'success',
@@ -90,15 +86,13 @@ const SkillList: React.FC<IProps> = ({ }) => {
             });
 
             if (result.isConfirmed)
-                await editSkill(skill);
+                await handleEditSkill(skill);
         }
     }, []);
 
-    const deleteSkill = React.useCallback(async (skill: ISkill): Promise<Record<'success', string> | false> => {
+    const handleDeleteSkill = React.useCallback(async (skillId: number): Promise<Record<'success', string> | false> => {
         try {
-            const response = await createAuthRequest().delete<Record<'success', string>>(`skills/${skill.id}`);
-
-            return response.data;
+            return await deleteSkill(skillId);
         } catch (err) {
             logger.error(err);
 
@@ -114,13 +108,18 @@ const SkillList: React.FC<IProps> = ({ }) => {
             });
 
             if (result.isConfirmed)
-                return await deleteSkill(skill);
+                return await handleDeleteSkill(skillId);
             else
                 return false;
         }
     }, []);
 
     const promptDeleteSkill = React.useCallback(async (skill: ISkill) => {
+        if (!skill.id) {
+            logger.error(`Cannot delete skill without ID.`);
+            return;
+        }
+
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -132,7 +131,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
         if (!result.isConfirmed)
             return;
 
-        const data = await deleteSkill(skill);
+        const data = await handleDeleteSkill(skill.id);
 
         if (data !== false) {
             await withReactContent(Swal).fire({
@@ -143,7 +142,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
         }
 
         reload();
-    }, [reload, deleteSkill]);
+    }, [reload, handleDeleteSkill]);
 
 
 
@@ -154,18 +153,18 @@ const SkillList: React.FC<IProps> = ({ }) => {
     const handleAddButtonClicked = React.useCallback(async () => {
         const skill = await awaitModalPrompt(SkillPrompt);
 
-        await addSkill(skill);
+        await handleAddSkill(skill);
 
         reload();
-    }, [reload, addSkill]);
+    }, [reload, handleAddSkill]);
 
     const handleEditButtonClicked = React.useCallback(async (skill: ISkill) => {
         const updated = await awaitModalPrompt(SkillPrompt, { existing: skill });
 
-        await editSkill(updated);
+        await handleEditSkill(updated);
 
         reload();
-    }, [reload, editSkill]);
+    }, [reload, handleEditSkill]);
 
     const handleDeleteSkillsClicked = React.useCallback(async () => {
         if (selected.length === 0) {
@@ -189,7 +188,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
         if (!result.isConfirmed)
             return;
 
-        await Promise.all(selected.map((skill) => deleteSkill(skill)));
+        await Promise.all(selected.map((skill) => skill.id).map((skillId) => skillId && handleDeleteSkill(skillId)));
 
         await withReactContent(Swal).fire({
             icon: 'success',
@@ -198,7 +197,7 @@ const SkillList: React.FC<IProps> = ({ }) => {
         });
 
         reload();
-    }, [reload, selected, deleteSkill]);
+    }, [reload, selected, handleDeleteSkill]);
 
     return (
         <>
