@@ -10,11 +10,11 @@ import SocialMediaLink from "./SocialMediaLink";
 import SocialMediaLinkPrompt from "./SocialMediaLinkPrompt";
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 
-import { createAuthRequest } from "@admin/utils/api/factories";
 import { defaultFormatter } from "@admin/utils/response-formatter/factories";
 import awaitModalPrompt from "@admin/utils/modals";
 import LoadError from "@admin/components/LoadError";
 import Loader from "@admin/components/Loader";
+import { addSocialMediaLink, deleteSocialMediaLink, loadSocialMediaLinks, updateSocialMediaLink } from "@admin/utils/api/endpoints/social-media-links";
 
 interface ISocialMediaLinksProps {
 }
@@ -23,11 +23,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
     const [selected, setSelected] = React.useState<ISocialMediaLink[]>([]);
 
-    const load = React.useCallback(async () => {
-        const response = await createAuthRequest().get<ISocialMediaLink[]>('social-media');
-
-        return response.data;
-    }, []);
+    const load = React.useCallback(async () => loadSocialMediaLinks(), []);
 
     const reload = React.useCallback(() => {
         waitToLoadRef.current?.load();
@@ -35,9 +31,9 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
         setSelected([]);
     }, [waitToLoadRef.current]);
 
-    const addLink = React.useCallback(async (link: string) => {
+    const handleAddLink = React.useCallback(async (link: string) => {
         try {
-            const response = await createAuthRequest().post<ISocialMediaLink[]>('social-media', { link });
+            await addSocialMediaLink(link);
 
             await withReactContent(Swal).fire({
                 icon: 'success',
@@ -59,13 +55,18 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             });
 
             if (result.isConfirmed)
-                await addLink(link);
+                await handleAddLink(link);
         }
     }, []);
 
-    const updateLink = React.useCallback(async (item: ISocialMediaLink, updatedLink: string) => {
+    const handleUpdateLink = React.useCallback(async (item: ISocialMediaLink, updatedLink: string) => {
+        if (!item.id) {
+            logger.error('Social media link is missing ID.');
+            return;
+        }
+
         try {
-            const response = await createAuthRequest().put<ISocialMediaLink[]>(`social-media/${item.id}`, { link: updatedLink });
+            await updateSocialMediaLink(item.id, updatedLink);
 
             await withReactContent(Swal).fire({
                 icon: 'success',
@@ -87,17 +88,18 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             });
 
             if (result.isConfirmed)
-                await updateLink(item, updatedLink);
+                await handleUpdateLink(item, updatedLink);
         }
     }, []);
 
-    const deleteLink = React.useCallback(async (link: ISocialMediaLink) => {
-        await createAuthRequest().delete<ISocialMediaLink[]>(`social-media/${link.id}`);
-    }, []);
-
     const tryDelete = React.useCallback(async (item: ISocialMediaLink) => {
+        if (!item.id) {
+            logger.error('Social media link is missing ID.');
+            return;
+        }
+
         try {
-            await deleteLink(item);
+            await deleteSocialMediaLink(item.id);
         } catch (err) {
             logger.error(err);
 
@@ -115,7 +117,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             if (result.isConfirmed)
                 await tryDelete(item);
         }
-    }, [deleteLink]);
+    }, []);
 
     const handleItemSelected = React.useCallback((link: ISocialMediaLink, selected: boolean) => {
         setSelected((prev) => selected ? prev.concat(link) : prev.filter((item) => item !== link));
@@ -125,25 +127,25 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
         try {
             const link = await awaitModalPrompt(SocialMediaLinkPrompt);
 
-            await addLink(link);
+            await handleAddLink(link);
         } catch (err) {
             // Modal was cancelled.
         } finally {
             reload();
         }
-    }, [reload, addLink]);
+    }, [reload, handleAddLink]);
 
     const handleEditLinkClicked = React.useCallback(async (item: ISocialMediaLink) => {
         try {
             const updated = await awaitModalPrompt(SocialMediaLinkPrompt, { link: item });
 
-            await updateLink(item, updated);
+            await handleUpdateLink(item, updated);
         } catch (err) {
             // Modal was cancelled.
         } finally {
             reload();
         }
-    }, [reload, updateLink]);
+    }, [reload, handleUpdateLink]);
 
     const handleDeleteSelectedClicked = React.useCallback(async () => {
         if (selected.length === 0) {
@@ -175,6 +177,11 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
     }, [reload, tryDelete, selected]);
 
     const handleDeleteItemClicked = React.useCallback(async (link: ISocialMediaLink) => {
+        if (!link.id) {
+            logger.error('Social media link is missing ID.');
+            return;
+        }
+
         const result = await withReactContent(Swal).fire({
             icon: 'question',
             title: 'Are You Sure?',
@@ -187,7 +194,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             return;
 
         try {
-            await deleteLink(link);
+            await deleteSocialMediaLink(link.id);
 
             await withReactContent(Swal).fire({
                 icon: 'success',
@@ -210,7 +217,7 @@ const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
             reload();
 
         }
-    }, [reload, deleteLink]);
+    }, [reload]);
 
     return (
         <>
