@@ -32,7 +32,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this
-            ->enforceHttps(! $this->app->environment('testing', 'dusk')) // Don't enforce HTTPS in Dusk
+            ->enforceHttps(! $this->app->environment('testing', 'dusk') && config('force_https', true)) // Don't enforce HTTPS in Dusk
             ->configureRateLimiting()
             ->bootRouteBindings()
             ->routes(function () {
