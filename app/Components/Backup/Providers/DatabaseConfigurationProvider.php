@@ -22,9 +22,6 @@ abstract class DatabaseConfigurationProvider
 
     /**
      * Checks if value for key exists in database
-     *
-     * @param string $key
-     * @return boolean
      */
     protected function hasValue(string $key): bool
     {

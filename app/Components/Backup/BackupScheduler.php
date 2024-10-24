@@ -10,8 +10,6 @@ class BackupScheduler
 {
     /**
      * Initializes backup scheduler
-     *
-     * @param BackupSchedulerConfigurationProvider $configurationProvider
      */
     public function __construct(
         public readonly BackupSchedulerConfigurationProvider $configurationProvider
@@ -60,9 +58,6 @@ class BackupScheduler
     /**
      * Transforms Cron alias to expression
      * This is because Laravel doesn't play well with aliases like @yearly, @monthly, etc.
-     *
-     * @param string $expression
-     * @return string
      */
     protected function transformCronExpression(string $expression): string
     {
@@ -74,8 +69,6 @@ class BackupScheduler
     /**
      * Schedules command
      *
-     * @param string $command
-     * @param string $expression
      * @return \Illuminate\Console\Scheduling\Event
      */
     protected function scheduleCommand(string $command, string $expression)
