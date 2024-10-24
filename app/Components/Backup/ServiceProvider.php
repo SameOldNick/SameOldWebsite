@@ -31,7 +31,7 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->bootDbDumperExtender();
-        $this->bootScheduler();
+        $this->scheduleBackups();
     }
 
     /**
@@ -51,7 +51,7 @@ class ServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    protected function bootScheduler()
+    protected function scheduleBackups()
     {
         if ($this->app->runningInConsole()) {
             $this->app->make(BackupScheduler::class)->schedule();
