@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\Backup;
 
 use App\Http\Controllers\Controller;
 use App\Models\BackupConfig;
+use App\Rules\CronExpression;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class BackupSettingsController extends Controller
@@ -31,6 +33,8 @@ class BackupSettingsController extends Controller
             'notification_slack_username',
             'notification_slack_icon',
             'notification_slack_channel',
+            'backup_cron',
+            'cleanup_cron',
         ];
 
         return BackupConfig::whereIn('key', $keys)->get();
@@ -60,15 +64,29 @@ class BackupSettingsController extends Controller
             'notification_slack_username' => [Rule::requiredIf($channels->contains('slack')), 'nullable', 'string', 'max:255'],
             'notification_slack_icon' => ['nullable', 'string', 'max:255'],
             'notification_slack_channel' => [Rule::requiredIf($channels->contains('slack')), 'nullable', 'string', 'max:255'],
+
+            'backup_cron' => ['nullable', 'string', new CronExpression],
+            'cleanup_cron' => ['nullable', 'string', new CronExpression],
         ]);
 
-        foreach ($validated as $key => $value) {
+        foreach (Arr::except($validated, ['backup_cron', 'cleanup_cron']) as $key => $value) {
             $value = is_array($value) ? implode(';', $value) : $value;
 
             BackupConfig::updateOrCreate(
                 ['key' => $key],
                 ['value' => $value]
             );
+        }
+
+        foreach (['backup_cron', 'cleanup_cron'] as $key) {
+            if (isset($validated[$key])) {
+                BackupConfig::updateOrCreate(
+                    ['key' => $key],
+                    ['value' => $validated[$key]]
+                );
+            } else {
+                BackupConfig::where('key', $key)->delete();
+            }
         }
 
         return BackupConfig::all();
