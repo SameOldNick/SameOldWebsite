@@ -3,8 +3,6 @@
 namespace App\Components\Backup\Providers;
 
 use App\Components\Backup\Contracts\BackupSchedulerConfigurationProvider;
-use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
-use Illuminate\Support\Facades\DB;
 
 class BackupSchedulerDatabaseConfigurationProvider extends DatabaseConfigurationProvider implements BackupSchedulerConfigurationProvider
 {
