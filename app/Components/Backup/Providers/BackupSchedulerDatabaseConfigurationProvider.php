@@ -7,7 +7,7 @@ use App\Components\Backup\Contracts\BackupSchedulerConfigurationProvider;
 class BackupSchedulerDatabaseConfigurationProvider extends DatabaseConfigurationProvider implements BackupSchedulerConfigurationProvider
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isBackupEnabled(): bool
     {
@@ -15,7 +15,7 @@ class BackupSchedulerDatabaseConfigurationProvider extends DatabaseConfiguration
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isCleanupEnabled(): bool
     {
@@ -23,7 +23,7 @@ class BackupSchedulerDatabaseConfigurationProvider extends DatabaseConfiguration
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getBackupCronExpression(): string
     {
@@ -31,7 +31,7 @@ class BackupSchedulerDatabaseConfigurationProvider extends DatabaseConfiguration
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getCleanupCronExpression(): string
     {

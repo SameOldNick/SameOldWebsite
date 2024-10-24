@@ -3,7 +3,6 @@
 namespace App\Components\Backup\Providers;
 
 use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseNotificationConfigurationProvider extends DatabaseConfigurationProvider implements NotificationConfigurationProviderInterface
 {
