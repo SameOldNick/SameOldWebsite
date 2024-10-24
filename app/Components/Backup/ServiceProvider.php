@@ -53,8 +53,8 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function bootScheduler()
     {
-        $backupScheduler = $this->app->make(BackupScheduler::class);
-
-        $backupScheduler->schedule();
+        if ($this->app->runningInConsole()) {
+            $this->app->make(BackupScheduler::class)->schedule();
+        }
     }
 }
