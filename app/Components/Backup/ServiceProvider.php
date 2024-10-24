@@ -19,8 +19,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->bind(NotificationConfigurationProviderInterface::class, DatabaseNotificationConfigurationProvider::class);
-        $this->app->bind(BackupSchedulerConfigurationProvider::class, BackupSchedulerDatabaseConfigurationProvider::class);
+        $this->bindConfigurationProviders();
     }
 
     /**
@@ -32,6 +31,17 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->bootDbDumperExtender();
         $this->scheduleBackups();
+    }
+
+    /**
+     * Binds configuration provider interfaces to implementations.
+     *
+     * @return void
+     */
+    protected function bindConfigurationProviders()
+    {
+        $this->app->bind(NotificationConfigurationProviderInterface::class, DatabaseNotificationConfigurationProvider::class);
+        $this->app->bind(BackupSchedulerConfigurationProvider::class, BackupSchedulerDatabaseConfigurationProvider::class);
     }
 
     /**
