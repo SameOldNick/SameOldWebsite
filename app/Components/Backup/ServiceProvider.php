@@ -63,6 +63,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function scheduleBackups()
     {
+        // TODO: Check if app is setup
         if ($this->app->runningInConsole()) {
             $this->app->make(BackupScheduler::class)->schedule();
         }
