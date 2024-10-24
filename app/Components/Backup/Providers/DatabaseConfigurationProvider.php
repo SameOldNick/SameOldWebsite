@@ -2,7 +2,7 @@
 
 namespace App\Components\Backup\Providers;
 
-use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
 abstract class DatabaseConfigurationProvider
@@ -28,7 +28,12 @@ abstract class DatabaseConfigurationProvider
      */
     protected function hasValue(string $key): bool
     {
-        return DB::table($this->getTable())->where('key', $key)->count() > 0;
+        try {
+            return DB::table($this->getTable())->where('key', $key)->count() > 0;
+        } catch (QueryException) {
+            // In case unable to connect to database (possibly because app isn't setup yet)
+            return false;
+        }
     }
 
     /**
