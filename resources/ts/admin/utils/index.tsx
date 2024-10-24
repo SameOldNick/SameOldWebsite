@@ -157,3 +157,64 @@ export function awaitAtMost<T>(callback: () => Promise<T>, maxTimeMs: number) {
             .finally(() => clearTimeout(timer));
     });
 }
+
+/**
+ * Transform Cron alias (@yearly, @monthly, etc.) to actual expression
+ * @param expression
+ * @returns Transformed expression
+ * @exports
+ */
+export const transformCronExpression = (expression: string) => {
+    const presets: Record<string, string> = {
+        '@yearly': '0 0 1 1 *',
+        '@annually': '0 0 1 1 *',
+        '@monthly': '0 0 1 * *',
+        '@weekly': '0 0 * * 0',
+        '@daily': '0 0 * * *',
+        '@midnight': '0 0 * * *',
+        '@hourly': '0 * * * *',
+    };
+
+    return expression in presets ? presets[expression] : expression;
+}
+
+/**
+ * Parses Cron expression
+ * @param expression Cron expression
+ * @param transformFromPresets If true, transforms alias to expression
+ * @returns {object} Object with minute, hour, dayOfMonth, month, and dayOfWeek
+ * @throws {Error} Thrown if expression cannot be parsed
+ * @exports
+ */
+export const parseCronExpression = (expression: string, transformFromPresets = true) => {
+    if (transformFromPresets) {
+        expression = transformCronExpression(expression);
+    }
+
+    const split = expression.trim().split(/\s+/).filter((part) => part !== '');
+
+    if (!Array.isArray(split)) {
+        throw new Error(`"${expression}" is not a valid CRON expression`);
+    }
+
+    const notEnoughParts = split.length < 5;
+
+    const questionMarkInInvalidPart =
+        (split[0] === '?') ||
+        (split[1] === '?') ||
+        (split[3] === '?');
+
+    const tooManyQuestionMarks = (split[2] === '?') && (split[4] === '?');
+
+    if (notEnoughParts || questionMarkInInvalidPart || tooManyQuestionMarks) {
+        throw new Error(`"${expression}" is not a valid CRON expression`);
+    }
+
+    return {
+        minute: split[0],
+        hour: split[1],
+        dayOfMonth: split[2],
+        month: split[3],
+        dayOfWeek: split[4]
+    };
+}
