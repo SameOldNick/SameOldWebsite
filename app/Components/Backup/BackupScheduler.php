@@ -42,7 +42,7 @@ class BackupScheduler
     {
         $expression = $this->transformCronExpression($this->configurationProvider->getBackupCronExpression());
 
-        $this->scheduleCommand('backup:run', $expression);
+        $this->scheduleCommand('backup:run', $expression)->runInBackground();
     }
 
     /**
@@ -54,7 +54,7 @@ class BackupScheduler
     {
         $expression = $this->transformCronExpression($this->configurationProvider->getCleanupCronExpression());
 
-        $this->scheduleCommand('backup:clean', $expression);
+        $this->scheduleCommand('backup:clean', $expression)->runInBackground();
     }
 
     /**
