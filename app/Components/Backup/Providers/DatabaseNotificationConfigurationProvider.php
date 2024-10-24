@@ -5,13 +5,8 @@ namespace App\Components\Backup\Providers;
 use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
 use Illuminate\Support\Facades\DB;
 
-class DatabaseNotificationConfigurationProvider implements NotificationConfigurationProviderInterface
+class DatabaseNotificationConfigurationProvider extends DatabaseConfigurationProvider implements NotificationConfigurationProviderInterface
 {
-    /**
-     * The table storing the configuration.
-     */
-    protected string $table = 'backup_config';
-
     /**
      * {@inheritDoc}
      */
@@ -101,41 +96,10 @@ class DatabaseNotificationConfigurationProvider implements NotificationConfigura
     }
 
     /**
-     * Gets table name
-     */
-    public function getTable(): string
-    {
-        return $this->table;
-    }
-
-    /**
      * Creates table key name
      */
     protected function createKey(string $key): string
     {
         return "notification_{$key}";
-    }
-
-    /**
-     * Gets array value from table
-     */
-    protected function getArrayValue(string $key, array $default = []): array
-    {
-        $row = DB::table($this->getTable())->where('key', $key)->first();
-
-        return $row ? explode(';', $row->value) : $default;
-    }
-
-    /**
-     * Gets string value or default
-     *
-     * @param  mixed  $default
-     * @return mixed
-     */
-    protected function getStringValue(string $key, $default = null)
-    {
-        $row = DB::table($this->getTable())->where('key', $key)->first();
-
-        return $row ? $row->value : $default;
     }
 }
