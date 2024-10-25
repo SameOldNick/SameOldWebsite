@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Collections\BackupCollection;
 use App\Traits\Models\Fileable;
+use Illuminate\Database\Eloquent\Attributes\CollectedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ use Spatie\Backup\BackupDestination\BackupDestination;
 /**
  * @property-read string $status One of STATUS_* constants
  */
+#[CollectedBy(BackupCollection::class)]
 class Backup extends Model
 {
     use Fileable;
@@ -63,16 +65,6 @@ class Backup extends Model
     protected $appends = [
         'status',
     ];
-
-    /**
-     * Create a new Eloquent Collection instance.
-     *
-     * @return BackupCollection
-     */
-    public function newCollection(array $models = [])
-    {
-        return new BackupCollection($models);
-    }
 
     /**
      * Checks if deleted.

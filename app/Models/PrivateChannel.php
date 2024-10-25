@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Collections\PrivateChannelCollection;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Attributes\CollectedBy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,7 @@ use Ramsey\Uuid\UuidInterface;
  * @property ?DateTimeInterface $updated_at
  * @property ?DateTimeInterface $expires_at
  */
+#[CollectedBy(PrivateChannelCollection::class)]
 class PrivateChannel extends Model
 {
     use HasFactory;
@@ -79,17 +81,6 @@ class PrivateChannel extends Model
         $this->delete();
 
         return $this;
-    }
-
-    /**
-     * Create a new Eloquent Collection instance.
-     *
-     * @param  array<int, static>  $models
-     * @return PrivateChannelCollection
-     */
-    public function newCollection(array $models = [])
-    {
-        return new PrivateChannelCollection($models);
     }
 
     /**
