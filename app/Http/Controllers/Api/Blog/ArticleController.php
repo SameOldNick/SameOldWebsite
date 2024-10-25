@@ -208,7 +208,7 @@ class ArticleController extends Controller
 
                 // Set as main image
                 $article->mainImage()->associate($mainImage);
-            } else if ($request->boolean('remove_main_image') && $article->mainImage) {
+            } elseif ($request->boolean('remove_main_image') && $article->mainImage) {
                 $article->mainImage()->dissociate();
 
                 $article->mainImage->delete();
@@ -228,7 +228,7 @@ class ArticleController extends Controller
                 $tags = Tag::createFromStrings($request->collect('tags'));
 
                 // Attach tags to article
-                $article->tags()->sync($tags->map(fn(Tag $tag) => $tag->getKey()));
+                $article->tags()->sync($tags->map(fn (Tag $tag) => $tag->getKey()));
             }
 
             // Update the article's published date
