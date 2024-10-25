@@ -125,19 +125,68 @@ export const createArticle = async ({
     return new Article(response.data);
 }
 
+export interface UpdateArticleParams {
+    title: string;
+    slug: string;
+    publishedAt: DateTime | null;
+    mainImage?: {
+        image: File;
+        description?: string;
+    } | false;
+    images?: string[];
+    tags?: string[];
+}
+
 /**
  * Updates article meta data
- * @param articleId Article ID to update
- * @param title New title
- * @param slug New slug
- * @param publishedAt When to publish article or null to unpublish
+ * @param params
  * @returns Article instance
  */
-export const updateArticle = async (articleId: number, title: string, slug: string, publishedAt: DateTime | null): Promise<Article> => {
-    const response = await createAuthRequest().put<IArticle>(`blog/articles/${articleId}`, {
+export const updateArticle = async (
+    articleId: number,
+    {
         title,
         slug,
-        published_at: publishedAt ? publishedAt.toISO() : null
+        publishedAt,
+        mainImage,
+        images,
+        tags
+    }: UpdateArticleParams
+): Promise<Article> => {
+    const formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('slug', slug);
+
+    formData.append('published_at', publishedAt?.toISO() ?? '');
+
+    if (typeof mainImage === 'object') {
+        formData.append('main_image[image]', mainImage.image);  // Add the image file
+        if (mainImage.description) {
+            formData.append('main_image[description]', mainImage.description);  // Add image description (optional)
+        }
+    } else if (mainImage === false) {
+        formData.append('remove_main_image', 'true');
+    }
+
+    // Add images array if provided (e.g., additional image URLs or metadata)
+    if (images) {
+        images.forEach((image, index) => {
+            formData.append(`images[${index}]`, image);
+        });
+    }
+
+    // Add tags array if provided
+    if (tags) {
+        tags.forEach((tag, index) => {
+            formData.append(`tags[${index}]`, tag);
+        });
+    }
+
+    const response = await createAuthRequest().post<IArticle>(`blog/articles/${articleId}?_method=PUT`, formData, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     });
 
     return new Article(response.data);
