@@ -9,6 +9,19 @@ import { ArticleEditorInputs } from '@admin/components/blog/articles/editor/Arti
 
 import Image from '@admin/utils/api/models/Image';
 
+interface NewMainImage {
+    file: File;
+    src: string;
+    description: string;
+}
+
+interface ExistingMainImage {
+    src: string;
+    description: string;
+}
+
+type SelectedMainImage = NewMainImage | ExistingMainImage;
+
 interface ArticleFormValues {
     title: string;
     autoGenerateSlug: boolean;
@@ -19,12 +32,6 @@ interface ArticleFormValues {
     mainImage?: SelectedMainImage;
     uploadedImages: Image[];
     tags: Tag[];
-}
-
-interface SelectedMainImage {
-    file?: File;
-    src: string;
-    description: string;
 }
 
 interface ArticleFormikProviderProps {
@@ -77,4 +84,4 @@ const ArticleFormikProvider: React.FC<ArticleFormikProviderProps> = ({
 
 
 export default ArticleFormikProvider;
-export { ArticleFormikProviderProps, ArticleFormValues, SelectedMainImage };
+export { ArticleFormikProviderProps, ArticleFormValues, SelectedMainImage, NewMainImage, ExistingMainImage };
