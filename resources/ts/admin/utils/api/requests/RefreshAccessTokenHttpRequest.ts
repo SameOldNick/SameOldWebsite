@@ -44,6 +44,10 @@ export default class RefreshAccessTokenHttpRequest implements IHttpRequest {
      * @memberof HttpRequest
      */
     public put<TResponseData = any, TRequestData = object>(url: string, params: TRequestData, customConfig?: AxiosRequestConfig) {
+        if (this.shouldMockMethod('put', params)) {
+            return this.mockMethod('put', url, params, customConfig);
+        }
+
         return this.refreshTokenOnError(() => this.httpRequest.put<TResponseData, TRequestData>(url, params, customConfig));
     }
 
@@ -55,7 +59,49 @@ export default class RefreshAccessTokenHttpRequest implements IHttpRequest {
      * @memberof HttpRequest
      */
     public delete<TResponseData = any, TRequestData = object>(url: string, params?: TRequestData, customConfig?: AxiosRequestConfig) {
+        if (this.shouldMockMethod('delete', params)) {
+            return this.mockMethod('delete', url, params, customConfig);
+        }
+
         return this.refreshTokenOnError(() => this.httpRequest.delete<TResponseData, TRequestData>(url, params, customConfig));
+    }
+
+    /**
+     * Checks if request method should be mocked
+     *
+     * @template TRequestData
+     * @param {string} method Request method (post, put, etc.)
+     * @param {TRequestData} params Request data
+     * @returns {boolean}
+     * @memberof RefreshAccessTokenHttpRequest
+     */
+    public shouldMockMethod<TRequestData = object>(method: string, params: TRequestData) {
+        // Laravel doesn't play nice with FormData submitted with PUT, PATCH, or DELETE request.
+        // Source: https://stackoverflow.com/a/50691997/533242
+        const methods = ['put', 'patch', 'delete'];
+
+        return methods.includes(method.toLowerCase()) && params instanceof FormData;
+    }
+
+    /**
+     * Mocks request method by sending it through a POST request
+     *
+     * @template TResponseData
+     * @template TRequestData
+     * @param {string} method Request method (post, put, etc)
+     * @param {string} url URL
+     * @param {TRequestData} params Request parameters
+     * @param {AxiosRequestConfig} [customConfig]
+     * @returns
+     * @memberof RefreshAccessTokenHttpRequest
+     */
+    public mockMethod<TResponseData = any, TRequestData = object>(method: string, url: string, params: TRequestData, customConfig?: AxiosRequestConfig) {
+        // Construct the URL with the _method parameter, accounting for existing query parameters
+        const separator = url.includes('?') ? '&' : '?';
+        const modifiedUrl = `${url}${separator}_method=${method}`;
+
+        // Call the post method with the modified URL, params, and optional config
+        return this.post<TResponseData, TRequestData>(modifiedUrl, params, customConfig);
     }
 
     /**
