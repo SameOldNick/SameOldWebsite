@@ -21,6 +21,7 @@ type ArticleEditActionsHandlerHelpers = {
     onSuccess: (message: string, extra?: SweetAlertOptions) => Promise<SweetAlertResult>;
     onNavigate: (url: string) => void;
     onReload: () => void;
+    onUpdate: () => void;
 }
 
 type ArticleEditActionsHandlerParams = {
@@ -57,7 +58,10 @@ interface EditArticleActionPanelProps {
 const EditArticleActionPanel: React.FC<EditArticleActionPanelProps> = ({ article, revision, formik }) => {
     const navigate = useNavigate();
 
-    const helpers = React.useMemo(() => ({
+    const helpers = React.useMemo<ArticleEditActionsHandlerHelpers>(() => ({
+        onUpdate: () => {
+            formik.resetForm();
+        },
         onSuccess: (message: string, extra: SweetAlertOptions = {}) => {
             return withReactContent(Swal).fire({
                 title: 'Success',
