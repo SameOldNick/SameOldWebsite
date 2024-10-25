@@ -8,14 +8,12 @@ import SelectRevisionModal from '@admin/components/blog/articles/modals/SelectRe
 import SelectDateTimeModal from '@admin/components/modals/SelectDateTimeModal';
 
 import { ArticleEditActionHandler, ArticleEditActionsHandlerParams, ArticleEditActionsHook } from '@admin/components/blog/articles/containers/edit/panel/EditArticleActionPanel';
+import { ArticleFormValues } from '@admin/components/blog/articles/containers/formik/ArticleFormikProvider';
 
 import awaitModalPrompt from '@admin/utils/modals';
 
-import { createRevision, setCurrentRevision, updateArticle } from '@admin/utils/api/endpoints/articles';
+import { createRevision, setCurrentRevision, updateArticle, UpdateArticleParams } from '@admin/utils/api/endpoints/articles';
 import { createAuthRequest } from '@admin/utils/api/factories';
-import { uploadImage } from '@admin/utils/api/endpoints/images';
-import { setMainImage, unsetMainImage } from '@admin/utils/api/endpoints/article-images';
-import { syncTags } from '@admin/utils/api/endpoints/article-tags';
 
 /**
  * Checks if values for keys are dirty
@@ -57,55 +55,77 @@ const handleRestoreRevisionClicked: ArticleEditActionHandler = async ({ article,
     }
 }
 
+const buildUpdateArticleParams = (formik: FormikProps<ArticleFormValues>, extra?: Partial<UpdateArticleParams>) => {
+    const {
+        title,
+        slug,
+        mainImage,
+        tags,
+        uploadedImages
+    } = formik.values;
+
+    // Update article title or slug if changed
+    const params: UpdateArticleParams = {
+        title,
+        slug,
+        publishedAt: null
+    };
+
+    // Update main image if needed
+    if (mainImage !== undefined) {
+        if ('file' in mainImage) {
+            params.mainImage = {
+                image: mainImage.file,
+                description: mainImage.description
+            };
+        } else {
+            // Main image exists, don't add or remove it
+        }
+    } else {
+        params.mainImage = false;
+    }
+
+    // Update tags if needed
+    if (isFormikValuesDirty(formik, ['tags'])) {
+        params.tags = tags.map((tag) => tag.label);
+    }
+
+    // Attach images
+    if (isFormikValuesDirty(formik, ['uploadedImages'])) {
+        params.images = uploadedImages.map((image) => image.uuid);
+    }
+
+    return { ...params, ...extra };
+}
+
 const handleSaveAsRevisionClicked: ArticleEditActionHandler = async ({
     formik,
     article,
     revision: currentRevision,
     helpers: {
         onSuccess,
-        onNavigate
+        onNavigate,
+        onUpdate
     }
 }) => {
     const {
-        title,
         content,
-        summary,
-        slug,
-        mainImage,
-        tags
+        summary
     } = formik.values;
 
-    // Update article title or slug if changed
-    if (isFormikValuesDirty(formik, ['title', 'slug'])) {
-        await updateArticle(article.article.id, title, slug, article.publishedAt);
-    }
+    // Build params for updating article
+    const params = buildUpdateArticleParams(formik, { publishedAt: article.publishedAt });
 
-    // Update main image if needed
-    if (isFormikValuesDirty(formik, ['mainImage'])) {
-        if (mainImage) {
-            // If the main image is changed, it should have a File.
-            if (!mainImage.file) {
-                // But if not, throw an error.
-                throw new Error('Main image is missing file. Please try again.');
-            }
-
-            const image = await uploadImage(mainImage.file, mainImage.description);
-            await setMainImage(article.article.id, image.uuid);
-        } else {
-            await unsetMainImage(article.article.id);
-        }
-    }
-
-    // Update tags if needed
-    if (isFormikValuesDirty(formik, ['tags'])) {
-        await syncTags(article.article.id, tags);
-    }
+    await updateArticle(article.article.id, params);
 
     // Create revision for article
     const revision = await createRevision(article.article.id, content, summary, currentRevision.revision.uuid);
 
     // Display message
     await onSuccess('Revision was saved.');
+
+    // Reset form
+    onUpdate();
 
     // Redirect to revision
     onNavigate(article.generatePath(revision.revision.uuid));
@@ -117,43 +137,19 @@ const handleUpdateClicked: ArticleEditActionHandler = async ({
     revision: currentRevision,
     helpers: {
         onSuccess,
-        onNavigate
+        onNavigate,
+        onUpdate,
     }
 }) => {
     const {
-        title,
         content,
-        summary,
-        slug,
-        mainImage,
-        tags
+        summary
     } = formik.values;
 
-    // Update article title or slug if changed
-    if (isFormikValuesDirty(formik, ['title', 'slug'])) {
-        await updateArticle(article.article.id, title, slug, article.publishedAt);
-    }
+    // Build params for updating article
+    const params = buildUpdateArticleParams(formik, { publishedAt: article.publishedAt });
 
-    // Update main image if needed
-    if (isFormikValuesDirty(formik, ['mainImage'])) {
-        if (mainImage) {
-            // If the main image is changed, it should have a File.
-            if (!mainImage.file) {
-                // But if not, throw an error.
-                throw new Error('Main image is missing file. Please try again.');
-            }
-
-            const image = await uploadImage(mainImage.file, mainImage.description);
-            await setMainImage(article.article.id, image.uuid);
-        } else {
-            await unsetMainImage(article.article.id);
-        }
-    }
-
-    // Update tags if needed
-    if (isFormikValuesDirty(formik, ['tags'])) {
-        await syncTags(article.article.id, tags);
-    }
+    await updateArticle(article.article.id, params);
 
     // Create revision for article
     const revision = await createRevision(article.article.id, content, summary, currentRevision ? currentRevision.revision.uuid : undefined);
@@ -164,12 +160,15 @@ const handleUpdateClicked: ArticleEditActionHandler = async ({
     // Display message
     await onSuccess('Article was updated.');
 
+    // Reset form
+    onUpdate();
+
     // Redirect to revision
     onNavigate(article.generatePath(revision.revision.uuid));
 }
 
 const handleUnpublishClicked: ArticleEditActionHandler = async (params) => {
-    unpublishArticle(params, 'unschedule');
+    unpublishArticle(params, 'unpublish');
 }
 
 const handleScheduleClicked: ArticleEditActionHandler = async (params) => {
@@ -188,7 +187,7 @@ const handlePublishClicked: ArticleEditActionHandler = async (params) => {
 }
 
 const handleUnscheduleClicked: ArticleEditActionHandler = async (params) => {
-    unpublishArticle(params, 'unpublish');
+    unpublishArticle(params, 'unschedule');
 }
 
 const handleDeleteClicked: ArticleEditActionHandler = async ({
@@ -228,43 +227,21 @@ const publishArticle = async ({
     helpers: {
         onSuccess,
         onNavigate,
-        onReload
+        onReload,
+        onUpdate,
     }
 }: ArticleEditActionsHandlerParams,
     dateTime: DateTime
 ) => {
     const {
-        title,
         content,
-        summary,
-        slug,
-        mainImage,
-        tags
+        summary
     } = formik.values;
 
-    // Update article title or slug and set published date/time
-    await updateArticle(article.article.id, title, slug, dateTime ?? DateTime.now());
+    // Build params for updating article
+    const params = buildUpdateArticleParams(formik, { publishedAt: dateTime ?? DateTime.now() });
 
-    // Update main image if needed
-    if (isFormikValuesDirty(formik, ['mainImage'])) {
-        if (mainImage) {
-            // If the main image is changed, it should have a File.
-            if (!mainImage.file) {
-                // But if not, throw an error.
-                throw new Error('Main image is missing file. Please try again.');
-            }
-
-            const image = await uploadImage(mainImage.file, mainImage.description);
-            await setMainImage(article.article.id, image.uuid);
-        } else {
-            await unsetMainImage(article.article.id);
-        }
-    }
-
-    // Update tags if needed
-    if (isFormikValuesDirty(formik, ['tags'])) {
-        await syncTags(article.article.id, tags);
-    }
+    await updateArticle(article.article.id, params);
 
     const message = `Article has been published.`;
 
@@ -278,6 +255,9 @@ const publishArticle = async ({
 
         // Display message
         await onSuccess(message);
+
+        // Reset form
+        onUpdate();
 
         // Redirect to revision
         onNavigate(article.generatePath(revision.revision.uuid));
@@ -297,44 +277,22 @@ const unpublishArticle = async ({
     helpers: {
         onSuccess,
         onNavigate,
-        onReload
+        onReload,
+        onUpdate,
     }
 }: ArticleEditActionsHandlerParams,
     action: 'unpublish' | 'unschedule'
 ) => {
     const {
-        title,
         content,
-        summary,
-        slug,
-        mainImage,
-        tags
+        summary
     } = formik.values;
 
-    // Update article title or slug if changed
+    // Build params for updating article
     // Clear published at date/time
-    await updateArticle(article.article.id, title, slug, null);
+    const params = buildUpdateArticleParams(formik, { publishedAt: null });
 
-    // Update main image if needed
-    if (isFormikValuesDirty(formik, ['mainImage'])) {
-        if (mainImage) {
-            // If the main image is changed, it should have a File.
-            if (!mainImage.file) {
-                // But if not, throw an error.
-                throw new Error('Main image is missing file. Please try again.');
-            }
-
-            const image = await uploadImage(mainImage.file, mainImage.description);
-            await setMainImage(article.article.id, image.uuid);
-        } else {
-            await unsetMainImage(article.article.id);
-        }
-    }
-
-    // Update tags if needed
-    if (isFormikValuesDirty(formik, ['tags'])) {
-        await syncTags(article.article.id, tags);
-    }
+    await updateArticle(article.article.id, params);
 
     const message = `Article has been ${action}ed.`;
 
@@ -348,6 +306,9 @@ const unpublishArticle = async ({
 
         // Display message
         await onSuccess(message);
+
+        // Reset form
+        onUpdate();
 
         // Redirect to revision
         onNavigate(article.generatePath(revision.revision.uuid));
