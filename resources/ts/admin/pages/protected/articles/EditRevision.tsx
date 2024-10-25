@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Tag } from 'react-tag-autocomplete';
 
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 import { IHasRouter, withRouter } from '@admin/components/hoc/WithRouter';
@@ -11,6 +12,14 @@ import LoadArticleError from '@admin/components/blog/articles/containers/edit/Lo
 
 import { loadArticle, loadRevision } from '@admin/utils/api/endpoints/articles';
 import { loadTags } from '@admin/utils/api/endpoints/article-tags';
+import Revision from '@admin/utils/api/models/Revision';
+import Article from '@admin/utils/api/models/Article';
+
+interface CurrentArticle {
+    article: Article;
+    revision: Revision;
+    tags: Tag[];
+}
 
 interface IProps extends IHasRouter<'article' | 'revision'> {
 
@@ -18,6 +27,8 @@ interface IProps extends IHasRouter<'article' | 'revision'> {
 
 const EditRevision: React.FC<IProps> = ({ router: { navigate, params, location } }) => {
     const waitToLoadArticleRef = React.useRef<IWaitToLoadHandle>(null);
+
+    const [currentArticle, setCurrentArticle] = React.useState<CurrentArticle>();
 
     const load = React.useCallback(async () => {
         const { article, revision } = params;
@@ -33,11 +44,15 @@ const EditRevision: React.FC<IProps> = ({ router: { navigate, params, location }
         if (!revision)
             throw new Error('The "revision" parameter is missing.');
 
-        return {
+        const current = {
             article: await loadArticle(articleId),
             revision: await loadRevision(articleId, revision),
             tags: await loadTags(articleId),
         };
+
+        setCurrentArticle(current);
+
+        return current;
     }, [params]);
 
     const handleTryAgainClicked = React.useCallback(() => {
@@ -49,8 +64,14 @@ const EditRevision: React.FC<IProps> = ({ router: { navigate, params, location }
     }, [navigate]);
 
     React.useEffect(() => {
-        waitToLoadArticleRef.current?.load();
-    }, [location.pathname, waitToLoadArticleRef.current]);
+        // Prevents load being called twice when first rendered
+        if (currentArticle !== undefined && (
+            currentArticle.article.article.id !== Number(params.article) ||
+            currentArticle.revision.revision.uuid !== params.revision)
+        ) {
+            waitToLoadArticleRef.current?.load();
+        }
+    }, [location.pathname]);
 
     return (
         <>
