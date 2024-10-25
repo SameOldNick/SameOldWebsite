@@ -44,7 +44,7 @@ export const loadRevision = async (articleId: number, revisionId: string) => {
     return new Revision(response.data);
 }
 
-export interface ICreateArticleParams {
+export interface CreateArticleParams {
     title: string;
     slug: string;
     content: string;
@@ -72,7 +72,7 @@ export const createArticle = async ({
     mainImage,
     images,
     tags
-}: ICreateArticleParams): Promise<Article> => {
+}: CreateArticleParams): Promise<Article> => {
     const formData = new FormData();
 
     // Add basic string fields
