@@ -12,6 +12,7 @@ use App\Traits\Models\HasPresenter;
 use App\Traits\Models\Immutable;
 use App\Traits\Models\Postable;
 use BackedEnum;
+use Illuminate\Database\Eloquent\Attributes\CollectedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @method static \Database\Factories\CommentFactory factory($count = null, $state = [])
  */
+#[CollectedBy(CommentCollection::class)]
 class Comment extends Model implements Moderatable
 {
     use CreatesModeratorsFactory;
@@ -99,11 +101,6 @@ class Comment extends Model implements Moderatable
      * @var class-string
      */
     protected static string $presenter = CommentPresenter::class;
-
-    /**
-     * The Eloquent collection class to use for the model.
-     */
-    protected static string $collectionClass = CommentCollection::class;
 
     /**
      * Gets the parent comment (if any)

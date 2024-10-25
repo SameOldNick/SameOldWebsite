@@ -6,6 +6,7 @@ use App\Models\Collections\ArticleCollection;
 use App\Models\Presenters\ArticlePresenter;
 use App\Traits\Models\HasPresenter;
 use App\Traits\Models\Postable;
+use Illuminate\Database\Eloquent\Attributes\CollectedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,7 @@ use Spatie\Sitemap\Tags\Url;
  * @method static \Illuminate\Database\Eloquent\Builder sortedByPublishDate()
  * @method static \Database\Factories\ArticleFactory factory($count = null, $state = [])
  */
+#[CollectedBy(ArticleCollection::class)]
 class Article extends Model implements Sitemapable
 {
     use HasFactory;
@@ -96,16 +98,6 @@ class Article extends Model implements Sitemapable
      * @var class-string
      */
     protected static string $presenter = ArticlePresenter::class;
-
-    /**
-     * Create a new Eloquent Collection instance.
-     *
-     * @return ArticleCollection
-     */
-    public function newCollection(array $models = [])
-    {
-        return new ArticleCollection($models);
-    }
 
     /**
      * Gets the current revision

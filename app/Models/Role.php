@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Collections\RoleCollection;
 use App\Traits\Models\HidesPrimaryKey;
+use Illuminate\Database\Eloquent\Attributes\CollectedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,7 @@ use Illuminate\Support\Str;
  * @property-read string $readable
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  */
+#[CollectedBy(RoleCollection::class)]
 class Role extends Model
 {
     use HasFactory;
@@ -59,16 +61,5 @@ class Role extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
-    }
-
-    /**
-     * Create a new Eloquent Collection instance.
-     *
-     * @param  static[]  $models
-     * @return RoleCollection
-     */
-    public function newCollection(array $models = [])
-    {
-        return new RoleCollection($models);
     }
 }
