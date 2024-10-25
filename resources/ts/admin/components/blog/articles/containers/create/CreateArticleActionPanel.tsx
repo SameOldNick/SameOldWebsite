@@ -28,7 +28,7 @@ const CreateArticleActionPanel: React.FC<CreateArticleActionPanelProps> = ({ onA
             const { title, slug, content, summary, autoGenerateSummary, mainImage, uploadedImages, tags } = formik.values;
             const publishDate = publish ? DateTime.now() : null;
 
-            if (mainImage && mainImage.file === undefined) {
+            if (mainImage && !('file' in mainImage)) {
                 throw new Error('Main image file is missing. Try attaching the image again.');
             }
 
@@ -39,7 +39,7 @@ const CreateArticleActionPanel: React.FC<CreateArticleActionPanelProps> = ({ onA
                 content,
                 summary: !autoGenerateSummary ? summary : null,
                 publishedAt: publishDate,
-                mainImage: mainImage && mainImage.file ? {
+                mainImage: mainImage && 'file' in mainImage ? {
                     image: mainImage.file,
                     description: mainImage.description
                 } : undefined,
