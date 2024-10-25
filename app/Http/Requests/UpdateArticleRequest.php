@@ -38,6 +38,14 @@ class UpdateArticleRequest extends FormRequest
                 'uuid',
                 Rule::exists(Revision::class, 'uuid')->where('article_id', $this->article->getKey()),
             ],
+            'main_image' => 'nullable|array',
+            'main_image.image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'main_image.description' => 'string|max:255',
+            'remove_main_image' => 'nullable|boolean',
+            'images' => 'nullable|array',
+            'images.*' => 'uuid',
+            'tags' => 'nullable|array',
+            'tags.*' => 'string',
         ];
     }
 }
