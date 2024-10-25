@@ -4,6 +4,10 @@
 .bytemd {
     height: 450px;
 
+    &.bytemd-fullscreen {
+        z-index: 99999;
+    }
+
     .bytemd-preview {
         .markdown-body {
             font-size: 18px !important;
