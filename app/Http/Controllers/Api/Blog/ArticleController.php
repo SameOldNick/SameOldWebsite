@@ -173,24 +173,84 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        // Update the article's title and slug if they are provided in the request
-        foreach (['title', 'slug'] as $key) {
-            if ($request->filled($key)) {
-                $article->setAttribute($key, $request->string($key));
+        // Use a transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            // Update the article's title and slug if they are provided in the request
+            foreach (['title', 'slug'] as $key) {
+                if ($request->filled($key)) {
+                    $article->setAttribute($key, $request->string($key));
+                }
             }
-        }
 
-        // Update the article's published date
-        $article->published_at = $request->date('published_at');
+            if ($request->has('main_image')) {
+                // Create Image model
+                $mainImage = new Image([
+                    'description' => $request->has('main_image.description') ? $request->str('main_image.description') : null,
+                ]);
 
-        // Save the updated article
-        $article->save();
+                // Store image on disk
+                $path = $request->file('main_image.image')->store('images');
 
-        // Dispatch events based on changes to the article's publication status
-        if ($article->wasChanged('published_at')) {
-            ArticlePublished::dispatchIf($article->is_published, $article);
-            ArticleScheduled::dispatchIf($article->is_scheduled, $article);
-            ArticleUnpublished::dispatchUnless($article->is_published, $article);
+                // Create File model
+                $file = File::createFromFilePath($path, public: true);
+
+                // Associate current user with file
+                $file->user()->associate($request->user());
+
+                // Save file and image models
+                $mainImage->save();
+                $mainImage->file()->save($file);
+
+                // Attach image to article
+                $article->images()->attach($mainImage);
+
+                // Set as main image
+                $article->mainImage()->associate($mainImage);
+            } else if ($request->boolean('remove_main_image') && $article->mainImage) {
+                $article->mainImage()->dissociate();
+
+                $article->mainImage->delete();
+            }
+
+            // Check for images
+            if ($request->has('images')) {
+                // Attach image UUIDs to article
+                $images = $request->collect('images')->all();
+
+                $article->images()->attach($images);
+            }
+
+            // Check if tags were supplied
+            if ($request->has('tags')) {
+                // Transform strings to Tag models
+                $tags = Tag::createFromStrings($request->collect('tags'));
+
+                // Attach tags to article
+                $article->tags()->sync($tags->map(fn(Tag $tag) => $tag->getKey()));
+            }
+
+            // Update the article's published date
+            $article->published_at = $request->date('published_at');
+
+            // Save the updated article
+            $article->save();
+
+            // Dispatch events based on changes to the article's publication status
+            if ($article->wasChanged('published_at')) {
+                ArticlePublished::dispatchIf($article->is_published, $article);
+                ArticleScheduled::dispatchIf($article->is_scheduled, $article);
+                ArticleUnpublished::dispatchUnless($article->is_published, $article);
+            }
+
+            // Commit the transaction if all updates succeed
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if anything fails
+            DB::rollBack();
+
+            return response()->json(['error' => 'Failed to create article.'], 500);
         }
 
         return $article;
