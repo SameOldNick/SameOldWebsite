@@ -20,13 +20,17 @@ trait HasPresenter
      */
     public function presenter()
     {
-        $presenter = $this->presenterClass();
+        $presenterClass = $this->presenterClass();
 
-        if (! $presenter) {
+        if (! $presenterClass) {
             throw new RuntimeException('Presenter class not found.');
         }
 
-        return $this->newPresenter($presenter);
+        if (!class_exists($presenterClass)) {
+            throw new RuntimeException("The presenter class '{$presenterClass}' does not exist.");
+        }
+
+        return $this->newPresenter($presenterClass);
     }
 
     /**
