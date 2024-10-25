@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Collections\PrivateChannelCollection;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Attributes\CollectedBy;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
