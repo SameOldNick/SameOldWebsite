@@ -26,7 +26,7 @@ trait HasPresenter
             throw new RuntimeException('Presenter class not found.');
         }
 
-        if (!class_exists($presenterClass)) {
+        if (! class_exists($presenterClass)) {
             throw new RuntimeException("The presenter class '{$presenterClass}' does not exist.");
         }
 
