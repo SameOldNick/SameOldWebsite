@@ -10,7 +10,7 @@
                         <h2 class="text-center">{{ __('Verification Required') }}</h2>
                     </div>
                     <div class="card-body">
-                        <div class="px-1 py-4">
+                        <div class="px-1 py-2">
                             <p class="text-center">
                                 {{ __('Before proceeding, please check your email for a verification link.') }}
                             </p>
