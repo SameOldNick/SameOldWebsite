@@ -59,7 +59,7 @@
                     <ul class="dropdown-menu">
                         @can('any-roles-admin')
                         <li>
-                            <a class="dropdown-item" href="{{ URL::temporarySignedRoute('admin.sso', now()->addMinutes(15), ['user' => Auth::user()->getKey()]) }}">
+                            <a class="dropdown-item" href="{{ URL::temporarySignedRoute('admin.sso', now()->addMinutes(15), ['user' => Auth::user()]) }}">
                                 {{ __('Dashboard') }}
                             </a>
                         </li>
