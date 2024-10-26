@@ -54,7 +54,7 @@ Route::namespace(Controllers\Main::class)->group(function () {
         Route::get('/files/{file}', 'FileController@retrieve')->name('file');
     });
 
-    Route::middleware(['auth', 'auth.mfa'])->group(function () {
+    Route::middleware(['auth', 'auth.mfa', 'verified'])->group(function () {
         Route::name('user.')->namespace('User')->group(function () {
             Route::get('/user', 'ProfileController@view')->name('profile');
             Route::post('/user', 'ProfileController@update');
