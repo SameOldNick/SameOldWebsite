@@ -8,7 +8,6 @@ use App\Models\OAuthProvider;
 use App\Models\User;
 use Exception;
 use Illuminate\Container\Container;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
