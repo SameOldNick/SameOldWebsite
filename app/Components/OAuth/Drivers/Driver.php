@@ -82,26 +82,6 @@ abstract class Driver
     }
 
     /**
-     * Registers routes for this OAuth driver.
-     *
-     * @return $this
-     */
-    public function registerRoutes(Router $router)
-    {
-        $suffix = $this->routerSuffix();
-
-        $router
-            ->get(sprintf('redirect/%s', $suffix), fn () => $this->container->call([$this, 'handleRedirect']))
-            ->name(sprintf('oauth.redirect.%s', $suffix));
-
-        $router
-            ->get(sprintf('callback/%s', $suffix), fn () => $this->container->call([$this, 'handleCallback']))
-            ->name(sprintf('oauth.callback.%s', $suffix));
-
-        return $this;
-    }
-
-    /**
      * Prepares redirect response.
      * Example: Setting the scopes for the provider.
      *
@@ -207,14 +187,6 @@ abstract class Driver
         $oauthProvider->expires_at = now()->addSeconds($oauthUser->expiresIn);
 
         return $oauthProvider;
-    }
-
-    /**
-     * Gets the suffix to use for router paths and names.
-     */
-    protected function routerSuffix(): string
-    {
-        return $this->providerName();
     }
 
     /**

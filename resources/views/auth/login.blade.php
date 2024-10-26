@@ -104,19 +104,19 @@
 
                                     <div class="text-center">
                                         @if (OAuth::driver('github')->isConfigured())
-                                        <a class="btn-social btn-social-githubdark" href="{{ route('oauth.redirect.github') }}">
+                                        <a class="btn-social btn-social-githubdark" href="{{ route('oauth.redirect', ['driver' => 'github']) }}">
                                             @svg('fab-github')
                                         </a>
                                         @endif
 
                                         @if (OAuth::driver('google')->isConfigured())
-                                        <a class="btn-social btn-social-googleblue" href="{{ route('oauth.redirect.google') }}">
+                                        <a class="btn-social btn-social-googleblue" href="{{ route('oauth.redirect', ['driver' => 'google']) }}">
                                             @svg('fab-google')
                                         </a>
                                         @endif
 
                                         @if (OAuth::driver('twitter')->isConfigured())
-                                        <a class="btn-social btn-social-x-twitter" href="{{ route('oauth.redirect.twitter') }}">
+                                        <a class="btn-social btn-social-x-twitter" href="{{ route('oauth.redirect', ['driver' => 'twitter']) }}">
                                             @svg('fab-x-twitter')
                                         </a>
                                         @endif

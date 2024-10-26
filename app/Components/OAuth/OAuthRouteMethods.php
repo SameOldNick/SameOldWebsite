@@ -13,12 +13,8 @@ class OAuthRouteMethods
                 'prefix' => 'oauth',
             ], function () {
                 /** @var \Illuminate\Routing\Router $this */
-                /** @var OAuth $oauth */
-                $oauth = $this->container->make(OAuth::class);
-
-                foreach ($oauth->configured() as $driver) {
-                    $oauth->driver($driver)->registerRoutes($this);
-                }
+                $this->get('redirect/{driver}', [OAuthController::class, 'handleRedirect'])->name('oauth.redirect');
+                $this->get('callback/{driver}', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
             });
         };
     }
