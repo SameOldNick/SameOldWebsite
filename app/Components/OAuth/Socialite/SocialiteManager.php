@@ -87,4 +87,3 @@ class SocialiteManager extends BaseSocialiteManager
         return route("oauth.callback", ["driver" => $name]);
     }
 }
-\0
