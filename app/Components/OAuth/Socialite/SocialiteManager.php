@@ -84,6 +84,7 @@ class SocialiteManager extends BaseSocialiteManager
 
     protected function getCallbackUrl(string $name)
     {
-        return route("oauth.callback.{$name}");
+        return route("oauth.callback", ["driver" => $name]);
     }
 }
+\0
