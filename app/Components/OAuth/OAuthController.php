@@ -9,8 +9,6 @@ class OAuthController
 {
     /**
      * Initializes controller
-     *
-     * @param OAuth $oAuth
      */
     public function __construct(
         protected readonly OAuth $oAuth
@@ -19,15 +17,14 @@ class OAuthController
     /**
      * Handles redirect to OAuth provider
      *
-     * @param string $driver
      * @return mixed
      */
     public function handleRedirect(string $driver)
     {
         $driver = $this->resolveDriver($driver);
 
-        if (!$driver) {
-            throw new NotFoundHttpException();
+        if (! $driver) {
+            throw new NotFoundHttpException;
         }
 
         return $driver->handleRedirect();
@@ -36,15 +33,14 @@ class OAuthController
     /**
      * Handles callback response from OAuth provider
      *
-     * @param string $driver
      * @return mixed
      */
     public function handleCallback(string $driver)
     {
         $driver = $this->resolveDriver($driver);
 
-        if (!$driver) {
-            throw new NotFoundHttpException();
+        if (! $driver) {
+            throw new NotFoundHttpException;
         }
 
         return $driver->handleCallback();
@@ -53,7 +49,6 @@ class OAuthController
     /**
      * Resolves OAuth driver
      *
-     * @param string $name
      * @return Drivers\Driver|null
      */
     protected function resolveDriver(string $name)
