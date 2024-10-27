@@ -47,7 +47,7 @@ class OAuthController
             throw new NotFoundHttpException();
         }
 
-        return $driver->handleRedirect();
+        return $driver->handleCallback();
     }
 
     /**
