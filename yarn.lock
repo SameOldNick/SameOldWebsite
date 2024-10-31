@@ -6819,7 +6819,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:^11.7.0":
+"highlight.js@npm:^11.10.0, highlight.js@npm:^11.7.0":
   version: 11.10.0
   resolution: "highlight.js@npm:11.10.0"
   checksum: 10/fc8747bcd4a491fc6a47ff80536881dcc9ea9b36cdc2a22a7be5670b89d76ca6c26df9d749017a23bbb2eb708331097a5ecbcee6330fb9064512d80cc3369d99
@@ -11100,6 +11100,7 @@ __metadata:
     eslint-plugin-react: "npm:latest"
     formik: "npm:^2.4.3"
     github-markdown-css: "npm:^5.6.1"
+    highlight.js: "npm:^11.10.0"
     history: "npm:^5.3.0"
     jest: "npm:^29.7.0"
     jquery: "npm:^3.6.0"
