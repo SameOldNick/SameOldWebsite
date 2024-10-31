@@ -11,7 +11,7 @@
         "biscolab/laravel-recaptcha": "^6.1",
         "blade-ui-kit/blade-icons": "^1.5",
         "composer/composer": "^2.6",
-        "google/analytics-data": "^0.19.0",
+        "google/analytics-data": "^0.20.0",
         "guzzlehttp/guzzle": "^7.8",
         "ifsnop/mysqldump-php": "^2.12",
         "landrok/language-detector": "^1.4",
