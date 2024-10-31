@@ -47,5 +47,16 @@ export default defineConfig({
             '@root': '/resources/ts',
 
         },
+    },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    admin: ['react', 'react-dom', 'reactstrap', 'chart.js'],
+                    mdeditor: ['codemirror-ssr', 'xterm-for-react', 'highlight.js'],
+                    main: ['jquery'],
+                }
+            }
+        }
     }
 });
