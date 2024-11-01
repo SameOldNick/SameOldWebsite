@@ -1,3 +1,9 @@
+/**
+ * Checks path name matches expected
+ * @param pathname Path name (with or without leading /)
+ * @param expected Expected path name
+ * @returns True if they match
+ */
 export const matchesPathName = (pathname: string, expected: string) => {
     const actual = !pathname.startsWith('/') ? `/${pathname}` : pathname;
 
