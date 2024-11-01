@@ -17,9 +17,13 @@ interface IProps {
 }
 
 const App: React.FC<IProps> = ({ }) => {
-    const store = storeFactory();
+    const store = React.useMemo(() => {
+        const store = storeFactory();
 
-    setStore(store);
+        setStore(store);
+
+        return store;
+    }, []);
 
     return (
         <>
