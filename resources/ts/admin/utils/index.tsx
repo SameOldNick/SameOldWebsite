@@ -72,7 +72,7 @@ export const viewportSize = () => {
         width: Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0),
         height: Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     };
-};
+}
 
 /**
  * Checks that two objects are equal (using JSON.stringify)
