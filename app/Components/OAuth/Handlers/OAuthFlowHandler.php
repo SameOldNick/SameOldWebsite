@@ -24,9 +24,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
      */
     public function handleOAuthRedirect()
     {
-        $provider = $this->createSocialiteProvider();
-
-        return $provider->redirect();
+        return $this->provider->provider()->redirect();
     }
 
     /**
@@ -63,21 +61,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
                 return $this->redirectToRoute('user.connected-accounts');
             }
         }
-    }
-
-    /**
-     * Creates Socialite provider
-     *
-     * @return AbstractProvider
-     */
-    protected function createSocialiteProvider()
-    {
-        $provider = $this->provider->provider();
-
-        // Set redirect URL (since it will be missing)
-        $provider->redirectUrl(route('oauth.callback', ['provider' => $this->provider->providerName()]));
-
-        return $provider;
     }
 
     /**

@@ -129,7 +129,12 @@ abstract class Provider
      */
     public function provider()
     {
-        return Socialite::driver($this->providerName());
+        $provider = Socialite::driver($this->providerName());
+
+        // Set redirect URL (since it will be missing)
+        $provider->redirectUrl(route('oauth.callback', ['provider' => $this->providerName()]));
+
+        return $provider;
     }
 
     /**
