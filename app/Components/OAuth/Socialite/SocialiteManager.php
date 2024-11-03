@@ -66,8 +66,9 @@ class SocialiteManager extends BaseSocialiteManager
             $config = $this->config->get("oauth.{$alias}", []);
         }
 
-        if (!array_key_exists('redirect', $config))
+        if (! array_key_exists('redirect', $config)) {
             $config['redirect'] = '';
+        }
 
         return $config;
     }

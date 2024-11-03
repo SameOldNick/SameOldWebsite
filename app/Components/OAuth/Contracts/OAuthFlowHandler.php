@@ -2,8 +2,6 @@
 
 namespace App\Components\OAuth\Contracts;
 
-use Laravel\Socialite\Contracts\User as SocialiteUser;
-
 interface OAuthFlowHandler
 {
     /**
