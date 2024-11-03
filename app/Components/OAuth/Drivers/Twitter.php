@@ -2,35 +2,41 @@
 
 namespace App\Components\OAuth\Drivers;
 
+use App\Components\OAuth\Contracts\OAuthFlowHandler;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 
 class Twitter extends Driver
 {
-    protected function providerName(): string
+    /**
+     * @inheritDoc
+     */
+    public function providerName(): string
     {
         return 'twitter';
     }
 
-    protected function prepareRedirectResponse()
+    /**
+     * @inheritDoc
+     */
+    protected function prepareRedirect(OAuthFlowHandler $handler): OAuthFlowHandler
     {
         $this->provider()->scopes(['users.read']);
 
-        return $this;
+        return $handler;
     }
 
     /**
-     * Prepares callback response.
-     * Example: Create and login user.
-     *
-     * @return $this
+     * @inheritDoc
      */
-    protected function prepareCallbackResponse(SocialiteUser $socialiteUser)
+    protected function prepareCallback(OAuthFlowHandler $handler, SocialiteUser $socialUser): OAuthFlowHandler
     {
-        if (empty($socialiteUser->getEmail())) {
-            $socialiteUser->email = $this->generateEmail($socialiteUser);
+        // The email address maybe empty with X
+        if (empty($socialUser->getEmail())) {
+            // Instead, come up with e-mail address
+            $socialUser->email = $this->generateEmail($socialUser);
         }
 
-        return parent::prepareCallbackResponse($socialiteUser);
+        return $handler;
     }
 
     protected function generateEmail(SocialiteUser $socialiteUser)

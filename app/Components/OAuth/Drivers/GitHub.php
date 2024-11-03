@@ -2,17 +2,25 @@
 
 namespace App\Components\OAuth\Drivers;
 
+use App\Components\OAuth\Contracts\OAuthFlowHandler;
+
 class GitHub extends Driver
 {
-    protected function providerName(): string
+    /**
+     * @inheritDoc
+     */
+    public function providerName(): string
     {
         return 'github';
     }
 
-    protected function prepareRedirectResponse()
+    /**
+     * @inheritDoc
+     */
+    protected function prepareRedirect(OAuthFlowHandler $handler): OAuthFlowHandler
     {
         $this->provider()->scopes(['read:user']);
 
-        return $this;
+        return $handler;
     }
 }

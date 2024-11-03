@@ -2,6 +2,8 @@
 
 namespace App\Components\OAuth;
 
+use App\Components\OAuth\Contracts\OAuthFlowHandler as OAuthFlowHandlerContract;
+use App\Components\OAuth\Handlers\OAuthFlowHandler;
 use App\Components\OAuth\Socialite\SocialiteManager;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +28,8 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->extend(Factory::class, function (Factory $factory, Container $app) {
             return new SocialiteManager($app);
         });
+
+        $this->app->bind(OAuthFlowHandlerContract::class, OAuthFlowHandler::class);
 
         Route::mixin(new OAuthRouteMethods);
     }
