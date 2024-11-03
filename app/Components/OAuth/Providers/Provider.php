@@ -72,8 +72,6 @@ abstract class Provider
      */
     public function handleCallback()
     {
-        //$socialUser = $this->getSocialUser();
-
         return $this->prepareCallback($this->createHandler())->handleOAuthCallback();
     }
 
@@ -82,7 +80,7 @@ abstract class Provider
      *
      * @throws OAuthLoginException Thrown if unable to get user
      */
-    protected function getSocialUser(): SocialiteUser
+    public function getSocialUser(): SocialiteUser
     {
         try {
             return $this->provider()->user();
@@ -122,11 +120,6 @@ abstract class Provider
     protected function prepareCallback(OAuthFlowHandler $handler): OAuthFlowHandler
     {
         return $handler;
-    }
-
-    public function prepareSocialUser(SocialiteUser $user): SocialiteUser
-    {
-        return $user;
     }
 
     /**

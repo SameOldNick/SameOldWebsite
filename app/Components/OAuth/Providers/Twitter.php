@@ -28,8 +28,10 @@ class Twitter extends Provider
     /**
      * {@inheritDoc}
      */
-    public function prepareSocialUser(SocialiteUser $socialUser): SocialiteUser
+    public function getSocialUser(): SocialiteUser
     {
+        $socialUser = parent::getSocialUser();
+
         // The email address maybe empty with X
         if (empty($socialUser->getEmail())) {
             // Instead, come up with e-mail address

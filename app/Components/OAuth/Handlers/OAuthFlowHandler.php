@@ -34,7 +34,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
      */
     public function handleOAuthCallback()
     {
-        $socialUser = $this->getSocialUser();
+        $socialUser = $this->provider->getSocialUser();
 
         if ($user = $this->lookupUser($socialUser)) {
             if ($this->isLoggedIn()) {
@@ -65,6 +65,11 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
         }
     }
 
+    /**
+     * Creates Socialite provider
+     *
+     * @return AbstractProvider
+     */
     protected function createSocialiteProvider()
     {
         $provider = $this->provider->provider();
@@ -73,30 +78,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
         $provider->redirectUrl(route('oauth.callback', ['provider' => $this->provider->providerName()]));
 
         return $provider;
-    }
-
-    /**
-     * Gets the social user
-     *
-     * @throws OAuthLoginException Thrown if unable to get user
-     */
-    protected function getSocialUser(): SocialUser
-    {
-        $provider = $this->createSocialiteProvider();
-
-        try {
-            return $provider->user();
-        } catch (InvalidStateException $ex) {
-            /**
-             * This happens when the provider sent a response back to the app that it wasn't expecting.
-             * Technically, this is because there's nothing in the session about the OAuth state.
-             * This can be caused by the user using a container/private tab when authenticating on the third-party OAuth provider.
-             */
-
-            throw new OAuthLoginException(new InvalidStateException(__('An OAuth response was received that wasn\'t expected.')));
-        } catch (Exception $ex) {
-            throw new OAuthLoginException($ex);
-        }
     }
 
     /**
