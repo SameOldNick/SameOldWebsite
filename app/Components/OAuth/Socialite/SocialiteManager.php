@@ -58,6 +58,7 @@ class SocialiteManager extends BaseSocialiteManager
 
     protected function getConfig(string $name)
     {
+        // Gets config from oauth.php instead of services.php
         $config = $this->config->get("oauth.{$name}", []);
 
         if (empty($config) && $this->hasProviderAlias($name)) {
@@ -65,9 +66,8 @@ class SocialiteManager extends BaseSocialiteManager
             $config = $this->config->get("oauth.{$alias}", []);
         }
 
-        if (! isset($config['redirect'])) {
-            $config['redirect'] = $this->getCallbackUrl($name);
-        }
+        if (!array_key_exists('redirect', $config))
+            $config['redirect'] = '';
 
         return $config;
     }
@@ -85,10 +85,5 @@ class SocialiteManager extends BaseSocialiteManager
     protected function getProviderAlias(string $name)
     {
         return static::$aliases[$name];
-    }
-
-    protected function getCallbackUrl(string $name)
-    {
-        return route('oauth.callback', ['driver' => $name]);
     }
 }

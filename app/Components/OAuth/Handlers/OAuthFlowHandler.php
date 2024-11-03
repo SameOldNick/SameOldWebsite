@@ -21,7 +21,9 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
      */
     public function handleOAuthRedirect()
     {
-        return $this->provider->provider()->redirect();
+        $provider = $this->createSocialiteProvider();
+
+        return $provider->redirect();
     }
 
     /**
@@ -58,6 +60,15 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
         }
     }
 
+    protected function createSocialiteProvider()
+    {
+        $provider = $this->provider->provider();
+
+        // Set redirect URL (since it will be missing)
+        $provider->redirectUrl(route('oauth.callback', ['provider' => $this->provider->providerName()]));
+
+        return $provider;
+    }
     /**
      * Checks if user is logged in
      */
