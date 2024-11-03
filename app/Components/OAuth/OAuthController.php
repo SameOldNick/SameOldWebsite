@@ -2,6 +2,7 @@
 
 namespace App\Components\OAuth;
 
+use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -19,8 +20,10 @@ class OAuthController
      *
      * @return mixed
      */
-    public function handleRedirect(string $driver)
+    public function handleRedirect(Request $request, string $driver)
     {
+        $request->session()->reflash();
+
         $driver = $this->resolveDriver($driver);
 
         if (! $driver) {
@@ -35,8 +38,10 @@ class OAuthController
      *
      * @return mixed
      */
-    public function handleCallback(string $driver)
+    public function handleCallback(Request $request, string $driver)
     {
+        $request->session()->reflash();
+
         $driver = $this->resolveDriver($driver);
 
         if (! $driver) {
