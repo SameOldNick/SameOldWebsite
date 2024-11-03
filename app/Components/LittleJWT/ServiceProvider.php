@@ -16,11 +16,21 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton('littlejwt.refresh', function ($app) {
+            /**
+             * The key needs to be pulled from the config file because Laravel
+             * doesn't load the .env file when the config is cached.
+             */
+            $config = config('littlejwt.key.refresh', [
+                'type' => 'secret',
+
+                'options' => [
+                    'phrase' => '',
+                ]
+            ]);
+
             $jwk = KeyBuilder::buildFromConfig([
-                'default' => KeyBuilder::KEY_SECRET,
-                KeyBuilder::KEY_SECRET => [
-                    'phrase' => env('LITTLEJWT_KEY_PHRASE_REFRESH', ''),
-                ],
+                'default' => $config['type'],
+                $config['type'] => $config['options'],
             ]);
 
             return new LittleJWT($app, $jwk);

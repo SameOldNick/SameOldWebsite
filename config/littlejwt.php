@@ -26,6 +26,28 @@ return [
              */
             'allow_unsecure' => false,
         ],
+
+        /**
+         * Configuration options for refresh key.
+         */
+        'refresh' => [
+            /**
+             * Type of refresh key.
+             * Possible options: secret or file
+             */
+            'type' => env('LITTLEJWT_KEY_REFRESH_TYPE', 'secret'),
+
+            /**
+             * Options to use for loading the refresh key.
+             */
+            'options' => [
+                /**
+                 * The phrase to use for refresh tokens.
+                 */
+                'phrase' => env('LITTLEJWT_KEY_PHRASE_REFRESH', ''),
+            ]
+        ],
+
         /**
          * Configurations options for a file key.
          */
@@ -81,9 +103,7 @@ return [
                 'typ',
                 'crit',
             ],
-            'payload' => [
-
-            ],
+            'payload' => [],
         ],
     ],
     'defaults' => [
