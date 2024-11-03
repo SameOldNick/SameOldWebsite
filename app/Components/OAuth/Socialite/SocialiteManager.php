@@ -72,6 +72,12 @@ class SocialiteManager extends BaseSocialiteManager
         return $config;
     }
 
+    /**
+     * Checks if provider has alias
+     *
+     * @param string $name
+     * @return boolean
+     */
     protected function hasProviderAlias(string $name)
     {
         return \array_key_exists($name, static::$aliases);
