@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Components\OAuth\Drivers;
+namespace App\Components\OAuth\Providers;
 
 use App\Components\OAuth\Contracts\OAuthFlowHandler;
 
-class GitHub extends Driver
+class GitHub extends Provider
 {
     /**
      * {@inheritDoc}

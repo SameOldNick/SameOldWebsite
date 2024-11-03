@@ -20,11 +20,11 @@ class OAuthController
      *
      * @return mixed
      */
-    public function handleRedirect(Request $request, string $driver)
+    public function handleRedirect(Request $request, string $provider)
     {
         $request->session()->reflash();
 
-        $driver = $this->resolveDriver($driver);
+        $driver = $this->resolveProvider($provider);
 
         if (! $driver) {
             throw new NotFoundHttpException;
@@ -38,11 +38,11 @@ class OAuthController
      *
      * @return mixed
      */
-    public function handleCallback(Request $request, string $driver)
+    public function handleCallback(Request $request, string $provider)
     {
         $request->session()->reflash();
 
-        $driver = $this->resolveDriver($driver);
+        $driver = $this->resolveProvider($provider);
 
         if (! $driver) {
             throw new NotFoundHttpException;
@@ -54,15 +54,15 @@ class OAuthController
     /**
      * Resolves OAuth driver
      *
-     * @return Drivers\Driver|null
+     * @return Providers\Provider|null
      */
-    protected function resolveDriver(string $name)
+    protected function resolveProvider(string $name)
     {
         try {
-            $driver = $this->oAuth->driver($name);
+            $provider = $this->oAuth->provider($name);
 
-            if ($driver->isConfigured()) {
-                return $driver;
+            if ($provider->isConfigured()) {
+                return $provider;
             }
         } catch (InvalidArgumentException $ex) {
         }

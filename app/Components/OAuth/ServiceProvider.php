@@ -66,9 +66,9 @@ class ServiceProvider extends BaseServiceProvider
     protected function getDrivers()
     {
         return [
-            'github' => Drivers\GitHub::class,
-            'google' => Drivers\Google::class,
-            'twitter' => Drivers\Twitter::class,
+            'github' => Providers\GitHub::class,
+            'google' => Providers\Google::class,
+            'twitter' => Providers\Twitter::class,
         ];
     }
 }
