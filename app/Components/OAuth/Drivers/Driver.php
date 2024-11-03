@@ -2,17 +2,13 @@
 
 namespace App\Components\OAuth\Drivers;
 
-use App\Components\OAuth\Contracts\CallbackHandler;
 use App\Components\OAuth\Contracts\OAuthFlowHandler;
 use App\Components\OAuth\Exceptions\OAuthLoginException;
-use App\Components\OAuth\Exceptions\UserHasCredentialsException;
-use App\Models\OAuthProvider;
 use App\Models\User;
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
@@ -51,8 +47,6 @@ abstract class Driver
 
     /**
      * Gets readable name of provider.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -86,7 +80,6 @@ abstract class Driver
     /**
      * Gets the social user
      *
-     * @return SocialiteUser
      * @throws OAuthLoginException Thrown if unable to get user
      */
     protected function getSocialUser(): SocialiteUser
@@ -108,8 +101,6 @@ abstract class Driver
 
     /**
      * Creates flow handler
-     *
-     * @return OAuthFlowHandler
      */
     protected function createHandler(): OAuthFlowHandler
     {
@@ -119,8 +110,6 @@ abstract class Driver
     /**
      * Prepares handler redirect response.
      * Example: Setting the scopes for the provider.
-     *
-     * @return OAuthFlowHandler
      */
     protected function prepareRedirect(OAuthFlowHandler $handler): OAuthFlowHandler
     {
@@ -129,10 +118,6 @@ abstract class Driver
 
     /**
      * Prepares handler for callback.
-     *
-     * @param OAuthFlowHandler $handler
-     * @param SocialiteUser $socialUser
-     * @return OAuthFlowHandler
      */
     protected function prepareCallback(OAuthFlowHandler $handler, SocialiteUser $socialUser): OAuthFlowHandler
     {

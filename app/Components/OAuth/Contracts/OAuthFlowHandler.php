@@ -16,7 +16,6 @@ interface OAuthFlowHandler
     /**
      * Handles OAuth callback
      *
-     * @param SocialiteUser $socialiteUser
      * @return mixed Response
      */
     public function handleOAuthCallback(SocialiteUser $socialiteUser);
