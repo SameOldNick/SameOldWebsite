@@ -2,7 +2,10 @@
 
 namespace App\Components\OAuth\Exceptions;
 
+use App\Components\SweetAlert\SweetAlertBuilder;
+use App\Components\SweetAlert\SweetAlerts;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class OAuthLoginException extends OAuthException
 {
@@ -25,6 +28,17 @@ class OAuthLoginException extends OAuthException
             }
         }
 
-        return redirect()->route('login')->withErrors(['oauth' => [$message]]);
+        if (Auth::check()) {
+            app(SweetAlerts::class)->success(function (SweetAlertBuilder $builder) use ($message) {
+                $builder
+                    ->title('Ooops...')
+                    ->icon('danger')
+                    ->text($message);
+            });
+
+            return redirect()->back();
+        } else {
+            return redirect()->route('login')->withErrors(['oauth' => [$message]]);
+        }
     }
 }
