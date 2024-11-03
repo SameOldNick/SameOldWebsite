@@ -1,15 +1,17 @@
+@use "sass:map";
+
 .btn-social {
-	display: inline-block;
-	width: 50px;
-	height: 50px;
-	//background: #f1f1f1;
-	margin: 10px;
-	border-radius: 30%;
-	//box-shadow: 0 5px 15px -5px #ecf0f1;
-	//color: #3498db;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    //background: #f1f1f1;
+    margin: 10px;
+    border-radius: 30%;
+    //box-shadow: 0 5px 15px -5px #ecf0f1;
+    //color: #3498db;
     text-align: center;
-	overflow: hidden;
-	position: relative;
+    overflow: hidden;
+    position: relative;
 
     i {
         line-height: 50px;
@@ -22,11 +24,13 @@
         padding: 10px;
     }
 
-    &:hover, &.btn-social-active {
+    &:hover,
+    &.btn-social-active {
         transform: scale(1.3);
-	    color: #f1f1f1 !important;
+        color: #f1f1f1 !important;
 
-        i, svg {
+        i,
+        svg {
             color: #f1f1f1 !important;
         }
 
@@ -55,14 +59,15 @@
         top: 90%;
     }
 
-	@each $icon, $color in $social-media-colors {
+    @each $icon, $color in $social-media-colors {
         &.btn-social-#{$icon} {
             &::before {
                 background-color: $color;
                 color: color-contrast($color);
             }
 
-            i, svg {
+            i,
+            svg {
                 color: $color;
                 //background-color: color-contrast($color);
             }
@@ -74,10 +79,12 @@
             left: -110%;
             top: 90%;
         }
+
         50% {
             left: 10%;
             top: -30%;
         }
+
         100% {
             left: -10%;
             top: -10%;
@@ -121,4 +128,9 @@ footer .btn-icon {
         top: 50%;
         transform: translateY(-50%);
     }
+}
+
+// Bootstrap automatically reverts danger color to black
+.btn-danger {
+    @include button-variant(map.get($theme-colors, danger), map.get($theme-colors, danger), $white);
 }
