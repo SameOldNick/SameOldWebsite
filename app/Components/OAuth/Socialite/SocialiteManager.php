@@ -75,8 +75,7 @@ class SocialiteManager extends BaseSocialiteManager
     /**
      * Checks if provider has alias
      *
-     * @param string $name
-     * @return boolean
+     * @return bool
      */
     protected function hasProviderAlias(string $name)
     {

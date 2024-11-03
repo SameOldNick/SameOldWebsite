@@ -2,15 +2,13 @@
 
 namespace App\Components\OAuth\Handlers;
 
-use Laravel\Socialite\Contracts\User as SocialUser;
 use App\Components\OAuth\Contracts\OAuthFlowHandler as OAuthFlowHandlerContract;
 use App\Components\OAuth\Drivers\Driver;
-use App\Components\OAuth\Facades\OAuth;
 use App\Models\OAuthProvider;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Laravel\Socialite\Contracts\User as SocialUser;
 
 class OAuthFlowHandler implements OAuthFlowHandlerContract
 {
@@ -19,7 +17,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
     ) {}
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handleOAuthRedirect()
     {
@@ -27,7 +25,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handleOAuthCallback(SocialUser $socialUser)
     {
@@ -38,7 +36,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
                 return $this->login($user)->redirectToRoute('user.profile');
             }
         } else {
-            if (!$this->isLoggedIn()) {
+            if (! $this->isLoggedIn()) {
                 if ($this->canCreateUser($socialUser)) {
                     $user = $this->registerUser($socialUser);
 
@@ -47,7 +45,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
                     return $this->redirectToRoute('user.profile');
                 } else {
                     return $this->redirectToRoute('login')->withInfo(
-                        'Please log in with your password to connect your account with ' . $this->provider->getName() . '.'
+                        'Please log in with your password to connect your account with '.$this->provider->getName().'.'
                     );
                 }
             } else {
@@ -62,8 +60,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
 
     /**
      * Checks if user is logged in
-     *
-     * @return boolean
      */
     protected function isLoggedIn(): bool
     {
@@ -72,8 +68,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
 
     /**
      * Gets the current user
-     *
-     * @return User
      */
     protected function currentUser(): User
     {
@@ -83,7 +77,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
     /**
      * Login user
      *
-     * @param User $user
      * @return $this
      */
     protected function login(User $user): static
@@ -96,7 +89,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
     /**
      * Creates response to redirect to route
      *
-     * @param string $route
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function redirectToRoute(string $route)
@@ -107,7 +99,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
     /**
      * Look up user from social user
      *
-     * @param SocialUser $socialUser
      * @return User|null User or null if not found
      */
     protected function lookupUser(SocialUser $socialUser): ?User
@@ -120,9 +111,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
 
     /**
      * Checks that new user can be created from social user.
-     *
-     * @param SocialUser $socialUser
-     * @return boolean
      */
     protected function canCreateUser(SocialUser $socialUser): bool
     {
@@ -149,9 +137,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
     /**
      * Associates social user with user
      *
-     * @param User $user
-     * @param SocialUser $socialUser
-     * @param boolean $replace If true, the previous social user is deleted
+     * @param  bool  $replace  If true, the previous social user is deleted
      * @return $this
      */
     protected function associateWithUser(User $user, SocialUser $socialUser, bool $replace = false)
@@ -169,9 +155,6 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
 
     /**
      * Creates OAuthProvider model from social user
-     *
-     * @param SocialUser $socialUser
-     * @return OAuthProvider
      */
     protected function mapToOAuthProvider(SocialUser $socialUser): OAuthProvider
     {

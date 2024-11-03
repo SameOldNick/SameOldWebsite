@@ -8,7 +8,7 @@ use Laravel\Socialite\Contracts\User as SocialiteUser;
 class Twitter extends Driver
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function providerName(): string
     {
@@ -16,7 +16,7 @@ class Twitter extends Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function prepareRedirect(OAuthFlowHandler $handler): OAuthFlowHandler
     {
@@ -26,7 +26,7 @@ class Twitter extends Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function prepareCallback(OAuthFlowHandler $handler, SocialiteUser $socialUser): OAuthFlowHandler
     {
@@ -41,9 +41,6 @@ class Twitter extends Driver
 
     /**
      * Generates email address to use when the email field is missing.
-     *
-     * @param SocialiteUser $socialiteUser
-     * @return string
      */
     protected function generateEmail(SocialiteUser $socialiteUser): string
     {

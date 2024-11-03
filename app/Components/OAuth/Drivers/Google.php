@@ -7,7 +7,7 @@ use App\Components\OAuth\Contracts\OAuthFlowHandler;
 class Google extends Driver
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function providerName(): string
     {
@@ -15,7 +15,7 @@ class Google extends Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function prepareRedirect(OAuthFlowHandler $handler): OAuthFlowHandler
     {
