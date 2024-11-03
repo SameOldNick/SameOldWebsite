@@ -11,10 +11,10 @@
                     <div class="card card-container shadow-lg bg-light mt-3">
 
                         <div class="card-header card-header-banner">
-                            <h2 class="text-center">Disconnect <span id="providerName">{{ Str::headline($provider->provider_name) }}</span>?</h2>
+                            <h2 class="text-center">Disconnect <span id="providerName">{{ $name }}</span>?</h2>
                         </div>
                         <div class="card-body text-center">
-                            <p class="card-text">Are you sure you want to disconnect this provider from your account?</p>
+                            <p class="card-text">Are you sure you want to disconnect <span id="providerName">{{ $name }}</span> from your account?</p>
                             <button class="btn btn-danger me-2" type="submit">Yes, disconnect</button>
                             <a class="btn btn-secondary" href="{{ route('user.connected-accounts') }}">Cancel</a>
                         </div>
