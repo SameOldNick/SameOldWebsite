@@ -2,17 +2,25 @@
 
 namespace App\Components\OAuth\Drivers;
 
+use App\Components\OAuth\Contracts\OAuthFlowHandler;
+
 class Google extends Driver
 {
-    protected function providerName(): string
+    /**
+     * @inheritDoc
+     */
+    public function providerName(): string
     {
         return 'google';
     }
 
-    protected function prepareRedirectResponse()
+    /**
+     * @inheritDoc
+     */
+    public function prepareRedirect(OAuthFlowHandler $handler): OAuthFlowHandler
     {
         $this->provider()->scopes(['profile', 'email']);
 
-        return $this;
+        return $handler;
     }
 }

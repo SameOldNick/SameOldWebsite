@@ -2,6 +2,8 @@
 
 namespace App\Components\OAuth\Drivers;
 
+use App\Components\OAuth\Contracts\CallbackHandler;
+use App\Components\OAuth\Contracts\OAuthFlowHandler;
 use App\Components\OAuth\Exceptions\OAuthLoginException;
 use App\Components\OAuth\Exceptions\UserHasCredentialsException;
 use App\Models\OAuthProvider;
@@ -9,6 +11,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Laravel\Socialite\Facades\Socialite;
@@ -47,13 +50,25 @@ abstract class Driver
     }
 
     /**
+     * Gets readable name of provider.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        $providerName = $this->providerName();
+
+        return trans()->has("oauth.providers.{$providerName}") ? trans("oauth.providers.{$providerName}") : Str::headline($providerName);
+    }
+
+    /**
      * Handles redirecting to external OAuth provider.
      *
      * @return mixed
      */
     public function handleRedirect()
     {
-        return $this->prepareRedirectResponse()->provider()->redirect();
+        return $this->prepareRedirect($this->createHandler())->handleOAuthRedirect();
     }
 
     /**
@@ -63,8 +78,21 @@ abstract class Driver
      */
     public function handleCallback()
     {
+        $socialUser = $this->getSocialUser();
+
+        return $this->prepareCallback($this->createHandler(), $socialUser)->handleOAuthCallback($socialUser);
+    }
+
+    /**
+     * Gets the social user
+     *
+     * @return SocialiteUser
+     * @throws OAuthLoginException Thrown if unable to get user
+     */
+    protected function getSocialUser(): SocialiteUser
+    {
         try {
-            $socialiteUser = $this->provider()->user();
+            return $this->provider()->user();
         } catch (InvalidStateException $ex) {
             /**
              * This happens when the provider sent a response back to the app that it wasn't expecting.
@@ -76,54 +104,39 @@ abstract class Driver
         } catch (Exception $ex) {
             throw new OAuthLoginException($ex);
         }
-
-        return $this->prepareCallbackResponse($socialiteUser)->generateCallbackResponse();
     }
 
     /**
-     * Prepares redirect response.
+     * Creates flow handler
+     *
+     * @return OAuthFlowHandler
+     */
+    protected function createHandler(): OAuthFlowHandler
+    {
+        return $this->container->make(OAuthFlowHandler::class, ['provider' => $this]);
+    }
+
+    /**
+     * Prepares handler redirect response.
      * Example: Setting the scopes for the provider.
      *
-     * @return $this
+     * @return OAuthFlowHandler
      */
-    protected function prepareRedirectResponse()
+    protected function prepareRedirect(OAuthFlowHandler $handler): OAuthFlowHandler
     {
-        return $this;
+        return $handler;
     }
 
     /**
-     * Prepares callback response.
-     * Example: Create and login user.
+     * Prepares handler for callback.
      *
-     * @return $this
+     * @param OAuthFlowHandler $handler
+     * @param SocialiteUser $socialUser
+     * @return OAuthFlowHandler
      */
-    protected function prepareCallbackResponse(SocialiteUser $socialiteUser)
+    protected function prepareCallback(OAuthFlowHandler $handler, SocialiteUser $socialUser): OAuthFlowHandler
     {
-        $user = $this->createOrUpdateUser($socialiteUser);
-
-        return $this->login($user);
-    }
-
-    /**
-     * Logs user in
-     *
-     * @return $this
-     */
-    protected function login(User $user)
-    {
-        Auth::login($user);
-
-        return $this;
-    }
-
-    /**
-     * Generates callback response
-     *
-     * @return mixed
-     */
-    protected function generateCallbackResponse()
-    {
-        return redirect()->route('user.profile');
+        return $handler;
     }
 
     /**
@@ -131,65 +144,13 @@ abstract class Driver
      *
      * @return AbstractProvider
      */
-    protected function provider()
+    public function provider()
     {
         return Socialite::driver($this->providerName());
     }
 
     /**
-     * Creates or updates user based on Socialite User response.
-     */
-    protected function createOrUpdateUser(SocialiteUser $oauthUser): User
-    {
-        // Check if a user with this email exists in the database.
-        $existingUser = User::where('email', $oauthUser->getEmail())->first();
-
-        if ($existingUser) {
-            // Account with the same email already exists
-            // Implement your logic for handling this situation
-            // You may link accounts or merge data here.
-            if ($existingUser->password) {
-                // User must login with their username and password.
-
-                throw new UserHasCredentialsException($existingUser);
-            } else {
-                $oauthProvider = $this->mapToOAuthProvider($oauthUser);
-
-                $existingUser->oauthProviders()->save($oauthProvider);
-
-                return $existingUser;
-            }
-        } else {
-            // Create a new user account
-            $newUser = new User;
-            $newUser->name = $oauthUser->getName();
-            $newUser->email = $oauthUser->getEmail();
-            $newUser->save();
-
-            $oauthProvider = $this->mapToOAuthProvider($oauthUser);
-
-            $newUser->oauthProviders()->save($oauthProvider);
-
-            return $newUser;
-        }
-    }
-
-    protected function mapToOAuthProvider(SocialiteUser $oauthUser): OAuthProvider
-    {
-        $oauthProvider = new OAuthProvider;
-
-        $oauthProvider->provider_name = $this->providerName();
-        $oauthProvider->provider_id = $oauthUser->getId();
-        $oauthProvider->access_token = $oauthUser->token;
-        $oauthProvider->refresh_token = $oauthUser->refreshToken;
-        $oauthProvider->avatar_url = $oauthUser->getAvatar();
-        $oauthProvider->expires_at = now()->addSeconds($oauthUser->expiresIn);
-
-        return $oauthProvider;
-    }
-
-    /**
      * Gets name of Socialite provider.
      */
-    abstract protected function providerName(): string;
+    abstract public function providerName(): string;
 }
