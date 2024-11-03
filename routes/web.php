@@ -72,6 +72,11 @@ Route::namespace(Controllers\Main::class)->group(function () {
             Route::get('/user/mfa/setup/complete', 'MFASetupController@completeSetup');
 
             Route::post('/user/mfa/setup/disable', 'MFADisableController@disableMFA')->name('security.mfa.disable');
+
+            Route::get('/connected-accounts', 'ConnectedAccountsController@index')->name('connected-accounts');
+            Route::get('/connected-accounts/connect/{provider}', 'ConnectedAccountsController@connect')->name('connected-accounts.connect');
+            Route::get('/connected-accounts/disconnect/{provider}', 'ConnectedAccountsController@disconnect')->name('connected-accounts.disconnect');
+            Route::delete('/connected-accounts/disconnect/{provider}', 'ConnectedAccountsController@destroy')->name('connected-accounts.destroy');
         });
     });
 

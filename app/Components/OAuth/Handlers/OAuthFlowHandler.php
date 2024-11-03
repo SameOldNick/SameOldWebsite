@@ -55,6 +55,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
 
                 $this->associateWithUser($user, $socialUser, true);
 
+                return $this->redirectToRoute('user.connected-accounts');
             }
         }
     }
