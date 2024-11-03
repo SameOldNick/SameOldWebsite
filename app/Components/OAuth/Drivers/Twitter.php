@@ -39,7 +39,13 @@ class Twitter extends Driver
         return $handler;
     }
 
-    protected function generateEmail(SocialiteUser $socialiteUser)
+    /**
+     * Generates email address to use when the email field is missing.
+     *
+     * @param SocialiteUser $socialiteUser
+     * @return string
+     */
+    protected function generateEmail(SocialiteUser $socialiteUser): string
     {
         return sprintf('%s@x.com', $socialiteUser->getId());
     }
