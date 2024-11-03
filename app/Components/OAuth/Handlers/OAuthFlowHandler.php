@@ -3,15 +3,12 @@
 namespace App\Components\OAuth\Handlers;
 
 use App\Components\OAuth\Contracts\OAuthFlowHandler as OAuthFlowHandlerContract;
-use App\Components\OAuth\Exceptions\OAuthLoginException;
 use App\Components\OAuth\Providers\Provider;
 use App\Models\OAuthProvider;
 use App\Models\User;
-use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialUser;
-use Laravel\Socialite\Two\InvalidStateException;
 
 class OAuthFlowHandler implements OAuthFlowHandlerContract
 {
@@ -50,7 +47,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
                     return $this->redirectToRoute('user.profile');
                 } else {
                     return $this->redirectToRoute('login')->withInfo(
-                        'Please log in with your password to connect your account with ' . $this->provider->getName() . '.'
+                        'Please log in with your password to connect your account with '.$this->provider->getName().'.'
                     );
                 }
             } else {
