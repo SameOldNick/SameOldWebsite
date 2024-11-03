@@ -63,7 +63,9 @@ class ConnectedAccountsController extends Controller
     {
         $this->authorize('delete', $provider);
 
-        return view('main.user.connected-accounts.disconnect', compact('provider'));
+        $name = OAuth::driver($provider->provider_name)->getName();
+
+        return view('main.user.connected-accounts.disconnect', compact('name', 'provider'));
     }
 
     /**
