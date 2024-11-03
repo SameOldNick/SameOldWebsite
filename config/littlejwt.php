@@ -45,7 +45,7 @@ return [
                  * The phrase to use for refresh tokens.
                  */
                 'phrase' => env('LITTLEJWT_KEY_PHRASE_REFRESH', ''),
-            ]
+            ],
         ],
 
         /**
