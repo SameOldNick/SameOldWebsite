@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\OAuth\Drivers;
+namespace App\Components\OAuth\Providers;
 
 use App\Components\OAuth\Contracts\OAuthFlowHandler;
 use App\Components\OAuth\Exceptions\OAuthLoginException;
@@ -14,7 +14,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\InvalidStateException;
 
-abstract class Driver
+abstract class Provider
 {
     public function __construct(
         protected Container $container
@@ -72,9 +72,9 @@ abstract class Driver
      */
     public function handleCallback()
     {
-        $socialUser = $this->getSocialUser();
+        //$socialUser = $this->getSocialUser();
 
-        return $this->prepareCallback($this->createHandler(), $socialUser)->handleOAuthCallback($socialUser);
+        return $this->prepareCallback($this->createHandler())->handleOAuthCallback();
     }
 
     /**
@@ -119,9 +119,14 @@ abstract class Driver
     /**
      * Prepares handler for callback.
      */
-    protected function prepareCallback(OAuthFlowHandler $handler, SocialiteUser $socialUser): OAuthFlowHandler
+    protected function prepareCallback(OAuthFlowHandler $handler): OAuthFlowHandler
     {
         return $handler;
+    }
+
+    public function prepareSocialUser(SocialiteUser $user): SocialiteUser
+    {
+        return $user;
     }
 
     /**

@@ -22,7 +22,7 @@ class ConnectedAccountsController extends Controller
             $provider = $request->session()->get('oauth.connecting');
 
             $data['success'] = __('Your account has been connected to :provider.', [
-                'provider' => OAuth::driver($provider)->getName(),
+                'provider' => OAuth::provider($provider)->getName(),
             ]);
         } elseif ($request->session()->has('success')) {
             $data['success'] = $request->session()->get('success');
@@ -44,7 +44,7 @@ class ConnectedAccountsController extends Controller
 
         $request->session()->flash('oauth.connecting', $provider);
 
-        return redirect()->route('oauth.redirect', ['driver' => $provider]);
+        return redirect()->route('oauth.redirect', ['provider' => $provider]);
     }
 
     /**
@@ -56,7 +56,7 @@ class ConnectedAccountsController extends Controller
     {
         $this->authorize('delete', $provider);
 
-        $name = OAuth::driver($provider->provider_name)->getName();
+        $name = OAuth::provider($provider->provider_name)->getName();
 
         return view('main.user.connected-accounts.disconnect', compact('name', 'provider'));
     }
@@ -74,7 +74,7 @@ class ConnectedAccountsController extends Controller
         return redirect()->route('user.connected-accounts')->with(
             'success',
             __('Your account has been disconnected from :provider.', [
-                'provider' => OAuth::driver($provider->provider_name)->getName(),
+                'provider' => OAuth::provider($provider->provider_name)->getName(),
             ])
         );
     }

@@ -3,17 +3,20 @@
 namespace App\Components\OAuth\Handlers;
 
 use App\Components\OAuth\Contracts\OAuthFlowHandler as OAuthFlowHandlerContract;
-use App\Components\OAuth\Drivers\Driver;
+use App\Components\OAuth\Exceptions\OAuthLoginException;
+use App\Components\OAuth\Providers\Provider;
 use App\Models\OAuthProvider;
 use App\Models\User;
+use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialUser;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class OAuthFlowHandler implements OAuthFlowHandlerContract
 {
     public function __construct(
-        public readonly Driver $provider
+        public readonly Provider $provider
     ) {}
 
     /**
@@ -29,8 +32,10 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
     /**
      * {@inheritDoc}
      */
-    public function handleOAuthCallback(SocialUser $socialUser)
+    public function handleOAuthCallback()
     {
+        $socialUser = $this->getSocialUser();
+
         if ($user = $this->lookupUser($socialUser)) {
             if ($this->isLoggedIn()) {
                 return $this->redirectToRoute('user.profile');
@@ -47,7 +52,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
                     return $this->redirectToRoute('user.profile');
                 } else {
                     return $this->redirectToRoute('login')->withInfo(
-                        'Please log in with your password to connect your account with '.$this->provider->getName().'.'
+                        'Please log in with your password to connect your account with ' . $this->provider->getName() . '.'
                     );
                 }
             } else {
@@ -69,6 +74,31 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
 
         return $provider;
     }
+
+    /**
+     * Gets the social user
+     *
+     * @throws OAuthLoginException Thrown if unable to get user
+     */
+    protected function getSocialUser(): SocialUser
+    {
+        $provider = $this->createSocialiteProvider();
+
+        try {
+            return $provider->user();
+        } catch (InvalidStateException $ex) {
+            /**
+             * This happens when the provider sent a response back to the app that it wasn't expecting.
+             * Technically, this is because there's nothing in the session about the OAuth state.
+             * This can be caused by the user using a container/private tab when authenticating on the third-party OAuth provider.
+             */
+
+            throw new OAuthLoginException(new InvalidStateException(__('An OAuth response was received that wasn\'t expected.')));
+        } catch (Exception $ex) {
+            throw new OAuthLoginException($ex);
+        }
+    }
+
     /**
      * Checks if user is logged in
      */

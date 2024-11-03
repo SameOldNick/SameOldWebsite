@@ -18,5 +18,5 @@ interface OAuthFlowHandler
      *
      * @return mixed Response
      */
-    public function handleOAuthCallback(SocialiteUser $socialiteUser);
+    public function handleOAuthCallback();
 }

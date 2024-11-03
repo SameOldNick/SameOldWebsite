@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Components\OAuth\Drivers;
+namespace App\Components\OAuth\Providers;
 
 use App\Components\OAuth\Contracts\OAuthFlowHandler;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 
-class Twitter extends Driver
+class Twitter extends Provider
 {
     /**
      * {@inheritDoc}
@@ -28,7 +28,7 @@ class Twitter extends Driver
     /**
      * {@inheritDoc}
      */
-    protected function prepareCallback(OAuthFlowHandler $handler, SocialiteUser $socialUser): OAuthFlowHandler
+    public function prepareSocialUser(SocialiteUser $socialUser): SocialiteUser
     {
         // The email address maybe empty with X
         if (empty($socialUser->getEmail())) {
@@ -36,7 +36,7 @@ class Twitter extends Driver
             $socialUser->email = $this->generateEmail($socialUser);
         }
 
-        return $handler;
+        return $socialUser;
     }
 
     /**
