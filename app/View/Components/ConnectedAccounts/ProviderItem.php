@@ -13,7 +13,9 @@ use Illuminate\View\Component;
 class ProviderItem extends Component
 {
     public readonly string $name;
+
     public readonly string $icon;
+
     public readonly ?OAuthProvider $provider;
 
     protected array $iconMappings = [
@@ -35,9 +37,6 @@ class ProviderItem extends Component
 
     /**
      * Gets the name of the provider
-     *
-     * @param string $providerName
-     * @return string
      */
     public function getName(string $providerName): string
     {
@@ -46,9 +45,6 @@ class ProviderItem extends Component
 
     /**
      * Gets the icon ID
-     *
-     * @param string $providerName
-     * @return string|null
      */
     public function getIcon(string $providerName): ?string
     {
@@ -57,18 +53,14 @@ class ProviderItem extends Component
 
     /**
      * Checks if provider is connected
-     *
-     * @return boolean
      */
     public function isConnected(): bool
     {
-        return !is_null($this->provider);
+        return ! is_null($this->provider);
     }
 
     /**
      * Gets URL to connect to OAuth provider
-     *
-     * @return string
      */
     public function connectUrl(): string
     {
@@ -77,8 +69,6 @@ class ProviderItem extends Component
 
     /**
      * Gets URL to disconnect from OAuth provider
-     *
-     * @return string
      */
     public function disconnectUrl(): string
     {
@@ -88,7 +78,7 @@ class ProviderItem extends Component
     /**
      * Gets provider associated with user
      *
-     * @param User|null $user
+     * @param  User|null  $user
      * @return OAuthProvider
      */
     protected function getProvider(User $user)

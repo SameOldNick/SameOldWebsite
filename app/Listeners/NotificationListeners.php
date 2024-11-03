@@ -60,7 +60,7 @@ class NotificationListeners
      */
     public function handleAuthFailed(Failed $event): void
     {
-        if (!$event->user) {
+        if (! $event->user) {
             // User tried to login with an email that doesn't exist or the user is deleted.
             return;
         }

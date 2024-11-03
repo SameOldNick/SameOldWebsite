@@ -7,7 +7,7 @@ use App\Components\OAuth\Contracts\OAuthFlowHandler;
 class GitHub extends Driver
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function providerName(): string
     {
@@ -15,7 +15,7 @@ class GitHub extends Driver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function prepareRedirect(OAuthFlowHandler $handler): OAuthFlowHandler
     {

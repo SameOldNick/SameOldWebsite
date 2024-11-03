@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Main\User;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
 use App\Components\OAuth\Facades\OAuth;
-use App\Components\SweetAlert\SweetAlertBuilder;
-use App\Components\SweetAlert\SweetAlerts;
+use App\Http\Controllers\Controller;
 use App\Models\OAuthProvider;
+use Illuminate\Http\Request;
 
 class ConnectedAccountsController extends Controller
 {
@@ -27,7 +24,7 @@ class ConnectedAccountsController extends Controller
             $data['success'] = __('Your account has been connected to :provider.', [
                 'provider' => OAuth::driver($provider)->getName(),
             ]);
-        } else if ($request->session()->has('success')) {
+        } elseif ($request->session()->has('success')) {
             $data['success'] = $request->session()->get('success');
         }
 
@@ -37,13 +34,11 @@ class ConnectedAccountsController extends Controller
     /**
      * Starts connecting for OAuth provider
      *
-     * @param Request $request
-     * @param string $provider
      * @return mixed
      */
     public function connect(Request $request, string $provider)
     {
-        if (!in_array($provider, OAuth::configured())) {
+        if (! in_array($provider, OAuth::configured())) {
             return redirect()->back()->withErrors(['provider' => 'The OAuth provider is invalid or not configured properly.']);
         }
 
@@ -55,8 +50,6 @@ class ConnectedAccountsController extends Controller
     /**
      * Confirms disconnecting from OAuth provider
      *
-     * @param Request $request
-     * @param OAuthProvider $provider
      * @return mixed
      */
     public function disconnect(Request $request, OAuthProvider $provider)
@@ -81,7 +74,7 @@ class ConnectedAccountsController extends Controller
         return redirect()->route('user.connected-accounts')->with(
             'success',
             __('Your account has been disconnected from :provider.', [
-                'provider' => OAuth::driver($provider->provider_name)->getName()
+                'provider' => OAuth::driver($provider->provider_name)->getName(),
             ])
         );
     }
