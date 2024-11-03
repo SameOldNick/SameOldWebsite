@@ -2,8 +2,8 @@
 
 namespace App\Components\OAuth;
 
-use Illuminate\Support\Manager;
 use App\Components\OAuth\Providers\Provider;
+use Illuminate\Support\Manager;
 
 class OAuth extends Manager
 {
@@ -24,7 +24,7 @@ class OAuth extends Manager
      */
     public function configured()
     {
-        return array_filter($this->all(), fn($driver) => $this->driver($driver)->isConfigured());
+        return array_filter($this->all(), fn ($driver) => $this->driver($driver)->isConfigured());
     }
 
     /**
@@ -40,7 +40,6 @@ class OAuth extends Manager
     /**
      * Gets the provider
      *
-     * @param string $name
      * @return Provider
      */
     public function provider(string $name)
