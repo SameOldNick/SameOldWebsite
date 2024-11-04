@@ -21,6 +21,7 @@
         "laravel/socialite": "^5.9",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "league/flysystem-ftp": "^3.29",
         "little-apps/littlejwt": "^2.2.0@beta",
         "masterminds/html5": "^2.9",
         "owenvoke/blade-fontawesome": "^2.4",
