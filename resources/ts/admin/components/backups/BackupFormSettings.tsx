@@ -4,9 +4,10 @@ import { Button, Col, FormGroup, FormText, Input, InputGroup, Label, Row } from 
 import withReactContent from 'sweetalert2-react-content';
 
 import * as Yup from 'yup';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import Swal from 'sweetalert2';
 import classNames from 'classnames';
+import S from 'string';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
@@ -14,10 +15,10 @@ import { IHasRouter } from '@admin/components/hoc/WithRouter';
 import FormikAlerts from '@admin/components/alerts/hoc/FormikAlerts';
 import CronExpressionBuilderModal from '@admin/components/modals/CronExpressionBuilderModal';
 
-import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import awaitModalPrompt from '@admin/utils/modals';
 import { transformCronExpression } from '@admin/utils';
+import { fetchSettings, updateSettings } from '@admin/utils/api/endpoints/backup';
 
 type TChannels = 'mail' | 'discord' | 'slack';
 
@@ -41,6 +42,8 @@ export interface IFormikValues {
 
     'cleanup_frequency': TFrequencies;
     'custom_clean_cron': string;
+
+    'backup_disks': string[];
 }
 
 interface IProps extends IHasRouter {
@@ -133,13 +136,9 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 otherwise: (schema) => schema.nullable()
             })
             .matches(/(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5,7}/, 'Cleanup Cron expression is invalid.'),
+
+        backup_disks: Yup.array().of(Yup.string()),
     }), []);
-
-    const getBackupSettings = React.useCallback(async () => {
-        const response = await createAuthRequest().get<IBackupSetting[]>('/backup/settings');
-
-        return response.data;
-    }, []);
 
     const getInitialFormValues = React.useCallback((settings: IBackupSetting[]) => {
         const initialValues: IFormikValues = {
@@ -160,6 +159,8 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
 
             'cleanup_frequency': 'never',
             'custom_clean_cron': '',
+
+            'backup_disks': []
         }
 
         const values: IFormikValues = { ...initialValues };
@@ -168,9 +169,11 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
             if (key === 'notification_to_email') {
                 values[key] = value.replace(';', ', ');
             } else if (key === 'notification_channel') {
-                const channels = value.split(';') as TChannels[];
+                const channels = value.split(';').filter((channel) => channel) as TChannels[];
 
                 values.notification_channels = channels;
+            } else if (key === 'backup_disks') {
+                values.backup_disks = value.split(';').filter((disk) => disk); // Remove empty strings from array
             } else if (key === 'backup_cron' || key === 'cleanup_cron') {
                 let expression = value.startsWith('@') ? transformCronExpression(value) : value;
 
@@ -187,7 +190,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                     values[key === 'backup_cron' ? 'custom_backup_cron' : 'custom_clean_cron'] = expression;
                 }
             } else if (key in initialValues) {
-                const typedKey = key as keyof Omit<IFormikValues, 'notification_channels' | 'backup_frequency' | 'cleanup_frequency'>;
+                const typedKey = key as keyof Omit<IFormikValues, 'notification_channels' | 'backup_frequency' | 'cleanup_frequency' | 'backup_disks'>;
 
                 values[typedKey] = value;
             }
@@ -196,7 +199,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
         return values;
     }, []);
 
-    const onUpdated = React.useCallback(async (response: AxiosResponse<IBackupSetting[]>) => {
+    const onUpdated = React.useCallback(async (response: IBackupSetting[]) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Updated',
@@ -231,7 +234,9 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 'notification_slack_webhook': values.notification_slack_webhook,
                 'notification_slack_username': values.notification_slack_username,
                 'notification_slack_icon': values.notification_slack_icon,
-                'notification_slack_channel': values.notification_slack_channel
+                'notification_slack_channel': values.notification_slack_channel,
+
+                'backup_disks': values.backup_disks,
             };
 
             switch (values.backup_frequency) {
@@ -280,9 +285,9 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 }
             }
 
-            const response = await createAuthRequest().post<IBackupSetting[]>('/backup/settings', data);
+            const updated = await updateSettings(data);
 
-            await onUpdated(response);
+            await onUpdated(updated);
         } catch (e) {
             await onError(e);
         }
@@ -319,7 +324,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
 
     return (
         <>
-            <WaitToLoad ref={waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={getBackupSettings}>
+            <WaitToLoad ref={waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={fetchSettings}>
                 {(settings, err) => (
                     <>
                         {err !== undefined && handleError(err)}
@@ -328,7 +333,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                 <Formik<IFormikValues>
                                     innerRef={formikRef}
                                     validationSchema={schema}
-                                    initialValues={getInitialFormValues(settings)}
+                                    initialValues={getInitialFormValues(settings.current_values)}
                                     onSubmit={handleFormSubmit}
                                 >
                                     {({ values, errors, touched, isSubmitting, isValid, ...helpers }) => (
@@ -339,6 +344,29 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                                         <FormikAlerts errors={errors} />
                                                     </Col>
                                                 </Row>
+
+                                                <h5>Backup Settings</h5>
+
+                                                <FormGroup row>
+                                                    <Col xs={12}>
+                                                        <Label for="disks">Disks</Label>
+                                                    </Col>
+                                                    <Col>
+                                                        {settings.possible_values.backup_disks.map((value, i) => (
+                                                            <FormGroup key={i} check inline>
+                                                                <Field
+                                                                    as={Input}
+                                                                    type='checkbox'
+                                                                    id={`backup_disks_${value}`}
+                                                                    name={`backup_disks`}
+                                                                    value={value}
+                                                                />
+                                                                <Label htmlFor={`backup_disks_${value}`} check>{S(value).humanize().s}</Label>
+                                                            </FormGroup>
+                                                        ))}
+                                                        <ErrorMessage name='backup_disks' component='div' className='invalid-feedback' />
+                                                    </Col>
+                                                </FormGroup>
 
                                                 <h5>Mail Notification Settings</h5>
 
