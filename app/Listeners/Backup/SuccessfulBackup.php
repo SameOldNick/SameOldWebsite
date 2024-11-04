@@ -3,6 +3,7 @@
 namespace App\Listeners\Backup;
 
 use App\Models\Backup;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Backup\Events\BackupWasSuccessful;
 
 class SuccessfulBackup
@@ -23,7 +24,7 @@ class SuccessfulBackup
         Backup::create()->file()->save(Backup::createFile(
             $event->backupDestination->newestBackup(),
             $event->backupDestination,
-            auth()->user()
+            Auth::user()
         ));
     }
 }
