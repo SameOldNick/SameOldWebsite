@@ -25,7 +25,7 @@ class ServiceProvider extends BaseServiceProvider
 
                 'options' => [
                     'phrase' => '',
-                ]
+                ],
             ]);
 
             $jwk = KeyBuilder::buildFromConfig([
