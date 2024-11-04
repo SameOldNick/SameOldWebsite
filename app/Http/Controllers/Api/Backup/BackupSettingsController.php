@@ -21,6 +21,7 @@ class BackupSettingsController extends Controller
      */
     public function show()
     {
+        // Fetch current values
         $keys = [
             'notification_channel',
             'notification_to_email',
@@ -35,9 +36,20 @@ class BackupSettingsController extends Controller
             'notification_slack_channel',
             'backup_cron',
             'cleanup_cron',
+            'backup_disks',
         ];
 
-        return BackupConfig::whereIn('key', $keys)->get();
+        $currentValues = BackupConfig::whereIn('key', $keys)->get();
+
+        // Fetch possible values from config
+        $possibleValues = [
+            'backup_disks' => array_keys(config('filesystems.disks', [])),
+        ];
+
+        return response()->json([
+            'current_values' => $currentValues,
+            'possible_values' => $possibleValues,
+        ]);
     }
 
     /**
@@ -67,6 +79,9 @@ class BackupSettingsController extends Controller
 
             'backup_cron' => ['nullable', 'string', new CronExpression],
             'cleanup_cron' => ['nullable', 'string', new CronExpression],
+
+            'backup_disks' => 'array',
+            'backup_disks.*' => Rule::in(array_keys(config('filesystems.disks', []))),
         ]);
 
         foreach (Arr::except($validated, ['backup_cron', 'cleanup_cron']) as $key => $value) {
