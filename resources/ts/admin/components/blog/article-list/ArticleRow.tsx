@@ -23,7 +23,7 @@ interface IArticleProps {
 const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
     const publishArticle = React.useCallback(async () => {
         try {
-            await updateArticle(article.article.id, article.article.title, article.article.slug, DateTime.now());
+            await updateArticle(article.article.id, { title: article.article.title, slug: article.article.slug, publishedAt: DateTime.now() });
         } catch (err) {
             logger.error(err);
 
@@ -46,7 +46,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
 
     const scheduleArticle = React.useCallback(async (dateTime: DateTime) => {
         try {
-            await updateArticle(article.article.id, article.article.title, article.article.slug, dateTime);
+            await updateArticle(article.article.id, { title: article.article.title, slug: article.article.slug, publishedAt: dateTime });
 
             onUpdated();
         } catch (err) {
@@ -71,7 +71,7 @@ const ArticleRow: React.FC<IArticleProps> = ({ article, onUpdated }) => {
 
     const unpublishArticle = React.useCallback(async () => {
         try {
-            await updateArticle(article.article.id, article.article.title, article.article.slug, null);
+            await updateArticle(article.article.id, { title: article.article.title, slug: article.article.slug, publishedAt: null });
         } catch (err) {
             logger.error(err);
 
