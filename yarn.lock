@@ -4797,10 +4797,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css.gg@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "css.gg@npm:2.1.1"
-  checksum: 10/4d0c77f8a87320b13cfd6f2de241276f6ba36375c8c97b0d0a47756c2d09bc1bc4bda5b5a29ab2da14ac1f4c4c8c1adb31769d5309c52c36a761ed88a2cb0b04
+"css.gg@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "css.gg@npm:2.1.4"
+  checksum: 10/6b98b08d6534d5898ac20afc13ece482b64eb8772c48d4b9976bdf970105f55860f841255283f55e6bc5970ce307cd741fcdca132965752d53a3c5ad9a45cea7
   languageName: node
   linkType: hard
 
@@ -11090,7 +11090,7 @@ __metadata:
     codemirror-ssr: "npm:^0.65.0"
     counterup2: "npm:^2.0.2"
     css-spinners: "npm:^1.0.1"
-    css.gg: "npm:^2.1.1"
+    css.gg: "npm:^2.1.4"
     dotenv: "npm:^16.0.1"
     dropzone: "npm:^6.0.0-beta.2"
     element-visibility-watcher: "npm:^1.0.5"
