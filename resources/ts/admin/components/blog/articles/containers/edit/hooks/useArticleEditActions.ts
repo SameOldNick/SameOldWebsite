@@ -14,6 +14,7 @@ import awaitModalPrompt from '@admin/utils/modals';
 
 import { createRevision, setCurrentRevision, updateArticle, UpdateArticleParams } from '@admin/utils/api/endpoints/articles';
 import { createAuthRequest } from '@admin/utils/api/factories';
+import createErrorHandler from '@admin/utils/errors/factory';
 
 /**
  * Checks if values for keys are dirty
@@ -103,7 +104,9 @@ const handleSaveAsRevisionClicked: ArticleEditActionHandler = async ({
     article,
     revision: currentRevision,
     helpers: {
+        onLoading,
         onSuccess,
+        onError,
         onNavigate,
         onUpdate
     }
@@ -113,22 +116,32 @@ const handleSaveAsRevisionClicked: ArticleEditActionHandler = async ({
         summary
     } = formik.values;
 
-    // Build params for updating article
-    const params = buildUpdateArticleParams(formik, { publishedAt: article.publishedAt });
+    try {
+        onLoading(true);
 
-    await updateArticle(article.article.id, params);
+        // Build params for updating article
+        const params = buildUpdateArticleParams(formik, { publishedAt: article.publishedAt });
 
-    // Create revision for article
-    const revision = await createRevision(article.article.id, content, summary, currentRevision.revision.uuid);
+        await updateArticle(article.article.id, params);
 
-    // Display message
-    await onSuccess('Revision was saved.');
+        // Create revision for article
+        const revision = await createRevision(article.article.id, content, summary, currentRevision.revision.uuid);
 
-    // Reset form
-    onUpdate();
+        // Display message
+        await onSuccess('Revision was saved.');
 
-    // Redirect to revision
-    onNavigate(article.generatePath(revision.revision.uuid));
+        // Reset form
+        onUpdate();
+
+        // Redirect to revision
+        onNavigate(article.generatePath(revision.revision.uuid));
+    } catch (err) {
+        const message = createErrorHandler().handle(err);
+
+        onError(`The following error occurred: ${message}\r\nPlease try again.`);
+    } finally {
+        onLoading(false);
+    }
 }
 
 const handleUpdateClicked: ArticleEditActionHandler = async ({
@@ -136,9 +149,11 @@ const handleUpdateClicked: ArticleEditActionHandler = async ({
     article,
     revision: currentRevision,
     helpers: {
+        onLoading,
         onSuccess,
+        onError,
         onNavigate,
-        onUpdate,
+        onUpdate
     }
 }) => {
     const {
@@ -146,25 +161,33 @@ const handleUpdateClicked: ArticleEditActionHandler = async ({
         summary
     } = formik.values;
 
-    // Build params for updating article
-    const params = buildUpdateArticleParams(formik, { publishedAt: article.publishedAt });
+    try {
+        // Build params for updating article
+        const params = buildUpdateArticleParams(formik, { publishedAt: article.publishedAt });
 
-    await updateArticle(article.article.id, params);
+        await updateArticle(article.article.id, params);
 
-    // Create revision for article
-    const revision = await createRevision(article.article.id, content, summary, currentRevision ? currentRevision.revision.uuid : undefined);
+        // Create revision for article
+        const revision = await createRevision(article.article.id, content, summary, currentRevision ? currentRevision.revision.uuid : undefined);
 
-    // Set as current revision
-    setCurrentRevision(article.article.id, revision.revision.uuid);
+        // Set as current revision
+        setCurrentRevision(article.article.id, revision.revision.uuid);
 
-    // Display message
-    await onSuccess('Article was updated.');
+        // Display message
+        await onSuccess('Article was updated.');
 
-    // Reset form
-    onUpdate();
+        // Reset form
+        onUpdate();
 
-    // Redirect to revision
-    onNavigate(article.generatePath(revision.revision.uuid));
+        // Redirect to revision
+        onNavigate(article.generatePath(revision.revision.uuid));
+    } catch (err) {
+        const message = createErrorHandler().handle(err);
+
+        onError(`The following error occurred: ${message}\r\nPlease try again.`);
+    } finally {
+        onLoading(false);
+    }
 }
 
 const handleUnpublishClicked: ArticleEditActionHandler = async (params) => {
@@ -193,8 +216,10 @@ const handleUnscheduleClicked: ArticleEditActionHandler = async (params) => {
 const handleDeleteClicked: ArticleEditActionHandler = async ({
     article,
     helpers: {
+        onLoading,
         onSuccess,
-        onNavigate
+        onError,
+        onNavigate,
     }
 }) => {
     // Prompt user to confirm deletion
@@ -209,14 +234,22 @@ const handleDeleteClicked: ArticleEditActionHandler = async ({
 
     // Check if user confirmed
     if (result.isConfirmed) {
-        // Delete article
-        const response = await createAuthRequest().delete<Record<'success', string>>(`blog/articles/${article.article.id}`);
+        try {
+            // Delete article
+            const response = await createAuthRequest().delete<Record<'success', string>>(`blog/articles/${article.article.id}`);
 
-        // Display message
-        await onSuccess(response.data.success);
+            // Display message
+            await onSuccess(response.data.success);
 
-        // Redirect to posts
-        onNavigate('/admin/posts');
+            // Redirect to posts
+            onNavigate('/admin/posts');
+        } catch (err) {
+            const message = createErrorHandler().handle(err);
+
+            onError(`The following error occurred: ${message}\r\nPlease try again.`);
+        } finally {
+            onLoading(false);
+        }
     }
 }
 
@@ -225,10 +258,12 @@ const publishArticle = async ({
     article,
     revision: currentRevision,
     helpers: {
+        onLoading,
         onSuccess,
+        onError,
         onNavigate,
-        onReload,
         onUpdate,
+        onReload,
     }
 }: ArticleEditActionsHandlerParams,
     dateTime: DateTime
@@ -238,35 +273,43 @@ const publishArticle = async ({
         summary
     } = formik.values;
 
-    // Build params for updating article
-    const params = buildUpdateArticleParams(formik, { publishedAt: dateTime ?? DateTime.now() });
+    try {
+        // Build params for updating article
+        const params = buildUpdateArticleParams(formik, { publishedAt: dateTime ?? DateTime.now() });
 
-    await updateArticle(article.article.id, params);
+        await updateArticle(article.article.id, params);
 
-    const message = `Article has been published.`;
+        const message = `Article has been published.`;
 
-    // Check if content is changed
-    if (isFormikValuesDirty(formik, ['content'])) {
-        // Create revision for article
-        const revision = await createRevision(article.article.id, content, summary, currentRevision ? currentRevision.revision.uuid : undefined);
+        // Check if content is changed
+        if (isFormikValuesDirty(formik, ['content'])) {
+            // Create revision for article
+            const revision = await createRevision(article.article.id, content, summary, currentRevision ? currentRevision.revision.uuid : undefined);
 
-        // Set as current revision
-        setCurrentRevision(article.article.id, revision.revision.uuid);
+            // Set as current revision
+            setCurrentRevision(article.article.id, revision.revision.uuid);
 
-        // Display message
-        await onSuccess(message);
+            // Display message
+            await onSuccess(message);
 
-        // Reset form
-        onUpdate();
+            // Reset form
+            onUpdate();
 
-        // Redirect to revision
-        onNavigate(article.generatePath(revision.revision.uuid));
-    } else {
-        // Display message
-        await onSuccess(message);
+            // Redirect to revision
+            onNavigate(article.generatePath(revision.revision.uuid));
+        } else {
+            // Display message
+            await onSuccess(message);
 
-        // Refresh current revision
-        onReload();
+            // Refresh current revision
+            onReload();
+        }
+    } catch (err) {
+        const message = createErrorHandler().handle(err);
+
+        onError(`The following error occurred: ${message}\r\nPlease try again.`);
+    } finally {
+        onLoading(false);
     }
 }
 
@@ -275,10 +318,12 @@ const unpublishArticle = async ({
     article,
     revision: currentRevision,
     helpers: {
+        onLoading,
         onSuccess,
+        onError,
         onNavigate,
-        onReload,
         onUpdate,
+        onReload,
     }
 }: ArticleEditActionsHandlerParams,
     action: 'unpublish' | 'unschedule'
@@ -288,36 +333,44 @@ const unpublishArticle = async ({
         summary
     } = formik.values;
 
-    // Build params for updating article
-    // Clear published at date/time
-    const params = buildUpdateArticleParams(formik, { publishedAt: null });
+    try {
+        // Build params for updating article
+        // Clear published at date/time
+        const params = buildUpdateArticleParams(formik, { publishedAt: null });
 
-    await updateArticle(article.article.id, params);
+        await updateArticle(article.article.id, params);
 
-    const message = `Article has been ${action}ed.`;
+        const message = `Article has been ${action}ed.`;
 
-    // Check if content is changed
-    if (isFormikValuesDirty(formik, ['content', 'summary'])) {
-        // Create revision for article
-        const revision = await createRevision(article.article.id, content, summary, currentRevision ? currentRevision.revision.uuid : undefined);
+        // Check if content is changed
+        if (isFormikValuesDirty(formik, ['content', 'summary'])) {
+            // Create revision for article
+            const revision = await createRevision(article.article.id, content, summary, currentRevision ? currentRevision.revision.uuid : undefined);
 
-        // Set as current revision
-        await setCurrentRevision(article.article.id, revision.revision.uuid);
+            // Set as current revision
+            await setCurrentRevision(article.article.id, revision.revision.uuid);
 
-        // Display message
-        await onSuccess(message);
+            // Display message
+            await onSuccess(message);
 
-        // Reset form
-        onUpdate();
+            // Reset form
+            onUpdate();
 
-        // Redirect to revision
-        onNavigate(article.generatePath(revision.revision.uuid));
-    } else {
-        // Display message
-        await onSuccess(message);
+            // Redirect to revision
+            onNavigate(article.generatePath(revision.revision.uuid));
+        } else {
+            // Display message
+            await onSuccess(message);
 
-        // Refresh current revision
-        onReload();
+            // Refresh current revision
+            onReload();
+        }
+    } catch (err) {
+        const message = createErrorHandler().handle(err);
+
+        onError(`The following error occurred: ${message}\r\nPlease try again.`);
+    } finally {
+        onLoading(false);
     }
 }
 
