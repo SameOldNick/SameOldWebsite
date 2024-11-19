@@ -4544,12 +4544,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^4.4.4":
-  version: 4.4.4
-  resolution: "chart.js@npm:4.4.4"
+"chart.js@npm:^4.4.6":
+  version: 4.4.6
+  resolution: "chart.js@npm:4.4.6"
   dependencies:
     "@kurkle/color": "npm:^0.3.0"
-  checksum: 10/77221dce07606c67686b31b14c3e8c56d71fadc93a5d754ef1f0abc870160253c31751edd9962a0f5bd929824ca69458b914b6c90c8a0c1e9a547d276e9ca9b0
+  checksum: 10/50d0c13a16fd8c156784ff5e4c79070f09325147b0ee5c64d6d3a17933dd9072027dbc72c561cdd8aa41183d8e5736ef634c9843767f79e8abcf1fa0fd03543b
   languageName: node
   linkType: hard
 
@@ -11085,7 +11085,7 @@ __metadata:
     bootstrap-select: "npm:^1.14.0-beta3"
     build-url-ts: "npm:^6.1.8"
     bytemd: "npm:^1.21.0"
-    chart.js: "npm:^4.4.4"
+    chart.js: "npm:^4.4.6"
     classnames: "npm:^2.5.1"
     codemirror-ssr: "npm:^0.65.0"
     counterup2: "npm:^2.0.2"
