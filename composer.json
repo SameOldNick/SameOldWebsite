@@ -39,7 +39,7 @@
     "require-dev": {
         "davidbadura/faker-markdown-generator": "^1.1",
         "fakerphp/faker": "^1.9.1",
-        "larastan/larastan": "^2.9",
+        "larastan/larastan": "^3.0",
         "laravel/dusk": "^8.2",
         "laravel/pint": "^1.15",
         "laravel/sail": "^1.27",
