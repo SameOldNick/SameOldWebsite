@@ -30,7 +30,7 @@ class ServiceProvider extends BaseServiceProvider
             return $app->make(ConfigProvider::class, ['config' => $config]);
         });
 
-        $this->bindConfigurationProviders();
+        $this->bindContracts();
     }
 
     /**
@@ -45,11 +45,11 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Binds configuration provider interfaces to implementations.
+     * Binds interfaces to implementations.
      *
      * @return void
      */
-    protected function bindConfigurationProviders()
+    protected function bindContracts()
     {
         $this->app->bind(NotificationConfigurationProviderInterface::class, DatabaseNotificationConfigurationProvider::class);
         $this->app->bind(BackupSchedulerConfigurationProvider::class, BackupSchedulerDatabaseConfigurationProvider::class);
