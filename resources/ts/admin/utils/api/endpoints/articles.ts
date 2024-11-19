@@ -166,7 +166,9 @@ export const updateArticle = async (
             formData.append('main_image[description]', mainImage.description);  // Add image description (optional)
         }
     } else if (mainImage === false) {
-        formData.append('remove_main_image', 'true');
+        // Laravel doesn't treat 'true' as a boolean, so send it as '1'
+        // Source: https://stackoverflow.com/a/74052117/533242
+        formData.append('remove_main_image', '1');
     }
 
     // Add images array if provided (e.g., additional image URLs or metadata)
