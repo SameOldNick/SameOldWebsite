@@ -50,7 +50,11 @@ const EditArticleContainer: React.FC<EditArticleContainerProps> = ({ article, re
                                 </HeadingTitle>
 
                                 <div className='d-flex'>
-                                    <EditArticleActionPanel formik={formik} article={article} revision={revision} />
+                                    <EditArticleActionPanel
+                                        formik={formik}
+                                        article={article}
+                                        revision={revision}
+                                    />
                                 </div>
                             </Heading>
                         </Row>
