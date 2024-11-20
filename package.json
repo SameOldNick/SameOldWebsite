@@ -61,7 +61,6 @@
         "build-url-ts": "^6.1.8",
         "bytemd": "^1.21.0",
         "classnames": "^2.5.1",
-        "css.gg": "^2.1.4",
         "dotenv": "^16.0.1",
         "dropzone": "^6.0.0-beta.2",
         "eslint": "^9.13.0",
