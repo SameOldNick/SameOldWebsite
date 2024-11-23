@@ -10,7 +10,7 @@
                         <h1>{{ __('Verification Needed') }}</h1>
                     </div>
                     <div class="card-body">
-                        <div class="p-4">
+                        <div class="p-md-4">
                             @if ($errors->any())
                                 <div class="mb-4">
                                     <x-alerts type="danger" :messages="$errors->all()"></x-alerts>
