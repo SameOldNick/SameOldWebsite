@@ -27,20 +27,14 @@
                                 </p>
 
                                 <div class="row justify-content-center">
-                                    <div class="col-6">
+                                    <div class="col-md-6">
                                         <div class="input-group mb-3 has-validation">
                                             <span class="input-group-text bg-secondary">
                                                 <i class="fa-solid fa-key text-white"></i>
                                             </span>
-                                            <input
-                                                name="code"
-                                                type="text"
+                                            <input name="code" type="text"
                                                 class="form-control @error('code') is-invalid @enderror"
-                                                placeholder="{{ __('Code') }}"
-                                                required
-                                                autofocus
-                                                autocomplete="off"
-                                            >
+                                                placeholder="{{ __('Code') }}" required autofocus autocomplete="off">
 
                                             @error('code')
                                                 <span class="invalid-feedback" role="alert">
@@ -64,7 +58,8 @@
                                         </button>
                                     </div>
                                     <div class="mx-auto mt-3">
-                                        <p><a href="{{ route('auth.mfa.backup') }}" class="link-secondary">Need to use a backup code?</a></p>
+                                        <p><a href="{{ route('auth.mfa.backup') }}" class="link-secondary">Need to use a
+                                                backup code?</a></p>
                                     </div>
                                 </div>
 
