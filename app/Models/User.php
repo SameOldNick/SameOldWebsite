@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,7 +43,6 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
 {
     use HasApiTokens;
     use HasFactory;
-    use HasOneTimePasscodeSecrets;
     use HasUuids;
     use Notifiable;
     use SoftDeletes;
@@ -266,6 +266,14 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
     public function oauthProviders(): HasMany
     {
         return $this->hasMany(OAuthProvider::class);
+    }
+
+    /**
+     * Get the secret associated with the user.
+     */
+    public function oneTimePasscodeSecrets(): HasOne
+    {
+        return $this->hasOne(OneTimePasscodeSecret::class, 'user_id');
     }
 
     /**
