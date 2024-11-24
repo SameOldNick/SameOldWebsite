@@ -31,7 +31,7 @@ final class OneTimeAuthenticatable implements MultiAuthenticatable
         // TOTP and HOTP use the same algorithm to generate secrets.
         $totp = TOTP::generate();
 
-        return new self(fn () => $totp->getSecret());
+        return new self(fn() => $totp->getSecret());
     }
 
     /**
@@ -39,22 +39,6 @@ final class OneTimeAuthenticatable implements MultiAuthenticatable
      */
     public static function string(string $secret): static
     {
-        return new static(fn () => $secret);
-    }
-
-    /**
-     * Creates authenticatable for authentication.
-     */
-    public static function auth(MultiAuthenticatable $authenticatable): static
-    {
-        return new static(fn () => optional($authenticatable->oneTimePasscodeSecrets)->auth_secret ?? MultiAuthNotConfiguredException::throw());
-    }
-
-    /**
-     * Creates authenticatable for backup.
-     */
-    public static function backup(MultiAuthenticatable $authenticatable): static
-    {
-        return new static(fn () => optional($authenticatable->oneTimePasscodeSecrets)->backup_secret ?? MultiAuthNotConfiguredException::throw());
+        return new static(fn() => $secret);
     }
 }

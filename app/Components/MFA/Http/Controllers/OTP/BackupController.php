@@ -3,6 +3,7 @@
 namespace App\Components\MFA\Http\Controllers\OTP;
 
 use App\Components\MFA\Contracts\MultiAuthenticatable;
+use App\Components\MFA\Contracts\SecretStore;
 use App\Components\MFA\Events\OTP\BackupCodeVerified;
 use App\Components\MFA\Facades\MFA;
 use App\Components\MFA\Rules\CurrentAuthCode;
@@ -34,12 +35,15 @@ class BackupController extends Controller
      *
      * @return mixed
      */
-    public function verifyBackupCode(Request $request, AuthenticatorService $authService)
+    public function verifyBackupCode(Request $request, AuthenticatorService $authService, SecretStore $secretStore)
     {
         $request->validate([
             'code' => [
                 'required',
-                new CurrentAuthCode(OneTimeAuthenticatable::backup($this->getAuthenticatable($request)), $authService->driver('backup')),
+                new CurrentAuthCode(
+                    OneTimeAuthenticatable::string($secretStore->getBackupSecret($this->getAuthenticatable($request))),
+                    $authService->driver('backup')
+                ),
             ],
         ]);
 
@@ -71,6 +75,8 @@ class BackupController extends Controller
      */
     protected function verifiedBackupCodeResponse(Request $request)
     {
+        // TODO: Notify user their MFA is disabled.
+
         return redirect()->to($this->getIntendedUrl($request));
     }
 

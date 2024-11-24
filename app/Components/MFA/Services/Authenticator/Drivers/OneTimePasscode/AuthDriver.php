@@ -5,6 +5,9 @@ namespace App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode;
 use App\Components\MFA\Contracts\AuthServiceInterface;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Contracts\OneTimePasscode\Factory;
+use App\Components\MFA\Contracts\SecretStore;
+use App\Components\MFA\Contracts\Stores\AuthSecretStore;
+use App\Components\MFA\Contracts\Stores\BackupSecretStore;
 use App\Components\MFA\Exceptions\MultiAuthNotConfiguredException;
 use App\Components\MFA\Http\Controllers\OTP\AuthController;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\TimebasedFactory;
@@ -19,7 +22,8 @@ use OTPHP\OTPInterface;
 class AuthDriver implements AuthServiceInterface
 {
     public function __construct(
-        protected readonly Factory $factory
+        protected readonly Factory $factory,
+        protected readonly SecretStore $secretStore,
     ) {}
 
     /**
@@ -76,10 +80,7 @@ class AuthDriver implements AuthServiceInterface
      */
     public function install(MultiAuthenticatable $authenticatable, string $authSecret, string $backupSecret)
     {
-        return $authenticatable->oneTimePasscodeSecrets()->create([
-            'auth_secret' => $authSecret,
-            'backup_secret' => $backupSecret,
-        ]);
+        $this->secretStore->storeSecrets($authenticatable, $authSecret, $backupSecret);
     }
 
     /**
@@ -87,9 +88,9 @@ class AuthDriver implements AuthServiceInterface
      *
      * @return mixed
      */
-    public function uninstall(Authenticatable $authenticatable)
+    public function uninstall(MultiAuthenticatable $authenticatable)
     {
-        return $authenticatable->oneTimePasscodeSecrets()->delete();
+        $this->secretStore->removeSecrets($authenticatable);
     }
 
     /**
@@ -129,6 +130,8 @@ class AuthDriver implements AuthServiceInterface
             return $authenticatable;
         }
 
-        return OneTimeAuthenticatable::auth($authenticatable);
+        $secret = $this->secretStore->getAuthSecret($authenticatable);
+
+        return OneTimeAuthenticatable::string($secret ?? MultiAuthNotConfiguredException::throw());
     }
 }

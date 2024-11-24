@@ -3,6 +3,7 @@
 namespace App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode;
 
 use App\Components\MFA\Contracts\MultiAuthenticatable;
+use App\Components\MFA\Contracts\SecretStore;
 use App\Components\MFA\Http\Controllers\OTP\BackupController;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\HashbasedFactory;
 use Illuminate\Routing\Router;
@@ -13,9 +14,10 @@ class BackupDriver extends AuthDriver
     const DEFAULT_BACKUP_CODE_COUNT = 6;
 
     public function __construct(
-        protected readonly array $config
+        protected readonly array $config,
+        SecretStore $secretStore,
     ) {
-        parent::__construct(new HashbasedFactory);
+        parent::__construct(new HashbasedFactory, $secretStore);
     }
 
     /**

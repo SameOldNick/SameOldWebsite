@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\MFA\Models;
+namespace App\Components\MFA\Stores\Eloquent\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -2,8 +2,10 @@
 
 namespace App\Components\MFA;
 
+use App\Components\MFA\Contracts\SecretStore;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
 use App\Components\MFA\Services\Persist\PersistService;
+use App\Components\MFA\Stores\Eloquent\SecretStore as EloquentSecretStore;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +31,8 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->alias('mfa.auth', AuthenticatorService::class);
         $this->app->alias('mfa.persist', PersistService::class);
 
+        $this->app->bind(SecretStore::class, EloquentSecretStore::class);
+
         Route::mixin(new RouteMethods);
     }
 
@@ -47,7 +51,7 @@ class ServiceProvider extends BaseServiceProvider
             return new Guard($inner, $authenticator, $persist);
         });
 
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
-        $this->loadViewsFrom(__DIR__.'/views', 'mfa');
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadViewsFrom(__DIR__ . '/views', 'mfa');
     }
 }
