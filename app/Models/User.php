@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Components\MFA\Concerns\HasOneTimePasscodeSecrets;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
+use App\Components\MFA\Stores\Eloquent\Models\OneTimePasscodeSecret;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;

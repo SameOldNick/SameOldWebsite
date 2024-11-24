@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Components\MFA\Concerns;
+namespace App\Components\MFA\Stores\Eloquent\Concerns;
 
-use App\Components\MFA\Models\OneTimePasscodeSecret;
+use App\Components\MFA\Stores\Eloquent\Models\OneTimePasscodeSecret;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 trait HasOneTimePasscodeSecrets

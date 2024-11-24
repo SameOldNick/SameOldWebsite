@@ -2,6 +2,8 @@
 
 namespace App\Components\MFA\Services\Authenticator;
 
+use App\Components\MFA\Contracts\OneTimePasscode\Factory;
+use App\Components\MFA\Contracts\SecretStore;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\AuthDriver;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\BackupDriver;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\HashbasedFactory;
@@ -27,7 +29,7 @@ class AuthenticatorService extends Manager
      */
     protected function createTotpDriver()
     {
-        return new AuthDriver(new TimebasedFactory);
+        return $this->newAuthDriver(new TimebasedFactory);
     }
 
     /**
@@ -37,7 +39,7 @@ class AuthenticatorService extends Manager
      */
     protected function createHotpDriver()
     {
-        return new AuthDriver(new HashbasedFactory);
+        return $this->newAuthDriver(new HashbasedFactory);
     }
 
     /**
@@ -47,9 +49,10 @@ class AuthenticatorService extends Manager
      */
     protected function createBackupDriver()
     {
-        $config = $this->getConfig('backup');
-
-        return new BackupDriver($config);
+        return new BackupDriver(
+            $this->getConfig('backup'),
+            $this->getContainer()->make(SecretStore::class),
+        );
     }
 
     /**
@@ -60,5 +63,19 @@ class AuthenticatorService extends Manager
     protected function getConfig(string $key)
     {
         return config("mfa.authenticator.drivers.{$key}", []);
+    }
+
+    /**
+     * Creates new AuthDriver with factory
+     *
+     * @param Factory $factory
+     * @return AuthDriver
+     */
+    protected function newAuthDriver(Factory $factory): AuthDriver
+    {
+        return new AuthDriver(
+            $factory,
+            $this->getContainer()->make(SecretStore::class),
+        );
     }
 }
