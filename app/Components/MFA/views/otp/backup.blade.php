@@ -22,8 +22,14 @@
 
                                 <x-return-url-input :returnUrl="redirect()->getIntendedUrl()" />
 
-                                <p class="text-center">
+                                <x-alert type="warning">
+                                    <strong>Warning: </strong>
+
                                     {{ __('You will need to reconfigure multi-factor authentication after verifying your backup code.') }}
+                                </x-alert>
+
+                                <p class="text-center">
+                                    {{ __('Enter a backup code in order to continue.') }}
                                 </p>
 
                                 <div class="row justify-content-center">
@@ -49,8 +55,6 @@
                                     </div>
 
                                 </div>
-
-
 
                                 <div class="d-flex justify-content-center flex-column">
                                     <div class="mx-auto">
