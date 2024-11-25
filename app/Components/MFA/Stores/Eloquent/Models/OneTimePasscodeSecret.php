@@ -46,6 +46,16 @@ class OneTimePasscodeSecret extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'auth_secret' => 'encrypted',
+        'backup_secret' => 'encrypted',
+    ];
+
+    /**
      * Get the user that the secret belongs to.
      */
     public function user(): BelongsTo
