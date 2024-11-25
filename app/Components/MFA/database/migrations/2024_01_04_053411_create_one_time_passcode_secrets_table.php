@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('totp_secrets');
+        Schema::dropIfExists('one_time_passcode_secrets');
     }
 };
