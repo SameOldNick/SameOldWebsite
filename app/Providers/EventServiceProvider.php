@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Components\MFA\Events\OTP\BackupCodeVerified;
 use App\Events\Articles\ArticleCreated;
 use App\Events\Articles\ArticleDeleted;
 use App\Events\Articles\ArticlePublished;
@@ -19,6 +20,7 @@ use App\Listeners\Comments\NotifyArticleAuthorCommentPosted;
 use App\Listeners\Comments\NotifyCommentRepliedTo;
 use App\Listeners\Contact\SendConfirmMessage;
 use App\Listeners\Contact\SendContactedConfirmationMessage;
+use App\Listeners\MFADisabled;
 use App\Listeners\NotificationListeners;
 use App\Listeners\RecentActivity\LogArticleCreated;
 use App\Listeners\RecentActivity\LogArticleDeleted;
@@ -83,6 +85,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CleanupWasSuccessful::class => [
             SuccessfulCleanup::class,
+        ],
+        BackupCodeVerified::class => [
+            MFADisabled::class,
         ],
     ];
 
