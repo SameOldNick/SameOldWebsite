@@ -77,8 +77,6 @@ class BackupController extends Controller
      */
     protected function verifiedBackupCodeResponse(Request $request)
     {
-        // TODO: Send email to user as well
-
         Swal::warning(function (SweetAlertBuilder $builder) {
             $builder
                 ->title(__('Your MFA Has Been Disabled'))
