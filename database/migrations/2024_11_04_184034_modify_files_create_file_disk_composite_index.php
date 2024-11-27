@@ -23,6 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('files', function (Blueprint $table) {});
+        Schema::table('files', function (Blueprint $table) {
+            // Can't recreate index for path because there might be repeating path values
+
+            $table->dropIndex(['path', 'disk']);
+        });
     }
 };
