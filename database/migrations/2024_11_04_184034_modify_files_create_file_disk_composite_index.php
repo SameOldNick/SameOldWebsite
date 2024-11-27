@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->dropUnique(['path']);
+            if (Schema::hasIndex('files', 'files_path_unique'))
+                $table->dropUnique(['path']);
 
             $table->index(['path', 'disk']);
         });
