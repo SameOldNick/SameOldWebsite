@@ -46,11 +46,11 @@ class CommentFlag extends Model
     }
 
     /**
-     * Gets who approved the flag.
+     * Gets who deleted the flag.
      */
-    public function approvedBy(): BelongsTo
+    public function deletedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'approved_by');
+        return $this->belongsTo(User::class, 'deleted_by');
     }
 
     /**
