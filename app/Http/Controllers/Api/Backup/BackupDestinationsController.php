@@ -23,7 +23,12 @@ class BackupDestinationsController extends Controller
         $this->middleware('can:role-manage-backups');
     }
 
-    // List all configurations
+    /**
+     * List all configurations
+     *
+     * @param Config $backupConfig
+     * @return void
+     */
     public function index(Config $backupConfig)
     {
         // Pull disks indirectly through Spatie Backup config
@@ -35,7 +40,12 @@ class BackupDestinationsController extends Controller
         ]));
     }
 
-    // Store a new configuration
+    /**
+     * Store a new configuration
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -114,7 +124,13 @@ class BackupDestinationsController extends Controller
         ], 201);
     }
 
-    // Show a specific configuration
+    /**
+     * Show a specific configuration
+     *
+     * @param Config $backupConfig
+     * @param FilesystemConfiguration $destination
+     * @return mixed
+     */
     public function show(Config $backupConfig, FilesystemConfiguration $destination)
     {
         $config = $destination->configurable;
@@ -132,7 +148,13 @@ class BackupDestinationsController extends Controller
         ];
     }
 
-    // Update an existing configuration
+    /**
+     * Update an existing configuration
+     *
+     * @param Request $request
+     * @param FilesystemConfiguration $destination
+     * @return mixed
+     */
     public function update(Request $request, FilesystemConfiguration $destination)
     {
         $request->validate([
@@ -187,6 +209,12 @@ class BackupDestinationsController extends Controller
         ];
     }
 
+    /**
+     * Updates multiple configurations
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function bulkUpdate(Request $request)
     {
         $validated = $request->validate([
@@ -249,7 +277,12 @@ class BackupDestinationsController extends Controller
         ];
     }
 
-    // Delete a configuration
+    /**
+     * Delete a configuration
+     *
+     * @param FilesystemConfiguration $destination
+     * @return mixed
+     */
     public function destroy(FilesystemConfiguration $destination)
     {
         $this->performDestroy($destination);
@@ -257,6 +290,12 @@ class BackupDestinationsController extends Controller
         return ['message' => 'Backup destination deleted successfully.'];
     }
 
+    /**
+     * Delete multiple configurations
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function bulkDestroy(Request $request)
     {
         $validated = $request->validate([
@@ -290,6 +329,12 @@ class BackupDestinationsController extends Controller
         return ['message' => 'Backup destinations deleted successfully.'];
     }
 
+    /**
+     * Enables disk configuration
+     *
+     * @param string $diskName
+     * @return void
+     */
     protected function enableDisk(string $diskName)
     {
         $existing = BackupConfig::where('key', 'backup_disks')->first();
@@ -306,6 +351,12 @@ class BackupDestinationsController extends Controller
         );
     }
 
+    /**
+     * Disables disk configuration
+     *
+     * @param string $diskName
+     * @return void
+     */
     protected function disableDisk(string $diskName)
     {
         $existing = BackupConfig::where('key', 'backup_disks')->first();
@@ -319,6 +370,13 @@ class BackupDestinationsController extends Controller
         }
     }
 
+    /**
+     * Updates a configuration
+     *
+     * @param FilesystemConfiguration $destination
+     * @param array $input
+     * @return FilesystemConfiguration
+     */
     protected function performUpdate(FilesystemConfiguration $destination, array $input)
     {
         $data = Arr::only($input, [
@@ -374,6 +432,12 @@ class BackupDestinationsController extends Controller
         return $destination;
     }
 
+    /**
+     * Removes a configuration
+     *
+     * @param FilesystemConfiguration $destination
+     * @return void
+     */
     protected function performDestroy(FilesystemConfiguration $destination)
     {
         $destination->configurable->delete();
