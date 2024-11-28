@@ -22,7 +22,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
- * @property string $title
+ * @property ?int $parent_id
+ * @property int $article_id
+ * @property ?string $title
  * @property string $comment
  * @property-read Article $article
  * @property-read ?Comment $parent

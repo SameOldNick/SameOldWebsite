@@ -7,6 +7,7 @@ use App\Components\Backup\Contracts\FilesystemConfiguration as FilesystemConfigu
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
+ * @property int $id
  * @property string $host
  * @property int $port
  * @property string $username

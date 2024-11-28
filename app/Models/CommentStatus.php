@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
+ * @property int $id
+ * @property int $comment_id
+ * @property ?int $user_id
  * @property CommentStatusEnum $status
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
  * @property-read Comment $comment
  * @property-read ?User $user
  */

@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $id
+ * @property int $person_id
+ * @property string $postable_type
+ * @property int $postable_id
  * @property-read Person $person
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at

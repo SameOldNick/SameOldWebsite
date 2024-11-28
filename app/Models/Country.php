@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $code
+ * @property string $code_alpha2
+ * @property string $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, State> $states
  */
 class Country extends Model

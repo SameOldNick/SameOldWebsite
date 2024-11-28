@@ -21,12 +21,15 @@ use Illuminate\Support\Str;
  * @property string $path
  * @property string $disk
  * @property bool $is_public
+ * @property ?int $user_id
+ * @property ?string $fileable_type
+ * @property ?string $fileable_id
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
  * @property ?Carbon $deleted_at
+ * @property-read ?User $user
  * @property-read ?Model $fileable
  * @property-read array $path_info
- * @property-read bool $file_exists
  *
  * @method static \Database\Factories\FileFactory factory($count = null, $state = [])
  */

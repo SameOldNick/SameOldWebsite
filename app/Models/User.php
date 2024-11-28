@@ -22,17 +22,23 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @property int $id
  * @property string $uuid
- * @property string|null $address1
- * @property string|null $address2
- * @property string|null $city
- * @property string|null $postal_code
- * @property string|null $country_code
+ * @property ?string $avatar
+ * @property ?string $address1
+ * @property ?string $address2
+ * @property ?string $city
+ * @property ?string $postal_code
+ * @property ?int $state_id
+ * @property ?string $country_code
+ * @property string $email
+ * @property ?\Illuminate\Support\Carbon $email_verified_at
+ * @property ?string $password
+ * @property ?string $remember_token
  * @property-read string $avatar_url
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read Country|null $country
- * @property-read State|null $state
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property-read ?Country $country
+ * @property-read ?State $state
  * @property-read \App\Models\Collections\RoleCollection $roles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OAuthProvider> $oauthProviders
  * @property-read \App\Models\Collections\PrivateChannelCollection $privateChannels
