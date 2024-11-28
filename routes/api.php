@@ -105,6 +105,16 @@ Route::namespace(Api::class)->group(function () {
         Route::get('/backup/settings', [Api\Backup\BackupSettingsController::class, 'show']);
         Route::post('/backup/settings', [Api\Backup\BackupSettingsController::class, 'update']);
 
+        Route::prefix('/backup/destinations')->group(function () {
+            Route::get('/', [Api\Backup\BackupDestinationsController::class, 'index']);
+            Route::post('/', [Api\Backup\BackupDestinationsController::class, 'store']);
+            Route::get('/{destination}', [Api\Backup\BackupDestinationsController::class, 'show']);
+            Route::put('/{destination}', [Api\Backup\BackupDestinationsController::class, 'update']);
+            Route::put('/', [Api\Backup\BackupDestinationsController::class, 'bulkUpdate']);
+            Route::delete('/{destination}', [Api\Backup\BackupDestinationsController::class, 'destroy']);
+            Route::delete('/', [Api\Backup\BackupDestinationsController::class, 'bulkDestroy']);
+        });
+
         Route::apiResource('contact-messages', Api\ContactMessagesController::class)->except(['store']);
         Route::put('contact-messages', [Api\ContactMessagesController::class, 'bulkUpdate']);
         Route::delete('contact-messages', [Api\ContactMessagesController::class, 'bulkDestroy']);
