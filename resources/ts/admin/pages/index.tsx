@@ -39,6 +39,10 @@ import Technologies from './protected/homepage/Technologies';
 import AllBackups from '@admin/pages/protected/backups/All';
 import BackupSettings from '@admin/pages/protected/backups/Settings';
 
+import BackupDestinations from '@admin/pages/protected/backups/destinations/Destinations';
+import CreateBackupDestination from '@admin/pages/protected/backups/destinations/Create';
+import EditBackupDestination from '@admin/pages/protected/backups/destinations/Edit';
+
 import Notifications from './protected/notifications/Notifications';
 
 const Pages: React.FC = () => {
@@ -94,6 +98,14 @@ const Pages: React.FC = () => {
                         <Route path='backups'>
                             <Route index element={<AllBackups />} />
                             <Route path='settings' element={<BackupSettings />} />
+
+                            <Route path='destinations'>
+                                <Route path='create' element={<CreateBackupDestination />} />
+                                <Route path='edit/:destination' element={<EditBackupDestination />} />
+
+                                <Route index element={<BackupDestinations />} />
+                            </Route>
+
                         </Route>
 
 

@@ -89,6 +89,7 @@ const createMainMenu = (): MenuItem[] => {
             [
                 new LinkMenuItem('View Backups', '/admin/backups'),
                 new LinkMenuItem('Backup Settings', '/admin/backups/settings'),
+                new LinkMenuItem('Backup Destinations', '/admin/backups/destinations'),
             ],
             {
                 icon: FaCloudUploadAlt,

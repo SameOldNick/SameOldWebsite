@@ -203,6 +203,17 @@ declare global {
         key: string;
         value: string;
     }
+
+    interface IBackupDestination {
+        id: number;
+        enable: boolean;
+        name: string;
+        type: 'ftp' | 'sftp';
+        host: string;
+        port: number;
+        auth_type: 'password' | 'key';
+        username: string;
+    }
 }
 
 export { };
