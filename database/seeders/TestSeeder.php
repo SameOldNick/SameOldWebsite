@@ -21,6 +21,7 @@ class TestSeeder extends Seeder
             Setup\RoleSeeder::class,
             Setup\PageSeeder::class,
             Setup\ContactPageSettingsSeeder::class,
+            Setup\BackupConfigSeeder::class,
         ]);
     }
 }

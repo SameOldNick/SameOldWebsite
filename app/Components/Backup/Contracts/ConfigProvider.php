@@ -22,7 +22,7 @@ interface ConfigProvider
      * @return NotificationsConfig
      */
     public function getNotifications(): NotificationsConfig;
-    
+
     /**
      * Gets monitored backups config
      *
