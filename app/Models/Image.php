@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property string $uuid
- * @property string $description
+ * @property ?string $description
  *
  * @method static \Database\Factories\ImageFactory factory($count = null, $state = [])
  */

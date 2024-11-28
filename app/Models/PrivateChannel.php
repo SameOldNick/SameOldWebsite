@@ -12,11 +12,14 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Ramsey\Uuid\UuidInterface;
 
 /**
+ * @property int $id
  * @property string $uuid
- * @property string $channel
- * @property ?DateTimeInterface $created_at
- * @property ?DateTimeInterface $updated_at
- * @property ?DateTimeInterface $expires_at
+ * @property string $notifiable_type
+ * @property int $notifiable_id
+ * @property ?string $channel
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?\Illuminate\Support\Carbon $expires_at
  */
 #[CollectedBy(PrivateChannelCollection::class)]
 class PrivateChannel extends Model

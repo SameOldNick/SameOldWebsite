@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
+ * @property string $country_code
  * @property string $code
  * @property string $state
  * @property-read Country $country

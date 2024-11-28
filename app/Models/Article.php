@@ -22,6 +22,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property string $title
  * @property string $slug
  * @property ?\Illuminate\Support\Carbon $published_at
+ * @property ?\Illuminate\Support\Carbon $deleted_at
  * @property-read bool $is_published
  * @property-read bool $is_scheduled
  * @property-read Revision $revision

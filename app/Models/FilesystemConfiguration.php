@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
+ * @property int $id
  * @property string $name
  * @property string $disk_type
  * @property string $configurable_type
  * @property int $configurable_id
  * @property string $driver_name
  * @property-read ?Model $configurable
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  *
  * @method static \Database\Factories\FilesystemConfigurationFactory factory($count = null, $state = [])
  */

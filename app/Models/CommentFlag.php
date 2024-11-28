@@ -9,6 +9,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property int $comment_id
+ * @property string $reason
+ * @property ?string $proposed
+ * @property ?array $extra
+ * @property ?int $deleted_by
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property-read Comment $comment
+ * @property-read ?User $deletedBy
+ */
 class CommentFlag extends Model
 {
     use HasFactory;

@@ -12,8 +12,10 @@ use Illuminate\Support\Str;
 
 /**
  * @property string $uuid
+ * @property int $article_id
+ * @property ?string $parent_revision_uuid
  * @property string $content
- * @property string $summary
+ * @property ?string $summary
  * @property-read bool $summary_auto
  * @property-read Article $article
  * @property ?\Illuminate\Support\Carbon $created_at

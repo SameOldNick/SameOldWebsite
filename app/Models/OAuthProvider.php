@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
+ * @property int $user_id
+ * @property string $provider_name
+ * @property string $provider_id
+ * @property string $access_token
+ * @property ?string $refresh_token
+ * @property ?string $avatar_url
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $expires_at

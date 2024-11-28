@@ -13,13 +13,16 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 /**
+ * @property int $id
+ * @property ?int $user_id
  * @property ?string $name
  * @property ?string $email
  * @property-read string $display_name
  * @property-read ?User $user
  * @property-read string $avatar_url
- * @property ?\DateTimeInterface $email_verified_at
- * @property-read Comment $comment
+ * @property ?\Illuminate\Support\Carbon $email_verified_at
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
  *
  * @method static \Database\Factories\PersonFactory factory($count = null, $state = [])
  */
