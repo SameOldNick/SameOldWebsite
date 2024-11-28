@@ -36,6 +36,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read \App\Models\Collections\RoleCollection $roles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OAuthProvider> $oauthProviders
  * @property-read \App\Models\Collections\PrivateChannelCollection $privateChannels
+ * @property-read ?OneTimePasscodeSecret $oneTimePasscodeSecrets
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  */
