@@ -72,8 +72,8 @@ class CommentFlag extends Model
     protected function extra(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => ! empty($value) ? $this->fromJson($value) : [],
-            set: fn ($value) => ! empty($value) ? $this->asJson($value) : null,
+            get: fn($value) => ! empty($value) ? $this->fromJson($value) : [],
+            set: fn($value) => ! empty($value) ? $this->asJson($value) : null,
         );
     }
 
