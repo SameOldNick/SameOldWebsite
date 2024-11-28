@@ -92,21 +92,6 @@ class FilesystemConfigurationFTP extends Model implements FilesystemConfiguratio
 
     public function toArray()
     {
-        /*
-        interface BackupDestinationFormValues {
-    enable: boolean;
-    name: string;
-    type: 'ftp' | 'sftp';
-    host: string;
-    port: number;
-    auth_type: 'password' | 'key';
-    username: string;
-    password: string | null;
-    confirm_password: string | null;
-    private_key: string | null;
-    passphrase: string | null;
-}*/
-
         return [
             'host' => $this->host,
             'port' => $this->port,
