@@ -68,6 +68,9 @@ class FilesystemConfigurationFTP extends Model implements FilesystemConfiguratio
         ];
     }
 
+    /**
+     * Gets base FilesystemConfiguration model.
+     */
     public function filesystemConfiguration()
     {
         return $this->morphOne(FilesystemConfiguration::class, 'configurable');
@@ -90,6 +93,9 @@ class FilesystemConfigurationFTP extends Model implements FilesystemConfiguratio
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function toArray()
     {
         return [
