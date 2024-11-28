@@ -42,8 +42,6 @@ export interface IFormikValues {
 
     'cleanup_frequency': TFrequencies;
     'custom_clean_cron': string;
-
-    'backup_disks': string[];
 }
 
 interface IProps extends IHasRouter {
@@ -136,8 +134,6 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 otherwise: (schema) => schema.nullable()
             })
             .matches(/(((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5,7}/, 'Cleanup Cron expression is invalid.'),
-
-        backup_disks: Yup.array().of(Yup.string()),
     }), []);
 
     const getInitialFormValues = React.useCallback((settings: IBackupSetting[]) => {
@@ -159,8 +155,6 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
 
             'cleanup_frequency': 'never',
             'custom_clean_cron': '',
-
-            'backup_disks': []
         }
 
         const values: IFormikValues = { ...initialValues };
@@ -172,8 +166,6 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 const channels = value.split(';').filter((channel) => channel) as TChannels[];
 
                 values.notification_channels = channels;
-            } else if (key === 'backup_disks') {
-                values.backup_disks = value.split(';').filter((disk) => disk); // Remove empty strings from array
             } else if (key === 'backup_cron' || key === 'cleanup_cron') {
                 let expression = value.startsWith('@') ? transformCronExpression(value) : value;
 
@@ -235,8 +227,6 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 'notification_slack_username': values.notification_slack_username,
                 'notification_slack_icon': values.notification_slack_icon,
                 'notification_slack_channel': values.notification_slack_channel,
-
-                'backup_disks': values.backup_disks,
             };
 
             switch (values.backup_frequency) {
