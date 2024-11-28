@@ -91,7 +91,7 @@ class FilesystemConfigurationSFTP extends Model implements FilesystemConfigurati
             'port' => $this->port,
             'username' => $this->username,
             'password' => $this->password,
-            'private_key' => $this->private_key,
+            'privateKey' => $this->private_key,
             'passphrase' => $this->passphrase,
             ...$extra,
         ];
