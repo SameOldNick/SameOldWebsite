@@ -44,12 +44,12 @@ class Artisan
      * Creates Artisan instance.
      *
      * @param  object  $notifiable  Who to send output to
+     * @param  ?UuidInterface $uuid UUID for notifications
+     * @param ?int $maxLength Max. length of messages
      */
     public static function create(object $notifiable, ?UuidInterface $uuid = null, ?int $maxLength = null): self
     {
-        $uuid = $uuid ?? Uuid::getFactory()->uuid4();
-
-        return new self(new ProcessNotifier($uuid, $notifiable, $maxLength));
+        return new self(ProcessNotifier::create($notifiable, $uuid, $maxLength));
     }
 
     /**

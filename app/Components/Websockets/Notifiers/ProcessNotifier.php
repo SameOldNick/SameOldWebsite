@@ -8,6 +8,7 @@ use App\Components\Websockets\Notifications\Process\ProcessOutput;
 use DateTimeInterface;
 use Illuminate\Broadcasting\BroadcastException;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -21,13 +22,6 @@ class ProcessNotifier extends AbstractNotifier
     const DEFAULT_MAX_LENGTH = 7000;
 
     /**
-     * The maximum length for messages.
-     *
-     * @var integer
-     */
-    public readonly int $maxLength;
-
-    /**
      * Initializes ProcessNotifier instance
      *
      * @param  UuidInterface  $uuid  Process UUID
@@ -37,10 +31,8 @@ class ProcessNotifier extends AbstractNotifier
     public function __construct(
         public readonly UuidInterface $uuid,
         public readonly object $notifiable,
-        ?int $maxLength,
-    ) {
-        $this->maxLength = $maxLength ?? static::DEFAULT_MAX_LENGTH;
-    }
+        public readonly int $maxLength,
+    ) {}
 
     /**
      * Sends notification that process was started.
@@ -108,5 +100,21 @@ class ProcessNotifier extends AbstractNotifier
                 )
             );
         }
+    }
+
+    /**
+     * Creates a ProcessNotifier instance
+     *
+     * @param object $notifiable
+     * @param UuidInterface|null $uuid
+     * @param integer|null $maxLength
+     * @return static
+     */
+    public static function create(object $notifiable, ?UuidInterface $uuid = null, ?int $maxLength = null): static
+    {
+        $uuid = $uuid ?? Uuid::getFactory()->uuid4();
+        $maxLength = $maxLength ?? static::DEFAULT_MAX_LENGTH;
+
+        return new self($uuid, $notifiable, $maxLength);
     }
 }
