@@ -21,7 +21,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is authorized to get article images.
      */
-    public function testCanGetArticleImages(): void
+    public function test_can_get_article_images(): void
     {
         $article = Article::factory()->create();
 
@@ -33,7 +33,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get article images.
      */
-    public function testCannotGetArticleImages(): void
+    public function test_cannot_get_article_images(): void
     {
         $article = Article::factory()->create();
 
@@ -45,7 +45,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is authorized to attach article image.
      */
-    public function testCanAttachArticleImage(): void
+    public function test_can_attach_article_image(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
         $image = Image::factory()->fakedImage()->create();
@@ -58,7 +58,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to attach article image.
      */
-    public function testCannotAttachArticleImage(): void
+    public function test_cannot_attach_article_image(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
         $image = Image::factory()->fakedImage()->create();
@@ -71,7 +71,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is authorized to detach article image.
      */
-    public function testCanDetachArticleImage(): void
+    public function test_can_detach_article_image(): void
     {
         $image = Image::factory()->fakedImage()->create();
 
@@ -86,7 +86,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to detach article image.
      */
-    public function testCannotDetachArticleImage(): void
+    public function test_cannot_detach_article_image(): void
     {
         $image = Image::factory()->fakedImage()->create();
 
@@ -101,7 +101,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is authorized to change article main image.
      */
-    public function testCanChangeArticleMainImage(): void
+    public function test_can_change_article_main_image(): void
     {
         $article = Article::factory()->create();
         $image = Image::factory()->fakedImage()->create();
@@ -116,7 +116,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to change article main image.
      */
-    public function testCannotChangeArticleMainImage(): void
+    public function test_cannot_change_article_main_image(): void
     {
         $article = Article::factory()->create();
         $image = Image::factory()->fakedImage()->create();
@@ -131,7 +131,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is authorized to remove article main image.
      */
-    public function testCanRemoveArticleMainImage(): void
+    public function test_can_remove_article_main_image(): void
     {
         $article = Article::factory()->create();
         $image = Image::factory()->fakedImage()->create();
@@ -147,7 +147,7 @@ class ArticleImagesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to remove article main image.
      */
-    public function testCannotRemoveArticleMainImage(): void
+    public function test_cannot_remove_article_main_image(): void
     {
         $article = Article::factory()->create();
         $image = Image::factory()->fakedImage()->create();

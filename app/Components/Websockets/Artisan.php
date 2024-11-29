@@ -44,8 +44,8 @@ class Artisan
      * Creates Artisan instance.
      *
      * @param  object  $notifiable  Who to send output to
-     * @param  ?UuidInterface $uuid UUID for notifications
-     * @param ?int $maxLength Max. length of messages
+     * @param  ?UuidInterface  $uuid  UUID for notifications
+     * @param  ?int  $maxLength  Max. length of messages
      */
     public static function create(object $notifiable, ?UuidInterface $uuid = null, ?int $maxLength = null): self
     {

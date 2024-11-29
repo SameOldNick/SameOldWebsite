@@ -18,7 +18,7 @@ class HomepageSettingsAccessTest extends TestCase
     /**
      * Tests user is authorized to get homepage metadata.
      */
-    public function testCanGetHomepageMetadata(): void
+    public function test_can_get_homepage_metadata(): void
     {
         $response = $this->withRoles(['edit_profile'])->get('/api/pages/homepage');
 
@@ -28,7 +28,7 @@ class HomepageSettingsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get homepage metadata.
      */
-    public function testCannotGetHomepageMetadata(): void
+    public function test_cannot_get_homepage_metadata(): void
     {
         $response = $this->withNoRoles()->get('/api/pages/homepage');
 
@@ -38,7 +38,7 @@ class HomepageSettingsAccessTest extends TestCase
     /**
      * Tests user is authorized to update homepage metadata.
      */
-    public function testCanPostHomepageMetadata(): void
+    public function test_can_post_homepage_metadata(): void
     {
         $response = $this->withRoles(['edit_profile'])->post('/api/pages/homepage');
 
@@ -48,7 +48,7 @@ class HomepageSettingsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to update homepage metadata.
      */
-    public function testCannotPostHomepageMetadata(): void
+    public function test_cannot_post_homepage_metadata(): void
     {
         $response = $this->withNoRoles()->post('/api/pages/homepage');
 

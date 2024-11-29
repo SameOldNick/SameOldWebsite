@@ -2,11 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\FilesystemConfiguration;
-use App\Models\FilesystemConfigurationFTP;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Http\UploadedFile;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FilesystemConfigurationSFTP>
@@ -30,14 +26,14 @@ class FilesystemConfigurationSFTPFactory extends Factory
 
     public function authPassword()
     {
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'password' => $this->faker->unique()->password,
         ]);
     }
 
     public function authKey()
     {
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'private_key' => $this->faker->unique()->sha256,
             'passphrase' => $this->faker->boolean ? $this->faker->unique()->password : null,
         ]);

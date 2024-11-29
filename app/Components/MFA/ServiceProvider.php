@@ -51,7 +51,7 @@ class ServiceProvider extends BaseServiceProvider
             return new Guard($inner, $authenticator, $persist);
         });
 
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
-        $this->loadViewsFrom(__DIR__ . '/views', 'mfa');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadViewsFrom(__DIR__.'/views', 'mfa');
     }
 }

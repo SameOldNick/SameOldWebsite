@@ -20,7 +20,7 @@ class AvatarAccessTest extends TestCase
     /**
      * Tests user is authorized to upload avatar.
      */
-    public function testCanUploadAvatar(): void
+    public function test_can_upload_avatar(): void
     {
         Storage::fake('avatars');
 
@@ -36,7 +36,7 @@ class AvatarAccessTest extends TestCase
     /**
      * Tests user is unauthorized to upload avatar.
      */
-    public function testCannotUploadAvatar(): void
+    public function test_cannot_upload_avatar(): void
     {
         Storage::fake('avatars');
 
@@ -52,7 +52,7 @@ class AvatarAccessTest extends TestCase
     /**
      * Tests user is authorized to delete avatar.
      */
-    public function testCanDeleteAvatar(): void
+    public function test_can_delete_avatar(): void
     {
         $response = $this->withRoles(['change_avatar'])->deleteJson('/api/user/avatar');
 
@@ -62,7 +62,7 @@ class AvatarAccessTest extends TestCase
     /**
      * Tests user is unauthorized to delete avatar.
      */
-    public function testCannotDeleteAvatar(): void
+    public function test_cannot_delete_avatar(): void
     {
         $response = $this->withNoRoles()->deleteJson('/api/user/avatar');
 

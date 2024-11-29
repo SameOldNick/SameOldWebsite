@@ -26,7 +26,7 @@ class ProcessNotifier extends AbstractNotifier
      *
      * @param  UuidInterface  $uuid  Process UUID
      * @param  object  $notifiable  Who to route notifications to
-     * @param int $maxLength Maximum length of messages
+     * @param  int  $maxLength  Maximum length of messages
      */
     public function __construct(
         public readonly UuidInterface $uuid,
@@ -78,9 +78,6 @@ class ProcessNotifier extends AbstractNotifier
     /**
      * Outputs message in chunks
      *
-     * @param string $message
-     * @param boolean $newline
-     * @param DateTimeInterface|null $dateTime
      * @return void
      */
     public function outputAsChunks(string $message, bool $newline, ?DateTimeInterface $dateTime = null)
@@ -104,11 +101,6 @@ class ProcessNotifier extends AbstractNotifier
 
     /**
      * Creates a ProcessNotifier instance
-     *
-     * @param object $notifiable
-     * @param UuidInterface|null $uuid
-     * @param integer|null $maxLength
-     * @return static
      */
     public static function create(object $notifiable, ?UuidInterface $uuid = null, ?int $maxLength = null): static
     {

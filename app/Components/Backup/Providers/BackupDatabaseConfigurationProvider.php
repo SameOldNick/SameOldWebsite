@@ -7,7 +7,7 @@ use App\Components\Backup\Contracts\BackupConfigurationProvider;
 class BackupDatabaseConfigurationProvider extends DatabaseConfigurationProvider implements BackupConfigurationProvider
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getDisks(): array
     {

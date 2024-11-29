@@ -6,7 +6,6 @@ use App\Models\FilesystemConfiguration;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
@@ -87,8 +86,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests creating FTP destination that is enabled for backup.
-     *
-     * @return void
      */
     public function test_create_destination_ftp_enabled(): void
     {
@@ -110,7 +107,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -122,8 +119,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests creating destination FTP that isn't enabled for backup.
-     *
-     * @return void
      */
     public function test_create_destination_ftp_disabled(): void
     {
@@ -145,7 +140,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -159,8 +154,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests creating SFTP destination with password authentication that is enabled for backup.
-     *
-     * @return void
      */
     public function test_create_destination_sftp_password_enabled(): void
     {
@@ -182,7 +175,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -196,8 +189,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests creating SFTP destination with password authentication that isn't enabled for backup.
-     *
-     * @return void
      */
     public function test_create_destination_sftp_password_disabled(): void
     {
@@ -219,7 +210,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -233,8 +224,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests creating SFTP destination with key authentication that is enabled for backup.
-     *
-     * @return void
      */
     public function test_create_destination_sftp_key_enabled(): void
     {
@@ -257,7 +246,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -271,8 +260,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests creating SFTP destination with key authentication that isn't enabled for backup.
-     *
-     * @return void
      */
     public function test_create_destination_sftp_key_disabled(): void
     {
@@ -295,7 +282,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -309,8 +296,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests enabling FTP destination as backup disk
-     *
-     * @return void
      */
     public function test_update_destination_basic(): void
     {
@@ -333,7 +318,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -349,8 +334,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests destinations basic info is updated.
-     *
-     * @return void
      */
     public function test_update_destinations_basic(): void
     {
@@ -389,8 +372,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests enabling FTP destination as backup disk
-     *
-     * @return void
      */
     public function test_update_destination_ftp_enable(): void
     {
@@ -406,7 +387,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -418,8 +399,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests enabling SFTP destination as backup disk
-     *
-     * @return void
      */
     public function test_update_destination_sftp_enable(): void
     {
@@ -435,7 +414,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $fsConfig = FilesystemConfiguration::find($response->json('configuration.id'));
@@ -447,8 +426,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests changing FTP authentication from password to key
-     *
-     * @return void
      */
     public function test_update_destination_ftp_password_to_key(): void
     {
@@ -457,7 +434,7 @@ class BackupDestinationsControllerTest extends TestCase
         $data = [
             'auth_type' => 'key',
             'private_key' => $this->faker()->sha256(),
-            'passphrase' => $this->faker()->boolean ? $this->faker()->password() : null
+            'passphrase' => $this->faker()->boolean ? $this->faker()->password() : null,
         ];
 
         $response = $this->actingAs($this->admin)->putJson(sprintf('/api/backup/destinations/%d', $existing->getKey()), $data);
@@ -466,7 +443,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $diskConfig = FilesystemConfiguration::find($response->json('configuration.id'))->getFilesystemConfig();
@@ -477,8 +454,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests changing SFTP authentication from password to key
-     *
-     * @return void
      */
     public function test_update_destination_sftp_password_to_key(): void
     {
@@ -487,7 +462,7 @@ class BackupDestinationsControllerTest extends TestCase
         $data = [
             'auth_type' => 'key',
             'private_key' => $this->faker()->sha256(),
-            'passphrase' => $this->faker()->boolean ? $this->faker()->password() : null
+            'passphrase' => $this->faker()->boolean ? $this->faker()->password() : null,
         ];
 
         $response = $this->actingAs($this->admin)->putJson(sprintf('/api/backup/destinations/%d', $existing->getKey()), $data);
@@ -496,7 +471,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $diskConfig = FilesystemConfiguration::find($response->json('configuration.id'))->getFilesystemConfig();
@@ -508,8 +483,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests changing SFTP authentication from password to key but password is missing
-     *
-     * @return void
      */
     public function test_update_destination_sftp_password_to_key_missing(): void
     {
@@ -527,8 +500,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests changing SFTP authentication from key to password
-     *
-     * @return void
      */
     public function test_update_destination_sftp_key_to_password(): void
     {
@@ -545,7 +516,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $diskConfig = FilesystemConfiguration::find($response->json('configuration.id'))->getFilesystemConfig();
@@ -557,8 +528,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests changing SFTP authentication from key to password but password is missing
-     *
-     * @return void
      */
     public function test_update_destination_sftp_key_to_password_missing(): void
     {
@@ -576,8 +545,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests changing root for SFTP destination
-     *
-     * @return void
      */
     public function test_update_destination_sftp_root(): void
     {
@@ -594,7 +561,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $this->assertEquals(
@@ -605,8 +572,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests changing root for FTP destination
-     *
-     * @return void
      */
     public function test_update_destination_ftp_change_root(): void
     {
@@ -622,7 +587,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $diskConfig = FilesystemConfiguration::find($response->json('configuration.id'))->getFilesystemConfig();
@@ -632,8 +597,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests removing root for FTP destination
-     *
-     * @return void
      */
     public function test_update_destination_ftp_remove_root(): void
     {
@@ -649,7 +612,7 @@ class BackupDestinationsControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJsonStructure([
                 'message',
-                'configuration'
+                'configuration',
             ]);
 
         $diskConfig = FilesystemConfiguration::find($response->json('configuration.id'))->getFilesystemConfig();
@@ -685,8 +648,6 @@ class BackupDestinationsControllerTest extends TestCase
 
     /**
      * Tests destinations are deleted.
-     *
-     * @return void
      */
     public function test_delete_destinations(): void
     {
@@ -694,7 +655,7 @@ class BackupDestinationsControllerTest extends TestCase
         FilesystemConfiguration::factory(2)->sftp('password')->create();
         FilesystemConfiguration::factory(2)->sftp('key')->create();
 
-        $ids = FilesystemConfiguration::all()->map(fn($destination) => $destination->getKey());
+        $ids = FilesystemConfiguration::all()->map(fn ($destination) => $destination->getKey());
 
         $response = $this->actingAs($this->admin)->deleteJson('/api/backup/destinations', ['destinations' => $ids]);
 
@@ -712,8 +673,7 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Assert storage adapter is loaded.
      *
-     * @param string $diskName
-     * @param class-string $adapterClass
+     * @param  class-string  $adapterClass
      * @return void
      */
     protected function assertStorageAdapterLoaded(string $diskName, string $adapterClass)
@@ -731,8 +691,7 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Assert storage adapter is not loaded.
      *
-     * @param string $diskName
-     * @param class-string $adapterClass
+     * @param  class-string  $adapterClass
      * @return void
      */
     protected function assertStorageAdapterNotLoaded(string $diskName)
@@ -748,7 +707,6 @@ class BackupDestinationsControllerTest extends TestCase
      * Asserts backup disk exists
      *
      * @param [type] $diskNames
-     * @param boolean $strict
      * @return void
      */
     protected function assertHasBackupDisks($diskNames, bool $strict = false)

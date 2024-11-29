@@ -3,11 +3,11 @@
 namespace App\Components\Backup\SpatieBackup;
 
 use App\Components\Backup\Contracts\ConfigProvider;
-use Spatie\Backup\Config\Config;
 use Spatie\Backup\Config\BackupConfig;
-use Spatie\Backup\Config\NotificationsConfig;
-use Spatie\Backup\Config\MonitoredBackupsConfig;
 use Spatie\Backup\Config\CleanupConfig;
+use Spatie\Backup\Config\Config;
+use Spatie\Backup\Config\MonitoredBackupsConfig;
+use Spatie\Backup\Config\NotificationsConfig;
 
 class DatabaseConfigProvider extends Config implements ConfigProvider
 {
@@ -23,7 +23,7 @@ class DatabaseConfigProvider extends Config implements ConfigProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getBackup(): BackupConfig
     {
@@ -31,7 +31,7 @@ class DatabaseConfigProvider extends Config implements ConfigProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getNotifications(): NotificationsConfig
     {
@@ -39,7 +39,7 @@ class DatabaseConfigProvider extends Config implements ConfigProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getMonitoredBackups(): MonitoredBackupsConfig
     {
@@ -47,7 +47,7 @@ class DatabaseConfigProvider extends Config implements ConfigProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getCleanup(): CleanupConfig
     {

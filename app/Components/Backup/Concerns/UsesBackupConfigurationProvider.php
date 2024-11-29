@@ -8,8 +8,6 @@ trait UsesBackupConfigurationProvider
 {
     /**
      * Gets the backup configuration provider
-     *
-     * @return BackupConfigurationProvider
      */
     protected function getConfigurationProvider(): BackupConfigurationProvider
     {

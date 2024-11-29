@@ -2,9 +2,8 @@
 
 namespace App\Components\Backup;
 
-use App\Components\Backup\Contracts\BackupSchedulerConfigurationProvider;
-use App\Components\Backup\SpatieBackup\DatabaseConfigProvider;
 use App\Components\Backup\Contracts\BackupConfigurationProvider;
+use App\Components\Backup\Contracts\BackupSchedulerConfigurationProvider;
 use App\Components\Backup\Contracts\ConfigProvider;
 use App\Components\Backup\Contracts\FilesystemConfigurationFactory as FilesystemConfigurationFactoryContract;
 use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
@@ -14,14 +13,15 @@ use App\Components\Backup\Filesystem\FilesystemConfigurationFactory;
 use App\Components\Backup\Providers\BackupDatabaseConfigurationProvider;
 use App\Components\Backup\Providers\BackupSchedulerDatabaseConfigurationProvider;
 use App\Components\Backup\Providers\DatabaseNotificationConfigurationProvider;
+use App\Components\Backup\SpatieBackup\DatabaseConfigProvider;
 use Exception;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Spatie\Backup\Config\Config;
-use Spatie\Backup\Tasks\Backup\DbDumperFactory;
 use Illuminate\Contracts\Filesystem\Factory as FactoryContract;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Spatie\Backup\Config\Config;
+use Spatie\Backup\Tasks\Backup\DbDumperFactory;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -56,8 +56,6 @@ class ServiceProvider extends BaseServiceProvider
 
     /**
      * Checks if database is ready for holding backup config
-     *
-     * @return boolean
      */
     protected function isDatabaseSetup(): bool
     {
@@ -88,7 +86,7 @@ class ServiceProvider extends BaseServiceProvider
          * the instance and re-save it when the database becomes available.
          */
         $this->app->beforeResolving(Config::class, function ($abstract, $params, $app) use (&$hasReset) {
-            if ($this->isDatabaseSetup() && !$hasReset) {
+            if ($this->isDatabaseSetup() && ! $hasReset) {
                 $app->forgetInstance(Config::class);
 
                 $hasReset = true;
@@ -109,6 +107,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->app->extend(FactoryContract::class, function (FactoryContract $manager, Container $app) {
             $factory = $app->make(FilesystemConfigurationFactoryContract::class);
+
             return new DynamicFilesystemManager($app, $factory);
         });
     }

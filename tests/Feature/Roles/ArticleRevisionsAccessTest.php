@@ -20,7 +20,7 @@ class ArticleRevisionsAccessTest extends TestCase
     /**
      * Tests user is authorized to get article revisions.
      */
-    public function testCanGetArticleRevisions(): void
+    public function test_can_get_article_revisions(): void
     {
         $article = Article::factory()->create();
 
@@ -32,7 +32,7 @@ class ArticleRevisionsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get article revisions.
      */
-    public function testCannotGetArticleRevisions(): void
+    public function test_cannot_get_article_revisions(): void
     {
         $article = Article::factory()->create();
 
@@ -44,7 +44,7 @@ class ArticleRevisionsAccessTest extends TestCase
     /**
      * Tests user is authorized to get article revision.
      */
-    public function testCanGetArticleRevision(): void
+    public function test_can_get_article_revision(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
         $revision = $article->revisions()->first();
@@ -57,7 +57,7 @@ class ArticleRevisionsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get article revision.
      */
-    public function testCannotGetArticleRevision(): void
+    public function test_cannot_get_article_revision(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
         $revision = $article->revisions()->first();
@@ -70,7 +70,7 @@ class ArticleRevisionsAccessTest extends TestCase
     /**
      * Tests user is authorized to create article revisions.
      */
-    public function testCanCreateArticleRevision(): void
+    public function test_can_create_article_revision(): void
     {
         $article = Article::factory()->create();
 
@@ -84,7 +84,7 @@ class ArticleRevisionsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to create article revisions.
      */
-    public function testCannotCreateArticleRevision(): void
+    public function test_cannot_create_article_revision(): void
     {
         $article = Article::factory()->create();
 
@@ -98,7 +98,7 @@ class ArticleRevisionsAccessTest extends TestCase
     /**
      * Tests user is authorized to delete article revisions.
      */
-    public function testCanDeleteArticleRevision(): void
+    public function test_can_delete_article_revision(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
         $revision = $article->revisions()->first();
@@ -111,7 +111,7 @@ class ArticleRevisionsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to delete article revisions.
      */
-    public function testCannotDeleteArticleRevision(): void
+    public function test_cannot_delete_article_revision(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
         $revision = $article->revisions()->first();

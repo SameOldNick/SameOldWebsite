@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Api\Backup;
 use App\Http\Controllers\Controller;
 use App\Models\BackupConfig;
 use App\Models\FilesystemConfiguration;
-use Illuminate\Http\Request;
 use App\Models\FilesystemConfigurationFTP;
 use App\Models\FilesystemConfigurationSFTP;
 use App\Rules\Slugified;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Spatie\Backup\Config\Config;
 
 class BackupDestinationsController extends Controller
@@ -26,7 +26,6 @@ class BackupDestinationsController extends Controller
     /**
      * List all configurations
      *
-     * @param Config $backupConfig
      * @return void
      */
     public function index(Config $backupConfig)
@@ -34,16 +33,15 @@ class BackupDestinationsController extends Controller
         // Pull disks indirectly through Spatie Backup config
         $enabled = $backupConfig->backup->destination->disks;
 
-        return response()->json(FilesystemConfiguration::all()->map(fn(FilesystemConfiguration $config) => [
+        return response()->json(FilesystemConfiguration::all()->map(fn (FilesystemConfiguration $config) => [
             'enable' => in_array($config->driver_name, $enabled),
-            ...$config->toArray()
+            ...$config->toArray(),
         ]));
     }
 
     /**
      * Store a new configuration
      *
-     * @param Request $request
      * @return mixed
      */
     public function store(Request $request)
@@ -55,7 +53,7 @@ class BackupDestinationsController extends Controller
                 'string',
                 'max:255',
                 new Slugified,
-                Rule::unique(FilesystemConfiguration::class)
+                Rule::unique(FilesystemConfiguration::class),
             ],
             'type' => 'required|in:ftp,sftp',
             'host' => 'required|string|max:255',
@@ -64,14 +62,14 @@ class BackupDestinationsController extends Controller
             'auth_type' => 'nullable|required_if:type,sftp|string|in:password,key',
             'password' => [
                 'nullable',
-                Rule::requiredIf(fn() => $request->type === 'ftp' || ($request->type === 'sftp' && $request->auth_type === 'password')),
+                Rule::requiredIf(fn () => $request->type === 'ftp' || ($request->type === 'sftp' && $request->auth_type === 'password')),
                 'string',
                 'max:255',
             ],
             'root' => 'nullable|string|max:255',
             'private_key' => [
                 'nullable',
-                Rule::requiredIf(fn() => $request->type === 'sftp' && $request->auth_type === 'key'),
+                Rule::requiredIf(fn () => $request->type === 'sftp' && $request->auth_type === 'key'),
                 'string',
             ],
             'passphrase' => 'nullable|string|max:255',
@@ -85,7 +83,7 @@ class BackupDestinationsController extends Controller
                 'username',
                 'password',
                 'root',
-                'extra'
+                'extra',
             ])),
             'sftp' => FilesystemConfigurationSFTP::create($request->only([
                 'host',
@@ -95,13 +93,13 @@ class BackupDestinationsController extends Controller
                 'private_key',
                 'passphrase',
                 'root',
-                'extra'
+                'extra',
             ])),
             default => null
         };
 
         // The validator shouldn't allow this, but just in case.
-        if (!$config) {
+        if (! $config) {
             return response()->json(['message' => 'Type is invalid.'], 500);
         }
 
@@ -127,15 +125,13 @@ class BackupDestinationsController extends Controller
     /**
      * Show a specific configuration
      *
-     * @param Config $backupConfig
-     * @param FilesystemConfiguration $destination
      * @return mixed
      */
     public function show(Config $backupConfig, FilesystemConfiguration $destination)
     {
         $config = $destination->configurable;
 
-        if (!$config) {
+        if (! $config) {
             return response()->json(['message' => 'Configuration not found.'], 404);
         }
 
@@ -144,15 +140,13 @@ class BackupDestinationsController extends Controller
 
         return [
             'enable' => in_array($config->driver_name, $enabled),
-            ...$destination->toArray()
+            ...$destination->toArray(),
         ];
     }
 
     /**
      * Update an existing configuration
      *
-     * @param Request $request
-     * @param FilesystemConfiguration $destination
      * @return mixed
      */
     public function update(Request $request, FilesystemConfiguration $destination)
@@ -164,7 +158,7 @@ class BackupDestinationsController extends Controller
                 'string',
                 'max:255',
                 new Slugified,
-                Rule::unique(FilesystemConfiguration::class)->ignore($destination)
+                Rule::unique(FilesystemConfiguration::class)->ignore($destination),
             ],
             'host' => 'nullable|string|max:255',
             'port' => 'nullable|integer|min:1|max:65535',
@@ -189,7 +183,7 @@ class BackupDestinationsController extends Controller
 
         $config = $destination->configurable;
 
-        if (!$config) {
+        if (! $config) {
             return response()->json(['message' => 'Backup destination not found.'], 404);
         }
 
@@ -212,7 +206,6 @@ class BackupDestinationsController extends Controller
     /**
      * Updates multiple configurations
      *
-     * @param Request $request
      * @return mixed
      */
     public function bulkUpdate(Request $request)
@@ -225,12 +218,12 @@ class BackupDestinationsController extends Controller
                 Rule::exists(FilesystemConfiguration::class),
             ],
             'destinations.*.enable' => 'nullable|boolean',
-            'destinations.*.name' => Rule::forEach(fn(string|null $value, string $attribute) => [
+            'destinations.*.name' => Rule::forEach(fn (?string $value, string $attribute) => [
                 'nullable',
                 'string',
                 'max:255',
                 new Slugified,
-                Rule::unique(FilesystemConfiguration::class)->ignore($value, 'name')
+                Rule::unique(FilesystemConfiguration::class)->ignore($value, 'name'),
             ]),
             'destinations.*.host' => 'nullable|string|max:255',
             'destinations.*.port' => 'nullable|integer|min:1|max:65535',
@@ -280,7 +273,6 @@ class BackupDestinationsController extends Controller
     /**
      * Delete a configuration
      *
-     * @param FilesystemConfiguration $destination
      * @return mixed
      */
     public function destroy(FilesystemConfiguration $destination)
@@ -293,7 +285,6 @@ class BackupDestinationsController extends Controller
     /**
      * Delete multiple configurations
      *
-     * @param Request $request
      * @return mixed
      */
     public function bulkDestroy(Request $request)
@@ -332,7 +323,6 @@ class BackupDestinationsController extends Controller
     /**
      * Enables disk configuration
      *
-     * @param string $diskName
      * @return void
      */
     protected function enableDisk(string $diskName)
@@ -340,7 +330,7 @@ class BackupDestinationsController extends Controller
         $existing = BackupConfig::where('key', 'backup_disks')->first();
 
         if ($existing) {
-            $value = !Str::contains($existing->value, $diskName) ? $existing->value . ';' . $diskName : $existing->value;
+            $value = ! Str::contains($existing->value, $diskName) ? $existing->value.';'.$diskName : $existing->value;
         } else {
             $value = $diskName;
         }
@@ -354,7 +344,6 @@ class BackupDestinationsController extends Controller
     /**
      * Disables disk configuration
      *
-     * @param string $diskName
      * @return void
      */
     protected function disableDisk(string $diskName)
@@ -373,8 +362,6 @@ class BackupDestinationsController extends Controller
     /**
      * Updates a configuration
      *
-     * @param FilesystemConfiguration $destination
-     * @param array $input
      * @return FilesystemConfiguration
      */
     protected function performUpdate(FilesystemConfiguration $destination, array $input)
@@ -384,7 +371,7 @@ class BackupDestinationsController extends Controller
             'port',
             'username',
             'passphrase',
-            'extra'
+            'extra',
         ]);
 
         if (Arr::has($input, 'name')) {
@@ -405,7 +392,7 @@ class BackupDestinationsController extends Controller
             $data['private_key'] = null;
             $data['passphrase'] = null;
             $data['password'] = Arr::get($input, 'password');
-        } else if (
+        } elseif (
             Arr::has($input, 'private_key') && (
                 $authType && $diskType === 'sftp' && $authType === 'key'
             )
@@ -435,7 +422,6 @@ class BackupDestinationsController extends Controller
     /**
      * Removes a configuration
      *
-     * @param FilesystemConfiguration $destination
      * @return void
      */
     protected function performDestroy(FilesystemConfiguration $destination)

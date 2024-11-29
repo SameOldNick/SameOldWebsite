@@ -20,7 +20,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is authorized to get comments.
      */
-    public function testCanGetComments(): void
+    public function test_can_get_comments(): void
     {
         Comment::factory(5)->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
@@ -32,7 +32,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get comments.
      */
-    public function testCannotGetComments(): void
+    public function test_cannot_get_comments(): void
     {
         $response = $this->withNoRoles()->getJson('/api/blog/comments');
 
@@ -42,7 +42,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is authorized to get comment.
      */
-    public function testCanGetComment(): void
+    public function test_can_get_comment(): void
     {
         $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
@@ -54,7 +54,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get comment.
      */
-    public function testCannotGetComment(): void
+    public function test_cannot_get_comment(): void
     {
         $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
@@ -66,7 +66,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is authorized to update comments.
      */
-    public function testCanUpdateComment(): void
+    public function test_can_update_comment(): void
     {
         $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
@@ -80,7 +80,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to update comments.
      */
-    public function testCannotUpdateComment(): void
+    public function test_cannot_update_comment(): void
     {
         $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
@@ -94,7 +94,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is authorized to delete comments.
      */
-    public function testCanDeleteComment(): void
+    public function test_can_delete_comment(): void
     {
         $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
@@ -106,7 +106,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to delete comments.
      */
-    public function testCannotDeleteComment(): void
+    public function test_cannot_delete_comment(): void
     {
         $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
@@ -118,7 +118,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is authorized to approve comments.
      */
-    public function testCanApproveComment(): void
+    public function test_can_approve_comment(): void
     {
         $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 
@@ -132,7 +132,7 @@ class CommentsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to approve comments.
      */
-    public function testCannotApproveComment(): void
+    public function test_cannot_approve_comment(): void
     {
         $comment = Comment::factory()->for(Article::factory()->createPostWithRegisteredPerson())->createPostWithRegisteredPerson()->create();
 

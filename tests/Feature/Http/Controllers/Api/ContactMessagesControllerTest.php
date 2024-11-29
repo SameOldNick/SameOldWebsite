@@ -21,7 +21,7 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMessageNameUpdated()
+    public function test_message_name_updated()
     {
         $message = ContactMessage::factory()->requiresConfirmation()->create();
 
@@ -47,7 +47,7 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMessageEmailUpdated()
+    public function test_message_email_updated()
     {
         $message = ContactMessage::factory()->requiresConfirmation()->create();
 
@@ -73,7 +73,7 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMessageUpdated()
+    public function test_message_updated()
     {
         $message = ContactMessage::factory()->requiresConfirmation()->create();
 
@@ -99,7 +99,7 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMarkMessageConfirmed()
+    public function test_mark_message_confirmed()
     {
         $message = ContactMessage::factory()->requiresConfirmation()->create();
 
@@ -117,7 +117,7 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testMarkMessageUnconfirmed()
+    public function test_mark_message_unconfirmed()
     {
         $message = ContactMessage::factory()->confirmed()->requiresConfirmation()->create();
 
@@ -135,7 +135,7 @@ class ContactMessagesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testRemoveContactMessage()
+    public function test_remove_contact_message()
     {
         $message = ContactMessage::factory()->confirmed()->requiresConfirmation()->create();
 

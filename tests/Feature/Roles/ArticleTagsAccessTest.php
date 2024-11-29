@@ -21,7 +21,7 @@ class ArticleTagsAccessTest extends TestCase
     /**
      * Tests user is authorized to get article tags.
      */
-    public function testCanGetArticleTags(): void
+    public function test_can_get_article_tags(): void
     {
         $article = Article::factory()->create();
 
@@ -33,7 +33,7 @@ class ArticleTagsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get article tags.
      */
-    public function testCannotGetArticleTags(): void
+    public function test_cannot_get_article_tags(): void
     {
         $article = Article::factory()->create();
 
@@ -45,7 +45,7 @@ class ArticleTagsAccessTest extends TestCase
     /**
      * Tests user is authorized to attach article tag.
      */
-    public function testCanAttachArticleTag(): void
+    public function test_can_attach_article_tag(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
 
@@ -59,7 +59,7 @@ class ArticleTagsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to attach article tag.
      */
-    public function testCannotAttachArticleTag(): void
+    public function test_cannot_attach_article_tag(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
 
@@ -73,7 +73,7 @@ class ArticleTagsAccessTest extends TestCase
     /**
      * Tests user is authorized to detach article tag.
      */
-    public function testCanDetachArticleTag(): void
+    public function test_can_detach_article_tag(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
         $tag = Tag::factory()->create();
@@ -90,7 +90,7 @@ class ArticleTagsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to detach article tag.
      */
-    public function testCannotDetachArticleTag(): void
+    public function test_cannot_detach_article_tag(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
         $tag = Tag::factory()->create();
@@ -107,7 +107,7 @@ class ArticleTagsAccessTest extends TestCase
     /**
      * Tests user is authorized to sync article tags.
      */
-    public function testCanSyncArticleTags(): void
+    public function test_can_sync_article_tags(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
 
@@ -121,7 +121,7 @@ class ArticleTagsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to sync article tags.
      */
-    public function testCannotSyncArticleTags(): void
+    public function test_cannot_sync_article_tags(): void
     {
         $article = Article::factory()->has(Revision::factory())->create();
 

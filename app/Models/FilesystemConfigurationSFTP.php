@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Components\Backup\Contracts\FilesystemConfiguration as FilesystemConfigurationContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
@@ -24,7 +24,7 @@ class FilesystemConfigurationSFTP extends Model implements FilesystemConfigurati
     use HasFactory;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $table = 'filesystem_configuration_sftp';
 
@@ -41,7 +41,7 @@ class FilesystemConfigurationSFTP extends Model implements FilesystemConfigurati
         'private_key',
         'passphrase',
         'root',
-        'extra'
+        'extra',
     ];
 
     /**
@@ -83,7 +83,7 @@ class FilesystemConfigurationSFTP extends Model implements FilesystemConfigurati
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getFilesystemConfig(): array
     {
@@ -102,7 +102,7 @@ class FilesystemConfigurationSFTP extends Model implements FilesystemConfigurati
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function toArray()
     {
