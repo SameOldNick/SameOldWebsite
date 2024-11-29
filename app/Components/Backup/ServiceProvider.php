@@ -14,11 +14,13 @@ use App\Components\Backup\Filesystem\FilesystemConfigurationFactory;
 use App\Components\Backup\Providers\BackupDatabaseConfigurationProvider;
 use App\Components\Backup\Providers\BackupSchedulerDatabaseConfigurationProvider;
 use App\Components\Backup\Providers\DatabaseNotificationConfigurationProvider;
+use Exception;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Spatie\Backup\Config\Config;
 use Spatie\Backup\Tasks\Backup\DbDumperFactory;
 use Illuminate\Contracts\Filesystem\Factory as FactoryContract;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class ServiceProvider extends BaseServiceProvider
@@ -59,7 +61,15 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function isDatabaseSetup(): bool
     {
-        return Schema::hasTable('backup_config');
+        try {
+            // Throws exception if not connected
+            // Source: https://stackoverflow.com/a/40778219/533242
+            DB::connection()->getPdo();
+
+            return Schema::hasTable('backup_config');
+        } catch (Exception $ex) {
+            return false;
+        }
     }
 
     /**
