@@ -152,7 +152,6 @@ class SetupInitial extends Command
     /**
      * Validates password
      *
-     * @param  string  $password
      * @return void
      */
     protected function validatePassword(#[\SensitiveParameter] string $password)

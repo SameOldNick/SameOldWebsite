@@ -5,9 +5,7 @@ namespace Database\Factories;
 use App\Models\FilesystemConfiguration;
 use App\Models\FilesystemConfigurationFTP;
 use App\Models\FilesystemConfigurationSFTP;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Http\UploadedFile;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FilesystemConfiguration>
@@ -29,7 +27,7 @@ class FilesystemConfigurationFactory extends Factory
     public function ftp(): static
     {
         return $this->state([
-            'disk_type' => 'ftp'
+            'disk_type' => 'ftp',
         ])->configurable(FilesystemConfigurationFTP::factory());
     }
 
@@ -42,7 +40,7 @@ class FilesystemConfigurationFactory extends Factory
         };
 
         return $this->state([
-            'disk_type' => 'sftp'
+            'disk_type' => 'sftp',
         ])->configurable($factory);
     }
 

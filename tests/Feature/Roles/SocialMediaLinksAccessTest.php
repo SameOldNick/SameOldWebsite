@@ -19,7 +19,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test accessing social media links when authorized.
      */
-    public function testCanGetSocialMediums(): void
+    public function test_can_get_social_mediums(): void
     {
         $response = $this->withRoles(['edit_profile'])->getJson('/api/social-media');
 
@@ -29,7 +29,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test accessing social media links when unauthorized.
      */
-    public function testCannotGetSocialMediums(): void
+    public function test_cannot_get_social_mediums(): void
     {
         $response = $this->withNoRoles()->getJson('/api/social-media');
 
@@ -39,7 +39,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test accessing a specific social media link when authorized.
      */
-    public function testCanGetSocialMedium(): void
+    public function test_can_get_social_medium(): void
     {
         $socialMedium = SocialMediaLink::factory()->create();
 
@@ -51,7 +51,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test accessing a specific social media link when unauthorized.
      */
-    public function testCannotGetSocialMedium(): void
+    public function test_cannot_get_social_medium(): void
     {
         $socialMedium = SocialMediaLink::factory()->create();
 
@@ -63,7 +63,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test creating a new social media link when authorized.
      */
-    public function testCanCreateSocialMedium(): void
+    public function test_can_create_social_medium(): void
     {
         $response = $this->withRoles(['edit_profile'])->postJson('/api/social-media', [
             'link' => $this->faker()->socialMediaLink('github'),
@@ -75,7 +75,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test creating a new social media link when unauthorized.
      */
-    public function testCannotCreateSocialMedium(): void
+    public function test_cannot_create_social_medium(): void
     {
         $response = $this->withNoRoles()->postJson('/api/social-media', [
             'link' => $this->faker()->socialMediaLink('github'),
@@ -87,7 +87,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test updating an existing social media link when authorized.
      */
-    public function testCanUpdateSocialMedium(): void
+    public function test_can_update_social_medium(): void
     {
         $socialMedium = SocialMediaLink::factory()->create();
 
@@ -101,7 +101,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test updating an existing social media link when unauthorized.
      */
-    public function testCannotUpdateSocialMedium(): void
+    public function test_cannot_update_social_medium(): void
     {
         $socialMedium = SocialMediaLink::factory()->create();
 
@@ -115,7 +115,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test deleting a social media link when authorized.
      */
-    public function testCanDeleteSocialMedium(): void
+    public function test_can_delete_social_medium(): void
     {
         $socialMedium = SocialMediaLink::factory()->create();
 
@@ -127,7 +127,7 @@ class SocialMediaLinksAccessTest extends TestCase
     /**
      * Test deleting a social media link when unauthorized.
      */
-    public function testCannotDeleteSocialMedium(): void
+    public function test_cannot_delete_social_medium(): void
     {
         $socialMedium = SocialMediaLink::factory()->create();
 

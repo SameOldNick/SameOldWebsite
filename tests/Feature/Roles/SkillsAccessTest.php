@@ -19,7 +19,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is authorized to get skills.
      */
-    public function testCanGetSkills(): void
+    public function test_can_get_skills(): void
     {
         $response = $this->withRoles(['edit_profile'])->getJson('/api/skills');
 
@@ -29,7 +29,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get skills.
      */
-    public function testCannotGetSkills(): void
+    public function test_cannot_get_skills(): void
     {
         $response = $this->withNoRoles()->getJson('/api/skills');
 
@@ -39,7 +39,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is authorized to get skill.
      */
-    public function testCanGetSkill(): void
+    public function test_can_get_skill(): void
     {
         $skill = Skill::factory()->create();
 
@@ -51,7 +51,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get skill.
      */
-    public function testCannotGetSkill(): void
+    public function test_cannot_get_skill(): void
     {
         $skill = Skill::factory()->create();
 
@@ -63,7 +63,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is authorized to create skills.
      */
-    public function testCanCreateSkill(): void
+    public function test_can_create_skill(): void
     {
         $response = $this->withRoles(['edit_profile'])->postJson('/api/skills', [
             'icon' => $this->faker->iconName(),
@@ -76,7 +76,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to create skills.
      */
-    public function testCannotCreateSkill(): void
+    public function test_cannot_create_skill(): void
     {
         $response = $this->withNoRoles()->postJson('/api/skills', [
             'icon' => $this->faker->iconName(),
@@ -89,7 +89,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is authorized to update skills.
      */
-    public function testCanUpdateSkill(): void
+    public function test_can_update_skill(): void
     {
         $skill = Skill::factory()->create();
 
@@ -104,7 +104,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to update skills.
      */
-    public function testCannotUpdateSkill(): void
+    public function test_cannot_update_skill(): void
     {
         $skill = Skill::factory()->create();
 
@@ -118,7 +118,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is authorized to delete skills.
      */
-    public function testCanDeleteSkill(): void
+    public function test_can_delete_skill(): void
     {
         $skill = Skill::factory()->create();
 
@@ -130,7 +130,7 @@ class SkillsAccessTest extends TestCase
     /**
      * Tests user is unauthorized to delete skills.
      */
-    public function testCannotDeleteSkill(): void
+    public function test_cannot_delete_skill(): void
     {
         $skill = Skill::factory()->create();
 

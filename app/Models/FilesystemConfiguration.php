@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Components\Backup\Contracts\FilesystemConfiguration as FilesystemConfigurationContract;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
@@ -40,7 +40,7 @@ class FilesystemConfiguration extends Model implements FilesystemConfigurationCo
      * @var array
      */
     protected $with = [
-        'configurable'
+        'configurable',
     ];
 
     public function configurable()
@@ -49,7 +49,7 @@ class FilesystemConfiguration extends Model implements FilesystemConfigurationCo
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getFilesystemConfig(): array
     {
@@ -61,19 +61,17 @@ class FilesystemConfiguration extends Model implements FilesystemConfigurationCo
         return [
             'name' => $this->name,
             'driver' => $this->disk_type,
-            ...$options
+            ...$options,
         ];
     }
 
     /**
      * Gets the driver name
      * Used to pull the configuration from the filesystem manager
-     *
-     * @return Attribute
      */
     protected function driverName(): Attribute
     {
-        return Attribute::get(fn($value, $attributes = []) => "dynamic-{$attributes['name']}");
+        return Attribute::get(fn ($value, $attributes = []) => "dynamic-{$attributes['name']}");
     }
 
     public function toArray()
@@ -82,7 +80,7 @@ class FilesystemConfiguration extends Model implements FilesystemConfigurationCo
             $this->getKeyName() => $this->getKey(),
             'name' => $this->name,
             'type' => $this->disk_type,
-            ...$this->configurable->toArray()
+            ...$this->configurable->toArray(),
         ];
     }
 }

@@ -101,7 +101,7 @@ class Backup extends Model
     protected function status(): Attribute
     {
         return new Attribute(
-            get: fn() => match (true) {
+            get: fn () => match (true) {
                 $this->isDeleted() => static::STATUS_DELETED,
                 $this->isFailed() => static::STATUS_FAILED,
                 $this->isNotExists() => static::STATUS_NOT_EXISTS,

@@ -8,7 +8,7 @@ use App\Components\MFA\Contracts\SecretStore as StoreContract;
 class SecretStore implements StoreContract
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function storeSecrets(MultiAuthenticatable $authenticatable, string $authSecret, string $backupSecret): void
     {
@@ -19,7 +19,7 @@ class SecretStore implements StoreContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function removeSecrets(MultiAuthenticatable $authenticatable): void
     {
@@ -27,7 +27,7 @@ class SecretStore implements StoreContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getAuthSecret(MultiAuthenticatable $authenticatable): ?string
     {
@@ -35,7 +35,7 @@ class SecretStore implements StoreContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getBackupSecret(MultiAuthenticatable $authenticatable): ?string
     {

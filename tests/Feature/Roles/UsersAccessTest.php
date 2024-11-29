@@ -20,7 +20,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test accessing users when authorized.
      */
-    public function testCanGetUsers(): void
+    public function test_can_get_users(): void
     {
         User::factory(5)->create();
 
@@ -32,7 +32,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test accessing users when unauthorized.
      */
-    public function testCannotGetUsers(): void
+    public function test_cannot_get_users(): void
     {
         User::factory(5)->create();
 
@@ -44,7 +44,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test accessing a specific user when authorized.
      */
-    public function testCanGetUser(): void
+    public function test_can_get_user(): void
     {
         $user = User::factory()->create();
 
@@ -56,7 +56,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test accessing a specific user when unauthorized.
      */
-    public function testCannotGetUser(): void
+    public function test_cannot_get_user(): void
     {
         $user = User::factory()->create();
 
@@ -68,7 +68,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test creating a new user when authorized.
      */
-    public function testCanCreateUser(): void
+    public function test_can_create_user(): void
     {
         $email = $this->faker()->unique()->email();
         $password = Password::default()->generate();
@@ -87,7 +87,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test creating a new user when unauthorized.
      */
-    public function testCannotCreateUser(): void
+    public function test_cannot_create_user(): void
     {
         $email = $this->faker()->unique()->email();
         $password = Password::default()->generate();
@@ -106,7 +106,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test updating an existing user when authorized.
      */
-    public function testCanUpdateUser(): void
+    public function test_can_update_user(): void
     {
         $user = User::factory()->create();
         $email = $this->faker()->unique()->email();
@@ -123,7 +123,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test updating an existing user when unauthorized.
      */
-    public function testCannotUpdateUser(): void
+    public function test_cannot_update_user(): void
     {
         $user = User::factory()->create();
         $email = $this->faker()->unique()->email();
@@ -140,7 +140,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test deleting a user when authorized.
      */
-    public function testCanDeleteUser(): void
+    public function test_can_delete_user(): void
     {
         $user = User::factory()->create();
 
@@ -153,7 +153,7 @@ class UsersAccessTest extends TestCase
     /**
      * Test deleting a user when unauthorized.
      */
-    public function testCannotDeleteUser(): void
+    public function test_cannot_delete_user(): void
     {
         $user = User::factory()->create();
 

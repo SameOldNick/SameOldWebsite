@@ -207,7 +207,7 @@ class Comment extends Model implements Moderatable
      */
     protected function commenter(): Attribute
     {
-        return Attribute::get(fn() => [
+        return Attribute::get(fn () => [
             'display_name' => $this->post->person->display_name,
             'name' => $this->post->person->name,
             'email' => $this->post->person->email,
@@ -243,7 +243,7 @@ class Comment extends Model implements Moderatable
      */
     protected function userType(): Attribute
     {
-        return Attribute::get(fn() => $this->post->person->user ? CommentUserType::Registered->value : CommentUserType::Guest->value);
+        return Attribute::get(fn () => $this->post->person->user ? CommentUserType::Registered->value : CommentUserType::Guest->value);
     }
 
     /**
@@ -251,7 +251,7 @@ class Comment extends Model implements Moderatable
      */
     protected function status(): Attribute
     {
-        return Attribute::get(fn() => $this->determineStatus()->value);
+        return Attribute::get(fn () => $this->determineStatus()->value);
     }
 
     /**
@@ -259,7 +259,7 @@ class Comment extends Model implements Moderatable
      */
     protected function markedBy(): Attribute
     {
-        return Attribute::get(fn() => $this->lastStatus?->user);
+        return Attribute::get(fn () => $this->lastStatus?->user);
     }
 
     /**
@@ -267,7 +267,7 @@ class Comment extends Model implements Moderatable
      */
     protected function avatarUrl(): Attribute
     {
-        return Attribute::get(fn() => $this->post->person->avatar_url)->shouldCache();
+        return Attribute::get(fn () => $this->post->person->avatar_url)->shouldCache();
     }
 
     /**
@@ -286,7 +286,7 @@ class Comment extends Model implements Moderatable
      */
     public function scopeStatus($query, $status)
     {
-        return $query->afterQuery(fn($comments) => $comments->status($status));
+        return $query->afterQuery(fn ($comments) => $comments->status($status));
     }
 
     /**

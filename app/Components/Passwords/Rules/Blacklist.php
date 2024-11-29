@@ -43,8 +43,6 @@ class Blacklist extends ValidationRule
 
     /**
      * Gets password variants to check for in blacklists.
-     *
-     * @param  string  $value
      */
     protected function getVariants(#[SensitiveParameter] string $value): array
     {
@@ -59,8 +57,6 @@ class Blacklist extends ValidationRule
 
     /**
      * Checks if blacklisted.
-     *
-     * @param  string  $value
      */
     protected function isBlacklisted(#[SensitiveParameter] string $value): bool
     {

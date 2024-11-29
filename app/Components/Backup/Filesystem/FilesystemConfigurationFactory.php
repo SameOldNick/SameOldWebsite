@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class FilesystemConfigurationFactory implements FactoryContract
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getFilesystemConfiguration(string $name): ?FilesystemConfiguration
     {

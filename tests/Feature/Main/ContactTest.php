@@ -31,7 +31,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactSubmissionConfirmedEventFired()
+    public function test_contact_submission_confirmed_event_fired()
     {
         Event::fake();
 
@@ -60,7 +60,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactSubmissionRequiresConfirmationEventFired()
+    public function test_contact_submission_requires_confirmation_event_fired()
     {
         Event::fake();
 
@@ -87,7 +87,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testGuestContactFormSubmissionRequiresConfirmation()
+    public function test_guest_contact_form_submission_requires_confirmation()
     {
         Mail::fake();
 
@@ -119,7 +119,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testAuthenticatedUserContactFormSubmissionRequiresConfirmation()
+    public function test_authenticated_user_contact_form_submission_requires_confirmation()
     {
         Mail::fake();
 
@@ -151,7 +151,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testGuestContactFormSubmissionRequiresUnregisteredUserConfirmation()
+    public function test_guest_contact_form_submission_requires_unregistered_user_confirmation()
     {
         Mail::fake();
 
@@ -183,7 +183,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testAuthenticatedUserContactFormSubmissionRequiresUnregisteredUserConfirmation()
+    public function test_authenticated_user_contact_form_submission_requires_unregistered_user_confirmation()
     {
         Mail::fake();
         Notification::fake();
@@ -219,7 +219,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testGuestContactFormSubmissionRequiresUnregisteredOrUnverifiedUserConfirmation()
+    public function test_guest_contact_form_submission_requires_unregistered_or_unverified_user_confirmation()
     {
         Mail::fake();
 
@@ -251,7 +251,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testUnverifiedUserContactFormSubmissionRequiresUnregisteredOrUnverifiedUserConfirmation()
+    public function test_unverified_user_contact_form_submission_requires_unregistered_or_unverified_user_confirmation()
     {
         Mail::fake();
 
@@ -285,7 +285,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testVerifiedUserContactFormSubmissionRequiresUnregisteredOrUnverifiedUserConfirmation()
+    public function test_verified_user_contact_form_submission_requires_unregistered_or_unverified_user_confirmation()
     {
         Mail::fake();
         Notification::fake();
@@ -322,7 +322,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testGuestContactFormSubmissionNoConfirmationRequired()
+    public function test_guest_contact_form_submission_no_confirmation_required()
     {
         Mail::fake();
         Notification::fake();
@@ -358,7 +358,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testAuthenticatedUserContactFormSubmissionNoConfirmationRequired()
+    public function test_authenticated_user_contact_form_submission_no_confirmation_required()
     {
         Mail::fake();
         Notification::fake();
@@ -394,7 +394,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testVerifyEmailFollowingSubmission()
+    public function test_verify_email_following_submission()
     {
         Mail::fake();
         Notification::fake();
@@ -436,7 +436,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactEmailConfirmationEventFired()
+    public function test_contact_email_confirmation_event_fired()
     {
         Event::fake();
 
@@ -460,7 +460,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactEmailConfirmationExpired()
+    public function test_contact_email_confirmation_expired()
     {
         Event::fake();
 
@@ -485,7 +485,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactEmailConfirmationAlreadyConfirmed()
+    public function test_contact_email_confirmation_already_confirmed()
     {
         Event::fake();
 
@@ -510,7 +510,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactProcessRequiresConfirmationModelCreated()
+    public function test_contact_process_requires_confirmation_model_created()
     {
         PageSettings::fake('contact', [
             'require_confirmation' => true,
@@ -538,7 +538,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactProcessModelCreated()
+    public function test_contact_process_model_created()
     {
         PageSettings::fake('contact', [
             'require_confirmation' => false,
@@ -566,7 +566,7 @@ class ContactTest extends TestCase
      *
      * @return void
      */
-    public function testContactEmailConfirmationModelConfirmed()
+    public function test_contact_email_confirmation_model_confirmed()
     {
         $contactMessage = ContactMessage::make([
             'name' => $this->faker->name,

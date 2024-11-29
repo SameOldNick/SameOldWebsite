@@ -18,7 +18,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewDraftArticle()
+    public function test_view_draft_article()
     {
         $this->withoutVite();
 
@@ -34,7 +34,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewPublishedArticle()
+    public function test_view_published_article()
     {
         $this->withoutVite();
 
@@ -50,7 +50,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewScheduledArticle()
+    public function test_view_scheduled_article()
     {
         $this->withoutVite();
 
@@ -66,7 +66,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewScheduledArticleInFuture()
+    public function test_view_scheduled_article_in_future()
     {
         $this->withoutVite();
 
@@ -86,7 +86,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testViewDeletedArticle()
+    public function test_view_deleted_article()
     {
         $this->withoutVite();
 
@@ -102,7 +102,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testPreviewDraftArticle()
+    public function test_preview_draft_article()
     {
         $this->withoutVite();
 
@@ -118,7 +118,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testPreviewPublishedArticle()
+    public function test_preview_published_article()
     {
         $this->withoutVite();
 
@@ -134,7 +134,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testPreviewScheduledArticle()
+    public function test_preview_scheduled_article()
     {
         $this->withoutVite();
 
@@ -150,7 +150,7 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testPreviewDeletedArticle()
+    public function test_preview_deleted_article()
     {
         $this->withoutVite();
 

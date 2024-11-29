@@ -21,8 +21,6 @@ class DatabaseDestinationConfigProvider extends DestinationConfig
 
     /**
      * Gets disks to use for backups
-     *
-     * @return array
      */
     public function getDisks(): array
     {

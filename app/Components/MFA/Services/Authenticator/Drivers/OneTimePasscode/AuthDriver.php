@@ -6,8 +6,6 @@ use App\Components\MFA\Contracts\AuthServiceInterface;
 use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Contracts\OneTimePasscode\Factory;
 use App\Components\MFA\Contracts\SecretStore;
-use App\Components\MFA\Contracts\Stores\AuthSecretStore;
-use App\Components\MFA\Contracts\Stores\BackupSecretStore;
 use App\Components\MFA\Exceptions\MultiAuthNotConfiguredException;
 use App\Components\MFA\Http\Controllers\OTP\AuthController;
 use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Factories\TimebasedFactory;

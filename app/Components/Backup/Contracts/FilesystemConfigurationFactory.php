@@ -6,9 +6,6 @@ interface FilesystemConfigurationFactory
 {
     /**
      * Gets filesystem configuration
-     *
-     * @param string $name
-     * @return FilesystemConfiguration|null
      */
     public function getFilesystemConfiguration(string $name): ?FilesystemConfiguration;
 }

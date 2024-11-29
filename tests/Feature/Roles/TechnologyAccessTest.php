@@ -19,7 +19,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test accessing technologies when authorized.
      */
-    public function testCanGetTechnologies(): void
+    public function test_can_get_technologies(): void
     {
         $response = $this->withRoles(['edit_profile'])->getJson('/api/technologies');
 
@@ -29,7 +29,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test accessing technologies when unauthorized.
      */
-    public function testCannotGetTechnologies(): void
+    public function test_cannot_get_technologies(): void
     {
         $response = $this->withNoRoles()->getJson('/api/technologies');
 
@@ -39,7 +39,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test accessing a specific technology when authorized.
      */
-    public function testCanGetTechnology(): void
+    public function test_can_get_technology(): void
     {
         $technology = Technology::factory()->create();
 
@@ -51,7 +51,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test accessing a specific technology when unauthorized.
      */
-    public function testCannotGetTechnology(): void
+    public function test_cannot_get_technology(): void
     {
         $technology = Technology::factory()->create();
 
@@ -63,7 +63,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test creating a new technology when authorized.
      */
-    public function testCanCreateTechnology(): void
+    public function test_can_create_technology(): void
     {
         $response = $this->withRoles(['edit_profile'])->postJson('/api/technologies', [
             'icon' => $this->faker->iconName(),
@@ -76,7 +76,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test creating a new technology when unauthorized.
      */
-    public function testCannotCreateTechnology(): void
+    public function test_cannot_create_technology(): void
     {
         $response = $this->withNoRoles()->postJson('/api/technologies', [
             'icon' => $this->faker->iconName(),
@@ -89,7 +89,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test updating an existing technology when authorized.
      */
-    public function testCanUpdateTechnology(): void
+    public function test_can_update_technology(): void
     {
         $technology = Technology::factory()->create();
 
@@ -104,7 +104,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test updating an existing technology when unauthorized.
      */
-    public function testCannotUpdateTechnology(): void
+    public function test_cannot_update_technology(): void
     {
         $technology = Technology::factory()->create();
 
@@ -119,7 +119,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test deleting a technology when authorized.
      */
-    public function testCanDeleteTechnology(): void
+    public function test_can_delete_technology(): void
     {
         $technology = Technology::factory()->create();
 
@@ -131,7 +131,7 @@ class TechnologyAccessTest extends TestCase
     /**
      * Test deleting a technology when unauthorized.
      */
-    public function testCannotDeleteTechnology(): void
+    public function test_cannot_delete_technology(): void
     {
         $technology = Technology::factory()->create();
 

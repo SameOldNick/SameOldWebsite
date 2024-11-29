@@ -2,10 +2,10 @@
 
 namespace App\Components\Backup\Filesystem;
 
-use Illuminate\Filesystem\FilesystemManager;
-use Illuminate\Support\Str;
 use App\Components\Backup\Contracts\FilesystemConfiguration as FilesystemConfigurationContract;
 use App\Components\Backup\Contracts\FilesystemConfigurationFactory;
+use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Support\Str;
 
 class DynamicFilesystemManager extends FilesystemManager
 {
@@ -19,7 +19,7 @@ class DynamicFilesystemManager extends FilesystemManager
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function resolve($name, $config = null)
     {
@@ -38,8 +38,7 @@ class DynamicFilesystemManager extends FilesystemManager
     /**
      * Gets filesystem configuration for dynamic disk.
      *
-     * @param string $name Disk name (prefixed with dynamic-)
-     * @return FilesystemConfigurationContract|null
+     * @param  string  $name  Disk name (prefixed with dynamic-)
      */
     protected function getDynamicFilesystemConfiguration(string $name): ?FilesystemConfigurationContract
     {
@@ -49,7 +48,6 @@ class DynamicFilesystemManager extends FilesystemManager
     /**
      * Creates driver from config
      *
-     * @param array $config
      * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
     protected function createCustomDriver(array $config)
@@ -62,9 +60,6 @@ class DynamicFilesystemManager extends FilesystemManager
 
     /**
      * Gets filesystem config from FilesystemConfigurationContract
-     *
-     * @param FilesystemConfigurationContract $config
-     * @return array
      */
     protected function getDriverConfig(FilesystemConfigurationContract $config): array
     {

@@ -20,7 +20,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test accessing projects when authorized.
      */
-    public function testCanGetProjects(): void
+    public function test_can_get_projects(): void
     {
         $response = $this->withRoles(['edit_profile'])->getJson('/api/projects');
 
@@ -30,7 +30,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test accessing projects when unauthorized.
      */
-    public function testCannotGetProjects(): void
+    public function test_cannot_get_projects(): void
     {
         $response = $this->withNoRoles()->getJson('/api/projects');
 
@@ -40,7 +40,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test accessing a specific project when authorized.
      */
-    public function testCanGetProject(): void
+    public function test_can_get_project(): void
     {
         $project = Project::factory()->create();
 
@@ -52,7 +52,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test accessing a specific project when unauthorized.
      */
-    public function testCannotGetProject(): void
+    public function test_cannot_get_project(): void
     {
         $project = Project::factory()->create();
 
@@ -64,7 +64,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test creating a new project when authorized.
      */
-    public function testCanCreateProject(): void
+    public function test_can_create_project(): void
     {
         $response = $this->withRoles(['edit_profile'])->postJson('/api/projects', [
             'title' => Str::headline($this->faker->realText(25)),
@@ -79,7 +79,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test creating a new project when unauthorized.
      */
-    public function testCannotCreateProject(): void
+    public function test_cannot_create_project(): void
     {
         $response = $this->withNoRoles()->postJson('/api/projects', [
             'title' => Str::headline($this->faker->realText(25)),
@@ -93,7 +93,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test updating an existing project when authorized.
      */
-    public function testCanUpdateProject(): void
+    public function test_can_update_project(): void
     {
         $project = Project::factory()->create();
 
@@ -110,7 +110,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test updating an existing project when unauthorized.
      */
-    public function testCannotUpdateProject(): void
+    public function test_cannot_update_project(): void
     {
         $project = Project::factory()->create();
 
@@ -127,7 +127,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test deleting a project when authorized.
      */
-    public function testCanDeleteProject(): void
+    public function test_can_delete_project(): void
     {
         $project = Project::factory()->create();
 
@@ -139,7 +139,7 @@ class ProjectsAccessTest extends TestCase
     /**
      * Test deleting a project when unauthorized.
      */
-    public function testCannotDeleteProject(): void
+    public function test_cannot_delete_project(): void
     {
         $project = Project::factory()->create();
 

@@ -67,9 +67,6 @@ class AuthenticatorService extends Manager
 
     /**
      * Creates new AuthDriver with factory
-     *
-     * @param Factory $factory
-     * @return AuthDriver
      */
     protected function newAuthDriver(Factory $factory): AuthDriver
     {

@@ -20,7 +20,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is authorized to get articles.
      */
-    public function testCanGetArticles(): void
+    public function test_can_get_articles(): void
     {
         $response = $this->withRoles(['write_posts'])->getJson('/api/blog/articles');
 
@@ -30,7 +30,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get articles.
      */
-    public function testCannotGetArticles(): void
+    public function test_cannot_get_articles(): void
     {
         $response = $this->withNoRoles()->getJson('/api/blog/articles');
 
@@ -40,7 +40,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is authorized to get article.
      */
-    public function testCanGetArticle(): void
+    public function test_can_get_article(): void
     {
         $article = Article::factory()->create();
 
@@ -52,7 +52,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to get article.
      */
-    public function testCannotGetArticle(): void
+    public function test_cannot_get_article(): void
     {
         $article = Article::factory()->create();
 
@@ -64,7 +64,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is authorized to create articles.
      */
-    public function testCanCreateArticle(): void
+    public function test_can_create_article(): void
     {
         $title = Str::headline($this->faker->unique()->realText(25));
 
@@ -82,7 +82,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to create articles.
      */
-    public function testCannotCreateArticle(): void
+    public function test_cannot_create_article(): void
     {
         $response = $this->withNoRoles()->postJson('/api/blog/articles', [
             'icon' => $this->faker->iconName(),
@@ -95,7 +95,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is authorized to update articles.
      */
-    public function testCanUpdateArticle(): void
+    public function test_can_update_article(): void
     {
         $article = Article::factory()->create();
 
@@ -110,7 +110,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to update articles.
      */
-    public function testCannotUpdateArticle(): void
+    public function test_cannot_update_article(): void
     {
         $article = Article::factory()->create();
 
@@ -124,7 +124,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is authorized to delete articles.
      */
-    public function testCanDeleteArticle(): void
+    public function test_can_delete_article(): void
     {
         $article = Article::factory()->create();
 
@@ -136,7 +136,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to delete articles.
      */
-    public function testCannotDeleteArticle(): void
+    public function test_cannot_delete_article(): void
     {
         $article = Article::factory()->create();
 
@@ -148,7 +148,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is authorized to restore articles.
      */
-    public function testCanRestoreArticle(): void
+    public function test_can_restore_article(): void
     {
         $article = Article::factory()->deleted()->create();
 
@@ -160,7 +160,7 @@ class ArticlesAccessTest extends TestCase
     /**
      * Tests user is unauthorized to restore articles.
      */
-    public function testCannotRestoreArticle(): void
+    public function test_cannot_restore_article(): void
     {
         $article = Article::factory()->deleted()->create();
 

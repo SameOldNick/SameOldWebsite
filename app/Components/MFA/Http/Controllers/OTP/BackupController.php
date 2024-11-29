@@ -81,8 +81,8 @@ class BackupController extends Controller
             $builder
                 ->title(__('Your MFA Has Been Disabled'))
                 ->content(
-                    '<p>' . __('As a security measure, using a backup code has automatically disabled Multi-Factor Authentication (MFA) on your account.') . '</p>' .
-                        '<p>' . __('To protect your account, we recommend re-enabling MFA immediately. You can do this by visiting the security settings in your account and setting up MFA again.') . '</p>'
+                    '<p>'.__('As a security measure, using a backup code has automatically disabled Multi-Factor Authentication (MFA) on your account.').'</p>'.
+                        '<p>'.__('To protect your account, we recommend re-enabling MFA immediately. You can do this by visiting the security settings in your account and setting up MFA again.').'</p>'
                 );
         });
 
