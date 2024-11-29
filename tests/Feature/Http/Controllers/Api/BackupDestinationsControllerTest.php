@@ -449,7 +449,7 @@ class BackupDestinationsControllerTest extends TestCase
         $diskConfig = FilesystemConfiguration::find($response->json('configuration.id'))->getFilesystemConfig();
 
         $this->assertNotNull($diskConfig['password']);
-        $this->assertArrayNotHasKey('private_key', $diskConfig);
+        $this->assertArrayNotHasKey('privateKey', $diskConfig);
     }
 
     /**
@@ -477,7 +477,7 @@ class BackupDestinationsControllerTest extends TestCase
         $diskConfig = FilesystemConfiguration::find($response->json('configuration.id'))->getFilesystemConfig();
 
         $this->assertNull($diskConfig['password']);
-        $this->assertEquals($data['private_key'], $diskConfig['private_key']);
+        $this->assertEquals($data['private_key'], $diskConfig['privateKey']);
         $this->assertEquals($data['passphrase'], $diskConfig['passphrase']);
     }
 
@@ -521,7 +521,7 @@ class BackupDestinationsControllerTest extends TestCase
 
         $diskConfig = FilesystemConfiguration::find($response->json('configuration.id'))->getFilesystemConfig();
 
-        $this->assertNull($diskConfig['private_key']);
+        $this->assertNull($diskConfig['privateKey']);
         $this->assertNull($diskConfig['passphrase']);
         $this->assertEquals($data['password'], $diskConfig['password']);
     }
@@ -655,7 +655,7 @@ class BackupDestinationsControllerTest extends TestCase
         FilesystemConfiguration::factory(2)->sftp('password')->create();
         FilesystemConfiguration::factory(2)->sftp('key')->create();
 
-        $ids = FilesystemConfiguration::all()->map(fn ($destination) => $destination->getKey());
+        $ids = FilesystemConfiguration::all()->map(fn($destination) => $destination->getKey());
 
         $response = $this->actingAs($this->admin)->deleteJson('/api/backup/destinations', ['destinations' => $ids]);
 
