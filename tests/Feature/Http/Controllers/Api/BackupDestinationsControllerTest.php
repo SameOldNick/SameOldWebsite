@@ -655,7 +655,7 @@ class BackupDestinationsControllerTest extends TestCase
         FilesystemConfiguration::factory(2)->sftp('password')->create();
         FilesystemConfiguration::factory(2)->sftp('key')->create();
 
-        $ids = FilesystemConfiguration::all()->map(fn($destination) => $destination->getKey());
+        $ids = FilesystemConfiguration::all()->map(fn ($destination) => $destination->getKey());
 
         $response = $this->actingAs($this->admin)->deleteJson('/api/backup/destinations', ['destinations' => $ids]);
 
