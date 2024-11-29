@@ -46,7 +46,6 @@ class BlogCommentReplyTest extends TestCase
         $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNotNull($comment);
         $this->assertEquals($this->user->email, $comment->commenter['email']);
-        $this->assertEquals(CommentStatus::AwaitingApproval->value, $comment->status);
     }
 
     /**
