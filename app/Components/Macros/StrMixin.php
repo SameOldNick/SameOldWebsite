@@ -151,4 +151,18 @@ class StrMixin
             return hash_equals($known, $user);
         };
     }
+
+    public function splitIntoChunks()
+    {
+        return function ($str, $maxLength) {
+            $chunks = [];
+            $length = Str::length($str);
+
+            for ($start = 0; $start < $length; $start += $maxLength) {
+                $chunks[] = Str::substr($str, $start, $maxLength);
+            }
+
+            return $chunks;
+        };
+    }
 }
