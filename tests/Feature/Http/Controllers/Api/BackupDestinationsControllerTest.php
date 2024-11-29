@@ -308,7 +308,7 @@ class BackupDestinationsControllerTest extends TestCase
         $data = [
             'name' => $this->faker()->unique()->slug,
             'host' => $this->faker()->boolean ? $this->faker()->unique()->domainName : $this->faker()->unique()->ipv4,
-            'port' => $this->faker()->unique()->numberBetween(10000, 99999),
+            'port' => $this->faker()->unique()->numberBetween(1, 65534),
             'username' => $this->faker()->unique()->userName,
         ];
 
