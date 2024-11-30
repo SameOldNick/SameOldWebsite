@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
 use League\Flysystem\Ftp\FtpAdapter;
 use League\Flysystem\PhpseclibV3\SftpAdapter;
+use PHPUnit\Framework\Attributes\Test;
 use Spatie\Backup\Config\Config;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\InteractsWithJWT;
 use Tests\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class BackupDestinationsControllerTest extends TestCase
 {
@@ -678,7 +678,7 @@ class BackupDestinationsControllerTest extends TestCase
         FilesystemConfiguration::factory(2)->sftp('password')->create();
         FilesystemConfiguration::factory(2)->sftp('key')->create();
 
-        $ids = FilesystemConfiguration::all()->map(fn($destination) => $destination->getKey());
+        $ids = FilesystemConfiguration::all()->map(fn ($destination) => $destination->getKey());
 
         $response = $this->actingAs($this->admin)->deleteJson('/api/backup/destinations', ['destinations' => $ids]);
 
