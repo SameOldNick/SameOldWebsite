@@ -110,6 +110,7 @@ Route::namespace(Api::class)->group(function () {
             Route::post('/', [Api\Backup\BackupDestinationsController::class, 'store']);
             Route::get('/{destination}', [Api\Backup\BackupDestinationsController::class, 'show']);
             Route::put('/{destination}', [Api\Backup\BackupDestinationsController::class, 'update']);
+            Route::post('/{destination}/test', [Api\Backup\BackupDestinationsController::class, 'test']);
             Route::put('/', [Api\Backup\BackupDestinationsController::class, 'bulkUpdate']);
             Route::delete('/{destination}', [Api\Backup\BackupDestinationsController::class, 'destroy']);
             Route::delete('/', [Api\Backup\BackupDestinationsController::class, 'bulkDestroy']);
