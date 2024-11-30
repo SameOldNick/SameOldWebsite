@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input } from 'reactstrap';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input } from 'reactstrap';
 
 interface IProps {
     destination: IBackupDestination;
@@ -10,6 +10,8 @@ interface IProps {
 }
 
 const BackupDestination: React.FC<IProps> = ({ destination, selected, onSelect, onEditClicked, onDeleteClicked }) => {
+    const [dropdownOpen, setDropdownOpen] = React.useState(false);
+
     return (
         <>
             <tr>
@@ -25,8 +27,16 @@ const BackupDestination: React.FC<IProps> = ({ destination, selected, onSelect, 
                 <td>{destination.host}</td>
                 <td>{destination.enable ? 'Enabled' : 'Disabled'}</td>
                 <td>
-                    <Button color='warning' size='sm' className="me-2" onClick={onEditClicked}>Edit</Button>
-                    <Button color='danger' size='sm' className="btn-sm" onClick={onDeleteClicked}>Delete</Button>
+                    <Dropdown
+                        isOpen={dropdownOpen}
+                        toggle={() => setDropdownOpen((prev) => !prev)}
+                    >
+                        <DropdownToggle caret color='primary'>Actions</DropdownToggle>
+                        <DropdownMenu>
+                            <DropdownItem onClick={onEditClicked}>Edit</DropdownItem>
+                            <DropdownItem onClick={onDeleteClicked}>Delete</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
                 </td>
             </tr>
         </>
