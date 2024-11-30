@@ -18,6 +18,13 @@ class FilesystemConfigurationTestJob extends NotifiableJob implements ShouldQueu
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 1;
+
+    /**
      * Create a new job instance.
      */
     public function __construct(
@@ -34,12 +41,9 @@ class FilesystemConfigurationTestJob extends NotifiableJob implements ShouldQueu
      */
     public function handler()
     {
-        try {
-            // Simply try to get files.
-            Storage::disk($this->filesystemConfiguration->driver_name)->files();
-        } catch (Exception $ex) {
-            // Manually fail the job so it's not attempted again.
-            $this->fail($ex);
-        }
+        // Simply try to get files.
+        Storage::disk($this->filesystemConfiguration->driver_name)->files();
+
+        // If an exception is thrown, Laravel will handle the rest...
     }
 }
