@@ -12,7 +12,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Spatie\Backup\Config\Config;
 
@@ -33,7 +32,7 @@ class BackupDestinationsController extends Controller
         // Pull disks indirectly through Spatie Backup config
         $enabled = $backupConfig->backup->destination->disks;
 
-        return response()->json(FilesystemConfiguration::all()->map(fn(FilesystemConfiguration $config) => [
+        return response()->json(FilesystemConfiguration::all()->map(fn (FilesystemConfiguration $config) => [
             'enable' => in_array($config->driver_name, $enabled),
             ...$config->toArray(),
         ]));
@@ -62,14 +61,14 @@ class BackupDestinationsController extends Controller
             'auth_type' => 'nullable|required_if:type,sftp|string|in:password,key',
             'password' => [
                 'nullable',
-                Rule::requiredIf(fn() => $request->type === 'ftp' || ($request->type === 'sftp' && $request->auth_type === 'password')),
+                Rule::requiredIf(fn () => $request->type === 'ftp' || ($request->type === 'sftp' && $request->auth_type === 'password')),
                 'string',
                 'max:255',
             ],
             'root' => 'nullable|string|max:255',
             'private_key' => [
                 'nullable',
-                Rule::requiredIf(fn() => $request->type === 'sftp' && $request->auth_type === 'key'),
+                Rule::requiredIf(fn () => $request->type === 'sftp' && $request->auth_type === 'key'),
                 'string',
             ],
             'passphrase' => 'nullable|string|max:255',
@@ -218,7 +217,7 @@ class BackupDestinationsController extends Controller
                 Rule::exists(FilesystemConfiguration::class),
             ],
             'destinations.*.enable' => 'nullable|boolean',
-            'destinations.*.name' => Rule::forEach(fn(?string $value, string $attribute) => [
+            'destinations.*.name' => Rule::forEach(fn (?string $value, string $attribute) => [
                 'nullable',
                 'string',
                 'max:255',
@@ -340,7 +339,7 @@ class BackupDestinationsController extends Controller
     protected function disableDisk(string $diskName)
     {
         BackupConfig::updateOrCreateArrayValue('backup_disks', function (array $disks) use ($diskName) {
-            return array_filter($disks, fn($value) => $value !== $diskName);
+            return array_filter($disks, fn ($value) => $value !== $diskName);
         });
     }
 
