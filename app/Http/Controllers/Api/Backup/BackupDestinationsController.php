@@ -148,8 +148,6 @@ class BackupDestinationsController extends Controller
     /**
      * Test the destination works.
      *
-     * @param Request $request
-     * @param FilesystemConfiguration $destination
      * @return mixed
      */
     public function test(Request $request, FilesystemConfiguration $destination)
