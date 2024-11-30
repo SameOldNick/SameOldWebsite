@@ -5,11 +5,12 @@ interface IProps {
     destination: IBackupDestination;
     selected: boolean;
     onSelect: () => void;
+    onTestClicked: () => void;
     onEditClicked: () => void;
     onDeleteClicked: () => void;
 }
 
-const BackupDestination: React.FC<IProps> = ({ destination, selected, onSelect, onEditClicked, onDeleteClicked }) => {
+const BackupDestination: React.FC<IProps> = ({ destination, selected, onSelect, onTestClicked, onEditClicked, onDeleteClicked }) => {
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
     return (
@@ -33,6 +34,7 @@ const BackupDestination: React.FC<IProps> = ({ destination, selected, onSelect, 
                     >
                         <DropdownToggle caret color='primary'>Actions</DropdownToggle>
                         <DropdownMenu>
+                            <DropdownItem onClick={onTestClicked}>Test Configuration</DropdownItem>
                             <DropdownItem onClick={onEditClicked}>Edit</DropdownItem>
                             <DropdownItem onClick={onDeleteClicked}>Delete</DropdownItem>
                         </DropdownMenu>
