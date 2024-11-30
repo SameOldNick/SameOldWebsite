@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\Backup;
 
+use App\Components\Websockets\Notifiers\JobStatusNotifier;
 use App\Http\Controllers\Controller;
+use App\Jobs\FilesystemConfigurationTestJob;
 use App\Models\BackupConfig;
 use App\Models\FilesystemConfiguration;
 use App\Models\FilesystemConfigurationFTP;
