@@ -48,7 +48,7 @@ class StrMixin
             $sentences = Arr::map($sentences, function ($value) {
                 $sentence = Str::of($value)->trim();
 
-                return (string) $sentence->whenTest('/[^.]$/', fn($value) => $value . '.');
+                return (string) $sentence->whenTest('/[^.]$/', fn ($value) => $value.'.');
             });
 
             return ! is_null($count) ? array_slice($sentences, 0, $count) : $sentences;
@@ -58,7 +58,7 @@ class StrMixin
     public function uniqueUrl()
     {
         return function ($url, $asHtml = true) {
-            $url .= (Str::contains($url, '?') ? '&' : '?') . (string) Str::orderedUuid();
+            $url .= (Str::contains($url, '?') ? '&' : '?').(string) Str::orderedUuid();
 
             return $asHtml ? new HtmlString($url) : $url;
         };
@@ -111,7 +111,7 @@ class StrMixin
             ];
 
             // Replace English characters with their l33t equivalents
-            return strtr($text, Arr::map($mapping, fn($chars) => Arr::random($chars)));
+            return strtr($text, Arr::map($mapping, fn ($chars) => Arr::random($chars)));
         };
     }
 
