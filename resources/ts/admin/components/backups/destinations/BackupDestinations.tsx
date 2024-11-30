@@ -11,6 +11,7 @@ import BackupDestinationsTable from '@admin/components/backups/destinations/tabl
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import createErrorHandler from '@admin/utils/errors/factory';
+import BackupDestinationTestAwaits from './tests/BackupDestinationTestAwaits';
 
 interface IProps extends IHasRouter {
 }
@@ -20,6 +21,7 @@ const BackupDestinations: React.FC<IProps> = ({ router }) => {
 
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     const [selected, setSelected] = React.useState<IBackupDestination[]>([]);
+    const [awaitingTests, setAwaitingTests] = React.useState<string[]>([]);
 
     const handeReloadClicked = React.useCallback(async () => {
         waitToLoadRef.current?.load();
@@ -47,6 +49,26 @@ const BackupDestinations: React.FC<IProps> = ({ router }) => {
 
     const handleAddClicked = React.useCallback(async () => {
         router.navigate('/admin/backups/destinations/create');
+    }, []);
+
+    const handleTestClicked = React.useCallback(async (destination: IBackupDestination) => {
+        try {
+            const response = await createAuthRequest().post<Record<'uuid', string>>(`/backup/destinations/${destination.id}/test`, {});
+
+            setAwaitingTests((prev) => prev.concat(response.data.uuid));
+        } catch (err) {
+            await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'An error occurred running the test. Please try again.',
+            });
+        }
+
+
+    }, []);
+
+    const handleTestFinished = React.useCallback((uuid: string) => {
+        setAwaitingTests((prev) => prev.filter((value) => value !== uuid));
     }, []);
 
     const handleEditClicked = React.useCallback(async (destination: IBackupDestination) => {
@@ -197,6 +219,7 @@ const BackupDestinations: React.FC<IProps> = ({ router }) => {
 
     return (
         <>
+            <BackupDestinationTestAwaits uuids={awaitingTests} onFinished={handleTestFinished} />
             <Card className="mb-4">
                 <CardBody>
                     <Row>
@@ -236,6 +259,7 @@ const BackupDestinations: React.FC<IProps> = ({ router }) => {
                                                 selected={selected}
                                                 onSelectAll={() => handleSelectAll(destinations)}
                                                 onSelect={handleSelect}
+                                                onTestClicked={handleTestClicked}
                                                 onEditClicked={handleEditClicked}
                                                 onDeleteClicked={handleDeleteClicked}
                                             />

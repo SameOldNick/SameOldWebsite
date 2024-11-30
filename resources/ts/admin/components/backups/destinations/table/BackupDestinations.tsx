@@ -8,6 +8,7 @@ interface IProps {
     selected: IBackupDestination[];
     onSelect: (destination: IBackupDestination) => void;
     onSelectAll: () => void;
+    onTestClicked: (destination: IBackupDestination) => void;
     onEditClicked: (destination: IBackupDestination) => void;
     onDeleteClicked: (destination: IBackupDestination) => void;
 }
@@ -17,6 +18,7 @@ const BackupDestinations: React.FC<IProps> = ({
     selected,
     onSelectAll,
     onSelect,
+    onTestClicked,
     onEditClicked,
     onDeleteClicked
 }) => {
@@ -55,6 +57,7 @@ const BackupDestinations: React.FC<IProps> = ({
                                         selected={selected.map((item) => item.id).includes(destination.id)}
                                         onSelect={() => onSelect(destination)}
                                         destination={destination}
+                                        onTestClicked={() => onTestClicked(destination)}
                                         onEditClicked={() => onEditClicked(destination)}
                                         onDeleteClicked={() => onDeleteClicked(destination)}
                                     />
