@@ -144,6 +144,22 @@ class BackupDestinationsController extends Controller
     }
 
     /**
+     * Test the destination works.
+     *
+     * @param Request $request
+     * @param FilesystemConfiguration $destination
+     * @return mixed
+     */
+    public function test(Request $request, FilesystemConfiguration $destination)
+    {
+        $notifier = JobStatusNotifier::create($request->user())->openChannel();
+
+        $this->dispatch(new FilesystemConfigurationTestJob($notifier, $destination));
+
+        return ['uuid' => (string) $notifier->getUuid()];
+    }
+
+    /**
      * Update an existing configuration
      *
      * @return mixed
