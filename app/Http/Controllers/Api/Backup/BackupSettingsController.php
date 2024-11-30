@@ -49,7 +49,7 @@ class BackupSettingsController extends Controller
         $channels = $request->collect('notification_channel');
 
         $validated = $request->validate([
-            'notification_channel' => 'required|array',
+            'notification_channel' => 'nullable|array',
             'notification_channel.*' => Rule::in(['mail', 'discord', 'slack']),
 
             'notification_to_email' => [Rule::requiredIf($channels->contains('mail')), 'nullable', 'array'],
@@ -78,7 +78,7 @@ class BackupSettingsController extends Controller
         }
 
         BackupConfig::updateOrCreateArrayValue('notification_channel', function () use ($validated) {
-            return $validated['notification_channel'];
+            return $validated['notification_channel'] ?? [];
         });
 
         foreach (['backup_cron', 'cleanup_cron'] as $key) {
