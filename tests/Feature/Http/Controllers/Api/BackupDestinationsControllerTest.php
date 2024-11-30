@@ -15,6 +15,7 @@ use Spatie\Backup\Config\Config;
 use Tests\Feature\Traits\CreatesUser;
 use Tests\Feature\Traits\InteractsWithJWT;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class BackupDestinationsControllerTest extends TestCase
 {
@@ -28,7 +29,8 @@ class BackupDestinationsControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_get_all_destinations()
+    #[Test]
+    public function get_all_destinations()
     {
         FilesystemConfiguration::factory(5)->ftp()->create();
         FilesystemConfiguration::factory(5)->sftp('password')->create();
@@ -59,7 +61,8 @@ class BackupDestinationsControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_retrieve_destination()
+    #[Test]
+    public function retrieve_destination()
     {
         FilesystemConfiguration::factory()->ftp()->create();
         FilesystemConfiguration::factory()->sftp('password')->create();
@@ -87,7 +90,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests creating FTP destination that is enabled for backup.
      */
-    public function test_create_destination_ftp_enabled(): void
+    #[Test]
+    public function create_destination_ftp_enabled(): void
     {
         $data = [
             'enable' => true,
@@ -120,7 +124,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests creating destination FTP that isn't enabled for backup.
      */
-    public function test_create_destination_ftp_disabled(): void
+    #[Test]
+    public function create_destination_ftp_disabled(): void
     {
         $data = [
             'enable' => false,
@@ -155,7 +160,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests creating SFTP destination with password authentication that is enabled for backup.
      */
-    public function test_create_destination_sftp_password_enabled(): void
+    #[Test]
+    public function create_destination_sftp_password_enabled(): void
     {
         $data = [
             'enable' => true,
@@ -190,7 +196,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests creating SFTP destination with password authentication that isn't enabled for backup.
      */
-    public function test_create_destination_sftp_password_disabled(): void
+    #[Test]
+    public function create_destination_sftp_password_disabled(): void
     {
         $data = [
             'enable' => false,
@@ -225,7 +232,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests creating SFTP destination with key authentication that is enabled for backup.
      */
-    public function test_create_destination_sftp_key_enabled(): void
+    #[Test]
+    public function create_destination_sftp_key_enabled(): void
     {
         $data = [
             'enable' => true,
@@ -261,7 +269,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests creating SFTP destination with key authentication that isn't enabled for backup.
      */
-    public function test_create_destination_sftp_key_disabled(): void
+    #[Test]
+    public function create_destination_sftp_key_disabled(): void
     {
         $data = [
             'enable' => false,
@@ -297,7 +306,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests enabling FTP destination as backup disk
      */
-    public function test_update_destination_basic(): void
+    #[Test]
+    public function update_destination_basic(): void
     {
         FilesystemConfiguration::factory()->ftp()->create();
         FilesystemConfiguration::factory()->sftp('password')->create();
@@ -335,7 +345,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests destinations basic info is updated.
      */
-    public function test_update_destinations_basic(): void
+    #[Test]
+    public function update_destinations_basic(): void
     {
         FilesystemConfiguration::factory(2)->ftp()->create();
         FilesystemConfiguration::factory(2)->sftp('password')->create();
@@ -373,7 +384,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests enabling FTP destination as backup disk
      */
-    public function test_update_destination_ftp_enable(): void
+    #[Test]
+    public function update_destination_ftp_enable(): void
     {
         $existing = FilesystemConfiguration::factory()->ftp()->create();
 
@@ -400,7 +412,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests enabling SFTP destination as backup disk
      */
-    public function test_update_destination_sftp_enable(): void
+    #[Test]
+    public function update_destination_sftp_enable(): void
     {
         $existing = FilesystemConfiguration::factory()->sftp('key')->create();
 
@@ -427,7 +440,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests changing FTP authentication from password to key
      */
-    public function test_update_destination_ftp_password_to_key(): void
+    #[Test]
+    public function update_destination_ftp_password_to_key(): void
     {
         $existing = FilesystemConfiguration::factory()->ftp()->create();
 
@@ -455,7 +469,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests changing SFTP authentication from password to key
      */
-    public function test_update_destination_sftp_password_to_key(): void
+    #[Test]
+    public function update_destination_sftp_password_to_key(): void
     {
         $existing = FilesystemConfiguration::factory()->sftp('password')->create();
 
@@ -484,7 +499,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests changing SFTP authentication from password to key but password is missing
      */
-    public function test_update_destination_sftp_password_to_key_missing(): void
+    #[Test]
+    public function update_destination_sftp_password_to_key_missing(): void
     {
         $existing = FilesystemConfiguration::factory()->sftp('key')->create();
 
@@ -501,7 +517,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests changing SFTP authentication from key to password
      */
-    public function test_update_destination_sftp_key_to_password(): void
+    #[Test]
+    public function update_destination_sftp_key_to_password(): void
     {
         $existing = FilesystemConfiguration::factory()->sftp('key')->create();
 
@@ -529,7 +546,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests changing SFTP authentication from key to password but password is missing
      */
-    public function test_update_destination_sftp_key_to_password_missing(): void
+    #[Test]
+    public function update_destination_sftp_key_to_password_missing(): void
     {
         $existing = FilesystemConfiguration::factory()->sftp('key')->create();
 
@@ -546,7 +564,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests changing root for SFTP destination
      */
-    public function test_update_destination_sftp_root(): void
+    #[Test]
+    public function update_destination_sftp_root(): void
     {
         $existing = FilesystemConfiguration::factory()->sftp('password')->create();
 
@@ -573,7 +592,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests changing root for FTP destination
      */
-    public function test_update_destination_ftp_change_root(): void
+    #[Test]
+    public function update_destination_ftp_change_root(): void
     {
         $existing = FilesystemConfiguration::factory()->ftp()->create();
 
@@ -598,7 +618,8 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests removing root for FTP destination
      */
-    public function test_update_destination_ftp_remove_root(): void
+    #[Test]
+    public function update_destination_ftp_remove_root(): void
     {
         $existing = FilesystemConfiguration::factory()->ftp()->create();
 
@@ -625,7 +646,8 @@ class BackupDestinationsControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_delete_destination()
+    #[Test]
+    public function delete_destination()
     {
         FilesystemConfiguration::factory()->ftp()->create();
         FilesystemConfiguration::factory()->sftp('password')->create();
@@ -649,13 +671,14 @@ class BackupDestinationsControllerTest extends TestCase
     /**
      * Tests destinations are deleted.
      */
-    public function test_delete_destinations(): void
+    #[Test]
+    public function delete_destinations(): void
     {
         FilesystemConfiguration::factory(2)->ftp()->create();
         FilesystemConfiguration::factory(2)->sftp('password')->create();
         FilesystemConfiguration::factory(2)->sftp('key')->create();
 
-        $ids = FilesystemConfiguration::all()->map(fn ($destination) => $destination->getKey());
+        $ids = FilesystemConfiguration::all()->map(fn($destination) => $destination->getKey());
 
         $response = $this->actingAs($this->admin)->deleteJson('/api/backup/destinations', ['destinations' => $ids]);
 
