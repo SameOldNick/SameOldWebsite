@@ -5,7 +5,7 @@ import { FaCloudUploadAlt, FaRedo } from 'react-icons/fa';
 
 import Heading from '@admin/layouts/admin/Heading';
 import BackupList from '@admin/components/backups/BackupList';
-import PerformBackupModal, { TBackupTypes } from '@admin/components/backups/PerformBackupModal';
+import PerformBackupModal, { TBackupTypes } from '@admin/components/backups/backup-modal/PerformBackupModal';
 
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';

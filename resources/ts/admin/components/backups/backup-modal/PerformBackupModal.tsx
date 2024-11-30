@@ -1,6 +1,5 @@
 import React from 'react';
 import { Alert, Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { ClipLoader } from 'react-spinners';
 import { XTerm } from 'xterm-for-react';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -13,8 +12,9 @@ import Event from '@admin/components/echo/events/Event';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
-import Loader from '../Loader';
+import Loader from '../../Loader';
 import createErrorHandler from '@admin/utils/errors/factory';
+import JobStatus from './JobStatus';
 
 export type TBackupTypes = 'full' | 'database' | 'files';
 export type TJobStatuses = 'pending' | 'started' | 'finished';
@@ -49,56 +49,6 @@ export interface IProcessOutputData {
     uuid: string;
     message: string;
     newline: boolean;
-}
-
-interface IJobStatusProps {
-    connected: boolean;
-    started?: DateTime;
-    finished?: DateTime;
-}
-
-const JobStatus: React.FC<IJobStatusProps> = ({ connected, started, finished }) => {
-    const [renderCount, setRenderCount] = React.useState(1);
-
-    React.useEffect(() => {
-        const timer = setInterval(() => setRenderCount((value) => value + 1), 750);
-
-        return () => {
-            clearInterval(timer);
-        }
-    }, []);
-
-    const displayText = React.useMemo(() => {
-        if (connected) {
-            if (finished)
-                return 'Job finished.';
-            else if (started)
-                return 'Job started.';
-            else
-                return 'Waiting for job to start...';
-        } else {
-            return 'Unable to perform backups because the WebSocket server is currently unreachable.';
-        }
-    }, [connected, started, finished]);
-
-    return (
-        <Alert color={connected ? 'info' : 'danger'} className="d-flex justify-content-between">
-            <div className='d-flex align-items-center'>
-                {connected && (
-                    <span className="me-1">
-                        {!started && !finished && <ClipLoader size={25} />}
-                    </span>
-                )}
-                {displayText}
-            </div>
-            {connected && (
-                <div key={renderCount}>
-                    {started && !finished && started.toRelative()}
-                    {finished && finished?.toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS)}
-                </div>
-            )}
-        </Alert>
-    );
 }
 
 const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose }) => {
