@@ -182,7 +182,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                     values[key === 'backup_cron' ? 'custom_backup_cron' : 'custom_clean_cron'] = expression;
                 }
             } else if (key in initialValues) {
-                const typedKey = key as keyof Omit<IFormikValues, 'notification_channels' | 'backup_frequency' | 'cleanup_frequency' | 'backup_disks'>;
+                const typedKey = key as keyof Omit<IFormikValues, 'notification_channels' | 'backup_frequency' | 'cleanup_frequency'>;
 
                 values[typedKey] = value;
             }
@@ -323,7 +323,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                 <Formik<IFormikValues>
                                     innerRef={formikRef}
                                     validationSchema={schema}
-                                    initialValues={getInitialFormValues(settings.current_values)}
+                                    initialValues={getInitialFormValues(settings)}
                                     onSubmit={handleFormSubmit}
                                 >
                                     {({ values, errors, touched, isSubmitting, isValid, ...helpers }) => (
@@ -334,29 +334,6 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                                         <FormikAlerts errors={errors} />
                                                     </Col>
                                                 </Row>
-
-                                                <h5>Backup Settings</h5>
-
-                                                <FormGroup row>
-                                                    <Col xs={12}>
-                                                        <Label for="disks">Disks</Label>
-                                                    </Col>
-                                                    <Col>
-                                                        {settings.possible_values.backup_disks.map((value, i) => (
-                                                            <FormGroup key={i} check inline>
-                                                                <Field
-                                                                    as={Input}
-                                                                    type='checkbox'
-                                                                    id={`backup_disks_${value}`}
-                                                                    name={`backup_disks`}
-                                                                    value={value}
-                                                                />
-                                                                <Label htmlFor={`backup_disks_${value}`} check>{S(value).humanize().s}</Label>
-                                                            </FormGroup>
-                                                        ))}
-                                                        <ErrorMessage name='backup_disks' component='div' className='invalid-feedback' />
-                                                    </Col>
-                                                </FormGroup>
 
                                                 <h5>Mail Notification Settings</h5>
 
