@@ -3,6 +3,7 @@
 namespace App\Components\Macros;
 
 use App\Components\Macros\Collection\WeightManager;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder as Schema;
@@ -12,6 +13,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
+use Illuminate\Database\Connection;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -36,6 +38,7 @@ class ServiceProvider extends BaseServiceProvider
         Blueprint::mixin(new BlueprintMixin);
         Schema::mixin(new SchemaMixin);
         EloquentBuilder::mixin(new EloquentBuilderMixin);
+        Connection::mixin(new ConnectionMixin);
     }
 
     /**
