@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Components\Websockets\Artisan;
 use App\Components\Websockets\Notifiers\JobStatusNotifier;
 use App\Models\FilesystemConfiguration;
 use Exception;
