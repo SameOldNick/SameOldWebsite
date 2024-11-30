@@ -41,9 +41,7 @@ class BackupConfig extends Model
     /**
      * Updates or creates a BackupConfig model with key
      *
-     * @param string $key
-     * @param callable(array): array $callback Existing items (if any) are passed and returned array is saved.
-     * @return self
+     * @param  callable(array): array  $callback  Existing items (if any) are passed and returned array is saved.
      */
     public static function updateOrCreateArrayValue(string $key, callable $callback): self
     {
