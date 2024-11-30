@@ -31,10 +31,10 @@ const BackupDestinations: React.FC<IProps> = ({
             {destinations.length > 0 && (
                 <Row>
                     <Col xs={12}>
-                        <Table>
+                        <Table responsive>
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th style={{ width: '20px' }}>
                                         <Input
                                             type='checkbox'
                                             checked={selected.length === destinations.length}
@@ -45,7 +45,7 @@ const BackupDestinations: React.FC<IProps> = ({
                                     <th>Type</th>
                                     <th>Host</th>
                                     <th>Enabled</th>
-                                    <th>Actions</th>
+                                    <th style={{ width: '15%' }}>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
