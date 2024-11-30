@@ -70,14 +70,16 @@ class BackupSettingsController extends Controller
             'cleanup_cron' => ['nullable', 'string', new CronExpression],
         ]);
 
-        foreach (Arr::except($validated, ['backup_cron', 'cleanup_cron']) as $key => $value) {
-            $value = is_array($value) ? implode(';', $value) : $value;
-
+        foreach (Arr::except($validated, ['notification_channel', 'backup_cron', 'cleanup_cron']) as $key => $value) {
             BackupConfig::updateOrCreate(
                 ['key' => $key],
                 ['value' => $value]
             );
         }
+
+        BackupConfig::updateOrCreateArrayValue('notification_channel', function () use ($validated) {
+            return $validated['notification_channel'];
+        });
 
         foreach (['backup_cron', 'cleanup_cron'] as $key) {
             if (isset($validated[$key])) {
