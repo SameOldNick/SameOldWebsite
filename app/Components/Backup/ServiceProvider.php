@@ -60,11 +60,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function isDatabaseSetup(): bool
     {
         try {
-            // Throws exception if not connected
-            // Source: https://stackoverflow.com/a/40778219/533242
-            DB::connection()->getPdo();
-
-            return Schema::hasTable('backup_config');
+            return DB::isConnected() && Schema::hasTable('backup_config');
         } catch (Exception $ex) {
             return false;
         }
