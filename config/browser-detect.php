@@ -1,4 +1,5 @@
 <?php
+
 return [
     'cache' => [
         /**
@@ -8,7 +9,7 @@ return [
         /**
          * Cache prefix, the user agent string will be hashed and appended at the end.
          */
-        'prefix' => 'bd4_'
+        'prefix' => 'bd4_',
     ],
     'security' => [
         /**
@@ -16,5 +17,5 @@ return [
          * then the library will make a cut this byte point.
          */
         'max-header-length' => 2048,
-    ]
+    ],
 ];

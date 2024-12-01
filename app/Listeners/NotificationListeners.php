@@ -6,6 +6,7 @@ use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Models\User;
 use App\Notifications\Alert;
 use App\Traits\Support\NotifiesRoles;
+use hisorange\BrowserDetect\Facade as Browser;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Events\Dispatcher;
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\Notification;
 use Spatie\Backup\Events\BackupHasFailed;
 use Spatie\Backup\Events\BackupWasSuccessful;
 use Spatie\Backup\Events\CleanupWasSuccessful;
-use hisorange\BrowserDetect\Facade as Browser;
 
 class NotificationListeners
 {
@@ -56,7 +56,7 @@ class NotificationListeners
         ];
 
         $message = sprintf(
-            "Somebody %s logged in to your account.",
+            'Somebody %s logged in to your account.',
             implode(' ', array_filter($details))
         );
 
@@ -82,7 +82,7 @@ class NotificationListeners
         ];
 
         $message = sprintf(
-            "Somebody %s tried to login to your account.",
+            'Somebody %s tried to login to your account.',
             implode(' ', array_filter($details))
         );
 
