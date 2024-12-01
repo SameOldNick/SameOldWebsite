@@ -13,6 +13,7 @@
         "composer/composer": "^2.6",
         "google/analytics-data": "^0.20.0",
         "guzzlehttp/guzzle": "^7.8",
+        "hisorange/browser-detect": "^5.0",
         "ifsnop/mysqldump-php": "^2.12",
         "landrok/language-detector": "^1.4",
         "laravel/framework": "^11.0",
