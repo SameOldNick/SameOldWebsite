@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Notification;
 use Spatie\Backup\Events\BackupHasFailed;
 use Spatie\Backup\Events\BackupWasSuccessful;
 use Spatie\Backup\Events\CleanupWasSuccessful;
+use hisorange\BrowserDetect\Facade as Browser;
 
 class NotificationListeners
 {
@@ -47,10 +48,17 @@ class NotificationListeners
     public function handleAuthLogin(Login $event): void
     {
         $ipAddress = request()->ip();
+        $browserName = Browser::browserName();
 
-        $message = $ipAddress ?
-            sprintf("Somebody with IP address '%s' logged in to your account.", $ipAddress) :
-            'Somebody logged in to your account.';
+        $details = [
+            $ipAddress ? "with IP address '{$ipAddress}'" : null,
+            $browserName ? "using the '{$browserName}' browser" : null,
+        ];
+
+        $message = sprintf(
+            "Somebody %s logged in to your account.",
+            implode(' ', array_filter($details))
+        );
 
         Notification::send($event->user, new Alert($event->user, 'info', $message));
     }
@@ -66,10 +74,17 @@ class NotificationListeners
         }
 
         $ipAddress = request()->ip();
+        $browserName = Browser::browserName();
 
-        $message = $ipAddress ?
-            sprintf("Somebody with IP address '%s' tried to login to your account.", $ipAddress) :
-            'Somebody tried to login to your account.';
+        $details = [
+            $ipAddress ? "with IP address '{$ipAddress}'" : null,
+            $browserName ? "using the '{$browserName}' browser" : null,
+        ];
+
+        $message = sprintf(
+            "Somebody %s tried to login to your account.",
+            implode(' ', array_filter($details))
+        );
 
         Notification::send($event->user, new Alert($event->user, 'info', $message));
     }
