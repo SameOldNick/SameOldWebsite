@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, ListGroupItem } from 'reactstrap';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
 import { IStoredNotification } from '../hoc/WithNotifications';
 
 import { DateTime } from 'luxon';
 import { FaEnvelope, FaEnvelopeOpen, FaExternalLinkAlt } from 'react-icons/fa';
+import classNames from 'classnames';
 
 interface INotificationItem {
     uuid: string;
@@ -28,33 +29,42 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     onSelect,
     onMarkClicked
 }) => {
+    const [dropdownOpen, setDropdownOpen] = React.useState(false);
+
+    const colClassNames = React.useMemo(() => classNames({ 'fw-bold': !readAt }), [readAt]);
+
     return (
         <>
-            <ListGroupItem color={!readAt ? color : undefined} className='d-flex justify-content-between align-items-center'>
-                <div className="d-flex align-items-center">
-                    <div>
-                        <span className='visually-hidden'>Select notification</span>
-                        <input type="checkbox" className="me-2" checked={selected} onChange={() => onSelect(selected)} />
-                    </div>
-                    <div>
-                        <strong>{message}</strong>
-                        <br />
-                        <small className="text-muted" title={dateTime.toLocaleString(DateTime.DATETIME_FULL)}>Sent: {dateTime.toRelative()}</small>
-                    </div>
-                </div>
-                <div className='d-flex gap-2'>
-                    {link && (
-                        <Button size="sm" color="info" onClick={() => window.open(link, '_blank')}>
-                            <FaExternalLinkAlt />{' '}
-                            Open Link
-                        </Button>
-                    )}
-                    <Button size="sm" color={readAt ? "secondary" : "primary"} onClick={onMarkClicked}>
-                        {readAt ? <FaEnvelope /> : <FaEnvelopeOpen />}{' '}
-                        {readAt ? "Mark Unread" : "Mark Read"}
-                    </Button>
-                </div>
-            </ListGroupItem>
+            <tr>
+                <td>
+                    <span className='visually-hidden'>Select notification</span>
+                    <input type="checkbox" checked={selected} onChange={() => onSelect(selected)} />
+                </td>
+                <td className={colClassNames}>{message}</td>
+                <td className={colClassNames} title={dateTime.toLocaleString(DateTime.DATETIME_FULL)}>
+                    {dateTime.toRelative()}
+                </td>
+                <td className={colClassNames} title={readAt?.toLocaleString(DateTime.DATETIME_FULL)}>
+                    {readAt?.toRelative() ?? 'N/A'}
+                </td>
+                <td>
+                    <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen((prev) => !prev)}>
+                        <DropdownToggle caret color='primary'>Actions</DropdownToggle>
+                        <DropdownMenu>
+                            {link && (
+                                <DropdownItem onClick={() => window.open(link, '_blank')}>
+                                    <FaExternalLinkAlt />{' '}
+                                    Open Link
+                                </DropdownItem>
+                            )}
+                            <DropdownItem onClick={onMarkClicked}>
+                                {readAt ? <FaEnvelope /> : <FaEnvelopeOpen />}{' '}
+                                {readAt ? "Mark Unread" : "Mark Read"}
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                </td>
+            </tr>
         </>
     );
 }

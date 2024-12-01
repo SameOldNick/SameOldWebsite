@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Label, ListGroup, Row } from 'reactstrap';
+import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Label, Row, Table } from 'reactstrap';
 import { FaEnvelope, FaEnvelopeOpen, FaSync, FaToolbox, FaTrash } from 'react-icons/fa';
 import { connect, ConnectedProps } from 'react-redux';
 import withReactContent from 'sweetalert2-react-content';
@@ -83,13 +83,9 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
         setSelected((prev) => !previous ? prev.concat(notification.uuid) : prev.filter((uuid) => uuid !== notification.uuid));
     }, []);
 
-    const handleSelectAllClicked = React.useCallback(() => {
-        setSelected(notifications.map((notification) => notification.uuid));
+    const handleSelectChanged = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setSelected(e.target.checked ? notifications.map((notification) => notification.uuid) : []);
     }, [notifications]);
-
-    const handleSelectNoneClicked = React.useCallback(() => {
-        setSelected([]);
-    }, []);
 
     const markNotifications = React.useCallback(async (as: 'read' | 'unread', uuids: string[]) => {
         try {
@@ -215,13 +211,6 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
             <Row>
                 <Col xs={12} className='d-flex flex-column flex-md-row justify-content-between mb-3'>
                     <div className="d-flex flex-column flex-md-row mb-3 mb-md-0">
-                        <Button color='primary' className='me-1' disabled={selected.length === notifications.length} onClick={handleSelectAllClicked}>
-                            Select All
-                        </Button>
-                        <Button color='primary' className='me-1' disabled={selected.length === 0} onClick={handleSelectNoneClicked}>
-                            Select None
-                        </Button>
-
                         {selected.length > 0 && (
                             <Dropdown group toggle={() => setShowDropdown((prev) => !prev)} isOpen={showDropdown}>
                                 <DropdownToggle caret color='primary'>
@@ -274,9 +263,23 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
                 </Col>
 
                 <Col xs={12}>
-                    <ListGroup>
-                        {renderNotifications(notifications)}
-                    </ListGroup>
+                    <Table responsive>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span className='visually-hidden'>Select All</span>
+                                    <input type="checkbox" checked={selected.length === notifications.length} onChange={handleSelectChanged} />
+                                </th>
+                                <th>Message</th>
+                                <th>Sent</th>
+                                <th>Read</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderNotifications(notifications)}
+                        </tbody>
+                    </Table>
                 </Col>
             </Row>
         </>
