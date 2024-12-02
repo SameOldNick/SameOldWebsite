@@ -8,13 +8,14 @@ import Swal from "sweetalert2";
 
 import PrivateChannel, { IPrivateChannelHandle } from '@admin/components/echo/channels/PrivateChannel';
 import Event from '@admin/components/echo/events/Event';
+import WaitToLoad from '@admin/components/WaitToLoad';
+import Loader from '@admin/components/Loader';
+import AwaitJob from '@admin/components/echo/wrappers/AwaitJob';
+
+import JobStatus from './JobStatus';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
-import WaitToLoad from '@admin/components/WaitToLoad';
-import Loader from '../../Loader';
 import createErrorHandler from '@admin/utils/errors/factory';
-import JobStatus from './JobStatus';
-import AwaitJob from '@admin/components/echo/wrappers/AwaitJob';
 
 export type TBackupTypes = 'full' | 'database' | 'files';
 export type TJobStatuses = 'pending' | 'started' | 'finished';
