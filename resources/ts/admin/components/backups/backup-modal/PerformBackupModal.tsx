@@ -6,15 +6,15 @@ import withReactContent from 'sweetalert2-react-content';
 import { DateTime } from 'luxon';
 import Swal from "sweetalert2";
 
-import Events from '@admin/components/echo/events/Events';
 import PrivateChannel, { IPrivateChannelHandle } from '@admin/components/echo/channels/PrivateChannel';
 import Event from '@admin/components/echo/events/Event';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
-import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
+import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '../../Loader';
 import createErrorHandler from '@admin/utils/errors/factory';
 import JobStatus from './JobStatus';
+import AwaitJob from '@admin/components/echo/wrappers/AwaitJob';
 
 export type TBackupTypes = 'full' | 'database' | 'files';
 export type TJobStatuses = 'pending' | 'started' | 'finished';
@@ -52,7 +52,6 @@ export interface IProcessOutputData {
 }
 
 const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose }) => {
-    const jobChannelRef = React.useRef<IPrivateChannelHandle>(null);
     const processChannelRef = React.useRef<IPrivateChannelHandle>(null);
     const xtermRef = React.useRef<XTerm>(null);
 
@@ -94,12 +93,8 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
 
     }, [canClose, onClose]);
 
-    const handleJobStatusEvent = React.useCallback((data: IJobData, event: string) => {
-        if (event === '.JobStarted')
-            setJobStarted(DateTime.fromISO(data.dateTime));
-        else if (event === '.JobCompleted')
-            setJobFinished(DateTime.fromISO(data.dateTime));
-    }, []);
+    const handleJobStarted = React.useCallback((data: IJobData) => setJobStarted(DateTime.fromISO(data.dateTime)), []);
+    const handleJobFinished = React.useCallback((data: IJobData) => setJobFinished(DateTime.fromISO(data.dateTime)), []);
 
     const handleProcessStartEvent = React.useCallback((data: IProcessBeginData, event: string) => {
         setProcessStarted(DateTime.fromISO(data.dateTime));
@@ -146,9 +141,11 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
                             <>
                                 {response && (
                                     <>
-                                        <PrivateChannel ref={jobChannelRef} channel={`jobs.${response.uuid}`}>
-                                            <Events callback={handleJobStatusEvent} />
-                                        </PrivateChannel>
+                                        <AwaitJob<IJobData>
+                                            uuid={response.uuid}
+                                            onJobStarted={handleJobStarted}
+                                            onJobFinished={handleJobFinished}
+                                        />
 
                                         <PrivateChannel ref={processChannelRef} channel={`processes.${response.uuid}`}>
                                             <Event event='.ProcessBegin' callback={handleProcessStartEvent} />
