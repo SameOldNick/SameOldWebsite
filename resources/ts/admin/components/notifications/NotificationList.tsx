@@ -181,9 +181,9 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
         }
     }, []);
 
-    const renderNotifications = React.useCallback((notifications: IStoredNotification[]) => {
-        return Object.entries(notifications)
-            .filter(([, item]) => {
+    const sortedNotifications = React.useMemo(() =>
+        notifications
+            .filter((item) => {
                 if (show === 'unread')
                     return !item.readAt;
                 else if (show === 'read')
@@ -191,23 +191,15 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
 
                 return true;
             })
-            .sort(([, a], [, b]) => {
+            .sort((a, b) => {
                 if (sortBy === 'oldest_newest') {
                     return a.dateTime.diff(b.dateTime).milliseconds;
                 } else {
                     return b.dateTime.diff(a.dateTime).milliseconds;
                 }
-            })
-            .map(([, item], index) => (
-                <NotificationItem
-                    key={index}
-                    notification={item}
-                    selected={selected.includes(item.uuid)}
-                    onSelect={(checked) => handleSelected(checked, item)}
-                    onMarkClicked={() => handleMarkAsClicked(item)}
-                />
-            ));
-    }, [sortBy, show, selected, handleSelected, handleMarkAsClicked]);
+            }),
+        [notifications, sortBy, show]
+    );
 
     return (
         <>
@@ -281,7 +273,15 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
                             </tr>
                         </thead>
                         <tbody>
-                            {renderNotifications(notifications)}
+                            {sortedNotifications.map((item, index) => (
+                                <NotificationItem
+                                    key={index}
+                                    notification={item}
+                                    selected={selected.includes(item.uuid)}
+                                    onSelect={(checked) => handleSelected(checked, item)}
+                                    onMarkClicked={() => handleMarkAsClicked(item)}
+                                />
+                            ))}
                         </tbody>
                     </Table>
                 </Col>
