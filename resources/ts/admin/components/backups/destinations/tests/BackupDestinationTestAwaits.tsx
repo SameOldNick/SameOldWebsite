@@ -3,7 +3,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 import Swal from 'sweetalert2';
 
-import BackupDestinationTestAwait from './BackupDestinationTestAwait';
+import AwaitJob from '@admin/components/echo/wrappers/AwaitJob';
 
 interface IProps {
     uuids: string[];
@@ -42,7 +42,7 @@ const BackupDestinationTestAwaits: React.FC<IProps> = ({ uuids, onFinished }) =>
     return (
         <>
             {uuids.map((uuid, i) => (
-                <BackupDestinationTestAwait
+                <AwaitJob
                     key={i}
                     uuid={uuid}
                     onJobStarted={() => handleStarted(uuid)}
