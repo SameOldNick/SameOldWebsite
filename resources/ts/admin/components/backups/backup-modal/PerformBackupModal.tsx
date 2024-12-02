@@ -15,19 +15,19 @@ import { createAuthRequest } from '@admin/utils/api/factories';
 import createErrorHandler from '@admin/utils/errors/factory';
 import ProcessOutputToXTerm from '@admin/components/echo/wrappers/ProcessOutputToXTerm';
 
-export type TBackupTypes = 'full' | 'database' | 'files';
-export type TJobStatuses = 'pending' | 'started' | 'finished';
+type TBackupTypes = 'full' | 'database' | 'files';
+type TJobStatuses = 'pending' | 'started' | 'finished';
 
-export interface IPerformBackupModalProps {
+interface IPerformBackupModalProps {
     type: TBackupTypes;
     onClose: () => void;
 }
 
-export interface IPerformBackupResponse {
+interface IPerformBackupResponse {
     uuid: string;
 }
 
-export interface IJobData {
+interface IJobData {
     dateTime: string;
     id: string;
     type: string;
