@@ -69,11 +69,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
         } catch (err) {
             const message = createErrorHandler().handle(err);
 
-            await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `An error occurred: ${message}\nPlease try again.`,
-            });
+            await displayError(`An error occurred: ${message}\nPlease try again.`);
         } finally {
             setLoading(false);
         }
@@ -106,11 +102,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
         } catch (err) {
             const message = createErrorHandler().handle(err);
 
-            await withReactContent(Swal).fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `An error occurred: ${message}\nPlease try again.`,
-            });
+            await displayError(`An error occurred: ${message}\nPlease try again.`);
         }
     }, []);
 
@@ -123,6 +115,8 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
             refresh();
         } catch (err) {
             logger.error(err);
+
+            await displayError('There was an error marking the selected notifications as read. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -137,6 +131,8 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
             refresh();
         } catch (err) {
             logger.error(err);
+
+            await displayError('There was an error marking the selected notifications as unread. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -162,11 +158,19 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, fetc
             refresh();
         } catch (err) {
             logger.error(err);
+
+            await displayError('There was an error deleting the selected notifications. Please try again.');
         } finally {
             setLoading(false);
         }
 
     }, [selected, refresh]);
+
+    const displayError = React.useCallback((message: string) => withReactContent(Swal).fire({
+        title: 'Ooops...',
+        text: message,
+        icon: 'error',
+    }), []);
 
     React.useEffect(() => {
         // Updates the relative time notifications were sent
