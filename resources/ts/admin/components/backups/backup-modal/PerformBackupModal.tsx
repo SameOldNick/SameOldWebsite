@@ -1,13 +1,10 @@
 import React from 'react';
 import { Alert, Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { XTerm } from 'xterm-for-react';
 import withReactContent from 'sweetalert2-react-content';
 
 import { DateTime } from 'luxon';
 import Swal from "sweetalert2";
 
-import PrivateChannel, { IPrivateChannelHandle } from '@admin/components/echo/channels/PrivateChannel';
-import Event from '@admin/components/echo/events/Event';
 import WaitToLoad from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
 import AwaitJob from '@admin/components/echo/wrappers/AwaitJob';
@@ -16,6 +13,7 @@ import JobStatus from './JobStatus';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import createErrorHandler from '@admin/utils/errors/factory';
+import ProcessOutputToXTerm from '@admin/components/echo/wrappers/ProcessOutputToXTerm';
 
 export type TBackupTypes = 'full' | 'database' | 'files';
 export type TJobStatuses = 'pending' | 'started' | 'finished';
@@ -35,31 +33,9 @@ export interface IJobData {
     type: string;
 }
 
-export interface IProcessBeginData {
-    dateTime: string;
-    uuid: string;
-}
-
-export interface IProcessCompleteData {
-    dateTime: string;
-    uuid: string;
-}
-
-export interface IProcessOutputData {
-    dateTime: string;
-    uuid: string;
-    message: string;
-    newline: boolean;
-}
-
 const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose }) => {
-    const processChannelRef = React.useRef<IPrivateChannelHandle>(null);
-    const xtermRef = React.useRef<XTerm>(null);
-
     const [jobStarted, setJobStarted] = React.useState<DateTime>();
     const [jobFinished, setJobFinished] = React.useState<DateTime>();
-    const [processStarted, setProcessStarted] = React.useState<DateTime>();
-    const [processCompleted, setProcessCompleted] = React.useState<DateTime>();
     const [canClose, setCanClose] = React.useState(false);
 
     React.useEffect(() => {
@@ -97,33 +73,6 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
     const handleJobStarted = React.useCallback((data: IJobData) => setJobStarted(DateTime.fromISO(data.dateTime)), []);
     const handleJobFinished = React.useCallback((data: IJobData) => setJobFinished(DateTime.fromISO(data.dateTime)), []);
 
-    const handleProcessStartEvent = React.useCallback((data: IProcessBeginData, event: string) => {
-        setProcessStarted(DateTime.fromISO(data.dateTime));
-    }, []);
-
-    const handleProcessCompleteEvent = React.useCallback((data: IProcessCompleteData, event: string) => {
-        setProcessCompleted(DateTime.fromISO(data.dateTime));
-    }, []);
-
-    const handleProcessOutputEvent = React.useCallback((data: IProcessOutputData, event: string) => {
-        /**
-         * As per: https://stackoverflow.com/a/71524508/533242
-         * xtermjs requires CRLF, not just LF.
-         * Using LF will cause formatting/spacing issues.
-         */
-
-        data.message.split(/\n/).map((line) => line.replace("\r", "")).forEach((line, i, lines) => {
-            if (i !== lines.length - 1) {
-                xtermRef.current?.terminal.writeln(line);
-            } else {
-                if (data.newline)
-                    xtermRef.current?.terminal.writeln(line);
-                else
-                    xtermRef.current?.terminal.write(line);
-            }
-        });
-    }, []);
-
     const isConnected = React.useMemo(() => {
         return window.EchoWrapper?.connectionState === 'connected' ? true : false;
     }, [window.EchoWrapper]);
@@ -148,11 +97,7 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
                                             onJobFinished={handleJobFinished}
                                         />
 
-                                        <PrivateChannel ref={processChannelRef} channel={`processes.${response.uuid}`}>
-                                            <Event event='.ProcessBegin' callback={handleProcessStartEvent} />
-                                            <Event event='.ProcessComplete' callback={handleProcessCompleteEvent} />
-                                            <Event event='.ProcessOutput' callback={handleProcessOutputEvent} />
-                                        </PrivateChannel>
+                                        <ProcessOutputToXTerm uuid={response.uuid} />
                                     </>
                                 )}
                                 {err && (
@@ -163,10 +108,6 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
                             </>
                         )}
                     </WaitToLoad>
-
-                    {processStarted && <XTerm ref={xtermRef} />}
-
-
                 </ModalBody>
                 <ModalFooter>
                     <Button color={canClose ? 'primary' : 'secondary'} onClick={handleCloseClicked}>
