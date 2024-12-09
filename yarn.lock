@@ -2914,12 +2914,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dropzone@npm:^5.7.4":
-  version: 5.7.8
-  resolution: "@types/dropzone@npm:5.7.8"
+"@types/dropzone@npm:^5.7.9":
+  version: 5.7.9
+  resolution: "@types/dropzone@npm:5.7.9"
   dependencies:
     "@types/jquery": "npm:*"
-  checksum: 10/b929912760ee2ccc4383eb8776589e4f851b20c89b940feb18b3d7c2e4a91bbe1586dbfef62c5203d3ffb0c6b5fb3888bcb5632be4da0952a3f6b69637a52de0
+  checksum: 10/3680fd5e020416e84ca71d0a18089f871c1d938633c5153bdec782d3864ea522b55cd07acb615e4f90c2e8a2aed339021eec01270b2190f9ba27a9cc87a9d402
   languageName: node
   linkType: hard
 
@@ -11247,7 +11247,7 @@ __metadata:
     "@types/blueimp-md5": "npm:^2.18.0"
     "@types/bootstrap": "npm:^5.2.7"
     "@types/codemirror": "npm:^5.60.8"
-    "@types/dropzone": "npm:^5.7.4"
+    "@types/dropzone": "npm:^5.7.9"
     "@types/jquery": "npm:^3.5.29"
     "@types/luxon": "npm:^3.3.7"
     "@types/owl.carousel": "npm:^2.3.6"
