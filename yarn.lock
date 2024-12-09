@@ -6383,10 +6383,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"github-markdown-css@npm:^5.8.0":
-  version: 5.8.0
-  resolution: "github-markdown-css@npm:5.8.0"
-  checksum: 10/b182b270e53c802c6ce987ec0d9239620fb960a78bf07b74a4539aadca8ab0819e7889736dab3ed6e809b7998624bb238ad6cb9b6b1b78e3e9f09164e6b06e5a
+"github-markdown-css@npm:^5.8.1":
+  version: 5.8.1
+  resolution: "github-markdown-css@npm:5.8.1"
+  checksum: 10/6adbab7a918662c5178ec3e6e390a54824e4ad6b964261579800c49da0b7a3d4afe3efb834a7f177f9552b8f6d64b07fdf044ae6fdd2e1e0cca66f814df13b94
   languageName: node
   linkType: hard
 
@@ -11232,7 +11232,7 @@ __metadata:
     eslint-plugin-jest: "npm:^28.9.0"
     eslint-plugin-react: "npm:latest"
     formik: "npm:^2.4.3"
-    github-markdown-css: "npm:^5.8.0"
+    github-markdown-css: "npm:^5.8.1"
     highlight.js: "npm:^11.10.0"
     history: "npm:^5.3.0"
     jest: "npm:^29.7.0"
