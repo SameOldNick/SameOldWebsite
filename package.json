@@ -106,7 +106,7 @@
         "typescript": "^5.6.3",
         "uniqid": "^5.4.0",
         "uuid": "^11.0.3",
-        "vite": "^5.4.10",
+        "vite": "^6.0.3",
         "vite-plugin-external": "^4.3.0",
         "vite-plugin-global-const": "^0.0.6",
         "vite-plugin-static-copy": "^2.2.0",
