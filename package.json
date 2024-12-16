@@ -95,7 +95,7 @@
         "redux-logger": "^3.0.6",
         "redux-thunk": "^3.1.0",
         "rehype-sanitize": "^6.0.0",
-        "sass": "^1.81.0",
+        "sass": "^1.83.0",
         "shiki": "^1.23.1",
         "store2": "^2.14.3",
         "string": "^3.3.3",
