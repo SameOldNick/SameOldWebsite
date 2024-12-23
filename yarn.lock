@@ -10185,17 +10185,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.41":
-  version: 8.4.41
-  resolution: "postcss@npm:8.4.41"
-  dependencies:
-    nanoid: "npm:^3.3.7"
-    picocolors: "npm:^1.0.1"
-    source-map-js: "npm:^1.2.0"
-  checksum: 10/6e6176c2407eff60493ca60a706c6b7def20a722c3adda94ea1ece38345eb99964191336fd62b62652279cec6938e79e0b1e1d477142c8d3516e7a725a74ee37
-  languageName: node
-  linkType: hard
-
 "postcss@npm:^8.4.49":
   version: 8.4.49
   resolution: "postcss@npm:8.4.49"
@@ -11299,7 +11288,7 @@ __metadata:
     luxon: "npm:^3.4.4"
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
-    postcss: "npm:^8.4.41"
+    postcss: "npm:^8.4.49"
     pusher-js: "npm:^8.4.0-rc2"
     query-string: "npm:^9.1.1"
     react: "npm:18"
@@ -11562,7 +11551,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.2.0":
+"source-map-js@npm:>=0.6.2 <2.0.0":
   version: 1.2.0
   resolution: "source-map-js@npm:1.2.0"
   checksum: 10/74f331cfd2d121c50790c8dd6d3c9de6be21926de80583b23b37029b0f37aefc3e019fa91f9a10a5e120c08135297e1ecf312d561459c45908cb1e0e365f49e5
