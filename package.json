@@ -41,7 +41,7 @@
         "@types/bootstrap": "^5.2.7",
         "@types/codemirror": "^5.60.8",
         "@types/dropzone": "^5.7.9",
-        "@types/jquery": "^3.5.29",
+        "@types/jquery": "^3.5.32",
         "@types/luxon": "^3.3.7",
         "@types/react": "18",
         "@types/react-dom": "18",
