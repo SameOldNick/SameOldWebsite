@@ -11371,7 +11371,7 @@ __metadata:
     vite-plugin-static-copy: "npm:^2.2.0"
     web-vitals: "npm:^4.2.4"
     xterm-for-react: "npm:^1.0.4"
-    yup: "npm:^1.5.0"
+    yup: "npm:^1.6.1"
   languageName: unknown
   linkType: soft
 
@@ -12937,15 +12937,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yup@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "yup@npm:1.5.0"
+"yup@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "yup@npm:1.6.1"
   dependencies:
     property-expr: "npm:^2.0.5"
     tiny-case: "npm:^1.0.3"
     toposort: "npm:^2.0.2"
     type-fest: "npm:^2.19.0"
-  checksum: 10/e716f76b41d5531951e280a0a2fb617cf4dabb26e07ad3406f13afae7785df5c5eb38286798eec7e39b4b772defc9820086420c4c6fd94f479c790b455825058
+  checksum: 10/19dba13403160a8739a9e57c8b816254842f3a9e01672846a980d8230cee8763783c089ded88662b30158d1479cf6bce0b51dce7f19ae7d0477be0c981024bc0
   languageName: node
   linkType: hard
 
