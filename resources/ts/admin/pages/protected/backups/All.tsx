@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Button, Card, CardBody, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Row } from 'reactstrap';
 import { FaCloudUploadAlt, FaRedo } from 'react-icons/fa';
 

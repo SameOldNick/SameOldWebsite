@@ -24,6 +24,7 @@
         "owl.carousel": "^2.3.4",
         "popper.js": "^1.16.1",
         "react-chartjs-2": "^5.2.0",
+        "react-helmet-async": "^2.0.5",
         "xterm-for-react": "^1.0.4"
     },
     "devDependencies": {
@@ -46,7 +47,6 @@
         "@types/luxon": "^3.3.7",
         "@types/react": "18",
         "@types/react-dom": "18",
-        "@types/react-helmet": "^6.1.7",
         "@types/react-page-visibility": "^6.4.4",
         "@types/redux-logger": "^3.0.12",
         "@types/string": "^0.0.34",
@@ -86,7 +86,6 @@
         "react": "18",
         "react-dom": "18",
         "react-dropzone": "^14.3.5",
-        "react-helmet": "^6.1.0",
         "react-icons": "^5.3.0",
         "react-page-visibility": "^7.0.0",
         "react-redux": "^9.1.0",
