@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import withReactContent from 'sweetalert2-react-content';
 import { FormikHelpers } from 'formik';
 import { Card, CardBody, Col, Row } from 'reactstrap';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Button, Card, CardBody, Col, Form, Input, Row } from 'reactstrap';
 import { FaPlus, FaRedo } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';

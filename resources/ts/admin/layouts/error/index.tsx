@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, ColProps, Container, Row } from 'reactstrap';
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet-async";
 import classNames from 'classnames';
 import { IconContext } from 'react-icons';
 

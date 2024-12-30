@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Col, Row } from 'reactstrap';
 import { FaDownload } from 'react-icons/fa';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
