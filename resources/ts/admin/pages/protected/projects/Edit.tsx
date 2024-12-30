@@ -26,23 +26,27 @@ const Edit: React.FC<IHasRouter<'project'>> = ({ router: { navigate, params: { p
         return response.data;
     }, [project]);
 
-    const handleError = React.useCallback(async (err: unknown) => {
-        const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
+    const handleError = React.useCallback((err: unknown) => {
+        (async () => {
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined);
 
-        const result = await withReactContent(Swal).fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `Unable to retrieve project: ${message}`,
-            confirmButtonText: 'Try Again',
-            showConfirmButton: true,
-            showCancelButton: true
-        });
+            const result = await withReactContent(Swal).fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Unable to retrieve project: ${message}`,
+                confirmButtonText: 'Try Again',
+                showConfirmButton: true,
+                showCancelButton: true
+            });
 
-        if (result.isConfirmed) {
-            waitToLoadRef.current?.load();
-        } else {
-            navigate(-1);
-        }
+            if (result.isConfirmed) {
+                waitToLoadRef.current?.load();
+            } else {
+                navigate(-1);
+            }
+        })();
+
+        return null;
     }, [waitToLoadRef.current, navigate]);
 
     const getInitialValues = React.useCallback((project: IProject) => ({
