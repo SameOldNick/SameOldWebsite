@@ -4,7 +4,7 @@ import { Button, Col, Form, Input, InputGroup, Modal, ModalBody, ModalFooter, Mo
 
 import { IIconType } from "./utils";
 import IconItem from "./IconItem";
-import { IHasIconsFile, withIconsFile } from "./WithIcons";
+import { IHasIconsFile, withIconsFile } from "./withIconsFile";
 import { IPromptModalProps } from "@admin/utils/modals";
 
 type IconSelectorModalProps = IHasIconsFile & IPromptModalProps<IIconType>;

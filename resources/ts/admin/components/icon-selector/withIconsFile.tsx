@@ -13,7 +13,7 @@ export interface IHasIconsFile {
 type TFallback = React.ReactNode | ((err: unknown) => React.ReactNode);
 
 export function withIconsFile<TProps extends IHasIconsFile = IHasIconsFile>(
-    Component: React.ComponentType<TProps>, 
+    Component: React.ComponentType<TProps>,
     fallback: TFallback = null,
     loading: React.ReactNode = <Loader display={{ type: 'over-element' }} />
 ) {
@@ -32,11 +32,11 @@ export function withIconsFile<TProps extends IHasIconsFile = IHasIconsFile>(
                 <WaitToLoad loading={loading} callback={loadIcons}>
                     {(file, err) => (
                         <>
-                            {file && <Component 
-                                {...(props as TProps)} 
-                                iconsFile={file} 
-                                lookupIcon={(icon) => lookupIcon(file, icon)} 
-                                getAllIcons={() => getAllIcons(file)}  
+                            {file && <Component
+                                {...(props as TProps)}
+                                iconsFile={file}
+                                lookupIcon={(icon) => lookupIcon(file, icon)}
+                                getAllIcons={() => getAllIcons(file)}
                             />}
                             {err && fallbackFunc(err)}
                         </>
