@@ -36,6 +36,6 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         Blade::component('sweetalerts', SweetAlertsView::class);
-        //View::composer('components.sweetalerts', SweetAlertComposer::class);
+        // View::composer('components.sweetalerts', SweetAlertComposer::class);
     }
 }
