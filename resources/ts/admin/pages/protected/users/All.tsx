@@ -14,7 +14,7 @@ import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import UsersList from '@admin/components/users/UsersList';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 const All: React.FC<IHasRouter> = ({ router: { navigate } }) => {
     const [show, setShow] = React.useState('both');

@@ -4,7 +4,7 @@ import { Card, CardBody } from 'reactstrap';
 
 import Heading from '@admin/layouts/admin/Heading';
 import ArticleList from '@admin/components/blog/article-list/ArticleList';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 
 const All: React.FC = () => {

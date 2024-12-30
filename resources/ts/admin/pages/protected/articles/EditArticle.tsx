@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
