@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 
 import { DateTime } from "luxon";
 
-import ChartWrapper from "@admin/components/hoc/ChartWrapper";
+import ChartWrapper from "@admin/components/wrappers/ChartWrapper";
 
 interface IProps {
     data: IChartVisitors;
