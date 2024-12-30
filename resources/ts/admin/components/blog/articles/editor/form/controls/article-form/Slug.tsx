@@ -13,9 +13,7 @@ interface SlugInputs {
     onSlugChanged: (slug: string) => void;
 }
 
-type SlugProps = {};
-
-const Slug: React.FC<SlugProps> = ({ }) => {
+const Slug: React.FC = () => {
     const {
         inputs: {
             autoGenerateSlug,
@@ -83,4 +81,4 @@ const Slug: React.FC<SlugProps> = ({ }) => {
 }
 
 export default Slug;
-export { SlugProps, SlugInputs };
+export { SlugInputs };

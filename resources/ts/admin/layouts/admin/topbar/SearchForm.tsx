@@ -6,11 +6,9 @@ import classNames from 'classnames';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 
-interface IProps extends Omit<FormProps, 'onSubmit'> {
+type Props = Omit<FormProps, 'onSubmit'>;
 
-}
-
-const SearchForm: React.FC<IProps> = ({ className, ...props }) => {
+const SearchForm: React.FC<Props> = ({ className, ...props }) => {
     const handleSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 

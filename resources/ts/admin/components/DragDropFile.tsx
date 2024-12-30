@@ -4,7 +4,7 @@ import { FaUpload } from 'react-icons/fa';
 
 import { humanReadableFileSize } from '@admin/utils';
 
-type TListenerCallback<TEvent extends Event, TThis extends HTMLElement = HTMLElement> = (this: TThis, ev: TEvent) => any;
+type TListenerCallback<TEvent extends Event, TThis extends HTMLElement = HTMLElement> = (this: TThis, ev: TEvent) => unknown;
 type TEventListenerMappings = PartialRecord<keyof HTMLElementEventMap, TListenerCallback<DragEvent, HTMLDivElement>>
 
 interface IBaseProps {

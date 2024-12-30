@@ -54,7 +54,7 @@ const Authenticated: React.FC<TProps> = ({ account: { fetchUser, user }, setUser
         }
     }, []);
 
-    const ping = React.useCallback(async (params: IHeartbeatCallbackParams) => {
+    const ping = React.useCallback(async (_params: IHeartbeatCallbackParams) => {
         try {
             await createAuthRequest().get<IUser>('user');
         } catch (e) {

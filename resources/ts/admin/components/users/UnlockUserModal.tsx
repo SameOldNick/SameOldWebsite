@@ -17,7 +17,7 @@ const UnlockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => 
     // TODO: Move to seperate API class.
     const unlockUser = React.useCallback(async () => {
         try {
-            const response = await createAuthRequest().post(`/users/restore/${user.user.id}`, {});
+            await createAuthRequest().post(`/users/restore/${user.user.id}`, {});
 
             await withReactContent(Swal).fire({
                 icon: 'success',

@@ -20,11 +20,7 @@ import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import classNames from 'classnames';
 
-interface IMessageListProps {
-
-}
-
-const MessageList: React.FC<IMessageListProps> = ({ }) => {
+const MessageList: React.FC = () => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
     const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 

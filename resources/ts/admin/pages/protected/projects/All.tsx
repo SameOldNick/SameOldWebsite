@@ -7,11 +7,7 @@ import Heading from '@admin/layouts/admin/Heading';
 import ProjectList from '@admin/components/projects/ProjectList';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps {
-
-}
-
-const All: React.FC<IProps> = ({ }) => {
+const All: React.FC = () => {
     return (
         <>
             <Helmet>

@@ -172,4 +172,6 @@ const UserForm = React.forwardRef<TForwardedRef, TProps>(({ buttonContent, field
     );
 });
 
+UserForm.displayName = 'UserForm';
+
 export default UserForm;

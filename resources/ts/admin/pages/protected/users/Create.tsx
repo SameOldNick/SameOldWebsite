@@ -16,11 +16,7 @@ import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import User from '@admin/utils/api/models/User';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps {
-
-}
-
-const Create: React.FC<IProps> = ({ }) => {
+const Create: React.FC = () => {
     const navigate = useNavigate();
 
     const initialValues = React.useMemo(() => ({

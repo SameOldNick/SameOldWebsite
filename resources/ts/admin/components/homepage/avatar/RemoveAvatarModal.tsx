@@ -8,13 +8,12 @@ import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { IPromptModalProps } from '@admin/utils/modals';
 
-interface IProps extends IPromptModalProps {
-}
+type Props = IPromptModalProps;
 
-const RemoveAvatarModal: React.FC<IProps> = ({ onSuccess, onCancelled }) => {
+const RemoveAvatarModal: React.FC<Props> = ({ onSuccess, onCancelled }) => {
     const deleteAvatar = React.useCallback(async () => {
         try {
-            const response = await createAuthRequest().delete<IMessageResponse>('user/avatar');
+            await createAuthRequest().delete<IMessageResponse>('user/avatar');
 
             onSuccess();
         } catch (err) {

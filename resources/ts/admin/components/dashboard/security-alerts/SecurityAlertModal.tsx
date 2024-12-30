@@ -2,8 +2,9 @@ import React from 'react';
 import { Badge, Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, Table } from 'reactstrap';
 
 import S from 'string';
-import SecurityNotification from '@admin/utils/api/models/notifications/SecurityNotification';
 import { DateTime } from 'luxon';
+
+import SecurityNotification from '@admin/utils/api/models/notifications/SecurityNotification';
 
 interface ISecurityAlertModalProps {
     notification: SecurityNotification;

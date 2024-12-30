@@ -16,11 +16,7 @@ import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import UsersList from '@admin/components/users/UsersList';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps extends IHasRouter {
-
-}
-
-const All: React.FC<IProps> = ({ router: { navigate } }) => {
+const All: React.FC<IHasRouter> = ({ router: { navigate } }) => {
     const [show, setShow] = React.useState('both');
     const [renderCount, setRenderCount] = React.useState(0);
 

@@ -33,17 +33,17 @@ const ProcessOutput = React.forwardRef<IPrivateChannelHandle, ProcessOutputProps
     onProcessCompleted,
     onProcessOutput
 }, ref) => {
-    const handleProcessStartEvent = React.useCallback((data: IProcessBeginData, event: string) => {
+    const handleProcessStartEvent = React.useCallback((data: IProcessBeginData, _event: string) => {
         if (onProcessStarted)
             onProcessStarted(data);
     }, [onProcessStarted]);
 
-    const handleProcessCompleteEvent = React.useCallback((data: IProcessCompleteData, event: string) => {
+    const handleProcessCompleteEvent = React.useCallback((data: IProcessCompleteData, _event: string) => {
         if (onProcessCompleted)
             onProcessCompleted(data);
     }, [onProcessCompleted]);
 
-    const handleProcessOutputEvent = React.useCallback((data: IProcessOutputData, event: string) => {
+    const handleProcessOutputEvent = React.useCallback((data: IProcessOutputData, _event: string) => {
         if (onProcessOutput)
             onProcessOutput(data);
     }, [onProcessOutput]);
@@ -58,6 +58,8 @@ const ProcessOutput = React.forwardRef<IPrivateChannelHandle, ProcessOutputProps
         </>
     );
 });
+
+ProcessOutput.displayName = 'ProcessOutput';
 
 export default ProcessOutput;
 export { ProcessOutputProps, IProcessBeginData, IProcessOutputData, IProcessCompleteData };

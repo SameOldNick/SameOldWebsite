@@ -5,8 +5,7 @@ import { DateTime } from 'luxon';
 
 import ProcessOutput, { IProcessBeginData, IProcessCompleteData, IProcessOutputData, ProcessOutputProps } from './ProcessOutput';
 
-interface ProcessOutputToXTermProps extends ProcessOutputProps {
-}
+type ProcessOutputToXTermProps = ProcessOutputProps;
 
 const ProcessOutputToXTerm: React.FC<ProcessOutputToXTermProps> = ({
     uuid,

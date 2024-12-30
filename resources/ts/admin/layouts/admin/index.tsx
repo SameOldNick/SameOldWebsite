@@ -2,29 +2,17 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 import { Outlet } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { FaCloudUploadAlt, FaComments, FaEnvelope, FaHome, FaList, FaNewspaper, FaTachometerAlt, FaUsers } from 'react-icons/fa';
 import { Container } from 'reactstrap';
 
 import { DateTime } from 'luxon';
 
-import Sidebar from './Sidebar';
-import Item from './sidebar/Item';
-import Dropdown from './sidebar/Dropdown';
-import DropdownItem from './sidebar/DropdownItem';
-
 import Footer from './Footer';
 import Topbar from './Topbar';
 import ScrollToTop from './ScrollToTop';
-import Authorized from '@admin/middleware/Authorized';
 import { createMainMenu } from '@admin/utils/menus/menus';
 import SidebarWrapper from './sidebar/wrapper/SidebarWrapper';
 
-interface IProps {
-}
-
-type TProps = React.PropsWithChildren<IProps>;
-
-const AdminLayout: React.FC<TProps> = ({ }) => {
+const AdminLayout: React.FC<React.PropsWithChildren> = () => {
     const menuItems = createMainMenu();
 
     return (
@@ -63,7 +51,7 @@ const AdminLayout: React.FC<TProps> = ({ }) => {
 
                         {/* Footer */}
                         <Footer>
-                            Copyright &copy; <a href='https://www.sameoldnick.com' target='_blank'>Same Old Nick</a> {DateTime.now().year}
+                            Copyright &copy; <a href='https://www.sameoldnick.com' target='_blank' rel="noreferrer">Same Old Nick</a> {DateTime.now().year}
                         </Footer>
                         {/* End of Footer */}
 

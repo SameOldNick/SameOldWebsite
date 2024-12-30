@@ -9,17 +9,14 @@ import Swal from "sweetalert2";
 import SocialMediaLink from "./SocialMediaLink";
 import SocialMediaLinkPrompt from "./SocialMediaLinkPrompt";
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
+import LoadError from "@admin/components/LoadError";
+import Loader from "@admin/components/Loader";
 
 import { defaultFormatter } from "@admin/utils/response-formatter/factories";
 import awaitModalPrompt from "@admin/utils/modals";
-import LoadError from "@admin/components/LoadError";
-import Loader from "@admin/components/Loader";
 import { addSocialMediaLink, deleteSocialMediaLink, loadSocialMediaLinks, updateSocialMediaLink } from "@admin/utils/api/endpoints/social-media-links";
 
-interface ISocialMediaLinksProps {
-}
-
-const SocialMediaLinks: React.FC<ISocialMediaLinksProps> = ({ }) => {
+const SocialMediaLinks: React.FC = () => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
     const [selected, setSelected] = React.useState<ISocialMediaLink[]>([]);
 

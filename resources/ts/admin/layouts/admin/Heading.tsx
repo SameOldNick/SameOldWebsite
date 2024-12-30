@@ -1,13 +1,11 @@
 import classNames from 'classnames';
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 
 interface IProps extends React.PropsWithChildren {
     title?: string;
 }
 
-interface HeadingTitleProps extends React.PropsWithChildren<React.ComponentProps<'h1'>> {
-
-}
+type HeadingTitleProps = React.PropsWithChildren<React.ComponentProps<'h1'>>;
 
 const HeadingTitle: React.FC<HeadingTitleProps> = ({ children, className, ...props }) => (
     <h1 className={classNames("h3 mb-0 text-gray-800", className)} {...props}>

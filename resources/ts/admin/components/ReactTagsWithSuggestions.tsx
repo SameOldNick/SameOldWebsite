@@ -5,11 +5,9 @@ import { createAuthRequest } from '@admin/utils/api/factories';
 
 type TReactTagsProps = React.ComponentProps<typeof ReactTags>;
 
-interface IReactTagsWrapperProps extends Omit<TReactTagsProps, 'suggestions'> {
+type Props = Omit<TReactTagsProps, 'suggestions'>;
 
-}
-
-const ReactTagsWithSuggestions: React.FC<IReactTagsWrapperProps> = ({ ...props }) => {
+const ReactTagsWithSuggestions: React.FC<Props> = ({ ...props }) => {
     const [suggestions, setSuggestions] = React.useState<TagSuggestion[]>([]);
 
     const getTags = React.useCallback(async () => {

@@ -15,7 +15,7 @@ interface IProps extends IPromptModalProps {
 const DeleteProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled }) => {
     const deleteProject = React.useCallback(async () => {
         try {
-            const response = await createAuthRequest().delete(`/projects/${project.id}`);
+            await createAuthRequest().delete(`/projects/${project.id}`);
 
             await withReactContent(Swal).fire({
                 icon: 'success',

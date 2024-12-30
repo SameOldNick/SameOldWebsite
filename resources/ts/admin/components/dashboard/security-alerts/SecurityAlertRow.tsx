@@ -3,9 +3,9 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Badge, Button } from 'reactstrap';
 
 import S from 'string';
+import { DateTime } from 'luxon';
 
 import SecurityNotification from '@admin/utils/api/models/notifications/SecurityNotification';
-import { DateTime } from 'luxon';
 
 interface ISecurityAlertRowProps {
     badgeColor: string;

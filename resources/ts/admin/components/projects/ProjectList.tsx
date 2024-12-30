@@ -10,11 +10,7 @@ import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 
-interface IProps {
-
-}
-
-const ProjectList: React.FC<IProps> = ({ }) => {
+const ProjectList: React.FC = () => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
     const [show, setShow] = React.useState('both');
 

@@ -1,11 +1,7 @@
 import React from 'react';
 import { IconContext } from 'react-icons';
 
-interface IconProps extends React.PropsWithChildren {
-
-}
-
-const Icon: React.FC<IconProps> = ({ children }) => {
+const Icon: React.FC<React.PropsWithChildren> = ({ children }) => {
     if (children === undefined)
         return <></>;
 
@@ -17,4 +13,3 @@ const Icon: React.FC<IconProps> = ({ children }) => {
 }
 
 export default Icon;
-export { IconProps };

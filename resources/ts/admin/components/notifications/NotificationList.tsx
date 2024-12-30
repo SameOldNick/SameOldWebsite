@@ -16,7 +16,7 @@ import { fetchFromApi } from '@admin/store/slices/notifications';
 import createErrorHandler from '@admin/utils/errors/factory';
 
 const connector = connect(
-    ({ }: RootState) => ({}),
+    null,
     { fetchFromApi }
 );
 

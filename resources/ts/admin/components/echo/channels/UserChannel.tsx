@@ -3,14 +3,13 @@ import { ConnectedProps, connect } from 'react-redux';
 
 import PrivateChannel from './PrivateChannel';
 
-interface IUserChannelProps extends React.PropsWithChildren {
-}
+type UserChannelProps = React.PropsWithChildren;
 
 const connector = connect(
     ({ account }: RootState) => ({ account })
 );
 
-type TProps = ConnectedProps<typeof connector> & IUserChannelProps;
+type TProps = ConnectedProps<typeof connector> & UserChannelProps;
 
 const UserChannel: React.FC<TProps> = ({ account, children }) => {
     if (!account.user) {

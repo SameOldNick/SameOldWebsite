@@ -10,11 +10,7 @@ import MobileNavbarToggle from './topbar/mobile-navbar/MobileNavbarToggle';
 import { createMainMenu } from '@admin/utils/menus/menus';
 import NotificationsIcon from './topbar/NotificationsIcon';
 
-interface TopbarProps {
-
-}
-
-const Topbar: React.FC<TopbarProps> = ({ }) => {
+const Topbar: React.FC = () => {
     const [mobileNavBarOpen, setMobileNavBarOpen] = React.useState(false);
 
     const menuItems = createMainMenu();
@@ -50,4 +46,3 @@ const Topbar: React.FC<TopbarProps> = ({ }) => {
 }
 
 export default Topbar;
-export { TopbarProps };

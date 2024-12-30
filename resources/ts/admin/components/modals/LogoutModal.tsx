@@ -1,11 +1,9 @@
-import { IPromptModalProps } from '@admin/utils/modals';
 import React from 'react';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-interface IProps extends IPromptModalProps {
-}
+import { IPromptModalProps } from '@admin/utils/modals';
 
-const LogoutModal: React.FC<IProps> = ({ onSuccess, onCancelled}) => (
+const LogoutModal: React.FC<IPromptModalProps> = ({ onSuccess, onCancelled }) => (
     <Modal isOpen={true} toggle={() => onCancelled()}>
         <ModalHeader toggle={() => onCancelled()}>
             Ready to Leave?

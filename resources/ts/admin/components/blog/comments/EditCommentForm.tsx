@@ -101,7 +101,7 @@ const EditCommentForm: React.FC<IEditCommentFormProps> = ({ comment, setComment 
                 initialValues={initialValues}
                 onSubmit={handleSave}
             >
-                {({ values, dirty, touched, errors }) => (
+                {({ dirty, touched, errors }) => (
                     <Form>
                         <Heading>
                             <HeadingTitle className='mb-2 mb-md-0'>

@@ -6,11 +6,8 @@ import Heading from '@admin/layouts/admin/Heading';
 import CommentList from '@admin/components/blog/comments/CommentList';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps {
 
-}
-
-const All: React.FC<IProps> = ({ }) => {
+const All: React.FC = () => {
     return (
         <>
             <Helmet>

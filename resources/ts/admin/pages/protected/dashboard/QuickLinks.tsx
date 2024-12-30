@@ -2,7 +2,7 @@ import React from "react";
 import DashboardCard from '@admin/components/dashboard/Card';
 import { ListGroup, ListGroupItem } from "reactstrap";
 
-const QuickLinks: React.FC = ({ }) => {
+const QuickLinks: React.FC = () => {
     return (
         <>
             <DashboardCard>

@@ -27,7 +27,7 @@ const UploadAvatarModal: React.FC<IPromptModalProps> = ({ onSuccess, onCancelled
 
             data.append('avatar', avatar.file);
 
-            const response = await createAuthRequest().post<IMessageResponse>('user/avatar', data, { headers: { 'Content-Type': 'multipart/form-data' } });
+            await createAuthRequest().post<IMessageResponse>('user/avatar', data, { headers: { 'Content-Type': 'multipart/form-data' } });
 
             onSuccess();
         } catch (err) {

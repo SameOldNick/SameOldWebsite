@@ -5,11 +5,7 @@ import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
 import CreateArticleContainer from '@admin/components/blog/articles/containers/create/CreateArticleContainer';
 
-interface IProps {
-
-}
-
-const Create: React.FC<IProps> = ({ }) => {
+const Create: React.FC = () => {
     return (
         <>
             <Helmet>

@@ -17,11 +17,7 @@ import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps extends IHasRouter<'project'> {
-
-}
-
-const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) => {
+const Edit: React.FC<IHasRouter<'project'>> = ({ router: { navigate, params: { project } } }) => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const getProject = React.useCallback(async () => {
@@ -59,7 +55,7 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         return tags.map(({ tag, slug }, index) => ({ label: tag, value: slug ?? index }));
     }, []);
 
-    const onUpdated = React.useCallback(async ({ }: AxiosResponse<IProject>) => {
+    const onUpdated = React.useCallback(async (_response: AxiosResponse<IProject>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Project Updated',
@@ -79,7 +75,7 @@ const Edit: React.FC<IProps> = ({ router: { navigate, params: { project } } }) =
         });
     }, []);
 
-    const onSubmit = React.useCallback(async (project: IProject, { name, description, url, tags }: IOnSubmitValues, { }: FormikHelpers<IFormikValues>) => {
+    const onSubmit = React.useCallback(async (project: IProject, { name, description, url, tags }: IOnSubmitValues, _helpers: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().put<IProject>(`projects/${project.id}`, {
                 title: name,

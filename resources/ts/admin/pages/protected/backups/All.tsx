@@ -10,11 +10,7 @@ import PerformBackupModal, { TBackupTypes } from '@admin/components/backups/back
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps extends IHasRouter {
-
-}
-
-const All: React.FC<IProps> = ({ router: { navigate } }) => {
+const All: React.FC<IHasRouter> = ({ router: { navigate } }) => {
     const [performBackup, setPerformBackup] = React.useState<TBackupTypes | false>(false);
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     const [show, setShow] = React.useState('all');

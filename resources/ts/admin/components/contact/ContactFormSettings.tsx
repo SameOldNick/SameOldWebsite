@@ -33,10 +33,9 @@ export interface IFormikValues {
     honeypot_field_name: string;
 }
 
-interface IProps extends IHasRouter {
-}
+type Props = IHasRouter;
 
-const ContactFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
+const ContactFormSettings: React.FC<Props> = ({ router: { navigate } }) => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const [senderMessageTooltipOpen, setSenderMessageTooltipOpen] = React.useState(false);

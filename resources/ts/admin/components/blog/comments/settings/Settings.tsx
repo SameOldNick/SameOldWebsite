@@ -61,7 +61,7 @@ const Settings: React.FC<ISettingsProps> = ({ settings, onSave }) => {
             initialValues={initialValues}
             onSubmit={handleFormSubmit}
         >
-            {({ values, dirty, touched, errors, isSubmitting }) => (
+            {({ touched, errors, isSubmitting }) => (
                 <>
                     <Form>
                         <FormGroup row>

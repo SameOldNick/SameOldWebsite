@@ -14,18 +14,14 @@ import accountSlice from '@admin/store/slices/account';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import awaitModalPrompt from '@admin/utils/modals';
 
-interface IProps {
-
-}
-
 const connector = connect(
     ({ account }: RootState) => ({ account }),
     (dispatch) => bindActionCreators({ dispatchAuthStage: accountSlice.actions.authStage }, dispatch)
 );
 
-type TProps = ConnectedProps<typeof connector> & IProps;
+type Props = ConnectedProps<typeof connector>;
 
-const User: React.FC<TProps> = ({ account: { user, stage }, dispatchAuthStage }) => {
+const User: React.FC<Props> = ({ account: { user, stage }, dispatchAuthStage }) => {
     const [open, setOpen] = React.useState(false);
 
     const logout = React.useCallback(async () => {

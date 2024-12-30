@@ -41,7 +41,7 @@ export default class LazyLoadImage extends React.Component<IProps, IState> {
             this.loadImage();
     }
 
-    private onImgLoaded(e: Event) {
+    private onImgLoaded(_e: Event) {
         this.setState({ loaded: true });
     }
 
@@ -78,7 +78,7 @@ export default class LazyLoadImage extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const { src, placeholder, onError, ...props } = this.props;
+        const { src, placeholder, onError: _onError, ...props } = this.props;
         const { loaded } = this.state;
 
         if (loaded)

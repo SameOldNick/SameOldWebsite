@@ -1,14 +1,9 @@
 import React from 'react';
 
-interface DividerProps {
-
-}
-
-const Divider: React.FC<DividerProps> = ({ }) => {
+const Divider: React.FC = () => {
     return (
         <hr className="sidebar-divider" />
     );
 }
 
 export default Divider;
-export { DividerProps };

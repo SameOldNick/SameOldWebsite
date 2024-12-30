@@ -6,11 +6,7 @@ import Heading from '@admin/layouts/admin/Heading';
 import TechnologyList from '@admin/components/homepage/technologies/TechnologyList';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps {
-
-}
-
-const Technologies: React.FC<IProps> = ({ }) => {
+const Technologies: React.FC = () => {
     return (
         <>
             <Helmet>

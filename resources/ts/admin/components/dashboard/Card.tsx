@@ -1,21 +1,21 @@
-import classNames from 'classnames';
 import React from 'react';
-import { Card as ReactstrapCard, CardProps, CardBody, CardBodyProps, CardHeader, CardHeaderProps } from 'reactstrap';
+import {
+    Card as ReactstrapCard,
+    CardProps as ReactstrapCardProps,
+    CardBody,
+    CardBodyProps as ReactstrapCardBodyProps,
+    CardHeader,
+    CardHeaderProps as ReactstrapCardHeaderProps
+} from 'reactstrap';
 
-interface ICardProps extends React.PropsWithChildren<CardProps> {
+import classNames from 'classnames';
 
-}
+type CardProps = React.PropsWithChildren<ReactstrapCardProps>;
+type CardHeaderProps = React.PropsWithChildren<ReactstrapCardBodyProps>;
+type CardBodyProps = React.PropsWithChildren<ReactstrapCardHeaderProps>;
 
-interface ICardHeaderProps extends React.PropsWithChildren<CardHeaderProps> {
-
-}
-
-interface ICardBodyProps extends React.PropsWithChildren<CardBodyProps> {
-
-}
-
-export default class Card extends React.Component<ICardProps> {
-    public static Header: React.FC<ICardHeaderProps> = ({ className, children, ...props }) => (
+export default class Card extends React.Component<CardProps> {
+    public static Header: React.FC<CardHeaderProps> = ({ className, children, ...props }) => (
         <CardHeader className={classNames("py-3", className)} {...props}>
             <h6 className="m-0 fw-bold text-primary">
                 {children}
@@ -23,13 +23,13 @@ export default class Card extends React.Component<ICardProps> {
         </CardHeader>
     );
 
-    public static Body: React.FC<ICardBodyProps> = ({ children, ...props }) => (
+    public static Body: React.FC<CardBodyProps> = ({ children, ...props }) => (
         <CardBody {...props}>
             {children}
         </CardBody>
     );
 
-    constructor(props: Readonly<ICardProps>) {
+    constructor(props: Readonly<CardProps>) {
         super(props);
 
         this.state = {
