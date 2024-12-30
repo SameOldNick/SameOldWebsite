@@ -20,19 +20,19 @@ interface ISkillProps extends IHasIconsFile {
 const Skill: React.FC<ISkillProps> = ({ lookupIcon, skill, selected, onSelected, onEditClicked, onDeleteClicked }) => {
     const icon = React.useMemo(() => lookupIcon(skill.icon), [skill]);
 
-    const handleClick = (_e: React.MouseEvent<HTMLElement>) => {
+    const handleClick = React.useCallback((_e: React.MouseEvent<HTMLElement>) => {
         onSelected(!selected)
-    }
+    }, [onSelected]);
 
-    const handleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleEditClick = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         onEditClicked();
-    }
+    }, [onEditClicked]);
 
-    const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleDeleteClick = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         onDeleteClicked();
-    }
+    }, [onDeleteClicked]);
 
     return (
         <Col
