@@ -5,10 +5,9 @@ import classNames from 'classnames';
 
 import ErrorMessage from '@admin/components/blog/articles/editor/form/controls/fields/ErrorMessage';
 import ArticleEditorContext from '@admin/components/blog/articles/editor/ArticleEditorContext';
-import MarkdownEditor, { IMarkdownEditorProps } from '@admin/components/MarkdownEditor';
+import MarkdownEditor, { UploadImagesCallback } from '@admin/components/MarkdownEditor';
 
-type TUploadImagesCallback = NonNullable<IMarkdownEditorProps['uploadImages']>;
-type TMarkdownImage = ArrayElement<Awaited<ReturnType<TUploadImagesCallback>>>;
+type TMarkdownImage = ArrayElement<Awaited<ReturnType<UploadImagesCallback>>>;
 
 interface ContentInputs {
     content: string;

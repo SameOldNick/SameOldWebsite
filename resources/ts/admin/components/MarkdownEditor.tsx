@@ -9,11 +9,11 @@ import gemoji from '@bytemd/plugin-gemoji';
 import highlight from '@bytemd/plugin-highlight';
 import mediumZoom from '@bytemd/plugin-medium-zoom';
 
-interface IMarkdownEditorProps extends EditorProps {
+type Props = EditorProps;
 
-}
+type UploadImagesCallback = NonNullable<EditorProps['uploadImages']>;
 
-const MarkdownEditor: React.FC<IMarkdownEditorProps> = ({ plugins, ...props }) => {
+const MarkdownEditor: React.FC<Props> = ({ plugins, ...props }) => {
     const activatedPlugins = React.useMemo(() => {
         if (plugins === undefined)
             return [
@@ -37,4 +37,4 @@ const MarkdownEditor: React.FC<IMarkdownEditorProps> = ({ plugins, ...props }) =
 }
 
 export default MarkdownEditor;
-export { IMarkdownEditorProps };
+export { Props, UploadImagesCallback };
