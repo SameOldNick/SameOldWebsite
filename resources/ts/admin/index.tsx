@@ -8,6 +8,7 @@ import ConsoleDriver from '@admin/utils/logger/drivers/ConsoleDriver';
 import reportWebVitals from '@admin/reportWebVitals';
 
 import App from '@admin/App';
+import { Settings } from 'luxon';
 
 // Setup logger
 logger.setDriver(new ConsoleDriver());
@@ -21,6 +22,8 @@ if (import.meta.env.VITE_APP_DEBUG) {
     logger.info(`ReactDOM version: ${ReactDOM.version}`);
 
 }
+
+Settings.throwOnInvalid = true;
 
 injects();
 
