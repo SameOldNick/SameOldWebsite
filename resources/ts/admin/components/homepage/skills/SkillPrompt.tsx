@@ -9,7 +9,7 @@ import IconSelectorModal from '@admin/components/icon-selector/IconSelectorModal
 import { IIconType } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
 import awaitModalPrompt, { IPromptModalProps } from '@admin/utils/modals';
-import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
+import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/withIconsFile';
 
 interface IFormikValues {
     skill: string;

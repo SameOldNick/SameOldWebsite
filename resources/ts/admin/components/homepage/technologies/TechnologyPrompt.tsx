@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import IconSelectorModal from '@admin/components/icon-selector/IconSelectorModal';
 import { IIconType } from '@admin/components/icon-selector/utils';
 import Icon from '@admin/components/icon-selector/Icon';
-import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/WithIcons';
+import { IHasIconsFile, withIconsFile } from '@admin/components/icon-selector/withIconsFile';
 
 import awaitModalPrompt, { IPromptModalProps } from '@admin/utils/modals';
 
