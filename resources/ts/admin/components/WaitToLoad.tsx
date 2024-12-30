@@ -4,7 +4,8 @@ export interface IWaitToLoadHelpers {
     reload: () => Promise<void>;
 }
 
-export type TWaitToLoadCallback<T> = (param: T | undefined, err: unknown | undefined, helpers: IWaitToLoadHelpers) => React.ReactNode;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TWaitToLoadCallback<T> = (param: T | undefined, err: any, helpers: IWaitToLoadHelpers) => React.ReactNode;
 
 interface IProps<T> {
     callback: () => Promise<T>;
