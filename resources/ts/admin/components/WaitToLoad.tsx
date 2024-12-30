@@ -90,10 +90,13 @@ function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime, log = 
     }), [load]);
 
     const renderChildren = React.useCallback((state: TIsNotLoadingStates<TReturnValue>) => {
-        if (isChildrenCallback(children) && isFinishedState(state)) {
-            return children(state.returnValue, undefined, helpers);
-        } else if (isErrorState(state) && isChildrenCallback(children)) {
-            return children(undefined, state.error, helpers);
+        // A typeof check is used because isChildrenCallback doesn't narrow type down to TWaitToLoadCallback...
+        if (typeof children === 'function') {
+            if (isFinishedState(state)) {
+                return children(state.returnValue, undefined, helpers);
+            } else if (isErrorState(state)) {
+                return children(undefined, state.error, helpers);
+            }
         } else {
             return children;
         }
