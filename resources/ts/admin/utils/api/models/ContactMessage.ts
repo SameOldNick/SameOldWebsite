@@ -61,7 +61,7 @@ export default class ContactMessage {
      * @readonly
      * @memberof ContactMessage
      */
-    public get confirmedAt() {
+    public get confirmedAt(): DateTime<true> | null {
         return this.message.confirmed_at ? DateTime.fromISO(this.message.confirmed_at) : null;
     }
 

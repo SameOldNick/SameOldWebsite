@@ -3,6 +3,7 @@ import { Badge, Button, Col, FormGroup, Input, Label, Modal, ModalBody, ModalFoo
 
 import ContactMessage from '@admin/utils/api/models/ContactMessage';
 import { IPromptModalProps } from '@admin/utils/modals';
+import { DateTime } from 'luxon';
 
 interface IModalProps extends IPromptModalProps {
     message: ContactMessage;
@@ -14,25 +15,30 @@ const MessageModal: React.FC<IModalProps> = ({ message, onSuccess }) => {
     const badges = React.useMemo(() => {
         const badges = [];
 
-        if (message.confirmedAt) {
+        const {
+            confirmedAt,
+            expiresAt
+        } = message;
+
+        if (confirmedAt) {
             badges.push(
-                <Badge title={message.confirmedAt.toLocaleString()} color='success' className='me-1'>
-                    {`Confirmed ${message.confirmedAt.isAfter() ? message.confirmedAt.fromNow() : message.confirmedAt.toNow()}`}
+                <Badge title={confirmedAt.toLocaleString()} color='success' className='me-1'>
+                    {`Confirmed ${confirmedAt > DateTime.now() ? confirmedAt.toRelative() : confirmedAt.toRelative({ base: DateTime.now() })}`}
                 </Badge>
             );
         }
 
-        if (message.expiresAt) {
-            if (message.expiresAt.isAfter()) {
+        if (expiresAt) {
+            if (expiresAt > DateTime.now()) {
                 badges.push(
-                    <Badge title={message.expiresAt.toLocaleString()} color='info' className='me-1'>
-                        {`Expires ${message.expiresAt.fromNow()}`}
+                    <Badge title={expiresAt.toLocaleString(DateTime.DATETIME_MED)} color='info' className='me-1'>
+                        {`Expires ${expiresAt.toRelative()}`}
                     </Badge>
                 );
             } else {
                 badges.push(
-                    <Badge title={message.expiresAt.toLocaleString()} color='warning' className='me-1'>
-                        {`Expired ${message.expiresAt.toNow()}`}
+                    <Badge title={expiresAt.toLocaleString(DateTime.DATETIME_MED)} color='warning' className='me-1'>
+                        {`Expired ${expiresAt.toRelative({ base: DateTime.now() })}`}
                     </Badge>
                 );
             }
