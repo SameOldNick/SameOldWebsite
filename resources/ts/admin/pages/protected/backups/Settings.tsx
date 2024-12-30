@@ -5,7 +5,7 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 import Heading from '@admin/layouts/admin/Heading';
 import BackupFormSettings from '@admin/components/backups/BackupFormSettings';
 
-import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
+import { withRouter, IHasRouter } from '@admin/components/hoc/withRouter';
 import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 const Settings: React.FC<IHasRouter> = ({ router }) => {

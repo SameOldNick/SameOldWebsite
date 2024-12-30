@@ -5,7 +5,7 @@ import { Alert as ReactstrapAlert, Button, Col, Container, Row } from 'reactstra
 import Heading from '@admin/layouts/admin/Heading';
 import Alert from '@admin/components/alerts/Alert';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
-import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
+import { withRouter, IHasRouter } from '@admin/components/hoc/withRouter';
 import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import Loader from '@admin/components/Loader';

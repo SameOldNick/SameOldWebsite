@@ -5,7 +5,7 @@ import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
+import { withRouter, IHasRouter } from '@admin/components/hoc/withRouter';
 import Loader from '@admin/components/Loader';
 import EditCommentForm from '@admin/components/blog/comments/EditCommentForm';
 

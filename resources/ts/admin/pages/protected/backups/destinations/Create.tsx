@@ -5,7 +5,7 @@ import { Card, CardBody, Col, Container, Row } from 'reactstrap';
 import Heading from '@admin/layouts/admin/Heading';
 import BackupFormSettings from '@admin/components/backups/BackupFormSettings';
 
-import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
+import { withRouter, IHasRouter } from '@admin/components/hoc/withRouter';
 import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 import BackupDestinations from '@admin/components/backups/destinations/BackupDestinations';
 import BackupDestinationForm, { BackupDestinationFormValues } from '@admin/components/backups/destinations/BackupDestinationForm';
