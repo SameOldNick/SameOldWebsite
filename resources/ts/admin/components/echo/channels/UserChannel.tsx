@@ -20,7 +20,7 @@ const UserChannel: React.FC<TProps> = ({ account, children }) => {
 
     return (
         <>
-            <PrivateChannel channel={`App.Models.User.${account.user.id}`}>
+            <PrivateChannel channel={`App.Models.User.${account.user.user.id}`}>
                 {children}
             </PrivateChannel>
         </>
