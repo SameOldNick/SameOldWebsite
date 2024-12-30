@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
-import { IStoredNotification } from '../hoc/WithNotifications';
+import { IStoredNotification } from '../hoc/withNotifications';
 
 import { DateTime } from 'luxon';
 import { FaEnvelope, FaEnvelopeOpen, FaExternalLinkAlt } from 'react-icons/fa';

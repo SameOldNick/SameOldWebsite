@@ -3,7 +3,7 @@ import { FaBell } from 'react-icons/fa';
 import { Badge, NavItem, NavLink } from 'reactstrap';
 import { NavLink as ReactRouterNavLink } from 'react-router-dom';
 
-import withNotifications, { IHasNotifications } from '@admin/components/hoc/WithNotifications';
+import withNotifications, { IHasNotifications } from '@admin/components/hoc/withNotifications';
 
 const NotificationsIcon: React.FC<IHasNotifications> = ({ notifications }) => {
     const displayCount = React.useMemo(() => {

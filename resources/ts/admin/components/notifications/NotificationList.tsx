@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 
 import NotificationItem, { INotificationItem } from './NotificationItem';
-import withNotifications, { IHasNotifications, IStoredNotification } from '@admin/components/hoc/WithNotifications';
+import withNotifications, { IHasNotifications } from '@admin/components/hoc/withNotifications';
 import Loader from '@admin/components/Loader';
 
 import { bulkDestroy, bulkUpdate, markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
