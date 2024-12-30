@@ -11,10 +11,7 @@ import Remove from './RemoveAvatarModal';
 import awaitModalPrompt from '@admin/utils/modals';
 import CurrentUserAvatar from '@admin/components/avatar/CurrentUserAvatar';
 
-interface IProps {
-}
-
-const Avatar: React.FC<IProps> = ({ }) => {
+const Avatar: React.FC = () => {
     const [avatarKey, setAvatarKey] = React.useState(0);
 
     const handleUploadClicked = React.useCallback(async () => {

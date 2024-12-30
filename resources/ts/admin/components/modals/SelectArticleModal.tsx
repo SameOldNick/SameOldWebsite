@@ -55,7 +55,7 @@ const SelectArticleModal: React.FC<TSelectArticleModalProps> = ({ existing, allo
     const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 
     const [selected, setSelected] = React.useState<Article | undefined>(existing);
-    const [show, setShow] = React.useState('all');
+    const [show, _setShow] = React.useState('all');
     const [search, setSearch] = React.useState('');
 
     const loadArticles = React.useCallback(async (link?: string) => {

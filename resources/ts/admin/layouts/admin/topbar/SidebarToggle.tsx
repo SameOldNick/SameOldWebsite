@@ -5,11 +5,7 @@ import { Button } from 'reactstrap';
 
 import classNames from 'classnames';
 
-interface IProps {
-
-}
-
-const SidebarToggle: React.FC<IProps> = ({ }) => {
+const SidebarToggle: React.FC = () => {
     const [toggled, setToggled] = React.useState(false);
 
     const onToggle = React.useCallback((e: React.MouseEvent) => {

@@ -10,10 +10,7 @@ import ActivityNotification from '@admin/utils/api/models/notifications/Activity
 import { all, markRead, markUnread } from '@admin/utils/api/endpoints/notifications';
 import RecentActivityRow from './RecentActivityRow';
 
-interface IRecentActivityProps {
-}
-
-const RecentActivity: React.FC<IRecentActivityProps> = ({ }) => {
+const RecentActivity: React.FC = () => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const fetchRecentActivity = React.useCallback(async () => {

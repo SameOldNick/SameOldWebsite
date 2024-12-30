@@ -16,12 +16,7 @@ import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import awaitModalPrompt from '@admin/utils/modals';
 import { addSkill, deleteSkill, loadSkills, updateSkill } from '@admin/utils/api/endpoints/skills';
 
-
-interface IProps {
-
-}
-
-const SkillList: React.FC<IProps> = ({ }) => {
+const SkillList: React.FC = () => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
     const [selected, setSelected] = React.useState<ISkill[]>([]);
 

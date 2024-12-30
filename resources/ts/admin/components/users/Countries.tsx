@@ -3,12 +3,11 @@ import { Input, InputProps } from "reactstrap";
 
 import { createAuthRequest } from "@admin/utils/api/factories";
 
-interface ICountriesProps extends Omit<InputProps, 'type' | 'ref'> {
-}
+type CountriesProps = Omit<InputProps, 'type' | 'ref'>;
 
 type TStateCountries = Record<string, ICountry>;
 
-const Countries = React.forwardRef<Input, ICountriesProps>(({ ...props }, ref) => {
+const Countries = React.forwardRef<Input, CountriesProps>(({ ...props }, ref) => {
     const [countries, setCountries] = React.useState<TStateCountries>({});
 
     const fetchCountries = React.useCallback(async () => {

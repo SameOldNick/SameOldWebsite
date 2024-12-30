@@ -6,11 +6,7 @@ import Heading from '@admin/layouts/admin/Heading';
 import MessageList from '@admin/components/messages/MessageList';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps {
-
-}
-
-const Messages: React.FC<IProps> = ({ }) => {
+const Messages: React.FC = () => {
     return (
         <>
             <Helmet>

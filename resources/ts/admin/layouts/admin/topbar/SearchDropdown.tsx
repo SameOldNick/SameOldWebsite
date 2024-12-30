@@ -4,11 +4,7 @@ import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 import SearchForm from './SearchForm';
 
-interface IProps {
-
-}
-
-const SearchDropdown: React.FC<IProps> = ({ }) => {
+const SearchDropdown: React.FC = () => {
     const [open, setOpen] = React.useState(false);
 
     return (

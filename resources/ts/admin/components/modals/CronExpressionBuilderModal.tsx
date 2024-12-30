@@ -75,7 +75,7 @@ const CronExpressionBuilderModal: React.FC<CronExpressionBuilderModalProps> = ({
                                 className='text-center'
                                 value={cronExpression}
                             />
-                            <FormText>See <a href="https://crontab.guru/" target='_blank'>crontab.guru</a> for information on what this translates to.</FormText>
+                            <FormText>See <a href="https://crontab.guru/" target='_blank' rel="noreferrer">crontab.guru</a> for information on what this translates to.</FormText>
                         </FormGroup>
 
                         <FormGroup>

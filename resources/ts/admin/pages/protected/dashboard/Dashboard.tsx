@@ -23,11 +23,7 @@ import QuickLinks from './QuickLinks';
 
 import { fetchPopularBrowsers, fetchPopularLinks, fetchVisitorsOverTime } from '@admin/utils/api/endpoints/dashboard';
 
-interface IProps {
-
-}
-
-const Dashboard: React.FC<IProps> = ({ }) => {
+const Dashboard: React.FC = () => {
     const [visitors, setVisitors] = React.useState<TApiState<IChartVisitors, unknown>>({ status: 'none' });
 
     const tryFetchVisitors = React.useCallback(async () => {

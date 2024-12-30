@@ -6,11 +6,7 @@ import Heading from '@admin/layouts/admin/Heading';
 import SkillList from '@admin/components/homepage/skills/SkillList';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps {
-
-}
-
-const Skills: React.FC<IProps> = ({ }) => {
+const Skills: React.FC = () => {
     return (
         <>
             <Helmet>

@@ -58,7 +58,7 @@ const SingleCommentActions: React.FC<ICommentActionsProps> = ({ comment, onStatu
     );
 }
 
-const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle, setUser }) => {
+const SingleComment: React.FC<ICommentProps> = ({ comment, onUpdated, setArticle }) => {
     const handleStatusChangeClicked = React.useCallback(async (status: TCommentStatuses) => {
         try {
             if (!comment.comment.id)

@@ -21,11 +21,7 @@ interface CurrentArticle {
     tags: Tag[];
 }
 
-interface IProps extends IHasRouter<'article' | 'revision'> {
-
-}
-
-const EditRevision: React.FC<IProps> = ({ router: { navigate, params, location } }) => {
+const EditRevision: React.FC<IHasRouter<'article' | 'revision'>> = ({ router: { navigate, params, location } }) => {
     const waitToLoadArticleRef = React.useRef<IWaitToLoadHandle>(null);
 
     const [currentArticle, setCurrentArticle] = React.useState<CurrentArticle>();

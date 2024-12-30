@@ -24,7 +24,7 @@ type TProps = IProps & IHasIconsFile;
 const SkillPrompt: React.FC<TProps> = ({ lookupIcon, existing, onSuccess, onCancelled }) => {
     const [selectedIcon, setSelectedIcon] = React.useState<IIconType | undefined>(existing !== undefined ? lookupIcon(existing.icon) : undefined);
 
-    const handleSubmit = React.useCallback(async (values: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = React.useCallback(async (values: IFormikValues, _helpers: FormikHelpers<IFormikValues>) => {
         await onSuccess({
             id: existing?.id,
             icon: `${selectedIcon?.prefix}-${selectedIcon?.name}`,

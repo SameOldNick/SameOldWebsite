@@ -20,12 +20,7 @@ import Comment from '@admin/utils/api/models/Comment';
 
 import awaitModalPrompt from '@admin/utils/modals';
 
-
-interface IProps {
-
-}
-
-const CommentList: React.FC<IProps> = ({ }) => {
+const CommentList: React.FC = () => {
     const waitToLoadCommentsRef = React.useRef<IWaitToLoadHandle>(null);
     const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 

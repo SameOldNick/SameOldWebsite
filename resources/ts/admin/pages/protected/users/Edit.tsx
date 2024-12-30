@@ -18,11 +18,7 @@ import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import User from '@admin/utils/api/models/User';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps extends IHasRouter<'user'> {
-
-}
-
-const Edit: React.FC<IProps> = ({ router }) => {
+const Edit: React.FC<IHasRouter<'user'>> = ({ router }) => {
     const [renderCount, setRenderCount] = React.useState(0);
     const formikRef = React.useRef<TForwardedRef>(null);
 

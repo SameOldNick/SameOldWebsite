@@ -10,9 +10,7 @@ interface TitleInputs {
     onTitleChanged: (title: string) => void;
 }
 
-type TitleProps = {};
-
-const Title: React.FC<TitleProps> = ({ }) => {
+const Title: React.FC = () => {
     const { inputs: { title, onTitleChanged } } = React.useContext(ArticleEditorContext);
 
     return (
@@ -35,4 +33,4 @@ const Title: React.FC<TitleProps> = ({ }) => {
 }
 
 export default Title;
-export { TitleInputs, TitleProps };
+export { TitleInputs };

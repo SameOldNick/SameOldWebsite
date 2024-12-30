@@ -3,10 +3,7 @@ import React from 'react';
 import Layout, { BigText, Button, Content, Heading, SmallText } from '@admin/layouts/error';
 import { FaArrowLeft, FaHome } from 'react-icons/fa';
 
-interface IProps {
-}
-
-const FourZeroThree: React.FC<IProps> = ({ }) => {
+const FourZeroThree: React.FC = () => {
     const goBack = React.useCallback((e: React.MouseEvent) => {
         e.preventDefault();
 

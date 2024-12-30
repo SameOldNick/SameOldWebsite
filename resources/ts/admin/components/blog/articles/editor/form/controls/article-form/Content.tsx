@@ -16,9 +16,7 @@ interface ContentInputs {
     onUploadImage: (files: File[]) => Promise<TMarkdownImage[]>;
 }
 
-type ContentProps = {};
-
-const Content: React.FC<ContentProps> = ({ }) => {
+const Content: React.FC = () => {
     const {
         inputs: {
             content,
@@ -51,4 +49,4 @@ const Content: React.FC<ContentProps> = ({ }) => {
 }
 
 export default Content;
-export { TMarkdownImage, ContentInputs, ContentProps };
+export { TMarkdownImage, ContentInputs };

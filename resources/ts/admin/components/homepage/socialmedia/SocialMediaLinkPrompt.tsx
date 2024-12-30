@@ -21,7 +21,7 @@ interface ISocialMediaLinkPromptEditProps {
 type TProps = (ISocialMediaLinkPromptAddProps | ISocialMediaLinkPromptEditProps) & IPromptModalProps<string>;
 
 const SocialMediaLinkPrompt: React.FC<TProps> = ({ link, onSuccess, onCancelled }) => {
-    const handleSubmit = React.useCallback(async ({ link }: IFormikValues, { }: FormikHelpers<IFormikValues>) => {
+    const handleSubmit = React.useCallback(async ({ link }: IFormikValues, _helpers: FormikHelpers<IFormikValues>) => {
         await onSuccess(link);
     }, [onSuccess]);
 

@@ -3,13 +3,13 @@ import { FaEnvelope, FaEnvelopeOpen, FaExternalLinkAlt } from 'react-icons/fa';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
 import classNames from 'classnames';
+import { DateTime } from 'luxon';
 
 import Article from '@admin/utils/api/models/Article';
 import Comment from '@admin/utils/api/models/Comment';
 import User from '@admin/utils/api/models/User';
 
 import ActivityNotification, { ActivityEvent } from '@admin/utils/api/models/notifications/ActivityNotification';
-import { DateTime } from 'luxon';
 
 interface IRecentActivityRowProps {
     activity: ActivityNotification;

@@ -24,7 +24,7 @@ interface NotificationItemProps {
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
-    notification: { color, message, dateTime, readAt, link },
+    notification: { message, dateTime, readAt, link },
     selected,
     onSelect,
     onMarkClicked

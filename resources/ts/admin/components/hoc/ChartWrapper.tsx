@@ -11,9 +11,7 @@ import {
     ArcElement,
 } from 'chart.js';
 
-interface IChartWrapperProps extends React.PropsWithChildren {
-
-}
+type ChartWrapperProps = React.PropsWithChildren;
 
 let hasInitialized = false;
 
@@ -32,7 +30,7 @@ if (!hasInitialized) {
     hasInitialized = true;
 }
 
-const ChartWrapper: React.FC<IChartWrapperProps> = ({ children }) => {
+const ChartWrapper: React.FC<ChartWrapperProps> = ({ children }) => {
     return (
         <>
             {children}

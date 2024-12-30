@@ -10,11 +10,7 @@ import SocialMediaLinks from '@admin/components/homepage/socialmedia/SocialMedia
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 import Authorized from '@admin/middleware/Authorized';
 
-interface IProps extends IHasRouter {
-
-}
-
-const Profile: React.FC<IProps> = ({ router }) => {
+const Profile: React.FC<IHasRouter> = ({ router }) => {
     return (
         <>
             <Helmet>

@@ -17,7 +17,7 @@ const LockUserModal: React.FC<IProps> = ({ user, onSuccess, onCancelled }) => {
     // TODO: Move to seperate API class.
     const lockUser = React.useCallback(async () => {
         try {
-            const response = await createAuthRequest().delete(`/users/${user.user.id}`);
+            await createAuthRequest().delete(`/users/${user.user.id}`);
 
             await withReactContent(Swal).fire({
                 icon: 'success',

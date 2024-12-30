@@ -11,10 +11,7 @@ import SecurityNotification from '@admin/utils/api/models/notifications/Security
 
 import { all } from '@admin/utils/api/endpoints/notifications';
 
-interface ISecurityAlertsProps {
-}
-
-const SecurityAlerts: React.FC<ISecurityAlertsProps> = ({ }) => {
+const SecurityAlerts: React.FC = () => {
     const [selectedAlert, setSelectedAlert] = React.useState<SecurityNotification>();
 
     const determineBadgeColorForSeverity = React.useCallback((severity: string): string => {

@@ -10,12 +10,9 @@ const connector = connect(
     { setAuthStage: account.actions.authStage }
 );
 
-interface IProps {
-}
+type Props = ConnectedProps<typeof connector> & React.PropsWithChildren;
 
-type TProps = ConnectedProps<typeof connector> & React.PropsWithChildren<IProps>;
-
-const SingleSignOn = ({ stage, setAuthStage }: TProps) => {
+const SingleSignOn: React.FC<Props> = ({ stage, setAuthStage }) => {
     const [loaded, setLoaded] = React.useState(false);
 
     React.useEffect(() => {

@@ -8,11 +8,7 @@ import BackupFormSettings from '@admin/components/backups/BackupFormSettings';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps extends IHasRouter {
-
-}
-
-const Settings: React.FC<IProps> = ({ router }) => {
+const Settings: React.FC<IHasRouter> = ({ router }) => {
     return (
         <>
             <Helmet>

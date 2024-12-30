@@ -5,8 +5,7 @@ import classNames from 'classnames';
 import { viewportSize } from '@admin/utils';
 import Toggle from './sidebar/Toggle';
 
-interface SidebarProps extends React.PropsWithChildren<React.ComponentProps<'ul'>> {
-}
+type SidebarProps = React.PropsWithChildren<React.ComponentProps<'ul'>>;
 
 const Sidebar: React.FC<SidebarProps> = ({ children, className, ...extraProps }) => {
     const sidebarRef = React.useRef<HTMLUListElement>(null);

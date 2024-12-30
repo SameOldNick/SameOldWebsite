@@ -13,11 +13,7 @@ import axios from 'axios';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 
-interface IProps {
-
-}
-
-const Settings: React.FC<IProps> = ({ }) => {
+const Settings: React.FC = () => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const loadSettings = React.useCallback(async () => {

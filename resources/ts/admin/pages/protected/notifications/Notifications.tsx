@@ -5,11 +5,7 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 import Heading from '@admin/layouts/admin/Heading';
 import NotificationList from '@admin/components/notifications/NotificationList';
 
-interface IProps {
-
-}
-
-const Notifications: React.FC<IProps> = ({ }) => {
+const Notifications: React.FC = () => {
     return (
         <>
             <Helmet>

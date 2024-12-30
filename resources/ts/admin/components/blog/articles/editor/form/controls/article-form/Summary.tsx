@@ -13,9 +13,7 @@ interface SummaryInputs {
     onSummaryChanged: (summary: string) => void;
 }
 
-type SummaryProps = {};
-
-const Summary: React.FC<SummaryProps> = ({ }) => {
+const Summary: React.FC = () => {
     const { inputs: { autoGenerateSummary, summary, onAutoGenerateSummaryChanged, onSummaryChanged } } = React.useContext(ArticleEditorContext);
 
     return (
@@ -54,4 +52,4 @@ const Summary: React.FC<SummaryProps> = ({ }) => {
 }
 
 export default Summary;
-export { SummaryInputs, SummaryProps };
+export { SummaryInputs };

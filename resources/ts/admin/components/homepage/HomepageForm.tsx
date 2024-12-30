@@ -24,10 +24,9 @@ export interface IFormikValues {
     biography: string;
 }
 
-interface IProps extends IHasRouter {
-}
+type Props = IHasRouter;
 
-const HomepageForm: React.FC<IProps> = (props) => {
+const HomepageForm: React.FC<Props> = (props) => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
 
     const schema = React.useMemo(() =>
@@ -61,7 +60,7 @@ const HomepageForm: React.FC<IProps> = (props) => {
         return initialValues;
     }, []);
 
-    const onUpdated = React.useCallback(async (response: AxiosResponse<IPageMetaData[]>) => {
+    const onUpdated = React.useCallback(async (_response: AxiosResponse<IPageMetaData[]>) => {
         await withReactContent(Swal).fire({
             icon: 'success',
             title: 'Updated',
@@ -81,7 +80,7 @@ const HomepageForm: React.FC<IProps> = (props) => {
         });
     }, []);
 
-    const handleHomepageFormSubmitted = React.useCallback(async ({ name, headline, location, biography }: IFormikValues, helpers: FormikHelpers<IFormikValues>) => {
+    const handleHomepageFormSubmitted = React.useCallback(async ({ name, headline, location, biography }: IFormikValues, _helpers: FormikHelpers<IFormikValues>) => {
         try {
             const response = await createAuthRequest().post<IPageMetaData[]>('/pages/homepage', {
                 name,

@@ -10,7 +10,6 @@ import Loader from '@admin/components/Loader';
 import PaginatedTable, { PaginatedTableHandle } from '@admin/components/paginated-table/PaginatedTable';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
-
 import Comment from '@admin/utils/api/models/Comment';
 import { IPromptModalProps } from '@admin/utils/modals';
 
@@ -56,7 +55,7 @@ const SelectCommentModal: React.FC<TSelectCommentModalProps> = ({ existing, allo
     const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 
     const [selected, setSelected] = React.useState<Comment | undefined>(existing);
-    const [show, setShow] = React.useState('all');
+    const [show, _setShow] = React.useState('all');
     const [search, setSearch] = React.useState('');
 
     const loadComments = React.useCallback(async (link?: string) => {

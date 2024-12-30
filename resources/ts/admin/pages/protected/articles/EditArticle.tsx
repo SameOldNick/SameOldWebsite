@@ -10,11 +10,7 @@ import LoadArticleError from '@admin/components/blog/articles/containers/edit/Lo
 
 import { loadArticle } from '@admin/utils/api/endpoints/articles';
 
-interface IProps extends IHasRouter<'article'> {
-
-}
-
-const EditArticle: React.FC<IProps> = ({ router: { params, navigate } }) => {
+const EditArticle: React.FC<IHasRouter<'article'>> = ({ router: { params, navigate } }) => {
     const waitToLoadArticleRef = React.useRef<IWaitToLoadHandle>(null);
 
     const load = React.useCallback(async () => {

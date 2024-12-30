@@ -15,7 +15,7 @@ interface IProps extends IPromptModalProps {
 const RestoreProjectModal: React.FC<IProps> = ({ project, onSuccess, onCancelled }) => {
     const restoreProject = React.useCallback(async () => {
         try {
-            const response = await createAuthRequest().post(`/projects/restore/${project.id}`, {});
+            await createAuthRequest().post(`/projects/restore/${project.id}`, {});
 
             await withReactContent(Swal).fire({
                 icon: 'success',

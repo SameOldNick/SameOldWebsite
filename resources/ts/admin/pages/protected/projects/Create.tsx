@@ -15,11 +15,7 @@ import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 
-interface IProps {
-
-}
-
-const Create: React.FC<IProps> = ({ }) => {
+const Create: React.FC = () => {
     const navigate = useNavigate();
 
     const onCreated = React.useCallback(async (project: IProject) => {
