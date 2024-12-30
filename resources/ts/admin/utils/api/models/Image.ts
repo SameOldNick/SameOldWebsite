@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 
 import File from "./File";
-import { TMarkdownImage } from "@admin/components/blog/article-form/Content";
+import { TMarkdownImage } from "@admin/components/blog/articles/editor/form/controls/article-form/Content";
 
 export default class Image {
 
