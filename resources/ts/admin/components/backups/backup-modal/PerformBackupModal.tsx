@@ -120,3 +120,4 @@ const PerformBackupModal: React.FC<IPerformBackupModalProps> = ({ type, onClose 
 }
 
 export default PerformBackupModal;
+export type { TBackupTypes };
