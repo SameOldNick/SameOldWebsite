@@ -199,7 +199,7 @@ class DateRangeHelper implements Arrayable, ArrayAccess, Countable
             fn ($value) => $value >= 0
         );
 
-        //asort($differences);
+        // asort($differences);
         $sorted = Arr::sort($differences);
 
         return key($differences);

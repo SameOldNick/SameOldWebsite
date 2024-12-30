@@ -30,7 +30,7 @@ class SchemaMixin
             $columns = array_column($structure, 'name');
 
             // Get the table's current indexes
-            //$indexes = DB::select(DB::raw("PRAGMA index_list($table)"));
+            // $indexes = DB::select(DB::raw("PRAGMA index_list($table)"));
             $indexes = array_filter($this->getIndexes($table), function ($index) use ($withoutIndexes) {
                 return ! in_array($index['name'], $withoutIndexes);
             });

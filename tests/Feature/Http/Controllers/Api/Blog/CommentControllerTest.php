@@ -160,7 +160,7 @@ class CommentControllerTest extends TestCase
                 ],
             ]);
 
-        //$this->assertNotEmpty($response->json('data'));
+        // $this->assertNotEmpty($response->json('data'));
     }
 
     /**
@@ -197,7 +197,7 @@ class CommentControllerTest extends TestCase
                 ],
             ]);
 
-        //$this->assertNotEmpty($response->json('data'));
+        // $this->assertNotEmpty($response->json('data'));
     }
 
     /**
