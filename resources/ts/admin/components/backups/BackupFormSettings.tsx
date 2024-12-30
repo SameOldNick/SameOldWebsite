@@ -11,7 +11,7 @@ import S from 'string';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
-import { IHasRouter } from '@admin/components/hoc/WithRouter';
+import { IHasRouter } from '@admin/components/hoc/withRouter';
 import FormikAlerts from '@admin/components/alerts/hoc/FormikAlerts';
 import CronExpressionBuilderModal from '@admin/components/modals/CronExpressionBuilderModal';
 

@@ -10,7 +10,7 @@ import axios from 'axios';
 
 import Heading from '@admin/layouts/admin/Heading';
 import { IWaitToLoadHelpers } from '@admin/components/WaitToLoad';
-import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
+import { withRouter, IHasRouter } from '@admin/components/hoc/withRouter';
 
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 import UsersList from '@admin/components/users/UsersList';

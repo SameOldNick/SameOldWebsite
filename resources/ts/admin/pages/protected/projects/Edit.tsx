@@ -8,7 +8,7 @@ import axios, { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
 
 import Heading from '@admin/layouts/admin/Heading';
-import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
+import { withRouter, IHasRouter } from '@admin/components/hoc/withRouter';
 import ProjectForm, { IFormikValues, IOnSubmitValues } from '@admin/components/projects/ProjectForm';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';

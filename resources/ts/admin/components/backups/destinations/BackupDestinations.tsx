@@ -5,7 +5,7 @@ import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
-import { IHasRouter } from '@admin/components/hoc/WithRouter';
+import { IHasRouter } from '@admin/components/hoc/withRouter';
 import Loader from '@admin/components/Loader';
 import BackupDestinationsTable from '@admin/components/backups/destinations/table/BackupDestinations';
 

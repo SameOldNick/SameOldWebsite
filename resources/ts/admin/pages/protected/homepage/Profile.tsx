@@ -5,7 +5,7 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 import Heading from '@admin/layouts/admin/Heading';
 import Avatar from '@admin/components/homepage/avatar';
 import HomepageForm from '@admin/components/homepage/HomepageForm';
-import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
+import { withRouter, IHasRouter } from '@admin/components/hoc/withRouter';
 import SocialMediaLinks from '@admin/components/homepage/socialmedia/SocialMediaLinks';
 import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 import Authorized from '@admin/middleware/Authorized';

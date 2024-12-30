@@ -1,10 +1,9 @@
 import React from "react";
 import { NavigateFunction, Params, useLocation, useNavigate, useParams } from "react-router-dom";
-import { Location } from "@remix-run/router";
 
 export interface IHasRouter<ParamsOrKey extends string = string> {
     router: {
-        location: Location;
+        location: ReturnType<typeof useLocation>;
         navigate: NavigateFunction;
         params: Readonly<Params<ParamsOrKey>>;
     }
@@ -18,7 +17,7 @@ export interface IHasRouter<ParamsOrKey extends string = string> {
  * @returns Wrapper that sends router prop when called
  */
 export function withRouter<TProps extends IHasRouter>(Component: React.ComponentType<TProps>) {
-    const element: React.FC = (props: any) => {
+    const element: React.FC<any> = (props) => {
         const location = useLocation();
         const navigate = useNavigate();
         const params = useParams();
@@ -30,5 +29,5 @@ export function withRouter<TProps extends IHasRouter>(Component: React.Component
 
     element.displayName = `withRouter(${Component.displayName || Component.name})`
 
-    return element;
+    return element as React.FC<Omit<TProps, keyof IHasRouter>>;
 }
