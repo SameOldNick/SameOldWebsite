@@ -6,7 +6,7 @@ import Heading from '@admin/layouts/admin/Heading';
 import BackupFormSettings from '@admin/components/backups/BackupFormSettings';
 
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 import BackupDestinations from '@admin/components/backups/destinations/BackupDestinations';
 import BackupDestinationForm, { BackupDestinationFormValues } from '@admin/components/backups/destinations/BackupDestinationForm';
 import createErrorHandler from '@admin/utils/errors/factory';

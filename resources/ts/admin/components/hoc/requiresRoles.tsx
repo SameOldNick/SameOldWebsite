@@ -19,10 +19,10 @@ interface IOptions {
  * @returns High ordered component
  */
 export function requiresRoles<TProps extends object>(Component: React.ComponentType<TProps>, roles: string[], { any = false, loading, unauthorized }: IOptions = {}) {
-    const element: React.FC = (props: any) => {
+    const element: React.FC<TProps> = (props) => {
         return (
             <Authorized roles={roles} hasAll={any !== false} oneOf={any === false} loading={loading} unauthorized={unauthorized}>
-                <Component {...props}  />
+                <Component {...props} />
             </Authorized>
         );
     }

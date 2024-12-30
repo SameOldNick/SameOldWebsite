@@ -7,7 +7,7 @@ import Avatar from '@admin/components/homepage/avatar';
 import HomepageForm from '@admin/components/homepage/HomepageForm';
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
 import SocialMediaLinks from '@admin/components/homepage/socialmedia/SocialMediaLinks';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 import Authorized from '@admin/middleware/Authorized';
 
 const Profile: React.FC<IHasRouter> = ({ router }) => {

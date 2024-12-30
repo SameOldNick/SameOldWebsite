@@ -15,7 +15,7 @@ import Loader from '@admin/components/Loader';
 
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 const Edit: React.FC<IHasRouter<'project'>> = ({ router: { navigate, params: { project } } }) => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);

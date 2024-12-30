@@ -8,7 +8,7 @@ import BackupList from '@admin/components/backups/BackupList';
 import PerformBackupModal, { TBackupTypes } from '@admin/components/backups/backup-modal/PerformBackupModal';
 
 import { withRouter, IHasRouter } from '@admin/components/hoc/WithRouter';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 const All: React.FC<IHasRouter> = ({ router: { navigate } }) => {
     const [performBackup, setPerformBackup] = React.useState<TBackupTypes | false>(false);

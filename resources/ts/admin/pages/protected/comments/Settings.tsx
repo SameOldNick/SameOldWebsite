@@ -4,7 +4,7 @@ import { Card, CardBody } from 'reactstrap';
 
 import Heading from '@admin/layouts/admin/Heading';
 import CommentSettings, { ICommentSettings } from '@admin/components/blog/comments/settings/Settings';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import Loader from '@admin/components/Loader';
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';

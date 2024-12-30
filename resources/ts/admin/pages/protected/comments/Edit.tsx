@@ -13,7 +13,7 @@ import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
 
 import Comment from '@admin/utils/api/models/Comment';
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 const Edit = withRouter(({ router }: IHasRouter<'comment'>) => {
     const [comment, setComment] = React.useState<Comment>();

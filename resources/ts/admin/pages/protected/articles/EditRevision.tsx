@@ -2,8 +2,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Tag } from 'react-tag-autocomplete';
 
-import { requiresRolesForPage } from '@admin/components/hoc/RequiresRoles';
 import { IHasRouter, withRouter } from '@admin/components/hoc/WithRouter';
+import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 import WaitToLoad, { IWaitToLoadHandle } from '@admin/components/WaitToLoad';
 import Loader from '@admin/components/Loader';
