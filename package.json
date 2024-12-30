@@ -97,7 +97,7 @@
         "rehype-sanitize": "^6.0.0",
         "sass": "^1.83.0",
         "shiki": "^1.24.4",
-        "store2": "^2.14.3",
+        "store2": "^2.14.4",
         "string": "^3.3.3",
         "sweetalert2": "^11.15.0",
         "sweetalert2-react-content": "^5.0.0",
