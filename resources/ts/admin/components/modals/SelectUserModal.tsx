@@ -53,7 +53,7 @@ const SelectUserModal: React.FC<TSelectUserModalProps> = ({ existing, allowAll, 
     const paginatedTableRef = React.useRef<PaginatedTableHandle>(null);
 
     const [selected, setSelected] = React.useState<User | undefined>(existing);
-    const [show, setShow] = React.useState('both');
+    const [show, _setShow] = React.useState('both');
     const [search, setSearch] = React.useState('');
 
     const loadUsers = React.useCallback(async (link?: string) => {

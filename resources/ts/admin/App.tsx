@@ -12,11 +12,7 @@ import storeFactory from '@admin/store/index';
 import echoFactory from '@admin/utils/echo/echo';
 import { setStore } from '@admin/utils/api/factories';
 
-interface IProps {
-
-}
-
-const App: React.FC<IProps> = ({ }) => {
+const App: React.FC = () => {
     const store = React.useMemo(() => {
         const store = storeFactory();
 
