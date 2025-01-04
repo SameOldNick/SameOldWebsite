@@ -39,14 +39,4 @@ class ModerationService
 
         return $flags;
     }
-
-    /**
-     * Gets moderators
-     *
-     * @return Moderator[]
-     */
-    public function getModerators(): array
-    {
-        return $this->factory->build();
-    }
 }
