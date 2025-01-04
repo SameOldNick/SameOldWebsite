@@ -4,7 +4,6 @@ namespace App\Components\Moderator\Factories;
 
 use App\Components\Moderator\Contracts\ModeratorsFactory;
 use App\Components\Moderator\Moderators\Contact as Moderators;
-use App\Components\Settings\Facades\PageSettings;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Arr;
 
@@ -53,7 +52,7 @@ class ContactModeratorsFactory implements ModeratorsFactory
     protected function getEnabledModerators(): array
     {
         return [
-            'blacklist'
+            'blacklist',
         ];
     }
 
