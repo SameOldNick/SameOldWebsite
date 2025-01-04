@@ -149,10 +149,14 @@ const ContactFormSettings: React.FC<Props> = ({ router: { navigate } }) => {
 
     return (
         <>
-            <WaitToLoad ref={waitToLoadRef} loading={<Loader display={{ type: 'over-element' }} />} callback={getMetaData}>
-                {(metaData, err) => (
+            <WaitToLoad
+                ref={waitToLoadRef}
+                loading={<Loader display={{ type: 'over-element' }} />}
+                callback={getMetaData}
+                onError={handleError}
+            >
+                {(metaData) => (
                     <>
-                        {err !== undefined && handleError(err)}
                         {metaData !== undefined && (
                             <>
                                 <Formik<IFormikValues>
