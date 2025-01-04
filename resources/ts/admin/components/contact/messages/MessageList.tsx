@@ -126,6 +126,35 @@ const MessageList: React.FC = () => {
 
     }, [reload]);
 
+    const handleDenyClicked = React.useCallback(async (message: ContactMessage) => {
+        try {
+            if (!await confirmPrompt(`This will blacklist the email address "${message.message.email}" from the contact form.`))
+                return;
+
+            const response = await createAuthRequest().post<Record<'success', string>>(`/pages/contact/blacklist`, { email: message.message.email });
+
+            await withReactContent(Swal).fire({
+                title: 'Success!',
+                text: response.data.success,
+                icon: 'success'
+            });
+
+        } catch (err) {
+            logger.error(err);
+
+            const message = defaultFormatter().parse(axios.isAxiosError(err) ? err.response : undefined)
+
+            await withReactContent(Swal).fire({
+                title: 'Oops...',
+                text: `An error occurred: ${message}`,
+                icon: 'error'
+            });
+        } finally {
+            reload();
+        }
+
+    }, [reload]);
+
     const handleDeleteClicked = React.useCallback(async (message: ContactMessage) => {
         try {
             if (!await confirmPrompt(`This will remove contact message with ID "${message.message.uuid}".`))
@@ -399,6 +428,7 @@ const MessageList: React.FC = () => {
                                                                     onViewClicked={() => handleViewClicked(message)}
                                                                     onMarkUnconfirmedClicked={() => handleMarkUnconfirmedClicked(message)}
                                                                     onMarkConfirmedClicked={() => handleMarkConfirmedClicked(message)}
+                                                                    onDenyClicked={() => handleDenyClicked(message)}
                                                                     onRemoveClicked={() => handleDeleteClicked(message)}
                                                                 />
                                                             ))}

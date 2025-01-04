@@ -51,8 +51,12 @@ Route::namespace(Api::class)->group(function () {
             Route::get('/homepage', [Api\Homepage\MetaDataController::class, 'show']);
             Route::post('/homepage', [Api\Homepage\MetaDataController::class, 'update']);
 
-            Route::get('/contact', [Api\Contact\MetaDataController::class, 'show']);
-            Route::post('/contact', [Api\Contact\MetaDataController::class, 'update']);
+            Route::prefix('/contact')->group(function () {
+                Route::get('/', [Api\Contact\MetaDataController::class, 'show']);
+                Route::post('/', [Api\Contact\MetaDataController::class, 'update']);
+
+                Route::apiResource('/blacklist', Api\Contact\BlacklistController::class)->except('update')->parameter('blacklist', 'emailBlacklist');
+            });
         });
 
         Route::prefix('/blog')->group(function () {

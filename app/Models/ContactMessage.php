@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Components\Moderator\Concerns\CreatesModeratorsFactory;
+use App\Components\Moderator\Contracts\Moderatable;
 use App\Enums\ContactMessageStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -22,10 +24,11 @@ use Illuminate\Support\Facades\URL;
  *
  * @method static \Database\Factories\ContactMessageFactory factory($count = null, $state = [])
  */
-class ContactMessage extends Model
+class ContactMessage extends Model implements Moderatable
 {
     use HasFactory;
     use HasUuids;
+    use CreatesModeratorsFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -93,7 +96,7 @@ class ContactMessage extends Model
      */
     protected function status(): Attribute
     {
-        return Attribute::get(fn () => match (true) {
+        return Attribute::get(fn() => match (true) {
             isset($this->confirmed_at) => ContactMessageStatus::Confirmed,
             isset($this->expires_at) && $this->expires_at->isFuture() => ContactMessageStatus::Unconfirmed,
             isset($this->expires_at) && $this->expires_at->isPast() => ContactMessageStatus::Expired,
@@ -109,5 +112,13 @@ class ContactMessage extends Model
     public static function getDefaultExpiresAt()
     {
         return now()->addHours(2);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getModerators(): array
+    {
+        return $this->createModeratorsFactory('contact')->build();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Main;
 
+use App\Components\Moderator\ModerationService;
 use App\Events\Contact\ContactSubmissionConfirmed;
 use App\Events\Contact\ContactSubmissionRequiresConfirmation;
 use App\Http\Controllers\Controller;
@@ -9,6 +10,9 @@ use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
 use App\Traits\Controllers\HasPage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class ContactController extends Controller
 {
@@ -33,7 +37,7 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function process(ContactRequest $request)
+    public function process(ModerationService $moderationService, ContactRequest $request)
     {
         $requiresConfirmation = false;
 
@@ -65,6 +69,17 @@ class ContactController extends Controller
 
             $message->save();
         });
+
+        $flags = $moderationService->moderate($message);
+
+        if (!empty($flags)) {
+            Log::info("Contact message from '{$request->email}' was flagged.", $flags);
+
+            return response(view('main.contact', [
+                'error' => app()->isProduction() ? __('Your contact message has been flagged.') : Arr::first($flags)['reason'],
+                'settings' => $this->getSettings()->toArray(),
+            ]), 422);
+        }
 
         if ($requiresConfirmation) {
             ContactSubmissionRequiresConfirmation::dispatch($message);

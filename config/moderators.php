@@ -96,6 +96,23 @@ return [
         ],
     ],
 
+    // Contact builder configuration
+    'contact' => [
+        // Factory class for creating database moderators
+        'factory' => \App\Components\Moderator\Factories\ContactModeratorsFactory::class,
+
+        'options' => [
+            'moderators' => [
+                [
+                    // Blacklist moderator configuration
+                    'moderator' => \App\Components\Moderator\Moderators\Contact\BlacklistModerator::class,
+
+                    'enabled' => true,
+                ],
+            ],
+        ],
+    ],
+
     // Fallback builder configuration
     'fallback' => [
         // Factory class for creating fallback moderators
