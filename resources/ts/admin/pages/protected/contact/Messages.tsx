@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import Heading from '@admin/layouts/admin/Heading';
 
-import MessageList from '@admin/components/messages/MessageList';
+import MessageList from '@admin/components/contact/messages/MessageList';
 import { requiresRolesForPage } from '@admin/components/hoc/requiresRoles';
 
 const Messages: React.FC = () => {
