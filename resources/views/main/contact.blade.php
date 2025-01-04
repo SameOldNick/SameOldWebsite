@@ -20,6 +20,14 @@
                                 </div>
                             @endisset
 
+                            @isset($error)
+                                <div class="mb-4">
+                                    <x-alert type="danger">
+                                        {{ $error }}
+                                    </x-alert>
+                                </div>
+                            @endisset
+
                             @if ($errors->any())
                                 <div class="mb-4">
                                     <x-alerts type="danger" :messages="$errors->all()"></x-alerts>
