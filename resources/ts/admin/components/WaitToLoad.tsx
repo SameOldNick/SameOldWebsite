@@ -10,6 +10,7 @@ export type TWaitToLoadCallback<T> = (param: T | undefined, err: any, helpers: I
 interface IProps<T> {
     callback: () => Promise<T>;
     loading: React.ReactNode;
+    onError?: (err: unknown) => void;
     maxTime?: number;
     children?: React.ReactNode | TWaitToLoadCallback<T>;
     log?: boolean;
@@ -36,7 +37,16 @@ export interface IWaitToLoadHandle {
     load: () => void;
 }
 
-function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime, log = true }: IProps<TReturnValue>, ref: React.ForwardedRef<IWaitToLoadHandle>) {
+function WaitToLoad<TReturnValue>({
+    loading,
+    onError,
+    children,
+    callback,
+    maxTime,
+    log = true
+}: IProps<TReturnValue>,
+    ref: React.ForwardedRef<IWaitToLoadHandle>
+) {
     let waitTimeout: Timeout | undefined;
 
     const [state, setState] = React.useState<TState<TReturnValue>>({ loading: true });
@@ -96,6 +106,10 @@ function WaitToLoad<TReturnValue>({ loading, children, callback, maxTime, log = 
             if (isFinishedState(state)) {
                 return children(state.returnValue, undefined, helpers);
             } else if (isErrorState(state)) {
+                if (onError) {
+                    onError(state.error);
+                }
+
                 return children(undefined, state.error, helpers);
             }
         } else {
