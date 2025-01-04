@@ -4,7 +4,6 @@ namespace App\Components\Moderator\Moderators\Contact;
 
 use App\Components\Moderator\Contracts\Moderator;
 use App\Components\Moderator\Exceptions\ContactFlagException;
-use App\Components\Moderator\Exceptions\FlagCommentException;
 use App\Models\ContactMessage;
 use App\Models\EmailBlacklist;
 use Illuminate\Support\Str;
