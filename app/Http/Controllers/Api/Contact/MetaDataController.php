@@ -12,6 +12,14 @@ class MetaDataController extends Controller
     use HasPage;
 
     /**
+     * Initializes controller
+     */
+    public function __construct()
+    {
+        $this->middleware('can:role-change-contact-settings');
+    }
+
+    /**
      * Displays contact form settings.
      */
     public function show()
