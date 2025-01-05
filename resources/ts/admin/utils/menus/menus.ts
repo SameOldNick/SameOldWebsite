@@ -62,6 +62,13 @@ const createMainMenu = (): MenuItem[] => {
                         roles: ['change_contact_settings']
                     }
                 ),
+                new LinkMenuItem(
+                    'Blacklist',
+                    '/admin/contact/blacklist',
+                    {
+                        roles: ['change_contact_settings']
+                    }
+                ),
             ],
             {
                 icon: FaEnvelope,

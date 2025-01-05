@@ -31,6 +31,7 @@ import EditUser from '@admin/pages/protected/users/Edit';
 
 import ContactMessages from './protected/contact/Messages';
 import ContactSettings from './protected/contact/Settings';
+import ContactBlacklist from './protected/contact/Blacklist';
 
 import Profile from './protected/homepage/Profile';
 import Skills from './protected/homepage/Skills';
@@ -80,6 +81,7 @@ const Pages: React.FC = () => {
                         <Route path='contact'>
                             <Route path='messages' element={<ContactMessages />} />
                             <Route path='settings' element={<ContactSettings />} />
+                            <Route path='blacklist' element={<ContactBlacklist />} />
                             <Route index element={<Navigate to='messages' />} />
                         </Route>
 

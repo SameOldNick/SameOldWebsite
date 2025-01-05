@@ -214,6 +214,15 @@ declare global {
         auth_type: 'password' | 'key';
         username: string;
     }
+
+    interface IBlacklistEntry {
+        id: number;
+        input: 'name' | 'email';
+        type: 'regex' | 'static';
+        value: string;
+        created_at: string;
+        updated_at: string;
+    }
 }
 
 export { };
