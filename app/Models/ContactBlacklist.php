@@ -33,7 +33,7 @@ class ContactBlacklist extends Model
 
     public function matches(string $value, bool $ignoreCase = false): bool
     {
-        $pattern = $this->isRegexPattern() ? $this->value : '/^'.preg_quote($this->value).'$/';
+        $pattern = $this->isRegexPattern() ? $this->value : '/^' . preg_quote($this->value) . '$/';
 
         return preg_match($ignoreCase ? Str::lower($pattern) : $pattern, $value) > 0;
     }
