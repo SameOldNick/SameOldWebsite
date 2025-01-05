@@ -6,6 +6,7 @@ import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { DateTime } from 'luxon';
+import classNames from 'classnames';
 
 import MessageRow from './MessageRow';
 import MessageModal from './MessageModal';
@@ -18,7 +19,6 @@ import ContactMessage from '@admin/utils/api/models/ContactMessage';
 import awaitModalPrompt from '@admin/utils/modals';
 import { createAuthRequest } from '@admin/utils/api/factories';
 import { defaultFormatter } from '@admin/utils/response-formatter/factories';
-import classNames from 'classnames';
 
 const MessageList: React.FC = () => {
     const waitToLoadRef = React.useRef<IWaitToLoadHandle>(null);
