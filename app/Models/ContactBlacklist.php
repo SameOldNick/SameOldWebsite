@@ -18,6 +18,7 @@ class ContactBlacklist extends Model
     protected $table = 'contact_blacklist';
 
     protected $fillable = ['input', 'value'];
+
     protected $appends = ['type'];
 
     public function isRegexPattern()
@@ -33,13 +34,13 @@ class ContactBlacklist extends Model
 
     public function matches(string $value, bool $ignoreCase = false): bool
     {
-        $pattern = $this->isRegexPattern() ? $this->value : '/^' . preg_quote($this->value) . '$/';
+        $pattern = $this->isRegexPattern() ? $this->value : '/^'.preg_quote($this->value).'$/';
 
         return preg_match($ignoreCase ? Str::lower($pattern) : $pattern, $value) > 0;
     }
 
     protected function type(): Attribute
     {
-        return Attribute::get(fn() => $this->isRegexPattern() ? 'regex' : 'static');
+        return Attribute::get(fn () => $this->isRegexPattern() ? 'regex' : 'static');
     }
 }

@@ -63,7 +63,6 @@ class BlacklistController extends Controller
     /**
      * Bulk destroy entries.
      *
-     * @param Request $request
      * @return mixed
      */
     public function bulkDestroy(Request $request)
@@ -73,8 +72,8 @@ class BlacklistController extends Controller
             'entries.*' => [
                 'required',
                 'numeric',
-                Rule::exists(ContactBlacklist::class, 'id')
-            ]
+                Rule::exists(ContactBlacklist::class, 'id'),
+            ],
         ]);
 
         // Use a transaction to ensure atomicity
