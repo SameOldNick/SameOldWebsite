@@ -288,7 +288,7 @@ const MessageList: React.FC = () => {
             reload();
         }
 
-    }, [reload]);
+    }, [reload, selected]);
 
     const handleDisplayOptionsFormSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
