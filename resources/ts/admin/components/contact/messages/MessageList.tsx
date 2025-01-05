@@ -303,7 +303,7 @@ const MessageList: React.FC = () => {
     const isAllSelected = React.useCallback((messages: IContactMessage[]) => {
         const uuids = messages.map((message) => message.uuid);
 
-        return selected.filter((value) => uuids.includes(value)).length === uuids.length;
+        return selected.length > 0 && selected.filter((value) => uuids.includes(value)).length === uuids.length;
     }, [selected]);
 
     const handleSelectAll = React.useCallback((e: React.ChangeEvent<HTMLInputElement>, messages: IContactMessage[]) => {
