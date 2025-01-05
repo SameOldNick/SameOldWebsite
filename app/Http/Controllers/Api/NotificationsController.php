@@ -163,7 +163,7 @@ class NotificationsController extends Controller
             // Rollback the transaction if anything fails
             DB::rollBack();
 
-            return response()->json(['error' => 'Failed to update notifications.'], 500);
+            return response()->json(['error' => 'Failed to delete notifications.'], 500);
         }
 
         return [
