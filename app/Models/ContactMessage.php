@@ -26,9 +26,9 @@ use Illuminate\Support\Facades\URL;
  */
 class ContactMessage extends Model implements Moderatable
 {
+    use CreatesModeratorsFactory;
     use HasFactory;
     use HasUuids;
-    use CreatesModeratorsFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -96,7 +96,7 @@ class ContactMessage extends Model implements Moderatable
      */
     protected function status(): Attribute
     {
-        return Attribute::get(fn() => match (true) {
+        return Attribute::get(fn () => match (true) {
             isset($this->confirmed_at) => ContactMessageStatus::Confirmed,
             isset($this->expires_at) && $this->expires_at->isFuture() => ContactMessageStatus::Unconfirmed,
             isset($this->expires_at) && $this->expires_at->isPast() => ContactMessageStatus::Expired,
@@ -115,7 +115,7 @@ class ContactMessage extends Model implements Moderatable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getModerators(): array
     {

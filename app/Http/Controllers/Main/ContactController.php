@@ -12,7 +12,6 @@ use App\Traits\Controllers\HasPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
 
 class ContactController extends Controller
 {
@@ -72,7 +71,7 @@ class ContactController extends Controller
 
         $flags = $moderationService->moderate($message);
 
-        if (!empty($flags)) {
+        if (! empty($flags)) {
             Log::info("Contact message from '{$request->email}' was flagged.", $flags);
 
             return response(view('main.contact', [
