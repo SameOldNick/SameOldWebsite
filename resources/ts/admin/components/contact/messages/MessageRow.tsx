@@ -14,7 +14,8 @@ interface IRowProps extends Omit<React.HTMLAttributes<HTMLTableRowElement>, 'chi
     onViewClicked: () => void;
     onMarkUnconfirmedClicked: () => void;
     onMarkConfirmedClicked: () => void;
-    onDenyClicked: () => void;
+    onDenyNameClicked: () => void;
+    onDenyEmailClicked: () => void;
     onRemoveClicked: () => void;
 }
 
@@ -25,7 +26,8 @@ const MessageRow: React.FC<IRowProps> = ({
     onViewClicked,
     onMarkUnconfirmedClicked,
     onMarkConfirmedClicked,
-    onDenyClicked,
+    onDenyNameClicked,
+    onDenyEmailClicked,
     onRemoveClicked,
     ...props
 }) => {
@@ -57,7 +59,8 @@ const MessageRow: React.FC<IRowProps> = ({
                         <DropdownItem onClick={onViewClicked}><FaExternalLinkAlt />{' '}View</DropdownItem>
                         {message.status !== 'unconfirmed' && <DropdownItem onClick={onMarkUnconfirmedClicked}><FaRegTimesCircle />{' '}Mark Unconfirmed</DropdownItem>}
                         {message.status !== 'confirmed' && <DropdownItem onClick={onMarkConfirmedClicked}><FaRegCheckCircle />{' '}Mark Confirmed</DropdownItem>}
-                        <DropdownItem onClick={onDenyClicked}><FaBan />{' '}Deny E-mail</DropdownItem>
+                        <DropdownItem onClick={onDenyNameClicked}><FaBan />{' '}Ban Name</DropdownItem>
+                        <DropdownItem onClick={onDenyEmailClicked}><FaBan />{' '}Ban E-mail</DropdownItem>
                         <DropdownItem onClick={onRemoveClicked}><FaTrash />{' '}Remove</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>

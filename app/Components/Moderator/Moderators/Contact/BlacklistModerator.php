@@ -5,6 +5,7 @@ namespace App\Components\Moderator\Moderators\Contact;
 use App\Components\Moderator\Contracts\Moderator;
 use App\Components\Moderator\Exceptions\ContactFlagException;
 use App\Components\Moderator\Exceptions\FlagCommentException;
+use App\Models\ContactBlacklist;
 use App\Models\ContactMessage;
 use App\Models\EmailBlacklist;
 use Illuminate\Support\Str;
@@ -31,11 +32,21 @@ class BlacklistModerator implements Moderator
      */
     public function moderate($contactMessage): void
     {
+        $name = $this->normalizeName($contactMessage->name);
         $email = $this->normalizeEmail($contactMessage->email);
 
-        if ($this->isBlacklisted($email)) {
-            throw new ContactFlagException("The email address {$email} is banned.");
+        if ($this->isBlacklisted($name, $email, $this->config['ignoreCase'] ?? false)) {
+            throw new ContactFlagException("The name '{$contactMessage->name}' or email address '{$contactMessage->email}' is banned.");
         }
+    }
+
+    protected function normalizeName(string $name)
+    {
+        // Transform multiple spaces or dashes into one space
+        $name = preg_replace('/([\s+\-]+)/', ' ', $name);
+
+        // Change to loweracse
+        return Str::lower($name);
     }
 
     protected function normalizeEmail(string $email)
@@ -47,8 +58,14 @@ class BlacklistModerator implements Moderator
         return Str::lower($email);
     }
 
-    protected function isBlacklisted(string $email)
+    protected function isBlacklisted(string $name, string $email, bool $ignoreCase)
     {
-        return EmailBlacklist::where('email', $email)->count() > 0;
+        foreach (ContactBlacklist::all() as $model) {
+            if ($model->matches($model->input === 'name' ? $name : $email, $ignoreCase)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -126,12 +126,17 @@ const MessageList: React.FC = () => {
 
     }, [reload]);
 
-    const handleDenyClicked = React.useCallback(async (message: ContactMessage) => {
+    const handleDenyClicked = React.useCallback(async (input: 'name' | 'email', message: ContactMessage) => {
         try {
-            if (!await confirmPrompt(`This will blacklist the email address "${message.message.email}" from the contact form.`))
+            const value = input === 'name' ? message.message.name : message.message.email;
+
+            if (!await confirmPrompt(`Any messages from "${value}" will be denied.`))
                 return;
 
-            const response = await createAuthRequest().post<Record<'success', string>>(`/pages/contact/blacklist`, { email: message.message.email });
+            const response = await createAuthRequest().post<Record<'success', string>>(`/pages/contact/blacklist`, {
+                input,
+                value
+            });
 
             await withReactContent(Swal).fire({
                 title: 'Success!',
@@ -428,7 +433,8 @@ const MessageList: React.FC = () => {
                                                                     onViewClicked={() => handleViewClicked(message)}
                                                                     onMarkUnconfirmedClicked={() => handleMarkUnconfirmedClicked(message)}
                                                                     onMarkConfirmedClicked={() => handleMarkConfirmedClicked(message)}
-                                                                    onDenyClicked={() => handleDenyClicked(message)}
+                                                                    onDenyNameClicked={() => handleDenyClicked('name', message)}
+                                                                    onDenyEmailClicked={() => handleDenyClicked('email', message)}
                                                                     onRemoveClicked={() => handleDeleteClicked(message)}
                                                                 />
                                                             ))}

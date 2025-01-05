@@ -108,6 +108,8 @@ return [
                     'moderator' => \App\Components\Moderator\Moderators\Contact\BlacklistModerator::class,
 
                     'enabled' => true,
+
+                    'ignoreCase' => true,
                 ],
             ],
         ],
