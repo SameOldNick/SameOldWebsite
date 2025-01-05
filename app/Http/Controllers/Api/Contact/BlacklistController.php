@@ -35,7 +35,7 @@ class BlacklistController extends Controller
         ]);
 
         foreach (['pattern', 'value'] as $field) {
-            if (!empty($validated[$field])) {
+            if (! empty($validated[$field])) {
                 ContactBlacklist::create([
                     'input' => $validated['input'],
                     'value' => $validated[$field],
@@ -45,8 +45,8 @@ class BlacklistController extends Controller
 
         return response([
             'success' => __('Added to :field blacklist.', [
-                'field' => $validated['input'] === 'email' ? 'email address' : 'name'
-            ])
+                'field' => $validated['input'] === 'email' ? 'email address' : 'name',
+            ]),
         ], 201);
     }
 
@@ -67,7 +67,7 @@ class BlacklistController extends Controller
             'success' => __('The value ":value" was removed from the :field blacklist.', [
                 'value' => $entry->value,
                 'field' => $entry->input === 'email' ? 'email address' : 'name',
-            ])
+            ]),
         ], 201);
     }
 }
