@@ -3,7 +3,6 @@
 namespace App\Components\Moderator;
 
 use App\Components\Moderator\Contracts\Moderatable;
-use App\Components\Moderator\Contracts\Moderator;
 use App\Components\Moderator\Exceptions\FlagException;
 
 class ModerationService
