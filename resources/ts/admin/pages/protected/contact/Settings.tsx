@@ -12,10 +12,10 @@ const Settings: React.FC<IHasRouter> = ({ router }) => {
     return (
         <>
             <Helmet>
-                <title>Contact Settings</title>
+                <title>Manage Contact Settings</title>
             </Helmet>
 
-            <Heading title='Contact Settings' />
+            <Heading title='Manage Contact Settings' />
 
             <Row className='justify-content-center mb-3'>
                 <Col md={8}>
