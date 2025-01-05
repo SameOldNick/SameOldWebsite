@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Exception;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -17,6 +18,7 @@ class ContactBlacklist extends Model
     protected $table = 'contact_blacklist';
 
     protected $fillable = ['input', 'value'];
+    protected $appends = ['type'];
 
     public function isRegexPattern()
     {
@@ -34,5 +36,10 @@ class ContactBlacklist extends Model
         $pattern = $this->isRegexPattern() ? $this->value : '/^'.preg_quote($this->value).'$/';
 
         return preg_match($ignoreCase ? Str::lower($pattern) : $pattern, $value) > 0;
+    }
+
+    protected function type(): Attribute
+    {
+        return Attribute::get(fn() => $this->isRegexPattern() ? 'regex' : 'static');
     }
 }
