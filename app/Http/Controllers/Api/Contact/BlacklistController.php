@@ -22,7 +22,7 @@ class BlacklistController extends Controller
      */
     public function index()
     {
-        return ContactBlacklist::all();
+        return ContactBlacklist::query()->paginate();
     }
 
     /**
