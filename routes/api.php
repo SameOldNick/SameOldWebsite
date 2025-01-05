@@ -55,7 +55,7 @@ Route::namespace(Api::class)->group(function () {
                 Route::get('/', [Api\Contact\MetaDataController::class, 'show']);
                 Route::post('/', [Api\Contact\MetaDataController::class, 'update']);
 
-                Route::apiResource('/blacklist', Api\Contact\BlacklistController::class)->except('update')->parameter('blacklist', 'emailBlacklist');
+                Route::apiResource('/blacklist', Api\Contact\BlacklistController::class)->except('update')->parameter('blacklist', 'entry');
             });
         });
 

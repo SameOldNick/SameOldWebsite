@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\Contact;
 
 use App\Http\Controllers\Controller;
-use App\Models\EmailBlacklist;
+use App\Models\ContactBlacklist;
+use App\Rules\RegexPattern;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -19,7 +20,7 @@ class BlacklistController extends Controller
      */
     public function index()
     {
-        return EmailBlacklist::all();
+        return ContactBlacklist::all();
     }
 
     /**
@@ -28,27 +29,45 @@ class BlacklistController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'email' => ['required', 'email', Rule::unique(EmailBlacklist::class)],
+            'input' => ['required', Rule::in(['name', 'email'])],
+            'pattern' => ['nullable', 'string', 'max:255', new RegexPattern, Rule::unique(ContactBlacklist::class, 'value')],
+            'value' => ['nullable', 'string', 'max:255', Rule::when($request->input === 'email', ['email']), Rule::unique(ContactBlacklist::class, 'value')],
         ]);
 
-        EmailBlacklist::create(['email' => $validated['email']]);
+        foreach (['pattern', 'value'] as $field) {
+            if (!empty($validated[$field])) {
+                ContactBlacklist::create([
+                    'input' => $validated['input'],
+                    'value' => $validated[$field],
+                ]);
+            }
+        }
 
-        return response(['success' => __('The email address ":email" was blacklisted.', ['email' => $validated['email']])], 201);
+        return response([
+            'success' => __('Added to :field blacklist.', [
+                'field' => $validated['input'] === 'email' ? 'email address' : 'name'
+            ])
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(EmailBlacklist $emailBlacklist)
+    public function show(ContactBlacklist $entry)
     {
-        return $emailBlacklist;
+        return $entry;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmailBlacklist $emailBlacklist)
+    public function destroy(ContactBlacklist $entry)
     {
-        return response(['success' => __('The email address ":email" was removed.', ['email' => $emailBlacklist->email])], 201);
+        return response([
+            'success' => __('The value ":value" was removed from the :field blacklist.', [
+                'value' => $entry->value,
+                'field' => $entry->input === 'email' ? 'email address' : 'name',
+            ])
+        ], 201);
     }
 }

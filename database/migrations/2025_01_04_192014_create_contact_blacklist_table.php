@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_blacklists', function (Blueprint $table) {
+        Schema::create('contact_blacklist', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
+            $table->enum('input', ['name', 'email']);
+            $table->string('value')->unique();
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_blacklists');
+        Schema::dropIfExists('contact_blacklist');
     }
 };
