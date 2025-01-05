@@ -56,6 +56,7 @@ Route::namespace(Api::class)->group(function () {
                 Route::post('/', [Api\Contact\MetaDataController::class, 'update']);
 
                 Route::apiResource('/blacklist', Api\Contact\BlacklistController::class)->except('update')->parameter('blacklist', 'entry');
+                Route::delete('/blacklist', [Api\Contact\BlacklistController::class, 'bulkDestroy']);
             });
         });
 
