@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\Contact;
 use App\Http\Controllers\Controller;
 use App\Models\ContactBlacklist;
 use App\Rules\RegexPattern;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class BlacklistController extends Controller
@@ -59,15 +61,64 @@ class BlacklistController extends Controller
     }
 
     /**
+     * Bulk destroy entries.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $validated = $request->validate([
+            'entries' => 'required|array',
+            'entries.*' => [
+                'required',
+                'numeric',
+                Rule::exists(ContactBlacklist::class, 'id')
+            ]
+        ]);
+
+        // Use a transaction to ensure atomicity
+        DB::beginTransaction();
+
+        try {
+            foreach ($validated['entries'] as $id) {
+                // Find the entry by ID
+                $entry = ContactBlacklist::findOrFail($id);
+
+                $this->performDestroy($entry);
+            }
+
+            // Commit the transaction if all updates succeed
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if anything fails
+            DB::rollBack();
+
+            return response()->json(['error' => 'Failed to remove blacklist entries.'], 500);
+        }
+
+        return response([
+            'success' => __('Blacklist entries were removed.'),
+        ], 201);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(ContactBlacklist $entry)
     {
+        $this->performDestroy($entry);
+
         return response([
             'success' => __('The value ":value" was removed from the :field blacklist.', [
                 'value' => $entry->value,
                 'field' => $entry->input === 'email' ? 'email address' : 'name',
             ]),
         ], 201);
+    }
+
+    protected function performDestroy(ContactBlacklist $entry)
+    {
+        return (bool) $entry->delete();
     }
 }
