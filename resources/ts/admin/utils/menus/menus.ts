@@ -56,14 +56,14 @@ const createMainMenu = (): MenuItem[] => {
                     }
                 ),
                 new LinkMenuItem(
-                    'Settings',
+                    'Manage Settings',
                     '/admin/contact/settings',
                     {
                         roles: ['change_contact_settings']
                     }
                 ),
                 new LinkMenuItem(
-                    'Blacklist',
+                    'Manage Blacklist',
                     '/admin/contact/blacklist',
                     {
                         roles: ['change_contact_settings']
