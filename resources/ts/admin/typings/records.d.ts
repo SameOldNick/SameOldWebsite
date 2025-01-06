@@ -8,6 +8,7 @@ declare global {
         country: ICountry;
         roles: IRole[];
         avatar_url: string;
+        oauth_providers: OAuthProvider[];
         created_at: string;
         updated_at: string | null;
         deleted_at: string | null;
@@ -20,6 +21,14 @@ declare global {
     }
 
     type TRole = "change_avatar" | "change_contact_settings" | "edit_profile" | "manage_backups" | "manage_images" | "manage_comments" | "manage_projects" | "manage_users" | "receive_contact_messages" | "view_contact_messages" | "write_posts";
+
+    interface OAuthProvider {
+        provider_name: string;
+        avatar_url: string;
+        created_at: string;
+        updated_at: string;
+        expires_at: string;
+    }
 
     interface IState {
         code: string;
