@@ -69,7 +69,7 @@ class ContactModerateTest extends TestCase
         $this
             ->assertGuest()
             ->post(route('contact.process'), $data)
-            ->assertViewHas('error', fn($value) => Str::contains($value, ' is banned.'))
+            ->assertViewHas('error', fn ($value) => Str::contains($value, ' is banned.'))
             ->assertStatus(422);
 
         $this->assertEquals(ContactMessageStatus::Flagged, ContactMessage::first()->status);
@@ -91,9 +91,9 @@ class ContactModerateTest extends TestCase
         Event::fake();
 
         $domain = $this->faker->freeEmailDomain;
-        $email = $this->faker->userName . '@' . $domain;
+        $email = $this->faker->userName.'@'.$domain;
 
-        $pattern = '/\@' . preg_quote($domain) . '$/';
+        $pattern = '/\@'.preg_quote($domain).'$/';
 
         ContactBlacklist::create([
             'input' => 'email',
@@ -109,7 +109,7 @@ class ContactModerateTest extends TestCase
         $this
             ->assertGuest()
             ->post(route('contact.process'), $data)
-            ->assertViewHas('error', fn($value) => Str::contains($value, ' is banned.'))
+            ->assertViewHas('error', fn ($value) => Str::contains($value, ' is banned.'))
             ->assertStatus(422);
 
         $this->assertEquals(ContactMessageStatus::Flagged, ContactMessage::first()->status);
@@ -146,7 +146,7 @@ class ContactModerateTest extends TestCase
         $this
             ->assertGuest()
             ->post(route('contact.process'), $data)
-            ->assertViewHas('error', fn($value) => Str::contains($value, ' is banned.'))
+            ->assertViewHas('error', fn ($value) => Str::contains($value, ' is banned.'))
             ->assertStatus(422);
 
         $this->assertEquals(ContactMessageStatus::Flagged, ContactMessage::first()->status);
@@ -169,7 +169,7 @@ class ContactModerateTest extends TestCase
 
         $name = $this->faker->name;
 
-        $pattern = '/^' . preg_quote($name) . '$/';
+        $pattern = '/^'.preg_quote($name).'$/';
 
         ContactBlacklist::create([
             'input' => 'name',
@@ -185,7 +185,7 @@ class ContactModerateTest extends TestCase
         $this
             ->assertGuest()
             ->post(route('contact.process'), $data)
-            ->assertViewHas('error', fn($value) => Str::contains($value, ' is banned.'))
+            ->assertViewHas('error', fn ($value) => Str::contains($value, ' is banned.'))
             ->assertStatus(422);
 
         $this->assertEquals(ContactMessageStatus::Flagged, ContactMessage::first()->status);

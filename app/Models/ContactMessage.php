@@ -98,8 +98,8 @@ class ContactMessage extends Model implements Moderatable
      */
     protected function status(): Attribute
     {
-        return Attribute::get(fn() => match (true) {
-            !empty($this->flags->all()) => ContactMessageStatus::Flagged,
+        return Attribute::get(fn () => match (true) {
+            ! empty($this->flags->all()) => ContactMessageStatus::Flagged,
             isset($this->confirmed_at) => ContactMessageStatus::Confirmed,
             isset($this->expires_at) && $this->expires_at->isFuture() => ContactMessageStatus::Unconfirmed,
             isset($this->expires_at) && $this->expires_at->isPast() => ContactMessageStatus::Expired,
