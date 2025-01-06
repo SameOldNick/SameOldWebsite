@@ -18,7 +18,7 @@ const DropdownWrapper: React.FC<IProps> = ({ item }) => {
 
                     {item.content}
                 </DropdownToggle>
-                <DropdownMenu right>
+                <DropdownMenu end>
                     {item.items.map((menuItem, index) => <ItemWrapper key={index} inDropdown item={menuItem} />)}
                 </DropdownMenu>
             </UncontrolledDropdown>
