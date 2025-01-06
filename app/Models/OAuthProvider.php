@@ -45,6 +45,19 @@ class OAuthProvider extends Model
     protected $with = [];
 
     /**
+     * The attributes that should be visible in serialization.
+     *
+     * @var array<string>
+     */
+    protected $visible = [
+        'provider_name',
+        'avatar_url',
+        'created_at',
+        'updated_at',
+        'expires_at',
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
