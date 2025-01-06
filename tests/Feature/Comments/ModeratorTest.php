@@ -58,7 +58,7 @@ class ModeratorTest extends TestCase
     public function test_detects_http_link(): void
     {
         $comment = Comment::factory([
-            'comment' => $this->faker()->profanity,
+            'comment' => $this->faker()->url,
         ])->createPostWithGuestPerson()->for(Article::factory())->create();
 
         $moderator = $this->app->make(ModerationService::class);
