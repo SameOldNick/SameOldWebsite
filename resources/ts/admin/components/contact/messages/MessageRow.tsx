@@ -57,8 +57,8 @@ const MessageRow: React.FC<IRowProps> = ({
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem onClick={onViewClicked}><FaExternalLinkAlt />{' '}View</DropdownItem>
-                        {message.status !== 'unconfirmed' && <DropdownItem onClick={onMarkUnconfirmedClicked}><FaRegTimesCircle />{' '}Mark Unconfirmed</DropdownItem>}
-                        {message.status !== 'confirmed' && <DropdownItem onClick={onMarkConfirmedClicked}><FaRegCheckCircle />{' '}Mark Confirmed</DropdownItem>}
+                        {!['unconfirmed', 'flagged'].includes(message.status) && <DropdownItem onClick={onMarkUnconfirmedClicked}><FaRegTimesCircle />{' '}Mark Unconfirmed</DropdownItem>}
+                        {!['confirmed', 'flagged'].includes(message.status) && <DropdownItem onClick={onMarkConfirmedClicked}><FaRegCheckCircle />{' '}Mark Confirmed</DropdownItem>}
                         <DropdownItem onClick={onDenyNameClicked}><FaBan />{' '}Ban Name</DropdownItem>
                         <DropdownItem onClick={onDenyEmailClicked}><FaBan />{' '}Ban E-mail</DropdownItem>
                         <DropdownItem onClick={onRemoveClicked}><FaTrash />{' '}Remove</DropdownItem>

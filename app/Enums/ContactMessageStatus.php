@@ -8,4 +8,5 @@ enum ContactMessageStatus: string
     case Unconfirmed = 'unconfirmed';
     case Confirmed = 'confirmed';
     case Expired = 'expired';
+    case Flagged = 'flagged';
 }

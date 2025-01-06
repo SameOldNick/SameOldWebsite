@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\URL;
 
 /**
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\URL;
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $confirmed_at
  * @property ?\Illuminate\Support\Carbon $expires_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ContactMessageFlag> $flags
  *
  * @method static \Database\Factories\ContactMessageFactory factory($count = null, $state = [])
  */
@@ -96,12 +98,29 @@ class ContactMessage extends Model implements Moderatable
      */
     protected function status(): Attribute
     {
-        return Attribute::get(fn () => match (true) {
+        return Attribute::get(fn() => match (true) {
+            !empty($this->flags->all()) => ContactMessageStatus::Flagged,
             isset($this->confirmed_at) => ContactMessageStatus::Confirmed,
             isset($this->expires_at) && $this->expires_at->isFuture() => ContactMessageStatus::Unconfirmed,
             isset($this->expires_at) && $this->expires_at->isPast() => ContactMessageStatus::Expired,
             default => ContactMessageStatus::Accepted
         });
+    }
+
+    /**
+     * Gets flags for message.
+     */
+    public function flags(): HasMany
+    {
+        return $this->hasMany(ContactMessageFlag::class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getModerators(): array
+    {
+        return $this->createModeratorsFactory('contact')->build();
     }
 
     /**
@@ -112,13 +131,5 @@ class ContactMessage extends Model implements Moderatable
     public static function getDefaultExpiresAt()
     {
         return now()->addHours(2);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getModerators(): array
-    {
-        return $this->createModeratorsFactory('contact')->build();
     }
 }
