@@ -7,6 +7,8 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Pages from '@admin/pages';
 import EchoProvider from '@admin/components/echo/Provider';
 import NotificationProvider from '@admin/components/notifications/NotificationProvider';
+import ErrorBoundary from '@admin/components/wrappers/ErrorBoundary';
+import UnknownError from '@admin/pages/errors/UnknownError';
 
 import storeFactory from '@admin/store/index';
 import echoFactory from '@admin/utils/echo/echo';
@@ -23,22 +25,25 @@ const App: React.FC = () => {
 
     return (
         <>
-            <HelmetProvider>
-                <Helmet titleTemplate='%s | Same Old Nick' />
+            <ErrorBoundary fallback={UnknownError}>
 
-                <Provider store={store}>
-                    <EchoProvider factory={echoFactory}>
-                        <NotificationProvider delay={50000}>
-                            <IconContext.Provider value={{ className: 'react-icons' }}>
-                                <Router>
-                                    <Pages />
-                                </Router>
-                            </IconContext.Provider>
-                        </NotificationProvider>
-                    </EchoProvider>
-                </Provider>
-            </HelmetProvider>
+                <HelmetProvider>
+                    <Helmet titleTemplate='%s | Same Old Nick' />
 
+                    <Provider store={store}>
+                        <EchoProvider factory={echoFactory}>
+                            <NotificationProvider delay={50000}>
+                                <IconContext.Provider value={{ className: 'react-icons' }}>
+                                    <Router>
+                                        <Pages />
+                                    </Router>
+                                </IconContext.Provider>
+                            </NotificationProvider>
+                        </EchoProvider>
+                    </Provider>
+
+                </HelmetProvider>
+            </ErrorBoundary>
         </>
     );
 }
