@@ -10022,13 +10022,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-spinners@npm:^0.14.1":
-  version: 0.14.1
-  resolution: "react-spinners@npm:0.14.1"
+"react-spinners@npm:^0.15.0":
+  version: 0.15.0
+  resolution: "react-spinners@npm:0.15.0"
   peerDependencies:
-    react: ^16.0.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/ea3e5450ce908fc5de5feb92a137441072d3345b8298da2dedcdd01d4d7c2f95348fc8d6abd16358ee05e48093c857fa49957afa334ab96037b3fd7f3a1a4a09
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/5272a3caf04b60586cb1836de849c49685679b057377b2d7687be00284ec3f19e54196b1a5a23ca043cf6e4ed8ec137ed88e09ab9457cd0aaab3ff9de07a4515
   languageName: node
   linkType: hard
 
@@ -10821,7 +10821,7 @@ __metadata:
     react-page-visibility: "npm:^7.0.0"
     react-redux: "npm:^9.1.0"
     react-router-dom: "npm:^7.1.1"
-    react-spinners: "npm:^0.14.1"
+    react-spinners: "npm:^0.15.0"
     react-tag-autocomplete: "npm:^7.4.0"
     reactstrap: "npm:^9.2.3"
     redux: "npm:^5.0.1"
