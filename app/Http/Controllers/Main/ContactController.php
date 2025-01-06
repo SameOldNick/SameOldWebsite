@@ -74,8 +74,12 @@ class ContactController extends Controller
         if (! empty($flags)) {
             Log::info("Contact message from '{$request->email}' was flagged.", $flags);
 
+            $message->flags()->saveMany($flags);
+
+            $reason = Arr::first($flags)->reason;
+
             return response(view('main.contact', [
-                'error' => app()->isProduction() ? __('Your contact message has been flagged.') : Arr::first($flags)['reason'],
+                'error' => app()->isProduction() ? __('Your contact message has been flagged.') : $reason,
                 'settings' => $this->getSettings()->toArray(),
             ]), 422);
         }

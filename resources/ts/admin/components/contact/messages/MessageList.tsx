@@ -374,6 +374,7 @@ const MessageList: React.FC = () => {
                                                 <option value="confirmed">Confirmed</option>
                                                 <option value="unconfirmed">Unconfirmed</option>
                                                 <option value="expired">Expired</option>
+                                                <option value="flagged">Flagged</option>
                                                 <option value="all">All</option>
                                             </Input>
                                         </Col>

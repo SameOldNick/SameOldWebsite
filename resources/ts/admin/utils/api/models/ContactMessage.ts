@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import S from "string";
 
-export type TContactMessageStatuses = 'accepted' | 'unconfirmed' | 'confirmed' | 'expired';
+export type TContactMessageStatuses = 'accepted' | 'unconfirmed' | 'confirmed' | 'expired' | 'flagged';
 
 /**
  * Represents a contact message.
@@ -14,6 +14,7 @@ export default class ContactMessage {
     public static readonly STATUS_UNCONFIRMED: TContactMessageStatuses = 'unconfirmed';
     public static readonly STATUS_CONFIRMED: TContactMessageStatuses = 'confirmed';
     public static readonly STATUS_EXPIRED: TContactMessageStatuses = 'expired';
+    public static readonly STATUS_FLAGGED: TContactMessageStatuses = 'flagged';
 
     /**
      * Creates an instance of ContactMessage.
