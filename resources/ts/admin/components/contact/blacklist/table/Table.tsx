@@ -1,10 +1,7 @@
 import React from 'react';
-import { Button, Table as ReactstrapTable } from 'reactstrap';
-import { FaTimes } from 'react-icons/fa';
+import { Table as ReactstrapTable } from 'reactstrap';
 
-import { DateTime } from 'luxon';
-
-import CodeBlock from '@admin/components/CodeBlock';
+import Row from './Row';
 
 interface TableProps {
     entries: IBlacklistEntry[];
@@ -42,31 +39,13 @@ const Table = ({
                 </thead>
                 <tbody>
                     {entries.map((entry, index) => (
-                        <tr key={index}>
-                            <td>
-                                <input
-                                    type="checkbox"
-                                    checked={selected.some(({ id }) => id === entry.id)}
-                                    onChange={() => onSelect(entry)}
-                                />
-                            </td>
-                            <td>
-                                {entry.input === 'email' ? 'E-mail address' : 'Name'}
-                            </td>
-                            <td>
-                                {entry.type === 'static' && entry.value}
-                                {entry.type === 'regex' && <CodeBlock options={{ lang: 'regex', theme: 'vitesse-light' }}>{entry.value}</CodeBlock>}
-                            </td>
-                            <td>
-                                {DateTime.fromISO(entry.created_at).toLocaleString(DateTime.DATETIME_FULL)}
-                            </td>
-                            <td>
-                                <Button color='primary' onClick={() => onRemove(entry)}>
-                                    <FaTimes />{' '}
-                                    Remove
-                                </Button>
-                            </td>
-                        </tr>
+                        <Row
+                            key={index}
+                            entry={entry}
+                            selected={selected.some(({ id }) => id === entry.id)}
+                            onSelect={() => onSelect(entry)}
+                            onRemove={() => onRemove(entry)}
+                        />
                     ))}
                 </tbody>
             </ReactstrapTable>
