@@ -76,7 +76,9 @@ class ModeratorTest extends TestCase
      */
     public function test_comment_not_flagged(): void
     {
-        $comment = Comment::factory()->for(Article::factory())->createPostWithGuestPerson()->create();
+        $comment = Comment::factory()->for(Article::factory())->createPostWithGuestPerson()->create([
+            'comment' => 'This is a test comment',
+        ]);
 
         $moderator = $this->app->make(ModerationService::class);
 
