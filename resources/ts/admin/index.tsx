@@ -13,14 +13,15 @@ import { Settings } from 'luxon';
 // Setup logger
 logger.setDriver(new ConsoleDriver());
 
-if (import.meta.env.VITE_APP_DEBUG) {
+if (import.meta.env.VITE_APP_DEBUG && /^(\(true\)|true)$/gi.test(import.meta.env.VITE_APP_DEBUG)) {
     logger.info('Build Information:');
     logger.info(`Environment: ${import.meta.env.VITE_APP_ENV}`);
-    logger.info(`Debug mode: ${import.meta.env.VITE_APP_DEBUG ? 'Enabled' : 'Disabled'}`);
+    logger.info(`Debug mode: Enabled`);
     logger.info(`Build date: ${import.meta.env.BUILD_DATE}`);
     logger.info(`React version: ${React.version}`);
     logger.info(`ReactDOM version: ${ReactDOM.version}`);
-
+} else {
+    logger.info('Debug mode is disabled.');
 }
 
 Settings.throwOnInvalid = true;

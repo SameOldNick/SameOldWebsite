@@ -2,7 +2,7 @@
 
 interface ImportMetaEnv {
     readonly VITE_APP_NAME: string;
-    readonly VITE_APP_DEBUG: boolean;
+    readonly VITE_APP_DEBUG: string;
     readonly VITE_APP_ENV: string;
 
     readonly BUILD_DATE: string;
