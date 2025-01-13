@@ -108,7 +108,7 @@
         "typescript": "^5.7.3",
         "typescript-eslint": "^8.18.2",
         "uniqid": "^5.4.0",
-        "uuid": "^11.0.3",
+        "uuid": "^11.0.5",
         "vite": "^6.0.5",
         "vite-plugin-external": "^4.3.0",
         "vite-plugin-global-const": "^0.0.6",
