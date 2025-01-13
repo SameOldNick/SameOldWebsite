@@ -10866,7 +10866,7 @@ __metadata:
     typescript-eslint: "npm:^8.18.2"
     uniqid: "npm:^5.4.0"
     uuid: "npm:^11.0.5"
-    vite: "npm:^6.0.5"
+    vite: "npm:^6.0.7"
     vite-plugin-external: "npm:^4.3.0"
     vite-plugin-global-const: "npm:^0.0.6"
     vite-plugin-static-copy: "npm:^2.2.0"
@@ -12162,9 +12162,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.0.5":
-  version: 6.0.6
-  resolution: "vite@npm:6.0.6"
+"vite@npm:^6.0.7":
+  version: 6.0.7
+  resolution: "vite@npm:6.0.7"
   dependencies:
     esbuild: "npm:^0.24.2"
     fsevents: "npm:~2.3.3"
@@ -12210,7 +12210,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/c37edc18d3dccddcab7da333dacfcb5550db436eec0f89ffb14691dbb0e821b1319cc48f111e364ea4f68f0916bc84fc80cd21772a022681870b479133d3c95c
+  checksum: 10/bf76b3647983cb3d76c0db90d1f72cd4f6e80864a112145405ac0046cedfb14814cc4d9c1acbd9c53da8749c3a2fa80570971f7c44c0524b71974981065e9388
   languageName: node
   linkType: hard
 
