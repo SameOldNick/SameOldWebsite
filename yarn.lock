@@ -3599,10 +3599,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"animated-scroll-to@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "animated-scroll-to@npm:2.3.0"
-  checksum: 10/f97b2237984b5663d77689390bb5ebb07ab837a10ffa72e97ceeffcfb7665662e278cb4642661b1b18c372e091d0e2ae4cee289f6c31c952e21a206296844573
+"animated-scroll-to@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "animated-scroll-to@npm:2.3.2"
+  checksum: 10/7d6db0f5f989cbaae4f074a153b0a9f9175ca639f723a638b0b47ed0a30f109b0eadfdc4aef061131d0369fd9ee3b8615281a3eac45b42da76a456bb9e203910
   languageName: node
   linkType: hard
 
@@ -10798,7 +10798,7 @@ __metadata:
     "@uiw/react-md-editor": "npm:^4.0.2"
     "@vitejs/plugin-react": "npm:^4.3.1"
     animate.css: "npm:^4.1.1"
-    animated-scroll-to: "npm:^2.3.0"
+    animated-scroll-to: "npm:^2.3.2"
     aos: "npm:^2.3.4"
     axios: "npm:^1.7.9"
     blueimp-md5: "npm:^2.19.0"
