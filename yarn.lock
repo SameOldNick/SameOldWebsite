@@ -5260,9 +5260,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-github@npm:^5.1.4":
-  version: 5.1.4
-  resolution: "eslint-plugin-github@npm:5.1.4"
+"eslint-plugin-github@npm:^5.1.5":
+  version: 5.1.5
+  resolution: "eslint-plugin-github@npm:5.1.5"
   dependencies:
     "@eslint/compat": "npm:^1.2.3"
     "@eslint/eslintrc": "npm:^3.1.0"
@@ -5290,7 +5290,7 @@ __metadata:
     eslint: ^8 || ^9
   bin:
     eslint-ignore-errors: bin/eslint-ignore-errors.js
-  checksum: 10/28893b8355d2738c8d6de8f7312a7b8ca5b2f1f80e4be399a5a47ae8a56d0e686356e3ccc3f34175728d584688cc397b02ab3078633fe058fcd774551da36c45
+  checksum: 10/f17574a3fee187584c0582a57d217e7f246208475bb58ad9fd08302ab33774358b3b39d4e500d20ed65962a2fefceab08220de215b48ed36b3fff1148bdb77b4
   languageName: node
   linkType: hard
 
@@ -10816,7 +10816,7 @@ __metadata:
     element-visibility-watcher: "npm:^1.0.5"
     eslint: "npm:^9.18.0"
     eslint-config-react-app: "npm:^7.0.1"
-    eslint-plugin-github: "npm:^5.1.4"
+    eslint-plugin-github: "npm:^5.1.5"
     eslint-plugin-jest: "npm:^28.9.0"
     eslint-plugin-only-warn: "npm:^1.1.0"
     eslint-plugin-react: "npm:^7.37.3"
