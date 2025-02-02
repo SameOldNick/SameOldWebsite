@@ -31,6 +31,7 @@ before_install:
   - sudo apt-get -y upgrade
   - sudo apt-get -y install mariadb-server mariadb-client
   - sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/
+  - sudo systemctl start mariadb
 
 env:
   global:
