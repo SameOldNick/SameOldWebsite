@@ -6,7 +6,11 @@ php:
   - 8.3
 
 before_install:
-  - sudo apt-get update
+  - sudo apt-get update -y
+  - sudo apt-get remove --purge mysql-server mysql-client mysql-common -y
+  - sudo apt-get autoremove -y
+  - sudo apt-get autoclean -y
+  - sudo rm -rf /etc/mysql
   - sudo apt-get -y install mariadb-server
 
 env:
