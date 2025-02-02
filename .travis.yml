@@ -6,7 +6,9 @@ php:
   - 8.3
 
 addons:
-  mariadb: 11.4
+  apt:
+    packages:
+      - mariadb-server
 
 env:
   global:
