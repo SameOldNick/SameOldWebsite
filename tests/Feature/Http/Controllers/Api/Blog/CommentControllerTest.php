@@ -315,7 +315,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'awaiting_verification'));
+        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'awaiting_verification'));
     }
 
     /**
@@ -334,7 +334,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'awaiting_approval'));
+        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'awaiting_approval'));
     }
 
     /**
@@ -353,7 +353,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'approved'));
+        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'approved'));
     }
 
     /**
@@ -372,7 +372,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'denied'));
+        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'denied'));
     }
 
     /**
