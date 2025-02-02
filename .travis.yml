@@ -30,6 +30,7 @@ before_install:
     EOF
   - sudo apt-get -y upgrade
   - sudo apt-get -y install mariadb-server mariadb-client
+  - sudo journalctl -xe
 
 env:
   global:
