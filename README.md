@@ -1,6 +1,6 @@
 # Same Old Website
 
-[![PHPUnit Tests](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml/badge.svg)](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml)
+[![PHPUnit Tests](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml/badge.svg)](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml) [![Build Status](https://app.travis-ci.com/SameOldNick/SameOldWebsite.svg?token=D9gRWqxcpGjLqH5zZmQa&branch=main)](https://app.travis-ci.com/SameOldNick/SameOldWebsite)
 
 ![Main Website](https://github.com/user-attachments/assets/a57bf2bf-46f4-46dd-a620-75d828e52cd6)
 ![Admin Panel](https://github.com/user-attachments/assets/6e5ca163-dc7e-4f5d-9757-2a36610501bf)
