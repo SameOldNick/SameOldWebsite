@@ -23,11 +23,9 @@ class ArticleFactory extends Factory
      */
     public function definition()
     {
-        $title = sprintf('%s %s', Str::headline($this->faker->unique()->realText(25)), $this->faker->emoji());
-
         return [
-            'title' => $title,
-            'slug' => Str::slug($title),
+            'title' => sprintf('%s %s', Str::headline($this->faker->unique()->realText(25)), $this->faker->emoji()),
+            'slug' => $this->faker->unique()->slug,
         ];
     }
 
@@ -45,27 +43,27 @@ class ArticleFactory extends Factory
     {
         return
             $this
-                ->createPostWithRegisteredPerson(value($user))
-                ->has($revisionFactory)
-                ->afterCreating(function (Article $article) {
-                    $revisions = $article->revisions;
+            ->createPostWithRegisteredPerson(value($user))
+            ->has($revisionFactory)
+            ->afterCreating(function (Article $article) {
+                $revisions = $article->revisions;
 
-                    $article->currentRevision()->associate($revisions->random());
+                $article->currentRevision()->associate($revisions->random());
 
-                    // Assigns parent revision to each revision (except first)
-                    if ($revisions->count() > 1) {
-                        for ($i = 1; $i < $revisions->count(); $i++) {
-                            $parent = $revisions->get($i - 1);
-                            $current = $revisions->get($i);
+                // Assigns parent revision to each revision (except first)
+                if ($revisions->count() > 1) {
+                    for ($i = 1; $i < $revisions->count(); $i++) {
+                        $parent = $revisions->get($i - 1);
+                        $current = $revisions->get($i);
 
-                            $current->parentRevision()->associate($parent);
+                        $current->parentRevision()->associate($parent);
 
-                            $current->save();
-                        }
+                        $current->save();
                     }
+                }
 
-                    $article->save();
-                });
+                $article->save();
+            });
     }
 
     /**
@@ -115,7 +113,7 @@ class ArticleFactory extends Factory
      */
     public function scheduled($dateTime = null)
     {
-        return $this->published($dateTime ?? fn () => $this->faker->dateTimeBetween('now', '+3 years'));
+        return $this->published($dateTime ?? fn() => $this->faker->dateTimeBetween('now', '+3 years'));
     }
 
     /**
