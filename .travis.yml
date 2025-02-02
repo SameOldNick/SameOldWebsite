@@ -15,7 +15,7 @@ before_install:
   - sudo mkdir -p /etc/apt/keyrings
   - sudo apt install -y software-properties-common
   - sudo sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
-  - sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.xtom.com/mariadb/repo/11.4/ubuntu focal main'
+  - sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mariadb.mirror.liquidtelecom.com/repo/11.4/ubuntu focal main'
   - sudo apt update -y
   - sudo apt-get -y install mariadb-server mariadb-client
 
