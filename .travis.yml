@@ -37,7 +37,7 @@ cache:
 before_script:
   - cp .env.travis .env
   - sudo mariadb -e 'CREATE DATABASE testing;'
-  - sudo mariadb -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY '';"
+  - sudo mariadb -e "GRANT ALL ON testing.* TO 'travis'@'localhost' IDENTIFIED BY '';"
   - composer self-update
   - composer install --no-interaction
   - php artisan key:generate
