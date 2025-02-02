@@ -1,0 +1,37 @@
+dist: precise
+language: php
+
+php:
+  - 8.2
+  - 8.3
+
+addons:
+  mariadb: 11.4
+
+env:
+  global:
+    - DB_CONNECTION=mysql
+    - DB_DATABASE=testing
+    - DB_USERNAME=travis
+    - DB_PASSWORD=
+    - CACHE_DRIVER=array
+    - SESSION_DRIVER=array
+    - MAIL_MAILER=log
+
+cache:
+  directories:
+    - node_modules
+    - vendor
+
+before_script:
+  - cp .env.travis .env
+  - sudo mysql -e 'CREATE DATABASE testing;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - sed -i "s/^LITTLEJWT_KEY_PHRASE=.*/LITTLEJWT_KEY_PHRASE=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+  - sed -i "s/^LITTLEJWT_KEY_PHRASE_REFRESH=.*/LITTLEJWT_KEY_PHRASE_REFRESH=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+  - php artisan migrate --no-interaction -vvv
+  
+script:
+  - php artisan test
