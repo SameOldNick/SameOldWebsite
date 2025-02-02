@@ -13,25 +13,11 @@ before_install:
   - sudo rm -rf /etc/mysql
   - sudo apt-get install apt-transport-https curl -y
   - sudo mkdir -p /etc/apt/keyrings
-  - sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
-  - sudo mkdir -p /etc/apt/sources.list.d
-  - |
-    sudo tee /etc/apt/sources.list.d/mariadb.sources > /dev/null <<EOF
-    # MariaDB 11.4 repository list - created 2025-02-02 20:35 UTC
-    # https://mariadb.org/download/
-    X-Repolib-Name: MariaDB
-    Types: deb
-    # deb.mariadb.org is a dynamic mirror if your preferred mirror goes offline. See https://mariadb.org/mirrorbits/ for details.
-    # URIs: https://deb.mariadb.org/11.4/ubuntu
-    URIs: https://mirrors.xtom.com/mariadb/repo/11.4/ubuntu
-    Suites: focal
-    Components: main main/debug
-    Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp
-    EOF
-  - sudo apt-get -y upgrade
+  - sudo apt install -y software-properties-common
+  - sudo sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
+  - sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.xtom.com/mariadb/repo/11.4/ubuntu focal main'
+  - sudo apt update -y
   - sudo apt-get -y install mariadb-server mariadb-client
-  - sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/
-  - sudo systemctl start mariadb
 
 env:
   global:
