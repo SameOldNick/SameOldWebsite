@@ -5,10 +5,9 @@ php:
   - 8.2
   - 8.3
 
-addons:
-  apt:
-    packages:
-      - mariadb-server
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install mariadb-server
 
 env:
   global:
