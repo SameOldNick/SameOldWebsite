@@ -15,13 +15,18 @@ before_install:
   - sudo mkdir -p /etc/apt/keyrings
   - sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
   - sudo mkdir -p /etc/apt/sources.list.d
-  - echo "# https://mariadb.org/download/" | sudo tee -a /etc/apt/sources.list.d/mariadb.sources
-  - echo "X-Repolib-Name: MariaDB" | sudo tee -a /etc/apt/sources.list.d/mariadb.sources
-  - echo "Types: deb" | sudo tee -a /etc/apt/sources.list.d/mariadb.sources
-  - echo "URIs: https://mirrors.xtom.com/mariadb/repo/11.4/ubuntu" | sudo tee -a /etc/apt/sources.list.d/mariadb.sources
-  - echo "Suites: focal" | sudo tee -a /etc/apt/sources.list.d/mariadb.sources
-  - echo "Components: main main/debug" | sudo tee -a /etc/apt/sources.list.d/mariadb.sources
-  - echo "Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp" | sudo tee -a /etc/apt/sources.list.d/mariadb.sources
+  - sudo tee /etc/apt/sources.list.d/mariadb.sources > /dev/null <<EOF
+# MariaDB 11.4 repository list - created 2025-02-02 20:35 UTC
+# https://mariadb.org/download/
+X-Repolib-Name: MariaDB
+Types: deb
+# deb.mariadb.org is a dynamic mirror if your preferred mirror goes offline. See https://mariadb.org/mirrorbits/ for details.
+# URIs: https://deb.mariadb.org/11.4/ubuntu
+URIs: https://mirrors.xtom.com/mariadb/repo/11.4/ubuntu
+Suites: focal
+Components: main main/debug
+Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp
+EOF
   - sudo apt-get -y upgrade
   - sudo apt-get -y install mariadb-server
 
