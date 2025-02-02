@@ -30,7 +30,7 @@ before_install:
     EOF
   - sudo apt-get -y upgrade
   - sudo apt-get -y install mariadb-server mariadb-client
-  - sudo journalctl -xe
+  - sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/
 
 env:
   global:
