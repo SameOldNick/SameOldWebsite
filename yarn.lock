@@ -1881,10 +1881,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:^9.14.0, @eslint/js@npm:^9.17.0":
+"@eslint/js@npm:^9.14.0":
   version: 9.17.0
   resolution: "@eslint/js@npm:9.17.0"
   checksum: 10/1a89e62f5c50e75d44565b7f3b91701455a999132c991e10bac59c118fbb54bdd54be22b9bda1ac730f78a2e64604403d65ce5dd7726d80b2632982cfc3d84ac
+  languageName: node
+  linkType: hard
+
+"@eslint/js@npm:^9.19.0":
+  version: 9.19.0
+  resolution: "@eslint/js@npm:9.19.0"
+  checksum: 10/d8133a83330676d5f0827713af2e9bbf35530631a93520fb59ead6b827a325c54fdd7ad99f2158f895fb393c47bbc55dfdaa945998a647f3b9230f1d5324a626
   languageName: node
   linkType: hard
 
@@ -10937,7 +10944,7 @@ __metadata:
     "@bytemd/plugin-highlight": "npm:^1.21.0"
     "@bytemd/plugin-medium-zoom": "npm:^1.21.0"
     "@bytemd/react": "npm:^1.21.0"
-    "@eslint/js": "npm:^9.17.0"
+    "@eslint/js": "npm:^9.19.0"
     "@fortawesome/fontawesome-free": "npm:^6.7.1"
     "@popperjs/core": "npm:^2.11.8"
     "@reduxjs/toolkit": "npm:^2.4.0"
