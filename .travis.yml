@@ -34,7 +34,7 @@ before_install:
   - sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mariadb.mirror.liquidtelecom.com/repo/11.4/ubuntu focal main'
   - sudo apt update -y
   - sudo apt-get -y install mariadb-server mariadb-client
-  - sudo pecl install xdebug
+  - sudo apt-get install php-xdebug
 
 before_script:
   - cp .env.travis .env
