@@ -56,4 +56,4 @@ script:
   - php artisan test --coverage-clover build/logs/clover.xml
 
 after_success:
-  - php -r "var_dump($_SERVER);"
+  - php -r "var_dump(\$_SERVER);"
