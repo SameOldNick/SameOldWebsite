@@ -54,4 +54,4 @@ script:
   - php artisan test --coverage-clover build/logs/clover.xml
 
 after_success:
-  - travis_retry php vendor/bin/coveralls.php -v
+  - php vendor/bin/coveralls.php -v
