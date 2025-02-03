@@ -42,7 +42,6 @@ before_script:
   - sudo mariadb -e 'CREATE DATABASE testing;'
   - sudo mariadb -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY '';"
   - sudo mariadb -e "GRANT ALL ON testing.* TO 'travis'@'localhost';"
-  - echo "auto_globals_jit = Off" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer self-update
   - composer install --no-interaction
   - composer require --dev php-coveralls/php-coveralls
@@ -56,4 +55,4 @@ script:
   - php artisan test --coverage-clover build/logs/clover.xml
 
 after_success:
-  - php -r "var_dump(\$_SERVER);"
+  - php vendor/bin/coveralls.php -v
