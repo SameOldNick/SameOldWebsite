@@ -51,7 +51,7 @@ before_script:
   
 script:
   - mkdir -p build/logs
-  - php artisan test --coverage-clover build/logs/clover.xml --filter=getting_approved_comments
+  - php artisan test --coverage-clover build/logs/clover.xml
 
 after_success:
   - php vendor/bin/coveralls.php -v
