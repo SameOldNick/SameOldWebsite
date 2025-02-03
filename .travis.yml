@@ -56,4 +56,4 @@ script:
   - php artisan test --coverage-clover build/logs/clover.xml
 
 after_success:
-  - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN php vendor/bin/coveralls.php -v
+  - php -r "var_dump($_SERVER);"
