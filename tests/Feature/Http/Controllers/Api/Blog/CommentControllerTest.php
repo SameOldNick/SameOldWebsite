@@ -315,7 +315,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'awaiting_verification'));
+        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'awaiting_verification'));
     }
 
     /**
@@ -334,7 +334,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'awaiting_approval'));
+        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'awaiting_approval'));
     }
 
     /**
@@ -353,7 +353,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'approved'));
+        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'approved'));
     }
 
     /**
@@ -364,7 +364,7 @@ class CommentControllerTest extends TestCase
     {
         $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->create();
 
-        Comment::factory(5)->guest()->denied()->approved(User::factory())->for($article)->create();
+        Comment::factory(5)->guest()->denied(User::factory())->for($article)->create();
 
         $response = $this->actingAs($this->admin)->getJson(route('api.comments.index', ['show' => 'denied']));
         $response
@@ -372,7 +372,7 @@ class CommentControllerTest extends TestCase
             ->assertJsonStructure(['data', 'meta', 'links'])
             ->assertJsonCount(5, 'data');
 
-        $this->assertCount(5, array_filter($response->json('data'), fn (array $comment) => $comment['status'] === 'denied'));
+        $this->assertCount(5, array_filter($response->json('data'), fn(array $comment) => $comment['status'] === 'denied'));
     }
 
     /**
