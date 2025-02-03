@@ -23,6 +23,8 @@ cache:
     - vendor
 
 before_install:
+  - sudo apt-get install php-xdebug
+  - php vendor/bin/coveralls.php -v
   - sudo apt-get update -y
   - sudo apt-get remove --purge mysql-server mysql-client mysql-common -y
   - sudo apt-get autoremove -y
@@ -35,7 +37,7 @@ before_install:
   - sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mariadb.mirror.liquidtelecom.com/repo/11.4/ubuntu focal main'
   - sudo apt update -y
   - sudo apt-get -y install mariadb-server mariadb-client
-  - sudo apt-get install php-xdebug
+
 
 before_script:
   - cp .env.travis .env
