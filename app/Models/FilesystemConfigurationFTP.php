@@ -15,11 +15,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $root
  * @property array|null $extra
  * @property-read ?FilesystemConfiguration $filesystemConfiguration
- *
- * @method static \Database\Factories\FilesystemConfigurationFTPFactory factory($count = null, $state = [])
  */
 class FilesystemConfigurationFTP extends Model implements FilesystemConfigurationContract
 {
+    /** @use HasFactory<\Database\Factories\FilesystemConfigurationFTPFactory> */
     use HasFactory;
 
     /**

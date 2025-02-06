@@ -14,8 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Country extends Model
 {
-    use HasFactory;
-
     /**
      * The primary key for the model.
      *

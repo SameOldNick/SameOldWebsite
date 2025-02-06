@@ -17,11 +17,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read ?Model $configurable
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
- *
- * @method static \Database\Factories\FilesystemConfigurationFactory factory($count = null, $state = [])
  */
 class FilesystemConfiguration extends Model implements FilesystemConfigurationContract
 {
+    /** @use HasFactory<\Database\Factories\FilesystemConfigurationFactory> */
     use HasFactory;
 
     /**
@@ -71,7 +70,7 @@ class FilesystemConfiguration extends Model implements FilesystemConfigurationCo
      */
     protected function driverName(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes = []) => "dynamic-{$attributes['name']}");
+        return Attribute::get(fn($value, $attributes = []) => "dynamic-{$attributes['name']}");
     }
 
     public function toArray()

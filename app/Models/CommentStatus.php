@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class CommentStatus extends Model
 {
+    /** @use HasFactory<\Database\Factories\CommentStatusFactory> */
     use HasFactory;
 
     /**
