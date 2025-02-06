@@ -7,7 +7,6 @@ use App\Traits\Models\Fileable;
 use Illuminate\Database\Eloquent\Attributes\CollectedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Backup\BackupDestination\Backup as SpatieBackup;
@@ -100,7 +99,7 @@ class Backup extends Model
     protected function status(): Attribute
     {
         return new Attribute(
-            get: fn() => match (true) {
+            get: fn () => match (true) {
                 $this->isDeleted() => static::STATUS_DELETED,
                 $this->isFailed() => static::STATUS_FAILED,
                 $this->isNotExists() => static::STATUS_NOT_EXISTS,

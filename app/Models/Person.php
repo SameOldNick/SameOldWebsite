@@ -28,6 +28,7 @@ class Person extends Model
 {
     /** @use HasFactory<\Database\Factories\PersonFactory> */
     use HasFactory;
+
     use MustVerifyEmail;
     use Notifiable;
 
@@ -73,7 +74,7 @@ class Person extends Model
      */
     public function getForeignKey()
     {
-        return 'person_' . $this->getKeyName();
+        return 'person_'.$this->getKeyName();
     }
 
     /**
@@ -111,9 +112,9 @@ class Person extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->user ? $this->user->name : $value,
+            get: fn ($value) => $this->user ? $this->user->name : $value,
             // Restricts name being changed if user is set
-            set: fn($value) => $this->user ? $this->name : $value
+            set: fn ($value) => $this->user ? $this->name : $value
         );
     }
 
@@ -123,9 +124,9 @@ class Person extends Model
     protected function email(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->user ? $this->user->email : $value,
+            get: fn ($value) => $this->user ? $this->user->email : $value,
             // Restricts email being changed if user is set
-            set: fn($value) => $this->user ? $this->email : $value
+            set: fn ($value) => $this->user ? $this->email : $value
         );
     }
 
@@ -135,11 +136,11 @@ class Person extends Model
     protected function displayName(): Attribute
     {
         // TODO: Make this a trait.
-        return Attribute::get(fn() => $this->name ?? Str::before($this->email, '@'));
+        return Attribute::get(fn () => $this->name ?? Str::before($this->email, '@'));
     }
 
     protected function avatarUrl(): Attribute
     {
-        return Attribute::get(fn() => sprintf('https://gravatar.com/avatar/%s', Str::of($this->email)->trim()->lower()->hash('sha256')))->shouldCache();
+        return Attribute::get(fn () => sprintf('https://gravatar.com/avatar/%s', Str::of($this->email)->trim()->lower()->hash('sha256')))->shouldCache();
     }
 }

@@ -70,7 +70,7 @@ class FilesystemConfiguration extends Model implements FilesystemConfigurationCo
      */
     protected function driverName(): Attribute
     {
-        return Attribute::get(fn($value, $attributes = []) => "dynamic-{$attributes['name']}");
+        return Attribute::get(fn ($value, $attributes = []) => "dynamic-{$attributes['name']}");
     }
 
     public function toArray()
