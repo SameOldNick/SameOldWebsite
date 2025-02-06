@@ -25,7 +25,6 @@ use Spatie\Backup\BackupDestination\BackupDestination;
 class Backup extends Model
 {
     use Fileable;
-    use HasFactory;
     use HasUuids;
     use SoftDeletes;
 
@@ -101,7 +100,7 @@ class Backup extends Model
     protected function status(): Attribute
     {
         return new Attribute(
-            get: fn () => match (true) {
+            get: fn() => match (true) {
                 $this->isDeleted() => static::STATUS_DELETED,
                 $this->isFailed() => static::STATUS_FAILED,
                 $this->isNotExists() => static::STATUS_NOT_EXISTS,

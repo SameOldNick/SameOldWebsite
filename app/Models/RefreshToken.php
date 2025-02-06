@@ -17,8 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class RefreshToken extends Model
 {
-    use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *

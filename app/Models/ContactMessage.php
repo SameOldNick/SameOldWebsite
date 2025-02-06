@@ -23,12 +23,11 @@ use Illuminate\Support\Facades\URL;
  * @property ?\Illuminate\Support\Carbon $confirmed_at
  * @property ?\Illuminate\Support\Carbon $expires_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ContactMessageFlag> $flags
- *
- * @method static \Database\Factories\ContactMessageFactory factory($count = null, $state = [])
  */
 class ContactMessage extends Model implements Moderatable
 {
     use CreatesModeratorsFactory;
+    /** @use HasFactory<\Database\Factories\ContactMessageFactory> */
     use HasFactory;
     use HasUuids;
 
@@ -98,7 +97,7 @@ class ContactMessage extends Model implements Moderatable
      */
     protected function status(): Attribute
     {
-        return Attribute::get(fn () => match (true) {
+        return Attribute::get(fn() => match (true) {
             ! empty($this->flags->all()) => ContactMessageStatus::Flagged,
             isset($this->confirmed_at) => ContactMessageStatus::Confirmed,
             isset($this->expires_at) && $this->expires_at->isFuture() => ContactMessageStatus::Unconfirmed,

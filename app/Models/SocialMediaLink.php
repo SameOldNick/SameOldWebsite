@@ -13,11 +13,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read ?string $icon
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
- *
- * @method static \Database\Factories\SocialMediaLinkFactory factory($count = null, $state = [])
  */
 class SocialMediaLink extends Model
 {
+    /** @use HasFactory<\Database\Factories\SocialMediaLinkFactory> */
     use HasFactory;
 
     public static $platforms = [

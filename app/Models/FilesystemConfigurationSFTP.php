@@ -16,11 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $passphrase
  * @property array|null $extra
  * @property-read ?FilesystemConfiguration $filesystemConfiguration
- *
- * @method static \Database\Factories\FilesystemConfigurationSFTPFactory factory($count = null, $state = [])
  */
 class FilesystemConfigurationSFTP extends Model implements FilesystemConfigurationContract
 {
+    /** @use HasFactory<\Database\Factories\FilesystemConfigurationSFTPFactory> */
     use HasFactory;
 
     /**

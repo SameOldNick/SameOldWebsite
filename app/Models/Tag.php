@@ -15,11 +15,10 @@ use Illuminate\Support\Str;
  * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Article> $articles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Project> $projects
- *
- * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  */
 class Tag extends Model
 {
+    /** @use HasFactory<\Database\Factories\TagFactory> */
     use HasFactory;
 
     /**
@@ -82,8 +81,8 @@ class Tag extends Model
     protected function slug(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => $value ?: Str::slug($attributes['tag']),
-            set: fn ($value) => $value
+            get: fn($value, $attributes) => $value ?: Str::slug($attributes['tag']),
+            set: fn($value) => $value
         )->shouldCache();
     }
 
@@ -107,6 +106,6 @@ class Tag extends Model
      */
     public static function createFromStrings($strings)
     {
-        return collect($strings)->map(fn ($tag) => Tag::firstOrCreate(['tag' => $tag]));
+        return collect($strings)->map(fn($tag) => Tag::firstOrCreate(['tag' => $tag]));
     }
 }

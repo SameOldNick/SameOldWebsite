@@ -24,7 +24,6 @@ use Ramsey\Uuid\UuidInterface;
 #[CollectedBy(PrivateChannelCollection::class)]
 class PrivateChannel extends Model
 {
-    use HasFactory;
     use HasUuids;
 
     /**

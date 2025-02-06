@@ -35,11 +35,11 @@ use Spatie\Sitemap\Tags\Url;
  *
  * @method static \Illuminate\Database\Eloquent\Builder published()
  * @method static \Illuminate\Database\Eloquent\Builder sortedByPublishDate()
- * @method static \Database\Factories\ArticleFactory factory($count = null, $state = [])
  */
 #[CollectedBy(ArticleCollection::class)]
 class Article extends Model implements Sitemapable
 {
+    /** @use HasFactory<\Database\Factories\ArticleFactory> */
     use HasFactory;
 
     /** @use HasPresenter<ArticlePresenter> */
@@ -183,7 +183,7 @@ class Article extends Model implements Sitemapable
      */
     protected function revision(): Attribute
     {
-        return Attribute::get(fn () => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
+        return Attribute::get(fn() => ! is_null($this->currentRevision) ? $this->currentRevision : $this->revisions()->latest()->first());
     }
 
     /**
@@ -191,7 +191,7 @@ class Article extends Model implements Sitemapable
      */
     protected function isPublished(): Attribute
     {
-        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isPast());
+        return Attribute::get(fn() => ! is_null($this->published_at) && $this->published_at->isPast());
     }
 
     /**
@@ -199,6 +199,6 @@ class Article extends Model implements Sitemapable
      */
     protected function isScheduled(): Attribute
     {
-        return Attribute::get(fn () => ! is_null($this->published_at) && $this->published_at->isFuture());
+        return Attribute::get(fn() => ! is_null($this->published_at) && $this->published_at->isFuture());
     }
 }

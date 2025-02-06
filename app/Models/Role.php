@@ -20,7 +20,6 @@ use Illuminate\Support\Str;
 #[CollectedBy(RoleCollection::class)]
 class Role extends Model
 {
-    use HasFactory;
     use HidesPrimaryKey;
 
     /**
@@ -50,7 +49,7 @@ class Role extends Model
     protected function readable(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => Str::headline($attributes['role'])
+            get: fn($value, $attributes) => Str::headline($attributes['role'])
         );
     }
 

@@ -14,10 +14,9 @@ use Illuminate\Notifications\DatabaseNotification;
  * @property ?\Illuminate\Support\Carbon $read_at
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
- *
- * @method static \Database\Factories\NotificationFactory factory($count = null, $state = [])
  */
 class Notification extends DatabaseNotification
 {
+    /** @use HasFactory<\Database\Factories\NotificationFactory> */
     use HasFactory;
 }

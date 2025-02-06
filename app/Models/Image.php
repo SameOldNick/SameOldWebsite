@@ -15,11 +15,10 @@ use Illuminate\Support\Str;
 /**
  * @property string $uuid
  * @property ?string $description
- *
- * @method static \Database\Factories\ImageFactory factory($count = null, $state = [])
  */
 class Image extends Model
 {
+    /** @use HasFactory<\Database\Factories\ImageFactory> */
     use Fileable;
     use HasFactory;
 
@@ -108,6 +107,6 @@ class Image extends Model
      */
     protected function alternativeText(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes = []) => $attributes['description'] ? Str::squish($attributes['description']) : $this->file->path_info['filename']);
+        return Attribute::get(fn($value, $attributes = []) => $attributes['description'] ? Str::squish($attributes['description']) : $this->file->path_info['filename']);
     }
 }

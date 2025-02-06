@@ -15,8 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class State extends Model
 {
-    use HasFactory;
-
     /**
      * Indicates if the model should be timestamped.
      *

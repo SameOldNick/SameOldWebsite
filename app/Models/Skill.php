@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $icon
  * @property string $skill
- *
- * @method static \Database\Factories\SkillFactory factory($count = null, $state = [])
  */
 class Skill extends Model
 {
+    /** @use HasFactory<\Database\Factories\SkillFactory> */
     use HasFactory;
 
     /**

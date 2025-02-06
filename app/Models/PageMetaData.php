@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class PageMetaData extends Model
 {
-    use HasFactory;
     use HidesPrimaryKey;
 
     /**
