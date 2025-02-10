@@ -91,7 +91,7 @@
         "react-redux": "^9.1.0",
         "react-router-dom": "^7.1.5",
         "react-spinners": "^0.15.0",
-        "react-tag-autocomplete": "^7.4.0",
+        "react-tag-autocomplete": "^7.5.0",
         "reactstrap": "^9.2.3",
         "redux": "^5.0.1",
         "redux-logger": "^3.0.6",
