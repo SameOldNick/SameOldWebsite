@@ -1552,14 +1552,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bytemd/plugin-breaks@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@bytemd/plugin-breaks@npm:1.21.0"
+"@bytemd/plugin-breaks@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@bytemd/plugin-breaks@npm:1.22.0"
   dependencies:
     remark-breaks: "npm:^3.0.2"
   peerDependencies:
     bytemd: ^1.5.0
-  checksum: 10/7cd4b7c95db4de5927e085344a36fec63616c804c2df7717504bf73e9b9a886e64312ae78f464a88e75bd34e473ea603a08a4585704adf861280f33d15a73979
+  checksum: 10/3d516ab07834d49a5f73f0a3511b72d76aa5c0f1cc9c78a9fcfea8eda46aef8e2409b2440e485a8da3bdb3fc55f7d730f5e3a541e4ffb5b39aeb0b3d2ad1750e
   languageName: node
   linkType: hard
 
@@ -10918,7 +10918,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
-    "@bytemd/plugin-breaks": "npm:^1.21.0"
+    "@bytemd/plugin-breaks": "npm:^1.22.0"
     "@bytemd/plugin-frontmatter": "npm:^1.21.0"
     "@bytemd/plugin-gemoji": "npm:^1.21.0"
     "@bytemd/plugin-gfm": "npm:^1.21.0"
