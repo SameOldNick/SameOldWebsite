@@ -37,7 +37,7 @@
         "spomky-labs/otphp": "^11.2",
         "starkbank/ecdsa": "^2.1",
         "symfony/process": "^7.0",
-        "thecodingmachine/safe": "^2.5"
+        "thecodingmachine/safe": "^3.0"
     },
     "require-dev": {
         "davidbadura/faker-markdown-generator": "^1.1",
