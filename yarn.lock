@@ -1563,9 +1563,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bytemd/plugin-frontmatter@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@bytemd/plugin-frontmatter@npm:1.21.0"
+"@bytemd/plugin-frontmatter@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@bytemd/plugin-frontmatter@npm:1.22.0"
   dependencies:
     "@types/js-yaml": "npm:^4.0.5"
     js-yaml: "npm:^4.1.0"
@@ -1573,7 +1573,7 @@ __metadata:
     vfile: "npm:^5.3.7"
   peerDependencies:
     bytemd: ^1.5.0
-  checksum: 10/75ab9505a3f20713e221c6706f5728b39df06f93b79c2aa2e8d23942458022e12ec223fccc715a42178ee24747948096a06af03f4b999a6fe3c3349714764381
+  checksum: 10/33281a4989216839b834e6aa3721c0e626602c61326d7961711c5a74917b3a75283e8a21e8b87c43c8afe79c1b9144e0f407243bd8d2e2e3f201859bf2d3274a
   languageName: node
   linkType: hard
 
@@ -10919,7 +10919,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@bytemd/plugin-breaks": "npm:^1.21.0"
-    "@bytemd/plugin-frontmatter": "npm:^1.21.0"
+    "@bytemd/plugin-frontmatter": "npm:^1.22.0"
     "@bytemd/plugin-gemoji": "npm:^1.21.0"
     "@bytemd/plugin-gfm": "npm:^1.21.0"
     "@bytemd/plugin-highlight": "npm:^1.21.0"

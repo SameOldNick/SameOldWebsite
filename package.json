@@ -29,7 +29,7 @@
     },
     "devDependencies": {
         "@bytemd/plugin-breaks": "^1.21.0",
-        "@bytemd/plugin-frontmatter": "^1.21.0",
+        "@bytemd/plugin-frontmatter": "^1.22.0",
         "@bytemd/plugin-gemoji": "^1.21.0",
         "@bytemd/plugin-gfm": "^1.21.0",
         "@bytemd/plugin-highlight": "^1.21.0",
