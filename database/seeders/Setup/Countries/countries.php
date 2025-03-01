@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file contains countries and their states.
+ * This is used to seed the database.
+ * This is not in the config/ directory because it is not a configuration file and Laravel automatically loads each configuration file during the boot.
+ */
+
 return [
     [
         'code_alpha2' => 'AF',
