@@ -1,14 +1,13 @@
 <?php
 
-namespace Database\Seeders\Setup;
+namespace Database\Seeders\Setup\Countries;
 
 use App\Models\Country;
 use App\Models\State;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
 
-class SlimCountryStateSeeder extends Seeder
+class CountryStateSeeder extends Seeder
 {
     use WithoutModelEvents;
 
@@ -19,15 +18,9 @@ class SlimCountryStateSeeder extends Seeder
      */
     public function run()
     {
-        $countries = config('countries', []);
+        $countries = require __DIR__ . '/countries.php';
 
-        $slimmed = Arr::where($countries, function ($value) {
-            $allowed = ['CAN', 'USA', 'GBR'];
-
-            return in_array($value['code_alpha3'], $allowed);
-        });
-
-        foreach ($slimmed as $item) {
+        foreach ($countries as $item) {
             $country = Country::create([
                 'code' => $item['code_alpha3'],
                 'code_alpha2' => $item['code_alpha2'],

@@ -17,7 +17,7 @@ class TestSeeder extends Seeder
     public function run()
     {
         $this->call([
-            Setup\SlimCountryStateSeeder::class,
+            Setup\Countries\SlimCountryStateSeeder::class,
             Setup\RoleSeeder::class,
             Setup\PageSeeder::class,
             Setup\ContactPageSettingsSeeder::class,
