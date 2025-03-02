@@ -19,6 +19,7 @@ use App\Components\Search\ServiceProvider as SearchServiceProvider;
 use App\Components\Security\ServiceProvider as SecurityServiceProvider;
 use App\Components\Settings\ServiceProvider as SettingsServiceProvider;
 use App\Components\SweetAlert\ServiceProvider as SweetAlertServiceProvider;
+use App\Components\Captcha\ServiceProvider as CaptchaServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 
 class ComponentServiceProvider extends AggregateServiceProvider
@@ -46,5 +47,6 @@ class ComponentServiceProvider extends AggregateServiceProvider
         SettingsServiceProvider::class,
         DuskServiceProvider::class,
         SearchServiceProvider::class,
+        CaptchaServiceProvider::class,
     ];
 }
