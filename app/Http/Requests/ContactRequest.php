@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
+use App\Rules\RecaptchaRule;
 use App\Rules\RecaptchaVersion3;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,7 +32,7 @@ class ContactRequest extends FormRequest
         ];
 
         if (PageSettings::page('contact')->setting('require_recaptcha')) {
-            $rules[recaptchaFieldName()] = ['required', new RecaptchaVersion3];
+            $rules['g-recaptcha-response'] = CaptchaRule::required('recaptcha');
         }
 
         return $rules;
@@ -44,7 +46,7 @@ class ContactRequest extends FormRequest
     public function messages()
     {
         return [
-            recaptchaFieldName() => [
+            'g-recaptcha-response' => [
                 'required' => __('You appear to be a robot. Please ensure your web browser supports JavaScript.'),
             ],
         ];

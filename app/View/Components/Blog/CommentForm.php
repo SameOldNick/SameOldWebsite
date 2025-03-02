@@ -2,6 +2,8 @@
 
 namespace App\View\Components\Blog;
 
+use App\Components\Settings\Facades\PageSettings;
+use App\Components\Settings\PageSettingsManager;
 use App\Models\Article;
 use App\Models\Comment as CommentModel;
 use Closure;
@@ -21,6 +23,7 @@ class CommentForm extends Component
      */
     public function __construct(
         public readonly Request $request,
+        public readonly PageSettingsManager $settings,
         public readonly Article $article,
         ?CommentModel $parent = null,
     ) {
@@ -37,6 +40,26 @@ class CommentForm extends Component
     {
         // TODO: Set cookie
         return old('comment', $this->request->cookie("{$this->article->slug}-comment"));
+    }
+
+    /**
+     * Is captcha required?
+     *
+     * @return boolean
+     */
+    public function requireCaptcha(): bool
+    {
+        $useCaptcha = $this->settings->page('blog')->setting('use_captcha');
+
+        return ($useCaptcha === 'guest' && !$this->request->user()) || $useCaptcha === 'all';
+    }
+
+    /**
+     * Generate an element ID
+     */
+    public function generateElementId(string $name): string
+    {
+        return $this->parent ? "{$name}{$this->parent->getKey()}" : $name;
     }
 
     /**

@@ -4,21 +4,20 @@ namespace Tests\Feature\Main\Blog;
 
 use App\Components\Settings\Facades\PageSettings;
 use App\Enums\CommentStatus;
-use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\Feature\Traits\FakesReCaptcha;
+use Tests\Feature\Traits\CreatesArticle;
 use Tests\TestCase;
 
 class BlogCommentVerifyTest extends TestCase
 {
-    use FakesReCaptcha;
     use RefreshDatabase;
     use WithFaker;
+    use CreatesArticle;
 
     /**
      * Tests a guest can post comment with email verification
@@ -32,11 +31,9 @@ class BlogCommentVerifyTest extends TestCase
             'comment_moderation' => 'disabled',
         ]);
 
-        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => $this->faker->realText(),
             'name' => $name,
             'email' => $email,
@@ -65,17 +62,15 @@ class BlogCommentVerifyTest extends TestCase
             'user_authentication' => 'guest_verified',
         ]);
 
-        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $this->post(route('blog.comment', ['article' => $article]), [
+        $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => $this->faker->realText(),
             'name' => $name,
             'email' => $email,
         ]);
 
-        $mailable = Mail::sent(fn (Mailable $mail) => $mail->hasTo($email))->first();
+        $mailable = Mail::sent(fn(Mailable $mail) => $mail->hasTo($email))->first();
 
         $this->assertNotNull($mailable);
         $this->assertArrayHasKey('link', $mailable->viewData);
@@ -102,11 +97,9 @@ class BlogCommentVerifyTest extends TestCase
             'user_authentication' => 'guest_unverified',
         ]);
 
-        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => $this->faker->realText(),
             'name' => $name,
             'email' => $email,

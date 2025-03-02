@@ -329,7 +329,7 @@ const ContactFormSettings: React.FC<Props> = ({ router: { navigate } }) => {
                                                             <Collapse isOpen={values.require_recaptcha}>
                                                                 <Row>
                                                                     <Col xs={12}>
-                                                                        <p className='mb-1'>Ensure reCAPTCHA is setup in the &apos;config/recaptcha.php&apos; file.</p>
+                                                                        <p className='mb-1'>Ensure reCAPTCHA is setup in the &apos;config/captcha.php&apos; file.</p>
                                                                     </Col>
                                                                 </Row>
                                                             </Collapse>
