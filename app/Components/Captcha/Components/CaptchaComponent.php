@@ -3,9 +3,9 @@
 namespace App\Components\Captcha\Components;
 
 use App\Components\Captcha\CaptchaManager;
-use Illuminate\View\Component;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\View\Component;
 
 class CaptchaComponent extends Component
 {
@@ -37,7 +37,7 @@ class CaptchaComponent extends Component
             // Ensure all attribute keys are camelCase
             $attributes = Arr::mapWithKeys(
                 $this->attributes->all(),
-                fn($value, $key) => [Str::camel($key) => $value]
+                fn ($value, $key) => [Str::camel($key) => $value]
             );
 
             return $this->manager->driver($this->driver)->presenter()->render($attributes, $data);

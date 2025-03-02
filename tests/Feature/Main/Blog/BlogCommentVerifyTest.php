@@ -15,9 +15,9 @@ use Tests\TestCase;
 
 class BlogCommentVerifyTest extends TestCase
 {
+    use CreatesArticle;
     use RefreshDatabase;
     use WithFaker;
-    use CreatesArticle;
 
     /**
      * Tests a guest can post comment with email verification
@@ -70,7 +70,7 @@ class BlogCommentVerifyTest extends TestCase
             'email' => $email,
         ]);
 
-        $mailable = Mail::sent(fn(Mailable $mail) => $mail->hasTo($email))->first();
+        $mailable = Mail::sent(fn (Mailable $mail) => $mail->hasTo($email))->first();
 
         $this->assertNotNull($mailable);
         $this->assertArrayHasKey('link', $mailable->viewData);

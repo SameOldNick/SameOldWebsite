@@ -18,7 +18,7 @@ class CountryStateSeeder extends Seeder
      */
     public function run()
     {
-        $countries = require __DIR__ . '/countries.php';
+        $countries = require __DIR__.'/countries.php';
 
         foreach ($countries as $item) {
             $country = Country::create([

@@ -8,9 +8,6 @@ class UserResponse implements UserResponseContract
 {
     /**
      * Generates a new user response instance.
-     *
-     * @param string $response
-     * @param string|null $remoteIp
      */
     public function __construct(
         public readonly string $response,
@@ -18,7 +15,7 @@ class UserResponse implements UserResponseContract
     ) {}
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getDriver(): string
     {

@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Components\Captcha\Facades\Captcha;
 use App\Components\Captcha\Rules\CaptchaRule;
-use App\Components\ReCaptcha\ReCaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
 use App\Models\Comment;
 use App\Models\User;

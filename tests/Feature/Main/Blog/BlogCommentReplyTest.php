@@ -231,7 +231,7 @@ class BlogCommentReplyTest extends TestCase
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            'g-recaptcha-response' => CaptchaRule::invalidResponse()
+            'g-recaptcha-response' => CaptchaRule::invalidResponse(),
         ]);
 
         $response->assertInvalid(['g-recaptcha-response']);

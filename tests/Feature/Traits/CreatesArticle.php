@@ -3,8 +3,6 @@
 namespace Tests\Feature\Traits;
 
 use App\Models\Article;
-use App\Models\Role;
-use App\Models\User;
 
 trait CreatesArticle
 {

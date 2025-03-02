@@ -10,6 +10,7 @@ return [
         'recaptcha' => [
             /**
              * The site key used to display the reCAPTCHA widget.
+             *
              * @see https://developers.google.com/recaptcha/docs/v3
              */
             'site_key' => env('RECAPTCHA_SITE_KEY', ''),
@@ -17,6 +18,7 @@ return [
             /**
              * The secret key used to verify the response.
              * This key should be kept secret.
+             *
              * @see https://developers.google.com/recaptcha/docs/verify
              */
             'secret_key' => env('RECAPTCHA_SECRET_KEY', ''),
@@ -28,6 +30,7 @@ return [
 
             /**
              * Additional options to pass to the Guzzle HTTP client.
+             *
              * @see https://docs.guzzlephp.org/en/stable/request-options.html
              */
             'client_options' => [],

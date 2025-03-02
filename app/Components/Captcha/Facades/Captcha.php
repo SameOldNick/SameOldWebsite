@@ -3,7 +3,6 @@
 namespace App\Components\Captcha\Facades;
 
 use App\Components\Captcha\Contracts\Driver;
-use App\Components\Captcha\Testing\Driver as TestingDriver;
 use App\Components\Captcha\Testing\FakeCaptchaService;
 use Illuminate\Support\Facades\Facade;
 
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static CaptchaManager getManager()
  * @method static Driver getDriver(?string $driver = null)
  * @method static void fake(?Driver $driver = null)
- * 
+ *
  * @see \App\Components\Captcha\CaptchaService
  */
 class Captcha extends Facade

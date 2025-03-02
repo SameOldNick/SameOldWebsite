@@ -3,9 +3,7 @@
 namespace App\Components\Captcha\Drivers\Recaptcha\Testing;
 
 use App\Components\Captcha\Contracts\Driver as DriverContract;
-use App\Components\Captcha\Drivers\Recaptcha\Presenter;;
-
-use App\Components\Captcha\Drivers\Recaptcha\RecaptchaVerifier;
+use App\Components\Captcha\Drivers\Recaptcha\Presenter;
 use App\Components\Captcha\Drivers\Recaptcha\Testing\Verifier as TestingVerifier;
 use App\Components\Captcha\Drivers\Recaptcha\UserResponse;
 use App\Components\Captcha\Drivers\Recaptcha\Verifier;
@@ -18,24 +16,18 @@ use Illuminate\Support\Str;
 
 /**
  * Builds a recaptcha driver for testing purposes.
- *
- * @package App\Components\Captcha\Drivers\Recaptcha\Testing
  */
 class DriverBuilder
 {
     /**
      * Response generator for the recaptcha verifier.
      *
-     * @var null|Closure(UserResponse $userResponse): void
+     * @var null|Closure(UserResponse): void
      */
     protected ?Closure $recaptchaResponseGenerator = null;
 
     /**
      * Constructs a new driver builder.
-     *
-     * @param string|null $siteKey
-     * @param string|null $secretKey
-     * @param float $minimumScore
      */
     public function __construct(
         protected ?string $siteKey = null,
@@ -70,7 +62,6 @@ class DriverBuilder
     /**
      * Sets the site key.
      *
-     * @param string $siteKey
      * @return $this
      */
     public function withSiteKey(string $siteKey): static
@@ -83,7 +74,6 @@ class DriverBuilder
     /**
      * Sets the secret key.
      *
-     * @param string $secretKey
      * @return $this
      */
     public function withSecretKey(string $secretKey): static
@@ -96,7 +86,6 @@ class DriverBuilder
     /**
      * Sets the minimum score.
      *
-     * @param float $minimumScore
      * @return $this
      */
     public function withMinimumScore(float $minimumScore): static
@@ -109,7 +98,6 @@ class DriverBuilder
     /**
      * Sets the recaptcha response generator.
      *
-     * @param callable $callback
      * @return $this
      */
     public function withRecaptchaResponseGenerator(callable $callback): static
@@ -122,8 +110,8 @@ class DriverBuilder
     /**
      * Sets the recaptcha response generator to return a successful response for a matching response code.
      *
-     * @param string $responseCode Expected response code.
-     * @param array $errorCodes Error codes to return.
+     * @param  string  $responseCode  Expected response code.
+     * @param  array  $errorCodes  Error codes to return.
      * @return $this
      */
     public function expectsResponseCode(string $responseCode, array $errorCodes = []): static
@@ -131,7 +119,7 @@ class DriverBuilder
         $this->recaptchaResponseGenerator = function (UserResponse $userResponse) use ($responseCode, $errorCodes) {
             return $this->generateResponse([
                 'success' => $responseCode === $userResponse->response,
-                'error-codes' => $errorCodes
+                'error-codes' => $errorCodes,
             ]);
         };
 
@@ -141,7 +129,6 @@ class DriverBuilder
     /**
      * Sets the recaptcha response generator to return a successful response with score.
      *
-     * @param float $score
      * @return $this
      */
     public function withValidResponse(float $score = 0.9): static
@@ -156,8 +143,6 @@ class DriverBuilder
     /**
      * Sets the recaptcha response generator to return an invalid response.
      *
-     * @param array $errorCodes
-     * @param float $score
      * @return $this
      */
     public function withInvalidResponse(array $errorCodes = [], float $score = 0.1): static
@@ -176,8 +161,6 @@ class DriverBuilder
     /**
      * Sets the recaptcha response generator to return a successful response with a random error code.
      *
-     * @param int $count
-     * @param float $score
      * @return $this
      */
     public function withRandomErrorCodes(int $count = 1, float $score = 0.1): static
@@ -189,8 +172,6 @@ class DriverBuilder
 
     /**
      * Gets the site key.
-     *
-     * @return string
      */
     public function getSiteKey(): string
     {
@@ -203,8 +184,6 @@ class DriverBuilder
 
     /**
      * Gets the secret key.
-     *
-     * @return string
      */
     public function getSecretKey(): string
     {
@@ -217,8 +196,6 @@ class DriverBuilder
 
     /**
      * Gets the minimum score.
-     *
-     * @return float
      */
     public function getMinimumScore(): float
     {
@@ -227,8 +204,6 @@ class DriverBuilder
 
     /**
      * Gets the recaptcha response generator.
-     *
-     * @return callable|null
      */
     public function getRecaptchaResponseGenerator(): ?callable
     {
@@ -237,8 +212,6 @@ class DriverBuilder
 
     /**
      * Builds the recaptcha driver.
-     *
-     * @return DriverContract
      */
     public function build(): DriverContract
     {
@@ -271,8 +244,7 @@ class DriverBuilder
     /**
      * Generates a response from the recaptcha verifier.
      *
-     * @param array $data Request data
-     * @return Response
+     * @param  array  $data  Request data
      */
     public function generateResponse(array $data): Response
     {
@@ -281,9 +253,6 @@ class DriverBuilder
 
     /**
      * Runs new driver builder through callback and returns driver.
-     *
-     * @param callable $callback
-     * @return DriverContract
      */
     public static function create(callable $callback): DriverContract
     {

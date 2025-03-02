@@ -5,8 +5,6 @@ namespace App\Http\Requests;
 use App\Components\Captcha\Facades\Captcha;
 use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
-use App\Rules\RecaptchaRule;
-use App\Rules\RecaptchaVersion3;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest

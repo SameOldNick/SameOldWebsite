@@ -16,10 +16,10 @@ use Tests\TestCase;
 
 class BlogCommentTest extends TestCase
 {
+    use CreatesArticle;
     use CreatesUser;
     use RefreshDatabase;
     use WithFaker;
-    use CreatesArticle;
 
     /**
      * @test

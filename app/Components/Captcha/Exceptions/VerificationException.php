@@ -10,9 +10,8 @@ class VerificationException extends Exception
     /**
      * Create a new instance.
      *
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param  string  $message
+     * @param  int  $code
      */
     public function __construct($message = 'The CAPTCHA verification failed.', $code = 0, ?Throwable $previous = null)
     {
@@ -22,9 +21,7 @@ class VerificationException extends Exception
     /**
      * Create a new instance with a reason.
      *
-     * @param string|null $reason
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param  int  $code
      * @return static
      */
     public static function withReason(?string $reason = null, $code = 0, ?Throwable $previous = null): self

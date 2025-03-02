@@ -19,7 +19,7 @@ class SlimCountryStateSeeder extends Seeder
      */
     public function run()
     {
-        $countries = require __DIR__ . '/countries.php';
+        $countries = require __DIR__.'/countries.php';
 
         $slimmed = Arr::where($countries, function ($value) {
             $allowed = ['CAN', 'USA', 'GBR'];

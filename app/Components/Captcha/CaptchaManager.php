@@ -8,9 +8,8 @@ use Illuminate\Support\Manager;
 
 final class CaptchaManager extends Manager
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getDefaultDriver()
     {
@@ -20,8 +19,6 @@ final class CaptchaManager extends Manager
 
     /**
      * Create the Recaptcha driver.
-     *
-     * @return Driver
      */
     protected function createRecaptchaDriver(): Driver
     {
