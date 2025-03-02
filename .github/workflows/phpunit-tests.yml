@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+ - XDEBUG_MODE=coverage
+
 jobs:
   laravel-tests:
 
@@ -18,11 +21,14 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
+        coverage: xdebug
     - uses: actions/checkout@v3
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+    - name: Install Coveralls PHP library
+      run: composer require --dev php-coveralls/php-coveralls
     - name: Generate key
       run: php artisan key:generate
     - name: Generate LittleJWT phrase for auth tokens
@@ -39,4 +45,8 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: php artisan test
+      run: php artisan test --coverage-clover build/logs/clover.xml
+    - name: Upload coverage results to Coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: php-coveralls --coverage_clover=build/logs/clover.xml -v
