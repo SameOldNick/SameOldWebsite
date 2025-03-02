@@ -30,6 +30,10 @@ class CaptchaComponent extends Component
     public function render()
     {
         return function (array $data) {
+            if (! $this->manager->driver($this->driver)->isReady()) {
+                return '';
+            }
+
             // Ensure all attribute keys are camelCase
             $attributes = Arr::mapWithKeys(
                 $this->attributes->all(),
