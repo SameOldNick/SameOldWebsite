@@ -4,6 +4,7 @@ namespace App\Components\Captcha\Testing;
 
 use App\Components\Captcha\CaptchaService;
 use App\Components\Captcha\Contracts\Driver;
+use App\Components\Captcha\Testing\Driver as TestingDriver;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Testing\Fakes\Fake;
 
@@ -14,7 +15,7 @@ class FakeCaptchaService extends CaptchaService implements Fake
      */
     public function __construct(
         Container $container,
-        protected readonly ?Driver $driver,
+        protected readonly array $drivers,
     ) {
         parent::__construct($container);
     }
@@ -24,6 +25,12 @@ class FakeCaptchaService extends CaptchaService implements Fake
      */
     public function getDriver(?string $driver = null): Driver
     {
-        return $this->driver ?? parent::getDriver($driver);
+        $driver = $driver ?? $this->getManager()->getDefaultDriver();
+
+        return match (true) {
+            isset($this->drivers[$driver]) => $this->drivers[$driver],
+            isset($this->drivers['*']) => $this->drivers['*'],
+            default => parent::getDriver($driver),
+        };
     }
 }
