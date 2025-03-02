@@ -8,6 +8,7 @@ use App\Enums\CommentStatus;
 use App\Events\Comments\CommentCreated;
 use App\Events\Comments\CommentStatusChanged;
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\ErrorsToSweetAlert;
 use App\Http\Requests\CommentRequest;
 use App\Mail\CommentVerification;
 use App\Models\Article;
@@ -21,7 +22,10 @@ class BlogCommentController extends Controller
 {
     use HasPage;
 
-    public function __construct() {}
+    public function __construct()
+    {
+        $this->middleware([ErrorsToSweetAlert::class]);
+    }
 
     /**
      * Shows the comment (if user has access)
