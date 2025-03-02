@@ -27,7 +27,9 @@ jobs:
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
     - name: Install Coveralls PHP library
-      run: composer require --dev php-coveralls/php-coveralls
+      run: |
+        wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.7.0/php-coveralls.phar -O php-coveralls
+        chmod +x php-coveralls
     - name: Generate key
       run: php artisan key:generate
     - name: Generate LittleJWT phrase for auth tokens
@@ -48,4 +50,4 @@ jobs:
     - name: Upload coverage results to Coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: php vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v
+      run: ./php-coveralls --coverage_clover=build/logs/clover.xml -v
