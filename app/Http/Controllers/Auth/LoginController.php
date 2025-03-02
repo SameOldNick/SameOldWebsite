@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Components\Captcha\Facades\Captcha;
+use App\Components\Captcha\Rules\CaptchaRule;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Traits\Controllers\ReturnsToUrl;
@@ -88,6 +90,28 @@ class LoginController extends Controller
         }
 
         return view('auth.login', $data);
+    }
+
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function validateLogin(Request $request)
+    {
+        $rules = [
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ];
+
+        if (Captcha::getDriver('recaptcha')->isReady()) {
+            $rules['g-recaptcha-response'] = CaptchaRule::required('recaptcha');
+        }
+
+        $request->validate($rules);
     }
 
     /**

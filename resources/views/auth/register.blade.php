@@ -12,9 +12,9 @@
                     <div class="card-body">
                         <div class="p-4">
                             @if ($errors->any())
-                            <div class="mb-4">
-                                <x-alerts type="danger" :messages="$errors->all(':message')"></x-alerts>
-                            </div>
+                                <div class="mb-4">
+                                    <x-alerts type="danger" :messages="$errors->all(':message')"></x-alerts>
+                                </div>
                             @endif
 
                             <form method="POST" action="{{ route('register') }}">
@@ -22,19 +22,16 @@
 
                                 <x-return-url-input :returnUrl="$returnUrl ?? old('return_url')" />
 
+                                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary text-white">
                                         <i class="fa-solid fa-at"></i>
                                     </span>
-                                    <input
-                                        name="email"
-                                        type="email"
+                                    <input name="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="{{ __('Email Address') }}"
-                                        value="{{ old('email') }}"
-                                        required
-                                        autocomplete="email"
-                                        autofocus>
+                                        placeholder="{{ __('Email Address') }}" value="{{ old('email') }}" required
+                                        autocomplete="email" autofocus>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -49,13 +46,9 @@
                                     </span>
 
                                     <div class="ibc-container showhide-password flex-grow-1">
-                                        <input
-                                            name="password"
-                                            type="password"
+                                        <input name="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror"
-                                            placeholder="{{ __('Password') }}"
-                                            required
-                                            autocomplete="password">
+                                            placeholder="{{ __('Password') }}" required autocomplete="password">
                                         <a href="#" class="ibc-button" role="button">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
@@ -73,23 +66,21 @@
                                         <i class="fa-solid fa-globe"></i>
                                     </span>
 
-                                    <select name="country" class="selectpicker form-control" title="{{ __('Select Country') }}" data-live-search="true" data-type="country" data-country="{{ old('country', 'CAN') }}" id="country">
+                                    <select name="country" class="selectpicker form-control"
+                                        title="{{ __('Select Country') }}" data-live-search="true" data-type="country"
+                                        data-country="{{ old('country', 'CAN') }}" id="country">
                                         <option value="">{{ __('Select a country') }}</option>
                                     </select>
                                 </div>
 
                                 <div class="d-flex flex-row justify-content-center">
                                     <div class="form-check">
-                                        <input
-                                            class="form-check-input @error('terms_conditions') is-invalid @enderror"
-                                            type="checkbox"
-                                            name="terms_conditions"
-                                            value="yes"
-                                            id="termsConditions"
-                                            aria-describedby="invalidTermsConditions"
-                                            required>
+                                        <input class="form-check-input @error('terms_conditions') is-invalid @enderror"
+                                            type="checkbox" name="terms_conditions" value="yes" id="termsConditions"
+                                            aria-describedby="invalidTermsConditions" required>
                                         <label class="form-check-label" for="termsConditions">
-                                            I agree to the <a href="{{ route('terms-conditions') }}" target="_blank" class="text-secondary">terms and conditions</a>
+                                            I agree to the <a href="{{ route('terms-conditions') }}" target="_blank"
+                                                class="text-secondary">terms and conditions</a>
                                         </label>
                                         @error('terms_conditions')
                                             <div id="invalidTermsConditions" class="invalid-feedback">
@@ -108,16 +99,18 @@
                                     </div>
 
                                     @if (Route::has('login'))
-                                    <p class="text-center">
-                                        Already have an account?
-                                        <a href="{{ route('login') }}" class="text-secondary">{{ __('Login') }}</a>
-                                    </p>
+                                        <p class="text-center">
+                                            Already have an account?
+                                            <a href="{{ route('login') }}"
+                                                class="text-secondary">{{ __('Login') }}</a>
+                                        </p>
                                     @endif
 
                                     @if (Route::has('password.request'))
-                                    <p class="text-center">
-                                        <a href="{{ route('password.request') }}" class="text-secondary">{{ __('Forgot your password?') }}</a>
-                                    </p>
+                                        <p class="text-center">
+                                            <a href="{{ route('password.request') }}"
+                                                class="text-secondary">{{ __('Forgot your password?') }}</a>
+                                        </p>
                                     @endif
                                 </div>
 
@@ -128,4 +121,14 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            function onToken(token) {
+                document.getElementById('g-recaptcha-response').value = token;
+            }
+        </script>
+
+        <x-captcha driver="recaptcha" js-callback="onToken" js-auto-call />
+    @endpush
 </x-main.layout>

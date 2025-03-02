@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Components\Captcha\Facades\Captcha;
+use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\SweetAlert\Swal;
 use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Http\Controllers\Controller;
@@ -63,14 +65,22 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => Password::required(),
             'country' => ['required', 'string', 'exists:countries,code'],
             'terms_conditions' => ['required', 'accepted'],
-        ], [
+        ];
+
+        if (Captcha::getDriver('recaptcha')->isReady()) {
+            $rules['g-recaptcha-response'] = CaptchaRule::required('recaptcha');
+        }
+
+        $messages = [
             'terms_conditions.accepted' => 'You must accept the terms and conditions.',
-        ]);
+        ];
+
+        return Validator::make($data, $rules, $messages);
     }
 
     /**

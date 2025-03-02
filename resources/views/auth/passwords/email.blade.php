@@ -22,18 +22,15 @@
                             <form method="POST" action="{{ route('password.email') }}">
                                 @csrf
 
+                                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary">
                                         <i class="fa-solid fa-at text-white"></i>
                                     </span>
-                                    <input
-                                        name="email"
-                                        type="text"
+                                    <input name="email" type="text"
                                         class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="{{ __('Email Address') }}"
-                                        required
-                                        autocomplete="email"
-                                        autofocus>
+                                        placeholder="{{ __('Email Address') }}" required autocomplete="email" autofocus>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -50,17 +47,19 @@
                                     </div>
 
                                     @if (Route::has('login'))
-                                    <p class="text-center">
-                                        Know your password?
-                                        <a href="{{ route('login') }}" class="text-secondary">{{ __('Login') }}</a>
-                                    </p>
+                                        <p class="text-center">
+                                            Know your password?
+                                            <a href="{{ route('login') }}"
+                                                class="text-secondary">{{ __('Login') }}</a>
+                                        </p>
                                     @endif
 
                                     @if (Route::has('register'))
-                                    <p class="text-center">
-                                        Don't have an account?
-                                        <a href="{{ route('register') }}" class="text-secondary">{{ __('Register') }}</a>
-                                    </p>
+                                        <p class="text-center">
+                                            Don't have an account?
+                                            <a href="{{ route('register') }}"
+                                                class="text-secondary">{{ __('Register') }}</a>
+                                        </p>
                                     @endif
                                 </div>
 
@@ -71,4 +70,14 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            function onToken(token) {
+                document.getElementById('g-recaptcha-response').value = token;
+            }
+        </script>
+
+        <x-captcha driver="recaptcha" js-callback="onToken" js-auto-call />
+    @endpush
 </x-main.layout>
