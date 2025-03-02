@@ -60,6 +60,14 @@ class Driver implements DriverContract
     /**
      * @inheritDoc
      */
+    public function isReady(): bool
+    {
+        return !empty($this->getSiteKey()) && !empty($this->getSecretKey());
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function presenter(): PresenterContract
     {
         return new Presenter($this->getSiteKey());

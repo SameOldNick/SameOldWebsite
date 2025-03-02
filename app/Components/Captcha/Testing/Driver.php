@@ -22,6 +22,14 @@ class Driver implements DriverContract
     /**
      * @inheritDoc
      */
+    public function isReady(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function presenter(): Presenter
     {
         return $this->presenter;
