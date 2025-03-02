@@ -10,9 +10,6 @@ class Driver implements DriverContract
 {
     /**
      * Creates a new testing driver instance.
-     *
-     * @param Presenter $presenter
-     * @param Verifier $verifier
      */
     public function __construct(
         protected readonly Presenter $presenter,
@@ -21,7 +18,7 @@ class Driver implements DriverContract
     ) {}
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isReady(): bool
     {
@@ -29,7 +26,7 @@ class Driver implements DriverContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function presenter(): Presenter
     {
@@ -37,7 +34,7 @@ class Driver implements DriverContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function verifier(): Verifier
     {

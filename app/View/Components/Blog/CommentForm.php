@@ -2,7 +2,6 @@
 
 namespace App\View\Components\Blog;
 
-use App\Components\Settings\Facades\PageSettings;
 use App\Components\Settings\PageSettingsManager;
 use App\Models\Article;
 use App\Models\Comment as CommentModel;
@@ -44,14 +43,12 @@ class CommentForm extends Component
 
     /**
      * Is captcha required?
-     *
-     * @return boolean
      */
     public function requireCaptcha(): bool
     {
         $useCaptcha = $this->settings->page('blog')->setting('use_captcha');
 
-        return ($useCaptcha === 'guest' && !$this->request->user()) || $useCaptcha === 'all';
+        return ($useCaptcha === 'guest' && ! $this->request->user()) || $useCaptcha === 'all';
     }
 
     /**

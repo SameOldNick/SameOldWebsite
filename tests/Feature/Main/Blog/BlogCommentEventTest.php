@@ -50,7 +50,7 @@ class BlogCommentEventTest extends TestCase
         $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
 
-        Event::assertDispatched(CommentCreated::class, fn(CommentCreated $event) => $event->comment->is($comment));
+        Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
     }
 
     /**
@@ -81,8 +81,8 @@ class BlogCommentEventTest extends TestCase
         $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
 
-        Event::assertDispatched(CommentCreated::class, fn(CommentCreated $event) => $event->comment->is($comment));
-        Event::assertNotDispatched(CommentStatusChanged::class, fn(CommentStatusChanged $event) => $event->comment->is($comment));
+        Event::assertDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
 
     /**
@@ -113,7 +113,7 @@ class BlogCommentEventTest extends TestCase
         $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNotNull($comment);
 
-        Event::assertDispatched(CommentStatusChanged::class, fn(CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
+        Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
     }
 
     /**
@@ -139,7 +139,7 @@ class BlogCommentEventTest extends TestCase
 
         $this->assertNotNull($comment = Comment::withPersonDetails('user', $this->user)->first());
 
-        Event::assertDispatched(CommentStatusChanged::class, fn(CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
+        Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
     }
 
     /**
@@ -165,7 +165,7 @@ class BlogCommentEventTest extends TestCase
 
         $this->assertNotNull($comment = Comment::withPersonDetails('user', $this->user)->first());
 
-        Event::assertNotDispatched(CommentStatusChanged::class, fn(CommentStatusChanged $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
 
     /**
@@ -192,7 +192,7 @@ class BlogCommentEventTest extends TestCase
         $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNotNull($comment);
 
-        Event::assertDispatched(CommentStatusChanged::class, fn(CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
+        Event::assertDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment) && $event->comment->status === CommentStatus::Approved->value);
     }
 
     /**
@@ -223,8 +223,8 @@ class BlogCommentEventTest extends TestCase
         $comment = Comment::withPersonDetails('email', $email)->first();
         $this->assertNull($comment);
 
-        Event::assertNotDispatched(CommentCreated::class, fn(CommentCreated $event) => $event->comment->is($comment));
-        Event::assertNotDispatched(CommentStatusChanged::class, fn(CommentStatusChanged $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
 
     /**
@@ -251,7 +251,7 @@ class BlogCommentEventTest extends TestCase
         $comment = Comment::withPersonDetails('user', $this->user)->first();
         $this->assertNull($comment);
 
-        Event::assertNotDispatched(CommentCreated::class, fn(CommentCreated $event) => $event->comment->is($comment));
-        Event::assertNotDispatched(CommentStatusChanged::class, fn(CommentStatusChanged $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentCreated::class, fn (CommentCreated $event) => $event->comment->is($comment));
+        Event::assertNotDispatched(CommentStatusChanged::class, fn (CommentStatusChanged $event) => $event->comment->is($comment));
     }
 }

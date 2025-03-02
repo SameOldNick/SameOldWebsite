@@ -9,7 +9,6 @@ use Illuminate\Support\Arr;
 
 class Text extends Base
 {
-
     /**
      * Generates a strong password.
      *

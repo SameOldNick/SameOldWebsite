@@ -6,8 +6,6 @@ interface UserResponse
 {
     /**
      * Get the driver name.
-     *
-     * @return string
      */
     public function getDriver(): string;
 }

@@ -10,8 +10,6 @@ class Driver implements DriverContract
 {
     /**
      * Constructs a new recaptcha driver.
-     *
-     * @param array $config
      */
     public function __construct(
         protected readonly array $config
@@ -19,8 +17,6 @@ class Driver implements DriverContract
 
     /**
      * Gets the site key.
-     *
-     * @return string
      */
     public function getSiteKey(): string
     {
@@ -29,8 +25,6 @@ class Driver implements DriverContract
 
     /**
      * Gets the secret key.
-     *
-     * @return string
      */
     protected function getSecretKey(): string
     {
@@ -39,8 +33,6 @@ class Driver implements DriverContract
 
     /**
      * Gets the minimum score.
-     *
-     * @return float
      */
     public function getMinimumScore(): float
     {
@@ -49,8 +41,6 @@ class Driver implements DriverContract
 
     /**
      * Gets the client options (for the HTTP client).
-     *
-     * @return array
      */
     public function getClientOptions(): array
     {
@@ -58,15 +48,15 @@ class Driver implements DriverContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isReady(): bool
     {
-        return !empty($this->getSiteKey()) && !empty($this->getSecretKey());
+        return ! empty($this->getSiteKey()) && ! empty($this->getSecretKey());
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function presenter(): PresenterContract
     {
@@ -74,7 +64,7 @@ class Driver implements DriverContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function verifier(): VerifierContract
     {

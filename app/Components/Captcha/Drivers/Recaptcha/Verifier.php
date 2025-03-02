@@ -4,7 +4,6 @@ namespace App\Components\Captcha\Drivers\Recaptcha;
 
 use App\Components\Captcha\Contracts\Verifier as VerifierContract;
 use App\Components\Captcha\Exceptions\VerificationException;
-use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest as HttpClient;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
@@ -32,11 +31,6 @@ class Verifier implements VerifierContract
 
     /**
      * Constructs a new recaptcha verifier.
-     *
-     * @param string $siteKey
-     * @param string $secretKey
-     * @param float $minimumScore
-     * @param array $clientOptions
      */
     public function __construct(
         protected readonly string $siteKey,
@@ -46,11 +40,11 @@ class Verifier implements VerifierContract
     ) {}
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function verifyResponse($userResponse): void
     {
-        if (!$userResponse instanceof UserResponse) {
+        if (! $userResponse instanceof UserResponse) {
             throw new \InvalidArgumentException('Invalid user response');
         }
 
@@ -60,7 +54,7 @@ class Verifier implements VerifierContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validateRule(string $attribute, mixed $value): void
     {
@@ -73,10 +67,6 @@ class Verifier implements VerifierContract
 
     /**
      * Resolves the user response.
-     *
-     * @param string $attribute
-     * @param mixed $value
-     * @return UserResponse
      */
     public function resolveUserResponse(string $attribute, mixed $value): UserResponse
     {
@@ -85,9 +75,6 @@ class Verifier implements VerifierContract
 
     /**
      * Performs the request to the reCAPTCHA API.
-     *
-     * @param UserResponse $userResponse
-     * @return Response
      */
     protected function performRequest(UserResponse $userResponse): Response
     {
@@ -104,8 +91,8 @@ class Verifier implements VerifierContract
     /**
      * Handles the response from the reCAPTCHA API.
      *
-     * @param Response $response
      * @return void
+     *
      * @throws VerificationException If the response is invalid.
      */
     protected function handleResponse(Response $response)
@@ -124,7 +111,7 @@ class Verifier implements VerifierContract
         if (! (bool) Arr::get($resultJson, 'success', false)) {
             $errorCodes = Arr::get($resultJson, 'error-codes', []);
 
-            $errorCode = Arr::first($errorCodes, fn($errorCode) => Arr::has(static::$errorCodes, $errorCode));
+            $errorCode = Arr::first($errorCodes, fn ($errorCode) => Arr::has(static::$errorCodes, $errorCode));
 
             throw VerificationException::withReason($errorCode ? static::$errorCodes[$errorCode] : null);
         }
@@ -136,8 +123,6 @@ class Verifier implements VerifierContract
 
     /**
      * Creates a new HTTP client instance.
-     *
-     * @return HttpClient
      */
     protected function createHttpClient(): HttpClient
     {

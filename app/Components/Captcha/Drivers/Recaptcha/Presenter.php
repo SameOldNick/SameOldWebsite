@@ -10,8 +10,6 @@ class Presenter implements PresenterContract
 
     /**
      * Constructs a new instance of the presenter.
-     *
-     * @param string $siteKey
      */
     public function __construct(
         private readonly string $siteKey
@@ -19,8 +17,6 @@ class Presenter implements PresenterContract
 
     /**
      * Gets the reCAPTCHA site key.
-     *
-     * @return string
      */
     public function getSiteKey(): string
     {
@@ -29,8 +25,6 @@ class Presenter implements PresenterContract
 
     /**
      * Gets the reCAPTCHA JS URL.
-     *
-     * @return string
      */
     public function getJsUrl(): string
     {
@@ -39,16 +33,14 @@ class Presenter implements PresenterContract
 
     /**
      * Get the script source URL.
-     *
-     * @return string
      */
     public function scriptSrc(): string
     {
-        return $this->getJsUrl() . '?render=' . $this->getSiteKey();
+        return $this->getJsUrl().'?render='.$this->getSiteKey();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function render(array $attributes, array $data)
     {

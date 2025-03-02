@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Components\SweetAlert\SweetAlerts;
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\ViewErrorBag;

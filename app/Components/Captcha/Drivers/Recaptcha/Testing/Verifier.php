@@ -4,11 +4,8 @@ namespace App\Components\Captcha\Drivers\Recaptcha\Testing;
 
 use App\Components\Captcha\Drivers\Recaptcha\UserResponse;
 use App\Components\Captcha\Drivers\Recaptcha\Verifier as RecaptchaVerifier;
-use App\Components\Captcha\Exceptions\VerificationException;
 use Closure;
 use Illuminate\Http\Client\Response;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 
 class Verifier extends RecaptchaVerifier
 {
@@ -26,9 +23,6 @@ class Verifier extends RecaptchaVerifier
 
     /**
      * Specifies a callback to be used for handling the request.
-     *
-     * @param Closure|null $callback
-     * @return static
      */
     public function useRequestCallback(?Closure $callback): static
     {
@@ -39,9 +33,6 @@ class Verifier extends RecaptchaVerifier
 
     /**
      * Performs the request.
-     *
-     * @param UserResponse $userResponse
-     * @return Response
      */
     protected function performRequest(UserResponse $userResponse): Response
     {
