@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void validate(UserResponse $userResponse)
  * @method static CaptchaManager getManager()
  * @method static Driver getDriver(?string $driver = null)
- * @method static void fake(?Driver $driver)
+ * @method static void fake(?Driver $driver = null)
  * 
  * @see \App\Components\Captcha\CaptchaService
  */
