@@ -2,6 +2,7 @@
 
 namespace App\Components\Moderator\Concerns;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 trait CompilesList
@@ -17,6 +18,7 @@ trait CompilesList
             $append = match ($entry['source']) {
                 'config' => $this->getListFromConfig($entry['key']),
                 'file' => $this->getListFromFile($entry),
+                'require' => $this->getListFromRequire($entry['path'], $entry['key']),
                 'inline' => $entry['list'],
                 default => []
             };
@@ -50,5 +52,17 @@ trait CompilesList
             'json' => (array) json_decode($contents),
             default => explode("\n", $contents)
         };
+    }
+
+    /**
+     * Gets list from require
+     *
+     * @return array
+     */
+    protected function getListFromRequire(string $path, string $key)
+    {
+        $array = require $path;
+
+        return Arr::get($array, $key, []);
     }
 }
