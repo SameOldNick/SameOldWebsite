@@ -55,9 +55,15 @@ class LanguageModerator implements Moderator
      */
     protected function detectLanguage(string $text): Language
     {
-        $detector = new LanguageDetector;
+        return $this->createLanguageDetector()->evaluate($text)->getLanguage();
+    }
 
-        return $detector->evaluate($text)->getLanguage();
+    /**
+     * Creates language detector
+     */
+    protected function createLanguageDetector(): LanguageDetector
+    {
+        return new LanguageDetector;
     }
 
     /**
