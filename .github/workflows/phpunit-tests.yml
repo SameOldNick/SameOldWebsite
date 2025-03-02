@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
- - XDEBUG_MODE=coverage
-
 jobs:
   laravel-tests:
 
@@ -16,6 +13,8 @@ jobs:
     strategy:
       matrix:
         php-versions: ['8.2', '8.3']
+    env:
+      XDEBUG_MODE: coverage
     steps:
     - name: Setup PHP ${{ matrix.php-versions }}
       uses: shivammathur/setup-php@v2
