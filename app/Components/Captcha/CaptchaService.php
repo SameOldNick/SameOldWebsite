@@ -60,7 +60,7 @@ class CaptchaService
      * @param string|null $driver
      * @return Driver
      */
-    public function getDriver(?string $driver): Driver
+    public function getDriver(?string $driver = null): Driver
     {
         return $this->getManager()->driver($driver);
     }
