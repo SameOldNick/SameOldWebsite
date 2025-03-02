@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Main\Blog;
 
+use App\Components\Captcha\Drivers\Recaptcha\Testing\DriverBuilder;
 use App\Components\Captcha\Facades\Captcha;
 use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
@@ -149,7 +150,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function guest_must_pass_captcha_to_submit_comment_reply()
     {
-        Captcha::fake();
+        Captcha::fake(DriverBuilder::create());
 
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
@@ -213,7 +214,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function post_comment_reply_invalid_recaptcha()
     {
-        Captcha::fake();
+        Captcha::fake(DriverBuilder::create());
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -272,7 +273,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function all_users_must_pass_captcha_to_reply_as_guest()
     {
-        Captcha::fake();
+        Captcha::fake(DriverBuilder::create());
 
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
@@ -305,7 +306,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function all_users_must_pass_captcha_to_submit_comment_reply_as_registered_user()
     {
-        Captcha::fake();
+        Captcha::fake(DriverBuilder::create());
 
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
@@ -334,6 +335,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function guests_dont_pass_captcha_to_submit_comment_reply_as_guest_user()
     {
+        Captcha::fake(DriverBuilder::create());
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -366,6 +368,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function registered_users_dont_pass_captcha_to_submit_reply_as_registered_user()
     {
+        Captcha::fake(DriverBuilder::create());
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -396,7 +399,7 @@ class BlogCommentReplyTest extends TestCase
     public function guest_can_reply_comment_without_captcha_when_disabled()
     {
         Mail::fake();
-        Captcha::fake();
+        Captcha::fake(DriverBuilder::create());
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
