@@ -33,6 +33,7 @@ class DriverBuilder
         protected ?string $siteKey = null,
         protected ?string $secretKey = null,
         protected float $minimumScore = 0.5,
+        protected bool $ready = true,
     ) {}
 
     /**
@@ -91,6 +92,18 @@ class DriverBuilder
     public function withMinimumScore(float $minimumScore): static
     {
         $this->minimumScore = $minimumScore;
+
+        return $this;
+    }
+
+    /**
+     * Sets the driver to be ready.
+     *
+     * @return $this
+     */
+    public function ready($ready = true): static
+    {
+        $this->ready = $ready;
 
         return $this;
     }
@@ -203,6 +216,14 @@ class DriverBuilder
     }
 
     /**
+     * Checks if the driver is ready.
+     */
+    public function isReady(): bool
+    {
+        return $this->ready;
+    }
+
+    /**
      * Gets the recaptcha response generator.
      */
     public function getRecaptchaResponseGenerator(): ?callable
@@ -218,6 +239,7 @@ class DriverBuilder
         return new Driver(
             $this->buildPresenter(),
             $this->buildVerifier(),
+            $this->isReady()
         );
     }
 
