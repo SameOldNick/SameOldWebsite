@@ -29,7 +29,7 @@ class FakeCaptchaService extends CaptchaService implements Fake
     /**
      * @inheritDoc
      */
-    public function getDriver(?string $driver): Driver
+    public function getDriver(?string $driver = null): Driver
     {
         return $this->driver ?? parent::getDriver($driver);
     }
