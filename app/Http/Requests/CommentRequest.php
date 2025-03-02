@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\ReCaptcha\ReCaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
 use App\Models\Comment;
@@ -54,10 +55,7 @@ class CommentRequest extends FormRequest
         $useCaptcha = PageSettings::page('blog')->setting('use_captcha');
 
         if (($useCaptcha === 'guest' && $this->isGuest()) || $useCaptcha === 'all') {
-            $rules[recaptchaFieldName()] = [
-                'required',
-                new ReCaptchaRule,
-            ];
+            $rules['g-recaptcha-response'] = CaptchaRule::required('recaptcha');
         }
 
         return $rules;

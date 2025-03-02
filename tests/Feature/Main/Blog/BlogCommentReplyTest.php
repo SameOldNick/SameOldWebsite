@@ -2,23 +2,22 @@
 
 namespace Tests\Feature\Main\Blog;
 
+use App\Components\Captcha\Facades\Captcha;
+use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
 use App\Enums\CommentStatus;
 use App\Models\Article;
 use App\Models\Comment;
-use Biscolab\ReCaptcha\Facades\ReCaptcha;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Mail;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\Traits\CreatesUser;
-use Tests\Feature\Traits\FakesReCaptcha;
 use Tests\TestCase;
 
 class BlogCommentReplyTest extends TestCase
 {
     use CreatesUser;
-    use FakesReCaptcha;
     use RefreshDatabase;
     use WithFaker;
 
@@ -150,9 +149,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function guest_must_pass_captcha_to_submit_comment_reply()
     {
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
-        ReCaptcha::fake();
+        Captcha::fake();
 
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
@@ -171,7 +168,7 @@ class BlogCommentReplyTest extends TestCase
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -202,7 +199,7 @@ class BlogCommentReplyTest extends TestCase
             ->post(route('blog.comment.reply', ['article' => $article, 'parent' => $parent]), [
                 'name' => $name,
                 'email' => $email,
-                recaptchaFieldName() => ReCaptcha::validResponse(),
+                'g-recaptcha-response' => CaptchaRule::validResponse(),
             ]);
 
         $response->assertInvalid(['comment']);
@@ -216,6 +213,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function post_comment_reply_invalid_recaptcha()
     {
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -233,10 +231,10 @@ class BlogCommentReplyTest extends TestCase
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => $this->faker->uuid,
+            'g-recaptcha-response' => CaptchaRule::invalidResponse()
         ]);
 
-        $response->assertInvalid([recaptchaFieldName()]);
+        $response->assertInvalid(['g-recaptcha-response']);
 
         $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
@@ -274,9 +272,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function all_users_must_pass_captcha_to_reply_as_guest()
     {
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
-        ReCaptcha::fake();
+        Captcha::fake();
 
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
@@ -295,7 +291,7 @@ class BlogCommentReplyTest extends TestCase
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -309,9 +305,7 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function all_users_must_pass_captcha_to_submit_comment_reply_as_registered_user()
     {
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
-        ReCaptcha::fake();
+        Captcha::fake();
 
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
@@ -326,7 +320,7 @@ class BlogCommentReplyTest extends TestCase
 
         $response = $this->actingAs($this->user)->post(route('blog.comment.reply', ['article' => $article, 'parent' => $parent]), [
             'comment' => 'This is a test comment',
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -340,8 +334,6 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function guests_dont_pass_captcha_to_submit_comment_reply_as_guest_user()
     {
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -358,12 +350,12 @@ class BlogCommentReplyTest extends TestCase
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => $this->faker->uuid,
+            'g-recaptcha-response' => $this->faker->uuid,
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $response->assertInvalid([recaptchaFieldName()]);
+        $response->assertInvalid(['g-recaptcha-response']);
 
         $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
@@ -374,8 +366,6 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function registered_users_dont_pass_captcha_to_submit_reply_as_registered_user()
     {
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -389,12 +379,12 @@ class BlogCommentReplyTest extends TestCase
 
         $response = $this->actingAs($this->user)->post(route('blog.comment.reply', ['article' => $article, 'parent' => $parent]), [
             'comment' => 'This is a test comment',
-            recaptchaFieldName() => $this->faker->uuid,
+            'g-recaptcha-response' => $this->faker->uuid,
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
 
-        $response->assertInvalid([recaptchaFieldName()]);
+        $response->assertInvalid(['g-recaptcha-response']);
 
         $this->assertNull(Comment::withPersonDetails('user', $this->user)->first());
     }
@@ -406,8 +396,7 @@ class BlogCommentReplyTest extends TestCase
     public function guest_can_reply_comment_without_captcha_when_disabled()
     {
         Mail::fake();
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -425,7 +414,7 @@ class BlogCommentReplyTest extends TestCase
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -439,8 +428,6 @@ class BlogCommentReplyTest extends TestCase
     #[Test]
     public function registered_user_can_reply_comment_without_captcha_when_disabled()
     {
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',

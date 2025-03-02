@@ -38,13 +38,16 @@
                                 @csrf
 
                                 @if ($settings['require_recaptcha'])
-                                <input type="hidden" name="{{ recaptchaFieldName() }}" id="gRecaptcha">
+                                    <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                                 @endif
 
                                 <div class="row mb-3">
                                     <div class="col-12">
                                         <label for="name" class="form-label">{{ __('Name') }}</label>
-                                        <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name', optional(Auth::user())->name) }}" required autocomplete="name">
+                                        <input name="name" type="text"
+                                            class="form-control @error('name') is-invalid @enderror" id="name"
+                                            value="{{ old('name', optional(Auth::user())->name) }}" required
+                                            autocomplete="name">
 
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -57,7 +60,10 @@
                                 <div class="row mb-3">
                                     <div class="col-12">
                                         <label for="email" class="form-label">{{ __('E-mail Address') }}</label>
-                                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('email', optional(Auth::user())->email) }}" required autocomplete="email">
+                                        <input name="email" type="email"
+                                            class="form-control @error('email') is-invalid @enderror" id="email"
+                                            value="{{ old('email', optional(Auth::user())->email) }}" required
+                                            autocomplete="email">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -97,30 +103,15 @@
 
     </div>
 
-    @push('head')
+    @push('scripts')
         @if ($settings['require_recaptcha'])
-            <script type="text/javascript">
-                function disableForm(disabled) {
-                    document.querySelectorAll('form#contact button, form#contact input, for#contactm textarea').forEach(function (el) {
-                        el.disabled = disabled;
-                    });
-                }
-
-                $(function () {
-                    disableForm(true);
-                });
-
-                function attachTokenToForm(token) {
-                    document.getElementById('gRecaptcha').value = token;
-
-                    disableForm(false);
+            <script>
+                function onToken(token) {
+                    document.getElementById('g-recaptcha-response').value = token;
                 }
             </script>
-            {!! htmlScriptTagJsApi([
-                'custom_validation' => 'attachTokenToForm'
-            ]) !!}
+
+            <x-captcha driver="recaptcha" js-callback="onToken" js-auto-call />
         @endif
     @endpush
 </x-main.layout>
-
-

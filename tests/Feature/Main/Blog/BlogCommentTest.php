@@ -2,24 +2,24 @@
 
 namespace Tests\Feature\Main\Blog;
 
+use App\Components\Captcha\Facades\Captcha;
+use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
 use App\Enums\CommentStatus;
-use App\Models\Article;
 use App\Models\Comment;
-use Biscolab\ReCaptcha\Facades\ReCaptcha;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\Feature\Traits\CreatesArticle;
 use Tests\Feature\Traits\CreatesUser;
-use Tests\Feature\Traits\FakesReCaptcha;
 use Tests\TestCase;
 
 class BlogCommentTest extends TestCase
 {
     use CreatesUser;
-    use FakesReCaptcha;
     use RefreshDatabase;
     use WithFaker;
+    use CreatesArticle;
 
     /**
      * @test
@@ -33,9 +33,7 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
-
-        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => $this->faker->realText(),
         ]);
 
@@ -60,11 +58,9 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is the comment.',
             'name' => $name,
             'email' => $email,
@@ -90,11 +86,9 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is the comment.',
             'name' => $name,
             'email' => $email,
@@ -120,11 +114,9 @@ class BlogCommentTest extends TestCase
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is the comment.',
             'name' => $name,
             'email' => $email,
@@ -143,25 +135,20 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function guest_must_pass_captcha_to_submit_comment()
     {
-        ReCaptcha::fake();
-
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -175,21 +162,19 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function post_comment_missing_comment_field()
     {
-        ReCaptcha::fake();
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->fromRoute('blog.single', ['article' => $article])->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->fromRoute('blog.single', ['article' => $this->article])->post(route('blog.comment', ['article' => $this->article]), [
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertInvalid(['comment']);
@@ -203,25 +188,23 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function post_comment_invalid_recaptcha()
     {
-        ReCaptcha::fake();
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => $this->faker->uuid,
+            'g-recaptcha-response' => $this->faker->uuid,
         ]);
 
-        $response->assertInvalid([recaptchaFieldName()]);
+        $response->assertInvalid(['g-recaptcha-response']);
 
         $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
@@ -232,16 +215,14 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function registered_user_does_not_need_captcha_to_submit_comment()
     {
-        ReCaptcha::fake();
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'guest',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
-        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
         ]);
 
@@ -257,24 +238,20 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function all_users_must_pass_captcha_to_submit_comment_as_guest()
     {
-        ReCaptcha::fake();
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -288,20 +265,16 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function all_users_must_pass_captcha_to_submit_comment_as_registered_user()
     {
-        ReCaptcha::fake();
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
-        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -315,9 +288,7 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function all_users_dont_pass_captcha_to_submit_comment_as_guest_user()
     {
-        ReCaptcha::fake();
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
@@ -325,18 +296,17 @@ class BlogCommentTest extends TestCase
         ]);
 
         [$name, $email] = [$this->faker->name, $this->faker->email];
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => $this->faker->uuid,
+            'g-recaptcha-response' => $this->faker->uuid,
         ]);
 
         $response
             ->assertRedirect() // Assuming redirect after submission
-            ->assertInvalid([recaptchaFieldName()]);
+            ->assertInvalid(['g-recaptcha-response']);
 
         $this->assertNull(Comment::withPersonDetails('email', $email)->first());
     }
@@ -347,25 +317,21 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function all_users_dont_pass_captcha_to_submit_comment_as_registered_user()
     {
-        ReCaptcha::fake();
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'all',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
-        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
-            recaptchaFieldName() => $this->faker->uuid,
+            'g-recaptcha-response' => $this->faker->uuid,
         ]);
 
         $response
             ->assertRedirect() // Assuming redirect after submission
-            ->assertInvalid([recaptchaFieldName()]);
+            ->assertInvalid(['g-recaptcha-response']);
 
         $this->assertNull(Comment::withPersonDetails('user', $this->user)->first());
     }
@@ -376,24 +342,20 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function guest_can_submit_comment_without_captcha_when_disabled()
     {
-        ReCaptcha::fake();
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
+        Captcha::fake();
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
         [$name, $email] = [$this->faker->name, $this->faker->email];
 
-        $response = $this->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
             'name' => $name,
             'email' => $email,
-            recaptchaFieldName() => ReCaptcha::validResponse(),
+            'g-recaptcha-response' => CaptchaRule::validResponse(),
         ]);
 
         $response->assertRedirect(); // Assuming redirect after submission
@@ -407,17 +369,13 @@ class BlogCommentTest extends TestCase
     #[Test]
     public function registered_user_can_submit_comment_without_captcha_when_disabled()
     {
-        // Simulate CAPTCHA validation logic here
-        // For testing, assume CAPTCHA is valid
         PageSettings::fake('blog', [
             'user_authentication' => 'guest_verified',
             'comment_moderation' => 'manual',
             'use_captcha' => 'disabled',
         ]);
 
-        $article = Article::factory()->withRevision()->createPostWithRegisteredPerson()->published()->create();
-
-        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $article]), [
+        $response = $this->actingAs($this->user)->post(route('blog.comment', ['article' => $this->article]), [
             'comment' => 'This is a test comment',
         ]);
 
