@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Components\Captcha\Facades\Captcha;
 use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
 use App\Rules\RecaptchaRule;
@@ -31,7 +32,7 @@ class ContactRequest extends FormRequest
             'message' => 'required|string',
         ];
 
-        if (PageSettings::page('contact')->setting('require_recaptcha')) {
+        if (Captcha::getDriver('recaptcha')->isReady() && PageSettings::page('contact')->setting('require_recaptcha')) {
             $rules['g-recaptcha-response'] = CaptchaRule::required('recaptcha');
         }
 

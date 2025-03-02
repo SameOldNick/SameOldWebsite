@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Components\Captcha\Facades\Captcha;
 use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\ReCaptcha\ReCaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
@@ -54,7 +55,7 @@ class CommentRequest extends FormRequest
 
         $useCaptcha = PageSettings::page('blog')->setting('use_captcha');
 
-        if (($useCaptcha === 'guest' && $this->isGuest()) || $useCaptcha === 'all') {
+        if (Captcha::getDriver('recaptcha')->isReady() && (($useCaptcha === 'guest' && $this->isGuest()) || $useCaptcha === 'all')) {
             $rules['g-recaptcha-response'] = CaptchaRule::required('recaptcha');
         }
 
