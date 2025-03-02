@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Facade;
 class Captcha extends Facade
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected static function getFacadeAccessor()
     {
@@ -26,9 +26,8 @@ class Captcha extends Facade
     /**
      * Swap the underlying captcha service implementation with a fake.
      *
-     * @param Driver|null $driver Driver implementation to use
-     * @param string|null $driverName Driver names to use the driver for (wildcard: '*')
-     * @return void
+     * @param  Driver|null  $driver  Driver implementation to use
+     * @param  string|null  $driverName  Driver names to use the driver for (wildcard: '*')
      */
     public static function fake(?Driver $driver = null, ?string $driverName = null): void
     {
@@ -42,8 +41,7 @@ class Captcha extends Facade
     /**
      * Swap the underlying captcha service implementation with a fake.
      *
-     * @param array<string, Driver> $drivers Drivers to fake
-     * @return void
+     * @param  array<string, Driver>  $drivers  Drivers to fake
      */
     public static function fakes(array $drivers): void
     {
