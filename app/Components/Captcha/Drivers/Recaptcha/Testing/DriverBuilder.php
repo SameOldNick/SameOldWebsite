@@ -276,8 +276,10 @@ class DriverBuilder
     /**
      * Runs new driver builder through callback and returns driver.
      */
-    public static function create(callable $callback): DriverContract
+    public static function create(?callable $callback = null): DriverContract
     {
-        return tap(new static, $callback)->build();
+        $driver = $callback ? tap(new static, $callback) : new static;
+
+        return $driver->build();
     }
 }
