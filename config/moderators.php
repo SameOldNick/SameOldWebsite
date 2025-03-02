@@ -35,8 +35,9 @@ return [
 
                     'lists' => [
                         [
-                            'source' => 'config',
-                            'key' => 'profanity.en',
+                            'source' => 'require',
+                            'path' => app_path('Components/Moderator/data/profanity.php'),
+                            'key' => 'en',
                         ],
                     ],
                 ],
