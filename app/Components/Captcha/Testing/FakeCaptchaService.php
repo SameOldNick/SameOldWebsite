@@ -4,7 +4,6 @@ namespace App\Components\Captcha\Testing;
 
 use App\Components\Captcha\CaptchaService;
 use App\Components\Captcha\Contracts\Driver;
-use App\Components\Captcha\Testing\Driver as TestingDriver;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Testing\Fakes\Fake;
 
