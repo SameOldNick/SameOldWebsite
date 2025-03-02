@@ -36,7 +36,7 @@ class Driver implements DriverContract
      */
     public function getMinimumScore(): float
     {
-        return $this->config['minimum_score'] ?? 0.5;
+        return (float) $this->config['minimum_score'] ?: 0.5;
     }
 
     /**
