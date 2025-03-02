@@ -17,6 +17,7 @@ class Driver implements DriverContract
     public function __construct(
         protected readonly Presenter $presenter,
         protected readonly Verifier $verifier,
+        protected readonly bool $ready = true
     ) {}
 
     /**
@@ -24,7 +25,7 @@ class Driver implements DriverContract
      */
     public function isReady(): bool
     {
-        return true;
+        return $this->ready;
     }
 
     /**
