@@ -28,8 +28,8 @@
         "xterm-for-react": "^1.0.4"
     },
     "devDependencies": {
-        "@bytemd/plugin-frontmatter": "^1.22.0",
         "@bytemd/plugin-breaks": "^1.22.0",
+        "@bytemd/plugin-frontmatter": "^1.22.0",
         "@bytemd/plugin-gemoji": "^1.21.0",
         "@bytemd/plugin-gfm": "^1.21.0",
         "@bytemd/plugin-highlight": "^1.21.0",
