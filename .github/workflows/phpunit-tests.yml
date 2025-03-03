@@ -21,28 +21,38 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         coverage: xdebug
+
     - uses: actions/checkout@v3
+
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+
     - name: Generate key
       run: php artisan key:generate
+
     - name: Generate LittleJWT phrase for auth tokens
       run: sed -i "s/^LITTLEJWT_KEY_PHRASE=.*/LITTLEJWT_KEY_PHRASE=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+
     - name: Generate LittleJWT phrase for refresh tokens
       run: sed -i "s/^LITTLEJWT_KEY_PHRASE_REFRESH=.*/LITTLEJWT_KEY_PHRASE_REFRESH=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
+
     - name: Create Database
       run: |
         mkdir -p database
         touch database/database.sqlite
+
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan test --coverage-clover build/logs/clover.xml
+      
     - name: Upload coverage results to Coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
