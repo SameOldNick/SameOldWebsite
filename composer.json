@@ -24,7 +24,7 @@
         "laravel/ui": "^4.2",
         "league/flysystem-ftp": "^3.29",
         "league/flysystem-sftp-v3": "^3.29",
-        "little-apps/littlejwt": "^2.2.0@beta",
+        "little-apps/littlejwt": "^2.3.0",
         "masterminds/html5": "^2.9",
         "owenvoke/blade-fontawesome": "^2.4",
         "simplesoftwareio/simple-qrcode": "~4",
