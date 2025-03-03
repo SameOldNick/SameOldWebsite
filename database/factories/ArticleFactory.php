@@ -24,7 +24,7 @@ class ArticleFactory extends Factory
     public function definition()
     {
         return [
-            'title' => sprintf('%s %s', Str::headline($this->faker->unique()->realText(25)), $this->faker->emoji()),
+            'title' => sprintf('%s %s', Str::headline($this->faker->unique()->sentence(10)), $this->faker->emoji()),
             'slug' => $this->faker->unique()->slug,
         ];
     }
