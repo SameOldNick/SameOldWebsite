@@ -11,7 +11,7 @@
                         <h2 class="text-center">{{ __('Contact Me') }}</h2>
                     </div>
                     <div class="card-body">
-                        <div class="px-5 py-4">
+                        <div class="px-md-5 py-4">
                             @isset($success)
                                 <div class="mb-4">
                                     <x-alert type="success">
