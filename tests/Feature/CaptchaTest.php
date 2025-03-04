@@ -33,7 +33,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
     }
 
@@ -64,12 +64,12 @@ class CaptchaTest extends TestCase
         try {
             Captcha::validate(new UserResponse($this->faker->sha256, $this->faker->ipv4));
 
-            $this->fail('Exception ' . VerificationException::class . ' not thrown.');
+            $this->fail('Exception '.VerificationException::class.' not thrown.');
         } catch (VerificationException $e) {
             $this->assertTrue(true);
             $this->assertMatchesRegularExpression('/Captcha verification failed: .+/', $e->getMessage());
             $this->assertMatchesRegularExpression(
-                '/' . implode('|', Arr::map(Verifier::$errorCodes, fn($message) => preg_quote($message))) . '/',
+                '/'.implode('|', Arr::map(Verifier::$errorCodes, fn ($message) => preg_quote($message))).'/',
                 $e->getMessage()
             );
         }
@@ -87,12 +87,12 @@ class CaptchaTest extends TestCase
         try {
             Captcha::validate(new UserResponse($this->faker->sha256, $this->faker->ipv4));
 
-            $this->fail('Exception ' . VerificationException::class . ' not thrown.');
+            $this->fail('Exception '.VerificationException::class.' not thrown.');
         } catch (VerificationException $e) {
             $this->assertTrue(true);
             $this->assertMatchesRegularExpression('/Captcha verification failed: .+/', $e->getMessage());
             $this->assertMatchesRegularExpression(
-                '/' . implode('|', Arr::map(Verifier::$errorCodes, fn($message) => preg_quote($message))) . '/',
+                '/'.implode('|', Arr::map(Verifier::$errorCodes, fn ($message) => preg_quote($message))).'/',
                 $e->getMessage()
             );
         }
@@ -110,7 +110,7 @@ class CaptchaTest extends TestCase
         try {
             Captcha::validate(new UserResponse($this->faker->sha256, $this->faker->ipv4));
 
-            $this->fail('Exception ' . VerificationException::class . ' not thrown.');
+            $this->fail('Exception '.VerificationException::class.' not thrown.');
         } catch (VerificationException $e) {
             $this->assertTrue(true);
             $this->assertEquals('Captcha verification failed: score too low', $e->getMessage());
@@ -138,7 +138,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
 
         Http::assertSent(function ($request) {
@@ -165,7 +165,7 @@ class CaptchaTest extends TestCase
         try {
             Captcha::validate(new UserResponse($this->faker->sha256, $this->faker->ipv4));
 
-            $this->fail('Exception ' . VerificationException::class . ' not thrown.');
+            $this->fail('Exception '.VerificationException::class.' not thrown.');
         } catch (VerificationException $e) {
             $this->assertTrue(true);
         }
@@ -194,7 +194,7 @@ class CaptchaTest extends TestCase
         try {
             Captcha::validate(new UserResponse($this->faker->sha256, $this->faker->ipv4));
 
-            $this->fail('Exception ' . VerificationException::class . ' not thrown.');
+            $this->fail('Exception '.VerificationException::class.' not thrown.');
         } catch (VerificationException $e) {
             $this->assertTrue(true);
         }
@@ -216,7 +216,7 @@ class CaptchaTest extends TestCase
         try {
             Captcha::validate(new UserResponse($this->faker->sha256, $this->faker->ipv4));
 
-            $this->fail('Exception ' . VerificationException::class . ' not thrown.');
+            $this->fail('Exception '.VerificationException::class.' not thrown.');
         } catch (VerificationException $e) {
             $this->assertTrue(true);
         }
@@ -242,7 +242,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (ValidationException $e) {
-            $this->fail('Validation exception thrown: ' . $e->getMessage());
+            $this->fail('Validation exception thrown: '.$e->getMessage());
         }
     }
 
@@ -276,7 +276,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (ValidationException $e) {
-            $this->fail('Validation exception thrown: ' . $e->getMessage());
+            $this->fail('Validation exception thrown: '.$e->getMessage());
         }
     }
 
@@ -399,7 +399,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
 
         Http::assertNotSent(function ($request) {
@@ -432,7 +432,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
 
         Http::assertNotSent(function ($request) {
@@ -466,7 +466,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
 
         Http::assertNotSent(function ($request) {
@@ -500,7 +500,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
 
         Http::assertNotSent(function ($request) {
@@ -534,7 +534,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
 
         Http::assertNotSent(function ($request) {
@@ -568,7 +568,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
 
         Http::assertNotSent(function ($request) {
@@ -602,7 +602,7 @@ class CaptchaTest extends TestCase
 
             $this->assertTrue(true);
         } catch (VerificationException $e) {
-            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+            $this->fail('Recaptcha verification failed: '.$e->getMessage());
         }
 
         Http::assertNotSent(function ($request) {
