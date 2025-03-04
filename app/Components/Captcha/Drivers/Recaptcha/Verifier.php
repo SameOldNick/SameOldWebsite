@@ -173,13 +173,11 @@ class Verifier implements VerifierContract
      */
     protected function determineIpVersion(string $ip): ?int
     {
-        if (str_contains($ip, ':')) {
-            return 6;
-        } elseif (str_contains($ip, '.')) {
-            return 4;
-        }
-
-        return null;
+        return match (true) {
+            str_contains($ip, '.') => 4,
+            str_contains($ip, ':') => 6,
+            default => null,
+        };
     }
 
     /**
