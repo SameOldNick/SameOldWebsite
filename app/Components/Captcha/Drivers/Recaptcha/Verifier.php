@@ -7,9 +7,9 @@ use App\Components\Captcha\Exceptions\VerificationException;
 use Illuminate\Http\Client\PendingRequest as HttpClient;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 use function Safe\preg_match;
 
@@ -119,7 +119,7 @@ class Verifier implements VerifierContract
         if (! (bool) Arr::get($resultJson, 'success', false)) {
             $errorCodes = Arr::get($resultJson, 'error-codes', []);
 
-            $errorCode = Arr::first($errorCodes, fn($errorCode) => Arr::has(static::$errorCodes, $errorCode));
+            $errorCode = Arr::first($errorCodes, fn ($errorCode) => Arr::has(static::$errorCodes, $errorCode));
 
             throw VerificationException::withReason($errorCode ? static::$errorCodes[$errorCode] : null);
         }
@@ -142,7 +142,7 @@ class Verifier implements VerifierContract
      */
     protected function isExcludedIp(string $ip): bool
     {
-        return count($this->excludeIps) > 0 ? Arr::first($this->excludeIps, fn($excludeIp) => $this->matchesIp($ip, $excludeIp)) !== null : false;
+        return count($this->excludeIps) > 0 ? Arr::first($this->excludeIps, fn ($excludeIp) => $this->matchesIp($ip, $excludeIp)) !== null : false;
     }
 
     /**
