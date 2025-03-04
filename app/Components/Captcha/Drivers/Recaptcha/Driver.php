@@ -48,6 +48,14 @@ class Driver implements DriverContract
     }
 
     /**
+     * Gets the list of IP addresses that are allowed to bypass the verification.
+     */
+    public function getExcludeIps(): array
+    {
+        return $this->config['exclude_ips'] ?? [];
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function isReady(): bool
@@ -68,6 +76,12 @@ class Driver implements DriverContract
      */
     public function verifier(): VerifierContract
     {
-        return new Verifier($this->getSiteKey(), $this->getSecretKey(), $this->getMinimumScore(), $this->getClientOptions());
+        return new Verifier(
+            $this->getSiteKey(),
+            $this->getSecretKey(),
+            $this->getMinimumScore(),
+            $this->getClientOptions(),
+            $this->getExcludeIps(),
+        );
     }
 }
