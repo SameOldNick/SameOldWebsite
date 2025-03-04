@@ -30,7 +30,7 @@ return [
 
             /**
              * List of IP addresses that are allowed to bypass the verification.
-             * 
+             *
              * Possible array values:
              *  - Exact IP address: 192.168.0.1
              *  - IP address range: 192.168.0.1/24
