@@ -7,8 +7,11 @@ use App\Components\Captcha\Exceptions\VerificationException;
 use Illuminate\Http\Client\PendingRequest as HttpClient;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+
+use function Safe\preg_match;
 
 /**
  * @mixes VerifierContract<UserResponse>
@@ -37,6 +40,7 @@ class Verifier implements VerifierContract
         protected readonly string $secretKey,
         protected readonly float $minimumScore,
         protected readonly array $clientOptions = [],
+        protected readonly array $excludeIps = [],
     ) {}
 
     /**
@@ -46,6 +50,10 @@ class Verifier implements VerifierContract
     {
         if (! $userResponse instanceof UserResponse) {
             throw new \InvalidArgumentException('Invalid user response');
+        }
+
+        if ($this->isExcludedIp($userResponse->remoteIp)) {
+            return;
         }
 
         $response = $this->performRequest($userResponse);
@@ -111,7 +119,7 @@ class Verifier implements VerifierContract
         if (! (bool) Arr::get($resultJson, 'success', false)) {
             $errorCodes = Arr::get($resultJson, 'error-codes', []);
 
-            $errorCode = Arr::first($errorCodes, fn ($errorCode) => Arr::has(static::$errorCodes, $errorCode));
+            $errorCode = Arr::first($errorCodes, fn($errorCode) => Arr::has(static::$errorCodes, $errorCode));
 
             throw VerificationException::withReason($errorCode ? static::$errorCodes[$errorCode] : null);
         }
@@ -127,5 +135,101 @@ class Verifier implements VerifierContract
     protected function createHttpClient(): HttpClient
     {
         return Http::asForm()->withOptions($this->clientOptions);
+    }
+
+    /**
+     * Determines if the IP address is excluded from the verification.
+     */
+    protected function isExcludedIp(string $ip): bool
+    {
+        return count($this->excludeIps) > 0 ? Arr::first($this->excludeIps, fn($excludeIp) => $this->matchesIp($ip, $excludeIp)) !== null : false;
+    }
+
+    /**
+     * Matches the IP address with the expected value.
+     */
+    protected function matchesIp(string $ip, string $expected): bool
+    {
+        // Values that match any IP address.
+        $allIps = [
+            '*',
+            '0.0.0.0/0',
+            '::/0',
+        ];
+
+        if ($expected === $ip || Str::is($expected, $ip) || in_array($expected, $allIps, true)) {
+            return true;
+        }
+
+        return match ($this->determineIpVersion($expected)) {
+            4 => $this->matchesIpv4($ip, $expected),
+            6 => $this->matchesIpv6($ip, $expected),
+            default => false,
+        };
+    }
+
+    /**
+     * Determines the IP version of the expected value.
+     */
+    protected function determineIpVersion(string $ip): ?int
+    {
+        if (str_contains($ip, ':')) {
+            return 6;
+        } elseif (str_contains($ip, '.')) {
+            return 4;
+        }
+
+        return null;
+    }
+
+    /**
+     * Matches the IPv4 address with the expected value.
+     */
+    protected function matchesIpv4(string $ip, string $expected): bool
+    {
+        if (preg_match('/^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\/(\d\d?)$/', $expected, $matches)) {
+            $excludeIp = $matches[1];
+            $mask = 32 - (int) $matches[2];
+
+            return (ip2long($ip) >> $mask) === (ip2long($excludeIp) >> $mask);
+        }
+
+        return false;
+    }
+
+    /**
+     * Matches the IPv6 address with the expected value.
+     */
+    protected function matchesIpv6(string $ip, string $expected): bool
+    {
+        if (preg_match('/^([0-9a-fA-F:]+)\/(\d{1,3})$/', $expected, $matches)) {
+            // Convert the IP addresses to binary.
+            $excludeIp = inet_pton($matches[1]);
+            $mask = (int) $matches[2];
+
+            // Convert the IP addresses to binary.
+            $ipBin = inet_pton($ip);
+            $ipBin = unpack('A16', $ipBin)[1];
+            $excludeIpBin = unpack('A16', $excludeIp)[1];
+
+            // Pad the IP addresses to 16 bytes.
+            $ipBin = str_pad($ipBin, 16, "\0", STR_PAD_RIGHT);
+            $excludeIpBin = str_pad($excludeIpBin, 16, "\0", STR_PAD_RIGHT);
+
+            for ($i = 0; $i < 16; $i++) {
+                // Calculate the number of bits to compare.
+                $maskBits = min(8, $mask);
+                $mask = max(0, $mask - 8);
+
+                // Compare the bits.
+                if ((ord($ipBin[$i]) >> (8 - $maskBits)) !== (ord($excludeIpBin[$i]) >> (8 - $maskBits))) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -29,6 +29,16 @@ return [
             'minimum_score' => env('RECAPTCHA_MINIMUM_SCORE', 0.5),
 
             /**
+             * List of IP addresses that are allowed to bypass the verification.
+             * 
+             * Possible array values:
+             *  - Exact IP address: 192.168.0.1
+             *  - IP address range: 192.168.0.1/24
+             *  - IP address with wildcard: 192.168.*.*
+             */
+            'exclude_ips' => [],
+
+            /**
              * Additional options to pass to the Guzzle HTTP client.
              *
              * @see https://docs.guzzlephp.org/en/stable/request-options.html

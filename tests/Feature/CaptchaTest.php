@@ -307,4 +307,306 @@ class CaptchaTest extends TestCase
             'g-recaptcha-response' => CaptchaRule::required('recaptcha'),
         ])->validate();
     }
+
+    /**
+     * Tests an IPv4 address is not excluded from the verification.
+     */
+    public function test_recaptcha_include_exact_ipv4(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = $this->faker->unique()->ipv4;
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$this->faker->unique()->ipv4]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->fail('Recaptcha verification passed: IP address is not excluded.');
+        } catch (VerificationException $e) {
+            $this->assertTrue(true);
+        }
+
+        Http::assertSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
+
+    /**
+     * Tests an IPv6 address is not excluded from the verification.
+     */
+    public function test_recaptcha_include_exact_ipv6(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = $this->faker->unique()->ipv6;
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$this->faker->unique()->ipv6]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->fail('Recaptcha verification passed: IP address is not excluded.');
+        } catch (VerificationException $e) {
+            $this->assertTrue(true);
+        }
+
+        Http::assertSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
+
+    /**
+     * Tests an IPv4 address is excluded from the verification.
+     */
+    public function test_recaptcha_exclude_exact_ipv4(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = $this->faker->ipv4;
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$ip]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->assertTrue(true);
+        } catch (VerificationException $e) {
+            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+        }
+
+        Http::assertNotSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
+
+    /**
+     * Tests an IPv6 address is excluded from the verification.
+     */
+    public function test_recaptcha_exclude_exact_ipv6(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = $this->faker->ipv6;
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$ip]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->assertTrue(true);
+        } catch (VerificationException $e) {
+            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+        }
+
+        Http::assertNotSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
+
+    /**
+     * Tests an IPv4 address is excluded from the verification.
+     */
+    public function test_recaptcha_exclude_wildcard_ipv4(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = '192.168.100.1';
+            $mask = '192.168.*.*';
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$mask]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->assertTrue(true);
+        } catch (VerificationException $e) {
+            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+        }
+
+        Http::assertNotSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
+
+    /**
+     * Tests an IPv6 address is excluded from the verification.
+     */
+    public function test_recaptcha_exclude_wildcard_ipv6(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = 'dbf0:7456:add0:d165:7bd0:65ba:b906:530d';
+            $mask = 'dbf0:7456:add0:d165:7bd0:65ba:*:*';
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$mask]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->assertTrue(true);
+        } catch (VerificationException $e) {
+            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+        }
+
+        Http::assertNotSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
+
+    /**
+     * Tests an IPv4 address is excluded from the verification.
+     */
+    public function test_recaptcha_exclude_cidr_range_ipv4(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = '192.168.100.1';
+            $mask = '192.168.0.0/16';
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$mask]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->assertTrue(true);
+        } catch (VerificationException $e) {
+            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+        }
+
+        Http::assertNotSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
+
+    /**
+     * Tests an IPv6 address is excluded from the verification.
+     */
+    public function test_recaptcha_exclude_shrunk_cidr_range_ipv6(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = 'dbf0:7456:add0:d165:7bd0:65ba:b906:530d';
+            $mask = 'dbf0:7456:add0:d165:7bd0::/64';
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$mask]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->assertTrue(true);
+        } catch (VerificationException $e) {
+            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+        }
+
+        Http::assertNotSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
+
+    /**
+     * Tests an IPv6 address is excluded from the verification.
+     */
+    public function test_recaptcha_exclude_expanded_cidr_range_ipv6(): void
+    {
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'score' => 0.1,
+                'action' => 'homepage',
+                'challenge_ts' => '2021-09-01T00:00:00Z',
+                'hostname' => 'example.com',
+                'error-codes' => [],
+            ]),
+        ]);
+
+        try {
+            $ip = 'dbf0:7456:add0:d165:7bd0:65ba:b906:530d';
+            $mask = 'dbf0:7456:add0:d165:7bd0:0000:0000:0000/64';
+
+            config(['captcha.drivers.recaptcha.exclude_ips' => [$mask]]);
+
+            Captcha::validate(new UserResponse($this->faker->sha256, $ip));
+
+            $this->assertTrue(true);
+        } catch (VerificationException $e) {
+            $this->fail('Recaptcha verification failed: ' . $e->getMessage());
+        }
+
+        Http::assertNotSent(function ($request) {
+            return $request->url() === 'https://www.google.com/recaptcha/api/siteverify';
+        });
+    }
 }
