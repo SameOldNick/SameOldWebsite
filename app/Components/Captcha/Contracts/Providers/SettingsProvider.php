@@ -6,8 +6,6 @@ interface SettingsProvider
 {
     /**
      * Gets the default driver name.
-     *
-     * @return string
      */
     public function defaultDriver(): string;
 
@@ -21,10 +19,8 @@ interface SettingsProvider
     /**
      * Gets a setting value for a driver.
      *
-     * @param string $driver The driver name.
-     * @param string|null $key If null, the entire driver configuration is returned.
-     * @param mixed $default
-     * @return mixed
+     * @param  string  $driver  The driver name.
+     * @param  string|null  $key  If null, the entire driver configuration is returned.
      */
     public function get(string $driver, ?string $key = null, mixed $default = null): mixed;
 }
