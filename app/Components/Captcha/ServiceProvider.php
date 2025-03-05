@@ -2,6 +2,7 @@
 
 namespace App\Components\Captcha;
 
+use App\Components\Captcha\Contracts\Providers\SettingsProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -14,6 +15,10 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+        $this->app->bind(SettingsProvider::class, function ($app) {
+            return new Providers\Settings\ConfigProvider($app['config']['captcha']);
+        });
+
         $this->app->bind(CaptchaService::class, function ($app) {
             return new CaptchaService($app);
         });
