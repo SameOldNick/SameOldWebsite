@@ -35,6 +35,6 @@ class ConfigProvider implements SettingsProvider
      */
     public function get(string $driver, ?string $key = null, mixed $default = null): mixed
     {
-        return Arr::get($this->config, !is_null($key) ? "drivers.{$driver}.{$key}" : "drivers.{$driver}", $default);
+        return Arr::get($this->config, ! is_null($key) ? "drivers.{$driver}.{$key}" : "drivers.{$driver}", $default);
     }
 }
