@@ -43,6 +43,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerViews(): void
     {
-        $this->loadViewsFrom(__DIR__.'/views', 'captcha');
+        $this->loadViewsFrom(__DIR__ . '/views', 'captcha');
     }
 }
