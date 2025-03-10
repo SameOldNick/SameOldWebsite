@@ -1588,14 +1588,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bytemd/plugin-gfm@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@bytemd/plugin-gfm@npm:1.21.0"
+"@bytemd/plugin-gfm@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@bytemd/plugin-gfm@npm:1.22.0"
   dependencies:
     remark-gfm: "npm:^3.0.1"
   peerDependencies:
     bytemd: ^1.5.0
-  checksum: 10/1fbb08f871152db2a2977b10060ffd72e4410573f12d86d0cce265e12d7773f48e2d2f0a5d9b4394443d02f3491ca9916b169aaac1195c8ecf098277a8edca76
+  checksum: 10/78052d9aee799bda2f59528011ab6ded4ae63965c3bd8437ec979132e663ae9f83d2a8a34e71e2937c334f958b4966e16754aa821ca440757daf3677cb1744df
   languageName: node
   linkType: hard
 
@@ -10921,7 +10921,7 @@ __metadata:
     "@bytemd/plugin-breaks": "npm:^1.22.0"
     "@bytemd/plugin-frontmatter": "npm:^1.22.0"
     "@bytemd/plugin-gemoji": "npm:^1.21.0"
-    "@bytemd/plugin-gfm": "npm:^1.21.0"
+    "@bytemd/plugin-gfm": "npm:^1.22.0"
     "@bytemd/plugin-highlight": "npm:^1.21.0"
     "@bytemd/plugin-medium-zoom": "npm:^1.21.0"
     "@bytemd/react": "npm:^1.21.0"
