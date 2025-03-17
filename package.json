@@ -32,7 +32,7 @@
         "@bytemd/plugin-frontmatter": "^1.22.0",
         "@bytemd/plugin-gemoji": "^1.21.0",
         "@bytemd/plugin-gfm": "^1.22.0",
-        "@bytemd/plugin-highlight": "^1.21.0",
+        "@bytemd/plugin-highlight": "^1.22.0",
         "@bytemd/plugin-medium-zoom": "^1.21.0",
         "@bytemd/react": "^1.21.0",
         "@eslint/js": "^9.22.0",
