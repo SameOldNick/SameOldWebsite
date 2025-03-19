@@ -1599,14 +1599,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bytemd/plugin-highlight@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@bytemd/plugin-highlight@npm:1.21.0"
+"@bytemd/plugin-highlight@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@bytemd/plugin-highlight@npm:1.22.0"
   dependencies:
     highlight.js: "npm:^11.7.0"
   peerDependencies:
     bytemd: ^1.5.0
-  checksum: 10/51e9b4282d936161a0f23ed044eb10dfdebd61b24959a805e45c259491b712b7696b459479ec7c941ea8859edc95ba3084ee01c7612c908ec1c9192a6f35ff1a
+  checksum: 10/f5f512d2e2ab791f3af85abf5e2a236d5d25fce932147540e4d1865a4ea3061db44afe65ab29f648162e6e48eeeee53bd8dd354974a86daa5f57d21c92311fca
   languageName: node
   linkType: hard
 
@@ -11070,7 +11070,7 @@ __metadata:
     "@bytemd/plugin-frontmatter": "npm:^1.22.0"
     "@bytemd/plugin-gemoji": "npm:^1.21.0"
     "@bytemd/plugin-gfm": "npm:^1.22.0"
-    "@bytemd/plugin-highlight": "npm:^1.21.0"
+    "@bytemd/plugin-highlight": "npm:^1.22.0"
     "@bytemd/plugin-medium-zoom": "npm:^1.21.0"
     "@bytemd/react": "npm:^1.22.0"
     "@eslint/js": "npm:^9.22.0"
