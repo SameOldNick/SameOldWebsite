@@ -1621,14 +1621,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bytemd/react@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@bytemd/react@npm:1.21.0"
+"@bytemd/react@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@bytemd/react@npm:1.22.0"
   dependencies:
-    bytemd: "npm:1.21.0"
+    bytemd: "npm:1.22.0"
   peerDependencies:
     react: "*"
-  checksum: 10/3963a3e73ed2917969639d4764bc3ffff53d1baebcb76c0300d6b468dbe5bdac1c675665865f2b57400cb7b6d14887d619ec9cf3f6a0c6f2306a8386c3fce7e9
+  checksum: 10/54a3b248aa4c61615aac132d83e6b52894683919885e58dd233bd288d1b5e2a7b6f570531fe496b4117405b88c572a8d233f271f74bbca88c11225f771b2aa47
   languageName: node
   linkType: hard
 
@@ -4429,7 +4429,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bytemd@npm:1.21.0, bytemd@npm:^1.21.0":
+"bytemd@npm:1.22.0":
+  version: 1.22.0
+  resolution: "bytemd@npm:1.22.0"
+  dependencies:
+    "@popperjs/core": "npm:^2.11.7"
+    "@types/codemirror": "npm:^5.60.7"
+    "@types/hast": "npm:^2.3.4"
+    "@types/lodash-es": "npm:^4.17.7"
+    "@types/mdast": "npm:^3.0.11"
+    codemirror-ssr: "npm:^0.65.0"
+    hast-util-sanitize: "npm:^4.1.0"
+    lodash-es: "npm:^4.17.21"
+    rehype-raw: "npm:^6.1.1"
+    rehype-sanitize: "npm:^5.0.1"
+    rehype-stringify: "npm:^9.0.3"
+    remark-parse: "npm:^10.0.1"
+    remark-rehype: "npm:^10.1.0"
+    select-files: "npm:^1.0.1"
+    tippy.js: "npm:^6.3.7"
+    unified: "npm:^10.1.2"
+    unist-util-visit: "npm:^4.1.2"
+    vfile: "npm:^5.3.7"
+    word-count: "npm:^0.2.2"
+  checksum: 10/f760a89602487487370fa8e3073c844f7bf031a9f53c336ef1aa7cfc16e9db85caa903e2f71d6cddf862cab22c31dd8ced9052de8aa60709d57a8e0031c92593
+  languageName: node
+  linkType: hard
+
+"bytemd@npm:^1.21.0":
   version: 1.21.0
   resolution: "bytemd@npm:1.21.0"
   dependencies:
@@ -11045,7 +11072,7 @@ __metadata:
     "@bytemd/plugin-gfm": "npm:^1.22.0"
     "@bytemd/plugin-highlight": "npm:^1.21.0"
     "@bytemd/plugin-medium-zoom": "npm:^1.21.0"
-    "@bytemd/react": "npm:^1.21.0"
+    "@bytemd/react": "npm:^1.22.0"
     "@eslint/js": "npm:^9.22.0"
     "@fortawesome/fontawesome-free": "npm:^6.7.1"
     "@popperjs/core": "npm:^2.11.8"
