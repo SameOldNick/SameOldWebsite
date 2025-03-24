@@ -1577,14 +1577,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bytemd/plugin-gemoji@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@bytemd/plugin-gemoji@npm:1.21.0"
+"@bytemd/plugin-gemoji@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@bytemd/plugin-gemoji@npm:1.22.0"
   dependencies:
     remark-gemoji: "npm:^7.0.1"
   peerDependencies:
     bytemd: ^1.5.0
-  checksum: 10/53d13c4f75079c78fd360e004a28513b9ec82e1f89d62f4022a206052f452786bccd9d891c6abd85d3b7ea8780fc4a7fd858a48e0b952674348a87eb3dc9dcc3
+  checksum: 10/30e850a162aa4036bb503d84a5576ab781e87f5867565efdc98030d14ce84bb0b016994ef6e7cacf5980d070aa96df775b1728003a9f4734b321f552dbd11915
   languageName: node
   linkType: hard
 
@@ -11068,7 +11068,7 @@ __metadata:
   dependencies:
     "@bytemd/plugin-breaks": "npm:^1.22.0"
     "@bytemd/plugin-frontmatter": "npm:^1.22.0"
-    "@bytemd/plugin-gemoji": "npm:^1.21.0"
+    "@bytemd/plugin-gemoji": "npm:^1.22.0"
     "@bytemd/plugin-gfm": "npm:^1.22.0"
     "@bytemd/plugin-highlight": "npm:^1.22.0"
     "@bytemd/plugin-medium-zoom": "npm:^1.21.0"
