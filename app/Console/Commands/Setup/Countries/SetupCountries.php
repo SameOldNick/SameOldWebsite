@@ -30,7 +30,7 @@ class SetupCountries extends Command
     public function handle()
     {
         // Get countries data
-        $countries = require __DIR__ . '/countries.php';
+        $countries = require __DIR__.'/countries.php';
 
         if ($this->option('test')) {
             $countries = Arr::where($countries, function ($value) {
