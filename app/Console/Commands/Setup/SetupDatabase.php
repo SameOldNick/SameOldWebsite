@@ -36,6 +36,10 @@ class SetupDatabase extends Command
         $this->info('Running database migrations...');
         $this->call('migrate:fresh', []);
 
+        // Populate countries and states
+        $this->info('Populating countries and states...');
+        $this->call('setup:countries');
+
         // Seed the database
         $this->info('Seeding the database...');
         $this->call('db:seed', ['--class' => 'SetupSeeder']);
