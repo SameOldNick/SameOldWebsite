@@ -17,7 +17,6 @@ class SetupSeeder extends Seeder
     public function run()
     {
         $this->call([
-            Setup\Countries\CountryStateSeeder::class,
             Setup\RoleSeeder::class,
             Setup\PageSeeder::class,
             Setup\ContactPageSettingsSeeder::class,
