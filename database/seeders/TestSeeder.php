@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class TestSeeder extends Seeder
 {
@@ -16,8 +17,9 @@ class TestSeeder extends Seeder
      */
     public function run()
     {
+        Artisan::call('setup:countries', ['--test' => true]);
+
         $this->call([
-            Setup\Countries\SlimCountryStateSeeder::class,
             Setup\RoleSeeder::class,
             Setup\PageSeeder::class,
             Setup\ContactPageSettingsSeeder::class,
