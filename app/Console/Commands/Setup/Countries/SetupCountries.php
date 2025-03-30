@@ -32,11 +32,12 @@ class SetupCountries extends Command
         // Get countries data
         $countries = require __DIR__.'/countries.php';
 
-        if (!!$this->option('only')) {
-            $countries = Arr::where($countries, fn($value) => in_array($value['code_alpha3'], $this->option('only')));
+        if ((bool) $this->option('only')) {
+            $countries = Arr::where($countries, fn ($value) => in_array($value['code_alpha3'], $this->option('only')));
 
             if (count($countries) !== count($this->option('only'))) {
                 $this->error('Some country codes were not found.');
+
                 return 1;
             }
         }
