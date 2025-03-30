@@ -17,7 +17,7 @@ class TestSeeder extends Seeder
      */
     public function run()
     {
-        Artisan::call('setup:countries', ['--test' => true]);
+        Artisan::call('setup:countries', ['--only' => ['CAN', 'USA', 'GBR']]);
 
         $this->call([
             Setup\RoleSeeder::class,
