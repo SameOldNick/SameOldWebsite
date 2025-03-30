@@ -15,7 +15,7 @@ class SetupCountries extends Command
      */
     protected $signature = 'setup:countries
                             {--overwrite : Clears existing countries and states before seeding}
-                            {--test : Populate countries and states for testing}';
+                            {--only=* : Only populate specific alpha-3 country code(s) (e.g., --only=CAN --only=USA)}';
 
     /**
      * The console command description.
@@ -32,12 +32,13 @@ class SetupCountries extends Command
         // Get countries data
         $countries = require __DIR__ . '/countries.php';
 
-        if ($this->option('test')) {
-            $countries = Arr::where($countries, function ($value) {
-                $allowed = ['CAN', 'USA', 'GBR'];
+        if (!!$this->option('only')) {
+            $countries = Arr::where($countries, fn($value) => in_array($value['code_alpha3'], $this->option('only')));
 
-                return in_array($value['code_alpha3'], $allowed);
-            });
+            if (count($countries) !== count($this->option('only'))) {
+                $this->error('Some country codes were not found.');
+                return 1;
+            }
         }
 
         // Clear existing data (if overwrite option is set)
