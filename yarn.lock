@@ -8258,10 +8258,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.4.4":
-  version: 3.5.0
-  resolution: "luxon@npm:3.5.0"
-  checksum: 10/48f86e6c1c96815139f8559456a3354a276ba79bcef0ae0d4f2172f7652f3ba2be2237b0e103b8ea0b79b47715354ac9fac04eb1db3485dcc72d5110491dd47f
+"luxon@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "luxon@npm:3.6.0"
+  checksum: 10/1546a51dbb8e3c888311b50dcee2550778a078952dbc1aec015fa64b069b8f47a589232e8ce1324aafe1b6c913eeb612ab91dec5d05a71de7fce03656800facb
   languageName: node
   linkType: hard
 
@@ -11132,7 +11132,7 @@ __metadata:
     laravel-echo: "npm:^1.17.0"
     laravel-vite-plugin: "npm:^1.2"
     lodash: "npm:^4.17.19"
-    luxon: "npm:^3.4.4"
+    luxon: "npm:^3.6.0"
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
     postcss: "npm:^8.5.3"
