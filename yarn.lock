@@ -1610,14 +1610,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bytemd/plugin-medium-zoom@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@bytemd/plugin-medium-zoom@npm:1.21.0"
+"@bytemd/plugin-medium-zoom@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@bytemd/plugin-medium-zoom@npm:1.22.0"
   dependencies:
     medium-zoom: "npm:^1.0.8"
   peerDependencies:
     bytemd: ^1.5.0
-  checksum: 10/b95315f152ae59a92133c079ef94d70b492452a34df8a58c55fa38585ae28fb4f77b8a5b196419bc7ebdc49a8a0f78ea1c5e9144cb80488b8337f5050f0e0a42
+  checksum: 10/f9fb1770ed39661fc53ca904153d99a943ba5da533ceace51aee77cb2841828b8bf1f8eed618d28786271946d13bb427d531d1090f7490890b1795aa2c415c05
   languageName: node
   linkType: hard
 
@@ -11071,7 +11071,7 @@ __metadata:
     "@bytemd/plugin-gemoji": "npm:^1.22.0"
     "@bytemd/plugin-gfm": "npm:^1.22.0"
     "@bytemd/plugin-highlight": "npm:^1.22.0"
-    "@bytemd/plugin-medium-zoom": "npm:^1.21.0"
+    "@bytemd/plugin-medium-zoom": "npm:^1.22.0"
     "@bytemd/react": "npm:^1.22.0"
     "@eslint/js": "npm:^9.22.0"
     "@fortawesome/fontawesome-free": "npm:^6.7.1"
