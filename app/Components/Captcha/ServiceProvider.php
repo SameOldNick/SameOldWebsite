@@ -19,10 +19,6 @@ class ServiceProvider extends BaseServiceProvider
             return new Providers\Settings\ConfigProvider($app['config']['captcha']);
         });
 
-        $this->app->bind(CaptchaService::class, function ($app) {
-            return new CaptchaService($app);
-        });
-
         $this->app->alias(CaptchaService::class, 'captcha');
 
         $this->registerViews();
