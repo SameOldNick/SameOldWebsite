@@ -8126,10 +8126,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"laravel-echo@npm:^1.17.0":
-  version: 1.17.1
-  resolution: "laravel-echo@npm:1.17.1"
-  checksum: 10/26a584e3628808904b2c581ba40e1c243baabbe940ed672313dfd3adad7a2b5820e71d2ad6e5c21c45ebff99013e17bf6a8aa902555ab187b364ca2ded43121c
+"laravel-echo@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "laravel-echo@npm:2.0.2"
+  checksum: 10/fa52d4ad84b71a348371a6b9130e18364682472a28fdc5d3dc356aed3c0bb196048410c4ba7826be64079890f296e3c71a9e77ab438bec2ed0648e7e998b4ce4
   languageName: node
   linkType: hard
 
@@ -11157,7 +11157,7 @@ __metadata:
     jquery: "npm:^3.6.0"
     jquery-ui: "npm:^1.14.1"
     jquery.easing: "npm:^1.4.1"
-    laravel-echo: "npm:^1.17.0"
+    laravel-echo: "npm:^2.0.2"
     laravel-vite-plugin: "npm:^1.2"
     lodash: "npm:^4.17.19"
     luxon: "npm:^3.4.4"
