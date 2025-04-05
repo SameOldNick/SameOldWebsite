@@ -5,6 +5,7 @@ namespace App\Console\Commands\Setup\Countries;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class SetupCountries extends Command
 {
@@ -50,7 +51,7 @@ class SetupCountries extends Command
 
             try {
                 // Disable foreign key checks
-                DB::statement('SET FOREIGN_KEY_CHECKS=0');
+                Schema::disableForeignKeyConstraints();
 
                 DB::table('countries')->truncate();
                 DB::table('states')->truncate();
@@ -58,7 +59,7 @@ class SetupCountries extends Command
                 throw $e;
             } finally {
                 // Always re-enable foreign key checks
-                DB::statement('SET FOREIGN_KEY_CHECKS=1');
+                Schema::disableForeignKeyConstraints();
             }
 
             $this->info('Existing data cleared.');
