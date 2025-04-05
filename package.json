@@ -79,7 +79,7 @@
         "laravel-echo": "^2.0.2",
         "laravel-vite-plugin": "^1.2",
         "lodash": "^4.17.19",
-        "luxon": "^3.4.4",
+        "luxon": "^3.6.0",
         "postcss": "^8.5.3",
         "pusher-js": "^8.4.0-rc2",
         "query-string": "^9.1.1",
