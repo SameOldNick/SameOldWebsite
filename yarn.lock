@@ -1501,11 +1501,11 @@ __metadata:
   linkType: hard
 
 "@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
-  version: 7.26.0
-  resolution: "@babel/runtime@npm:7.26.0"
+  version: 7.27.0
+  resolution: "@babel/runtime@npm:7.27.0"
   dependencies:
     regenerator-runtime: "npm:^0.14.0"
-  checksum: 10/9f4ea1c1d566c497c052d505587554e782e021e6ccd302c2ad7ae8291c8e16e3f19d4a7726fb64469e057779ea2081c28b7dbefec6d813a22f08a35712c0f699
+  checksum: 10/e6966e03b695feb4c0ac0856a4355231c2580bf9ebd0298f47739f85c0ea658679dd84409daf26378d42c86c1cbe7e33feab709b14e784254b6c441d91606465
   languageName: node
   linkType: hard
 
@@ -1610,14 +1610,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bytemd/plugin-medium-zoom@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@bytemd/plugin-medium-zoom@npm:1.21.0"
+"@bytemd/plugin-medium-zoom@npm:^1.22.0":
+  version: 1.22.0
+  resolution: "@bytemd/plugin-medium-zoom@npm:1.22.0"
   dependencies:
     medium-zoom: "npm:^1.0.8"
   peerDependencies:
     bytemd: ^1.5.0
-  checksum: 10/b95315f152ae59a92133c079ef94d70b492452a34df8a58c55fa38585ae28fb4f77b8a5b196419bc7ebdc49a8a0f78ea1c5e9144cb80488b8337f5050f0e0a42
+  checksum: 10/f9fb1770ed39661fc53ca904153d99a943ba5da533ceace51aee77cb2841828b8bf1f8eed618d28786271946d13bb427d531d1090f7490890b1795aa2c415c05
   languageName: node
   linkType: hard
 
@@ -5746,7 +5746,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.27.1, eslint-plugin-react@npm:^7.37.3":
+"eslint-plugin-react@npm:^7.27.1":
   version: 7.37.3
   resolution: "eslint-plugin-react@npm:7.37.3"
   dependencies:
@@ -5771,6 +5771,34 @@ __metadata:
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
   checksum: 10/30042b95c440a962157192f67369d8c9171f7c73e992695e5674c9d28c3cfe4098488eca86dfa7c433d4c8a91243cbafdc80c7e42d2c1720a427ddb36e65457e
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-react@npm:^7.37.4":
+  version: 7.37.4
+  resolution: "eslint-plugin-react@npm:7.37.4"
+  dependencies:
+    array-includes: "npm:^3.1.8"
+    array.prototype.findlast: "npm:^1.2.5"
+    array.prototype.flatmap: "npm:^1.3.3"
+    array.prototype.tosorted: "npm:^1.1.4"
+    doctrine: "npm:^2.1.0"
+    es-iterator-helpers: "npm:^1.2.1"
+    estraverse: "npm:^5.3.0"
+    hasown: "npm:^2.0.2"
+    jsx-ast-utils: "npm:^2.4.1 || ^3.0.0"
+    minimatch: "npm:^3.1.2"
+    object.entries: "npm:^1.1.8"
+    object.fromentries: "npm:^2.0.8"
+    object.values: "npm:^1.2.1"
+    prop-types: "npm:^15.8.1"
+    resolve: "npm:^2.0.0-next.5"
+    semver: "npm:^6.3.1"
+    string.prototype.matchall: "npm:^4.0.12"
+    string.prototype.repeat: "npm:^1.0.0"
+  peerDependencies:
+    eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
+  checksum: 10/c538c10665c87cb90a0bcc4efe53a758570db10997d079d31474a9760116ef5584648fa22403d889ca672df8071bda10b40434ea0499e5ee8360bc5c8aba1679
   languageName: node
   linkType: hard
 
@@ -8098,10 +8126,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"laravel-echo@npm:^1.17.0":
-  version: 1.17.1
-  resolution: "laravel-echo@npm:1.17.1"
-  checksum: 10/26a584e3628808904b2c581ba40e1c243baabbe940ed672313dfd3adad7a2b5820e71d2ad6e5c21c45ebff99013e17bf6a8aa902555ab187b364ca2ded43121c
+"laravel-echo@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "laravel-echo@npm:2.0.2"
+  checksum: 10/fa52d4ad84b71a348371a6b9130e18364682472a28fdc5d3dc356aed3c0bb196048410c4ba7826be64079890f296e3c71a9e77ab438bec2ed0648e7e998b4ce4
   languageName: node
   linkType: hard
 
@@ -8258,10 +8286,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.4.4":
-  version: 3.5.0
-  resolution: "luxon@npm:3.5.0"
-  checksum: 10/48f86e6c1c96815139f8559456a3354a276ba79bcef0ae0d4f2172f7652f3ba2be2237b0e103b8ea0b79b47715354ac9fac04eb1db3485dcc72d5110491dd47f
+"luxon@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "luxon@npm:3.6.0"
+  checksum: 10/1546a51dbb8e3c888311b50dcee2550778a078952dbc1aec015fa64b069b8f47a589232e8ce1324aafe1b6c913eeb612ab91dec5d05a71de7fce03656800facb
   languageName: node
   linkType: hard
 
@@ -11071,7 +11099,7 @@ __metadata:
     "@bytemd/plugin-gemoji": "npm:^1.22.0"
     "@bytemd/plugin-gfm": "npm:^1.22.0"
     "@bytemd/plugin-highlight": "npm:^1.22.0"
-    "@bytemd/plugin-medium-zoom": "npm:^1.21.0"
+    "@bytemd/plugin-medium-zoom": "npm:^1.22.0"
     "@bytemd/react": "npm:^1.22.0"
     "@eslint/js": "npm:^9.22.0"
     "@fortawesome/fontawesome-free": "npm:^6.7.1"
@@ -11119,7 +11147,7 @@ __metadata:
     eslint-plugin-github: "npm:^5.1.5"
     eslint-plugin-jest: "npm:^28.11.0"
     eslint-plugin-only-warn: "npm:^1.1.0"
-    eslint-plugin-react: "npm:^7.37.3"
+    eslint-plugin-react: "npm:^7.37.4"
     formik: "npm:^2.4.3"
     github-markdown-css: "npm:^5.8.1"
     globals: "npm:^15.14.0"
@@ -11129,10 +11157,10 @@ __metadata:
     jquery: "npm:^3.6.0"
     jquery-ui: "npm:^1.14.1"
     jquery.easing: "npm:^1.4.1"
-    laravel-echo: "npm:^1.17.0"
+    laravel-echo: "npm:^2.0.2"
     laravel-vite-plugin: "npm:^1.2"
     lodash: "npm:^4.17.19"
-    luxon: "npm:^3.4.4"
+    luxon: "npm:^3.6.0"
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
     postcss: "npm:^8.5.3"
