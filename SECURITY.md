@@ -17,7 +17,7 @@ Next, ensure the security issue is with Same Old Website itself and not with any
 
 ## Reporting a Vulnerability
 
-If you're sure the vulnerability is caused by Little JWT, [open an issue](https://github.com/little-apps/LittleJWT/issues/new) and include the following:
+If you're sure the vulnerability is caused by Same Old Website, [open an issue](https://github.com/SameOldNick/SameOldWebsite/issues/new) and include the following:
 
  * **Who** the vulnerability affects.
  * **What** the security vulnerability is.
