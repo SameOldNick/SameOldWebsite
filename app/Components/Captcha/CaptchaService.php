@@ -4,24 +4,15 @@ namespace App\Components\Captcha;
 
 use App\Components\Captcha\Contracts\Driver;
 use App\Components\Captcha\Contracts\UserResponse;
-use Illuminate\Contracts\Container\Container;
-use Illuminate\Support\Manager;
 
 class CaptchaService
 {
     /**
-     * The captcha manager instance.
-     */
-    public readonly CaptchaManager $manager;
-
-    /**
      * Create a new captcha service instance.
      */
     public function __construct(
-        private readonly Container $container,
-    ) {
-        $this->manager = new CaptchaManager($this->container);
-    }
+        public readonly CaptchaManager $manager,
+    ) {}
 
     /**
      * Validate the user response.
