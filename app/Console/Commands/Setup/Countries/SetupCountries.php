@@ -65,7 +65,7 @@ class SetupCountries extends Command
             $this->info('Existing data cleared.');
         }
 
-        $this->info($this->option('test') ? 'Populating countries and states for testing...' : 'Populating countries and states...');
+        $this->info('Populating countries and states...');
 
         $this->withProgressBar($countries, function (array $item) {
             $countryCode = $item['code_alpha3'];
