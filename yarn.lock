@@ -4429,7 +4429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bytemd@npm:1.22.0":
+"bytemd@npm:1.22.0, bytemd@npm:^1.22.0":
   version: 1.22.0
   resolution: "bytemd@npm:1.22.0"
   dependencies:
@@ -4453,33 +4453,6 @@ __metadata:
     vfile: "npm:^5.3.7"
     word-count: "npm:^0.2.2"
   checksum: 10/f760a89602487487370fa8e3073c844f7bf031a9f53c336ef1aa7cfc16e9db85caa903e2f71d6cddf862cab22c31dd8ced9052de8aa60709d57a8e0031c92593
-  languageName: node
-  linkType: hard
-
-"bytemd@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "bytemd@npm:1.21.0"
-  dependencies:
-    "@popperjs/core": "npm:^2.11.7"
-    "@types/codemirror": "npm:^5.60.7"
-    "@types/hast": "npm:^2.3.4"
-    "@types/lodash-es": "npm:^4.17.7"
-    "@types/mdast": "npm:^3.0.11"
-    codemirror-ssr: "npm:^0.65.0"
-    hast-util-sanitize: "npm:^4.1.0"
-    lodash-es: "npm:^4.17.21"
-    rehype-raw: "npm:^6.1.1"
-    rehype-sanitize: "npm:^5.0.1"
-    rehype-stringify: "npm:^9.0.3"
-    remark-parse: "npm:^10.0.1"
-    remark-rehype: "npm:^10.1.0"
-    select-files: "npm:^1.0.1"
-    tippy.js: "npm:^6.3.7"
-    unified: "npm:^10.1.2"
-    unist-util-visit: "npm:^4.1.2"
-    vfile: "npm:^5.3.7"
-    word-count: "npm:^0.2.2"
-  checksum: 10/8cf0434bbac776b3b838385c1c38dcf667c2f4fd4d5ccb55614675e7d9c1dd6a3e1b5b520c8580b0054b35494710f5d0dcaec67a87d9f2746a96ef2259ac80ab
   languageName: node
   linkType: hard
 
@@ -11133,7 +11106,7 @@ __metadata:
     bootstrap: "npm:^5.3.2"
     bootstrap-select: "npm:^1.14.0-beta3"
     build-url-ts: "npm:^6.1.8"
-    bytemd: "npm:^1.21.0"
+    bytemd: "npm:^1.22.0"
     chart.js: "npm:^4.4.8"
     classnames: "npm:^2.5.1"
     codemirror-ssr: "npm:^0.65.0"
