@@ -60,7 +60,7 @@
         "blueimp-md5": "^2.19.0",
         "bootstrap-select": "^1.14.0-beta3",
         "build-url-ts": "^6.1.8",
-        "bytemd": "^1.21.0",
+        "bytemd": "^1.22.0",
         "classnames": "^2.5.1",
         "dotenv": "^16.4.7",
         "dropzone": "^6.0.0-beta.2",
