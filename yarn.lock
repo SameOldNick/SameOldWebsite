@@ -3056,10 +3056,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:^3.3.7":
-  version: 3.4.2
-  resolution: "@types/luxon@npm:3.4.2"
-  checksum: 10/fd89566e3026559f2bc4ddcc1e70a2c16161905ed50be9473ec0cfbbbe919165041408c4f6e06c4bcf095445535052e2c099087c76b1b38e368127e618fc968d
+"@types/luxon@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "@types/luxon@npm:3.6.2"
+  checksum: 10/73ca30059e0b1e352ce3a208837bc042e0bae9cf6e5b42f63de9ddfe15348a9e9bf9fcde3d4034038be24cb24adc579ae984cadff3bf70432e54fed1ad249d12
   languageName: node
   linkType: hard
 
@@ -8266,10 +8266,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.6.0":
-  version: 3.6.0
-  resolution: "luxon@npm:3.6.0"
-  checksum: 10/1546a51dbb8e3c888311b50dcee2550778a078952dbc1aec015fa64b069b8f47a589232e8ce1324aafe1b6c913eeb612ab91dec5d05a71de7fce03656800facb
+"luxon@npm:^3.6.1":
+  version: 3.6.1
+  resolution: "luxon@npm:3.6.1"
+  checksum: 10/35aad425607708c87af110a52c949190bc35b987770079ec8007ef2365cd29639413db3360d2883777aa01cb3ca5bdb37f42ee3e8e5a0dd277fe22e90cc8a786
   languageName: node
   linkType: hard
 
@@ -11092,7 +11092,7 @@ __metadata:
     "@types/codemirror": "npm:^5.60.8"
     "@types/dropzone": "npm:^5.7.9"
     "@types/jquery": "npm:^3.5.32"
-    "@types/luxon": "npm:^3.3.7"
+    "@types/luxon": "npm:^3.6.2"
     "@types/owl.carousel": "npm:^2.3.6"
     "@types/react": "npm:19"
     "@types/react-dom": "npm:19"
@@ -11140,7 +11140,7 @@ __metadata:
     laravel-echo: "npm:^2.0.2"
     laravel-vite-plugin: "npm:^1.2"
     lodash: "npm:^4.17.19"
-    luxon: "npm:^3.6.0"
+    luxon: "npm:^3.6.1"
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
     postcss: "npm:^8.5.3"
