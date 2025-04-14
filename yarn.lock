@@ -10146,12 +10146,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pusher-js@npm:^8.4.0-rc2":
-  version: 8.4.0-rc2
-  resolution: "pusher-js@npm:8.4.0-rc2"
+"pusher-js@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "pusher-js@npm:8.4.0"
   dependencies:
     tweetnacl: "npm:^1.0.3"
-  checksum: 10/49d9b02543aaaaaf7ac6355b2a820d491aa5f735222ad130bfc785e806163a12e21951867dd87d4d2bdb5c0dd3d73559fc7fef7c9856f7d1cdbbfe5e55d6a1d5
+  checksum: 10/c0ab712d56a4bdca9b252e9ec577be584896c559a1c62ef801b5f5bd5e08e6fc34980c8b88152c84289470a6870a3cf5dd621ef23c86f81211ae41d5c3f28e47
   languageName: node
   linkType: hard
 
@@ -11144,7 +11144,7 @@ __metadata:
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
     postcss: "npm:^8.5.3"
-    pusher-js: "npm:^8.4.0-rc2"
+    pusher-js: "npm:^8.4.0"
     query-string: "npm:^9.1.1"
     react: "npm:19"
     react-chartjs-2: "npm:^5.3.0"
