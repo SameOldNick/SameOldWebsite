@@ -4362,12 +4362,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap@npm:^5.3.2":
-  version: 5.3.3
-  resolution: "bootstrap@npm:5.3.3"
+"bootstrap@npm:^5.3.5":
+  version: 5.3.5
+  resolution: "bootstrap@npm:5.3.5"
   peerDependencies:
     "@popperjs/core": ^2.11.8
-  checksum: 10/f05183948b00b496400cc13df5798ecab7a85975e7d9a77b314a763b574a990aec0f1bbf1913c648a93b5d8cc82e73bc05f5ec1161d2932aad7ef7f316d9c82d
+  checksum: 10/ea03a50f7a2cdfb55e48309dc6b567e138cfd7ef84d2e5aa164da99152c31913c2a27cc5b4f05b960d4c52577c31a8c6240669004df60b7acf4651cdfb791912
   languageName: node
   linkType: hard
 
@@ -11110,7 +11110,7 @@ __metadata:
     aos: "npm:^2.3.4"
     axios: "npm:^1.7.9"
     blueimp-md5: "npm:^2.19.0"
-    bootstrap: "npm:^5.3.2"
+    bootstrap: "npm:^5.3.5"
     bootstrap-select: "npm:^1.14.0-beta3"
     build-url-ts: "npm:^6.1.8"
     bytemd: "npm:^1.22.0"
