@@ -105,7 +105,7 @@ class Verifier implements VerifierContract
         if (! (bool) Arr::get($resultJson, 'success', false)) {
             $errorCodes = Arr::get($resultJson, 'error-codes', []);
 
-            $errorCode = Arr::first($errorCodes, fn($errorCode) => Arr::has(static::getErrorCodes(), $errorCode));
+            $errorCode = Arr::first($errorCodes, fn ($errorCode) => Arr::has(static::getErrorCodes(), $errorCode));
 
             throw VerificationException::withReason($errorCode ? static::getErrorCodes() : null);
         }
