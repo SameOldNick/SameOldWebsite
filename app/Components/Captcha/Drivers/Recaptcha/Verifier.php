@@ -19,20 +19,6 @@ use function Safe\preg_match;
 class Verifier implements VerifierContract
 {
     /**
-     * Error codes and their descriptions.
-     *
-     * @var array<string, string>
-     */
-    public static array $errorCodes = [
-        'missing-input-secret' => __('The secret parameter is missing.'),
-        'invalid-input-secret' => __('The secret parameter is invalid or malformed.'),
-        'missing-input-response' => __('The response parameter is missing.'),
-        'invalid-input-response' => __('The response parameter is invalid or malformed.'),
-        'bad-request' => __('The request is invalid or malformed.'),
-        'timeout-or-duplicate' => __('The response is no longer valid: either is too old or has been used previously.'),
-    ];
-
-    /**
      * Constructs a new recaptcha verifier.
      */
     public function __construct(
@@ -119,9 +105,9 @@ class Verifier implements VerifierContract
         if (! (bool) Arr::get($resultJson, 'success', false)) {
             $errorCodes = Arr::get($resultJson, 'error-codes', []);
 
-            $errorCode = Arr::first($errorCodes, fn ($errorCode) => Arr::has(static::$errorCodes, $errorCode));
+            $errorCode = Arr::first($errorCodes, fn($errorCode) => Arr::has(static::getErrorCodes(), $errorCode));
 
-            throw VerificationException::withReason($errorCode ? static::$errorCodes[$errorCode] : null);
+            throw VerificationException::withReason($errorCode ? static::getErrorCodes() : null);
         }
 
         if ((float) Arr::get($resultJson, 'score', 0) < $this->minimumScore) {
@@ -229,5 +215,22 @@ class Verifier implements VerifierContract
         }
 
         return false;
+    }
+
+    /**
+     * Returns the error codes and their descriptions.
+     *
+     * @return array<string, string>
+     */
+    public static function getErrorCodes(): array
+    {
+        return [
+            'missing-input-secret' => __('The secret parameter is missing.'),
+            'invalid-input-secret' => __('The secret parameter is invalid or malformed.'),
+            'missing-input-response' => __('The response parameter is missing.'),
+            'invalid-input-response' => __('The response parameter is invalid or malformed.'),
+            'bad-request' => __('The request is invalid or malformed.'),
+            'timeout-or-duplicate' => __('The response is no longer valid: either is too old or has been used previously.'),
+        ];
     }
 }
