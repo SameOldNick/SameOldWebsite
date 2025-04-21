@@ -116,5 +116,5 @@
         "web-vitals": "^4.2.4",
         "yup": "^1.5.0"
     },
-    "packageManager": "yarn@4.7.0"
+    "packageManager": "yarn@4.9.1"
 }
