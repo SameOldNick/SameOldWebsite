@@ -47,7 +47,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
                     return $this->redirectToRoute('user.profile');
                 } else {
                     return $this->redirectToRoute('login')->withInfo(
-                        'Please log in with your password to connect your account with ' . $this->provider->getName() . '. If you do not have a password, please reset it.'
+                        __('Please log in with your password to connect your account with :provider. If you do not have a password, please reset it.', ['provider' => $this->provider->getName()])
                     );
                 }
             } else {
