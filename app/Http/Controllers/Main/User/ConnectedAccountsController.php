@@ -54,6 +54,12 @@ class ConnectedAccountsController extends Controller
      */
     public function disconnect(Request $request, OAuthProvider $provider)
     {
+        if (is_null($request->user()->password) && $request->user()->oauthProviders->count() <= 1) {
+            return redirect()->route('user.connected-accounts')->withErrors([
+                'provider' => __('You cannot disconnect the last connected account. Please set a password first.'),
+            ]);
+        }
+
         $this->authorize('delete', $provider);
 
         $name = OAuth::provider($provider->provider_name)->getName();

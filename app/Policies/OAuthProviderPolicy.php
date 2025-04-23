@@ -36,6 +36,8 @@ class OAuthProviderPolicy
      */
     public function delete(User $user, OAuthProvider $provider): bool
     {
-        return $user->is($provider->user);
+        return $user->is($provider->user) &&
+            // Allow deletion if the user has a password or more than one OAuth provider
+            ($user->oauthProviders->count() > 1 || ! is_null($user->password));
     }
 }
