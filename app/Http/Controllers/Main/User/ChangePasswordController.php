@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Main\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -36,6 +37,8 @@ class ChangePasswordController extends Controller
         tap($request->user(), function ($user) use ($validated) {
             $user->password = Hash::make($validated['new_password']);
         })->save();
+
+        event(new PasswordReset($request->user()));
 
         Auth::logout();
 
