@@ -323,17 +323,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helpers@npm:^7.26.0":
-  version: 7.26.0
-  resolution: "@babel/helpers@npm:7.26.0"
-  dependencies:
-    "@babel/template": "npm:^7.25.9"
-    "@babel/types": "npm:^7.26.0"
-  checksum: 10/fd4757f65d10b64cfdbf4b3adb7ea6ffff9497c53e0786452f495d1f7794da7e0898261b4db65e1c62bbb9a360d7d78a1085635c23dfc3af2ab6dcba06585f86
-  languageName: node
-  linkType: hard
-
-"@babel/helpers@npm:^7.26.10":
+"@babel/helpers@npm:^7.26.0, @babel/helpers@npm:^7.26.10":
   version: 7.27.0
   resolution: "@babel/helpers@npm:7.27.0"
   dependencies:
@@ -3240,7 +3230,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:19":
+"@types/react-dom@npm:^19.0.0":
   version: 19.1.2
   resolution: "@types/react-dom@npm:19.1.2"
   peerDependencies:
@@ -3258,12 +3248,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:19":
+"@types/react@npm:*":
   version: 19.0.8
   resolution: "@types/react@npm:19.0.8"
   dependencies:
     csstype: "npm:^3.0.2"
   checksum: 10/1080d5b96ee0b4395f8f167ae6952f570088ee03bdce69f8237aab82c32d9bd2b71106f787bac17ba351acc4aba5e3454bafca51f2eb11d1562073b821e63d15
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19.0.0":
+  version: 19.1.2
+  resolution: "@types/react@npm:19.1.2"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10/17803797227d2fc07a2cd6c17d57b1ea9b01eb16eca6318be60852c8d7467b4b58e675742f53d77ff4a37621a5814f16847dede73999181cb7f9449c1784fab6
   languageName: node
   linkType: hard
 
@@ -10289,7 +10288,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:19":
+"react-dom@npm:^19.0.0":
   version: 19.1.0
   resolution: "react-dom@npm:19.1.0"
   dependencies:
@@ -10499,10 +10498,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:19":
-  version: 19.0.0
-  resolution: "react@npm:19.0.0"
-  checksum: 10/2490969c503f644703c88990d20e4011fa6119ddeca451e9de48f6d7ab058d670d2852a5fcd3aa3cd90a923ab2815d532637bd4a814add402ae5c0d4f129ee71
+"react@npm:^19.0.0":
+  version: 19.1.0
+  resolution: "react@npm:19.1.0"
+  checksum: 10/d0180689826fd9de87e839c365f6f361c561daea397d61d724687cae88f432a307d1c0f53a0ee95ddbe3352c10dac41d7ff1ad85530fb24951b27a39e5398db4
   languageName: node
   linkType: hard
 
@@ -11200,8 +11199,8 @@ __metadata:
     "@types/jquery": "npm:^3.5.32"
     "@types/luxon": "npm:^3.6.2"
     "@types/owl.carousel": "npm:^2.3.6"
-    "@types/react": "npm:19"
-    "@types/react-dom": "npm:19"
+    "@types/react": "npm:^19.0.0"
+    "@types/react-dom": "npm:^19.0.0"
     "@types/react-page-visibility": "npm:^6.4.4"
     "@types/redux-logger": "npm:^3.0.12"
     "@types/string": "npm:^0.0.34"
@@ -11252,9 +11251,9 @@ __metadata:
     postcss: "npm:^8.5.3"
     pusher-js: "npm:^8.4.0"
     query-string: "npm:^9.1.1"
-    react: "npm:19"
+    react: "npm:^19.0.0"
     react-chartjs-2: "npm:^5.3.0"
-    react-dom: "npm:19"
+    react-dom: "npm:^19.0.0"
     react-dropzone: "npm:^14.3.8"
     react-helmet-async: "npm:^2.0.5"
     react-icons: "npm:^5.5.0"
