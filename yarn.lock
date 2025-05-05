@@ -2905,16 +2905,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tinymce/tinymce-react@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "@tinymce/tinymce-react@npm:5.1.1"
+"@tinymce/tinymce-react@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@tinymce/tinymce-react@npm:6.1.0"
   dependencies:
     prop-types: "npm:^15.6.2"
-    tinymce: "npm:^7.0.0 || ^6.0.0 || ^5.5.1"
   peerDependencies:
-    react: ^18.0.0 || ^17.0.1 || ^16.7.0
-    react-dom: ^18.0.0 || ^17.0.1 || ^16.7.0
-  checksum: 10/82c5df31cdab0b4fd762d7c100d1a3baebefef77f26c51490c0959e97ffadbdeb44e207bce0175b1d128cd3f0bd0a91bb6f5d1a704f2280b4f78a0bcc541f94c
+    react: ^19.0.0 || ^18.0.0 || ^17.0.1 || ^16.7.0
+    react-dom: ^19.0.0 || ^18.0.0 || ^17.0.1 || ^16.7.0
+    tinymce: ^7.0.0 || ^6.0.0 || ^5.5.1
+  peerDependenciesMeta:
+    tinymce:
+      optional: true
+  checksum: 10/475a72dd9e1d4c20fa27b8711148bdb2eb6265f40791813463b5eab7cbb8688eb3a6d981411f9bafd60d29c74a23dd751db7f67d8adb24489930c37de70e46d0
   languageName: node
   linkType: hard
 
@@ -11218,7 +11221,7 @@ __metadata:
     "@fortawesome/fontawesome-free": "npm:^6.7.1"
     "@popperjs/core": "npm:^2.11.8"
     "@reduxjs/toolkit": "npm:^2.6.1"
-    "@tinymce/tinymce-react": "npm:^5.1.1"
+    "@tinymce/tinymce-react": "npm:^6.1.0"
     "@types/aos": "npm:^3.0.5"
     "@types/blueimp-md5": "npm:^2.18.0"
     "@types/bootstrap": "npm:^5.2.7"
@@ -11975,13 +11978,6 @@ __metadata:
     fdir: "npm:^6.4.4"
     picomatch: "npm:^4.0.2"
   checksum: 10/b04557ee58ad2be5f2d2cbb4b441476436c92bb45ba2e1fc464d686b793392b305ed0bcb8b877429e9b5036bdd46770c161a08384c0720b6682b7cd6ac80e403
-  languageName: node
-  linkType: hard
-
-"tinymce@npm:^7.0.0 || ^6.0.0 || ^5.5.1":
-  version: 7.6.0
-  resolution: "tinymce@npm:7.6.0"
-  checksum: 10/65f2066acaa0b5268f32bef00a89e6ef8638cff422fde76c62b6aeb349f699268ef9c3cc3f60af4b01fc2448f6838b689e080f4c6f529096434e4bc7661eae28
   languageName: node
   linkType: hard
 
