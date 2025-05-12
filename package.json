@@ -106,7 +106,7 @@
         "tinymce": "^7.8.0",
         "ts-deepmerge": "^7.0.2",
         "typescript": "^5.7.3",
-        "typescript-eslint": "^8.24.0",
+        "typescript-eslint": "^8.32.0",
         "uniqid": "^5.4.0",
         "uuid": "^11.1.0",
         "vite": "^6.3.5",
