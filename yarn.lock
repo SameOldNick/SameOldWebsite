@@ -11324,7 +11324,7 @@ __metadata:
     sweetalert2: "npm:^11.19.1"
     sweetalert2-react-content: "npm:^5.0.0"
     tinymce: "npm:^7.8.0"
-    ts-deepmerge: "npm:^7.0.2"
+    ts-deepmerge: "npm:^7.0.3"
     typescript: "npm:^5.7.3"
     typescript-eslint: "npm:^8.32.0"
     uniqid: "npm:^5.4.0"
@@ -12080,10 +12080,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-deepmerge@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "ts-deepmerge@npm:7.0.2"
-  checksum: 10/0ce920301a3a488fbe8ce57fc9a105b675f90fc5e231d9705d27768bcf1f2cdee9337a5de2dec92dbcfff1180000b0c63d8f4f0fb3caa5eec8247a558dd0803f
+"ts-deepmerge@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "ts-deepmerge@npm:7.0.3"
+  checksum: 10/fbe1d5d7b2561430c0faa17f76e84e9b025ab1ea01812b5bbab9d5aebdad1eca8263908d9359a17348de66eb27fd42b9861f92bd1eba70906b1ae647729c3680
   languageName: node
   linkType: hard
 
