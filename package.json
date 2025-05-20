@@ -104,7 +104,7 @@
         "sweetalert2": "^11.21.2",
         "sweetalert2-react-content": "^5.0.0",
         "tinymce": "^7.8.0",
-        "ts-deepmerge": "^7.0.2",
+        "ts-deepmerge": "^7.0.3",
         "typescript": "^5.7.3",
         "typescript-eslint": "^8.32.0",
         "uniqid": "^5.4.0",
