@@ -3258,12 +3258,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^19.0.0":
-  version: 19.1.2
-  resolution: "@types/react-dom@npm:19.1.2"
+"@types/react-dom@npm:^19.1.5":
+  version: 19.1.5
+  resolution: "@types/react-dom@npm:19.1.5"
   peerDependencies:
     "@types/react": ^19.0.0
-  checksum: 10/bcadf2a1f4d23db8c1aaa0d13e30866d7bcda076801bbc66df14512932e0802ddac526bf15f4cce9777cd6e0bd3803aba47a1d726977f5193b4bc173348508d0
+  checksum: 10/1bbfb77aa8b40ae1b3e2d90a3cd29987aa244a34a0e398828266276eb3f83810d10ed6cb1fddaf1469653bbe7243d9b75f6e245c21c8bb6224169c48bedfa536
   languageName: node
   linkType: hard
 
@@ -11264,7 +11264,7 @@ __metadata:
     "@types/luxon": "npm:^3.6.2"
     "@types/owl.carousel": "npm:^2.3.6"
     "@types/react": "npm:^19.1.4"
-    "@types/react-dom": "npm:^19.0.0"
+    "@types/react-dom": "npm:^19.1.5"
     "@types/react-page-visibility": "npm:^6.4.4"
     "@types/redux-logger": "npm:^3.0.12"
     "@types/string": "npm:^0.0.34"

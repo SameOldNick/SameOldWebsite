@@ -46,7 +46,7 @@
         "@types/jquery": "^3.5.32",
         "@types/luxon": "^3.6.2",
         "@types/react": "^19.1.4",
-        "@types/react-dom": "^19.0.0",
+        "@types/react-dom": "^19.1.5",
         "@types/react-page-visibility": "^6.4.4",
         "@types/redux-logger": "^3.0.12",
         "@types/string": "^0.0.34",
