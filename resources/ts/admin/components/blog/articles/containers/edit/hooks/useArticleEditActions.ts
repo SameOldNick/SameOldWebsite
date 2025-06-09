@@ -127,6 +127,9 @@ const handleSaveAsRevisionClicked: ArticleEditActionHandler = async ({
         // Create revision for article
         const revision = await createRevision(article.article.id, content, summary, currentRevision.revision.uuid);
 
+        // Set as current revision
+        setCurrentRevision(article.article.id, revision.revision.uuid);
+
         // Display message
         await onSuccess('Revision was saved.');
 
