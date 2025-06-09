@@ -5824,9 +5824,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:^28.11.0":
-  version: 28.11.0
-  resolution: "eslint-plugin-jest@npm:28.11.0"
+"eslint-plugin-jest@npm:^28.13.0":
+  version: 28.13.0
+  resolution: "eslint-plugin-jest@npm:28.13.0"
   dependencies:
     "@typescript-eslint/utils": "npm:^6.0.0 || ^7.0.0 || ^8.0.0"
   peerDependencies:
@@ -5838,7 +5838,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 10/7f3896ec2dc03110688bb9f359a7aa1ba1a6d9a60ffbc3642361c4aaf55afcba9ce36b6609b20b1507028c2170ffe29b0f3e9cc9b7fe12fdd233740a2f9ce0a1
+  checksum: 10/14ffcf6530f0f26e1faf1e4f5a596f66baec1193069f8d3895c8a900fd2c856c93cd17e46ba281e1f3c0337cb58e2c55668e9a8163c125b0a8715b16c237914f
   languageName: node
   linkType: hard
 
@@ -11410,7 +11410,7 @@ __metadata:
     eslint: "npm:^9.24.0"
     eslint-config-react-app: "npm:^7.0.1"
     eslint-plugin-github: "npm:^5.1.5"
-    eslint-plugin-jest: "npm:^28.11.0"
+    eslint-plugin-jest: "npm:^28.13.0"
     eslint-plugin-only-warn: "npm:^1.1.0"
     eslint-plugin-react: "npm:^7.37.5"
     formik: "npm:^2.4.3"
