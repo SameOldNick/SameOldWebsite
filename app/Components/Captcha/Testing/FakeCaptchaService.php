@@ -5,6 +5,7 @@ namespace App\Components\Captcha\Testing;
 use App\Components\Captcha\CaptchaManager;
 use App\Components\Captcha\CaptchaService;
 use App\Components\Captcha\Contracts\Driver;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Testing\Fakes\Fake;
 
 class FakeCaptchaService extends CaptchaService implements Fake
