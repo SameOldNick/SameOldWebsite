@@ -178,7 +178,7 @@ class DriverBuilder
      */
     public function withRandomErrorCodes(int $count = 1, float $score = 0.1): static
     {
-        $errorCodes = Arr::random(array_keys(Verifier::$errorCodes), $count);
+        $errorCodes = Arr::random(array_keys(Verifier::getErrorMappings()), $count);
 
         return $this->withInvalidResponse($errorCodes, $score);
     }
