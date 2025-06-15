@@ -14,10 +14,10 @@ class FakeCaptchaService extends CaptchaService implements Fake
      * Creates a new fake captcha service instance.
      */
     public function __construct(
-        CaptchaManager $manager,
+        protected readonly Container $container,
         protected readonly array $drivers,
     ) {
-        parent::__construct($manager);
+        parent::__construct($container->make(CaptchaManager::class));
     }
 
     /**
