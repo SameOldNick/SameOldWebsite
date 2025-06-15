@@ -2,6 +2,7 @@
 
 namespace App\Components\Captcha\Testing;
 
+use App\Components\Captcha\CaptchaManager;
 use App\Components\Captcha\CaptchaService;
 use App\Components\Captcha\Contracts\Driver;
 use Illuminate\Contracts\Container\Container;
@@ -13,10 +14,10 @@ class FakeCaptchaService extends CaptchaService implements Fake
      * Creates a new fake captcha service instance.
      */
     public function __construct(
-        Container $container,
+        CaptchaManager $manager,
         protected readonly array $drivers,
     ) {
-        parent::__construct($container);
+        parent::__construct($manager);
     }
 
     /**
