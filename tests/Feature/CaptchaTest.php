@@ -69,7 +69,7 @@ class CaptchaTest extends TestCase
             $this->assertTrue(true);
             $this->assertMatchesRegularExpression('/Captcha verification failed: .+/', $e->getMessage());
             $this->assertMatchesRegularExpression(
-                '/'.implode('|', Arr::map(Verifier::getErrorCodes(), fn ($message) => preg_quote($message))).'/',
+                '/' . implode('|', Arr::map(Verifier::getErrorMappings(), fn($message) => preg_quote($message))) . '/',
                 $e->getMessage()
             );
         }
@@ -92,7 +92,7 @@ class CaptchaTest extends TestCase
             $this->assertTrue(true);
             $this->assertMatchesRegularExpression('/Captcha verification failed: .+/', $e->getMessage());
             $this->assertMatchesRegularExpression(
-                '/'.implode('|', Arr::map(Verifier::getErrorCodes(), fn ($message) => preg_quote($message))).'/',
+                '/' . implode('|', Arr::map(Verifier::getErrorMappings(), fn($message) => preg_quote($message))) . '/',
                 $e->getMessage()
             );
         }
