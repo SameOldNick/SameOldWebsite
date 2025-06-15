@@ -103,11 +103,12 @@ class Verifier implements VerifierContract
         $resultJson = $response->json();
 
         if (! (bool) Arr::get($resultJson, 'success', false)) {
+            $errorMappings = static::getErrorMappings();
             $errorCodes = Arr::get($resultJson, 'error-codes', []);
 
-            $errorCode = Arr::first($errorCodes, fn ($errorCode) => Arr::has(static::getErrorCodes(), $errorCode));
+            $errorCode = Arr::first($errorCodes, fn($errorCode) => Arr::has($errorMappings, $errorCode));
 
-            throw VerificationException::withReason($errorCode ? static::getErrorCodes() : null);
+            throw VerificationException::withReason($errorCode ? $errorMappings[$errorCode] : null);
         }
 
         if ((float) Arr::get($resultJson, 'score', 0) < $this->minimumScore) {
@@ -222,7 +223,7 @@ class Verifier implements VerifierContract
      *
      * @return array<string, string>
      */
-    public static function getErrorCodes(): array
+    public static function getErrorMappings(): array
     {
         return [
             'missing-input-secret' => __('The secret parameter is missing.'),
