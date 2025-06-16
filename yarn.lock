@@ -2939,9 +2939,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tinymce/tinymce-react@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "@tinymce/tinymce-react@npm:6.1.0"
+"@tinymce/tinymce-react@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "@tinymce/tinymce-react@npm:6.2.1"
   dependencies:
     prop-types: "npm:^15.6.2"
   peerDependencies:
@@ -2951,7 +2951,7 @@ __metadata:
   peerDependenciesMeta:
     tinymce:
       optional: true
-  checksum: 10/475a72dd9e1d4c20fa27b8711148bdb2eb6265f40791813463b5eab7cbb8688eb3a6d981411f9bafd60d29c74a23dd751db7f67d8adb24489930c37de70e46d0
+  checksum: 10/1a871c5188f802f40d843884191d19418b167f674f96eb5a45c8d1e809813d19db3a080dd0ba410fdfe28c85daa6ae3aff352c0f4d8453dafb82f374528f6b61
   languageName: node
   linkType: hard
 
@@ -11455,7 +11455,7 @@ __metadata:
     "@fortawesome/fontawesome-free": "npm:^6.7.1"
     "@popperjs/core": "npm:^2.11.8"
     "@reduxjs/toolkit": "npm:^2.8.2"
-    "@tinymce/tinymce-react": "npm:^6.1.0"
+    "@tinymce/tinymce-react": "npm:^6.2.1"
     "@types/aos": "npm:^3.0.5"
     "@types/blueimp-md5": "npm:^2.18.0"
     "@types/bootstrap": "npm:^5.2.7"
