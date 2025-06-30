@@ -54,7 +54,7 @@
         "@types/uuid": "^10.0.0",
         "@typescript-eslint/eslint-plugin": "latest",
         "@typescript-eslint/parser": "latest",
-        "@vitejs/plugin-react": "^4.4.1",
+        "@vitejs/plugin-react": "^4.6.0",
         "animated-scroll-to": "^2.3.2",
         "axios": "^1.9.0",
         "blueimp-md5": "^2.19.0",
