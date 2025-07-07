@@ -4,7 +4,7 @@ const updateTogglerMenu = () => {
     const targetEl = document.querySelector<HTMLSpanElement>('.sections-submenu-current');
 
     if (targetEl && activeLinkEl)
-        targetEl.innerHTML = activeLinkEl.innerText;
+        targetEl.innerText = activeLinkEl.innerText;
 }
 
 const scrollToElementWithOffset = (element: Element, offset: number) => {
