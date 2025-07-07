@@ -1,6 +1,7 @@
 import React from 'react';
 import { XTerm } from 'xterm-for-react';
 
+import S from 'string';
 import { DateTime } from 'luxon';
 
 import ProcessOutput, { IProcessBeginData, IProcessCompleteData, IProcessOutputData, ProcessOutputProps } from './ProcessOutput';
@@ -42,7 +43,7 @@ const ProcessOutputToXTerm: React.FC<ProcessOutputToXTermProps> = ({
          * Using LF will cause formatting/spacing issues.
          */
 
-        data.message.split(/\n/).map((line) => line.replace("\r", "")).forEach((line, i, lines) => {
+        data.message.split(/\n/).map((line) => S(line).replaceAll("\r", "").s).forEach((line, i, lines) => {
             if (i !== lines.length - 1) {
                 xtermRef.current?.terminal.writeln(line);
             } else {
