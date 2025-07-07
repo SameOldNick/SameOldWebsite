@@ -8,6 +8,9 @@ on:
     paths:
       - '**.php'
 
+permissions:
+  contents: write
+
 jobs:
   laravel-pint:
     runs-on: ubuntu-latest

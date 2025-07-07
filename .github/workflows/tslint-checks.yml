@@ -1,5 +1,9 @@
 name: TSLint Checks
 on: [push]
+
+permissions:
+  contents: read
+
 jobs:
   job:
     runs-on: ubuntu-latest
