@@ -3961,22 +3961,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:8.35.1":
-  version: 8.35.1
-  resolution: "@typescript-eslint/utils@npm:8.35.1"
-  dependencies:
-    "@eslint-community/eslint-utils": "npm:^4.7.0"
-    "@typescript-eslint/scope-manager": "npm:8.35.1"
-    "@typescript-eslint/types": "npm:8.35.1"
-    "@typescript-eslint/typescript-estree": "npm:8.35.1"
-  peerDependencies:
-    eslint: ^8.57.0 || ^9.0.0
-    typescript: ">=4.8.4 <5.9.0"
-  checksum: 10/68388898dc095d7813a18049e782d90ed6500496bb68e3ea5efd7e1de24f37732b133bf88faca835b6219383f406693fdf846e16d3c48e9418388121c89dcf48
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/utils@npm:^8.0.0":
+"@typescript-eslint/utils@npm:8.35.1, @typescript-eslint/utils@npm:^8.0.0":
   version: 8.35.1
   resolution: "@typescript-eslint/utils@npm:8.35.1"
   dependencies:
@@ -4062,9 +4047,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-md-editor@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "@uiw/react-md-editor@npm:4.0.6"
+"@uiw/react-md-editor@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "@uiw/react-md-editor@npm:4.0.7"
   dependencies:
     "@babel/runtime": "npm:^7.14.6"
     "@uiw/react-markdown-preview": "npm:^5.0.6"
@@ -4073,7 +4058,7 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10/519400d0945fe820f76fd7dfc10233d27cdee9a4f72189e5e17fdcfc659d8f485236c809b7a9227dea6f206dc5bcd05217122fcaa97ea2877cee97baaa22877b
+  checksum: 10/554fb1efb85ab82870d14924c103d0e21af2a56fcc0dd9b32d40fd9a2e529401600568945ead1177ed6080f826aa886f68c7e1bd560a9145f12b0bd0e880b77f
   languageName: node
   linkType: hard
 
@@ -11635,7 +11620,7 @@ __metadata:
     "@types/uuid": "npm:^10.0.0"
     "@typescript-eslint/eslint-plugin": "npm:latest"
     "@typescript-eslint/parser": "npm:latest"
-    "@uiw/react-md-editor": "npm:^4.0.6"
+    "@uiw/react-md-editor": "npm:^4.0.7"
     "@vitejs/plugin-react": "npm:^4.6.0"
     animate.css: "npm:^4.1.1"
     animated-scroll-to: "npm:^2.3.2"
