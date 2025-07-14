@@ -9,7 +9,7 @@
         "@fortawesome/fontawesome-free": "^6.7.1",
         "@popperjs/core": "^2.11.8",
         "@types/owl.carousel": "^2.3.6",
-        "@uiw/react-md-editor": "^4.0.6",
+        "@uiw/react-md-editor": "^4.0.7",
         "animate.css": "^4.1.1",
         "aos": "^2.3.4",
         "bootstrap": "^5.3.7",

@@ -4161,9 +4161,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-md-editor@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "@uiw/react-md-editor@npm:4.0.6"
+"@uiw/react-md-editor@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "@uiw/react-md-editor@npm:4.0.7"
   dependencies:
     "@babel/runtime": "npm:^7.14.6"
     "@uiw/react-markdown-preview": "npm:^5.0.6"
@@ -4172,7 +4172,7 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10/519400d0945fe820f76fd7dfc10233d27cdee9a4f72189e5e17fdcfc659d8f485236c809b7a9227dea6f206dc5bcd05217122fcaa97ea2877cee97baaa22877b
+  checksum: 10/554fb1efb85ab82870d14924c103d0e21af2a56fcc0dd9b32d40fd9a2e529401600568945ead1177ed6080f826aa886f68c7e1bd560a9145f12b0bd0e880b77f
   languageName: node
   linkType: hard
 
@@ -11823,7 +11823,7 @@ __metadata:
     "@types/uuid": "npm:^10.0.0"
     "@typescript-eslint/eslint-plugin": "npm:latest"
     "@typescript-eslint/parser": "npm:latest"
-    "@uiw/react-md-editor": "npm:^4.0.6"
+    "@uiw/react-md-editor": "npm:^4.0.7"
     "@vitejs/plugin-react": "npm:^4.6.0"
     animate.css: "npm:^4.1.1"
     animated-scroll-to: "npm:^2.3.2"
