@@ -64,7 +64,7 @@
         "classnames": "^2.5.1",
         "dotenv": "^17.0.0",
         "dropzone": "^6.0.0-beta.2",
-        "eslint": "^9.30.0",
+        "eslint": "^9.31.0",
         "eslint-plugin-github": "^6.0.0",
         "eslint-plugin-jest": "^29.0.1",
         "eslint-plugin-only-warn": "^1.1.0",
