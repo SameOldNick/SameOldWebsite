@@ -6,25 +6,25 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x]
-        php-version: ['8.2', '8.3']
+        node-version: [20.x, 22.x, lts/*, current, latest]
+        php-version: ['8.2', '8.3', '8.4']
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Enable Corepack
+      run: corepack enable
 
     - name: Setup PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
@@ -34,6 +34,12 @@ jobs:
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
+    - name: Update Yarn
+      run: yarn set version stable
+
+    - name: Install Yarn Packages
+      run: yarn install --immutable
+
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
@@ -41,6 +47,4 @@ jobs:
       run: php artisan key:generate
 
     - name: Build
-      run: |
-        npm install
-        npm run build
+      run: yarn build

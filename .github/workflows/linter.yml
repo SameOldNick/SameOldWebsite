@@ -1,58 +1,28 @@
-name: Lint Code Base
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+name: TSLint Checks
+on: [push]
 jobs:
-  lint:
-    name: Lint Code Base
+  job:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: read
-      statuses: write
-
-    strategy:
-      matrix:
-        node-version: [lts/*]
-
+    timeout-minutes: 3
     steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
-      - name: Setup Node.js ${{ matrix.node-version }}
-        id: setup-node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install Yarn
-        id: yarn-install
+      - name: Prepare
         run: corepack enable
 
-      - name: Install Yarn Dependencies
-        id: yarn-install-deps
-        run: yarn
+      - name: Install Dependencies
+        run: yarn install --immutable
 
-      - name: Update Composer Dependencies
-        id: composer-update
-        run: composer update --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+      - name: Lint
+        uses: mooyoul/tslint-actions@v1.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: '*.ts *.tsx'
 
-      - name: Lint Code Base
-        id: super-linter
-        uses: super-linter/super-linter/slim@v5
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TYPESCRIPT_DEFAULT_STYLE: prettier
-          VALIDATE_ALL_CODEBASE: false
-          VALIDATE_TYPESCRIPT_ES: true
-          VALIDATE_TSX: true
-          ACTIONS_RUNNER_DEBUG: true
+      - name: Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Applied tslint-actions changes
+          file_pattern: '*.ts *.tsx'
