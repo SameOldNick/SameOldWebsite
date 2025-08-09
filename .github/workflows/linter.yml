@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   lint:
     name: Lint Code Base
@@ -21,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [lts/*]
 
     steps:
       - name: Checkout
@@ -32,14 +29,17 @@ jobs:
 
       - name: Setup Node.js ${{ matrix.node-version }}
         id: setup-node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: yarn
+
+      - name: Install Yarn
+        id: yarn-install
+        run: corepack enable
 
       - name: Install Yarn Dependencies
-        id: yarn-install
-        run: yarn install --immutable
+        id: yarn-install-deps
+        run: yarn
 
       - name: Update Composer Dependencies
         id: composer-update
