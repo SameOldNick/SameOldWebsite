@@ -1,9 +1,5 @@
 name: TSLint Checks
 on: [push]
-
-permissions:
-  contents: read
-
 jobs:
   job:
     runs-on: ubuntu-latest
@@ -14,7 +10,10 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Prepare
-        run: npm ci
+        run: corepack enable
+
+      - name: Install Dependencies
+        run: yarn install --immutable
 
       - name: Lint
         uses: mooyoul/tslint-actions@v1.1.1
