@@ -37,7 +37,7 @@
         "@bytemd/react": "^1.22.0",
         "@eslint/js": "^9.33.0",
         "@reduxjs/toolkit": "^2.8.2",
-        "@tinymce/tinymce-react": "^6.2.1",
+        "@tinymce/tinymce-react": "^6.3.0",
         "@types/aos": "^3.0.5",
         "@types/blueimp-md5": "^2.18.0",
         "@types/bootstrap": "^5.2.7",
