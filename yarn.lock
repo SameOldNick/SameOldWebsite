@@ -12137,7 +12137,7 @@ __metadata:
     string: "npm:^3.3.3"
     sweetalert2: "npm:^11.22.4"
     sweetalert2-react-content: "npm:^5.0.0"
-    tinymce: "npm:^7.9.1"
+    tinymce: "npm:^8.0.2"
     ts-deepmerge: "npm:^7.0.3"
     typescript: "npm:^5.9.2"
     typescript-eslint: "npm:^8.39.1"
@@ -12825,10 +12825,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinymce@npm:^7.9.1":
-  version: 7.9.1
-  resolution: "tinymce@npm:7.9.1"
-  checksum: 10/30efbf03ed9976be36d71dc762e7780860d7098b1dd8ad3942a6b920ee3431db5491493d67d7aceb0701ae7d97c69c5a386e758e62962c847f6f23eeabaeb8ca
+"tinymce@npm:^8.0.2":
+  version: 8.0.2
+  resolution: "tinymce@npm:8.0.2"
+  checksum: 10/f29730693e0f098ea8f7421f0586546b866004681d865684a00eeedb02c4279b0cd244ec0f85069023558ead6e968e57e6d3a833d94932381cdc73682026c416
   languageName: node
   linkType: hard
 
