@@ -43,7 +43,7 @@
         "@types/bootstrap": "^5.2.7",
         "@types/codemirror": "^5.60.16",
         "@types/dropzone": "^5.7.9",
-        "@types/jquery": "^3.5.32",
+        "@types/jquery": "^3.5.33",
         "@types/luxon": "^3.7.1",
         "@types/react": "^19.1.9",
         "@types/react-dom": "^19.1.6",
