@@ -76,7 +76,7 @@
         "jest": "^30.0.4",
         "jquery-ui": "^1.14.1",
         "jquery.easing": "^1.4.1",
-        "laravel-echo": "^2.1.7",
+        "laravel-echo": "^2.2.0",
         "laravel-vite-plugin": "^1.2",
         "lodash": "^4.17.19",
         "luxon": "^3.7.1",
