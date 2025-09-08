@@ -5250,10 +5250,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"build-url-ts@npm:^6.1.8":
-  version: 6.1.8
-  resolution: "build-url-ts@npm:6.1.8"
-  checksum: 10/7a9676b3a07ca487f34003de7467edb64d8244c9d565b14a039fc8a6474cb8719a6e3c0f7c6610e2297fcf9112610f5c2a5b1e477dd84591f1e5bead03742857
+"build-url-ts@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "build-url-ts@npm:6.2.0"
+  checksum: 10/858b22fe8b039569436069f29b8172f7448ccef5c09f72f8cf7784035d7364cad5507225a6a349c35c0dd1460bf893f4656804bf1a278696f384da3662c2611e
   languageName: node
   linkType: hard
 
@@ -12104,7 +12104,7 @@ __metadata:
     blueimp-md5: "npm:^2.19.0"
     bootstrap: "npm:^5.3.7"
     bootstrap-select: "npm:^1.14.0-beta3"
-    build-url-ts: "npm:^6.1.8"
+    build-url-ts: "npm:^6.2.0"
     bytemd: "npm:^1.22.0"
     chart.js: "npm:^4.5.0"
     classnames: "npm:^2.5.1"
