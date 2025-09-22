@@ -11,7 +11,7 @@
         "axlon/laravel-postal-code-validation": "^3.7",
         "blade-ui-kit/blade-icons": "^1.5",
         "composer/composer": "^2.6",
-        "google/analytics-data": "^0.22.0",
+        "google/analytics-data": "^0.23.0",
         "guzzlehttp/guzzle": "^7.8",
         "hisorange/browser-detect": "^5.0",
         "ifsnop/mysqldump-php": "^2.12",
