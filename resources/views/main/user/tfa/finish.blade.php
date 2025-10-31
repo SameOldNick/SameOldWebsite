@@ -12,7 +12,7 @@
                     <div class="card-body text-center">
                         <p class="card-text">Congratulations! Multi-Factor Authentication (MFA) has been successfully set up for your account.</p>
                         <p class="card-text">You can now securely access your account using MFA.</p>
-                        <a href="{{ route('user.profile') }}" class="btn btn-primary">Go to Dashboard</a>
+                        <a href="{{ route('user.profile') }}" class="btn btn-primary">Go to Profile</a>
                     </div>
                 </div>
             </div>
