@@ -16,6 +16,7 @@ class DatabaseDestinationConfigProvider extends DestinationConfig
             compressionLevel: $original->compressionLevel,
             filenamePrefix: $original->filenamePrefix,
             disks: $this->getDisks(),
+            continueOnFailure: $original->continueOnFailure,
         );
     }
 
