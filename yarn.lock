@@ -3005,13 +3005,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reduxjs/toolkit@npm:^2.8.2":
-  version: 2.8.2
-  resolution: "@reduxjs/toolkit@npm:2.8.2"
+"@reduxjs/toolkit@npm:^2.11.0":
+  version: 2.11.0
+  resolution: "@reduxjs/toolkit@npm:2.11.0"
   dependencies:
     "@standard-schema/spec": "npm:^1.0.0"
     "@standard-schema/utils": "npm:^0.3.0"
-    immer: "npm:^10.0.3"
+    immer: "npm:^11.0.0"
     redux: "npm:^5.0.1"
     redux-thunk: "npm:^3.1.0"
     reselect: "npm:^5.1.0"
@@ -3023,7 +3023,7 @@ __metadata:
       optional: true
     react-redux:
       optional: true
-  checksum: 10/7834b7b91a364f98f5ffa932b1027179d9a0a27a145206a7b5256304acafe5516c6622540656435e310e4a08e579eecaee5c2582442c4ef6a4dbe6f417b7d395
+  checksum: 10/99f32cc627ea0204549ec4b93436eefa1dbf6d4f095dc3beb4010bcc1962e62f4f0ad2f7b295544e764c96d3ad24c5b16aa4b3f5bdef459a6f5abbf4b07ebb01
   languageName: node
   linkType: hard
 
@@ -7981,10 +7981,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^10.0.3":
-  version: 10.1.1
-  resolution: "immer@npm:10.1.1"
-  checksum: 10/9dacf1e8c201d69191ccd88dc5d733bafe166cd45a5a360c5d7c88f1de0dff974a94114d72b35f3106adfe587fcfb131c545856184a2247d89d735ad25589863
+"immer@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "immer@npm:11.0.0"
+  checksum: 10/d79824edac56741986d80f091fcec00330e7fa4406a82f9e6bb30997c2674c468afe5196750456fc592c7e40cf903d968e04f8035efc9f26c073b5ed2b52462f
   languageName: node
   linkType: hard
 
@@ -12137,7 +12137,7 @@ __metadata:
     "@eslint/js": "npm:^9.39.1"
     "@fortawesome/fontawesome-free": "npm:^7.1.0"
     "@popperjs/core": "npm:^2.11.8"
-    "@reduxjs/toolkit": "npm:^2.8.2"
+    "@reduxjs/toolkit": "npm:^2.11.0"
     "@tinymce/tinymce-react": "npm:^6.3.0"
     "@types/aos": "npm:^3.0.5"
     "@types/blueimp-md5": "npm:^2.18.0"
