@@ -12215,7 +12215,7 @@ __metadata:
     redux-logger: "npm:^3.0.6"
     redux-thunk: "npm:^3.1.0"
     rehype-sanitize: "npm:^6.0.0"
-    sass: "npm:^1.93.0"
+    sass: "npm:^1.94.2"
     shiki: "npm:^3.11.0"
     store2: "npm:^2.14.3"
     string: "npm:^3.3.3"
@@ -12296,9 +12296,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.93.0":
-  version: 1.93.0
-  resolution: "sass@npm:1.93.0"
+"sass@npm:^1.94.2":
+  version: 1.94.2
+  resolution: "sass@npm:1.94.2"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
@@ -12309,7 +12309,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10/37f22e016e1d5ad04754123009064260c1f568771688742a2b34c763d7c30b706e8c991dffb578ca6a1ecf598ea57e7392597719786eff5eb47b099b7dbf03cd
+  checksum: 10/e60c214ea93677740c9ddfad55c77fd433255bbfdd9faba137acf1215bed5ba6ad9d83efea81feb87a89283931d01f0435227e3fff37c65c263e0ee05f885328
   languageName: node
   linkType: hard
 
