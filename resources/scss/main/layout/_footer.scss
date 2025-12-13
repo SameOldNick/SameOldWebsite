@@ -8,7 +8,7 @@ $bottom-navbar-text-shadow-thickness: 3px;
 $bottom-navbar-text-shadow-color: rgba(25, 41, 84, 1);
 
 footer {
-	color: $white;
+    color: $white;
 
     .brand {
         a {
@@ -16,14 +16,15 @@ footer {
             font-family: $font-family-cursive;
             text-decoration: none;
 
-            &:hover, &:active {
+            &:hover,
+            &:active {
                 color: $white;
             }
         }
 
     }
 
-	.nav {
+    .nav {
         --#{$prefix}nav-link-color: #{$bottom-navbar-color};
         --#{$prefix}nav-link-hover-color: #{$bottom-navbar-hover-color};
         --#{$prefix}nav-link-disabled-color: #{$bottom-navbar-disabled-color};
@@ -33,15 +34,22 @@ footer {
         font-style: normal;
         text-transform: uppercase;
 
-		.nav-item {
-			.nav-link {
-				text-shadow: none;
+        svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
 
-                &:hover, &:focus, &.active {
+        .nav-item {
+            .nav-link {
+                text-shadow: none;
+
+                &:hover,
+                &:focus,
+                &.active {
                     @include full-text-shadow($bottom-navbar-text-shadow-thickness, $bottom-navbar-text-shadow-color);
 
                 }
-			}
+            }
 
             .dropdown-menu {
                 --bs-dropdown-color: #{$bottom-navbar-color} !important;
@@ -52,6 +60,6 @@ footer {
 
                 text-shadow: none;
             }
-		}
-	}
+        }
+    }
 }

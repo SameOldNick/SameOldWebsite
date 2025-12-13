@@ -41,7 +41,7 @@ class MenuServiceProvider extends ServiceProvider
             $this->createSharedMenu($menu)
                 ->dropdown('Legal', function (DropdownItem $dropdown) {
                     $dropdown
-                        ->icon('fa-solid fa-scale-balanced')
+                        ->icon('fas-scale-balanced')
                         ->route('terms-conditions', 'Terms & Conditions')
                         ->route('privacy-policy', 'Privacy Policy');
                 });
@@ -69,9 +69,9 @@ class MenuServiceProvider extends ServiceProvider
     private function createSharedMenu(Menu $menu)
     {
         return $menu
-            ->route('home', 'Home', $this->applyIcon('fa-solid fa-house'))
-            ->route('blog', 'Blog', $this->applyIcon('fa-solid fa-newspaper'))
-            ->route('contact', 'Contact Me', $this->applyIcon('fa-solid fa-envelope'));
+            ->route('home', 'Home', $this->applyIcon('fas-house'))
+            ->route('blog', 'Blog', $this->applyIcon('fas-newspaper'))
+            ->route('contact', 'Contact Me', $this->applyIcon('fas-envelope'));
     }
 
     /**

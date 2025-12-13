@@ -2,101 +2,107 @@
     <div class="container">
         <div class="logo">
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="{{ Vite::asset('resources/images/sameoldnick-text.png') }}" alt="{{ __('Same Old Nick') }}" style="max-height: 55px;">
+                <img src="{{ Vite::asset('resources/images/sameoldnick-text.png') }}" alt="{{ __('Same Old Nick') }}"
+                    style="max-height: 55px;">
             </a>
         </div>
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
-            <x-menu name="main"/>
+            <x-menu name="main" />
 
             <ul class="navbar-nav gap-2">
                 <li class="nav-item dropdown dropdown-search">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false"
+                        data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                        {{ svg('fas-magnifying-glass') }}
                         <span class="d-inline d-lg-none">{{ __('Search') }}</span>
                     </a>
                     <form action="{{ route('blog.search') }}" class="dropdown-menu dropdown-menu-end p-4">
                         <div class="ibc-container">
-                            <input type="search" name="q" class="form-control" placeholder="Search" aria-label="Search">
-                            <button class="ibc-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <input type="search" name="q" class="form-control" placeholder="Search"
+                                aria-label="Search">
+                            <button class="ibc-button">
+                                {{ svg('fas-magnifying-glass') }}
+                            </button>
                         </div>
                     </form>
 
                 </li>
 
                 @guest
-                <li class="nav-item dropdown dropdown-login">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" title="{{ __('Authentication') }}" role="button" aria-expanded="false">
-                        <i class="fa-solid fa-lock-open"></i>
-                        <span class="d-inline d-lg-none">{{ __('Authentication') }}</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        @if (Route::has('login'))
-                        <li><a href="{{ route('login') }}" class="dropdown-item">{{ __('Login') }}</a></li>
-                        @endif
+                    <li class="nav-item dropdown dropdown-login">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                            title="{{ __('Authentication') }}" role="button" aria-expanded="false">
+                            {{ svg('fas-lock-open') }}
+                            <span class="d-inline d-lg-none">{{ __('Authentication') }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (Route::has('login'))
+                                <li><a href="{{ route('login') }}" class="dropdown-item">{{ __('Login') }}</a></li>
+                            @endif
 
-                        @if (Route::has('register'))
-                        <li><a href="{{ route('register') }}" class="dropdown-item">{{ __('Create Account') }}</a></li>
-                        @endif
-                    </ul>
-                </li>
+                            @if (Route::has('register'))
+                                <li><a href="{{ route('register') }}" class="dropdown-item">{{ __('Create Account') }}</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
                 @else
-                <li class="nav-item dropdown dropdown-account">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" title="{{ __('Account') }}" role="button" aria-expanded="false">
-                        <i class="fa-solid fa-user me-1"></i>
-                        {{ Auth::user()->email }}
-                    </a>
-                    <ul class="dropdown-menu">
-                        @can('any-roles-admin')
-                        <li>
-                            <a class="dropdown-item" href="{{ URL::temporarySignedRoute('admin.sso', now()->addMinutes(15), ['user' => Auth::user()]) }}">
-                                {{ __('Dashboard') }}
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        @endcan
-                        <li>
-                            <a class="dropdown-item" href="{{ route('user.profile') }}">
-                                {{ __('Profile') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('user.change-password') }}">
-                                {{ __('Change Password') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('user.security') }}">
-                                {{ __('Security') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('user.connected-accounts') }}">
-                                {{ __('Connected Accounts') }}
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item" id="logoutFormLink" href="{{ route('logout') }}">
-                                {{ __('Logout') }}
-                            </a>
-                        </li>
-                        <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                            <x-return-url-input :returnUrl="url()->current()" />
-                        </form>
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown dropdown-account">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                            title="{{ __('Account') }}" role="button" aria-expanded="false">
+                            {{ svg('fas-user', ['class' => 'me-1']) }}
+                            {{ Auth::user()->email }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            @can('any-roles-admin')
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ URL::temporarySignedRoute('admin.sso', now()->addMinutes(15), ['user' => Auth::user()]) }}">
+                                        {{ __('Dashboard') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            @endcan
+                            <li>
+                                <a class="dropdown-item" href="{{ route('user.profile') }}">
+                                    {{ __('Profile') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('user.change-password') }}">
+                                    {{ __('Change Password') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('user.security') }}">
+                                    {{ __('Security') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('user.connected-accounts') }}">
+                                    {{ __('Connected Accounts') }}
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" id="logoutFormLink" href="{{ route('logout') }}">
+                                    {{ __('Logout') }}
+                                </a>
+                            </li>
+                            <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                                <x-return-url-input :returnUrl="url()->current()" />
+                            </form>
+                        </ul>
+                    </li>
                 @endguest
             </ul>
         </div>

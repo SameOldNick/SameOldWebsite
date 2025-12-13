@@ -1,8 +1,9 @@
 <li @class('nav-item', 'dropdown')>
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
         @if ($dropdown->hasProp('icon'))
             <span class="me-1">
-                <i class="{{ $dropdown->getProp('icon') }}"></i>
+                {{ svg($dropdown->getProp('icon')) }}
             </span>
         @endif
 
