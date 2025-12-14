@@ -33,7 +33,7 @@ class NtfyChannel
      */
     public function isEnabled(): bool
     {
-        return config('ntfy.enabled', false) && config('ntfy.url');
+        return config('services.ntfy.enabled', false);
     }
 
     /**
