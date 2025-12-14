@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Facade;
 
 class Ntfy extends Facade
 {
+    /**
+     * {@inheritDoc}
+     */
     protected static function getFacadeAccessor(): string
     {
         return NtfyService::class;
