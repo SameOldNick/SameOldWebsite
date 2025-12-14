@@ -41,7 +41,9 @@ class NtfyChannel
      */
     protected function toMessage(object $notifiable, Notification $notification): Message
     {
-        if ($notification instanceof NtfyNotification) {
+        // Checks if the notification implements the NtfyNotification contract or has a toNtfy method
+        // The latter is for consistency with other notification channels in Laravel
+        if ($notification instanceof NtfyNotification || method_exists($notification, 'toNtfy')) {
 
             return $notification->toNtfy($notifiable);
         }
