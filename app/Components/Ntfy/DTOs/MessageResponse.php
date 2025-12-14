@@ -25,7 +25,7 @@ class MessageResponse
     }
 
     /**
-     * Get the server timestamp of the message.
+     * Get the server timestamp as unix timestamp of the message.
      */
     public function time(): ?int
     {
