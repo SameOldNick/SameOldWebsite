@@ -12,15 +12,15 @@
     --ibc-input-bg: #{$input-bg};
 
     --ibc-button-color: #{$ibc-color};
-    --ibc-button-focus-color: #{tint-color($ibc-color, 15%)};
-    --ibc-button-hover-color: #{tint-color($ibc-color, 25%)};
+    --ibc-button-focus-color: #{shade-color($ibc-color, 15%)};
+    --ibc-button-hover-color: #{shade-color($ibc-color, 25%)};
 
     input {
         font-family: var(--ibc-input-font-family);
         font-size: var(--ibc-input-font-size);
         font-weight: var(--ibc-input-font-weight);
         line-height: var(--ibc-input-line-height);
-        color: var(--ibc-input-color);
+        //color: var(--ibc-input-color);
         background-color: var(--ibc-input-bg);
 
         padding-right: 40px;
@@ -61,11 +61,11 @@
         }
 
         &:focus {
-            color: var(--ibc-button-focus-color);
+            color: var(--ibc-button-focus-color) !important;
         }
 
         &:hover {
-            color: var(--ibc-button-hover-color);
+            color: var(--ibc-button-hover-color) !important;
         }
     }
 
