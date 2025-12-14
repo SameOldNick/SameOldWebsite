@@ -64,6 +64,10 @@
         }
     },
     "scripts": {
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "yarn dlx concurrently -c \"#93c5fd,#c4b5fd,#a78bfa,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan reverb:start --debug\" \"yarn dev\" --names='server,queue,reverb,vite'"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
