@@ -14,6 +14,7 @@ use App\Components\Macros\ServiceProvider as MacrosServiceProvider;
 use App\Components\Menus\ServiceProvider as MenusServiceProvider;
 use App\Components\MFA\ServiceProvider as MFAServiceProvider;
 use App\Components\Moderator\ServiceProvider as ModeratorServiceProvider;
+use App\Components\Ntfy\ServiceProvider as NtfyServiceProvider;
 use App\Components\OAuth\ServiceProvider as OAuthServiceProvider;
 use App\Components\Passwords\ServiceProvider as PasswordsServiceProvider;
 use App\Components\Search\ServiceProvider as SearchServiceProvider;
@@ -48,5 +49,6 @@ class ComponentServiceProvider extends AggregateServiceProvider
         DuskServiceProvider::class,
         SearchServiceProvider::class,
         CaptchaServiceProvider::class,
+        NtfyServiceProvider::class,
     ];
 }
