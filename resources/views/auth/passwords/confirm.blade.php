@@ -18,15 +18,11 @@
 
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary">
-                                        <i class="fa-solid fa-key text-white"></i>
+                                        @svg('fas-key', ['class' => 'text-white'])
                                     </span>
-                                    <input
-                                        name="password"
-                                        type="password"
+                                    <input name="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror"
-                                        placeholder="{{ __('Password') }}"
-                                        required
-                                        autocomplete="current-password"
+                                        placeholder="{{ __('Password') }}" required autocomplete="current-password"
                                         autofocus>
 
                                     @error('password')
@@ -44,11 +40,11 @@
                                     </div>
 
                                     @if (Route::has('password.request'))
-                                    <p class="text-center">
-                                        <a href="{{ route('password.request') }}" class="text-secondary">
-                                            {{ __('Forgot your password?') }}
-                                        </a>
-                                    </p>
+                                        <p class="text-center">
+                                            <a href="{{ route('password.request') }}" class="text-secondary">
+                                                {{ __('Forgot your password?') }}
+                                            </a>
+                                        </p>
                                     @endif
                                 </div>
 

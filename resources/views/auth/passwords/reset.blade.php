@@ -23,16 +23,12 @@
 
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary">
-                                        <i class="fa-solid fa-at text-white"></i>
+                                        @svg('fas-at', ['class' => 'text-white'])
                                     </span>
-                                    <input
-                                        name="email"
-                                        type="email"
+                                    <input name="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="{{ __('Email Address') }}"
-                                        value="{{ $email ?? old('email') }}"
-                                        required
-                                        autocomplete="email">
+                                        placeholder="{{ __('Email Address') }}" value="{{ $email ?? old('email') }}"
+                                        required autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -43,7 +39,7 @@
 
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary text-white">
-                                        <i class="fa-solid fa-key"></i>
+                                        @svg('fas-key', ['class' => 'text-white'])
                                     </span>
 
                                     <div class="ibc-container showhide-password flex-grow-1">
@@ -71,22 +67,25 @@
                                     </div>
 
                                     @if (Route::has('password.request'))
-                                    <p class="text-center">
-                                        <a href="{{ route('password.request') }}" class="text-secondary">{{ __('Didn\'t receive a code?') }}</a>
-                                    </p>
+                                        <p class="text-center">
+                                            <a href="{{ route('password.request') }}"
+                                                class="text-secondary">{{ __('Didn\'t receive a code?') }}</a>
+                                        </p>
                                     @endif
 
                                     @if (Route::has('login'))
-                                    <p class="text-center">
-                                        Know your password?
-                                        <a href="{{ route('login') }}" class="text-secondary">{{ __('Login') }}</a>
-                                    </p>
+                                        <p class="text-center">
+                                            Know your password?
+                                            <a href="{{ route('login') }}"
+                                                class="text-secondary">{{ __('Login') }}</a>
+                                        </p>
                                     @endif
 
                                     @if (Route::has('register'))
-                                    <p class="text-center">
-                                        {{ __('Don\'t have an account?') }} <a href="{{ route('register') }}" class="text-secondary">{{ __('Register') }}</a>
-                                    </p>
+                                        <p class="text-center">
+                                            {{ __('Don\'t have an account?') }} <a href="{{ route('register') }}"
+                                                class="text-secondary">{{ __('Register') }}</a>
+                                        </p>
                                     @endif
 
 

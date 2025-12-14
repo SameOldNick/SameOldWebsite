@@ -26,7 +26,7 @@
 
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary">
-                                        <i class="fa-solid fa-at text-white"></i>
+                                        @svg('fas-at', ['class' => 'text-white'])
                                     </span>
                                     <input name="email" type="text"
                                         class="form-control @error('email') is-invalid @enderror"

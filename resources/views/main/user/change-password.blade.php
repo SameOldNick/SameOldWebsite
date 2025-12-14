@@ -19,7 +19,7 @@
                                 </div>
                             @endisset
 
-                            @if(!Auth::user()->password)
+                            @if (!Auth::user()->password)
                                 <div class="mb-4">
                                     <x-alert type="warning">
                                         <strong>{{ __('Important Notice:') }}</strong>
@@ -34,22 +34,26 @@
                                 </div>
                             @endif
 
-                            <form method="POST" name="user-change-password" action="{{ route('user.change-password') }}">
+                            <form method="POST" name="user-change-password"
+                                action="{{ route('user.change-password') }}">
                                 @csrf
 
-                                @if(Auth::user()->password)
-                                <div class="row mb-3">
-                                    <div class="col-12">
-                                        <label for="current_password" class="form-label">{{ __('Current Password') }}</label>
-                                        <input name="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" id="current_password" required autocomplete="password">
+                                @if (Auth::user()->password)
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="current_password"
+                                                class="form-label">{{ __('Current Password') }}</label>
+                                            <input name="current_password" type="password"
+                                                class="form-control @error('current_password') is-invalid @enderror"
+                                                id="current_password" required autocomplete="password">
 
-                                        @error('current_password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                            @error('current_password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
                                 @endif
 
                                 <div class="row mb-3">

@@ -26,7 +26,7 @@
 
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary text-white">
-                                        <i class="fa-solid fa-at"></i>
+                                        @svg('fas-at')
                                     </span>
                                     <input name="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror"
@@ -42,7 +42,7 @@
 
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary text-white">
-                                        <i class="fa-solid fa-key"></i>
+                                        @svg('fas-key')
                                     </span>
 
                                     <div class="ibc-container showhide-password flex-grow-1">
@@ -64,7 +64,7 @@
 
                                 <div class="input-group mb-3 has-validation">
                                     <span class="input-group-text bg-secondary text-white">
-                                        <i class="fa-solid fa-globe"></i>
+                                        @svg('fas-globe')
                                     </span>
 
                                     <select name="country" class="selectpicker form-control"
