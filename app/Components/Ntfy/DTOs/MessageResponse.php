@@ -2,6 +2,8 @@
 
 namespace App\Components\Ntfy\DTOs;
 
+use Carbon\CarbonImmutable;
+
 /**
  * Data Transfer Object for ntfy server message responses.
  */
@@ -25,9 +27,23 @@ class MessageResponse
     /**
      * Get the server timestamp of the message.
      */
-    public function time(): ?string
+    public function time(): ?int
     {
-        return $this->responseData['time'] ?? null;
+        return isset($this->responseData['time']) ? (int) $this->responseData['time'] : null;
+    }
+
+    /**
+     * Get the message date and time as a DateTimeImmutable instance.
+     */
+    public function dateTime(): ?\DateTimeImmutable
+    {
+        if (! isset($this->responseData['time'])) {
+            return null;
+        }
+
+        return CarbonImmutable::createFromTimestamp(
+            (int) $this->responseData['time']
+        );
     }
 
     /**
