@@ -129,7 +129,7 @@ class Verifier implements VerifierContract
      */
     protected function isExcludedIp(string $ip): bool
     {
-        return count($this->excludeIps) > 0 ? Arr::first($this->excludeIps, fn($excludeIp) => $this->matchesIp($ip, $excludeIp)) !== null : false;
+        return count($this->excludeIps) > 0 ? Arr::first($this->excludeIps, fn ($excludeIp) => $this->matchesIp($ip, $excludeIp)) !== null : false;
     }
 
     /**
