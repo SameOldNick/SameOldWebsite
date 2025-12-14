@@ -1,5 +1,6 @@
 $(() => {
-    $('.showhide-password').each(function() {
+    $('.showhide-password').each(function () {
+        const $container = $(this);
         const $input = $('input', this);
         const $button = $('a.ibc-button, button.ibc-button', this);
 
@@ -7,10 +8,14 @@ $(() => {
             return;
         }
 
-        $button.on('click', function(e) {
+        $button.on('click', function (e) {
             e.preventDefault();
 
-            $input.attr('type', $input.attr('type') === 'password' ? 'text' : 'password');
+            const show = $input.attr('type') === 'password';
+
+            $container.toggleClass('showing-password', show);
+
+            $input.attr('type', show ? 'text' : 'password');
         });
     });
 });

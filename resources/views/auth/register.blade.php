@@ -50,7 +50,8 @@
                                             class="form-control @error('password') is-invalid @enderror"
                                             placeholder="{{ __('Password') }}" required autocomplete="password">
                                         <a href="#" class="ibc-button" role="button">
-                                            <i class="fa-solid fa-eye"></i>
+                                            @svg('fas-eye', ['class' => 'showhide-password-show-icon'])
+                                            @svg('fas-eye-slash', ['class' => 'showhide-password-hide-icon'])
                                         </a>
                                     </div>
 

@@ -57,9 +57,12 @@
                                         <label for="new_password" class="form-label">{{ __('New Password') }}</label>
 
                                         <div class="ibc-container showhide-password flex-grow-1">
-                                            <input name="new_password" id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" required>
+                                            <input name="new_password" id="new_password" type="password"
+                                                class="form-control @error('new_password') is-invalid @enderror"
+                                                required>
                                             <a href="#" class="ibc-button" role="button">
-                                                <i class="fa-solid fa-eye"></i>
+                                                @svg('fas-eye', ['class' => 'showhide-password-show-icon'])
+                                                @svg('fas-eye-slash', ['class' => 'showhide-password-hide-icon'])
                                             </a>
                                         </div>
 

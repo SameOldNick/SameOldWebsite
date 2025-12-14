@@ -147,4 +147,22 @@
     &.collapsed {
         display: block !important;
     }
+.showhide-password {
+    &.showing-password {
+        .showhide-password-show-icon {
+            display: none;
+        }
+
+        .showhide-password-hide-icon {
+            display: inline;
+        }
+    }
+
+    .showhide-password-show-icon {
+        display: inline;
+    }
+
+    .showhide-password-hide-icon {
+        display: none;
+    }
 }
