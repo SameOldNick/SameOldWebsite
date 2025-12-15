@@ -43,7 +43,7 @@ class BackupController extends Controller
              * It also causes JS to treat the data as an object, not an array.
              */
             return ! is_null($collection) ? $collection->values() : null;
-        });
+        })->latest();
 
         return $query->paginate();
     }
