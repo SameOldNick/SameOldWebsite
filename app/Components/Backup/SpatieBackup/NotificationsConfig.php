@@ -5,7 +5,6 @@ namespace App\Components\Backup\SpatieBackup;
 use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
 use Spatie\Backup\Config\NotificationDiscordConfig;
 use Spatie\Backup\Config\NotificationMailConfig;
-use Spatie\Backup\Config\NotificationMailSenderConfig;
 use Spatie\Backup\Config\NotificationsConfig as BaseNotificationsConfig;
 use Spatie\Backup\Config\NotificationSlackConfig;
 
@@ -47,27 +46,27 @@ class NotificationsConfig extends BaseNotificationsConfig
                 \App\Components\Backup\Notifications\CleanupWasSuccessfulNotification::class => static::getChannelsForNotification($provider, \App\Components\Backup\Notifications\CleanupWasSuccessfulNotification::class),
             ],
             notifiable: \App\Components\Backup\Notifications\Notifiable::class,
-            mail: new NotificationMailConfig(
-                to: $provider->getMailToEmails(),
-                from: new NotificationMailSenderConfig(
-                    address: $provider->getMailFromEmail(),
-                    name: $provider->getMailFromName(),
-                ),
-            ),
-            slack: new NotificationSlackConfig(
-                webhookUrl: $provider->getSlackWebhook(),
-                username: $provider->getSlackUsername(),
-                icon: $provider->getSlackIcon(),
-                channel: $provider->getSlackChannel(),
-            ),
-            discord: new NotificationDiscordConfig(
-                webhookUrl: $provider->getDiscordWebhook(),
-                username: $provider->getDiscordUsername(),
-                avatar_url: $provider->getDiscordAvatarUrl(),
-            ),
-            ntfy: new NotificationNtfyConfig(
-                topic: $provider->getNtfyTopic(),
-            ),
+            mail: NotificationMailConfig::fromArray([
+                'to' => $provider->getMailToEmails(),
+                'from' => [
+                    'address' => $provider->getMailFromEmail(),
+                    'name' => $provider->getMailFromName(),
+                ],
+            ]),
+            slack: NotificationSlackConfig::fromArray([
+                'webhook_url' => $provider->getSlackWebhook(),
+                'channel' => $provider->getSlackChannel(),
+                'username' => $provider->getSlackUsername(),
+                'icon' => $provider->getSlackIcon(),
+            ]),
+            discord: NotificationDiscordConfig::fromArray([
+                'webhook_url' => $provider->getDiscordWebhook(),
+                'username' => $provider->getDiscordUsername(),
+                'avatar_url' => $provider->getDiscordAvatarUrl(),
+            ]),
+            ntfy: NotificationNtfyConfig::fromArray([
+                'topic' => $provider->getNtfyTopic(),
+            ])
         );
     }
 
