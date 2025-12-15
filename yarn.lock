@@ -4721,6 +4721,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xterm/xterm@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@xterm/xterm@npm:5.5.0"
+  checksum: 10/d4cdc402de81a83a3e0ef93f38072cb8f54abe4d65865f2e29b92cbc2593f86d052f6b993895c9e5dec97f47548f504e90bcea0aad6845917c09b03f2f3a4629
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -11504,6 +11511,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-xtermjs@npm:^1.0.10":
+  version: 1.0.10
+  resolution: "react-xtermjs@npm:1.0.10"
+  peerDependencies:
+    "@xterm/xterm": ^5.5.0
+  checksum: 10/88d718e5203cb803611fbded611bf2c13a52744d6ae849493a8160431f19015c336fdb0e62fda50f7568328b07e19e827c5c28ae69ce5b2d49d75ae2fec3939e
+  languageName: node
+  linkType: hard
+
 "react@npm:^19.2.3":
   version: 19.2.3
   resolution: "react@npm:19.2.3"
@@ -12215,6 +12231,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:latest"
     "@uiw/react-md-editor": "npm:^4.0.7"
     "@vitejs/plugin-react": "npm:^5.1.1"
+    "@xterm/xterm": "npm:^5.5.0"
     animate.css: "npm:^4.1.1"
     animated-scroll-to: "npm:^2.3.2"
     aos: "npm:^2.3.4"
@@ -12267,6 +12284,7 @@ __metadata:
     react-router-dom: "npm:^7.9.6"
     react-spinners: "npm:^0.17.0"
     react-tag-autocomplete: "npm:^7.5.1"
+    react-xtermjs: "npm:^1.0.10"
     reactstrap: "npm:^9.2.3"
     redux: "npm:^5.0.1"
     redux-logger: "npm:^3.0.6"
@@ -12289,7 +12307,6 @@ __metadata:
     vite-plugin-global-const: "npm:^0.0.6"
     vite-plugin-static-copy: "npm:^3.1.1"
     web-vitals: "npm:^5.1.0"
-    xterm-for-react: "npm:^1.0.4"
     yup: "npm:^1.7.1"
   languageName: unknown
   linkType: soft
@@ -13938,26 +13955,6 @@ __metadata:
     imurmurhash: "npm:^0.1.4"
     signal-exit: "npm:^4.0.1"
   checksum: 10/648efddba54d478d0e4330ab6f239976df3b9752b123db5dc9405d9b5af768fa9d70ce60c52fdbe61d1200d24350bc4fbcbaf09288496c2be050de126bd95b7e
-  languageName: node
-  linkType: hard
-
-"xterm-for-react@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "xterm-for-react@npm:1.0.4"
-  dependencies:
-    prop-types: "npm:^15.7.2"
-    xterm: "npm:^4.5.0"
-  peerDependencies:
-    react: ^16.0.0
-    react-dom: ^16.0.0
-  checksum: 10/10cbf4d8e1cd6f3ddef01c27b5a654a8b912a5d694b869654542ba813cf85c504d9beceb2844939bdc9b8f3a1b1d481e038ee3c77c1cd86bd5ab14e36f0a1b20
-  languageName: node
-  linkType: hard
-
-"xterm@npm:^4.5.0":
-  version: 4.19.0
-  resolution: "xterm@npm:4.19.0"
-  checksum: 10/c12980fbab358258c528d54f32fc40ba2ed7ffd9ba5bfc6d8a6e0c1b2a6b02f544041602ddc79bed89b185ff419a815422a5e45f719bf3d61eb2e68096a7fd88
   languageName: node
   linkType: hard
 

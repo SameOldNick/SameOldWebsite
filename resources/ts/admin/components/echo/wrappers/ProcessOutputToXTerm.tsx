@@ -1,10 +1,11 @@
 import React from 'react';
-import { XTerm } from 'xterm-for-react';
+import { useXTerm } from 'react-xtermjs';
 
 import S from 'string';
 import { DateTime } from 'luxon';
 
 import ProcessOutput, { IProcessBeginData, IProcessCompleteData, IProcessOutputData, ProcessOutputProps } from './ProcessOutput';
+import classNames from 'classnames';
 
 type ProcessOutputToXTermProps = ProcessOutputProps;
 
@@ -14,7 +15,7 @@ const ProcessOutputToXTerm: React.FC<ProcessOutputToXTermProps> = ({
     onProcessCompleted,
     onProcessOutput
 }) => {
-    const xtermRef = React.useRef<XTerm>(null);
+    const { ref, instance: xterm } = useXTerm();
 
     const [processStarted, setProcessStarted] = React.useState<DateTime>();
     const [processCompleted, setProcessCompleted] = React.useState<DateTime>();
@@ -43,17 +44,22 @@ const ProcessOutputToXTerm: React.FC<ProcessOutputToXTermProps> = ({
          * Using LF will cause formatting/spacing issues.
          */
 
+        if (!xterm) {
+            console.warn('XTerm instance not ready yet');
+            return;
+        }
+
         data.message.split(/\n/).map((line) => S(line).replaceAll("\r", "").s).forEach((line, i, lines) => {
             if (i !== lines.length - 1) {
-                xtermRef.current?.terminal.writeln(line);
+                xterm.writeln(line);
             } else {
                 if (data.newline)
-                    xtermRef.current?.terminal.writeln(line);
+                    xterm.writeln(line);
                 else
-                    xtermRef.current?.terminal.write(line);
+                    xterm.write(line);
             }
         });
-    }, [onProcessOutput]);
+    }, [onProcessOutput, xterm]);
 
     return (
         <>
@@ -64,7 +70,11 @@ const ProcessOutputToXTerm: React.FC<ProcessOutputToXTermProps> = ({
                 onProcessCompleted={handleProcessCompleteEvent}
             />
 
-            {processStarted && <XTerm ref={xtermRef} />}
+            <>
+                <div className={classNames({ 'd-none': !processStarted })} style={{ overflowY: 'auto', border: '1px solid #ccc', borderRadius: '4px' }}>
+                    <div ref={ref} style={{ width: '100%', height: '100%' }} />
+                </div>
+            </>
         </>
     );
 }
