@@ -3,15 +3,15 @@ import React from 'react';
 import PaginateResponse from '@admin/utils/api/models/PaginateResponse';
 import Pages from './Pages';
 
-type TChildrenCallback<TData = unknown> = (data: TData[], key: number) => React.ReactNode;
+type TChildrenCallback = (data: unknown[], key: number) => React.ReactNode;
 
-interface PaginatedTableProps<TData = unknown> {
-    initialResponse: IPaginateResponse<TData> | IPaginateResponseCollection<TData>;
-    pullData: (link?: string) => Promise<IPaginateResponse<TData> | IPaginateResponseCollection<TData>>;
-    onUpdate?: (data: TData[]) => void;
+interface PaginatedTableProps {
+    initialResponse: IPaginateResponse | IPaginateResponseCollection;
+    pullData: (link?: string) => Promise<IPaginateResponse | IPaginateResponseCollection>;
+    onUpdate?: (data: unknown[]) => void;
     onError?: (e: unknown) => void;
     loader?: React.ReactNode;
-    children: React.ReactNode | TChildrenCallback<TData>;
+    children: React.ReactNode | TChildrenCallback;
 }
 
 interface PaginatedTableHandle {
@@ -20,8 +20,14 @@ interface PaginatedTableHandle {
     reload: () => Promise<void>;
 }
 
-function PaginatedTable<TData>({ initialResponse, children, loader, ...props }: PaginatedTableProps<TData>, ref: React.ForwardedRef<PaginatedTableHandle>) {
-    const [lastResponse, setLastResponse] = React.useState<PaginateResponse<TData>>(new PaginateResponse(initialResponse));
+function PaginatedTable({
+    initialResponse,
+    children,
+    loader,
+    ...props
+}: PaginatedTableProps, ref: React.ForwardedRef<PaginatedTableHandle>) {
+    const [paginateResponse, setPaginateResponse] = React.useState<PaginateResponse>(new PaginateResponse(initialResponse));
+    const [data, setData] = React.useState<unknown[]>(initialResponse.data ?? []);
     const [lastLink, setLastLink] = React.useState<string>();
     const [loading, setLoading] = React.useState(false);
     const [renderCount, setRenderCount] = React.useState(1);
@@ -30,7 +36,8 @@ function PaginatedTable<TData>({ initialResponse, children, loader, ...props }: 
     React.useImperativeHandle(ref, () => ({
         currentPage,
         reset: async () => {
-            setLastResponse(new PaginateResponse(initialResponse));
+            setPaginateResponse(new PaginateResponse(initialResponse));
+            setData(initialResponse.data ?? []);
             setCurrentPage(1);
             setLastLink(undefined);
             setRenderCount(1);
@@ -50,7 +57,8 @@ function PaginatedTable<TData>({ initialResponse, children, loader, ...props }: 
             const response = await pullData(link);
             const paginateResponse = new PaginateResponse(response);
 
-            setLastResponse(paginateResponse);
+            setPaginateResponse(paginateResponse);
+            setData(response.data ?? []);
             setCurrentPage(paginateResponse.meta.current_page);
 
             if (onUpdate)
@@ -75,15 +83,13 @@ function PaginatedTable<TData>({ initialResponse, children, loader, ...props }: 
     return (
         <>
             {loading && loader}
-            {typeof children === 'function' ? children(lastResponse.response.data ?? [], renderCount) : children}
-            {lastResponse.hasPages && <Pages response={lastResponse} onPageSelect={handlePageSelect} />}
+            {typeof children === 'function' ? children(data, renderCount) : children}
+            {paginateResponse.hasPages && <Pages response={paginateResponse} onPageSelect={handlePageSelect} />}
         </>
     );
 }
 
-const ForwardedPaginatedTable = React.forwardRef(PaginatedTable) as <TData>(
-    props: PaginatedTableProps<TData> & React.RefAttributes<PaginatedTableHandle>
-) => ReturnType<typeof PaginatedTable>;
+const ForwardedPaginatedTable = React.forwardRef(PaginatedTable);
 
 export default ForwardedPaginatedTable;
 export { PaginatedTableProps, PaginatedTableHandle };

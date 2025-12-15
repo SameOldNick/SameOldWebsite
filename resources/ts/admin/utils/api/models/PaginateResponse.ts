@@ -7,7 +7,7 @@ export default class PaginateResponse<T = unknown> {
      * @memberof PaginateResponse
      */
     constructor(
-        private readonly _response: IPaginateResponse<T> | IPaginateResponseCollection<T>
+        private readonly _response: IPaginateResponse | IPaginateResponseCollection
     ) {
     }
 
@@ -136,7 +136,7 @@ export default class PaginateResponse<T = unknown> {
      * @param {unknown} response
      * @returns {response is IPaginateResponse<T>}
      */
-    private isResource<T>(response: unknown): response is IPaginateResponse<T> {
+    private isResource(response: unknown): response is IPaginateResponse {
         return typeof response === 'object' && response !== null && !('meta' in response && typeof response.meta === 'object');
     }
 
@@ -148,7 +148,7 @@ export default class PaginateResponse<T = unknown> {
      * @param {unknown} response
      * @returns {response is IPaginateResponseCollection<T>}
      */
-    private isCollection<T>(response: unknown): response is IPaginateResponseCollection<T> {
+    private isCollection(response: unknown): response is IPaginateResponseCollection {
         return typeof response === 'object' && response !== null && 'meta' in response && typeof response.meta === 'object';
     }
 }

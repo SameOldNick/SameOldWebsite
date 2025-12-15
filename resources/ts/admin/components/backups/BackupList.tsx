@@ -26,7 +26,7 @@ const BackupList: React.FC<IBackupListProps> = ({ show }) => {
         return response.data;
     }, [show]);
 
-    const mapDataToBackup = React.useCallback((backups: IBackup[]) => backups.map((data) => new Backup(data)), []);
+    const mapDataToBackup = React.useCallback((backups: any[]) => backups.map((data) => new Backup(data)), []);
 
     const handleViewBackupClicked = React.useCallback(async (e: React.MouseEvent, backup: Backup) => {
         e.preventDefault();

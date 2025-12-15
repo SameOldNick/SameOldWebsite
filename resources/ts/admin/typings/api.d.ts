@@ -47,6 +47,7 @@ declare global {
     export interface IPaginateResponseLink {
         url: string | null;
         label: string;
+        page: number | null;
         active: boolean;
     }
 
@@ -66,11 +67,11 @@ declare global {
         next_page_url: string | null;
     }
 
-    export interface IPaginateResponse<T> extends IPaginateResponseMeta {
+    export interface IPaginateResponse<T = any> extends IPaginateResponseMeta {
         data: T[];
     }
 
-    export interface IPaginateResponseCollection<T> {
+    export interface IPaginateResponseCollection<T = any> {
         data: T[];
 
         links: {
