@@ -74,7 +74,7 @@ class BackupSettingsController extends Controller
         foreach (Arr::except($validated, ['notification_channel', 'notification_to_email', 'backup_cron', 'cleanup_cron']) as $key => $value) {
             BackupConfig::updateOrCreate(
                 ['key' => $key],
-                ['value' => $value]
+                ['value' => $value ?? '']
             );
         }
 
