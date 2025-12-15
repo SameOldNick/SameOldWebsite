@@ -62,4 +62,9 @@ interface NotificationConfigurationProviderInterface
      * Gets Slack channel
      */
     public function getSlackChannel(): string;
+
+    /**
+     * Gets ntfy topic
+     */
+    public function getNtfyTopic(): ?string;
 }

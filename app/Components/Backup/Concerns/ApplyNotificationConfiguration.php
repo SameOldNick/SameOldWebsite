@@ -5,6 +5,7 @@ namespace App\Components\Backup\Concerns;
 use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Ntfy\Message as NtfyMessage;
 use Spatie\Backup\Notifications\Channels\Discord\DiscordMessage;
 
 trait ApplyNotificationConfiguration
@@ -47,5 +48,19 @@ trait ApplyNotificationConfiguration
         $configurationProvider = $this->getConfigurationProvider();
 
         return $discordMessage->from($configurationProvider->getDiscordUsername(), $configurationProvider->getDiscordAvatarUrl());
+    }
+
+    /**
+     * Applies configuration to ntfy message.
+     */
+    protected function applyConfigurationToNtfyMessage(NtfyMessage $ntfyMessage): NtfyMessage
+    {
+        $configurationProvider = $this->getConfigurationProvider();
+
+        if ($topic = $configurationProvider->getNtfyTopic()) {
+            $ntfyMessage->topic($topic);
+        }
+
+        return $ntfyMessage;
     }
 }

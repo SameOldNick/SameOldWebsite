@@ -3,11 +3,12 @@
 namespace App\Components\Backup\SpatieBackup;
 
 use App\Components\Backup\Contracts\ConfigProvider;
+use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
 use Spatie\Backup\Config\BackupConfig;
 use Spatie\Backup\Config\CleanupConfig;
 use Spatie\Backup\Config\Config;
 use Spatie\Backup\Config\MonitoredBackupsConfig;
-use Spatie\Backup\Config\NotificationsConfig;
+use Spatie\Backup\Config\NotificationsConfig as BaseNotificationsConfig;
 
 class DatabaseConfigProvider extends Config implements ConfigProvider
 {
@@ -33,9 +34,11 @@ class DatabaseConfigProvider extends Config implements ConfigProvider
     /**
      * {@inheritDoc}
      */
-    public function getNotifications(): NotificationsConfig
+    public function getNotifications(): BaseNotificationsConfig
     {
-        return $this->original->notifications;
+        $provider = app(NotificationConfigurationProviderInterface::class);
+
+        return NotificationsConfig::fromProvider($provider);
     }
 
     /**

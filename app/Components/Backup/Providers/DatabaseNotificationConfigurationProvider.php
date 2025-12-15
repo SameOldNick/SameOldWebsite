@@ -95,6 +95,14 @@ class DatabaseNotificationConfigurationProvider extends DatabaseConfigurationPro
     }
 
     /**
+     * Gets ntfy topic
+     */
+    public function getNtfyTopic(): ?string
+    {
+        return $this->getStringValue($this->createKey('ntfy_topic'));
+    }
+
+    /**
      * Creates table key name
      */
     protected function createKey(string $key): string

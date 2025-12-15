@@ -4,6 +4,7 @@ namespace App\Components\Backup\Concerns;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Ntfy\Message as NtfyMessage;
 use Spatie\Backup\Notifications\Channels\Discord\DiscordMessage;
 
 trait PullsNotificationConfiguration
@@ -28,5 +29,10 @@ trait PullsNotificationConfiguration
     public function toDiscord(): DiscordMessage
     {
         return $this->applyConfigurationToDiscordMessage(parent::toDiscord());
+    }
+
+    public function toNtfy($notifiable): NtfyMessage
+    {
+        return $this->applyConfigurationToNtfyMessage(parent::toNtfy($notifiable));
     }
 }
