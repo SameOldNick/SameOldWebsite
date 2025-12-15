@@ -164,7 +164,13 @@ final class File extends Model
      */
     protected function fileExists(): Attribute
     {
-        return Attribute::get(fn ($value, $attributes = []) => $this->getStorageDisk()->exists($attributes['path']));
+        return Attribute::get(function ($value, $attributes = []) {
+            try {
+                return $this->getStorageDisk()->exists($attributes['path']);
+            } catch (\InvalidArgumentException) {
+                return false;
+            }
+        });
     }
 
     /**
