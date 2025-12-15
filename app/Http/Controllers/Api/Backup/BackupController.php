@@ -33,7 +33,6 @@ class BackupController extends Controller
             $collection = match ((string) $request->str('show')) {
                 'successful' => $found->status('successful'),
                 'failed' => $found->status('failed'),
-                'not-exists' => $found->status('not-exists'),
                 'deleted' => $found->status('deleted'),
                 default => null,
             };

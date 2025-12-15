@@ -90,7 +90,6 @@ const All: React.FC<IHasRouter> = ({ router: { navigate } }) => {
                                         <Input type='select' name='show' id='show' defaultValue={show}>
                                             <option value="successful">Successful Only</option>
                                             <option value="failed">Failed Only</option>
-                                            <option value="not-exists">Non-existent Only</option>
                                             <option value="deleted">Deleted Only</option>
                                             <option value="all">All</option>
                                         </Input>

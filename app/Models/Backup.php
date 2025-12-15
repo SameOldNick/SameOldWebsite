@@ -31,8 +31,6 @@ class Backup extends Model
 
     const STATUS_FAILED = 'failed';
 
-    const STATUS_NOT_EXISTS = 'not-exists';
-
     const STATUS_DELETED = 'deleted';
 
     /**
@@ -102,7 +100,6 @@ class Backup extends Model
             get: fn () => match (true) {
                 $this->isDeleted() => static::STATUS_DELETED,
                 $this->isFailed() => static::STATUS_FAILED,
-                $this->isNotExists() => static::STATUS_NOT_EXISTS,
                 default => static::STATUS_SUCCESSFUL
             }
         );
