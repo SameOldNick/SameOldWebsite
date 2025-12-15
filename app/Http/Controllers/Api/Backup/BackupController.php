@@ -22,7 +22,7 @@ class BackupController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'show' => 'sometimes|in:successful,failed,not-exists,deleted',
+            'show' => 'sometimes|in:successful,failed,deleted',
         ]);
 
         /**
