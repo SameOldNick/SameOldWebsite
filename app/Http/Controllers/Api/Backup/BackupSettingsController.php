@@ -50,7 +50,7 @@ class BackupSettingsController extends Controller
 
         $validated = $request->validate([
             'notification_channel' => 'nullable|array',
-            'notification_channel.*' => Rule::in(['mail', 'discord', 'slack']),
+            'notification_channel.*' => Rule::enum(NotificationChannels::class),
 
             'notification_to_email' => [Rule::requiredIf($channels->contains('mail')), 'nullable', 'array'],
             'notification_to_email.*' => 'email',
