@@ -94,9 +94,7 @@ final class File extends Model
      *
      * @var list<string>
      */
-    protected $appends = [
-        'meta',
-    ];
+    protected $appends = [];
 
     /**
      * The presenter class
