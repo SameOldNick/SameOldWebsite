@@ -67,6 +67,8 @@ class BackupSettingsController extends Controller
             'notification_slack_icon' => ['nullable', 'string', 'max:255'],
             'notification_slack_channel' => [Rule::requiredIf($channels->contains('slack')), 'nullable', 'string', 'max:255'],
 
+            'notification_ntfy_topic' => [Rule::requiredIf($channels->contains(NotificationChannels::Ntfy)), 'nullable', 'string', 'max:255'],
+
             'backup_cron' => ['nullable', 'string', new CronExpression],
             'cleanup_cron' => ['nullable', 'string', new CronExpression],
         ]);
