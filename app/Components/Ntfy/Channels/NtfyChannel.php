@@ -25,6 +25,13 @@ class NtfyChannel
 
         $message = $this->toMessage($notifiable, $notification);
 
+        if (method_exists($notifiable, 'routeNotificationFor')) {
+            if ($topic = $notifiable->routeNotificationFor('ntfy', $notification)) {
+                // Set the topic from the notifiable if available
+                $message->topic($topic);
+            }
+        }
+
         $this->ntfy->send($message);
     }
 
