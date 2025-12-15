@@ -110,21 +110,6 @@ const BackupInfoModal: React.FC<IBackupModalProps> = ({ backup, onSuccess }) => 
                                             />
                                         </Col>
                                     </FormGroup>
-
-                                    <FormGroup row>
-                                        <Label for="size" sm={3} className='text-end'>
-                                            Size:
-                                        </Label>
-                                        <Col sm={9}>
-                                            <Input
-                                                id="size"
-                                                name="size"
-                                                type="text"
-                                                readOnly
-                                                value={backup.file.sizeHumanReadable}
-                                            />
-                                        </Col>
-                                    </FormGroup>
                                 </>
                             )}
 
