@@ -17,7 +17,7 @@ class NotificationNtfyConfig extends Data
     public static function fromArray(array $data): self
     {
         return new self(
-            topic: $data['topic'],
+            topic: $data['topic'] ?? '',
         );
     }
 }
