@@ -37,6 +37,20 @@
                 }
             }
 
+            .blog-article-meta {
+                li {
+                    display: inline-flex;
+                    align-items: center;
+                    margin-right: 0.5rem;
+
+                    svg {
+                        height: 1rem;
+                        width: 1rem;
+                        margin-right: 0.25rem;
+                    }
+                }
+            }
+
             .blog-article-read-more {
                 display: flex;
                 flex-direction: row;
@@ -64,11 +78,19 @@
 
     .blog-pagination {
         display: flex;
+        align-items: center;
         justify-content: space-between;
 
         >a {
+            display: inline-flex;
+            align-items: center;
             text-decoration: none;
             color: $dark;
+
+            svg {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
 
             &:hover {
                 font-weight: bold;

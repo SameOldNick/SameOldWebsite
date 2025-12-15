@@ -6,11 +6,11 @@
             <h3 class="blog-post-title h5 card-title">{{ $article->title }}</h3>
             <ul class="blog-post-metadata">
                 <li title="{{ $article->published_at }}">
-                    <i class="fa-solid fa-calendar"></i>
+                    @svg('fas-calendar')
                     Posted {{ $article->published_at->longRelativeToNowDiffForHumans() }}
                 </li>
                 <li>
-                    <i class="fa-solid fa-comments"></i>
+                    @svg('fas-comments')
                     {{ trans_choice('{0} No comments|{1} :count comment|[2,*] :count comments', $totalComments) }}
                 </li>
             </ul>

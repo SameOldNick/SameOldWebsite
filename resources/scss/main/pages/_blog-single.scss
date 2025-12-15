@@ -20,6 +20,20 @@
             }
         }
 
+        .blog-article-meta {
+            li {
+                display: inline-flex;
+                align-items: center;
+                margin-right: 0.5rem;
+
+                svg {
+                    height: 1rem;
+                    width: 1rem;
+                    margin-right: 0.25rem;
+                }
+            }
+        }
+
         .blog-article-content {
             margin-bottom: 3rem;
 
@@ -97,8 +111,16 @@
 
                 .blog-article-comment-actions {
                     a {
+                        display: inline-flex;
+                        align-items: center;
                         color: $dark;
                         text-decoration: none;
+
+                        svg {
+                            height: 1rem;
+                            width: 1rem;
+                            margin-right: 0.25rem;
+                        }
 
                         &:hover {
                             font-weight: bold;

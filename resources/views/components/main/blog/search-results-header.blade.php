@@ -1,6 +1,6 @@
 @props(['query', 'count'])
 
-@if(!$request->filled('q') || $errors->has('q'))
+@if (!$request->filled('q') || $errors->has('q'))
     <div class="mb-4">
         <x-alert type="danger">
             {{ __('The search query was not specified or is invalid.') }}
@@ -26,31 +26,33 @@
                 </div>
                 <div>
                     <div class="btn-group" role="group" aria-label="Sort by buttons">
-                        <a
-                            href="{{ $sortByRelevanceLink }}"
-                            @class(['btn', 'btn-primary' => $request->isSortBy('relevance'), 'btn-outline-primary' => !$request->isSortBy('relevance')])
-                            role="button"
-                        >
+                        <a href="{{ $sortByRelevanceLink }}" @class([
+                            'd-flex',
+                            'align-items-center',
+                            'btn',
+                            'btn-primary' => $request->isSortBy('relevance'),
+                            'btn-outline-primary' => !$request->isSortBy('relevance'),
+                        ]) role="button">
                             {{ __('Relevance') }}
                             @if ($request->isSortBy('relevance'))
                                 @if ($request->isOrderAscending())
-                                    &uarr;
+                                    @svg('fas-arrow-up-long', 'ms-1')
                                 @else
-                                    &darr;
+                                    @svg('fas-arrow-down-long', 'ms-1')
                                 @endif
                             @endif
                         </a>
-                        <a
-                            href="{{ $sortByDateLink }}"
-                            @class(['btn', 'btn-primary' => $request->isSortBy('date'), 'btn-outline-primary' => !$request->isSortBy('date')])
-                            role="button"
-                        >
+                        <a href="{{ $sortByDateLink }}" @class([
+                            'btn',
+                            'btn-primary' => $request->isSortBy('date'),
+                            'btn-outline-primary' => !$request->isSortBy('date'),
+                        ]) role="button">
                             {{ __('Date') }}
                             @if ($request->isSortBy('date'))
                                 @if ($request->isOrderAscending())
-                                    &uarr;
+                                    @svg('fas-arrow-up-long', 'ms-1')
                                 @else
-                                    &darr;
+                                    @svg('fas-arrow-down-long', 'ms-1')
                                 @endif
                             @endif
                         </a>

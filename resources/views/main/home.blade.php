@@ -23,34 +23,32 @@
                     <nav class="navbar navbar-expand-md sections-submenu">
                         <div class="container-fluid">
 
-                            <button
-                                class="navbar-toggler w-100"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#navbarSectionsSubmenu"
-                                aria-controls="navbarSectionsSubmenu"
-                                aria-expanded="false"
-                                aria-label="{{ __('Toggle navigation') }}">
+                            <button class="navbar-toggler w-100" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSectionsSubmenu" aria-controls="navbarSectionsSubmenu"
+                                aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                                 <span class="sections-submenu-current">{{ __('Biography') }}</span>
-                                <i class="fa-solid fa-caret-down ms-1"></i>
+                                @svg('fas-caret-down', 'ms-1')
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSectionsSubmenu">
                                 <ul class="nav nav-pills flex-column flex-fill">
                                     <li class="nav-item flex-sm-fill">
-                                        <a class="nav-link text-sm-center active" href="#biography">{{ __('Biography') }}</a>
+                                        <a class="nav-link text-sm-center active"
+                                            href="#biography">{{ __('Biography') }}</a>
                                     </li>
                                     <li class="nav-item flex-sm-fill">
                                         <a class="nav-link text-sm-center" href="#skills">{{ __('Skills') }}</a>
                                     </li>
                                     <li class="nav-item flex-sm-fill">
-                                        <a class="nav-link text-sm-center" href="#technologies">{{ __('Technologies') }}</a>
+                                        <a class="nav-link text-sm-center"
+                                            href="#technologies">{{ __('Technologies') }}</a>
                                     </li>
                                     <li class="nav-item flex-sm-fill">
                                         <a class="nav-link text-sm-center" href="#projects">{{ __('Projects') }}</a>
                                     </li>
                                     <li class="nav-item flex-sm-fill">
-                                        <a class="nav-link text-sm-center" href="#blogPosts">{{ __('Recent Posts') }}</a>
+                                        <a class="nav-link text-sm-center"
+                                            href="#blogPosts">{{ __('Recent Posts') }}</a>
                                     </li>
                                 </ul>
                             </div>

@@ -1,8 +1,9 @@
 <aside class="blog-sidebar">
     <form action="{{ route('blog.search') }}" method="get" class="ibc-container mb-3">
-        <input type="search" name="q" value="{{ request()->str('q') }}" class="form-control" placeholder="{{ __('Search') }}" aria-label="{{ __('Search') }}">
+        <input type="search" name="q" value="{{ request()->str('q') }}" class="form-control"
+            placeholder="{{ __('Search') }}" aria-label="{{ __('Search') }}">
         <button class="ibc-button" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            @svg('fas-magnifying-glass')
         </button>
     </form>
 
@@ -11,26 +12,28 @@
 
         <div class="blog-sidebar-articles">
             @foreach ($mostRecent as $article)
-            <a href="{{ $article->presenter()->publicUrl() }}" class="blog-sidebar-article py-3">
-                <div class="blog-sidebar-article-media">
-                    @isset($article->mainImage)
-                    <img src="{{ $article->mainImage->file->presenter()->publicUrl() }}" alt="{{ $article->mainImage->alternativeText }}" class="img-cover img-thumbnail">
-                    @else
-                    <div class="blog-sidebar-article-media-placeholder img-thumbnail">
-                        <i class="fa-solid fa-image"></i>
+                <a href="{{ $article->presenter()->publicUrl() }}" class="blog-sidebar-article py-3">
+                    <div class="blog-sidebar-article-media">
+                        @isset($article->mainImage)
+                            <img src="{{ $article->mainImage->file->presenter()->publicUrl() }}"
+                                alt="{{ $article->mainImage->alternativeText }}" class="img-cover img-thumbnail">
+                        @else
+                            <div class="blog-sidebar-article-media-placeholder img-thumbnail">
+                                @svg('fas-image')
+                            </div>
+                        @endisset
                     </div>
-                    @endisset
-                </div>
 
-                <div class="blog-sidebar-article-content">
-                    <h6 class="blog-sidebar-article-title">{{ $article->title }}</h6>
-                    <ul class="mt-1 text-muted small list-inline">
-                        <li class="list-inline-item" title="{{ $article->published_at }}">
-                            <i class="fa-solid fa-calendar-days me-1"></i> {{ $article->published_at->toDateString() }}
-                        </li>
-                    </ul>
-                </div>
-            </a>
+                    <div class="blog-sidebar-article-content">
+                        <h6 class="blog-sidebar-article-title">{{ $article->title }}</h6>
+                        <ul class="mt-1 text-muted small list-inline">
+                            <li class="list-inline-item" title="{{ $article->published_at }}">
+                                @svg('fas-calendar-days')
+                                {{ $article->published_at->toDateString() }}
+                            </li>
+                        </ul>
+                    </div>
+                </a>
             @endforeach
         </div>
     </div>

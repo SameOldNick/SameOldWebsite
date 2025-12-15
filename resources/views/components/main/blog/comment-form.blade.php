@@ -3,7 +3,7 @@
 @cannot('create', \App\Models\Comment::class)
     <div class="alert alert-info d-flex align-items-center" role="alert">
         <div class="flex-shrink-0 me-2" aria-label="Info:">
-            <i class="fa-solid fa-circle-info"></i>
+            @svg('fas-circle-info')
         </div>
         <div>
             You must <a href='{{ route('login', ['return_url' => url()->current()]) }}' class="text-dark">login</a> or <a
