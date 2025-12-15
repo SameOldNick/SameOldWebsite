@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Backup;
 
+use App\Components\Backup\Enums\NotificationChannels;
 use App\Http\Controllers\Controller;
 use App\Models\BackupConfig;
 use App\Rules\CronExpression;
