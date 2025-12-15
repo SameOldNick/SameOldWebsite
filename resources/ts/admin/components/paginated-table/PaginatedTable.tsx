@@ -75,7 +75,7 @@ function PaginatedTable<TData>({ initialResponse, children, loader, ...props }: 
     return (
         <>
             {loading && loader}
-            {typeof children === 'function' ? children(lastResponse.response.data, renderCount) : children}
+            {typeof children === 'function' ? children(lastResponse.response.data ?? [], renderCount) : children}
             {lastResponse.hasPages && <Pages response={lastResponse} onPageSelect={handlePageSelect} />}
         </>
     );
