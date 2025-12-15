@@ -55,6 +55,6 @@ class NtfyChannel
             return $notification->toNtfy($notifiable);
         }
 
-        throw new \InvalidArgumentException('Notification is not an instance of NtfyNotification.');
+        throw new \InvalidArgumentException('Notification is not an instance of NtfyNotification and does not have a toNtfy method.');
     }
 }
