@@ -35,8 +35,8 @@
                                 <div class="row justify-content-center">
                                     <div class="col-md-6">
                                         <div class="input-group mb-3 has-validation">
-                                            <span class="input-group-text bg-secondary">
-                                                <i class="fa-solid fa-key text-white"></i>
+                                            <span class="input-group-text bg-secondary text-white">
+                                                @svg('fas-key')
                                             </span>
                                             <input name="code" type="text"
                                                 class="form-control @error('code') is-invalid @enderror"
