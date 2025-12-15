@@ -53,7 +53,7 @@ export default defineConfig({
             output: {
                 manualChunks: {
                     admin: ['react', 'react-dom', 'reactstrap', 'chart.js'],
-                    mdeditor: ['codemirror-ssr', 'xterm-for-react', 'highlight.js'],
+                    mdeditor: ['codemirror-ssr', 'react-xtermjs', 'highlight.js'],
                     main: ['jquery'],
                 }
             }
