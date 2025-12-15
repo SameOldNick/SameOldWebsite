@@ -20,7 +20,7 @@ import awaitModalPrompt from '@admin/utils/modals';
 import { transformCronExpression } from '@admin/utils';
 import { fetchSettings, updateSettings } from '@admin/utils/api/endpoints/backup';
 
-type TChannels = 'mail' | 'discord' | 'slack';
+type TChannels = 'mail' | 'discord' | 'slack' | 'ntfy';
 
 type TFrequencies = 'never' | 'daily' | 'weekly' | 'monthly' | 'custom';
 
@@ -36,6 +36,7 @@ export interface IFormikValues {
     'notification_slack_username': string;
     'notification_slack_icon': string;
     'notification_slack_channel': string;
+    'notification_ntfy_topic': string;
 
     'backup_frequency': TFrequencies;
     'custom_backup_cron': string;
@@ -53,7 +54,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
     const formikRef = React.useRef<FormikProps<IFormikValues>>(null);
 
     const schema = React.useMemo(() => Yup.object().shape({
-        notification_channels: Yup.array().of(Yup.string().oneOf(['mail', 'discord', 'slack'])).notRequired(),
+        notification_channels: Yup.array().of(Yup.string().oneOf(['mail', 'discord', 'slack', 'ntfy'])).notRequired(),
 
         notification_to_email: Yup.string()
             .test('is-valid-emails', 'One or more emails are invalid', (value) => {
@@ -117,6 +118,14 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 otherwise: (schema) => schema.nullable() // Field is not required otherwise
             }),
 
+        notification_ntfy_topic: Yup.string()
+            .max(255)
+            .when('notification_channels', {
+                is: (notificationChannels: TChannels) => notificationChannels.includes('ntfy'), // Condition: 'ntfy' is in the array
+                then: (schema) => schema.matches(/^[\w-]+$/, 'Ntfy topic can only contain letters, numbers, underscores, and hyphens.').nullable(),
+                otherwise: (schema) => schema.nullable() // Field is not required otherwise
+            }),
+
         backup_frequency: Yup.string().oneOf(['never', 'daily', 'weekly', 'monthly', 'custom']),
         custom_backup_cron: Yup.string()
             .when('backup_frequency', {
@@ -149,6 +158,7 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
             'notification_slack_username': '',
             'notification_slack_icon': '',
             'notification_slack_channel': '',
+            'notification_ntfy_topic': '',
 
             'backup_frequency': 'never',
             'custom_backup_cron': '',
@@ -227,6 +237,8 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                 'notification_slack_username': values.notification_slack_username,
                 'notification_slack_icon': values.notification_slack_icon,
                 'notification_slack_channel': values.notification_slack_channel,
+
+                'notification_ntfy_topic': values.notification_ntfy_topic,
             };
 
             switch (values.backup_frequency) {
@@ -528,6 +540,40 @@ const BackupFormSettings: React.FC<IProps> = ({ router: { navigate } }) => {
                                                         disabled={!values.notification_channels.includes('slack')}
                                                     />
                                                     <ErrorMessage name='notification_slack_channel' component='div' className='invalid-feedback' />
+                                                </FormGroup>
+
+                                                {/* Ntfly Settings (Shown if Ntfly is selected) */}
+                                                <h5>Ntfly Notification Settings</h5>
+
+                                                <FormGroup switch>
+                                                    <Field
+                                                        as={Input}
+                                                        type='switch'
+                                                        role='switch'
+                                                        name='notification_channels'
+                                                        id='channelNtfly'
+                                                        value='ntfy'
+                                                        checked={values.notification_channels.includes('ntfy')}
+                                                        className={classNames({ 'is-invalid': errors.notification_channels && touched.notification_channels })}
+                                                    />
+                                                    {' '}
+                                                    <Label check for='channelNtfly'>
+                                                        Enable Ntfly Notifications
+                                                    </Label>
+                                                </FormGroup>
+
+                                                <FormGroup>
+                                                    <Label for="ntfyTopic">Topic </Label>
+                                                    <Field
+                                                        as={Input}
+                                                        type='text'
+                                                        name='notification_ntfy_topic'
+                                                        id='ntfyTopic'
+                                                        placeholder="e.g. mytopic"
+                                                        className={classNames({ 'is-invalid': errors.notification_ntfy_topic && touched.notification_ntfy_topic })}
+                                                        disabled={!values.notification_channels.includes('ntfy')}
+                                                    />
+                                                    <ErrorMessage name='notification_ntfy_topic' component='div' className='invalid-feedback' />
                                                 </FormGroup>
 
                                                 <h5>Schedule Settings</h5>
