@@ -208,7 +208,7 @@ declare global {
         expires_at: string | null;
     }
 
-    type TBackupStatuses = 'successful' | 'failed' | 'not-exists' | 'deleted';
+    type TBackupStatuses = 'successful' | 'failed' | 'deleted';
 
     interface IBackup {
         uuid: string;
@@ -216,6 +216,7 @@ declare global {
         error_message?: string;
         created_at: string;
         updated_at: string | null;
+        deleted_at: string | null;
         file: IFile | null;
     }
 
