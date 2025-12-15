@@ -53,19 +53,19 @@ class BackupSettingsController extends Controller
             'notification_channel' => 'nullable|array',
             'notification_channel.*' => Rule::enum(NotificationChannels::class),
 
-            'notification_to_email' => [Rule::requiredIf($channels->contains('mail')), 'nullable', 'array'],
+            'notification_to_email' => [Rule::requiredIf($channels->contains(NotificationChannels::Mail)), 'nullable', 'array'],
             'notification_to_email.*' => 'email',
-            'notification_from_email' => [Rule::requiredIf($channels->contains('mail')), 'nullable', 'email'],
-            'notification_from_name' => [Rule::requiredIf($channels->contains('mail')), 'nullable', 'string', 'max:255'],
+            'notification_from_email' => [Rule::requiredIf($channels->contains(NotificationChannels::Mail)), 'nullable', 'email'],
+            'notification_from_name' => [Rule::requiredIf($channels->contains(NotificationChannels::Mail)), 'nullable', 'string', 'max:255'],
 
-            'notification_discord_webhook' => [Rule::requiredIf($channels->contains('discord')), 'nullable', 'url:http,https', 'max:255'],
-            'notification_discord_username' => [Rule::requiredIf($channels->contains('discord')), 'nullable', 'string', 'max:255'],
+            'notification_discord_webhook' => [Rule::requiredIf($channels->contains(NotificationChannels::Discord)), 'nullable', 'url:http,https', 'max:255'],
+            'notification_discord_username' => [Rule::requiredIf($channels->contains(NotificationChannels::Discord)), 'nullable', 'string', 'max:255'],
             'notification_discord_avatar_url' => ['nullable', 'url:http,https', 'max:255'],
 
-            'notification_slack_webhook' => [Rule::requiredIf($channels->contains('slack')), 'nullable', 'url:http,https', 'max:255'],
-            'notification_slack_username' => [Rule::requiredIf($channels->contains('slack')), 'nullable', 'string', 'max:255'],
+            'notification_slack_webhook' => [Rule::requiredIf($channels->contains(NotificationChannels::Slack)), 'nullable', 'url:http,https', 'max:255'],
+            'notification_slack_username' => [Rule::requiredIf($channels->contains(NotificationChannels::Slack)), 'nullable', 'string', 'max:255'],
             'notification_slack_icon' => ['nullable', 'string', 'max:255'],
-            'notification_slack_channel' => [Rule::requiredIf($channels->contains('slack')), 'nullable', 'string', 'max:255'],
+            'notification_slack_channel' => [Rule::requiredIf($channels->contains(NotificationChannels::Slack)), 'nullable', 'string', 'max:255'],
 
             'notification_ntfy_topic' => [Rule::requiredIf($channels->contains(NotificationChannels::Ntfy)), 'nullable', 'string', 'max:255'],
 
