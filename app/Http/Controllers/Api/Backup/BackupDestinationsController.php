@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Backup;
 use App\Components\Websockets\Notifiers\JobStatusNotifier;
 use App\Http\Controllers\Controller;
 use App\Jobs\FilesystemConfigurationTestJob;
-use App\Models\BackupConfig;
 use App\Models\FilesystemConfiguration;
 use App\Models\FilesystemConfigurationFTP;
 use App\Models\FilesystemConfigurationSFTP;
@@ -29,15 +28,9 @@ class BackupDestinationsController extends Controller
      *
      * @return void
      */
-    public function index(Config $backupConfig)
+    public function index()
     {
-        // Pull disks indirectly through Spatie Backup config
-        $enabled = $backupConfig->backup->destination->disks;
-
-        return response()->json(FilesystemConfiguration::all()->map(fn (FilesystemConfiguration $config) => [
-            'enable' => in_array($config->driver_name, $enabled),
-            ...$config->toArray(),
-        ]));
+        return response()->json(FilesystemConfiguration::all());
     }
 
     /**
@@ -107,15 +100,12 @@ class BackupDestinationsController extends Controller
         $fsConfig = new FilesystemConfiguration([
             'name' => $request->name,
             'disk_type' => $request->type,
+            'is_active' => $request->boolean('enable'),
         ]);
 
         $fsConfig->configurable()->associate($config);
 
         $fsConfig->save();
-
-        if ($request->boolean('enable')) {
-            $this->enableDisk($fsConfig->driver_name);
-        }
 
         return response()->json([
             'message' => 'Backup destination created successfully.',
@@ -336,30 +326,6 @@ class BackupDestinationsController extends Controller
     }
 
     /**
-     * Enables disk configuration
-     *
-     * @return void
-     */
-    protected function enableDisk(string $diskName)
-    {
-        BackupConfig::updateOrCreateArrayValue('backup_disks', function (array $disks) use ($diskName) {
-            return array_unique([...$disks, $diskName]);
-        });
-    }
-
-    /**
-     * Disables disk configuration
-     *
-     * @return void
-     */
-    protected function disableDisk(string $diskName)
-    {
-        BackupConfig::updateOrCreateArrayValue('backup_disks', function (array $disks) use ($diskName) {
-            return array_filter($disks, fn ($value) => $value !== $diskName);
-        });
-    }
-
-    /**
      * Updates a configuration
      *
      * @return FilesystemConfiguration
@@ -367,6 +333,7 @@ class BackupDestinationsController extends Controller
     protected function performUpdate(FilesystemConfiguration $destination, array $input)
     {
         $data = Arr::only($input, [
+            'enable',
             'host',
             'port',
             'username',
@@ -374,9 +341,15 @@ class BackupDestinationsController extends Controller
             'extra',
         ]);
 
+        if (Arr::has($input, 'enable')) {
+            $destination->is_active = (bool) Arr::get($input, 'enable');
+        }
+
         if (Arr::has($input, 'name')) {
             $destination->name = Arr::get($input, 'name');
+        }
 
+        if ($destination->isDirty()) {
             $destination->save();
         }
 
@@ -407,14 +380,6 @@ class BackupDestinationsController extends Controller
         }
 
         $destination->configurable->update($data);
-
-        if (Arr::has($input, 'enable')) {
-            if ((bool) Arr::get($input, 'enable')) {
-                $this->enableDisk($destination->driver_name);
-            } else {
-                $this->disableDisk($destination->driver_name);
-            }
-        }
 
         return $destination;
     }

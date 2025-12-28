@@ -26,7 +26,6 @@ class BackupConfigSeeder extends Seeder
             'notification_slack_username' => config('backup.notifications.slack.username'),
             'notification_slack_icon' => config('backup.notifications.slack.icon'),
             'notification_slack_channel' => config('backup.notifications.slack.channel'),
-            'backup_disks' => '',
         ];
 
         foreach ($defaults as $key => $value) {

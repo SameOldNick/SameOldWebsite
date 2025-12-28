@@ -227,7 +227,7 @@ declare global {
 
     interface IBackupDestination {
         id: number;
-        enable: boolean;
+        is_active: boolean;
         name: string;
         type: 'ftp' | 'sftp';
         host: string;

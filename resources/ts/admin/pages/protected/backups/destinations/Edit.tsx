@@ -79,6 +79,7 @@ const Edit: React.FC<IProps> = ({ router }) => {
                                     <BackupDestinationForm
                                         existing={{
                                             ...destination,
+                                            enable: destination.is_active,
                                             password: null,
                                             confirm_password: null,
                                             private_key: null,

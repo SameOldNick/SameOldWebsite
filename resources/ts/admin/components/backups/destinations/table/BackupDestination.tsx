@@ -26,7 +26,7 @@ const BackupDestination: React.FC<IProps> = ({ destination, selected, onSelect, 
                 <td>{destination.name}</td>
                 <td>{destination.type.toUpperCase()}</td>
                 <td>{destination.host}</td>
-                <td>{destination.enable ? 'Enabled' : 'Disabled'}</td>
+                <td>{destination.is_active ? 'Enabled' : 'Disabled'}</td>
                 <td>
                     <Dropdown
                         isOpen={dropdownOpen}

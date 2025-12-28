@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property string $disk_type
+ * @property bool $is_active
  * @property string $configurable_type
  * @property int $configurable_id
  * @property string $driver_name
@@ -31,6 +32,7 @@ class FilesystemConfiguration extends Model implements FilesystemConfigurationCo
     protected $fillable = [
         'name',
         'disk_type',
+        'is_active',
     ];
 
     /**
@@ -77,6 +79,7 @@ class FilesystemConfiguration extends Model implements FilesystemConfigurationCo
     {
         return [
             $this->getKeyName() => $this->getKey(),
+            'is_active' => $this->is_active,
             'name' => $this->name,
             'type' => $this->disk_type,
             ...$this->configurable->toArray(),
