@@ -12218,7 +12218,7 @@ __metadata:
     vite: "npm:^7.1.4"
     vite-plugin-external: "npm:^6.2.2"
     vite-plugin-global-const: "npm:^0.0.6"
-    vite-plugin-static-copy: "npm:^3.1.1"
+    vite-plugin-static-copy: "npm:^3.1.4"
     web-vitals: "npm:^5.1.0"
     yup: "npm:^1.7.1"
   languageName: unknown
@@ -13630,18 +13630,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-static-copy@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "vite-plugin-static-copy@npm:3.1.1"
+"vite-plugin-static-copy@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "vite-plugin-static-copy@npm:3.1.4"
   dependencies:
     chokidar: "npm:^3.6.0"
-    fs-extra: "npm:^11.3.0"
     p-map: "npm:^7.0.3"
     picocolors: "npm:^1.1.1"
-    tinyglobby: "npm:^0.2.14"
+    tinyglobby: "npm:^0.2.15"
   peerDependencies:
     vite: ^5.0.0 || ^6.0.0 || ^7.0.0
-  checksum: 10/e44d8f5ec21d7e5d9bc76f881f537d260dba0e0dad0757a86cabfc7be086c84368e956b9a2a56a55d8566e1fe9e90be96ded11b16a129b3aec5ac8f1f8474a9a
+  checksum: 10/9e9fbdbd30fdb437d2b10821ccaa61ceaf020263ac7e59875b1b8cccbc04015496a7e1bce938191e958b4acad4b3adb6baba2be493355ede9f28994b073bd5c8
   languageName: node
   linkType: hard
 
