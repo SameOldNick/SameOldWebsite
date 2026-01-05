@@ -11211,13 +11211,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-chartjs-2@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "react-chartjs-2@npm:5.3.0"
+"react-chartjs-2@npm:^5.3.1":
+  version: 5.3.1
+  resolution: "react-chartjs-2@npm:5.3.1"
   peerDependencies:
     chart.js: ^4.1.1
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/3cad39fa154be833f9d091ad09f6a630ec1e31cc2536ec63f20ad0e49847b291e7973274df1d30bbae5e5168488789407625cde52c020146b611a47c79092d45
+  checksum: 10/889f17ac70806d13135357b0d858ec862b53783bf70ccdffd15f6d03f1a92dae5f02b5e14644136ef5df2bc2a63401642dc0a73b694f568be4f7fbcdf3a58665
   languageName: node
   linkType: hard
 
@@ -12192,7 +12192,7 @@ __metadata:
     pusher-js: "npm:^8.4.0"
     query-string: "npm:^9.3.1"
     react: "npm:^19.2.3"
-    react-chartjs-2: "npm:^5.3.0"
+    react-chartjs-2: "npm:^5.3.1"
     react-dom: "npm:^19.2.3"
     react-dropzone: "npm:^14.3.8"
     react-helmet-async: "npm:^2.0.5"
