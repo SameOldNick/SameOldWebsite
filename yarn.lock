@@ -4641,10 +4641,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xterm/xterm@npm:^5.5.0":
-  version: 5.5.0
-  resolution: "@xterm/xterm@npm:5.5.0"
-  checksum: 10/d4cdc402de81a83a3e0ef93f38072cb8f54abe4d65865f2e29b92cbc2593f86d052f6b993895c9e5dec97f47548f504e90bcea0aad6845917c09b03f2f3a4629
+"@xterm/xterm@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "@xterm/xterm@npm:6.0.0"
+  checksum: 10/2e9aef4770ce4778f4823f261491ade3863fa2141ff4607785a4c22cb6948bb0897e21581536ab1a3327a7ee59467e3549c09b61278b07a558f03ff14ba45bc4
   languageName: node
   linkType: hard
 
@@ -12149,7 +12149,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:latest"
     "@uiw/react-md-editor": "npm:^4.0.7"
     "@vitejs/plugin-react": "npm:^5.1.2"
-    "@xterm/xterm": "npm:^5.5.0"
+    "@xterm/xterm": "npm:^6.0.0"
     animate.css: "npm:^4.1.1"
     animated-scroll-to: "npm:^2.3.2"
     aos: "npm:^2.3.4"
