@@ -3467,12 +3467,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/codemirror@npm:^5.60.16":
-  version: 5.60.16
-  resolution: "@types/codemirror@npm:5.60.16"
+"@types/codemirror@npm:^5.60.17":
+  version: 5.60.17
+  resolution: "@types/codemirror@npm:5.60.17"
   dependencies:
     "@types/tern": "npm:*"
-  checksum: 10/df8b6e1100a3a29b90d7ca0a9a7bd3307441f0d859df101a53ffe10108952e1f47920d6ae5c296ab98be5d4f12dc9b7182629a7863024754454c4e1374996ba0
+  checksum: 10/972e70898206ebb7baf72dd4afb3352fc9e18943c5c6598615065bd1c5a0fc1d8a766d0cc353a689a216611af018d55efe4ba938f3578a98df01623f0474f75e
   languageName: node
   linkType: hard
 
@@ -12242,7 +12242,7 @@ __metadata:
     "@types/aos": "npm:^3.0.5"
     "@types/blueimp-md5": "npm:^2.18.0"
     "@types/bootstrap": "npm:^5.2.7"
-    "@types/codemirror": "npm:^5.60.16"
+    "@types/codemirror": "npm:^5.60.17"
     "@types/dropzone": "npm:^5.7.9"
     "@types/jquery": "npm:^3.5.33"
     "@types/luxon": "npm:^3.7.1"

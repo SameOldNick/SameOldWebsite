@@ -42,7 +42,7 @@
         "@types/aos": "^3.0.5",
         "@types/blueimp-md5": "^2.18.0",
         "@types/bootstrap": "^5.2.7",
-        "@types/codemirror": "^5.60.16",
+        "@types/codemirror": "^5.60.17",
         "@types/dropzone": "^5.7.9",
         "@types/jquery": "^3.5.33",
         "@types/luxon": "^3.7.1",
