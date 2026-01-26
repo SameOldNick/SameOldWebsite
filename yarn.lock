@@ -9139,13 +9139,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"laravel-echo@npm:^2.2.7":
-  version: 2.2.7
-  resolution: "laravel-echo@npm:2.2.7"
+"laravel-echo@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "laravel-echo@npm:2.3.0"
   peerDependencies:
     pusher-js: "*"
     socket.io-client: "*"
-  checksum: 10/e35069afb37f16cc6aff1636842d0a9c190ec0c883dbb1764dbfffb325ad743e710da7d21f148ec58bc206a985b3113a85bc2a527e718b173ac9c981a2ed9a31
+  checksum: 10/e72f6fe38a90f814ed3b6bfced174eed9252391bbb0611b2c3f47d0a471d19f68d214447a5da542329905dfc167dee0a166a1fcc3ecebec841ab61bd89c78834
   languageName: node
   linkType: hard
 
@@ -12219,7 +12219,7 @@ __metadata:
     jquery: "npm:^3.6.0"
     jquery-ui: "npm:^1.14.1"
     jquery.easing: "npm:^1.4.1"
-    laravel-echo: "npm:^2.2.7"
+    laravel-echo: "npm:^2.3.0"
     laravel-vite-plugin: "npm:^2.0"
     lodash: "npm:^4.17.19"
     luxon: "npm:^3.7.2"
