@@ -72,7 +72,7 @@
         "eslint-plugin-react": "^7.37.5",
         "formik": "^2.4.9",
         "github-markdown-css": "^5.8.1",
-        "globals": "^16.4.0",
+        "globals": "^17.3.0",
         "history": "^5.3.0",
         "jest": "^30.2.0",
         "jquery-ui": "^1.14.2",
