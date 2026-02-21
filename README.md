@@ -1,10 +1,9 @@
 # Same Old Website
 
-[![PHPUnit Tests](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml/badge.svg)](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml) [![Build Status](https://app.travis-ci.com/SameOldNick/SameOldWebsite.svg?token=D9gRWqxcpGjLqH5zZmQa&branch=main)](https://app.travis-ci.com/SameOldNick/SameOldWebsite) [![Coverage Status](https://coveralls.io/repos/github/SameOldNick/SameOldWebsite/badge.svg?branch=main)](https://coveralls.io/github/SameOldNick/SameOldWebsite?branch=main)
+[![PHPUnit Tests](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml/badge.svg)](https://github.com/SameOldNick/SameOldWebsite/actions/workflows/phpunit-tests.yml) [![Build Status](https://app.travis-ci.com/SameOldNick/SameOldWebsite.svg?token=D9gRWqxcpGjLqH5zZmQa&branch=main)](https://app.travis-ci.com/SameOldNick/SameOldWebsite) [![codecov](https://codecov.io/github/SameOldNick/SameOldWebsite/graph/badge.svg?token=02E3FZWKJA)](https://codecov.io/github/SameOldNick/SameOldWebsite)
 
 ![Main Website](https://github.com/user-attachments/assets/a57bf2bf-46f4-46dd-a620-75d828e52cd6)
 ![Admin Panel](https://github.com/user-attachments/assets/6e5ca163-dc7e-4f5d-9757-2a36610501bf)
-
 
 Welcome to **Same Old Website** - a personal web app built by SameOldNick using Laravel and React. This app is designed to be a personal portfolio and blog platform with an admin panel for easy management.
 
@@ -22,6 +21,7 @@ Welcome to **Same Old Website** - a personal web app built by SameOldNick using 
 - **Advanced Search**: Search for articles and content using tags and keywords.
 
 ## 🤝 Contributions
+
 Contributions, feedback, and suggestions are all warmly welcome! Whether you're helping fix a bug, suggesting design improvements, or adding a new feature, your input is valued.
 
 For additional details on development procedures, please refer to the [Contributing](https://github.com/SameOldNick/SameOldWebsite/wiki/Contributing) wiki.
