@@ -2,16 +2,15 @@ name: PHPUnit Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 permissions:
   contents: read
 
 jobs:
   laravel-tests:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,47 +18,53 @@ jobs:
     env:
       XDEBUG_MODE: coverage
     steps:
-    - name: Setup PHP ${{ matrix.php-versions }}
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-versions }}
-        coverage: xdebug
+      - name: Setup PHP ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: xdebug
 
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+      - name: Install Dependencies
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
 
-    - name: Generate key
-      run: php artisan key:generate
+      - name: Generate key
+        run: php artisan key:generate
 
-    - name: Generate LittleJWT phrase for auth tokens
-      run: sed -i "s/^LITTLEJWT_KEY_PHRASE=.*/LITTLEJWT_KEY_PHRASE=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+      - name: Generate LittleJWT phrase for auth tokens
+        run: sed -i "s/^LITTLEJWT_KEY_PHRASE=.*/LITTLEJWT_KEY_PHRASE=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
 
-    - name: Generate LittleJWT phrase for refresh tokens
-      run: sed -i "s/^LITTLEJWT_KEY_PHRASE_REFRESH=.*/LITTLEJWT_KEY_PHRASE_REFRESH=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
+      - name: Generate LittleJWT phrase for refresh tokens
+        run: sed -i "s/^LITTLEJWT_KEY_PHRASE_REFRESH=.*/LITTLEJWT_KEY_PHRASE_REFRESH=$(php artisan littlejwt:phrase -d | sed -n '/.*/{n;p}')/" .env
 
-    - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
 
-    - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
+      - name: Create Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
 
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      continue-on-error: true
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: php artisan test --coverage-clover build/logs/clover.xml
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        continue-on-error: true
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan test --coverage-clover build/logs/clover.xml --log-junit junit.xml
 
-    - name: Upload coverage results to Coveralls
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        composer global require php-coveralls/php-coveralls
-        php-coveralls --coverage_clover=build/logs/clover.xml -v
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./build/logs/clover.xml
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./junit.xml
