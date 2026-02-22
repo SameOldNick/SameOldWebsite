@@ -1,4 +1,6 @@
 name: TSLint Checks
+permissions:
+  contents: write
 on: [push]
 jobs:
   job:
