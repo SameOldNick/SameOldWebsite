@@ -5990,10 +5990,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^17.2.4":
-  version: 17.2.4
-  resolution: "dotenv@npm:17.2.4"
-  checksum: 10/3b0fdfb40aebfec3a3b4421990b5874cb93c5a259d20ef637ead237a360cbaf753879d3a66e5c044147658824d86ffead6a4090e8ebb727782e5717fcdb636dd
+"dotenv@npm:^17.3.1":
+  version: 17.3.1
+  resolution: "dotenv@npm:17.3.1"
+  checksum: 10/4dde6571dff22c2323a3e33ac25e1e7d51c4b6d60dc884f59e3efe85c8fd3cc8800d6b3925d05c46b19dca08cba821a0a24e22f75a1b9b768c859b98bb927b04
   languageName: node
   linkType: hard
 
@@ -9275,7 +9275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.21":
+"lodash@npm:^4.17.21, lodash@npm:^4.17.23":
   version: 4.17.23
   resolution: "lodash@npm:4.17.23"
   checksum: 10/82504c88250f58da7a5a4289f57a4f759c44946c005dd232821c7688b5fcfbf4a6268f6a6cdde4b792c91edd2f3b5398c1d2a0998274432cff76def48735e233
@@ -12231,7 +12231,7 @@ __metadata:
     codemirror-ssr: "npm:^0.65.0"
     counterup2: "npm:^2.0.2"
     css-spinners: "npm:^1.0.1"
-    dotenv: "npm:^17.2.4"
+    dotenv: "npm:^17.3.1"
     dropzone: "npm:^6.0.0-beta.2"
     element-visibility-watcher: "npm:^1.0.5"
     eslint: "npm:^10.0.1"
@@ -12251,6 +12251,7 @@ __metadata:
     jquery.easing: "npm:^1.4.1"
     laravel-echo: "npm:^2.3.0"
     laravel-vite-plugin: "npm:^2.0"
+    lodash: "npm:^4.17.23"
     luxon: "npm:^3.7.2"
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
