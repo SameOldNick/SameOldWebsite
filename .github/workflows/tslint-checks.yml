@@ -24,7 +24,7 @@ jobs:
           pattern: '*.ts *.tsx'
 
       - name: Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Applied tslint-actions changes
           file_pattern: '*.ts *.tsx'
