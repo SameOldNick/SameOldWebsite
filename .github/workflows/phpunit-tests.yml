@@ -24,7 +24,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
