@@ -36,7 +36,7 @@
         "@bytemd/plugin-highlight": "^1.22.0",
         "@bytemd/plugin-medium-zoom": "^1.22.0",
         "@bytemd/react": "^1.22.0",
-        "@eslint/js": "^9.39.2",
+        "@eslint/js": "^10.0.1",
         "@reduxjs/toolkit": "^2.11.2",
         "@tinymce/tinymce-react": "^6.3.0",
         "@types/aos": "^3.0.5",
