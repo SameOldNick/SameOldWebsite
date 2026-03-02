@@ -18,7 +18,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Lint
-        uses: mooyoul/tslint-actions@v1.1.1
+        uses: mooyoul/tslint-actions@v1.1.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pattern: '*.ts *.tsx'
