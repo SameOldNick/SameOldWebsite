@@ -9283,9 +9283,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"laravel-vite-plugin@npm:^2.0":
-  version: 2.0.1
-  resolution: "laravel-vite-plugin@npm:2.0.1"
+"laravel-vite-plugin@npm:^2.1":
+  version: 2.1.0
+  resolution: "laravel-vite-plugin@npm:2.1.0"
   dependencies:
     picocolors: "npm:^1.0.0"
     vite-plugin-full-reload: "npm:^1.1.0"
@@ -9293,7 +9293,7 @@ __metadata:
     vite: ^7.0.0
   bin:
     clean-orphaned-assets: bin/clean.js
-  checksum: 10/367ed6c60dfe0737e014ee9aa80a39625c83320e44413cb09cd779e5e008a769628e1af4c3e8089f6ceb758cadcb30c214991780d82e23531336e0ef1742ff38
+  checksum: 10/9bf31414bb1517c5b18ef5d6505b8917a0428c673e5adb6202df9092561387ae8dc86b18e896a9164364a442c2052daf2cc7061e6c72b144b225536dd15dada6
   languageName: node
   linkType: hard
 
@@ -12395,7 +12395,7 @@ __metadata:
     jquery-ui: "npm:^1.14.2"
     jquery.easing: "npm:^1.4.1"
     laravel-echo: "npm:^2.3.0"
-    laravel-vite-plugin: "npm:^2.0"
+    laravel-vite-plugin: "npm:^2.1"
     lodash: "npm:^4.17.23"
     luxon: "npm:^3.7.2"
     owl.carousel: "npm:^2.3.4"
