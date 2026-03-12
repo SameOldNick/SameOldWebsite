@@ -6746,10 +6746,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-only-warn@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "eslint-plugin-only-warn@npm:1.1.0"
-  checksum: 10/395e0502d8fc901704094da4752a11bc1b2d057d323828d557b6b3ca20125cf4b9177b516e67b212f7251de65d831d73c2d57162d4f614cdf36402c0bf8262b4
+"eslint-plugin-only-warn@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "eslint-plugin-only-warn@npm:1.2.1"
+  checksum: 10/9392644bb1e7b0c824bdedd93a7fd482ddc4d6e2d852d0d2b19251e4afb0a822587eb07ddd307d271cfe75e54e331ed4def511d725d67f49e856a093fde4a8a3
   languageName: node
   linkType: hard
 
@@ -12383,7 +12383,7 @@ __metadata:
     eslint-config-react-app: "npm:^7.0.1"
     eslint-plugin-github: "npm:^6.0.0"
     eslint-plugin-jest: "npm:^29.15.0"
-    eslint-plugin-only-warn: "npm:^1.1.0"
+    eslint-plugin-only-warn: "npm:^1.2.1"
     eslint-plugin-react: "npm:^7.37.5"
     formik: "npm:^2.4.9"
     github-markdown-css: "npm:^5.8.1"
