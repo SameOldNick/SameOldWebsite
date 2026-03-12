@@ -12,8 +12,11 @@ use App\Traits\Models\HasPresenter;
 use App\Traits\Models\Immutable;
 use App\Traits\Models\Postable;
 use BackedEnum;
+use Database\Factories\CommentFactory;
 use Illuminate\Database\Eloquent\Attributes\CollectedBy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,15 +37,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read string $status {@see CommentStatusEnum}
  * @property-read string $user_type {@see CommentUserType}
  * @property-read array $commenter Commenters information
- * @property-read \Illuminate\Database\Eloquent\Collection<int, CommentFlag> $flags
- * @property-read \Illuminate\Database\Eloquent\Collection<int, CommentStatus> $statuses
+ * @property-read Collection<int, CommentFlag> $flags
+ * @property-read Collection<int, CommentStatus> $statuses
  */
 #[CollectedBy(CommentCollection::class)]
 class Comment extends Model implements Moderatable
 {
     use CreatesModeratorsFactory;
 
-    /** @use HasFactory<\Database\Factories\CommentFactory> */
+    /** @use HasFactory<CommentFactory> */
     use HasFactory;
 
     /** @use HasPresenter<CommentPresenter> */
@@ -283,8 +286,8 @@ class Comment extends Model implements Moderatable
     /**
      * Scope a query to only include comments with status.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeStatus($query, $status)
     {
@@ -294,8 +297,8 @@ class Comment extends Model implements Moderatable
     /**
      * Scope a query to only include parent comments.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeParents($query)
     {

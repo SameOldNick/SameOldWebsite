@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\RevisionFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -18,12 +20,12 @@ use Illuminate\Support\Str;
  * @property ?string $summary
  * @property-read bool $summary_auto
  * @property-read Article $article
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Revision extends Model
 {
-    /** @use HasFactory<\Database\Factories\RevisionFactory> */
+    /** @use HasFactory<RevisionFactory> */
     use HasFactory;
 
     use HasUuids;

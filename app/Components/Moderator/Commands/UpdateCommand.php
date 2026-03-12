@@ -3,6 +3,7 @@
 namespace App\Components\Moderator\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -91,7 +92,7 @@ class UpdateCommand extends Command
     /**
      * Gets storage driver
      *
-     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     * @return Filesystem
      */
     protected function getStorage()
     {

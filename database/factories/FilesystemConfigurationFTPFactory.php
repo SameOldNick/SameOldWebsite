@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\FilesystemConfigurationFTP;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FilesystemConfigurationFTP>
+ * @extends Factory<FilesystemConfigurationFTP>
  */
 class FilesystemConfigurationFTPFactory extends Factory
 {

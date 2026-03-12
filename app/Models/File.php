@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\Presenters\FilePresenter;
 use App\Traits\Models\HasPresenter;
+use Database\Factories\FileFactory;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,7 +35,7 @@ use Illuminate\Support\Str;
  */
 final class File extends Model
 {
-    /** @use HasFactory<\Database\Factories\FileFactory> */
+    /** @use HasFactory<FileFactory> */
     use HasFactory;
 
     /** @use HasPresenter<FilePresenter> */
@@ -140,7 +142,7 @@ final class File extends Model
     /**
      * Gets the storage disk the file is from.
      *
-     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     * @return Filesystem
      */
     public function getStorageDisk()
     {

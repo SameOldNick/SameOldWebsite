@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * @property string $code
@@ -79,7 +80,7 @@ class Country extends Model
     /**
      * Gets countries sorted by country name.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public static function sortedByCountry()
     {
@@ -89,7 +90,7 @@ class Country extends Model
     /**
      * Gets countries sorted by country code.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public static function sortedByCode()
     {

@@ -16,7 +16,9 @@ use App\Models\Comment;
 use App\Models\Person;
 use App\Models\Post;
 use App\Traits\Controllers\HasPage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\URL;
+use Symfony\Component\HttpFoundation\Response;
 
 class BlogCommentController extends Controller
 {
@@ -30,7 +32,7 @@ class BlogCommentController extends Controller
     /**
      * Shows the comment (if user has access)
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function show(Article $article, Comment $comment)
     {
@@ -42,7 +44,7 @@ class BlogCommentController extends Controller
     /**
      * Previews a comment for a blog article
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function preview(Article $article, Comment $comment)
     {
@@ -52,7 +54,7 @@ class BlogCommentController extends Controller
     /**
      * Processes submitted comment
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function comment(SweetAlerts $swal, CommentRequest $request, Article $article)
     {
@@ -62,7 +64,7 @@ class BlogCommentController extends Controller
     /**
      * Processes submitted reply comment
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function reply(SweetAlerts $swal, CommentRequest $request, Article $article, Comment $parent)
     {
@@ -75,7 +77,7 @@ class BlogCommentController extends Controller
     /**
      * Verifies the comment
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function verify(SweetAlerts $swal, Article $article, Comment $comment)
     {
@@ -108,7 +110,7 @@ class BlogCommentController extends Controller
     /**
      * Handles a post comment request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     protected function handleCommentRequest(SweetAlerts $swal, CommentRequest $request, Article $article, ?Comment $parent = null)
     {

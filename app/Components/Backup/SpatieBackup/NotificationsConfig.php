@@ -3,6 +3,12 @@
 namespace App\Components\Backup\SpatieBackup;
 
 use App\Components\Backup\Contracts\NotificationConfigurationProviderInterface;
+use App\Components\Backup\Notifications\BackupHasFailedNotification;
+use App\Components\Backup\Notifications\BackupWasSuccessfulNotification;
+use App\Components\Backup\Notifications\CleanupHasFailedNotification;
+use App\Components\Backup\Notifications\CleanupWasSuccessfulNotification;
+use App\Components\Backup\Notifications\HealthyBackupWasFoundNotification;
+use App\Components\Backup\Notifications\UnhealthyBackupWasFoundNotification;
 use Spatie\Backup\Config\NotificationDiscordConfig;
 use Spatie\Backup\Config\NotificationMailConfig;
 use Spatie\Backup\Config\NotificationsConfig as BaseNotificationsConfig;
@@ -38,12 +44,12 @@ class NotificationsConfig extends BaseNotificationsConfig
     {
         return new self(
             notifications: [
-                \App\Components\Backup\Notifications\BackupHasFailedNotification::class => static::getChannelsForNotification($provider, \App\Components\Backup\Notifications\BackupHasFailedNotification::class),
-                \App\Components\Backup\Notifications\UnhealthyBackupWasFoundNotification::class => static::getChannelsForNotification($provider, \App\Components\Backup\Notifications\UnhealthyBackupWasFoundNotification::class),
-                \App\Components\Backup\Notifications\CleanupHasFailedNotification::class => static::getChannelsForNotification($provider, \App\Components\Backup\Notifications\CleanupHasFailedNotification::class),
-                \App\Components\Backup\Notifications\BackupWasSuccessfulNotification::class => static::getChannelsForNotification($provider, \App\Components\Backup\Notifications\BackupWasSuccessfulNotification::class),
-                \App\Components\Backup\Notifications\HealthyBackupWasFoundNotification::class => static::getChannelsForNotification($provider, \App\Components\Backup\Notifications\HealthyBackupWasFoundNotification::class),
-                \App\Components\Backup\Notifications\CleanupWasSuccessfulNotification::class => static::getChannelsForNotification($provider, \App\Components\Backup\Notifications\CleanupWasSuccessfulNotification::class),
+                BackupHasFailedNotification::class => static::getChannelsForNotification($provider, BackupHasFailedNotification::class),
+                UnhealthyBackupWasFoundNotification::class => static::getChannelsForNotification($provider, UnhealthyBackupWasFoundNotification::class),
+                CleanupHasFailedNotification::class => static::getChannelsForNotification($provider, CleanupHasFailedNotification::class),
+                BackupWasSuccessfulNotification::class => static::getChannelsForNotification($provider, BackupWasSuccessfulNotification::class),
+                HealthyBackupWasFoundNotification::class => static::getChannelsForNotification($provider, HealthyBackupWasFoundNotification::class),
+                CleanupWasSuccessfulNotification::class => static::getChannelsForNotification($provider, CleanupWasSuccessfulNotification::class),
             ],
             notifiable: \App\Components\Backup\Notifications\Notifiable::class,
             mail: NotificationMailConfig::fromArray([

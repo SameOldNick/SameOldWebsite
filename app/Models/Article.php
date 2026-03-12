@@ -3,17 +3,22 @@
 namespace App\Models;
 
 use App\Models\Collections\ArticleCollection;
+use App\Models\Collections\CommentCollection;
 use App\Models\Presenters\ArticlePresenter;
 use App\Traits\Models\HasPresenter;
 use App\Traits\Models\Postable;
+use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Attributes\CollectedBy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
 
@@ -21,17 +26,17 @@ use Spatie\Sitemap\Tags\Url;
  * @property int $id
  * @property string $title
  * @property string $slug
- * @property ?\Illuminate\Support\Carbon $published_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $published_at
+ * @property ?Carbon $deleted_at
  * @property-read bool $is_published
  * @property-read bool $is_scheduled
  * @property-read Revision $revision
  * @property-read ?Revision $currentRevision
  * @property-read ?Image $mainImage
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Revision> $revisions
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Tag> $tags
- * @property-read \App\Models\Collections\CommentCollection $comments
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Image> $images
+ * @property-read Collection<int, Revision> $revisions
+ * @property-read Collection<int, Tag> $tags
+ * @property-read CommentCollection $comments
+ * @property-read Collection<int, Image> $images
  *
  * @method static \Illuminate\Database\Eloquent\Builder published()
  * @method static \Illuminate\Database\Eloquent\Builder sortedByPublishDate()
@@ -39,7 +44,7 @@ use Spatie\Sitemap\Tags\Url;
 #[CollectedBy(ArticleCollection::class)]
 class Article extends Model implements Sitemapable
 {
-    /** @use HasFactory<\Database\Factories\ArticleFactory> */
+    /** @use HasFactory<ArticleFactory> */
     use HasFactory;
 
     /** @use HasPresenter<ArticlePresenter> */
@@ -151,8 +156,8 @@ class Article extends Model implements Sitemapable
     /**
      * Scope a query to only include published articles.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopePublished($query)
     {
@@ -162,8 +167,8 @@ class Article extends Model implements Sitemapable
     /**
      * Scope a query to sort by published_at column value.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeSortedByPublishDate($query)
     {

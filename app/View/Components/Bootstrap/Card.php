@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Bootstrap;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Card extends Component
@@ -19,7 +20,7 @@ class Card extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render()
     {

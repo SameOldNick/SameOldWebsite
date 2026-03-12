@@ -4,6 +4,7 @@ namespace App\Components\Backup;
 
 use App\Components\Backup\Contracts\BackupSchedulerConfigurationProvider;
 use Cron\CronExpression;
+use Illuminate\Console\Scheduling\Event;
 use Illuminate\Support\Facades\Schedule;
 
 class BackupScheduler
@@ -69,7 +70,7 @@ class BackupScheduler
     /**
      * Schedules command
      *
-     * @return \Illuminate\Console\Scheduling\Event
+     * @return Event
      */
     protected function scheduleCommand(string $command, string $expression)
     {

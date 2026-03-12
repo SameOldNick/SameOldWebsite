@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\Controllers\RespondsWithUsersAvatar;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AvatarController extends Controller
 {
@@ -14,7 +15,7 @@ class AvatarController extends Controller
     /**
      * Displays users profile
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function view(Request $request, User $user)
     {

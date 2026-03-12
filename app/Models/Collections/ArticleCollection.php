@@ -7,6 +7,7 @@ use App\Models\Comment;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 
 /**
  * @extends Collection<int, Article>
@@ -72,7 +73,7 @@ class ArticleCollection extends Collection
     /**
      * Count the occurrences of keywords in the given text and title
      *
-     * @param  \Illuminate\Support\Stringable  $content
+     * @param  Stringable  $content
      * @param  string  $title
      * @param  array  $keywords
      * @param  bool  $ignoreCase

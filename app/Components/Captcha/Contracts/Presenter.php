@@ -2,6 +2,8 @@
 
 namespace App\Components\Captcha\Contracts;
 
+use Illuminate\Contracts\View\View;
+
 interface Presenter
 {
     /**
@@ -9,7 +11,7 @@ interface Presenter
      *
      * @param  array  $attributes  Attributes passed to the component.
      * @param  array  $data  The component data.
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render(array $attributes, array $data);
 }

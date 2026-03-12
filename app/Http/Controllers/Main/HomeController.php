@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\Controllers\HasPage;
 use App\Traits\Controllers\RespondsWithUsersAvatar;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,7 +17,7 @@ class HomeController extends Controller
     /**
      * Show the homepage.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {

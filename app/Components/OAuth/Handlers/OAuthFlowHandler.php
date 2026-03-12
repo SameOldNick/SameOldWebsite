@@ -7,6 +7,7 @@ use App\Components\OAuth\Providers\Provider;
 use App\Models\OAuthProvider;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
@@ -91,7 +92,7 @@ class OAuthFlowHandler implements OAuthFlowHandlerContract
     /**
      * Creates response to redirect to route
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     protected function redirectToRoute(string $route)
     {

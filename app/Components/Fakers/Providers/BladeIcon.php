@@ -3,6 +3,7 @@
 namespace App\Components\Fakers\Providers;
 
 use BladeUI\Icons\Factory as BladeIconsFactory;
+use BladeUI\Icons\Svg;
 use Faker\Generator;
 use Faker\Provider\Base;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
@@ -41,7 +42,7 @@ class BladeIcon extends Base
      *
      * @param  string|null  $setKey  Set key (a random set is chosen if not specified)
      */
-    public function icon($setKey = null): \BladeUI\Icons\Svg
+    public function icon($setKey = null): Svg
     {
         $name = $this->iconName($setKey);
 

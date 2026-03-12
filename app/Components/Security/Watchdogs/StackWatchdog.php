@@ -2,6 +2,8 @@
 
 namespace App\Components\Security\Watchdogs;
 
+use App\Components\Security\Issues\Issue;
+
 final class StackWatchdog implements WatchdogDriver
 {
     public function __construct(
@@ -21,7 +23,7 @@ final class StackWatchdog implements WatchdogDriver
     /**
      * Sniff for issues.
      *
-     * @return array<\App\Components\Security\Issues\Issue>
+     * @return array<Issue>
      */
     public function sniff(): array
     {

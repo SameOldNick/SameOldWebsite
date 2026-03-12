@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Main\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +16,7 @@ class ChangePasswordController extends Controller
     /**
      * Displays change password page
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function view(Request $request)
     {
@@ -24,7 +26,7 @@ class ChangePasswordController extends Controller
     /**
      * Changes users password
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(Request $request)
     {

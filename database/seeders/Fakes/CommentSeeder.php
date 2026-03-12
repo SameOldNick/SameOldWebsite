@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Post;
 use Database\Factories\CommentFactory;
+use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
 
@@ -89,7 +90,7 @@ class CommentSeeder extends Seeder
     /**
      * Creates post factory for comments.
      *
-     * @return \Database\Factories\PostFactory
+     * @return PostFactory
      */
     protected function createPostFactory(?Comment $parent)
     {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Components\LittleJWT\RefreshTokenGuardAdapter;
 use App\Http\Controllers\Api;
 use App\Http\Controllers\Auth;
 use App\Http\Middleware;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace(Api::class)->group(function () {
     Route::prefix('/auth')->group(function () {
         Route::post('refresh', [Api\AuthController::class, 'refresh'])
-            ->middleware([Middleware\AuthenticateJWTWithAdapter::adapter(App\Components\LittleJWT\RefreshTokenGuardAdapter::class)]);
+            ->middleware([Middleware\AuthenticateJWTWithAdapter::adapter(RefreshTokenGuardAdapter::class)]);
     });
 
     Route::apiResource('images', Api\Blog\ImageController::class)->middleware(['auth:jwt']);

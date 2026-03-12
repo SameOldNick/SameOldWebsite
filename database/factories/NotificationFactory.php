@@ -2,13 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Notification>
+ * @extends Factory<Notification>
  */
 class NotificationFactory extends Factory
 {
@@ -22,7 +24,7 @@ class NotificationFactory extends Factory
         return [
             'id' => Str::uuid(),  // Generate a UUID
             'type' => $this->faker->randomElement(['App\Notifications\SomeType', 'App\Notifications\AnotherType']),
-            'notifiable_type' => $this->faker->randomElement([\App\Models\User::class]),
+            'notifiable_type' => $this->faker->randomElement([User::class]),
             'notifiable_id' => $this->faker->numberBetween(1, 100),
             'data' => json_encode([
                 'message' => $this->faker->sentence,
@@ -50,7 +52,7 @@ class NotificationFactory extends Factory
     /**
      * Randomly chooses a notifiable
      *
-     * @param  \Illuminate\Database\Eloquent\Model[]  $notifiables
+     * @param  Model[]  $notifiables
      * @return static
      */
     public function notifiables(array $notifiables)
@@ -68,7 +70,7 @@ class NotificationFactory extends Factory
     /**
      * Gets a random notifiable of type
      *
-     * @param  class-string<\Illuminate\Database\Eloquent\Model>  $class
+     * @param  class-string<Model>  $class
      * @return static
      */
     public function notifiableType(string $class)

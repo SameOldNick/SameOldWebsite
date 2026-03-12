@@ -13,6 +13,7 @@ use App\Components\Menus\Links\Matchers;
 use App\Components\Menus\Links\Resolvers;
 use App\Components\Menus\Traits\HasProps;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Conditionable;
 use Illuminate\View\ComponentAttributeBag;
 
@@ -159,7 +160,7 @@ class Menu
     /**
      * Gets the items in this menu
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function items()
     {

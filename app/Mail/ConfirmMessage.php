@@ -10,6 +10,7 @@ use App\Models\ContactMessage;
 use App\Traits\Support\BuildsFromContainer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 
 class ConfirmMessage extends Mailable
@@ -67,7 +68,7 @@ class ConfirmMessage extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

@@ -5,11 +5,14 @@ namespace App\Models;
 use App\Components\Moderator\Concerns\CreatesModeratorsFactory;
 use App\Components\Moderator\Contracts\Moderatable;
 use App\Enums\ContactMessageStatus;
+use Database\Factories\ContactMessageFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 
 /**
@@ -18,17 +21,17 @@ use Illuminate\Support\Facades\URL;
  * @property string $email
  * @property string $message
  * @property-read ContactMessageStatus $status
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $confirmed_at
- * @property ?\Illuminate\Support\Carbon $expires_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, ContactMessageFlag> $flags
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $confirmed_at
+ * @property ?Carbon $expires_at
+ * @property-read Collection<int, ContactMessageFlag> $flags
  */
 class ContactMessage extends Model implements Moderatable
 {
     use CreatesModeratorsFactory;
 
-    /** @use HasFactory<\Database\Factories\ContactMessageFactory> */
+    /** @use HasFactory<ContactMessageFactory> */
     use HasFactory;
 
     use HasUuids;
@@ -127,7 +130,7 @@ class ContactMessage extends Model implements Moderatable
     /**
      * Gets the default expires at date/time
      *
-     * @return \Illuminate\Support\Carbon
+     * @return Carbon
      */
     public static function getDefaultExpiresAt()
     {

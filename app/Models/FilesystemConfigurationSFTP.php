@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Components\Backup\Contracts\FilesystemConfiguration as FilesystemConfigurationContract;
+use Database\Factories\FilesystemConfigurationSFTPFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FilesystemConfigurationSFTP extends Model implements FilesystemConfigurationContract
 {
-    /** @use HasFactory<\Database\Factories\FilesystemConfigurationSFTPFactory> */
+    /** @use HasFactory<FilesystemConfigurationSFTPFactory> */
     use HasFactory;
 
     /**

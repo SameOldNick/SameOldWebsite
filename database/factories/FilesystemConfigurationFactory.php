@@ -8,7 +8,7 @@ use App\Models\FilesystemConfigurationSFTP;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FilesystemConfiguration>
+ * @extends Factory<FilesystemConfiguration>
  */
 class FilesystemConfigurationFactory extends Factory
 {

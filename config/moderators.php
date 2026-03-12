@@ -1,10 +1,21 @@
 <?php
 
+use App\Components\Moderator\Factories\CommentModeratorsFactory;
+use App\Components\Moderator\Factories\ContactModeratorsFactory;
+use App\Components\Moderator\Factories\ModeratorsConfigFactory;
+use App\Components\Moderator\Factories\ModeratorsFallbackFactory;
+use App\Components\Moderator\Factories\ModeratorsFileFactory;
+use App\Components\Moderator\Moderators\Comments\EmailModerator;
+use App\Components\Moderator\Moderators\Comments\LanguageModerator;
+use App\Components\Moderator\Moderators\Comments\LinkModerator;
+use App\Components\Moderator\Moderators\Comments\ProfanityModerator;
+use App\Components\Moderator\Moderators\Contact\BlacklistModerator;
+
 return [
     // Comments builder configuration
     'comments' => [
         // Factory class for creating database moderators
-        'factory' => \App\Components\Moderator\Factories\CommentModeratorsFactory::class,
+        'factory' => CommentModeratorsFactory::class,
 
         'options' => [
             /**
@@ -20,7 +31,7 @@ return [
             'moderators' => [
                 [
                     // Profanity moderator configuration
-                    'moderator' => \App\Components\Moderator\Moderators\Comments\ProfanityModerator::class,
+                    'moderator' => ProfanityModerator::class,
 
                     'enabled' => true,
 
@@ -44,7 +55,7 @@ return [
 
                 [
                     // Language moderator configuration
-                    'moderator' => \App\Components\Moderator\Moderators\Comments\LanguageModerator::class,
+                    'moderator' => LanguageModerator::class,
 
                     'enabled' => true,
 
@@ -62,7 +73,7 @@ return [
 
                 [
                     // Email moderator configuration
-                    'moderator' => \App\Components\Moderator\Moderators\Comments\EmailModerator::class,
+                    'moderator' => EmailModerator::class,
 
                     'enabled' => true,
 
@@ -89,7 +100,7 @@ return [
 
                 [
                     // Link moderator configuration
-                    'moderator' => \App\Components\Moderator\Moderators\Comments\LinkModerator::class,
+                    'moderator' => LinkModerator::class,
 
                     'enabled' => true,
                 ],
@@ -100,13 +111,13 @@ return [
     // Contact builder configuration
     'contact' => [
         // Factory class for creating database moderators
-        'factory' => \App\Components\Moderator\Factories\ContactModeratorsFactory::class,
+        'factory' => ContactModeratorsFactory::class,
 
         'options' => [
             'moderators' => [
                 [
                     // Blacklist moderator configuration
-                    'moderator' => \App\Components\Moderator\Moderators\Contact\BlacklistModerator::class,
+                    'moderator' => BlacklistModerator::class,
 
                     'enabled' => true,
 
@@ -119,7 +130,7 @@ return [
     // Fallback builder configuration
     'fallback' => [
         // Factory class for creating fallback moderators
-        'factory' => \App\Components\Moderator\Factories\ModeratorsFallbackFactory::class,
+        'factory' => ModeratorsFallbackFactory::class,
 
         'stack' => [
             'file',
@@ -130,7 +141,7 @@ return [
     // Config builder configuration
     'config' => [
         // Factory class for creating config-based moderators
-        'factory' => \App\Components\Moderator\Factories\ModeratorsConfigFactory::class,
+        'factory' => ModeratorsConfigFactory::class,
 
         'options' => [],
     ],
@@ -138,7 +149,7 @@ return [
     // File builder configuration
     'file' => [
         // Factory class for creating file-based moderators
-        'factory' => \App\Components\Moderator\Factories\ModeratorsFileFactory::class,
+        'factory' => ModeratorsFileFactory::class,
 
         'options' => [
             'disk' => 'local',

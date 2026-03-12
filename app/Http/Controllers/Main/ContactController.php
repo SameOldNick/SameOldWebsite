@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
 use App\Traits\Controllers\HasPage;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -20,7 +21,7 @@ class ContactController extends Controller
     /**
      * Displays contact form
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function show(Request $request)
     {
@@ -34,7 +35,7 @@ class ContactController extends Controller
     /**
      * Processes contact form submission.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function process(ModerationService $moderationService, ContactRequest $request)
     {

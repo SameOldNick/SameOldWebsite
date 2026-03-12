@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use LittleApps\LittleJWT\Build\Buildables\GuardBuildable;
+use LittleApps\LittleJWT\JWT\JsonWebToken;
 use LittleApps\LittleJWT\Utils\ResponseBuilder;
 
 class AdminController extends Controller
@@ -22,7 +24,7 @@ class AdminController extends Controller
         // Based off https://stackoverflow.com/a/26834685/533242
 
         /**
-         * @var \LittleApps\LittleJWT\JWT\JsonWebToken
+         * @var JsonWebToken
          */
         $accessToken = Auth::guard('jwt')->buildJwtForUser($user);
 
@@ -31,7 +33,7 @@ class AdminController extends Controller
         $buildable = new GuardBuildable($user, ['exp' => $refreshTokenExpiresAt]);
 
         /**
-         * @var \LittleApps\LittleJWT\JWT\JsonWebToken
+         * @var JsonWebToken
          */
         $refreshToken = $this->app->make('littlejwt.refresh')->create($buildable);
 
@@ -50,7 +52,7 @@ class AdminController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function app(Request $request)
     {

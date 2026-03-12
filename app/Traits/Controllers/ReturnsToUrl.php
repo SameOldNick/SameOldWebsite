@@ -2,6 +2,7 @@
 
 namespace App\Traits\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Str;
@@ -25,7 +26,7 @@ trait ReturnsToUrl
     /**
      * Safely returns to URL (by first checking if can return to URL)
      *
-     * @return \Illuminate\Http\RedirectResponse|null Redirect response or null (if unsafe)
+     * @return RedirectResponse|null Redirect response or null (if unsafe)
      */
     protected function returnToSafeResponse(Request $request)
     {
@@ -37,7 +38,7 @@ trait ReturnsToUrl
     /**
      * Generates redirect response to return URL
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     protected function returnToResponse(string $returnUrl)
     {

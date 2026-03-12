@@ -6,6 +6,8 @@ use App\Exceptions\NoUserAvailableException;
 use App\Models\Person;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use InvalidArgumentException;
 
 /**
@@ -146,7 +148,7 @@ trait Postable
     /**
      * Gets the Post this is morphed from.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return MorphOne
      */
     public function post()
     {
@@ -177,11 +179,11 @@ trait Postable
      * ])->first();
      * ```
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @param  mixed  ...$params  The field name and value, or an associative array of field names and values.
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      *
-     * @throws \InvalidArgumentException If an unsupported field is provided.
+     * @throws InvalidArgumentException If an unsupported field is provided.
      */
     public function scopeWithPersonDetails($query, ...$params)
     {
@@ -221,11 +223,11 @@ trait Postable
      * ])->first();
      * ```
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @param  mixed  ...$params  The field name and value, or an associative array of field names and values.
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      *
-     * @throws \InvalidArgumentException If an unsupported field is provided.
+     * @throws InvalidArgumentException If an unsupported field is provided.
      */
     public function scopeFindPersonDetails($query, ...$params)
     {

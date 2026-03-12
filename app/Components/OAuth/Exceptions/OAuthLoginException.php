@@ -6,6 +6,7 @@ use App\Components\SweetAlert\SweetAlertBuilder;
 use App\Components\SweetAlert\SweetAlerts;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class OAuthLoginException extends OAuthException
 {
@@ -14,7 +15,7 @@ class OAuthLoginException extends OAuthException
     /**
      * Render the exception.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function render()
     {

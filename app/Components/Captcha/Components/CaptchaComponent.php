@@ -3,6 +3,7 @@
 namespace App\Components\Captcha\Components;
 
 use App\Components\Captcha\CaptchaManager;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
@@ -25,7 +26,7 @@ class CaptchaComponent extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render()
     {

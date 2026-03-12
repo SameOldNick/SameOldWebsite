@@ -6,6 +6,7 @@ use ArrayAccess;
 use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 class PaginationMixin
 {
@@ -13,7 +14,7 @@ class PaginationMixin
     {
         return function (int $showPerPage) {
             /**
-             * @var \Illuminate\Support\Collection $this
+             * @var Collection $this
              */
             $pageNumber = Paginator::resolveCurrentPage('page');
 

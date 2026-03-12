@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\ErrorsToSweetAlert;
 use App\Models\Article;
 use App\Models\Revision;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class BlogArticleController extends Controller
@@ -18,7 +19,7 @@ class BlogArticleController extends Controller
     /**
      * Display the specified article.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function single(Request $request, Article $article)
     {
@@ -28,7 +29,7 @@ class BlogArticleController extends Controller
     /**
      * Displays the specified revision for article
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function singleRevision(Request $request, Article $article, Revision $revision)
     {

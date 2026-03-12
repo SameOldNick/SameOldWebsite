@@ -3,6 +3,7 @@
 namespace App\Components\Security\Watchdogs;
 
 use App\Components\Security\Enums\Severity;
+use App\Components\Security\Issues\Issue;
 use App\Components\Security\Issues\SecureConnectionAdvisory;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
@@ -24,7 +25,7 @@ final class HttpSecureWatchdog implements WatchdogDriver
     /**
      * Sniff for issues.
      *
-     * @return array<\App\Components\Security\Issues\Issue>
+     * @return array<Issue>
      */
     public function sniff(): array
     {

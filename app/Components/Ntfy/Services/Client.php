@@ -29,8 +29,8 @@ class Client
     /**
      * Send a message via ntfy.
      *
-     * @throws \Ntfy\Exception\NtfyException
-     * @throws \Ntfy\Exception\EndpointException
+     * @throws NtfyException
+     * @throws EndpointException
      */
     public function send(Message $message): MessageResponse
     {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main\User;
 use App\Components\MFA\Rules\CurrentAuthCode;
 use App\Components\MFA\Services\Authenticator\AuthenticatorService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class MFADisableController extends Controller
@@ -12,7 +13,7 @@ class MFADisableController extends Controller
     /**
      * Confirms the user entered the current password.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function disableMFA(Request $request, AuthenticatorService $authenticatorService)
     {

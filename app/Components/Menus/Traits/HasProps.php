@@ -2,6 +2,7 @@
 
 namespace App\Components\Menus\Traits;
 
+use Illuminate\Support\Collection;
 use Illuminate\View\ComponentAttributeBag;
 
 trait HasProps
@@ -25,7 +26,7 @@ trait HasProps
     /**
      * Gets all properties
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getProps()
     {

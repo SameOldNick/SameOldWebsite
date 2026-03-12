@@ -7,6 +7,7 @@ use App\Components\Captcha\Rules\CaptchaRule;
 use App\Components\Settings\Facades\PageSettings;
 use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -33,7 +34,7 @@ class CommentRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules()
     {

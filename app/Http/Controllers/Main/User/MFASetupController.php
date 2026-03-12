@@ -9,6 +9,8 @@ use App\Components\MFA\Services\Authenticator\Drivers\OneTimePasscode\Setup\Back
 use App\Components\MFA\Services\Persist\PersistService;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\MFASetupInitialized;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class MFASetupController extends Controller
@@ -23,7 +25,7 @@ class MFASetupController extends Controller
     /**
      * Confirms the user entered the current password.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function confirmPassword(Request $request)
     {
@@ -40,7 +42,7 @@ class MFASetupController extends Controller
     /**
      * Displays the steps to install the MFA secret and a form to confirm the code.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function showInstallationInstructions(Request $request)
     {
@@ -52,7 +54,7 @@ class MFASetupController extends Controller
     /**
      * Confirms the user entered the correct MFA code.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function confirmMFA(Request $request)
     {
@@ -67,7 +69,7 @@ class MFASetupController extends Controller
     /**
      * Displays the backup codes to the user.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function showBackupCodes(Request $request)
     {
@@ -88,7 +90,7 @@ class MFASetupController extends Controller
     /**
      * Acknowledges the backup codes were stored.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function acknowledgeBackupCodes(Request $request)
     {
@@ -104,7 +106,7 @@ class MFASetupController extends Controller
     /**
      * Displays page confirming MFA is installed.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function completeSetup(Request $request)
     {

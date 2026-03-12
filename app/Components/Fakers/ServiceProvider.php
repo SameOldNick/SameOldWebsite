@@ -3,6 +3,7 @@
 namespace App\Components\Fakers;
 
 use BladeUI\Icons\Factory as BladeIconsFactory;
+use DavidBadura\FakerMarkdownGenerator\FakerProvider;
 use Faker\Generator;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -40,7 +41,7 @@ final class ServiceProvider extends BaseServiceProvider
                     $object->addProvider($app->make(Providers\BladeIcon::class));
                     $object->addProvider($app->make(Providers\Technology::class));
                     $object->addProvider($app->make(Providers\Text::class));
-                    $object->addProvider(new \DavidBadura\FakerMarkdownGenerator\FakerProvider($object));
+                    $object->addProvider(new FakerProvider($object));
                 }
             });
         }

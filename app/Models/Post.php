@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -15,13 +17,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $postable_type
  * @property int $postable_id
  * @property-read Person $person
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  */
 class Post extends Model
 {
-    /** @use HasFactory<\Database\Factories\PostFactory> */
+    /** @use HasFactory<PostFactory> */
     use HasFactory;
 
     use SoftDeletes;
@@ -73,9 +75,9 @@ class Post extends Model
     /**
      * Scope a query to only include posts from user ID.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @param  int  $userId  User ID
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function scopeOwned($query, int $userId)
     {
@@ -87,8 +89,8 @@ class Post extends Model
     /**
      * Scope a query to only include posts from user with name.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeFindName($query, string $name, bool $caseSensitive = false)
     {
@@ -104,8 +106,8 @@ class Post extends Model
     /**
      * Scope a query to only include posts from user with name.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeWithName($query, string $name)
     {
@@ -119,8 +121,8 @@ class Post extends Model
     /**
      * Scope a query to only include posts from user with email.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeFindEmail($query, string $email, bool $caseSensitive = false)
     {
@@ -136,8 +138,8 @@ class Post extends Model
     /**
      * Scope a query to only include posts from user with email.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeWithEmail($query, string $email)
     {

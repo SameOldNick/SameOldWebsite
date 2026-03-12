@@ -3,15 +3,17 @@
 namespace App\Traits\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 trait RespondsWithUsersAvatar
 {
     /**
      * Responds with user's avatar
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     protected function respondWithAvatar(User $user, ?int $size)
     {
@@ -37,7 +39,7 @@ trait RespondsWithUsersAvatar
     /**
      * Responds with download of users avatar.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     protected function respondWithUploadedAvatar(User $user, ?int $size)
     {
@@ -47,7 +49,7 @@ trait RespondsWithUsersAvatar
     /**
      * Responds with avatar from OAuth provider.
      *
-     * @return \Illuminate\Http\RedirectResponse|null
+     * @return RedirectResponse|null
      */
     protected function respondWithOauthProviderAvatar(User $user, ?int $size)
     {
@@ -69,7 +71,7 @@ trait RespondsWithUsersAvatar
     /**
      * Responds with user's default avatar.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     protected function respondWithDefaultAvatar(User $user, ?int $size)
     {

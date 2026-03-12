@@ -3,6 +3,7 @@
 namespace App\View\Components\Blog;
 
 use App\Models\Article;
+use App\Models\Collections\CommentCollection;
 use App\Models\Comment as CommentModel;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -32,7 +33,7 @@ class Comment extends Component
     /**
      * Gets the children of the comment to display.
      *
-     * @return \App\Models\Collections\CommentCollection
+     * @return CommentCollection
      */
     public function children()
     {

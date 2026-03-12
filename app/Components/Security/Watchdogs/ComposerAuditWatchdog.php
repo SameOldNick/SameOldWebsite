@@ -6,6 +6,7 @@ use App\Components\Security\Enums\Severity;
 use App\Components\Security\Exceptions\WatchdogException;
 use App\Components\Security\Issues\ComposerAuditAbandonedAdvisory;
 use App\Components\Security\Issues\ComposerAuditSecurityAdvisory;
+use App\Components\Security\Issues\Issue;
 use Composer\Console\Application;
 use Exception;
 use Illuminate\Support\Arr;
@@ -48,7 +49,7 @@ final class ComposerAuditWatchdog implements WatchdogDriver
     /**
      * Sniff for issues.
      *
-     * @return array<\App\Components\Security\Issues\Issue>
+     * @return array<Issue>
      */
     public function sniff(): array
     {

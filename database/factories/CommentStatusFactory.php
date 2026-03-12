@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use App\Enums\CommentStatus as CommentStatusEnum;
+use App\Models\CommentStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CommentStatus>
+ * @extends Factory<CommentStatus>
  */
 class CommentStatusFactory extends Factory
 {

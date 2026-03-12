@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
  * @property string $page
- * @property-read \Illuminate\Database\Eloquent\Collection<int, PageMetaData> $metaData
+ * @property-read Collection<int, PageMetaData> $metaData
  */
 class Page extends Model
 {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Rules\PostalCodeAlpha3;
 use App\Rules\State as StateRule;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
@@ -15,7 +16,7 @@ class ProfileController extends Controller
     /**
      * Displays users profile
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function view(Request $request)
     {
@@ -25,7 +26,7 @@ class ProfileController extends Controller
     /**
      * Updates the users profile information
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function update(Request $request)
     {

@@ -5,6 +5,7 @@ namespace App\Components\Ntfy\Services;
 use App\Components\Ntfy\DTOs\MessageResponse;
 use Ntfy\Auth\Token;
 use Ntfy\Auth\User;
+use Ntfy\Exception\EndpointException;
 use Ntfy\Exception\NtfyException;
 use Ntfy\Message;
 use Ntfy\Server;
@@ -22,8 +23,8 @@ class Ntfy
     /**
      * Send a message via ntfy.
      *
-     * @throws \Ntfy\Exception\NtfyException
-     * @throws \Ntfy\Exception\EndpointException
+     * @throws NtfyException
+     * @throws EndpointException
      */
     public function send(Message $message): MessageResponse
     {

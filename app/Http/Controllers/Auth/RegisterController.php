@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
@@ -44,7 +45,7 @@ class RegisterController extends Controller
     /**
      * Show the application registration form.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function showRegistrationForm(Request $request)
     {

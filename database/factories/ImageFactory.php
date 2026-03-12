@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\File;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
+ * @extends Factory<Image>
  */
 class ImageFactory extends Factory
 {

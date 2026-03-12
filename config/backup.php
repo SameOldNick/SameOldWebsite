@@ -1,5 +1,16 @@
 <?php
 
+use App\Components\Backup\Notifications\BackupHasFailedNotification;
+use App\Components\Backup\Notifications\BackupWasSuccessfulNotification;
+use App\Components\Backup\Notifications\CleanupHasFailedNotification;
+use App\Components\Backup\Notifications\CleanupWasSuccessfulNotification;
+use App\Components\Backup\Notifications\HealthyBackupWasFoundNotification;
+use App\Components\Backup\Notifications\Notifiable;
+use App\Components\Backup\Notifications\UnhealthyBackupWasFoundNotification;
+use Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy;
+use Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays;
+use Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes;
+
 return [
 
     'backup' => [
@@ -196,19 +207,19 @@ return [
      */
     'notifications' => [
         'notifications' => [
-            \App\Components\Backup\Notifications\BackupHasFailedNotification::class => ['mail'],
-            \App\Components\Backup\Notifications\UnhealthyBackupWasFoundNotification::class => ['mail'],
-            \App\Components\Backup\Notifications\CleanupHasFailedNotification::class => ['mail'],
-            \App\Components\Backup\Notifications\BackupWasSuccessfulNotification::class => ['mail'],
-            \App\Components\Backup\Notifications\HealthyBackupWasFoundNotification::class => ['mail'],
-            \App\Components\Backup\Notifications\CleanupWasSuccessfulNotification::class => ['mail'],
+            BackupHasFailedNotification::class => ['mail'],
+            UnhealthyBackupWasFoundNotification::class => ['mail'],
+            CleanupHasFailedNotification::class => ['mail'],
+            BackupWasSuccessfulNotification::class => ['mail'],
+            HealthyBackupWasFoundNotification::class => ['mail'],
+            CleanupWasSuccessfulNotification::class => ['mail'],
         ],
 
         /*
          * Here you can specify the notifiable to which the notifications should be sent. The default
          * notifiable will use the variables specified in this config file.
          */
-        'notifiable' => \App\Components\Backup\Notifications\Notifiable::class,
+        'notifiable' => Notifiable::class,
 
         'mail' => [
             'to' => 'your@example.com',
@@ -257,8 +268,8 @@ return [
             'name' => env('APP_NAME', 'laravel-backup'),
             'disks' => ['local'],
             'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+                MaximumAgeInDays::class => 1,
+                MaximumStorageInMegabytes::class => 5000,
             ],
         ],
 
@@ -284,7 +295,7 @@ return [
          * No matter how you configure it the default strategy will never
          * delete the newest backup.
          */
-        'strategy' => \Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
+        'strategy' => DefaultStrategy::class,
 
         'default_strategy' => [
             /*

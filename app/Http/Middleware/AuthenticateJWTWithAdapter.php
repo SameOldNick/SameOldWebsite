@@ -3,10 +3,14 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Contracts\Auth\Middleware\AuthenticatesRequests;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Http\Request;
+use LittleApps\LittleJWT\Contracts\GuardAdapter;
+use LittleApps\LittleJWT\Guards\Guard;
 
 class AuthenticateJWTWithAdapter implements AuthenticatesRequests
 {
@@ -36,11 +40,11 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  string  $name
      * @return mixed
      *
-     * @throws \Illuminate\Auth\AuthenticationException
+     * @throws AuthenticationException
      */
     public function handle($request, Closure $next, $name)
     {
@@ -53,7 +57,7 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
      * Creates Guard adapter.
      *
      * @param  string  $name
-     * @return \LittleApps\LittleJWT\Contracts\GuardAdapter
+     * @return GuardAdapter
      */
     protected function createAdapter($name)
     {
@@ -63,7 +67,7 @@ class AuthenticateJWTWithAdapter implements AuthenticatesRequests
     /**
      * Gets JWT guard
      *
-     * @return \LittleApps\LittleJWT\Guards\Guard
+     * @return Guard
      */
     protected function getGuard()
     {

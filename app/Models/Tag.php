@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Database\Factories\TagFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -18,7 +20,7 @@ use Illuminate\Support\Str;
  */
 class Tag extends Model
 {
-    /** @use HasFactory<\Database\Factories\TagFactory> */
+    /** @use HasFactory<TagFactory> */
     use HasFactory;
 
     /**
@@ -102,7 +104,7 @@ class Tag extends Model
      * Creates Tag models from strings
      *
      * @param  iterable<string>  $strings
-     * @return \Illuminate\Support\Collection<int, Tag>
+     * @return Collection<int, Tag>
      */
     public static function createFromStrings($strings)
     {

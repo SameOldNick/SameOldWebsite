@@ -6,14 +6,15 @@ use App\Casts\Json;
 use App\Traits\Models\HidesPrimaryKey;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property int $page_id
  * @property string $key
  * @property mixed $value
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  * @property-read Page $page
  */
 class PageMetaData extends Model

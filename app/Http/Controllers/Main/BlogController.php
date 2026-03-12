@@ -7,7 +7,10 @@ use App\Components\Search\QueryParser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogSearchRequest;
 use App\Models\Article;
+use App\Models\Collections\ArticleCollection;
 use App\Traits\Controllers\Trackable;
+use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Carbon;
 
 class BlogController extends Controller
@@ -17,7 +20,7 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function index()
     {
@@ -33,7 +36,7 @@ class BlogController extends Controller
     /**
      * Display articles published in month and year
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function archive($year, $month)
     {
@@ -54,12 +57,12 @@ class BlogController extends Controller
     /**
      * Displays articles matching search query.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function search(BlogSearchRequest $request, QueryParser $queryParser)
     {
         /**
-         * @var \App\Models\Collections\ArticleCollection
+         * @var ArticleCollection
          */
         $articles = Article::published()->get();
 
@@ -84,7 +87,7 @@ class BlogController extends Controller
         }
 
         /**
-         * @var \Illuminate\Pagination\AbstractPaginator
+         * @var AbstractPaginator
          */
         $articles = $articles->paginate(5)->withQueryString();
 

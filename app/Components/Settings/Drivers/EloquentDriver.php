@@ -5,6 +5,7 @@ namespace App\Components\Settings\Drivers;
 use App\Components\Settings\Contracts\Driver;
 use App\Models\Page;
 use App\Models\PageMetaData;
+use Illuminate\Database\Eloquent\Collection;
 
 class EloquentDriver implements Driver
 {
@@ -46,7 +47,7 @@ class EloquentDriver implements Driver
     /**
      * Gets metadata collection for page.
      *
-     * @return \Illuminate\Database\Eloquent\Collection<int, PageMetaData>
+     * @return Collection<int, PageMetaData>
      */
     public function getCollection(string $page)
     {

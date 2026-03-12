@@ -2,6 +2,7 @@
 
 namespace App\Components\Passwords;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Validation\Rules\Password as LaravelPassword;
 
@@ -24,7 +25,7 @@ class ServiceProvider extends BaseServiceProvider
         LaravelPassword::defaults(
             Password::createFromCallback(function (PasswordRulesBuilder $builder) {
                 /**
-                 * @var \Illuminate\Foundation\Application
+                 * @var Application
                  */
                 $app = $this->app;
 

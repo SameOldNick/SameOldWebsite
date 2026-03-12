@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Database\Factories\NotificationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $id
@@ -11,12 +13,12 @@ use Illuminate\Notifications\DatabaseNotification;
  * @property string $notifiable_type
  * @property int $notifiable_id
  * @property array $data
- * @property ?\Illuminate\Support\Carbon $read_at
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $read_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Notification extends DatabaseNotification
 {
-    /** @use HasFactory<\Database\Factories\NotificationFactory> */
+    /** @use HasFactory<NotificationFactory> */
     use HasFactory;
 }

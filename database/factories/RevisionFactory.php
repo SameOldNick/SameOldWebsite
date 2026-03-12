@@ -6,7 +6,7 @@ use App\Models\Revision;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Revision>
+ * @extends Factory<Revision>
  */
 class RevisionFactory extends Factory
 {

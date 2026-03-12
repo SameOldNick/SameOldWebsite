@@ -2,13 +2,15 @@
 
 namespace App\Traits\Console;
 
+use Illuminate\Database\Seeder;
+
 trait CreatesSeeders
 {
     /**
      * Creates Seeder instance
      *
-     * @param  class-string<\Illuminate\Database\Seeder>  $class
-     * @return \Illuminate\Database\Seeder
+     * @param  class-string<Seeder>  $class
+     * @return Seeder
      */
     protected function createSeeder(string $class)
     {

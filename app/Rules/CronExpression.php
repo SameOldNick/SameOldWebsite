@@ -5,6 +5,7 @@ namespace App\Rules;
 use Closure;
 use Cron\CronExpression as CronCronExpression;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
 class CronExpression implements ValidationRule
 {
@@ -13,7 +14,7 @@ class CronExpression implements ValidationRule
     /**
      * Run the validation rule.
      *
-     * @param  Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param  Closure(string): PotentiallyTranslatedString  $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

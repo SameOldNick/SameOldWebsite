@@ -3,6 +3,7 @@
 namespace App\Traits\Models;
 
 use App\Models\File;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * @property-read File|null $file
@@ -12,7 +13,7 @@ trait Fileable
     /**
      * Gets the File for this Model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return MorphOne
      */
     public function file()
     {

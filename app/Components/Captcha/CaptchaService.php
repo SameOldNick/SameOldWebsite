@@ -4,6 +4,7 @@ namespace App\Components\Captcha;
 
 use App\Components\Captcha\Contracts\Driver;
 use App\Components\Captcha\Contracts\UserResponse;
+use App\Components\Captcha\Exceptions\VerificationException;
 
 class CaptchaService
 {
@@ -19,7 +20,7 @@ class CaptchaService
      *
      * @return void
      *
-     * @throws \App\Components\Captcha\Exceptions\VerificationException Thrown if verification fails
+     * @throws VerificationException Thrown if verification fails
      * @throws InvalidArgumentException Thrown if the user response is invalid
      */
     public function validate(UserResponse $userResponse)

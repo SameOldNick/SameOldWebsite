@@ -3,13 +3,14 @@
 namespace App\Components\MFA;
 
 use App\Components\MFA\Facades\MFA;
+use Illuminate\Routing\Router;
 
 class RouteMethods
 {
     public function mfa()
     {
         return function ($options = []) {
-            /** @var \Illuminate\Routing\Router $this */
+            /** @var Router $this */
             $defaults = [
                 'otp' => [
                     'enabled' => true,

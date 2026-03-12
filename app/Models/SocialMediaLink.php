@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
+use Database\Factories\SocialMediaLinkFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property string $link
  * @property-read ?string $platform
  * @property-read ?string $icon
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class SocialMediaLink extends Model
 {
-    /** @use HasFactory<\Database\Factories\SocialMediaLinkFactory> */
+    /** @use HasFactory<SocialMediaLinkFactory> */
     use HasFactory;
 
     public static $platforms = [

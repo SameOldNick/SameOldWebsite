@@ -14,7 +14,7 @@ trait ExecutesCommandsExternally
      * Executes a command unsafely (no sanitization on the command is performed)
      *
      * @param  string  $commandLine
-     * @param  \Symfony\Component\Console\Output\OutputInterface[]  $outputs  Any additional interfaces to send output to. (default: empty array)
+     * @param  OutputInterface[]  $outputs  Any additional interfaces to send output to. (default: empty array)
      * @param  array  $additional  Additional arguments to use when creating Process. (default: empty array)
      * @return string Returns command output
      */

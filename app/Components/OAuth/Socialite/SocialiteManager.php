@@ -6,6 +6,7 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Laravel\Socialite\SocialiteManager as BaseSocialiteManager;
+use Laravel\Socialite\Two\AbstractProvider;
 
 class SocialiteManager extends BaseSocialiteManager
 {
@@ -28,7 +29,7 @@ class SocialiteManager extends BaseSocialiteManager
      *
      * @param  string  $provider
      * @param  array  $ignored
-     * @return \Laravel\Socialite\Two\AbstractProvider
+     * @return AbstractProvider
      */
     public function buildProvider($provider, $ignored)
     {
@@ -42,7 +43,7 @@ class SocialiteManager extends BaseSocialiteManager
     /**
      * Create an instance of the specified driver.
      *
-     * @return \Laravel\Socialite\One\AbstractProvider|\Laravel\Socialite\Two\AbstractProvider
+     * @return \Laravel\Socialite\One\AbstractProvider|AbstractProvider
      */
     protected function createTwitterDriver()
     {

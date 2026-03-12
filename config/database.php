@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\DBAL\TimestampType;
 use Illuminate\Support\Str;
 
 return [
@@ -172,7 +173,7 @@ return [
      */
     'dbal' => [
         'types' => [
-            'timestamp' => Illuminate\Database\DBAL\TimestampType::class,
+            'timestamp' => TimestampType::class,
         ],
     ],
 ];

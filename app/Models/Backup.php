@@ -9,15 +9,16 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Spatie\Backup\BackupDestination\Backup as SpatieBackup;
 use Spatie\Backup\BackupDestination\BackupDestination;
 
 /**
  * @property string $uuid
  * @property ?string $error_message
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  * @property-read string $status One of STATUS_* constants
  */
 #[CollectedBy(BackupCollection::class)]

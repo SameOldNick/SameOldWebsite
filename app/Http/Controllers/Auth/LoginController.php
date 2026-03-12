@@ -5,11 +5,18 @@ namespace App\Http\Controllers\Auth;
 use App\Components\Captcha\Facades\Captcha;
 use App\Components\Captcha\Rules\CaptchaRule;
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\EncryptCookies;
 use App\Providers\RouteServiceProvider;
 use App\Traits\Controllers\ReturnsToUrl;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use LittleApps\LittleJWT\Facades\Blacklist;
 
 class LoginController extends Controller
@@ -45,10 +52,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout', 'apiLogout');
 
         $this->middleware([
-            \App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            EnsureFrontendRequestsAreStateful::class,
         ])->only('apiLogout');
     }
 
@@ -78,7 +85,7 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function showLoginForm(Request $request)
     {
@@ -97,7 +104,7 @@ class LoginController extends Controller
      *
      * @return void
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     protected function validateLogin(Request $request)
     {
@@ -127,7 +134,7 @@ class LoginController extends Controller
     /**
      * Get the guard to be used during authentication.
      *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     * @return StatefulGuard
      */
     protected function guard()
     {

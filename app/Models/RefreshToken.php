@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property int $user_id
  * @property string $jwt_id
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Support\Carbon $expires_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property Carbon $expires_at
  * @property-read User $user
  */
 class RefreshToken extends Model

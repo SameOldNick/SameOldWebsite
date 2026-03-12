@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\CollectedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -16,9 +17,9 @@ use Ramsey\Uuid\UuidInterface;
  * @property string $notifiable_type
  * @property int $notifiable_id
  * @property ?string $channel
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $expires_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $expires_at
  */
 #[CollectedBy(PrivateChannelCollection::class)]
 class PrivateChannel extends Model

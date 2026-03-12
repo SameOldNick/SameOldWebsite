@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
@@ -14,7 +15,7 @@ class NotificationsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function index(Request $request)
     {

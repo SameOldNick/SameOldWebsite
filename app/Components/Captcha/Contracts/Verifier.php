@@ -2,6 +2,9 @@
 
 namespace App\Components\Captcha\Contracts;
 
+use App\Components\Captcha\Exceptions\ValidationException;
+use App\Components\Captcha\Exceptions\VerificationException;
+
 /**
  * @template TResponse of UserResponse
  */
@@ -12,14 +15,14 @@ interface Verifier
      *
      * @param  TResponse  $userResponse
      *
-     * @throws \App\Components\Captcha\Exceptions\VerificationException If the response is invalid.
+     * @throws VerificationException If the response is invalid.
      */
     public function verifyResponse(UserResponse $userResponse): void;
 
     /**
      * Validate the rule.
      *
-     * @throws \App\Components\Captcha\Exceptions\ValidationException If the rule is invalid.
+     * @throws ValidationException If the rule is invalid.
      */
     public function validateRule(string $attribute, mixed $value): void;
 }

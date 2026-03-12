@@ -3,6 +3,7 @@
 namespace App\Components\LittleJWT;
 
 use Illuminate\Contracts\Container\Container;
+use LittleApps\LittleJWT\Core\Handler;
 use LittleApps\LittleJWT\Guards\Adapters\AbstractAdapter;
 use LittleApps\LittleJWT\Guards\Adapters\Concerns\BuildsJwt;
 use LittleApps\LittleJWT\Validation\ExtendedValidator;
@@ -22,7 +23,7 @@ class RefreshTokenGuardAdapter extends AbstractAdapter
     /**
      * Gets the LittleJWT handler
      *
-     * @return \LittleApps\LittleJWT\Core\Handler
+     * @return Handler
      */
     protected function getHandler()
     {

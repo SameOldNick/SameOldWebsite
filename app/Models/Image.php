@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Presenters\ImagePresenter;
 use App\Traits\Models\Fileable;
 use App\Traits\Models\HasPresenter;
+use Database\Factories\ImageFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +20,7 @@ use Illuminate\Support\Str;
  */
 class Image extends Model
 {
-    /** @use HasFactory<\Database\Factories\ImageFactory> */
+    /** @use HasFactory<ImageFactory> */
     use Fileable;
 
     use HasFactory;
@@ -95,8 +97,8 @@ class Image extends Model
     /**
      * Scope a query to only include images owned by a user.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  Builder  $query
+     * @return Builder
      */
     public function scopeOwned($query, User $user)
     {

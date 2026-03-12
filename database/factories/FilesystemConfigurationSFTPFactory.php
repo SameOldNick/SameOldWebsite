@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\FilesystemConfigurationSFTP;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FilesystemConfigurationSFTP>
+ * @extends Factory<FilesystemConfigurationSFTP>
  */
 class FilesystemConfigurationSFTPFactory extends Factory
 {

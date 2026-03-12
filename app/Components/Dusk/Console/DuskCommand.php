@@ -100,7 +100,7 @@ class DuskCommand extends BaseDuskCommand
     /**
      * Build the process to run the web server
      *
-     * @return \Symfony\Component\Process\Process
+     * @return Process
      */
     protected function buildServeProcess()
     {

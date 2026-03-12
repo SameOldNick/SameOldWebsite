@@ -3,7 +3,10 @@
 namespace App\View\Components;
 
 use App\Models\Article;
+use App\Models\Collections\ArticleCollection;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class BlogSidebar extends Component
@@ -21,7 +24,7 @@ class BlogSidebar extends Component
     /**
      * Gets the most recent articles.
      *
-     * @return \App\Models\Collections\ArticleCollection
+     * @return ArticleCollection
      */
     public function mostRecent()
     {
@@ -35,7 +38,7 @@ class BlogSidebar extends Component
     /**
      * Gets articles with most comments
      *
-     * @return \App\Models\Collections\ArticleCollection
+     * @return ArticleCollection
      */
     public function popular()
     {
@@ -48,7 +51,7 @@ class BlogSidebar extends Component
     /**
      * Gets months that had articles published
      *
-     * @return \Illuminate\Support\Collection<int, Carbon>
+     * @return Collection<int, Carbon>
      */
     public function monthsWithArticles()
     {
@@ -63,7 +66,7 @@ class BlogSidebar extends Component
     /**
      * Gets published articles.
      *
-     * @return \App\Models\Collections\ArticleCollection
+     * @return ArticleCollection
      */
     protected function getPublishedArticles()
     {
@@ -73,7 +76,7 @@ class BlogSidebar extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|\Closure|string
      */
     public function render()
     {

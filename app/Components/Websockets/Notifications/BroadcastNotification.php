@@ -2,6 +2,7 @@
 
 namespace App\Components\Websockets\Notifications;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
@@ -53,7 +54,7 @@ abstract class BroadcastNotification extends Notification
      * Get the channels the event should broadcast on.
      * If empty is returned, the event is broadcasted on the the 'App.Models.User.{id}' private channel.
      *
-     * @return \Illuminate\Broadcasting\Channel|\Illuminate\Broadcasting\Channel[]
+     * @return Channel|Channel[]
      */
     public function broadcastOn()
     {

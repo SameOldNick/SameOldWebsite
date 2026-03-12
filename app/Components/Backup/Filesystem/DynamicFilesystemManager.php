@@ -4,6 +4,7 @@ namespace App\Components\Backup\Filesystem;
 
 use App\Components\Backup\Contracts\FilesystemConfiguration as FilesystemConfigurationContract;
 use App\Components\Backup\Contracts\FilesystemConfigurationFactory;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Str;
 
@@ -48,7 +49,7 @@ class DynamicFilesystemManager extends FilesystemManager
     /**
      * Creates driver from config
      *
-     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     * @return Filesystem
      */
     protected function createCustomDriver(array $config)
     {

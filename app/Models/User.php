@@ -4,8 +4,12 @@ namespace App\Models;
 
 use App\Components\MFA\Contracts\MultiAuthenticatable;
 use App\Components\MFA\Stores\Eloquent\Models\OneTimePasscodeSecret;
+use App\Models\Collections\PrivateChannelCollection;
+use App\Models\Collections\RoleCollection;
+use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -30,25 +35,25 @@ use Laravel\Sanctum\HasApiTokens;
  * @property ?int $state_id
  * @property ?string $country_code
  * @property string $email
- * @property ?\Illuminate\Support\Carbon $email_verified_at
+ * @property ?Carbon $email_verified_at
  * @property ?string $password
  * @property ?string $remember_token
  * @property-read string $avatar_url
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  * @property-read ?Country $country
  * @property-read ?State $state
- * @property-read \App\Models\Collections\RoleCollection $roles
- * @property-read \Illuminate\Database\Eloquent\Collection<int, OAuthProvider> $oauthProviders
- * @property-read \App\Models\Collections\PrivateChannelCollection $privateChannels
+ * @property-read RoleCollection $roles
+ * @property-read Collection<int, OAuthProvider> $oauthProviders
+ * @property-read PrivateChannelCollection $privateChannels
  * @property-read ?OneTimePasscodeSecret $oneTimePasscodeSecrets
  */
 class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEmail
 {
     use HasApiTokens;
 
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
 
     use HasUuids;
@@ -307,7 +312,7 @@ class User extends Authenticatable implements MultiAuthenticatable, MustVerifyEm
      *
      * @param  array  $roles  Role names or models
      * @param  bool  $hasAll  Specifies if users must have all or one of the roles
-     * @return \Illuminate\Database\Eloquent\Collection<int, User>
+     * @return Collection<int, User>
      */
     public static function getUsersWithRoles($roles, bool $hasAll = true)
     {

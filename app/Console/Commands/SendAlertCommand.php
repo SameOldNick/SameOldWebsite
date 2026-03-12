@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Notifications\Alert;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
@@ -75,7 +76,7 @@ class SendAlertCommand extends Command
     /**
      * Gets the users
      *
-     * @return \Illuminate\Support\Collection<int, User>
+     * @return Collection<int, User>
      */
     protected function getUsers()
     {

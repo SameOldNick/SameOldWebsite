@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\PersonFactory;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -20,13 +22,13 @@ use Illuminate\Support\Str;
  * @property-read string $display_name
  * @property-read ?User $user
  * @property-read string $avatar_url
- * @property ?\Illuminate\Support\Carbon $email_verified_at
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $email_verified_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  */
 class Person extends Model
 {
-    /** @use HasFactory<\Database\Factories\PersonFactory> */
+    /** @use HasFactory<PersonFactory> */
     use HasFactory;
 
     use MustVerifyEmail;

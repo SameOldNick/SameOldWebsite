@@ -3,23 +3,25 @@
 namespace App\Models;
 
 use App\Enums\CommentStatus as CommentStatusEnum;
+use Database\Factories\CommentStatusFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property int $comment_id
  * @property ?int $user_id
  * @property CommentStatusEnum $status
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  * @property-read Comment $comment
  * @property-read ?User $user
  */
 class CommentStatus extends Model
 {
-    /** @use HasFactory<\Database\Factories\CommentStatusFactory> */
+    /** @use HasFactory<CommentStatusFactory> */
     use HasFactory;
 
     /**

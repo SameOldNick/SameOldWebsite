@@ -8,6 +8,7 @@ use App\Events\Comments\CommentStatusChanged;
 use App\Models\Comment;
 use App\Notifications\CommentPosted;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
 
 class NotifyCommentRepliedTo
@@ -79,7 +80,7 @@ class NotifyCommentRepliedTo
     /**
      * Get notifiables from comment
      *
-     * @return \Illuminate\Support\Collection<int, mixed>
+     * @return Collection<int, mixed>
      */
     protected function getNotifiables(Comment $comment)
     {

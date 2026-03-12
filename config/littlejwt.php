@@ -1,5 +1,13 @@
 <?php
 
+use App\Models\User;
+use Jose\Component\Signature\Algorithm\HS256;
+use LittleApps\LittleJWT\Build\Buildables\DefaultBuildable;
+use LittleApps\LittleJWT\Guards\Adapters\FingerprintAdapter;
+use LittleApps\LittleJWT\Guards\Adapters\GenericAdapter;
+use LittleApps\LittleJWT\Validation\Validatables\DefaultValidatable;
+use LittleApps\LittleJWT\Validation\Validatables\GuardValidatable;
+
 return [
     'key' => [
         /**
@@ -78,7 +86,7 @@ return [
          *
          * @see https://web-token.spomky-labs.com/the-components/signed-tokens-jws/signature-algorithms List of supported algorithms
          */
-        'algorithm' => Jose\Component\Signature\Algorithm\HS256::class,
+        'algorithm' => HS256::class,
     ],
 
     'builder' => [
@@ -123,7 +131,7 @@ return [
             /**
              * Fully qualified buildable class to use.
              */
-            'buildable' => LittleApps\LittleJWT\Build\Buildables\DefaultBuildable::class,
+            'buildable' => DefaultBuildable::class,
 
             /**
              * Value to use for the 'alg' claim.
@@ -151,7 +159,7 @@ return [
             /**
              * Validatable instance to use for this validator.
              */
-            'validatable' => LittleApps\LittleJWT\Validation\Validatables\DefaultValidatable::class,
+            'validatable' => DefaultValidatable::class,
 
             /**
              * Claim keys required in the header and payload.
@@ -185,7 +193,7 @@ return [
             /**
              * Validatable instance to use for this validator.
              */
-            'validatable' => LittleApps\LittleJWT\Validation\Validatables\GuardValidatable::class,
+            'validatable' => GuardValidatable::class,
 
             /**
              * If true, the guard validator checks that a user exists with the 'sub' claim identifier.
@@ -197,7 +205,7 @@ return [
              * The expected value for the provider ('prv') payload claim.
              * If false, the 'prv' payload claim is not validated (not recommended).
              */
-            'model' => App\Models\User::class,
+            'model' => User::class,
         ],
     ],
     /**
@@ -213,14 +221,14 @@ return [
                  * The class for the adapter.
                  * This should not be changed.
                  */
-                'adapter' => LittleApps\LittleJWT\Guards\Adapters\GenericAdapter::class,
+                'adapter' => GenericAdapter::class,
             ],
             'fingerprint' => [
                 /**
                  * The class for the adapter.
                  * This should not be changed.
                  */
-                'adapter' => LittleApps\LittleJWT\Guards\Adapters\FingerprintAdapter::class,
+                'adapter' => FingerprintAdapter::class,
 
                 /**
                  * Name of the cookie to hold the fingerprint.
