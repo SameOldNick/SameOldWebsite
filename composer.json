@@ -20,7 +20,7 @@
         "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.9",
-        "laravel/tinker": "^2.7",
+        "laravel/tinker": "^3.0",
         "laravel/ui": "^4.2",
         "league/flysystem-ftp": "^3.29",
         "league/flysystem-sftp-v3": "^3.29",
