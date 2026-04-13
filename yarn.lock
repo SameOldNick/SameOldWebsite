@@ -9320,7 +9320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.21":
+"lodash@npm:^4.17.21, lodash@npm:^4.18.0":
   version: 4.18.1
   resolution: "lodash@npm:4.18.1"
   checksum: 10/306fea53dfd39dad1f03d45ba654a2405aebd35797b673077f401edb7df2543623dc44b9effbb98f69b32152295fff725a4cec99c684098947430600c6af0c3f
@@ -12321,6 +12321,7 @@ __metadata:
     jquery.easing: "npm:^1.4.1"
     laravel-echo: "npm:^2.3.0"
     laravel-vite-plugin: "npm:^2.1"
+    lodash: "npm:^4.18.0"
     luxon: "npm:^3.7.2"
     owl.carousel: "npm:^2.3.4"
     popper.js: "npm:^1.16.1"
