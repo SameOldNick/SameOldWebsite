@@ -117,5 +117,8 @@
         "web-vitals": "^5.1.0",
         "yup": "^1.7.1"
     },
+    "overrides": {
+        "glob": "^10.5.0"
+    },
     "packageManager": "yarn@4.12.0"
 }
