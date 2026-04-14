@@ -11572,21 +11572,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^7.13.1":
-  version: 7.13.1
-  resolution: "react-router-dom@npm:7.13.1"
+"react-router-dom@npm:^7.14.1":
+  version: 7.14.1
+  resolution: "react-router-dom@npm:7.14.1"
   dependencies:
-    react-router: "npm:7.13.1"
+    react-router: "npm:7.14.1"
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10/bda00612fc5032ad2b693d9d6dc9049690c7967900a166887ce60727be5b375a1c9d5c9e4083a80a2baa548428edf74c1cd2a43255a771e9cab7ea33b42aefc2
+  checksum: 10/29e0b139e7dafd0916a4773a07cdad294b649422b50b0bc911974c09a08623079df901c57d8f8efeea737c54cad91a453ce8f74d4997995667cc99e56b5e533a
   languageName: node
   linkType: hard
 
-"react-router@npm:7.13.1":
-  version: 7.13.1
-  resolution: "react-router@npm:7.13.1"
+"react-router@npm:7.14.1":
+  version: 7.14.1
+  resolution: "react-router@npm:7.14.1"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -11596,7 +11596,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10/da3c9f52ccb968647090013f735b8506b5f6a0290a43259d78e9ef6a664715978b6de90417e56b18717ce4ffc306e02826f0418e046aae22936a6f8cf386bc79
+  checksum: 10/8d518134e2d3f8aea84665881c84e3d3c2967d39c1bad01adce86d32549dbd13155f224325fd8cca851cf39bd6cb0c3e8aaff71403d910a7b15226cf9cb124cd
   languageName: node
   linkType: hard
 
@@ -12416,7 +12416,7 @@ __metadata:
     react-icons: "npm:^5.5.0"
     react-page-visibility: "npm:^7.0.0"
     react-redux: "npm:^9.1.0"
-    react-router-dom: "npm:^7.13.1"
+    react-router-dom: "npm:^7.14.1"
     react-spinners: "npm:^0.17.0"
     react-tag-autocomplete: "npm:^7.5.1"
     react-xtermjs: "npm:^1.0.10"
