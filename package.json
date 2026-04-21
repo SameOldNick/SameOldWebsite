@@ -25,7 +25,7 @@
         "owl.carousel": "^2.3.4",
         "popper.js": "^1.16.1",
         "react-chartjs-2": "^5.3.1",
-        "react-helmet-async": "^2.0.5",
+        "react-helmet-async": "^3.0.0",
         "react-xtermjs": "^1.0.10"
     },
     "devDependencies": {
