@@ -71,7 +71,7 @@
         "eslint-plugin-only-warn": "^1.2.1",
         "eslint-plugin-react": "^7.37.5",
         "formik": "^2.4.9",
-        "github-markdown-css": "^5.8.1",
+        "github-markdown-css": "^5.9.0",
         "globals": "^17.4.0",
         "history": "^5.3.0",
         "jest": "^30.2.0",
