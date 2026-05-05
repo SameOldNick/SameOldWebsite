@@ -9,6 +9,13 @@ import path from 'node:path';
 
 import { DateTime } from 'luxon';
 
+const entryPoints = [
+    'resources/ts/main/index.ts',
+    'resources/ts/admin/index.tsx',
+    'resources/scss/main/all.scss',
+    'resources/scss/admin/all.scss'
+];
+
 export default defineConfig({
     plugins: [
         globalConst({
@@ -30,12 +37,7 @@ export default defineConfig({
             }
         }),
         laravel({
-            input: [
-                'resources/ts/main/index.ts',
-                'resources/ts/admin/index.tsx',
-                'resources/scss/main/all.scss',
-                'resources/scss/admin/all.scss'
-            ],
+            input: entryPoints,
             refresh: true,
         }),
         react(),
@@ -50,6 +52,7 @@ export default defineConfig({
     },
     build: {
         rollupOptions: {
+            input: entryPoints,
             output: {
                 manualChunks: {
                     admin: ['react', 'react-dom', 'reactstrap', 'chart.js'],
