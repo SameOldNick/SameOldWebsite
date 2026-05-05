@@ -12443,7 +12443,7 @@ __metadata:
     store2: "npm:^2.14.3"
     string: "npm:^3.3.3"
     sweetalert2: "npm:^11.26.17"
-    sweetalert2-react-content: "npm:^5.1.1"
+    sweetalert2-react-content: "npm:^5.1.2"
     tinymce: "npm:^8.4.0"
     ts-deepmerge: "npm:^7.0.3"
     typescript: "npm:^6.0.3"
@@ -13054,14 +13054,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sweetalert2-react-content@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "sweetalert2-react-content@npm:5.1.1"
+"sweetalert2-react-content@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "sweetalert2-react-content@npm:5.1.2"
   peerDependencies:
     react: ^18.0.0 || ^19.0.0
     react-dom: ^18.0.0 || ^19.0.0
     sweetalert2: ^11.0.0
-  checksum: 10/50de3f87b757963dc68d7c84137de1202c25a377f86d083a2b0c7064e4808ac2e1a437345097b108fea3369ef6502adc9964253e7cddfd20d273c98ec53ecd61
+  checksum: 10/75153d42f3b11d73859c053ddad2d23417e92170e3d07de8782f951c18341df15ed3dce15f2609fe71be4cbf3a766565162da22b6ae9e797a26cdec86a2e7281
   languageName: node
   linkType: hard
 
