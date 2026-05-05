@@ -9308,17 +9308,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"laravel-vite-plugin@npm:^2.1":
-  version: 2.1.0
-  resolution: "laravel-vite-plugin@npm:2.1.0"
+"laravel-vite-plugin@npm:^3.1":
+  version: 3.1.0
+  resolution: "laravel-vite-plugin@npm:3.1.0"
   dependencies:
     picocolors: "npm:^1.0.0"
+    tinyglobby: "npm:^0.2.12"
     vite-plugin-full-reload: "npm:^1.1.0"
   peerDependencies:
-    vite: ^7.0.0
+    fontaine: ^0.5.0
+    vite: ^8.0.0
+  peerDependenciesMeta:
+    fontaine:
+      optional: true
   bin:
     clean-orphaned-assets: bin/clean.js
-  checksum: 10/9bf31414bb1517c5b18ef5d6505b8917a0428c673e5adb6202df9092561387ae8dc86b18e896a9164364a442c2052daf2cc7061e6c72b144b225536dd15dada6
+  checksum: 10/f46b97a11aa451f2d4d5ae1769c20cafaf196a787095c5da306cc8c7f0c84a16ed6c255b0a9a2821cacb6b8e086672ed0d16bd24deb5b959be9cf474badd4375
   languageName: node
   linkType: hard
 
@@ -11244,6 +11249,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picomatch@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "picomatch@npm:4.0.4"
+  checksum: 10/f6ef80a3590827ce20378ae110ac78209cc4f74d39236370f1780f957b7ee41c12acde0e4651b90f39983506fd2f5e449994716f516db2e9752924aff8de93ce
+  languageName: node
+  linkType: hard
+
 "pirates@npm:^4.0.7":
   version: 4.0.7
   resolution: "pirates@npm:4.0.7"
@@ -12413,7 +12425,7 @@ __metadata:
     jquery-ui: "npm:^1.14.2"
     jquery.easing: "npm:^1.4.1"
     laravel-echo: "npm:^2.3.4"
-    laravel-vite-plugin: "npm:^2.1"
+    laravel-vite-plugin: "npm:^3.1"
     lodash: "npm:^4.18.0"
     luxon: "npm:^3.7.2"
     owl.carousel: "npm:^2.3.4"
@@ -13126,6 +13138,16 @@ __metadata:
   version: 1.0.3
   resolution: "tiny-warning@npm:1.0.3"
   checksum: 10/da62c4acac565902f0624b123eed6dd3509bc9a8d30c06e017104bedcf5d35810da8ff72864400ad19c5c7806fc0a8323c68baf3e326af7cb7d969f846100d71
+  languageName: node
+  linkType: hard
+
+"tinyglobby@npm:^0.2.12":
+  version: 0.2.16
+  resolution: "tinyglobby@npm:0.2.16"
+  dependencies:
+    fdir: "npm:^6.5.0"
+    picomatch: "npm:^4.0.4"
+  checksum: 10/5c2c41b572ada38449e7c86a5fe034f204a1dbba577225a761a14f29f48dc3f2fc0d81a6c56fcc67c5a742cc3aa9fb5e2ca18dbf22b610b0bc0e549b34d5a0f8
   languageName: node
   linkType: hard
 
