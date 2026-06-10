@@ -50,16 +50,5 @@ export default defineConfig({
 
         },
     },
-    build: {
-        rollupOptions: {
-            input: entryPoints,
-            output: {
-                manualChunks: {
-                    admin: ['react', 'react-dom', 'reactstrap', 'chart.js'],
-                    mdeditor: ['codemirror-ssr', 'react-xtermjs', 'highlight.js'],
-                    main: ['jquery'],
-                }
-            }
-        }
-    }
+
 });
