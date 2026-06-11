@@ -2,7 +2,7 @@
     <div class="container">
         <div class="logo">
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="{{ Vite::asset('resources/images/sameoldnick-text.png') }}" alt="{{ __('Same Old Nick') }}"
+                <img src="{{ asset('images/sameoldnick-text.png') }}" alt="{{ __('Same Old Nick') }}"
                     style="max-height: 55px;">
             </a>
         </div>
