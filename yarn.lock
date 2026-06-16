@@ -2761,10 +2761,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/aos@npm:^3.0.5":
-  version: 3.0.7
-  resolution: "@types/aos@npm:3.0.7"
-  checksum: 10/388954646768c9bb48fcf624808b3baa5b381925424e74f19579b31c742b16fa786757c350c6acda6402fc132a53be33d87d5ea556f62667334d1e5aabd33eda
+"@types/aos@npm:^3.0.8":
+  version: 3.0.8
+  resolution: "@types/aos@npm:3.0.8"
+  checksum: 10/2fe53efeaa0279f5f40ffffcf7562e7ed1ce07b459585f01ab7c17b1dfd3f38cd10c8071869b9c7f5e411cdd50e735c658998e7d3f2f16f7d17bc9f528fee04d
   languageName: node
   linkType: hard
 
@@ -11097,7 +11097,7 @@ __metadata:
     "@popperjs/core": "npm:^2.11.8"
     "@reduxjs/toolkit": "npm:^2.11.2"
     "@tinymce/tinymce-react": "npm:^6.3.0"
-    "@types/aos": "npm:^3.0.5"
+    "@types/aos": "npm:^3.0.8"
     "@types/blueimp-md5": "npm:^2.18.0"
     "@types/bootstrap": "npm:^5.2.7"
     "@types/codemirror": "npm:^5.60.17"
