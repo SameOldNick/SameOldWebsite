@@ -85,7 +85,7 @@
         "pusher-js": "^8.4.0",
         "query-string": "^9.3.1",
         "react": "^19.2.7",
-        "react-dom": "^19.2.6",
+        "react-dom": "^19.2.7",
         "react-dropzone": "^15.0.0",
         "react-icons": "^5.5.0",
         "react-page-visibility": "^7.0.0",
@@ -119,7 +119,7 @@
     },
     "resolutions": {
         "react": "19.2.7",
-        "react-dom": "19.2.6"
+        "react-dom": "19.2.7"
     },
     "overrides": {
         "glob": "^10.5.0"
