@@ -10187,14 +10187,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"query-string@npm:^9.3.1":
-  version: 9.3.1
-  resolution: "query-string@npm:9.3.1"
+"query-string@npm:^9.4.1":
+  version: 9.4.1
+  resolution: "query-string@npm:9.4.1"
   dependencies:
     decode-uri-component: "npm:^0.4.1"
     filter-obj: "npm:^5.1.0"
     split-on-first: "npm:^3.0.0"
-  checksum: 10/c56a2242ba749b14413998f620fa52dafaf6fe4fbc4572e46c3d7f5ad1ef2811d4ed4d256f53ed8b9d5e073d2dd672c20cc05ae363b65c8745120e81a5d520a6
+  checksum: 10/27615731efdb2ce2a9c3c2699829923e41fa74727d26e5a347a4c55db89263be3f2a89f09e8aa146033292e89964107d527596672a509ba76bd657ba3fda477d
   languageName: node
   linkType: hard
 
@@ -11148,7 +11148,7 @@ __metadata:
     popper.js: "npm:^1.16.1"
     postcss: "npm:^8.5.15"
     pusher-js: "npm:^8.4.0"
-    query-string: "npm:^9.3.1"
+    query-string: "npm:^9.4.1"
     react: "npm:^19.2.7"
     react-chartjs-2: "npm:^5.3.1"
     react-dom: "npm:^19.2.7"
