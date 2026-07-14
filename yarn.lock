@@ -2807,12 +2807,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bootstrap@npm:^5.2.7":
-  version: 5.2.10
-  resolution: "@types/bootstrap@npm:5.2.10"
+"@types/bootstrap@npm:^5.2.11":
+  version: 5.2.11
+  resolution: "@types/bootstrap@npm:5.2.11"
   dependencies:
     "@popperjs/core": "npm:^2.9.2"
-  checksum: 10/b750b58f1037c97cc62cc99fcf17e5fb9175e8f167c97de6ec0532830544c92bfe4bdaf7c8c6c0d509ebdb315584206e21914eea2ae21b1d10efb45323880a44
+  checksum: 10/9d613df4b6701f51a64ff61ab8220bfbf3cd6904b1f3e902f986b8af9be59607e80deb0a14579d6710343e3be23227f95e2d953d325168033215c0490316659d
   languageName: node
   linkType: hard
 
@@ -11109,7 +11109,7 @@ __metadata:
     "@tinymce/tinymce-react": "npm:^6.3.0"
     "@types/aos": "npm:^3.0.8"
     "@types/blueimp-md5": "npm:^2.18.0"
-    "@types/bootstrap": "npm:^5.2.7"
+    "@types/bootstrap": "npm:^5.2.11"
     "@types/codemirror": "npm:^5.60.17"
     "@types/dropzone": "npm:^5.7.9"
     "@types/jquery": "npm:^4.0.1"
