@@ -8110,21 +8110,21 @@ __metadata:
   linkType: hard
 
 "laravel-vite-plugin@npm:^3.1":
-  version: 3.1.0
-  resolution: "laravel-vite-plugin@npm:3.1.0"
+  version: 3.1.3
+  resolution: "laravel-vite-plugin@npm:3.1.3"
   dependencies:
     picocolors: "npm:^1.0.0"
     tinyglobby: "npm:^0.2.12"
     vite-plugin-full-reload: "npm:^1.1.0"
   peerDependencies:
-    fontaine: ^0.5.0
+    fontaine: ^0.8.0
     vite: ^8.0.0
   peerDependenciesMeta:
     fontaine:
       optional: true
   bin:
     clean-orphaned-assets: bin/clean.js
-  checksum: 10/f46b97a11aa451f2d4d5ae1769c20cafaf196a787095c5da306cc8c7f0c84a16ed6c255b0a9a2821cacb6b8e086672ed0d16bd24deb5b959be9cf474badd4375
+  checksum: 10/17c48e6fa1c32179aaa223acd2523ae6285ba8f9064d6006a5a715642c931d888ce7b7afb726ee05b9fd4307f11ee3032483f1361a834ab8c215ce396868e35f
   languageName: node
   linkType: hard
 
