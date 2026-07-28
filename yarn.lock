@@ -6585,6 +6585,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"globals@npm:^17.8.0":
+  version: 17.8.0
+  resolution: "globals@npm:17.8.0"
+  checksum: 10/b7b854b2052d2608d1878884bf730c027e17b9e2d194834f48c3280a7f0005b06d5f51dba362d3149cc05eb90d36d990e5c996728ecd3585a43dc3b4a286ed85
+  languageName: node
+  linkType: hard
+
 "globalthis@npm:^1.0.4":
   version: 1.0.4
   resolution: "globalthis@npm:1.0.4"
@@ -11286,7 +11293,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.37.5"
     formik: "npm:^2.4.9"
     github-markdown-css: "npm:^5.9.0"
-    globals: "npm:^17.7.0"
+    globals: "npm:^17.8.0"
     highlight.js: "npm:^11.10.0"
     history: "npm:^5.3.0"
     jest: "npm:^30.4.2"
