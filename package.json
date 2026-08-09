@@ -113,7 +113,7 @@
         "vite": "^8.1.5",
         "vite-plugin-external": "^6.2.2",
         "vite-plugin-global-const": "^0.0.6",
-        "vite-plugin-static-copy": "^4.1.0",
+        "vite-plugin-static-copy": "^4.1.1",
         "web-vitals": "^6.0.1",
         "yup": "^1.7.1"
     },
