@@ -46,7 +46,7 @@
         "@types/dropzone": "^5.7.9",
         "@types/jquery": "^4.0.1",
         "@types/luxon": "^3.7.2",
-        "@types/react": "^19.2.17",
+        "@types/react": "^19.2.18",
         "@types/react-dom": "^19.2.3",
         "@types/react-page-visibility": "^6.4.4",
         "@types/redux-logger": "^3.0.12",
@@ -84,7 +84,7 @@
         "postcss": "^8.5.23",
         "pusher-js": "^8.4.0",
         "query-string": "^9.4.1",
-        "react": "^19.2.7",
+        "react": "^19.2.8",
         "react-dom": "^19.2.7",
         "react-dropzone": "^15.0.0",
         "react-icons": "^5.7.0",
@@ -118,7 +118,7 @@
         "yup": "^1.7.1"
     },
     "resolutions": {
-        "react": "19.2.7",
+        "react": "19.2.8",
         "react-dom": "19.2.7"
     },
     "overrides": {
