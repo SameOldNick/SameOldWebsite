@@ -38,6 +38,6 @@ final class OneTimeAuthenticatable implements MultiAuthenticatable
      */
     public static function string(string $secret): static
     {
-        return new static(fn () => $secret);
+        return new self(fn () => $secret);
     }
 }

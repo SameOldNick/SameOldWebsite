@@ -77,6 +77,6 @@ final class Options implements Arrayable
      */
     public static function defaults(?callable $callback = null): void
     {
-        static::$createDefaultsCallback = $callback;
+        self::$createDefaultsCallback = $callback;
     }
 }
