@@ -16,7 +16,7 @@
         "hisorange/browser-detect": "^5.0",
         "ifsnop/mysqldump-php": "^2.12",
         "landrok/language-detector": "^1.4",
-        "laravel/framework": "^12.0",
+        "laravel/framework": "^13.40",
         "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.9",
@@ -35,7 +35,7 @@
         "spatie/url": "^2.2",
         "spomky-labs/otphp": "^11.2",
         "starkbank/ecdsa": "^2.1",
-        "symfony/process": "^7.0",
+        "symfony/process": "^8.1",
         "thecodingmachine/safe": "^3.0",
         "verifiedjoseph/ntfy-php-library": "^4.7"
     },
