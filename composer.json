@@ -4,7 +4,7 @@
     "description": "Here, you'll find the code that powers Nick's personal corner of the internet.",
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "ext-bcmath": "*",
         "ext-gd": "*",
         "arif-rh/profanity-filter": "^1.0",
