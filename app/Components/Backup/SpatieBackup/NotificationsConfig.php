@@ -13,6 +13,7 @@ use Spatie\Backup\Config\NotificationDiscordConfig;
 use Spatie\Backup\Config\NotificationMailConfig;
 use Spatie\Backup\Config\NotificationsConfig as BaseNotificationsConfig;
 use Spatie\Backup\Config\NotificationSlackConfig;
+use Spatie\Backup\Config\NotificationWebhookConfig;
 
 class NotificationsConfig extends BaseNotificationsConfig
 {
@@ -27,6 +28,7 @@ class NotificationsConfig extends BaseNotificationsConfig
         public NotificationSlackConfig $slack,
         public ?NotificationDiscordConfig $discord,
         public ?NotificationNtfyConfig $ntfy,
+        public ?NotificationWebhookConfig $webhook,
     ) {
         parent::__construct(
             notifications: $notifications,
@@ -34,6 +36,7 @@ class NotificationsConfig extends BaseNotificationsConfig
             mail: $mail,
             slack: $slack,
             discord: $discord,
+            webhook: $webhook,
         );
     }
 
@@ -72,7 +75,8 @@ class NotificationsConfig extends BaseNotificationsConfig
             ]),
             ntfy: NotificationNtfyConfig::fromArray([
                 'topic' => $provider->getNtfyTopic(),
-            ])
+            ]),
+            webhook: null, // Not implemented yet
         );
     }
 

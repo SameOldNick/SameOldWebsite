@@ -22,6 +22,7 @@ class DatabaseBackupConfigProvider extends BackupConfig
             tries: $original->tries,
             retryDelay: $original->retryDelay,
             monitoredBackups: $original->monitoredBackups,
+            verifyBackup: $original->verifyBackup,
         );
     }
 }
